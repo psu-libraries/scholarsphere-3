@@ -13,12 +13,14 @@
 # limitations under the License.
 
 class User < ActiveRecord::Base
+# Connects this user object to Hydra behaviors. 
+ include Hydra::User
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
   # Connects this user object to Blacklight's Bookmarks and Folders.
   include Blacklight::User
   # Workaround to retry LDAP calls a number of times
-  include ScholarSphere::Utils
+  include Sufia::Utils
 
   delegate :can?, :cannot?, :to => :ability
 

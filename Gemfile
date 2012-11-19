@@ -7,16 +7,20 @@ end
 source 'http://rubygems.org'
 
 # Ruby on Rails components
+gem 'sufia'
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'
 # Hydra community components
 gem 'blacklight', '3.7.1'
 gem 'blacklight_advanced_search', '1.2.4'
-gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git', :ref => '720e07afd4'
-gem 'active-fedora', '4.5.0'
+#gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git', :ref => '720e07afd4'
+gem 'hydra-head', '5.0.0.pre11'
+#gem 'active-fedora', '4.5.0'
+gem 'active-fedora', '5.0.0.rc3'
 gem 'rubydora', '0.5.13'
-gem 'solrizer-fedora', '2.2.0'
+#gem 'solrizer-fedora', '2.2.0'
+gem 'solrizer-fedora'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
 gem 'hydra-batch-edit', :git=>'git://github.com/psu-stewardship/hydra-batch-edit.git', :ref => 'b753c7aeac'
