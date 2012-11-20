@@ -57,8 +57,13 @@ class User < ActiveRecord::Base
     send(Devise.authentication_keys.first)
   end
 
+  #put in to remove deprication warnings since the parent class overrides our login with it's own
+  def login
+    self[:login]
+  end
+
   def to_s
-    login
+    self[:login]
   end
 
   def email_address

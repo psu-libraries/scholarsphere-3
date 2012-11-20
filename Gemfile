@@ -6,8 +6,12 @@ end
 
 source 'http://rubygems.org'
 
+# NOTE: the :require arg is necessary on Linux-based hosts
+gem 'rmagick', '2.13.1', :require => 'RMagick'
+
 # Ruby on Rails components
-gem 'sufia'
+gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'
+#gem 'sufia'
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'
@@ -23,7 +27,8 @@ gem 'rubydora', '0.5.13'
 gem 'solrizer-fedora'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
-gem 'hydra-batch-edit', :git=>'git://github.com/psu-stewardship/hydra-batch-edit.git', :ref => 'b753c7aeac'
+#gem 'hydra-batch-edit', :git=>'git://github.com/psu-stewardship/hydra-batch-edit.git', :ref => 'b753c7aeac'
+gem 'hydra-batch-edit', '~> 0.0.7'
 
 # Other components
 gem 'resque', '1.22.0', :require => 'resque/server'

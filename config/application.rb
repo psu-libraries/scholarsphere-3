@@ -19,6 +19,9 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
+#require 'rubygems'
+#require 'RMagick'
+#include Magick
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.

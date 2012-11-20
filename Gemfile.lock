@@ -1,10 +1,34 @@
 GIT
-  remote: git://github.com/psu-stewardship/hydra-batch-edit.git
-  revision: b753c7aeac3bbe3ed0ce4d7ede4f49f52e77294e
-  ref: b753c7aeac
+  remote: git://github.com/mediashelf/sufia.git
+  revision: 589f0829c4e7609e74756ea3990331bc6f108557
   specs:
-    hydra-batch-edit (0.0.6)
+    sufia (0.0.1.pre2)
+      activerecord-import
+      acts_as_follower (= 0.1.1)
       blacklight
+      blacklight_advanced_search
+      daemons (= 1.1.9)
+      devise (= 2.1.2)
+      execjs (= 1.4.0)
+      hydra-batch-edit (~> 0.0.7)
+      hydra-head (= 5.0.0.pre11)
+      hydra-ldap (= 0.1.0)
+      mail_form
+      mailboxer (= 0.8.0)
+      nest (= 1.1.1)
+      noid (= 0.5.5)
+      paperclip (= 3.3.0)
+      rails (~> 3.2.8)
+      rails_autolink (= 1.0.9)
+      rainbow (= 1.1.4)
+      resque (= 1.22.0)
+      resque-pool (= 0.3.0)
+      rmagick (= 2.13.1)
+      sitemap (= 0.3.2)
+      therubyracer (= 0.10.2)
+      will_paginate (= 3.0.3)
+      yaml_db (= 0.2.3)
+      zipruby (= 0.3.6)
 
 GIT
   remote: git://github.com/psu-stewardship/mail_form.git
@@ -166,7 +190,7 @@ GEM
       railties (>= 3.0.0)
     fastercsv (1.5.5)
     fastthread (1.0.7)
-    ffi (1.1.5)
+    ffi (1.2.0)
     foreigner (1.2.1)
       activerecord (>= 3.0.0)
     fssm (0.2.9)
@@ -185,6 +209,8 @@ GEM
       blacklight
       cancan
       deprecation
+    hydra-batch-edit (0.0.7)
+      blacklight
     hydra-core (5.0.0.pre11)
       RedCloth (= 4.2.9)
       active-fedora (~> 5.0.0.rc1)
@@ -225,7 +251,7 @@ GEM
     launchy (2.1.2)
       addressable (~> 2.3)
     libv8 (3.3.10.4)
-    libwebsocket (0.1.6)
+    libwebsocket (0.1.6.1)
       websocket
     logger (1.2.8)
     mail (2.4.4)
@@ -402,30 +428,6 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.6)
     stomp (1.2.7)
-    sufia (0.0.1.pre1)
-      acts_as_follower (= 0.1.1)
-      blacklight
-      blacklight_advanced_search
-      daemons (= 1.1.9)
-      devise (= 2.1.2)
-      execjs (= 1.4.0)
-      hydra-batch-edit
-      hydra-head (= 5.0.0.pre11)
-      mailboxer (= 0.8.0)
-      nest (= 1.1.1)
-      noid (= 0.5.5)
-      paperclip (= 3.3.0)
-      rails (~> 3.2.8)
-      rails_autolink (= 1.0.9)
-      rainbow (= 1.1.4)
-      resque (= 1.22.0)
-      resque-pool (= 0.3.0)
-      rmagick (= 2.13.1)
-      sitemap (= 0.3.2)
-      therubyracer (= 0.10.2)
-      will_paginate (= 3.0.3)
-      yaml_db (= 0.2.3)
-      zipruby (= 0.3.6)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
     thor (0.16.0)
@@ -484,7 +486,7 @@ DEPENDENCIES
   execjs (= 1.4.0)
   factory_girl_rails (~> 4.1.0)
   headless
-  hydra-batch-edit!
+  hydra-batch-edit (~> 0.0.7)
   hydra-head (= 5.0.0.pre11)
   hydra-ldap (= 0.1.0)
   jettywrapper
@@ -514,7 +516,7 @@ DEPENDENCIES
   sitemap (= 0.3.2)
   solrizer-fedora
   sqlite3
-  sufia
+  sufia!
   therubyracer (= 0.10.2)
   uglifier (= 1.3.0)
   unicorn-rails
