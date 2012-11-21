@@ -169,6 +169,7 @@ describe UsersController do
      end
      it "should trophy a file" do
       post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      puts response.body
       JSON.parse(response.body)['trophy']['user_id'].should == @user.id
       JSON.parse(response.body)['trophy']['generic_file_id'].should == @file.pid["scholarsphere:".length..-1]
     end

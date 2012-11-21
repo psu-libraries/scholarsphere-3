@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mediashelf/sufia.git
-  revision: 589f0829c4e7609e74756ea3990331bc6f108557
+  revision: ac6df82966a702d2e09d94c48ae6f56cfcd10a56
   specs:
     sufia (0.0.1.pre2)
       activerecord-import
@@ -12,7 +12,6 @@ GIT
       execjs (= 1.4.0)
       hydra-batch-edit (~> 0.0.7)
       hydra-head (= 5.0.0.pre11)
-      hydra-ldap (= 0.1.0)
       mail_form
       mailboxer (= 0.8.0)
       nest (= 1.1.1)
@@ -180,6 +179,8 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.1.3)
+    equivalent-xml (0.3.0)
+      nokogiri (>= 1.4.3)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -406,7 +407,6 @@ GEM
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     sitemap (0.3.2)
-    solr-ruby (0.0.8)
     solrizer (2.0.0.rc6)
       daemons
       mediashelf-loggable (~> 0.4.7)
@@ -414,14 +414,6 @@ GEM
       om (>= 1.5.0)
       stomp
       xml-simple
-    solrizer-fedora (1.2.3)
-      active-fedora (>= 3.1.0)
-      activesupport
-      fastercsv
-      jettywrapper (>= 1.1.0)
-      rsolr
-      solr-ruby (>= 0.0.6)
-      solrizer (>= 1.0.0)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -483,6 +475,7 @@ DEPENDENCIES
   database_cleaner
   debugger
   devise (= 2.1.2)
+  equivalent-xml
   execjs (= 1.4.0)
   factory_girl_rails (~> 4.1.0)
   headless
@@ -514,7 +507,6 @@ DEPENDENCIES
   sass-rails (= 3.2.5)
   selenium-webdriver
   sitemap (= 0.3.2)
-  solrizer-fedora
   sqlite3
   sufia!
   therubyracer (= 0.10.2)

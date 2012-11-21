@@ -40,7 +40,7 @@ describe GenericFilesController do
     end
 
     it "should spawn a content deposit event job" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
       file = fixture_file_upload('/world.png','image/png')
       Resque.expects(:enqueue).with(ContentDepositEventJob, 'test:123', 'jilluser')
       Resque.expects(:enqueue).with(CharacterizeJob, 'test:123')
@@ -48,7 +48,7 @@ describe GenericFilesController do
     end
 
     it "should expand zip files" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
       file = fixture_file_upload('/world.png','application/zip')
       Resque.expects(:enqueue).with(CharacterizeJob, 'test:123')
       Resque.expects(:enqueue).with(UnzipJob, 'test:123')
@@ -75,7 +75,7 @@ describe GenericFilesController do
     end
 
     it "should record what user created the first version of content" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :terms_of_service=>"1"
 
@@ -109,7 +109,7 @@ describe GenericFilesController do
       saved_file.to_solr['depositor_t'].should == ['jilluser']
     end
     it "Shoul call virus check" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       ClamAV.any_instance.expects(:scanfile).returns(0)      
       file = fixture_file_upload('/world.png','image/png')
       Resque.expects(:enqueue).with(ContentDepositEventJob, 'test:123', 'jilluser')
@@ -118,7 +118,7 @@ describe GenericFilesController do
     end
 
     it "failing virus check should create flash" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       ClamAV.any_instance.expects(:scanfile).returns(1)      
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
@@ -137,7 +137,7 @@ describe GenericFilesController do
 
   describe "audit" do
     before do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       @generic_file = GenericFile.new
       @generic_file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
       @generic_file.apply_depositor_metadata('mjg36')
@@ -158,7 +158,7 @@ describe GenericFilesController do
   describe "destroy" do
     before(:each) do
       GenericFile.any_instance.stubs(:terms_of_service).returns('1')
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
       @generic_file.save
@@ -211,7 +211,7 @@ describe GenericFilesController do
     end
 
     it "should record what user added a new version" do
-      GenericFile.any_instance.stubs(:to_solr).returns({})
+      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
@@ -221,6 +221,7 @@ describe GenericFilesController do
 
       posted_file = GenericFile.find(@generic_file.pid)
       version1 = posted_file.content.latest_version
+      puts "---version1:#{version1}---"
       posted_file.content.version_committer(version1).should == @user.login
 
       # other user uploads new version
@@ -232,10 +233,11 @@ describe GenericFilesController do
       Resque.expects(:enqueue).with(ContentNewVersionEventJob, @generic_file.pid, archivist.login).once
       Resque.expects(:enqueue).with(CharacterizeJob, @generic_file.pid).once
       file = fixture_file_upload('/image.jp2','image/jp2')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:terms_of_service=>"1", :tag=>[''] }
+      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:terms_of_service=>"1", :tag=>[''] }
 
       edited_file = GenericFile.find(@generic_file.pid)
       version2 = edited_file.content.latest_version
+      puts "---version2:#{version2}---"
       version2.versionID.should_not == version1.versionID
       edited_file.content.version_committer(version2).should == archivist.login
 
