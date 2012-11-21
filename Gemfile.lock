@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/mediashelf/sufia.git
-  revision: ac6df82966a702d2e09d94c48ae6f56cfcd10a56
+  remote: git://github.com/cam156/sufia.git
+  revision: f97b9403b0ceb80dabcac8231228e8cf751394c9
   specs:
     sufia (0.0.1.pre2)
       activerecord-import
