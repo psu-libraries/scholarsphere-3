@@ -221,7 +221,6 @@ describe GenericFilesController do
 
       posted_file = GenericFile.find(@generic_file.pid)
       version1 = posted_file.content.latest_version
-      puts "---version1:#{version1}---"
       posted_file.content.version_committer(version1).should == @user.login
 
       # other user uploads new version
@@ -237,7 +236,6 @@ describe GenericFilesController do
 
       edited_file = GenericFile.find(@generic_file.pid)
       version2 = edited_file.content.latest_version
-      puts "---version2:#{version2}---"
       version2.versionID.should_not == version1.versionID
       edited_file.content.version_committer(version2).should == archivist.login
 
