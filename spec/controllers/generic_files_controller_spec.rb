@@ -86,7 +86,7 @@ describe GenericFilesController do
     end
 
     it "should create batch associations from batch_id" do
-      Rails.application.config.stubs(:id_namespace).returns('sample')
+      Sufia::Engine.config.stubs(:id_namespace).returns('sample')
       file = fixture_file_upload('/world.png','image/png')
       controller.stubs(:add_posted_blob_to_asset)
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
@@ -211,8 +211,6 @@ describe GenericFilesController do
     end
 
     it "should record what user added a new version" do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
 
@@ -233,7 +231,6 @@ describe GenericFilesController do
       Resque.expects(:enqueue).with(CharacterizeJob, @generic_file.pid).once
       file = fixture_file_upload('/image.jp2','image/jp2')
       post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:terms_of_service=>"1", :tag=>[''] }
-
       edited_file = GenericFile.find(@generic_file.pid)
       version2 = edited_file.content.latest_version
       version2.versionID.should_not == version1.versionID
