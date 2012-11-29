@@ -16,10 +16,16 @@ class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller
   include Blacklight::Controller  
 # Adds Hydra behaviors into the application controller 
-  include Hydra::Controller::ControllerBehavior
+  include Hydra::Controller::ControllerBehavior  
+# Adds Sufia behaviors into the application controller 
+  include Sufia::Controller
+
 
   # Adds Hydra behaviors into the application controller
-  include Hydra::Controller::ControllerBehavior
+  include Hydra::Controller::ControllerBehavior  
+# Adds Sufia behaviors into the application controller 
+  include Sufia::Controller
+
 
   ## Force the session to be restarted on every request.  The ensures that when the REMOTE_USER header is not set, the user will be logged out.
   before_filter :clear_session_user
@@ -54,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_session_user
-    if request.nil?
+   if request.nil?
       logger.warn "Request is Nil, how weird!!!"
       return
     end

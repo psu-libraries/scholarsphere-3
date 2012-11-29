@@ -93,7 +93,6 @@ describe CatalogController do
     it "should find my 4 files" do
       response.should be_success
       response.should render_template('catalog/recent')
-      puts response
       assigns(:recent_documents).count.should eql(4)
       # the order is reversed since the first in should be the last out in descending time order
       #assigns(:recent_documents).each {|doc| logger.info doc.fetch(:generic_file__title_t)[0]}

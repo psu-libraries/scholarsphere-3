@@ -13,6 +13,8 @@
 # limitations under the License.
 
 class User < ActiveRecord::Base
+# Connects this user object to Sufia behaviors. 
+ include Sufia::User
 # Connects this user object to Hydra behaviors. 
  include Hydra::User
   # Adds acts_as_messageable for user mailboxes
