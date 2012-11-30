@@ -32,7 +32,7 @@ describe CatalogController do
       @gf1 =  GenericFile.new(title:'Test Document PDF', filename:'test.pdf', read_groups:['public'])
       @gf1.apply_depositor_metadata('mjg36')
       @gf1.save
-      @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib1', read_groups:['public'])
+      @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib2', read_groups:['public'])
       @gf2.apply_depositor_metadata('mjg36')
       @gf2.save
     end
@@ -53,12 +53,12 @@ describe CatalogController do
     end
     describe "facet search" do
       before do
-        xhr :get, :index, :fq=>"{!raw f=generic_file__contributor_facet}Contrib1"
+        xhr :get, :index, :q=>"{f=generic_file__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success
         response.should render_template('catalog/index')
-        assigns(:document_list).count.should eql(2)
+        assigns(:document_list).count.should eql(1)
       end
     end
   end

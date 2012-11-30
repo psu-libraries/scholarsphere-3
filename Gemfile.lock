@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/cam156/sufia.git
-  revision: f97b9403b0ceb80dabcac8231228e8cf751394c9
+  revision: 47032e9adb71944843236f3e6a87453b12d6c9bc
   specs:
     sufia (0.0.1.pre2)
       activerecord-import
@@ -11,6 +11,8 @@ GIT
       devise (= 2.1.2)
       execjs (= 1.4.0)
       hydra-batch-edit (~> 0.0.7)
+      hydra-core (= 5.0.0.pre11)
+      hydra-file-access (= 5.0.0.pre11)
       hydra-head (= 5.0.0.pre11)
       mail_form
       mailboxer (= 0.8.0)
@@ -222,6 +224,17 @@ GEM
       hydra-access-controls (= 5.0.0.pre11)
       hydra-mods (>= 0.0.6)
       jquery-rails
+      rails (~> 3.2.3)
+      sanitize
+    hydra-file-access (5.0.0.pre11)
+      RedCloth (= 4.2.9)
+      active-fedora
+      blacklight (~> 3.4)
+      block_helpers
+      deprecation (>= 0.0.5)
+      devise
+      hydra-core (= 5.0.0.pre11)
+      hydra-mods (>= 0.0.5)
       rails (~> 3.2.3)
       sanitize
     hydra-head (5.0.0.pre11)
@@ -463,8 +476,6 @@ DEPENDENCIES
   activerecord-import
   acts_as_follower (= 0.1.1)
   bcrypt-ruby
-  blacklight (= 3.7.1)
-  blacklight_advanced_search (= 1.2.4)
   capybara
   clamav (= 0.4.1)
   coffee-rails (= 3.2.2)
