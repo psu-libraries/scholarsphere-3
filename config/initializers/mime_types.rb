@@ -12,7 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Be sure to restart your server when you modify this file.# Mime Types Added By Hydra Head:
+# Be sure to restart your server when you modify this file.Mime::Type.register_alias "text/plain", :refworks_marc_txt
+Mime::Type.register_alias "text/plain", :openurl_kev
+Mime::Type.register "application/x-endnote-refer", :endnote
+Mime::Type.register "application/marc", :marc
+Mime::Type.register "application/marcxml+xml", :marcxml, 
+      ["application/x-marc+xml", "application/x-marcxml+xml", 
+       "application/marc+xml"]
+# Mime Types Added By Hydra Head:
 
 # Mime::Type.register "text/html", :html
 # Mime::Type.register "application/pdf", :pdf

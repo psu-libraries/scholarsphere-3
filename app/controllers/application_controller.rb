@@ -13,19 +13,20 @@
 # limitations under the License.
 
 class ApplicationController < ActionController::Base
-  # Adds a few additional behaviors into the application controller
-  include Blacklight::Controller  
+  # Adds a few additional behaviors into the application controller 
+   include Blacklight::Controller  
 # Adds Hydra behaviors into the application controller 
   include Hydra::Controller::ControllerBehavior  
 # Adds Sufia behaviors into the application controller 
   include Sufia::Controller
 
 
-  # Adds Hydra behaviors into the application controller
-  include Hydra::Controller::ControllerBehavior  
-# Adds Sufia behaviors into the application controller 
-  include Sufia::Controller
+  # Please be sure to impelement current_user and user_session. Blacklight depends on 
+  # these methods in order to perform user specific actions. 
 
+  layout 'hydra-head'
+
+  protect_from_forgery
 
   ## Force the session to be restarted on every request.  The ensures that when the REMOTE_USER header is not set, the user will be logged out.
   before_filter :clear_session_user
@@ -51,10 +52,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, :with => :render_404
   rescue_from Blacklight::Exceptions::InvalidSolrID, :with => :render_404
 
-  def layout_name
-    'hydra-head'
-  end
-
   def clear_session_user
    if request.nil?
       logger.warn "Request is Nil, how weird!!!"
@@ -63,7 +60,9 @@ class ApplicationController < ActionController::Base
 
     # only logout if the REMOTE_USER is not set in the HTTP headers and a user is set within warden
     # logout clears the entire session including flash messages
+    search = session[:search].dup if session[:search]
     request.env['warden'].logout unless user_logged_in?
+    session[:search] = search
   end
 
   def set_current_user
@@ -105,7 +104,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  protected
+ protected
   # Returns the solr permissions document for the given id
   # @return solr permissions document
   # @example This is the document that you can pass into permissions enforcement methods like 'can?'
@@ -117,8 +116,6 @@ class ApplicationController < ActionController::Base
     permissions_solr_response, permissions_solr_document = get_permissions_solr_response_for_doc_id(id)
     return permissions_solr_document
   end
-
-  protect_from_forgery
 
   def user_logged_in?
     env['warden'] and env['warden'].user and remote_user_set?

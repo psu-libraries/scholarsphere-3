@@ -11,7 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+Sufia::Engine.configure do
+  config.contact_email = 'dmc186@psu.edu'
+  config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
+end
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   config.log_level = :debug

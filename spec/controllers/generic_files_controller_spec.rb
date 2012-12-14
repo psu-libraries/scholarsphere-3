@@ -158,12 +158,11 @@ describe GenericFilesController do
   describe "destroy" do
     before(:each) do
       GenericFile.any_instance.stubs(:terms_of_service).returns('1')
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
+      @user = FactoryGirl.find_or_create(:user)
+      sign_in @user
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
       @generic_file.save
-      @user = FactoryGirl.find_or_create(:user)
-      sign_in @user
     end
     after do
       @user.delete

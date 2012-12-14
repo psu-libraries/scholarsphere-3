@@ -17,10 +17,10 @@ class User < ActiveRecord::Base
  include Sufia::User
 # Connects this user object to Hydra behaviors. 
  include Hydra::User
+# Connects this user object to Blacklights Bookmarks. 
+ include Blacklight::User
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
-  # Connects this user object to Blacklight's Bookmarks and Folders.
-  include Blacklight::User
   # Workaround to retry LDAP calls a number of times
   include Sufia::Utils
 

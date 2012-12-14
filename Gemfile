@@ -16,18 +16,10 @@ gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'
 # Hydra community components
-gem 'blacklight', '3.7.1'
-gem 'blacklight_advanced_search', '1.2.4'
-#gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git', :ref => '720e07afd4'
-gem 'hydra-head', '5.0.0.pre11'
-#gem 'active-fedora', '4.5.0'
-gem 'active-fedora', '5.0.0.rc3'
+gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git'
 gem 'rubydora', '0.5.13'
-#gem 'solrizer-fedora'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
-#gem 'hydra-batch-edit', :git=>'git://github.com/psu-stewardship/hydra-batch-edit.git', :ref => 'b753c7aeac'
-gem 'hydra-batch-edit', '~> 0.0.7'
 
 # Other components
 gem 'resque', '1.22.0', :require => 'resque/server'
@@ -84,3 +76,6 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.1.0"
   gem 'launchy'
 end # (leave this comment here to catch a stray line inserted by blacklight!)
+
+gem "unicode", :platforms => [:mri_18, :mri_19]
+gem "bootstrap-sass"

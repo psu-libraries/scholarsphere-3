@@ -37,6 +37,10 @@ Feature: As an authenticate and authorized
     And I am logged in as "archivist1"
     And I follow "dashboard"
     Then I should see "Test Document Text"
-    Given I follow "Delete"
+    #Given I follow "Delete"
+    When I follow the link within
+    """
+    a[href="/files/test3"].itemtrash
+    """
     Then I should see "The file has been deleted"
 
