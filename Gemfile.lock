@@ -1,8 +1,9 @@
 GIT
-  remote: git://github.com/cam156/sufia.git
-  revision: 452f7c9c9c60f0b9e85070e5154b6348d95ce7c6
+  remote: git://github.com/mediashelf/sufia.git
+  revision: 630720083030e6710456702d97e99187a81818cc
   specs:
     sufia (0.0.1.pre2)
+      active-fedora (~> 5.0.0)
       activerecord-import
       acts_as_follower (= 0.1.1)
       blacklight (~> 4.0.0)
@@ -11,7 +12,7 @@ GIT
       devise (= 2.1.2)
       execjs (= 1.4.0)
       hydra-batch-edit (~> 0.0.7)
-      hydra-head (~> 5.0.0.rc1)
+      hydra-head (~> 5.0.0)
       mail_form
       mailboxer (= 0.8.0)
       nest (= 1.1.1)
@@ -20,7 +21,7 @@ GIT
       rails (~> 3.2.8)
       rails_autolink (= 1.0.9)
       rainbow (= 1.1.4)
-      resque (= 1.22.0)
+      resque (= 1.23.0)
       resque-pool (= 0.3.0)
       rmagick (= 2.13.1)
       sitemap (= 0.3.2)
@@ -49,7 +50,7 @@ GIT
 
 GIT
   remote: https://github.com/projecthydra/hydra-head.git
-  revision: ba6f757c6ab1fcad264af9a221db0fb401ff6ea2
+  revision: c9699be0e7a213c3f89b661e0c00db5aa0cc54ab
   specs:
     hydra-access-controls (5.0.0)
       active-fedora
@@ -346,7 +347,7 @@ GEM
     redis (3.0.2)
     redis-namespace (1.2.1)
       redis (~> 3.0.0)
-    resque (1.22.0)
+    resque (1.23.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.0)
       sinatra (>= 0.9.2)
@@ -497,7 +498,6 @@ DEPENDENCIES
   rails_indexes!
   rainbow (= 1.1.4)
   rb-readline
-  resque (= 1.22.0)
   resque-pool (= 0.3.0)
   rmagick (= 2.13.1)
   rspec (= 2.11.0)

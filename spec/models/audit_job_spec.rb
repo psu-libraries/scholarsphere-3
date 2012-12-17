@@ -34,7 +34,8 @@ describe AuditJob do
   describe "passing audit" do
     it "should not send passing mail" do
       ActiveFedora::RelsExtDatastream.any_instance.stubs(:dsChecksumValid).returns(true)
-      Resque.enqueue(AuditJob, @file.pid, @ds[0], @ds[1].versionID)
+      #Resque.enqueue(AuditJob, @file.pid, @ds[0], @ds[1].versionID)
+      AuditJob.new(@file.pid, @ds[0], @ds[1].versionID).run
       @inbox = @user.mailbox.inbox
       @inbox.count.should == 0
     end
@@ -42,7 +43,8 @@ describe AuditJob do
   describe "failing audit" do
     it "should send failing mail" do
       ActiveFedora::RelsExtDatastream.any_instance.stubs(:dsChecksumValid).returns(false)
-      Resque.enqueue(AuditJob, @file.pid, @ds[0], @ds[1].versionID)
+      #Resque.enqueue(AuditJob, @file.pid, @ds[0], @ds[1].versionID)
+      AuditJob.new(@file.pid, @ds[0], @ds[1].versionID).run
       @inbox = @user.mailbox.inbox
       @inbox.count.should == 1
       @inbox.each { |msg| msg.last_message.subject.should == AuditJob::FAIL }

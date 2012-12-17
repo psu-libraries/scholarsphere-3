@@ -10,7 +10,8 @@ source 'http://rubygems.org'
 gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
-gem 'sufia', :git => 'git://github.com/cam156/sufia.git'
+#gem 'sufia', :git => 'git://github.com/cam156/sufia.git'
+gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'
 #gem 'sufia'
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
@@ -22,7 +23,7 @@ gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
 
 # Other components
-gem 'resque', '1.22.0', :require => 'resque/server'
+#gem 'resque', '1.22.0', :require => 'resque/server'
 gem 'resque-pool', '0.3.0'
 # NOTE: the :require arg is necessary on Linux-based hosts
 gem 'rmagick', '2.13.1', :require => 'RMagick'

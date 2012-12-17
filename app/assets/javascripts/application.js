@@ -21,5 +21,5 @@ limitations under the License.
 //= require bootstrap-dropdown
 //= require bootstrap-button
 //= require bootstrap-collapse
-//= require scholarsphere
+//= require sufia
 //= require batch_edit

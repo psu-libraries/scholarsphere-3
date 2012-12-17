@@ -12,17 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'spec_helper'
-
-describe RoleMapper do
-  before do
-    @user = FactoryGirl.find_or_create(:user)
-    User.any_instance.stubs(:groups).returns(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
+class RoleMapper
+  def self.roles(uid)
+    u = User.find_by_login(uid)
+    return [] unless u
+    return u.groups
   end
-  after do
-    @user.delete
-  end
-  subject {::RoleMapper.roles(@user.login)}
-  it { should == ["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"]}
 end
-

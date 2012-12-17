@@ -67,11 +67,7 @@ class UsersController < ApplicationController
     delete_trophy.each do | smash_trophy |
       Trophy.where(user_id: current_user.id, generic_file_id: smash_trophy.slice('scholarsphere:'.length..-1)).each.map(&:delete)
     end
-    begin
-      Resque.enqueue(UserEditProfileEventJob, @user.login)
-    rescue Redis::CannotConnectError
-      logger.error "Redis is down!"
-    end
+    Sufia.queue.push(UserEditProfileEventJob.new(@user.login))
     redirect_to profile_path(@user.to_s), notice: "Your profile has been updated"
   end
   def toggle_trophy    
@@ -96,11 +92,7 @@ class UsersController < ApplicationController
   def follow
     unless current_user.following?(@user)
       current_user.follow(@user)
-      begin
-        Resque.enqueue(UserFollowEventJob, current_user.login, @user.login)
-      rescue Redis::CannotConnectError
-        logger.error "Redis is down!"
-      end
+      Sufia.queue.push(UserFollowEventJob.new(current_user.login, @user.login))
     end
     redirect_to profile_path(@user.to_s), notice: "You are following #{@user.to_s}"
   end
@@ -109,11 +101,7 @@ class UsersController < ApplicationController
   def unfollow
     if current_user.following?(@user)
       current_user.stop_following(@user)
-      begin
-        Resque.enqueue(UserUnfollowEventJob, current_user.login, @user.login)
-      rescue Redis::CannotConnectError
-        logger.error "Redis is down!"
-      end
+      Sufia.queue.push(UserUnfollowEventJob.new(current_user.login, @user.login))
     end
     redirect_to profile_path(@user.to_s), notice: "You are no longer following #{@user.to_s}"
   end

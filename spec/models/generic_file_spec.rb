@@ -131,7 +131,8 @@ describe GenericFile do
     end
     describe "that have been saved" do
       before(:each) do
-        Resque.expects(:enqueue).once.returns(true)
+        Sufia.queue.expects(:push).once.returns(true)
+        #Resque.expects(:enqueue).once.returns(true)
       end
       after(:each) do
         unless @file.inner_object.class == ActiveFedora::UnsavedDigitalObject
@@ -265,7 +266,7 @@ describe GenericFile do
     it "should schedule a audit job" do
       @datastreams.each { |ds| ds.any_instance.stubs(:dsChecksumValid).returns(false) }
       ChecksumAuditLog.stubs(:create!).returns(true)
-      Resque.expects(:enqueue).times(@datastreams.count)
+      Sufia.queue.expects(:push).times(@datastreams.count)
       @f.audit!
     end
     it "should log a failing audit" do
@@ -288,7 +289,8 @@ describe GenericFile do
     end
     it "should schedule a characterization job" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-      Resque.expects(:enqueue).once
+      Sufia.queue.expects(:push).once.returns(true)
+      #Resque.expects(:enqueue).once
       @file.save
     end
   end
@@ -400,11 +402,13 @@ describe GenericFile do
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
     end
     it "should not be triggered unless the content ds is changed" do
-      Resque.expects(:enqueue).once
+      Sufia.queue.expects(:push).once.returns(true)
+      #Resque.expects(:enqueue).once
       @file.content.content = "hey"
       @file.save
       @file.related_url = 'http://example.com'
-      Resque.expects(:enqueue).never
+      Sufia.queue.expects(:push).never
+      #Resque.expects(:enqueue).never
       @file.save
       @file.delete
     end

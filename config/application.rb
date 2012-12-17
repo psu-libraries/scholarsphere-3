@@ -200,9 +200,9 @@ module ScholarSphere
   end
 end
 # this prevents LoadErrors, related to Rails autoload behavior
-require 'sufia/permissions'
-require 'sufia/id_service'
-require 'sufia/noid'
-require 'sufia/model_methods'
-require 'sufia/role_mapper'
-require 'sufia/utils'
+#require 'sufia/permissions'
+#require 'sufia/id_service'
+#require 'sufia/noid'
+#require 'sufia/model_methods'
+#require 'sufia/role_mapper'
+#require 'sufia/utils'
