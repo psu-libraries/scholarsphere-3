@@ -23,4 +23,3 @@ limitations under the License.
 //= require bootstrap-collapse
 //= require sufia
 //= require batch_edit
-//= require sufia-psu-changes
