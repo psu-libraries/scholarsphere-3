@@ -18,8 +18,4 @@ limitations under the License.
 //= require jquery_ujs.js
 //= require jquery-ui-1.8.23.custom.min
 //= require blacklight
-//= require bootstrap-dropdown
-//= require bootstrap-button
-//= require bootstrap-collapse
 //= require sufia
-//= require batch_edit

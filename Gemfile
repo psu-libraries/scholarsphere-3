@@ -12,7 +12,7 @@ gem 'rmagick', '2.13.1', :require => 'RMagick'
 # Ruby on Rails components
 #gem 'sufia', :git => 'git://github.com/cam156/sufia.git'
 gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'
-#gem 'sufia'
+#gem 'sufia', '0.0.1"
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'
