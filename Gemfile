@@ -10,9 +10,10 @@ source 'http://rubygems.org'
 gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
-#gem 'sufia', :git => 'git://github.com/cam156/sufia.git'
-gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'#, :ref =>'826a9af9595e546c0abada81b53441f3220c7013'
-#gem 'sufia', '0.0.1"
+#gem 'sufia', :git => 'git://github.com/cam156/sufia.git', :ref =>'6fa34043531a552a4c22'
+gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
+
+#gem 'sufia', '0.0.1'
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'

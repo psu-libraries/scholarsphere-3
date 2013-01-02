@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mediashelf/sufia.git
-  revision: ec88fc5195c27366f7c4447131e162328c3a91f7
+  revision: bd33d25555f1fefe7096f169bb82e0fb8bbd3739
   specs:
     sufia (0.0.1)
       activerecord-import
@@ -113,11 +113,11 @@ GEM
     blankslate (2.1.2.4)
     block_helpers (0.3.3)
       activesupport (>= 2.0)
-    bootstrap-sass (2.2.1.1)
+    bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
     builder (3.0.4)
     cancan (1.6.8)
-    capybara (2.0.1)
+    capybara (2.0.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -160,13 +160,13 @@ GEM
     daemon_controller (1.1.0)
     daemons (1.1.9)
     database_cleaner (0.9.1)
-    debugger (1.2.2)
+    debugger (1.2.3)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
       debugger-ruby_core_source (~> 1.1.5)
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.5)
+    debugger-ruby_core_source (1.1.6)
     deprecation (0.0.5)
       activesupport
     devise (2.1.2)
@@ -236,7 +236,7 @@ GEM
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.7.5)
+    json (1.7.6)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -283,7 +283,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.4.0)
       mime-types
-    parslet (1.4.0)
+    parslet (1.5.0)
       blankslate (~> 2.0)
     passenger (3.0.13)
       daemon_controller (>= 1.0.0)
@@ -321,7 +321,7 @@ GEM
     raindrops (0.10.0)
     rake (10.0.3)
     rb-readline (0.4.2)
-    rdf (0.3.11)
+    rdf (0.3.11.1)
       addressable (>= 2.2.6)
     rdf-rdfxml (0.3.9)
       rdf (>= 0.3.11)
@@ -360,7 +360,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
-    ruby-prof (0.11.2)
+    ruby-prof (0.11.3)
     rubydora (1.2.1)
       activemodel
       activesupport
@@ -374,7 +374,7 @@ GEM
     rubyzip (0.9.9)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
-    sass (3.2.3)
+    sass (3.2.4)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -403,7 +403,7 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.6)
-    stomp (1.2.7)
+    stomp (1.2.8)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
     thor (0.16.0)
