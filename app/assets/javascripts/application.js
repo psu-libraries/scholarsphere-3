@@ -14,8 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//= require jquery-1.8.2.min
-//= require jquery_ujs.js
-//= require jquery-ui-1.8.23.custom.min
-//= require blacklight
+
+//= require jquery
+// require jquery-1.8.2.min
+//= require jquery_ujs
+// require jquery_ujs.js
+// require jquery-ui-1.8.23.custom.min
+// require blacklight
+//= require blacklight/blacklight
 //= require sufia
+//= require batch_edit
+

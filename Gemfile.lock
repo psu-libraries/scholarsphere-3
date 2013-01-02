@@ -1,9 +1,8 @@
 GIT
   remote: git://github.com/mediashelf/sufia.git
-  revision: 3cd5dbc73f676c2c459ef43ab469f88af00eb46a
+  revision: ec88fc5195c27366f7c4447131e162328c3a91f7
   specs:
     sufia (0.0.1)
-      active-fedora (~> 5.0.0)
       activerecord-import
       acts_as_follower (= 0.1.1)
       blacklight (~> 4.0.0)
@@ -11,8 +10,8 @@ GIT
       daemons (= 1.1.9)
       devise (= 2.1.2)
       execjs (= 1.4.0)
-      hydra-batch-edit (~> 0.0.7)
-      hydra-head (~> 5.0.0)
+      hydra-batch-edit (~> 0.1.0)
+      hydra-head (~> 5.1)
       mail_form
       mailboxer (= 0.8.0)
       nest (= 1.1.1)
@@ -48,33 +47,6 @@ GIT
       activerecord (>= 2.3.0)
       railties
 
-GIT
-  remote: https://github.com/projecthydra/hydra-head.git
-  revision: 9ffa383936ee6f9a226ab30f601abb1405aaa36d
-  specs:
-    hydra-access-controls (5.0.1)
-      active-fedora
-      activesupport
-      blacklight
-      cancan
-      deprecation
-    hydra-core (5.0.1)
-      RedCloth (= 4.2.9)
-      active-fedora (~> 5.0)
-      blacklight (~> 4.0)
-      block_helpers
-      deprecation (>= 0.0.5)
-      devise
-      hydra-access-controls (= 5.0.1)
-      hydra-mods (>= 0.0.6)
-      jquery-rails
-      rails (~> 3.2.3)
-      sanitize
-    hydra-head (5.0.1)
-      hydra-access-controls (= 5.0.1)
-      hydra-core (= 5.0.1)
-      rails (>= 3.2.6)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -92,17 +64,17 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.3)
-    active-fedora (5.0.0)
+    active-fedora (5.3.1)
       activeresource (>= 3.0.0)
       activesupport (>= 3.0.0)
       builder (~> 3.0.0)
       deprecation
       mediashelf-loggable
-      om (~> 1.8.0.rc1)
+      om (~> 1.8.0)
       rdf
       rdf-rdfxml (~> 0.3.8)
       rsolr
-      rubydora (~> 0.5.13)
+      rubydora (~> 1.2)
       solrizer (~> 2.0.0)
     activemodel (3.2.8)
       activesupport (= 3.2.8)
@@ -123,9 +95,6 @@ GEM
       multi_json (~> 1.0)
     acts_as_follower (0.1.1)
     addressable (2.3.2)
-    akami (1.2.0)
-      gyoku (>= 0.4.0)
-      nokogiri (>= 1.4.0)
     arel (3.0.2)
     backports (2.6.5)
     bcrypt-ruby (3.0.1)
@@ -224,15 +193,33 @@ GEM
     fssm (0.2.9)
     gherkin (2.11.5)
       json (>= 1.4.6)
-    gyoku (1.0.0)
-      builder (>= 2.1.2)
     headless (0.3.1)
     hike (1.2.1)
     hooks (0.2.2)
-    httpi (2.0.0)
-      rack
-    hydra-batch-edit (0.0.7)
+    hydra-access-controls (5.1.0)
+      active-fedora
+      activesupport
       blacklight
+      cancan
+      deprecation
+    hydra-batch-edit (0.1.0)
+      blacklight
+    hydra-core (5.1.0)
+      RedCloth (= 4.2.9)
+      active-fedora (~> 5.3)
+      blacklight (~> 4.0)
+      block_helpers
+      deprecation (>= 0.0.5)
+      devise
+      hydra-access-controls (= 5.1.0)
+      hydra-mods (>= 0.0.6)
+      jquery-rails
+      rails (~> 3.2.3)
+      sanitize
+    hydra-head (5.1.0)
+      hydra-access-controls (= 5.1.0)
+      hydra-core (= 5.1.0)
+      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -283,7 +270,6 @@ GEM
     noid (0.5.5)
       backports
     nokogiri (1.5.6)
-    nori (2.0.0)
     om (1.8.0)
       activemodel
       activesupport
@@ -375,16 +361,16 @@ GEM
       railties (>= 3.0)
       rspec (~> 2.11.0)
     ruby-prof (0.11.2)
-    rubydora (0.5.13)
+    rubydora (1.2.1)
       activemodel
       activesupport
       deprecation
+      equivalent-xml
       fastercsv
       hooks
       mime-types
       nokogiri
       rest-client
-      savon
     rubyzip (0.9.9)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
@@ -393,14 +379,6 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    savon (2.0.2)
-      akami (~> 1.2.0)
-      builder (>= 2.1.2)
-      gyoku (~> 1.0.0)
-      httpi (~> 2.0.0)
-      nokogiri (>= 1.4.0)
-      nori (~> 2.0.0)
-      wasabi (~> 3.0.0)
     selenium-webdriver (2.27.2)
       childprocess (>= 0.2.5)
       libwebsocket (~> 0.1.3)
@@ -418,6 +396,8 @@ GEM
       om (>= 1.5.0)
       stomp
       xml-simple
+    solrizer-fedora (2.3.1)
+      active-fedora
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -448,10 +428,7 @@ GEM
       rack (>= 1.0.0)
     warden (1.2.1)
       rack (>= 1.0)
-    wasabi (3.0.0)
-      httpi (~> 2.0)
-      nokogiri (>= 1.4.0)
-    websocket (1.0.5)
+    websocket (1.0.6)
     will_paginate (3.0.3)
     xml-simple (1.1.2)
     xpath (1.0.0)
@@ -481,9 +458,9 @@ DEPENDENCIES
   execjs (= 1.4.0)
   factory_girl_rails (~> 4.1.0)
   headless
-  hydra-head!
   hydra-ldap (= 0.1.0)
   jettywrapper
+  jquery-rails
   launchy
   mail_form!
   mailboxer (= 0.8.0)
@@ -503,10 +480,10 @@ DEPENDENCIES
   rspec (= 2.11.0)
   rspec-rails (>= 2.11.0)
   ruby-prof
-  rubydora (= 0.5.13)
   sass-rails (= 3.2.5)
   selenium-webdriver
   sitemap (= 0.3.2)
+  solrizer-fedora (= 2.3.1)
   sqlite3
   sufia!
   therubyracer (= 0.10.2)

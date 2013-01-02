@@ -11,16 +11,17 @@ gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
 #gem 'sufia', :git => 'git://github.com/cam156/sufia.git'
-gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'
+gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git'#, :ref =>'826a9af9595e546c0abada81b53441f3220c7013'
 #gem 'sufia', '0.0.1"
 gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline'
 # Hydra community components
-gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git'
-gem 'rubydora', '0.5.13'
+#gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
+gem 'solrizer-fedora', '2.3.1'
+gem 'jquery-rails'
 
 # Other components
 #gem 'resque', '1.22.0', :require => 'resque/server'
