@@ -10,8 +10,11 @@ source 'http://rubygems.org'
 gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
-#gem 'sufia', :git => 'git://github.com/cam156/sufia.git', :ref =>'6fa34043531a552a4c22'
-gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
+gem 'sufia', :git => 'git://github.com/cam156/sufia.git', :ref =>'ab4ece4b257a63c1b7638eb22e3d03e68da4b508'
+#gem 'sufia', :path => '../sufia'
+#gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
+
+gem 'active-fedora', :git => 'git@github.com:projecthydra/active_fedora.git'
 
 #gem 'sufia', '0.0.1'
 gem 'rails', '3.2.8'
