@@ -284,14 +284,14 @@ class CatalogController < ApplicationController
       }
     end
 
-    config.add_search_field('format') do |field|
+    config.add_search_field('file_format') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "format"
+        :"spellcheck.dictionary" => "file_format"
       }
       field.solr_local_parameters = {
-        :qf => "generic_file__format_t",
-        :pf => "generic_file__format_t"
+        :qf => "generic_file__file_format_t",
+        :pf => "generic_file__file_format_t"
       }
     end
 
