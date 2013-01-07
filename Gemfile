@@ -10,11 +10,16 @@ source 'http://rubygems.org'
 gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
-gem 'sufia', :git => 'git://github.com/cam156/sufia.git', :ref =>'ab4ece4b257a63c1b7638eb22e3d03e68da4b508'
+#gem 'sufia', :git => 'git://github.com/cam156/sufia.git' , :ref =>'2837b71e3d7ad034d3dc2fe8379b21c6bb9f7ef3'
 #gem 'sufia', :path => '../sufia'
-#gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
+gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
+
+gem 'hydra-head', github: 'projecthydra/hydra-head', ref: 'd60913b' #pre5.2
 
 gem 'active-fedora', :git => 'git@github.com:projecthydra/active_fedora.git'
+gem 'hydra-batch-edit', :path => '../hydra-batch-edit'
+#gem 'hydra-batch-edit', :git => 'git@github.com:psu-stewardship/hydra-batch-edit.git'
+gem 'font-awesome-sass-rails'
 
 #gem 'sufia', '0.0.1'
 gem 'rails', '3.2.8'
@@ -26,6 +31,7 @@ gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
 gem 'solrizer-fedora', '2.3.1'
 gem 'jquery-rails'
+
 
 # Other components
 #gem 'resque', '1.22.0', :require => 'resque/server'
