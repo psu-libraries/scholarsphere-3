@@ -16,7 +16,6 @@ require 'spec_helper'
 
 describe GenericFile do
   before(:each) do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     @file = GenericFile.new
     @file.apply_depositor_metadata('jcoyne')
   end
@@ -111,7 +110,7 @@ describe GenericFile do
       @file.should respond_to(:language)
       @file.should respond_to(:rights)
       @file.should respond_to(:resource_type)
-      @file.should respond_to(:format)
+      @file.should respond_to(:file_format)
       @file.should respond_to(:identifier)
     end
     it "should delegate methods to characterization metadata" do
@@ -192,10 +191,11 @@ describe GenericFile do
     @file.language = "Arabic"
     @file.rights = "Wide open, buddy."
     @file.resource_type = "Book"
-    @file.format = "application/pdf"
     @file.identifier = "urn:isbn:1234567890"
     @file.based_near = "Medina, Saudi Arabia"
     @file.related_url = "http://example.org/TheWork/"
+    @file.mime_type = "image/jpeg"
+    @file.format_label = "JPEG Image"
     local = @file.to_solr
     local.should_not be_nil
     local["generic_file__part_of_t"].should be_nil
@@ -212,9 +212,10 @@ describe GenericFile do
     local["generic_file__language_t"].should == ["Arabic"]
     local["generic_file__date_created_t"].should == ["1200"]
     local["generic_file__resource_type_t"].should == ["Book"]
-    local["generic_file__format_t"].should == ["application/pdf"]
     local["generic_file__identifier_t"].should == ["urn:isbn:1234567890"]
     local["generic_file__based_near_t"].should == ["Medina, Saudi Arabia"]
+    local["file_format_t"].should == "jpeg (JPEG Image)"
+    local["mime_type_t"].should == ["image/jpeg"]
   end
   it "should support multi-valued fields in solr" do
     @file.tag = ["tag1", "tag2"]
@@ -250,7 +251,6 @@ describe GenericFile do
   end
   describe "audit" do
     before(:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       GenericFile.any_instance.stubs(:characterize).returns(true)
       f = GenericFile.new
       f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
@@ -374,7 +374,6 @@ describe GenericFile do
   end
   describe "noid integration" do
     before(:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       GenericFile.any_instance.expects(:characterize_if_changed).yields
       @new_file = GenericFile.new(:pid => 'ns:123')
       @new_file.apply_depositor_metadata('mjg36')
@@ -415,7 +414,6 @@ describe GenericFile do
     end
     describe "after job runs" do
       before(:all) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         myfile = GenericFile.new
         myfile.add_file_datastream(File.new(Rails.root + 'spec/fixtures/scholarsphere/scholarsphere_test4.pdf'), :dsid=>'content')
         myfile.label = 'label123'
@@ -499,7 +497,6 @@ describe GenericFile do
   describe "permissions validation" do
     context "depositor must have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @rightsmd = @file.rightsMetadata
@@ -599,7 +596,6 @@ describe GenericFile do
     end
     context "public must not have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['public']
@@ -700,7 +696,6 @@ describe GenericFile do
     end
     context "registered must not have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['registered']
@@ -801,7 +796,6 @@ describe GenericFile do
     end
     context "everything is copacetic" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['public']

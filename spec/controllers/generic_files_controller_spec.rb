@@ -18,7 +18,6 @@ describe GenericFilesController do
   before do
     Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
     Hydra::LDAP.stubs(:does_user_exist?).returns(true)
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
     User.any_instance.stubs(:groups).returns([])
@@ -26,7 +25,6 @@ describe GenericFilesController do
   end
   describe "#create" do
     before do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       @file_count = GenericFile.count
       @mock = GenericFile.new({:pid => 'test:123'})
       GenericFile.stubs(:new).returns(@mock)
@@ -173,7 +171,6 @@ describe GenericFilesController do
 
   describe "destroy" do
     before(:each) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       @generic_file = GenericFile.new
@@ -198,7 +195,6 @@ describe GenericFilesController do
 
   describe "update" do
     before do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       ClamAV.any_instance.stubs(:scanfile).returns(0)
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
@@ -214,7 +210,7 @@ describe GenericFilesController do
       Sufia.queue.expects(:push).with(s2).once
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
-      post :update, :id=>@generic_file.pid, :generic_file=>{:terms_of_service=>"1", :title=>'new_title', :tag=>[''], :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, :id=>@generic_file.pid, :generic_file=>{:title=>'new_title', :tag=>[''], :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
       @user.delete      
     end
 
@@ -229,7 +225,7 @@ describe GenericFilesController do
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:terms_of_service=>"1", :tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
       @user.delete
     end
 
@@ -238,7 +234,7 @@ describe GenericFilesController do
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:terms_of_service=>"1", :tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
 
       posted_file = GenericFile.find(@generic_file.pid)
       version1 = posted_file.content.latest_version
@@ -258,7 +254,7 @@ describe GenericFilesController do
       CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s3)
       Sufia.queue.expects(:push).with(s3).once
       file = fixture_file_upload('/image.jp2','image/jp2')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:terms_of_service=>"1", :tag=>[''] }
+      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:tag=>[''] }
       edited_file = GenericFile.find(@generic_file.pid)
       version2 = edited_file.content.latest_version
       version2.versionID.should_not == version1.versionID
@@ -275,7 +271,7 @@ describe GenericFilesController do
       s3 = mock('three')
       CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s3)
       Sufia.queue.expects(:push).with(s3)
-      post :update, :id=>@generic_file.pid, :revision=>'content.0', :generic_file=>{:terms_of_service=>"1", :tag=>['']}
+      post :update, :id=>@generic_file.pid, :revision=>'content.0', :generic_file=>{:tag=>['']}
 
       restored_file = GenericFile.find(@generic_file.pid)
       version3 = restored_file.content.latest_version
@@ -286,7 +282,7 @@ describe GenericFilesController do
     end
 
     it "should add a new groups and users" do
-      post :update, :id=>@generic_file.pid, :generic_file=>{:terms_of_service=>"1", :tag=>[''], :permissions=>{:new_group_name=>{'group1'=>'read'}, :new_user_name=>{'user1'=>'edit'}}}
+      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_group_name=>{'group1'=>'read'}, :new_user_name=>{'user1'=>'edit'}}}
 
       assigns[:generic_file].read_groups.should == ["group1"]
       assigns[:generic_file].edit_users.should include("user1", @user.login)
@@ -294,7 +290,7 @@ describe GenericFilesController do
     it "should update existing groups and users" do
       @generic_file.read_groups = ['group3']
       @generic_file.save
-      post :update, :id=>@generic_file.pid, :generic_file=>{:terms_of_service=>"1", :tag=>[''], :permissions=>{:new_group_name=>'', :new_group_permission=>'', :new_user_name=>'', :new_user_permission=>'', :group=>{'group3' =>'read'}}}
+      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_group_name=>'', :new_group_permission=>'', :new_user_name=>'', :new_user_permission=>'', :group=>{'group3' =>'read'}}}
 
       assigns[:generic_file].read_groups.should == ["group3"]
     end
@@ -312,14 +308,13 @@ describe GenericFilesController do
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:terms_of_service=>"1", :tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
     end
 
   end
 
   describe "someone elses files" do
     before(:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       f = GenericFile.new(:pid => 'scholarsphere:test5')
       f.apply_depositor_metadata('archivist1')
       f.set_title_and_label('world.png')

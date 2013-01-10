@@ -16,7 +16,6 @@ require 'spec_helper'
 
 describe CatalogController do
   before do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     GenericFile.any_instance.stubs(:characterize_if_changed).yields
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
@@ -28,7 +27,6 @@ describe CatalogController do
   end
   describe "#index" do
     before (:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       @gf1 =  GenericFile.new(title:'Test Document PDF', filename:'test.pdf', read_groups:['public'])
       @gf1.apply_depositor_metadata('mjg36')
       @gf1.save

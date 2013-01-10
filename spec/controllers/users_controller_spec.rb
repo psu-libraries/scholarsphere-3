@@ -180,7 +180,6 @@ describe UsersController do
   end
   describe "#toggle_trophy" do
      before do
-       GenericFile.any_instance.stubs(:terms_of_service).returns('1')
        @file = GenericFile.new()
        @file.apply_depositor_metadata(@user.login)
        @file.save
