@@ -6,35 +6,28 @@ end
 
 source 'http://rubygems.org'
 
+gem 'rails', '3.2.11'
+
 # NOTE: the :require arg is necessary on Linux-based hosts
-gem 'rmagick', '2.13.1', :require => 'RMagick'
+#gem 'rmagick', '2.13.1', :require => 'RMagick'
 
 # Ruby on Rails components
-#gem 'sufia', :git => 'git://github.com/cam156/sufia.git' , :ref =>'2837b71e3d7ad034d3dc2fe8379b21c6bb9f7ef3'
-#gem 'sufia', :path => '../sufia'
-gem 'sufia', :git => 'git://github.com/mediashelf/sufia.git' #, :ref =>'ec88fc5195c27'
-
-gem 'hydra-head', github: 'projecthydra/hydra-head', ref: 'd60913b' #pre5.2
-
-gem 'active-fedora', :git => 'git@github.com:projecthydra/active_fedora.git'
-gem 'hydra-batch-edit', :path => '../hydra-batch-edit'
-#gem 'hydra-batch-edit', :git => 'git@github.com:psu-stewardship/hydra-batch-edit.git'
-gem 'font-awesome-sass-rails'
-
-#gem 'sufia', '0.0.1'
-gem 'rails', '3.2.8'
 gem 'mysql2', '0.3.11'
-gem 'rb-readline'
+gem 'rb-readline', '0.4.2'
+
 # Hydra community components
-#gem 'hydra-head', :git => 'https://github.com/projecthydra/hydra-head.git'
+gem 'sufia', '0.0.5'
+# pointing to stewardship until pull request is complete
+#gem 'hydra-batch-edit' 
+gem 'hydra-batch-edit', :git => 'git@github.com:psu-stewardship/hydra-batch-edit.git'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
-gem 'solrizer-fedora', '2.3.1'
-gem 'jquery-rails'
+#gem 'solrizer-fedora', '2.3.1'
+gem 'jquery-rails', '2.1.4'
+#gem 'activerecord', '3.2.10'
 
 
 # Other components
-#gem 'resque', '1.22.0', :require => 'resque/server'
 gem 'resque-pool', '0.3.0'
 # NOTE: the :require arg is necessary on Linux-based hosts
 gem 'rmagick', '2.13.1', :require => 'RMagick'
@@ -54,7 +47,8 @@ gem 'mailboxer', '0.8.0'
 gem 'clamav', '0.4.1'
 gem 'rainbow', '1.1.4'
 gem 'will_paginate', '3.0.3'
-gem 'equivalent-xml'
+gem 'equivalent-xml', '0.3.0'
+gem 'font-awesome-sass-rails'
 
 group :assets do
   gem 'sass-rails', '3.2.5'
