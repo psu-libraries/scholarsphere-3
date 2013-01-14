@@ -1,4 +1,111 @@
 body
 {
-    padding-top: 0;
+   font: 13px/1.4em Arial,sans-serif;
+}
+#ajax-modal
+{
+   position: absolute; 
+   margin-top: 150px;
+   tabindex="-1";
+}
+.modal.fade.in
+{
+    top: 0;
+}
+#ajax-modal .modal-body
+{
+    background: url("/assets/site_images/ui-bg_highlight-soft_100_eeeeee_1x100.png") repeat-x scroll 50% top #EEEEEE;
+    border: 1px solid #DDDDDD;
+    color: #333333;
+    padding-top: 0px;
+    max-height: 400px;
+    min-height: 400px;
+/*    overflow: hidden;   to remove scroll bar*/
+}
+
+#ajax-modal .modal-header
+{
+    background: url("/assets/site_images/ui-bg_gloss-wave_35_558fd0_500x100.png") repeat-x scroll 50% 50% #558FD0;
+    border: 1px solid #4C84C6;
+}
+/*.modal-header
+{
+ padding: 9px 15px;
+}*/
+.modal-header button.close, 
+#ajax-modal .modal-header h3
+{
+    color: #FFFFFF;
+    font-weight: 700;
+    opacity: 1.0;
+}
+#ajax-modal .facet_pagination.top 
+{
+    display: block; 
+}
+.facet_pagination .prev_next_links 
+{
+    font-weight: 700;
+}
+
+.facet_pagination .prev_next_links .disabled {
+    background: none repeat scroll 0 0 transparent;
+    color: gray;
+    font-weight: 400;
+}
+.facet_pagination .sort_options .btn-group, 
+.facet_pagination .prev_next_links .btn-group 
+{
+    background: none repeat scroll 0 0 #F6F6F6;
+    border: 1px solid #CCCCCC;
+    display: inline-block;
+    font-weight: 700;
+    padding: 0.2em 1em;
+}
+.facet_pagination .sort_options .active {
+    background-color: #E2EDFE;
+    border: 1px solid #C4DAFE;
+    font-weight: bold;
+}
+
+#facet_top_links.modal-footer
+{
+    background-color: #FFFFFF;
+}
+table.table td a,
+.icon-cog:before  {
+    color: #0088CC;
+}
+
+table.table td a:hover
+{
+    color: #005580;
+    text-decoration: underline;
+}
+
+a:hover,
+a:active
+{
+    outline: 0 none;
+}
+#facet_group li ul.slide-list li a,
+#facets li ul.slide-list li a
+{
+    color: #0088CC;
+    text-decoration: none;
+}
+
+#facets.nav-list li 
+{
+    padding-right: 0px;
+    margin-right: 0px;
+}
+#facets.nav-list li a
+{
+    padding-right: 3px;
+}
+#facets ul
+{
+    margin: 0;
+    padding: 0;
 }
