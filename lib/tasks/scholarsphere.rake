@@ -89,7 +89,7 @@ namespace :scholarsphere do
 
   desc "Characterize uncharacterized files"
   task :characterize => :environment do
-    GenericFile.find(:all, :rows => GenericFile.count).each do |gf|
+    GenericFile.find(:all).each do |gf|
       if gf.characterization.content.nil?
         Resque.enqueue(CharacterizeJob, gf.pid)
       end
@@ -98,7 +98,7 @@ namespace :scholarsphere do
 
   desc "Characterize uncharacterized files"
   task :characterize! => :environment do
-    GenericFile.find(:all, :rows => GenericFile.count).each do |gf|
+    GenericFile.find(:all).each do |gf|
       Resque.enqueue(CharacterizeJob, gf.pid)
     end
   end
@@ -134,7 +134,7 @@ namespace :scholarsphere do
       export_file = ENV['output']
       triples = RDF::Repository.new
       rows = GenericFile.count
-      GenericFile.find(:all, :rows => rows).each do |gf|
+      GenericFile.find(:all).each do |gf|
         next unless gf.rightsMetadata.groups["public"] == "read" && gf.descMetadata.content
         RDF::Reader.for(:ntriples).new(gf.descMetadata.content) do |reader|
           reader.each_statement do |statement|

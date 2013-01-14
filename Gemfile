@@ -57,6 +57,7 @@ group :development, :test do
   gem "jettywrapper"
   gem "factory_girl_rails", "~> 4.1.0"
   gem 'launchy'
+  gem 'database_cleaner'
 end # (leave this comment here to catch a stray line inserted by blacklight!)
 
 gem "unicode", :platforms => [:mri_18, :mri_19]
