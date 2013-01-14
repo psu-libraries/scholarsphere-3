@@ -183,6 +183,8 @@
 #
 #
 #
+require 'active_fedora'
+
 namespace :scholarsphere do
   
   desc "Init Hydra configuration" 
@@ -230,12 +232,17 @@ namespace :scholarsphere do
    
     desc "Load default ScholarSphere Hydra fixtures"
     task :load do
-      ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
+      #ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
+      dir = File.join(Rails.root, @localPart, @fixtureDir) 
+      loader = ActiveFedora::FixtureLoader.new(dir)
+
       fixtures = find_fixtures_scholar(@fixtureDir)
       fixtures.each do |fixture|
-        ENV["pid"] = fixture
-        Rake::Task["repo:load"].reenable
-        Rake::Task["repo:load"].invoke
+        #ENV["pid"] = fixture
+        loader.import_and_index(fixture)
+        puts "Loaded '#{fixture}'"
+        #Rake::Task["repo:load"].reenable
+        #Rake::Task["repo:load"].invoke
       end
       raise "No fixtures found; you may need to generate from erb, use: rake scholarsphere:fixtures:generate" if fixtures.empty?
     end
@@ -262,7 +269,6 @@ namespace :scholarsphere do
       User.create(login: 'archivist1', display_name: 'Captain Archivist')
       # Then, set this user as the depositor of test4 to appease this damn failing cuke
       gf = GenericFile.find('scholarsphere:test4')
-      gf.terms_of_service = '1'
       gf.apply_depositor_metadata('archivist1')
       gf.save
     end

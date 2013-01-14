@@ -68,8 +68,7 @@ describe FileContentDatastream do
   end
   describe "extract_metadata" do
     it "should have the path" do
-      @subject.fits_path.should_not be_nil
-      @subject.fits_path.should_not == ''
+      @subject.send(:fits_path).should be_present
     end
     it "should return an xml document" do
       repo = mock("repo")

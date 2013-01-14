@@ -16,7 +16,6 @@ require 'spec_helper'
 
 describe DashboardController do
   before do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     User.any_instance.stubs(:groups).returns([])
     controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
   end
