@@ -16,7 +16,7 @@ gem 'rb-readline', '0.4.2'
 gem 'sufia', '0.0.5'
 # pointing to stewardship until pull request is complete
 #gem 'hydra-batch-edit' 
-gem 'hydra-batch-edit', :git => 'git://github.com:psu-stewardship/hydra-batch-edit.git'
+gem 'hydra-batch-edit', :git => 'git://github.com/psu-stewardship/hydra-batch-edit.git'
 gem 'hydra-ldap', '0.1.0'
 gem 'noid', '0.5.5'
 gem 'jquery-rails', '2.1.4'
