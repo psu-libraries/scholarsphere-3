@@ -19,6 +19,9 @@ require 'rdf/rdfxml'
 require 'rubygems'
 require 'action_view'
 require 'rainbow'
+  require 'cucumber'
+  require 'cucumber/rake/task'
+
 include ActionView::Helpers::NumberHelper
 
 namespace :scholarsphere do
@@ -122,7 +125,9 @@ namespace :scholarsphere do
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
         Rake::Task['spec'].invoke
-        Rake::Task['blacklight:cucumber:ok'].invoke
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format pretty"
+  end
     end
     raise "test failures: #{error}" if error
   end
