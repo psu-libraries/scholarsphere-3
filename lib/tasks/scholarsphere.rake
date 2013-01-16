@@ -122,7 +122,7 @@ namespace :scholarsphere do
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
         Rake::Task['spec'].invoke
-        Rake::Task['cucumber:ok'].invoke
+        Rake::Task['blacklight:cucumber:ok'].invoke
     end
     raise "test failures: #{error}" if error
   end
