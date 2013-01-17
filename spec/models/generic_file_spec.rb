@@ -196,6 +196,7 @@ describe GenericFile do
     @file.related_url = "http://example.org/TheWork/"
     @file.mime_type = "image/jpeg"
     @file.format_label = "JPEG Image"
+    @file.instance_variable_set(:@text,"abc")
     local = @file.to_solr
     local.should_not be_nil
     local["generic_file__part_of_t"].should be_nil
@@ -216,6 +217,7 @@ describe GenericFile do
     local["generic_file__based_near_t"].should == ["Medina, Saudi Arabia"]
     local["file_format_t"].should == "jpeg (JPEG Image)"
     local["mime_type_t"].should == ["image/jpeg"]
+    local["text"].should == "abc"
   end
   it "should support multi-valued fields in solr" do
     @file.tag = ["tag1", "tag2"]
@@ -397,6 +399,7 @@ describe GenericFile do
   describe "characterize" do
     it "should return expected results when called" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
+      @file.expects(:extract_content)
       @file.characterize
       doc = Nokogiri::XML.parse(@file.characterization.content)
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
@@ -454,6 +457,10 @@ describe GenericFile do
         @myfile.append_metadata
         @myfile.format_label.should == ["Portable Document Format"]
         @myfile.title.should include("Microsoft Word - sample.pdf.docx")
+      end
+      it "should include extracted text" do
+        @myfile.extract_content
+        @myfile.instance_variable_get(:@text).should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
       end
     end
   end
