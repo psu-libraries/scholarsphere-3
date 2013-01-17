@@ -57,7 +57,6 @@
   <!-- solr lib dirs -->
   <lib dir="../lib/contrib/analysis-extras/lib" />
   <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
-  <lib dir="../lib/" regex="apache-solr-cell-\d.*\.jar" />
   <lib dir="../lib/contrib/extraction/lib" regex=".*\.jar" />
   
   <dataDir>${solr.data.dir:}</dataDir>
