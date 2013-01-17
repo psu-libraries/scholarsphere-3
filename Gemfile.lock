@@ -1,17 +1,17 @@
 GIT
+  remote: git://github.com/psu-stewardship/hydra-batch-edit.git
+  revision: 5b597347b34e705a21a76a3b583545adf024843a
+  specs:
+    hydra-batch-edit (0.1.0)
+      blacklight
+
+GIT
   remote: git://github.com/psu-stewardship/mail_form.git
   revision: 50c00f037864914ce2dfce0ea55ea3cfc8b99010
   ref: 50c00f0
   specs:
     mail_form (1.3.0)
       actionmailer (~> 3.0)
-
-GIT
-  remote: git@github.com:psu-stewardship/hydra-batch-edit.git
-  revision: 5b597347b34e705a21a76a3b583545adf024843a
-  specs:
-    hydra-batch-edit (0.1.0)
-      blacklight
 
 GEM
   remote: http://rubygems.org/
