@@ -1,0 +1,87 @@
+<%#
+Copyright © 2012 The Pennsylvania State University
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+%>
+
+<dl id="user_info">
+  <% if !user.facebook_handle.blank?() %>
+    <dt><i class="icon-facebook"></i> Facebook Handle</dt>
+    <dd><%= link_to "http://facebook.com/#{user.facebook_handle}", "http://facebook.com/#{user.facebook_handle}", {target:'_blank'} %></dd>
+  <% end %>
+
+  <% if !user.twitter_handle.blank?() %>
+    <dt><i class="icon-twitter"></i> Twitter Handle</dt>
+    <dd><%= link_to "http://twitter.com/#{user.twitter_handle}", "http://twitter.com/#{user.twitter_handle}", {target:'_blank'} %></dd>
+  <% end %>
+
+  <!-- 
+
+  <dt><i class="icon-google-plus"></i> Google+ Handle</dt>
+  <dd><%# link_to user.googleplus_handle, "http://google.com/+#{user.googleplus_handle}", {target:'_blank'} %></dd>
+  --> 
+
+  <% if !user.linkedin_handle.blank?() %>
+    <dt><i class="icon-linkedin"></i> Linked In</dt>
+    <dd><%= link_to "http://linkedin.com/#{user.linkedin_handle}", "http://linkedin.com/#{user.linkedin_handle}", {target:'_blank'} %></dd>
+  <% end %>
+
+  <dt><i class="icon-envelope-alt"></i> Email</dt>
+  <dd><%= mail_to user.email %></dd>
+
+  <% if user.chat_id %>
+    <dt><i class="icon-bullhorn"></i> Chat ID</dt>
+    <dd><%= user.chat_id %></dd>
+  <% end %>
+
+  <% if user.website %>
+    <dt><i class="icon-globe"></i> Website(s)</dt>
+    <dd><%= iconify_auto_link(user.website) %></dd>
+  <% end %>
+
+  <% if user.title %>
+    <dt>Title</dt>
+    <dd><%= user.title.titleize %></dd>
+  <% end %>
+
+  <% if user.admin_area %>
+    <dt>Administrative Area</dt>
+    <dd><%= user.admin_area.titleize %></dd>
+  <% end %>
+
+  <% if user.department %>
+    <dt>Department</dt>
+    <dd><%= user.department.titleize %></dd>
+  <% end %>
+
+  <% if user.office %>
+    <dt>Office</dt>
+    <dd><%= user.office.titleize %></dd>
+  <% end %>
+
+  <% if user.address %>
+    <dt><i class="icon-map-marker"></i> Address</dt>
+    <dd><%= user.address.titleize %></dd>
+  <% end %>
+
+  <% if user.affiliation %>
+    <dt>Affiliation</dt>
+    <dd><%= user.affiliation.titleize %></dd>
+  <% end %>
+
+  <% if user.telephone %>
+    <dt><i class="icon-phone"></i> Telephone</dt>
+    <dd><%= link_to user.telephone, "wtai://wp/mc;#{user.telephone}" %><%# user.telephone %></dd>
+  <% end %>
+
+</dl>
