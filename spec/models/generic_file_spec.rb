@@ -184,9 +184,9 @@ describe GenericFile do
     @file.title = "The Work"
     @file.description = "The work by Allah"
     @file.publisher = "Vertigo Comics"
-    @file.date_created = "1200"
-    @file.date_uploaded = "2011"
-    @file.date_modified = "2012"
+    @file.date_created = "1200-01-01"
+    @file.date_uploaded = "2011-01-01"
+    @file.date_modified = "2012-01-01"
     @file.subject = "Theology"
     @file.language = "Arabic"
     @file.rights = "Wide open, buddy."
@@ -199,22 +199,22 @@ describe GenericFile do
     @file.instance_variable_set(:@text,"abc")
     local = @file.to_solr
     local.should_not be_nil
-    local["generic_file__part_of_t"].should be_nil
-    local["generic_file__date_uploaded_t"].should be_nil
-    local["generic_file__date_modified_t"].should be_nil
-    local["generic_file__rights_t"].should == ["Wide open, buddy."]
-    local["generic_file__related_url_t"].should be_nil
-    local["generic_file__contributor_t"].should == ["Mohammad"]
-    local["generic_file__creator_t"].should == ["Allah"]
-    local["generic_file__title_t"].should == ["The Work"]
-    local["generic_file__description_t"].should == ["The work by Allah"]
-    local["generic_file__publisher_t"].should == ["Vertigo Comics"]
-    local["generic_file__subject_t"].should == ["Theology"]
-    local["generic_file__language_t"].should == ["Arabic"]
-    local["generic_file__date_created_t"].should == ["1200"]
-    local["generic_file__resource_type_t"].should == ["Book"]
-    local["generic_file__identifier_t"].should == ["urn:isbn:1234567890"]
-    local["generic_file__based_near_t"].should == ["Medina, Saudi Arabia"]
+    local["desc_metadata__part_of_t"].should be_nil
+    local["desc_metadata__date_uploaded_t"].should be_nil
+    local["desc_metadata__date_modified_t"].should be_nil
+    local["desc_metadata__rights_t"].should == ["Wide open, buddy."]
+    local["desc_metadata__related_url_t"].should be_nil
+    local["desc_metadata__contributor_t"].should == ["Mohammad"]
+    local["desc_metadata__creator_t"].should == ["Allah"]
+    local["desc_metadata__title_t"].should == ["The Work"]
+    local["desc_metadata__description_t"].should == ["The work by Allah"]
+    local["desc_metadata__publisher_t"].should == ["Vertigo Comics"]
+    local["desc_metadata__subject_t"].should == ["Theology"]
+    local["desc_metadata__language_t"].should == ["Arabic"]
+    local["desc_metadata__date_created_t"].should == ["1200-01-01"]
+    local["desc_metadata__resource_type_t"].should == ["Book"]
+    local["desc_metadata__identifier_t"].should == ["urn:isbn:1234567890"]
+    local["desc_metadata__based_near_t"].should == ["Medina, Saudi Arabia"]
     local["file_format_t"].should == "jpeg (JPEG Image)"
     local["mime_type_t"].should == ["image/jpeg"]
     local["text"].should == "abc"

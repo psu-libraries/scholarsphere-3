@@ -46,7 +46,8 @@ describe CatalogController do
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
-        assigns(:document_list)[0].fetch(:generic_file__title_t)[0].should eql('Test Document PDF')
+        puts "docs = #{ assigns(:document_list)[0].inspect}"
+        assigns(:document_list)[0].fetch(:desc_metadata__title_t)[0].should eql('Test Document PDF')
       end
     end
     describe "facet search" do
@@ -109,12 +110,12 @@ describe CatalogController do
       lgf3 = assigns(:recent_documents)[1]
       lgf2 = assigns(:recent_documents)[2]
       lgf1 = assigns(:recent_documents)[3]
-      lgf4.fetch(:generic_file__title_t)[0].should eql(@gf4.title[0])
-      lgf4.fetch(:generic_file__contributor_t)[0].should eql(@gf4.contributor[0])
-      lgf4.fetch(:generic_file__resource_type_t)[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(:generic_file__title_t)[0].should eql(@gf1.title[0])
-      lgf1.fetch(:generic_file__contributor_t)[0].should eql(@gf1.contributor[0])
-      lgf1.fetch(:generic_file__resource_type_t)[0].should eql(@gf1.resource_type[0])
+      lgf4.fetch(:desc_metadata__title_t)[0].should eql(@gf4.title[0])
+      lgf4.fetch(:desc_metadata__contributor_t)[0].should eql(@gf4.contributor[0])
+      lgf4.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf4.resource_type[0])
+      lgf1.fetch(:desc_metadata__title_t)[0].should eql(@gf1.title[0])
+      lgf1.fetch(:desc_metadata__contributor_t)[0].should eql(@gf1.contributor[0])
+      lgf1.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf1.resource_type[0])
     end
   end
 end
