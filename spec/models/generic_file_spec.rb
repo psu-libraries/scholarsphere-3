@@ -196,7 +196,7 @@ describe GenericFile do
     @file.related_url = "http://example.org/TheWork/"
     @file.mime_type = "image/jpeg"
     @file.format_label = "JPEG Image"
-    @file.instance_variable_set(:@text,"abc")
+    @file.full_text.content = "abc"
     local = @file.to_solr
     local.should_not be_nil
     local["desc_metadata__part_of_t"].should be_nil
@@ -459,8 +459,7 @@ describe GenericFile do
         @myfile.title.should include("Microsoft Word - sample.pdf.docx")
       end
       it "should include extracted text" do
-        @myfile.extract_content
-        @myfile.instance_variable_get(:@text).should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
+        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
       end
     end
   end
