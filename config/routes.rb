@@ -8,6 +8,12 @@ ScholarSphere::Application.routes.draw do
   HydraHead.add_routes(self)
   Hydra::BatchEdit.add_routes(self)
 
+  # Resque monitoring routes 
+  namespace :admin do 
+    constraints ResqueAdmin do 
+      mount Resque::Server, :at => "queues" 
+    end 
+  end 
 
   devise_for :users
   mount Sufia::Engine => '/'
@@ -73,6 +79,7 @@ ScholarSphere::Application.routes.draw do
   match 'notifications' => 'mailbox#index', :as => :mailbox
   match 'notifications/delete_all' => 'mailbox#delete_all', :as => :mailbox_delete_all
   match 'notifications/:uid/delete' => 'mailbox#delete', :as => :mailbox_delete
+
 
   # Catch-all (for routing errors)
   match '*error' => 'errors#routing'
