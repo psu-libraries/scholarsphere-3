@@ -15,12 +15,12 @@ ScholarSphere::Application.routes.draw do
     end 
   end 
 
-  devise_for :users
-  mount Sufia::Engine => '/'
-
   # Login/logout route to destroy session
   match 'logout' => 'sessions#destroy', :as => :destroy_user_session
   match 'login' => 'sessions#new', :as => :new_user_session
+
+  devise_for :users
+  mount Sufia::Engine => '/'
 
   # LDAP-related routes for group and user lookups
   match 'directory/user/:uid' => 'directory#user'
@@ -82,7 +82,7 @@ ScholarSphere::Application.routes.draw do
 
 
   # Catch-all (for routing errors)
-  match '*error' => 'errors#routing'
+  #match '*error' => 'errors#routing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
