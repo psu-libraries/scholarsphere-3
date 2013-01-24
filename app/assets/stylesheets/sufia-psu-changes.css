@@ -6,7 +6,7 @@ body
 {
    position: absolute; 
    margin-top: 150px;
-   tabindex="-1";
+   tabindex:"-1";
 }
 .modal.fade.in
 {
