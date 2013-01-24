@@ -82,7 +82,7 @@ ScholarSphere::Application.routes.draw do
 
 
   # Catch-all (for routing errors)
-  #match '*error' => 'errors#routing'
+  match '*error' => 'errors#routing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
