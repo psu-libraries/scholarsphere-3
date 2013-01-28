@@ -37,11 +37,15 @@ class GenericFile < ActiveFedora::Base
 
 
   def extract_content
-    url = Blacklight.solr_config[:url] ? Blacklight.solr_config[:url] : Blacklight.solr_config["url"] ? Blacklight.solr_config["url"] : Blacklight.solr_config[:fulltext] ? Blacklight.solr_config[:fulltext]["url"] : Blacklight.solr_config[:default]["url"] 
-    uri = URI(url+'/update/extract?&extractOnly=true&wt=ruby&extractFormat=text')
-    req = Net::HTTP.new(uri.host, uri.port)
-    resp = req.post(uri.to_s, self.content.content, {'Content-type'=>self.mime_type+';charset=utf-8', "Content-Length"=>"#{self.content.content.size}" })
-    full_text.content = eval(resp.body)[""]
+    begin
+      url = Blacklight.solr_config[:url] ? Blacklight.solr_config[:url] : Blacklight.solr_config["url"] ? Blacklight.solr_config["url"] : Blacklight.solr_config[:fulltext] ? Blacklight.solr_config[:fulltext]["url"] : Blacklight.solr_config[:default]["url"] 
+      uri = URI(url+'/update/extract?&extractOnly=true&wt=ruby&extractFormat=text')
+      req = Net::HTTP.new(uri.host, uri.port)
+      resp = req.post(uri.to_s, self.content.content, {'Content-type'=>self.mime_type+';charset=utf-8', "Content-Length"=>"#{self.content.content.size}" })
+      full_text.content = eval(resp.body)[""]
+    rescue Exception => e
+      logger.warn ("Resued exception while extracting content for #{self.pid}: #{e.inspect} ")
+    end
   end
 
   def to_solr(solr_doc={}, opts={})
