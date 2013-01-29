@@ -51,7 +51,8 @@ describe GenericFilesController do
 
     it "should expand zip files" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
-      file = fixture_file_upload('/world.png','application/zip')
+      #file = fixture_file_upload('/world.png','application/zip')
+      file = fixture_file_upload('/icons.zip','application/zip')
 
       s1 = mock('one')
       CharacterizeJob.expects(:new).with('test:123').returns(s1)
