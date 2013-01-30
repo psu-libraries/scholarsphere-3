@@ -13,7 +13,8 @@ gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
 
 # Hydra community components
-gem 'sufia', '0.0.8'
+#gem 'sufia', '0.0.8'
+gem 'sufia', :path => '../sufia' 
 #gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'1d78dfc6364c4ab893613e1931b5b59872e79005'
 # pointing to stewardship until pull request is complete
 #gem 'hydra-batch-edit' 
@@ -31,6 +32,7 @@ gem 'equivalent-xml', '0.3.0'
 gem 'font-awesome-sass-rails'
 gem 'execjs', '1.4.0' 
 gem 'therubyracer', '0.10.2' 
+gem "yaml_db", "~> 0.2.3"
 
 group :assets do
   gem 'sass-rails', '3.2.5'
