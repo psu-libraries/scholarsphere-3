@@ -55,7 +55,6 @@ class GenericFile < ActiveFedora::Base
     solr_doc["file_format_t"] = file_format
     solr_doc["file_format_facet"] = solr_doc["file_format_t"]
     solr_doc["text"] = full_text.content 
-    logger.warn "Text =  #{solr_doc['text']}"
     return solr_doc
   end
 
