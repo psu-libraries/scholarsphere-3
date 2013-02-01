@@ -25,3 +25,4 @@ limitations under the License.
 //= require sufia
 //= require batch_edit
 //= require bootstrap-tab
+//= require scholarsphere_fileupload
