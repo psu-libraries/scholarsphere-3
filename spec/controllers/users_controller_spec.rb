@@ -40,6 +40,19 @@ describe UsersController do
       response.should redirect_to(root_path)
       flash[:alert].should include ("User 'johndoe666' does not exist")
     end
+      it "removes unmatched trophy in show" do
+      @batch = Batch.new
+      @batch.save
+      @file = GenericFile.new(:batch=>@batch)
+      @file.apply_depositor_metadata(@user.login)
+      @file.save
+      post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      @file.delete
+      get :show, uid: @user.login
+      response.should be_success
+      response.should_not redirect_to(root_path)
+      flash[:alert].should be_nil
+    end
   end
   describe "#edit" do
     it "show edit form when user edits own profile" do
@@ -52,6 +65,19 @@ describe UsersController do
       get :edit, uid: @another_user.login
       response.should redirect_to(profile_path(@another_user.login))
       flash[:alert].should include("Permission denied: cannot access this page.")
+    end
+    it "removes unmatched trophy in edit" do
+      @batch = Batch.new
+      @batch.save
+      @file = GenericFile.new(:batch=>@batch)
+      @file.apply_depositor_metadata(@user.login)
+      @file.save
+      post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      @file.delete
+      get :show, uid: @user.login
+      response.should be_success
+      response.should_not redirect_to(root_path)
+      flash[:alert].should be_nil
     end
   end
   describe "#update" do
@@ -203,4 +229,5 @@ describe UsersController do
       response.should_not be_success
     end
   end
+
 end
