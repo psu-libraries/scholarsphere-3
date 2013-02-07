@@ -41,9 +41,7 @@ describe UsersController do
       flash[:alert].should include ("User 'johndoe666' does not exist")
     end
       it "removes unmatched trophy in show" do
-      @batch = Batch.new
-      @batch.save
-      @file = GenericFile.new(:batch=>@batch)
+      @file = GenericFile.new
       @file.apply_depositor_metadata(@user.login)
       @file.save
       post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
@@ -67,9 +65,7 @@ describe UsersController do
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
     it "removes unmatched trophy in edit" do
-      @batch = Batch.new
-      @batch.save
-      @file = GenericFile.new(:batch=>@batch)
+      @file = GenericFile.new
       @file.apply_depositor_metadata(@user.login)
       @file.save
       post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
