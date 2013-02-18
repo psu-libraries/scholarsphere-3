@@ -35,6 +35,32 @@ class GenericFile < ActiveFedora::Base
     end
   end
 
+  def create_pdf_thumbnail
+     retryCnt = 0
+     stat = false;
+     for retryCnt in 1..3
+       begin
+         pdf = Magick::ImageList.new
+         pdf.from_blob(content.content)
+         first = pdf.to_a[0]
+         first.format = "PNG"
+         scale = 338.0/first.page.width
+         scale = 0.20 if scale < 0.20
+         thumb = first.scale scale
+         thumb.crop!(0, 0, 338, 493)
+         self.thumbnail.content = thumb.to_blob { self.format = "PNG" }
+         #logger.debug "Has the content changed before saving? #{self.content.changed?}"
+         stat = self.save
+         break
+       rescue => e
+         puts e
+         logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
+            sleep 1
+       end
+     end
+     return stat
+   end
+
 
   def extract_content
     begin
