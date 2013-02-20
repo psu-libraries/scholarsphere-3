@@ -88,6 +88,7 @@ a:active
 {
     outline: 0 none;
 }
+#facets span.selected,
 #facet_group li ul.slide-list li a,
 #facets li ul.slide-list li a
 {
@@ -109,3 +110,11 @@ a:active
     margin: 0;
     padding: 0;
 }
+
+
+.stats a
+{
+    color: #0088CC;
+    text-decoration: none;
+}
+
