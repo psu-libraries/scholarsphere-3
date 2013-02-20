@@ -31,11 +31,12 @@ class StatsController < ApplicationController
 
   def list 
 
-#   listing of all users with valid display name (eliminates audituser)
-    all_users=User.where("display_name != ''")
-
     if user_logged_in?
        if current_user.groups.include?('umg/up.dlt.applicationsteam')
+
+###       listing of all users with valid display name (eliminates audituser)
+          all_users=User.where("display_name != ''")
+
           @object_count = GenericFile.count
           @user_count = all_users.count
 
