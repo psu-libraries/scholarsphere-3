@@ -34,10 +34,31 @@ class UsersController < ApplicationController
     else 
       @events = []
     end
-    @trophies=[]
-    @user.trophies.each do |t| 
-      @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
-    end
+
+    num_retry = 0
+    begin
+      problem_index = 0
+      num_retry += 1
+      @trophies=[]
+      @user.trophies.each do |t| 
+        problem_index += 1
+        @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
+      end
+      rescue ActiveFedora::ObjectNotFoundError => e
+        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>show" + e.inspect
+        loop_counter = 0
+        @user.trophies.each do |t|
+          loop_counter += 1
+          if problem_index == loop_counter
+             t.delete
+          end
+        end
+        if num_retry <= 5
+          retry
+        else
+          raise
+        end
+    end       
     @followers = @user.followers
     @following = @user.all_following
   end
@@ -47,9 +68,31 @@ class UsersController < ApplicationController
     @user = current_user
     @groups = @user.groups
     @trophies=[]
-    @user.trophies.each do |t| 
-      @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
-    end
+
+    num_retry = 0
+    begin
+      problem_index = 0
+      num_retry += 1
+      @trophies=[]
+      @user.trophies.each do |t| 
+        problem_index += 1
+        @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
+      end
+      rescue ActiveFedora::ObjectNotFoundError => e
+        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>edit" + e.inspect
+        loop_counter = 0
+        @user.trophies.each do |t|
+          loop_counter += 1
+          if problem_index == loop_counter
+             t.delete
+          end
+        end
+        if num_retry <= 5
+          retry
+        else
+          raise
+        end
+    end    
   end
 
   # Process changes from profile form

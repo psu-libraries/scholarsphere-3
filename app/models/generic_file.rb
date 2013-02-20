@@ -35,6 +35,32 @@ class GenericFile < ActiveFedora::Base
     end
   end
 
+  def create_pdf_thumbnail
+     retryCnt = 0
+     stat = false;
+     for retryCnt in 1..3
+       begin
+         pdf = Magick::ImageList.new
+         pdf.from_blob(content.content)
+         first = pdf.to_a[0]
+         first.format = "PNG"
+         scale = 338.0/first.page.width
+         scale = 0.20 if scale < 0.20
+         thumb = first.scale scale
+         thumb.crop!(0, 0, 338, 493)
+         self.thumbnail.content = thumb.to_blob { self.format = "PNG" }
+         #logger.debug "Has the content changed before saving? #{self.content.changed?}"
+         stat = self.save
+         break
+       rescue => e
+         puts e
+         logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
+            sleep 1
+       end
+     end
+     return stat
+   end
+
 
   def extract_content
     begin
@@ -55,8 +81,45 @@ class GenericFile < ActiveFedora::Base
     solr_doc["file_format_t"] = file_format
     solr_doc["file_format_facet"] = solr_doc["file_format_t"]
     solr_doc["text"] = full_text.content 
-    logger.warn "Text =  #{solr_doc['text']}"
     return solr_doc
   end
 
+  def export_as_endnote
+        end_note_format = {
+          '%T' => [:title, lambda { |x| x.first }],
+          '%Q' => [:title, lambda { |x| x.drop(1) }],
+          '%A' => [:creator],
+          '%C' => [:publication_place],
+          '%D' => [:date_created],
+          '%8' => [:date_uploaded],
+          '%E' => [:contributor],
+          '%I' => [:publisher],
+          '%J' => [:series_title],
+          '%@' => [:isbn],
+          '%U' => [:related_url],
+          '%7' => [:edition_statement],
+          '%R' => [:persistent_url],
+          '%X' => [:description],
+          '%G' => [:language],
+          '%[' => [:date_modified],
+          '%9' => [:resource_type],
+          '%~' => ScholarSphere::Application::config.application_name,
+          '%W' => 'Penn State University'
+        }
+        text = []
+        text << "%0 GenericFile"
+        end_note_format.each do |endnote_key, mapping|
+          if mapping.is_a? String
+            values = [mapping]
+          else
+            values = self.send(mapping[0]) if self.respond_to? mapping[0]
+            values = mapping[1].call(values) if mapping.length == 2
+            values = [values] unless values.is_a? Array
+          end
+          next if values.empty? or values.first.nil?
+          spaced_values = values.join("; ")
+          text << "#{endnote_key} #{spaced_values}"
+        end
+        return text.join("\n")
+  end
 end
