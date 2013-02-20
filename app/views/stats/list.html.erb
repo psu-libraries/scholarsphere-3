@@ -1,0 +1,53 @@
+<div class="stats">
+<h1>Statistics for <%= ScholarSphere::Application.config.application_name %> 
+<%= ScholarSphere::Application.config.scholarsphere_version %></h1> 
+<h2>released on <%= ScholarSphere::Application.config.scholarsphere_release_date %></h2>
+<br />
+<h3>Total objects: <%= @object_count %> </h3>
+<ul>
+  <li>Public &nbsp;<span class="count">(<%= @public.to_s %>)</span></li>
+  <li>PSU &nbsp;<span class="count">(<%= @psu.to_s %>)</span></li>
+  <li>Private &nbsp;<span class="count">(<%= @private.to_s %>)</span></li>
+</ul>
+
+<h4>Top formats used:</h4>
+<ul>
+   <% @ff.each do |k,v| %>
+      <li>
+         <%= k.first %>&nbsp;
+         <span class="count">(
+         <%= v.count %>)
+         </span>
+      </li>
+   <% end %>
+</ul>
+<br/>
+<h3>Total Scholarsphere Members: <%= @user_count %> </h3>
+<br/>
+<h4>Newest members:</h4>
+<ul>
+   <% @users_list.each do |usr| %>
+      <% if !usr.display_name.nil?  %>
+          <li>
+             <a href="<%= sufia.profile_path(usr.login) %>"  title="click for User Profile"><%= usr.name %></a> member since 
+             <span class="date">
+             <%= usr.created_at.to_time.strftime("%m/%d/%Y") %>
+             </span>
+          </li>
+       <% end %>
+   <%end %>
+</ul>
+<br/>
+
+<h4>Members with the most files:</h4>
+<ul>
+   <% @gf.each do |k,v| %>
+      <li>
+         <a href="<%= sufia.profile_path(k) %>" title="click for User Profile">
+         <%= User.select(:display_name).where(:login => k).first[:display_name].titleize %></a>&nbsp;
+         <span class="count">(<%= v.count %>)</span>
+      </li>
+   <% end %>
+</ul>
+
+</div>
