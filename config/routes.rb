@@ -2,6 +2,9 @@ ScholarSphere::Application.routes.draw do
   # "Recently added files" route for catalog index view
   match "catalog/recent" => "catalog#recent", :as => :catalog_recent
 
+  # Statistics page
+  match "stats" => "stats#list", :via => :get, :as => :stats
+
   root :to => "catalog#index"
 
   Blacklight.add_routes(self)
@@ -26,6 +29,7 @@ ScholarSphere::Application.routes.draw do
   match 'directory/user/:uid' => 'directory#user'
   match 'directory/user/:uid/:attribute' => 'directory#user_attribute'
   match 'directory/group/:cn' => 'directory#group', :constraints => { :cn => /.*/ }
+
 
   # Batch edit routes
   match 'batches/:id/edit' => 'batch#edit', :as => :batch_edit
@@ -79,7 +83,6 @@ ScholarSphere::Application.routes.draw do
   match 'notifications' => 'mailbox#index', :as => :mailbox
   match 'notifications/delete_all' => 'mailbox#delete_all', :as => :mailbox_delete_all
   match 'notifications/:uid/delete' => 'mailbox#delete', :as => :mailbox_delete
-
 
   # Catch-all (for routing errors)
   match '*error' => 'errors#routing'
