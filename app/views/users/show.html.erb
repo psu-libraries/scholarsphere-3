@@ -13,67 +13,83 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 %>
+<% content_for :local_js do %>
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+<% end %>
 
-  <h1 class="span110">
-    <span class="span60">
-    <%= image_tag @user.avatar.url(:thumb), :width => 100 %>
-    <%= @user.name %> (<%= @user.login %>)
-    </span>
 
-    <span class="span20 offset20">
+
+
+
+  <div class="span110"> 
+    <div class="pull-right">
+    <!-- profile and view buttons -->
       <% if not signed_in? %>
         <!-- sign in to access social functions -->
       <% elsif current_user == @user %>
-        <a class="btn btn-primary" href="<%= edit_profile_path(@user.to_s) %>"><i class="icon-edit"></i> Edit Your Profile </a>
+        <a class="btn" href="<%= sufia.edit_profile_path(URI.escape(@user.to_s, '@.')) %>"><i class="icon-edit"></i> Edit Your Profile </a>
       <% elsif current_user.following?(@user) %>
-        <a class="btn btn-primary" href="<%= unfollow_user_path(@user.to_s) %>"><i class="icon-eye-close"></i> Unfollow </a>
+        <a class="btn btn-primary" href="<%= sufia.unfollow_user_path(@user.to_s) %>"><i class="icon-eye-close"></i> Unfollow </a>
       <% else %>
-        <a class="btn btn-primary" href="<%= follow_user_path(@user.to_s) %>"><i class="icon-eye-open"></i> Follow</a>
+        <a class="btn btn-primary" href="<%= sufia.follow_user_path(@user.to_s) %>"><i class="icon-eye-open"></i> Follow</a>
       <% end %>
-      <a class="btn btn-primary" href="<%= profiles_path %>"><i class="icon-globe"></i> View Users</a>
-    </span>
-  </h1>
-    <dl>
-      <dt><i class="icon-calendar"></i> Active Since</dt>
-      <dd><%= @user.created_at.to_date.to_formatted_s(:long_ordinal) %></dd>
-      <dt><i class="icon-folder-open"></i> Deposited Files</dt>
-      <dd><%= link_to_field('depositor', @user.to_s, GenericFile.find(:depositor_t => @user.to_s).count) %></dd>
-    <dt><i class="icon-trophy trophy-on" ></i> Highlighted Files</dt>
-    <% @trophies.each do |t| %>
-    <dd> <%= link_to display_title(t), generic_file_path(t) %></dd>
-    <% end %>
-    </dl>
+    </div>
+    <span class="span20">
+      <%= image_tag @user.avatar.url(:thumb), :width => 100 %>
+      <h3> <%= @user.name %><br /><%= @user.user_key %> </h3>
+      <hr /> 
+        <i class="icon-time muted"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
+        <i class="icon-folder-open"></i> Deposited Files <%= link_to_field('depositor', @user.to_s, GenericFile.find(:depositor_t => @user.to_s).count) %> <br />
+        <i class="icon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
+        <i class="icon-briefcase"></i> <%= @user.title.titleize %> <br />
+      <!-- following -->
+        <hr />
+      <div>
+        <h4><i class="icon-hand-left"></i> Follower(s): <%= @followers.count %></h4>
+        <h4><i class="icon-hand-right"></i> Following: <%= @following.count %></h4>
+      </div>
 
-<hr />
+      <br />
+      <a class="btn btn-primary" href="<%= sufia.profiles_path %>"><i class="icon-globe"></i> View Users</a>
+    </span> <!-- /close span60 -->
 
-<h2>User Info</h2>
-<div class="span44">
-  <div>
-    <h4><i class="icon-hand-left"></i> Follower(s): <%= @followers.count %></h4>
-    <ul class="thumbnails">
-      <% @followers.each do |f| %>
-        <li class="span8">
-          <%= link_to(image_tag(f.avatar.url(:thumb)), profile_path(f.login), { :title => f.name } ) %>
-          <%= link_to(f.name, profile_path(f.login), { :title => f.name } ) %>
-        <li>
-      <% end %>
-    </ul>
-  </div>
+<!-- right col -->
+    <span class="span78 offset2"> 
 
-  <div>
-    <h4><i class="icon-hand-right"></i> Following: <%= @following.count %></h4>
-    <ul class="thumbnails">
-      <% @following.each do |f| %>
-        <li class="span8">
-          <%= link_to(image_tag(f.avatar.url(:thumb)), profile_path(f.login), { :title => f.name } ) %>
-          <%= link_to(f.name, profile_path(f.login), { :title => f.name } ) %>
-        <li>
-      <% end %>
-    </ul>
-  </div>
-  <%= render :partial => 'user_info', :locals => {:user => @user} %>
-</div><!-- close span44 -->
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#contributions"><i class="icon-trophy"></i> Contributions</a></li>
+        <li><a href="#profile"><i class="icon-info-sign"></i> Profile</a></li>
+        <li><a href="#activity_log" ><i class="icon-rss"></i> Activity</a></li>
+      </ul>
+       
+      <div class="tab-content">
 
-<div class="span60 offset5">
-  <%= render :partial => 'users/activity_log', :locals => {:events => @events} %>
-</div>
+        <div class="tab-pane active" id="contributions">
+          <dl>
+            <dt><i class="icon-trophy trophy-on" ></i> Highlighted Files</dt>
+            <% if @trophies.count > 0 %>
+              <% @trophies.each do |t| %>
+                <dd> <%= link_to display_title(t), sufia.generic_file_path(t) %></dd>
+              <% end %>
+            <% else %>
+              You can highlight up to 5 files by clicking the file's corresponding trophy icon (<i class="icon-trophy"></i>) in <%= link_to "your dashboard", dashboard_path %> and the highlighted files will appear here, on your ScholarSphere profile.
+            <% end %>
+          </dl>
+        </div> <!-- /contributions -->
+
+        <div class="tab-pane" id="profile">
+          <h2>User Info</h2>
+          <%= render :partial => 'user_info', :locals => {:user => @user} %>
+        </div> <!-- /profile -->
+
+        <div class="tab-pane" id="activity_log">
+          <%= render :partial => 'users/activity_log', :locals => {:events => @events} %>
+        </div> <!-- /activity -->
+
+      </div> <!-- /tab-content -->
+
+    </span> <!-- /close span50 -->
+  </div><!-- /close span110 -->

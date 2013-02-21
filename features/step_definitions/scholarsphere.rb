@@ -20,6 +20,11 @@ Given /^And I click the anchor "([^"]*)"$/ do |link|
   click_link(link)
 end
 
+Given /^And I click within the anchor "(.*?)"$/ do |selector|
+#Given /^(?:|I )click within the anchor "([^"]*)"$/ do |selector|
+  find(selector).click
+end
+
 # tests wether a select option is choosen
 Then /^"([^"]*)" should be selected for "([^"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
@@ -42,3 +47,8 @@ Then /^"([^\"]*)" should( not)? be disabled$/ do |label, negate|
   end
   ["false", "", nil].send(negate ? :should : :should_not, include(field[:disabled]))
 end
+
+When /^I follow the link within$/ do |selector|
+  find(selector).click
+end
+

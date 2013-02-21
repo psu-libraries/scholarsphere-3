@@ -13,12 +13,16 @@
 # limitations under the License.
 
 class User < ActiveRecord::Base
+# Connects this user object to Sufia behaviors. 
+ include Sufia::User
+# Connects this user object to Hydra behaviors. 
+ include Hydra::User
+# Connects this user object to Blacklights Bookmarks. 
+ include Blacklight::User
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
-  # Connects this user object to Blacklight's Bookmarks and Folders.
-  include Blacklight::User
   # Workaround to retry LDAP calls a number of times
-  include ScholarSphere::Utils
+  include Sufia::Utils
 
   delegate :can?, :cannot?, :to => :ability
 
@@ -39,7 +43,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :login, :display_name, :address, :admin_area, :department, :title, :office, :chat_id, :website, :affiliation, :telephone, :avatar, 
-  :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle
+  :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle, :linkedin_handle
 
   # Add user avatar (via paperclip library)
   has_attached_file :avatar, :styles => { medium: "300x300>", thumb: "100x100>" }, :default_url => '/assets/missing_:style.png'
@@ -55,8 +59,13 @@ class User < ActiveRecord::Base
     send(Devise.authentication_keys.first)
   end
 
+  #put in to remove deprication warnings since the parent class overrides our login with it's own
+  def login
+    self[:login]
+  end
+
   def to_s
-    login
+    self[:login]
   end
 
   def email_address
@@ -157,6 +166,7 @@ class User < ActiveRecord::Base
       logger.warn "Error getting directory entry: #{Hydra::LDAP.connection.get_operation_result.message}"
       return
     end
+
     attrs = {}
     attrs[:email] = entry[:mail].first rescue nil
     attrs[:display_name] = entry[:displayname].first rescue nil

@@ -19,6 +19,9 @@ require 'rdf/rdfxml'
 require 'rubygems'
 require 'action_view'
 require 'rainbow'
+  require 'cucumber'
+  require 'cucumber/rake/task'
+
 include ActionView::Helpers::NumberHelper
 
 namespace :scholarsphere do
@@ -89,7 +92,7 @@ namespace :scholarsphere do
 
   desc "Characterize uncharacterized files"
   task :characterize => :environment do
-    GenericFile.find(:all, :rows => GenericFile.count).each do |gf|
+    GenericFile.find(:all).each do |gf|
       if gf.characterization.content.nil?
         Resque.enqueue(CharacterizeJob, gf.pid)
       end
@@ -98,14 +101,14 @@ namespace :scholarsphere do
 
   desc "Characterize uncharacterized files"
   task :characterize! => :environment do
-    GenericFile.find(:all, :rows => GenericFile.count).each do |gf|
+    GenericFile.find(:all).each do |gf|
       Resque.enqueue(CharacterizeJob, gf.pid)
     end
   end
 
   desc "Re-solrize all objects"
   task :resolrize => :environment do
-    Resque.enqueue(ResolrizeJob)
+    Sufia.queue.push(ResolrizeJob.new)
   end
 
   desc "Execute Continuous Integration build (docs, tests with coverage)"
@@ -122,7 +125,9 @@ namespace :scholarsphere do
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
         Rake::Task['spec'].invoke
-        Rake::Task['cucumber:ok'].invoke
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format pretty"
+  end
     end
     raise "test failures: #{error}" if error
   end
@@ -134,7 +139,7 @@ namespace :scholarsphere do
       export_file = ENV['output']
       triples = RDF::Repository.new
       rows = GenericFile.count
-      GenericFile.find(:all, :rows => rows).each do |gf|
+      GenericFile.find(:all).each do |gf|
         next unless gf.rightsMetadata.groups["public"] == "read" && gf.descMetadata.content
         RDF::Reader.for(:ntriples).new(gf.descMetadata.content) do |reader|
           reader.each_statement do |statement|

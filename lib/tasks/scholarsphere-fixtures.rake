@@ -183,6 +183,8 @@
 #
 #
 #
+require 'active_fedora'
+
 namespace :scholarsphere do
   
   desc "Init Hydra configuration" 
@@ -191,11 +193,12 @@ namespace :scholarsphere do
   end
 
   namespace :fixtures do
-    @localDir = 'spec/fixtures'
-    @dir = ENV["FIXTURE_DIR"] || 'scholarsphere'
+    @localPart = 'spec/fixtures'
+    @fixtureDir = ENV["FIXTURE_DIR"] || 'scholarsphere'
 
     desc "Create ScholarSphere Hydra fixtures for generation and loading"
     task :create => :environment do
+      
       @id = ENV["FIXTURE_ID"] ||'scholarsphere1'
       @title = ENV["FIXTURE_TITLE"] || 'scholarsphere test'
       @user = ENV["FIXTURE_USER"] || 'archivist1'
@@ -205,11 +208,9 @@ namespace :scholarsphere do
       @inputFoxmlFile = File.join(Rails.root, 'spec', 'fixtures', 'scholarsphere_generic_stub.foxml.erb')
       @inputDescFile = File.join(Rails.root, 'spec', 'fixtures',  'scholarsphere_generic_stub.descMeta.txt')
       @inputTxtFile = File.join(Rails.root, 'spec', 'fixtures',  'scholarsphere_generic_stub.txt')
-
-      @outputFoxmlFile = File.join(Rails.root, @localDir, @dir, 'scholarsphere_'+@id+'.foxml.erb')
-      @outputDescFile = File.join(Rails.root, @localDir, @dir, 'scholarsphere_'+@id+'.descMeta.txt')
-      @outputTxtFile = File.join(Rails.root, @localDir, @dir, 'scholarsphere_'+@id+'.txt')
-
+      @outputFoxmlFile = File.join(Rails.root, @localPart, @fixtureDir, 'scholarsphere_'+@id+'.foxml.erb')
+      @outputDescFile = File.join(Rails.root, @localPart, @fixtureDir, 'scholarsphere_'+@id+'.descMeta.txt')
+      @outputTxtFile = File.join(Rails.root, @localPart, @fixtureDir, 'scholarsphere_'+@id+'.txt')
       run_erb_stub @inputFoxmlFile, @outputFoxmlFile
       run_erb_stub @inputDescFile, @outputDescFile
       run_erb_stub @inputTxtFile, @outputTxtFile
@@ -217,8 +218,8 @@ namespace :scholarsphere do
 
     desc "Generate default ScholarSphere Hydra fixtures"
     task :generate do
-      ENV["dir"] = File.join(Rails.root, @localDir, @dir) 
-      fixtures = find_fixtures_erb(@dir)
+      ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
+      fixtures = find_fixtures_erb(@fixtureDir)
       fixtures.each do |fixture|
         unless fixture.include?('generic_stub')
           outFile = fixture.sub('foxml.erb','foxml.xml')
@@ -231,20 +232,25 @@ namespace :scholarsphere do
    
     desc "Load default ScholarSphere Hydra fixtures"
     task :load do
-      ENV["dir"] = File.join(Rails.root, @localDir, @dir) 
-      fixtures = find_fixtures(@dir)
+      #ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
+      dir = File.join(Rails.root, @localPart, @fixtureDir) 
+      loader = ActiveFedora::FixtureLoader.new(dir)
+
+      fixtures = find_fixtures_scholar(@fixtureDir)
       fixtures.each do |fixture|
-        ENV["pid"] = fixture
-        Rake::Task["repo:load"].reenable
-        Rake::Task["repo:load"].invoke
+        #ENV["pid"] = fixture
+        loader.import_and_index(fixture)
+        puts "Loaded '#{fixture}'"
+        #Rake::Task["repo:load"].reenable
+        #Rake::Task["repo:load"].invoke
       end
       raise "No fixtures found; you may need to generate from erb, use: rake scholarsphere:fixtures:generate" if fixtures.empty?
     end
 
     desc "Remove default ScholarSphere Hydra fixtures"
     task :delete do
-      ENV["dir"] = File.join(Rails.root, @localDir, @dir)
-      fixtures = find_fixtures(@dir)
+      ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir)
+      fixtures = find_fixtures_scholar(@fixtureDir)
       fixtures.each do |fixture|
         ENV["pid"] = fixture
         Rake::Task["repo:delete"].reenable
@@ -263,7 +269,6 @@ namespace :scholarsphere do
       User.create(login: 'archivist1', display_name: 'Captain Archivist')
       # Then, set this user as the depositor of test4 to appease this damn failing cuke
       gf = GenericFile.find('scholarsphere:test4')
-      gf.terms_of_service = '1'
       gf.apply_depositor_metadata('archivist1')
       gf.save
     end
@@ -276,14 +281,14 @@ namespace :scholarsphere do
       end
     end
 
-    def find_fixtures(dir)
-      Dir.glob(File.join(Rails.root, @localDir, dir, '*.foxml.xml')).map do |fixture_file|
+    def find_fixtures_scholar(dir)
+      Dir.glob(File.join(Rails.root, @localPart, dir, '*.foxml.xml')).map do |fixture_file|
         File.basename(fixture_file, '.foxml.xml').gsub('_',':')
       end
     end
 
     def find_fixtures_erb(dir)
-      Dir.glob(File.join(Rails.root, @localDir, dir, '*.foxml.erb'))
+      Dir.glob(File.join(Rails.root, @localPart, dir, '*.foxml.erb'))
     end
 
     def get_erb_template(file)

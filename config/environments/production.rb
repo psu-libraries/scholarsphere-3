@@ -88,5 +88,5 @@ ScholarSphere::Application.configure do
   config.login_url = "https://webaccess.psu.edu?cosign-#{get_vhost_by_host[0]}&#{get_vhost_by_host[1]}"
 
   # uncomment this when ready to put contact form into production
-  config.contact_email = 'scholarsphere-service-support@dlt.psu.edu,dmc186@psu.edu'
+  config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'
 end

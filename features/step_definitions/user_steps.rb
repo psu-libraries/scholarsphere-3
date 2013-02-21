@@ -26,7 +26,7 @@ Given /^I (?:am )?log(?:ged)? in as "([^\"]*)"$/ do |login|
   Capybara.current_driver = driver_name
   
   visit "/"
-  step %{And I click the anchor "#{login}"} 
+  step %{And I click within the anchor "i.icon-user"}
   step %{I should see a link to "ingest" with label "upload"}
   step %{I should see a link to "dashboard" with label "dashboard"}
   # step %{I should see a link to "logout"} 

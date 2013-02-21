@@ -16,7 +16,6 @@ require 'spec_helper'
 
 describe CatalogController do
   before do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     GenericFile.any_instance.stubs(:characterize_if_changed).yields
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
@@ -28,11 +27,10 @@ describe CatalogController do
   end
   describe "#index" do
     before (:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       @gf1 =  GenericFile.new(title:'Test Document PDF', filename:'test.pdf', read_groups:['public'])
       @gf1.apply_depositor_metadata('mjg36')
       @gf1.save
-      @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib1', read_groups:['public'])
+      @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib2', read_groups:['public'])
       @gf2.apply_depositor_metadata('mjg36')
       @gf2.save
     end
@@ -48,17 +46,29 @@ describe CatalogController do
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
-        assigns(:document_list)[0].fetch(:generic_file__title_t)[0].should eql('Test Document PDF')
+        puts "docs = #{ assigns(:document_list)[0].inspect}"
+        assigns(:document_list)[0].fetch(:desc_metadata__title_t)[0].should eql('Test Document PDF')
       end
     end
     describe "facet search" do
       before do
-        xhr :get, :index, :fq=>"{!raw f=generic_file__contributor_facet}Contrib1"
+        xhr :get, :index, :q=>"{f=generic_file__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success
         response.should render_template('catalog/index')
-        assigns(:document_list).count.should eql(2)
+        assigns(:document_list).count.should eql(1)
+      end
+    end
+    describe "user with group search" do
+      before do
+        User.any_instance.stubs(:groups).returns(['umg/personal.testuser.testgroup'])
+        xhr :get, :index, :q=>"{f=generic_file__contributor_facet}Contrib2"
+      end
+      it "should find facet files" do
+        response.should be_success
+        response.should render_template('catalog/index')
+        assigns(:document_list).count.should eql(1)
       end
     end
   end
@@ -100,12 +110,12 @@ describe CatalogController do
       lgf3 = assigns(:recent_documents)[1]
       lgf2 = assigns(:recent_documents)[2]
       lgf1 = assigns(:recent_documents)[3]
-      lgf4.fetch(:generic_file__title_t)[0].should eql(@gf4.title[0])
-      lgf4.fetch(:generic_file__contributor_t)[0].should eql(@gf4.contributor[0])
-      lgf4.fetch(:generic_file__resource_type_t)[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(:generic_file__title_t)[0].should eql(@gf1.title[0])
-      lgf1.fetch(:generic_file__contributor_t)[0].should eql(@gf1.contributor[0])
-      lgf1.fetch(:generic_file__resource_type_t)[0].should eql(@gf1.resource_type[0])
+      lgf4.fetch(:desc_metadata__title_t)[0].should eql(@gf4.title[0])
+      lgf4.fetch(:desc_metadata__contributor_t)[0].should eql(@gf4.contributor[0])
+      lgf4.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf4.resource_type[0])
+      lgf1.fetch(:desc_metadata__title_t)[0].should eql(@gf1.title[0])
+      lgf1.fetch(:desc_metadata__contributor_t)[0].should eql(@gf1.contributor[0])
+      lgf1.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf1.resource_type[0])
     end
   end
 end

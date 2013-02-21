@@ -16,7 +16,6 @@ require 'spec_helper'
 
 describe GenericFile do
   before(:each) do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     @file = GenericFile.new
     @file.apply_depositor_metadata('jcoyne')
   end
@@ -111,7 +110,7 @@ describe GenericFile do
       @file.should respond_to(:language)
       @file.should respond_to(:rights)
       @file.should respond_to(:resource_type)
-      @file.should respond_to(:format)
+      @file.should respond_to(:file_format)
       @file.should respond_to(:identifier)
     end
     it "should delegate methods to characterization metadata" do
@@ -131,7 +130,9 @@ describe GenericFile do
     end
     describe "that have been saved" do
       before(:each) do
-        Resque.expects(:enqueue).once.returns(true)
+        @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
+        Sufia.queue.expects(:push).once.returns(true)
+        #Resque.expects(:enqueue).once.returns(true)
       end
       after(:each) do
         unless @file.inner_object.class == ActiveFedora::UnsavedDigitalObject
@@ -183,36 +184,40 @@ describe GenericFile do
     @file.title = "The Work"
     @file.description = "The work by Allah"
     @file.publisher = "Vertigo Comics"
-    @file.date_created = "1200"
-    @file.date_uploaded = "2011"
-    @file.date_modified = "2012"
+    @file.date_created = "1200-01-01"
+    @file.date_uploaded = "2011-01-01"
+    @file.date_modified = "2012-01-01"
     @file.subject = "Theology"
     @file.language = "Arabic"
     @file.rights = "Wide open, buddy."
     @file.resource_type = "Book"
-    @file.format = "application/pdf"
     @file.identifier = "urn:isbn:1234567890"
     @file.based_near = "Medina, Saudi Arabia"
     @file.related_url = "http://example.org/TheWork/"
+    @file.mime_type = "image/jpeg"
+    @file.format_label = "JPEG Image"
+    @file.full_text.content = "abc"
     local = @file.to_solr
     local.should_not be_nil
-    local["generic_file__part_of_t"].should be_nil
-    local["generic_file__date_uploaded_t"].should be_nil
-    local["generic_file__date_modified_t"].should be_nil
-    local["generic_file__rights_t"].should == ["Wide open, buddy."]
-    local["generic_file__related_url_t"].should be_nil
-    local["generic_file__contributor_t"].should == ["Mohammad"]
-    local["generic_file__creator_t"].should == ["Allah"]
-    local["generic_file__title_t"].should == ["The Work"]
-    local["generic_file__description_t"].should == ["The work by Allah"]
-    local["generic_file__publisher_t"].should == ["Vertigo Comics"]
-    local["generic_file__subject_t"].should == ["Theology"]
-    local["generic_file__language_t"].should == ["Arabic"]
-    local["generic_file__date_created_t"].should == ["1200"]
-    local["generic_file__resource_type_t"].should == ["Book"]
-    local["generic_file__format_t"].should == ["application/pdf"]
-    local["generic_file__identifier_t"].should == ["urn:isbn:1234567890"]
-    local["generic_file__based_near_t"].should == ["Medina, Saudi Arabia"]
+    local["desc_metadata__part_of_t"].should be_nil
+    local["desc_metadata__date_uploaded_t"].should be_nil
+    local["desc_metadata__date_modified_t"].should be_nil
+    local["desc_metadata__rights_t"].should == ["Wide open, buddy."]
+    local["desc_metadata__related_url_t"].should be_nil
+    local["desc_metadata__contributor_t"].should == ["Mohammad"]
+    local["desc_metadata__creator_t"].should == ["Allah"]
+    local["desc_metadata__title_t"].should == ["The Work"]
+    local["desc_metadata__description_t"].should == ["The work by Allah"]
+    local["desc_metadata__publisher_t"].should == ["Vertigo Comics"]
+    local["desc_metadata__subject_t"].should == ["Theology"]
+    local["desc_metadata__language_t"].should == ["Arabic"]
+    local["desc_metadata__date_created_t"].should == ["1200-01-01"]
+    local["desc_metadata__resource_type_t"].should == ["Book"]
+    local["desc_metadata__identifier_t"].should == ["urn:isbn:1234567890"]
+    local["desc_metadata__based_near_t"].should == ["Medina, Saudi Arabia"]
+    local["file_format_t"].should == "jpeg (JPEG Image)"
+    local["mime_type_t"].should == ["image/jpeg"]
+    local["text"].should == "abc"
   end
   it "should support multi-valued fields in solr" do
     @file.tag = ["tag1", "tag2"]
@@ -228,8 +233,8 @@ describe GenericFile do
       before do
         @f = GenericFile.new
         @f.stubs(:mime_type=>'image/png', :width=>['50'], :height=>['50'])  #Would get set by the characterization job
-        @f.stubs(:to_solr).returns({})
-        @f.add_file_datastream(File.new("#{Rails.root}/spec/fixtures/world.png"), :dsid=>'content')
+        #@f.stubs(:to_solr).returns({ :id => "foo:123" })
+        @f.add_file_datastream(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), :dsid=>'content')
         @f.apply_depositor_metadata('mjg36')
         @f.save
         @mock_image = mock("image", :from_blob=>true)
@@ -248,7 +253,6 @@ describe GenericFile do
   end
   describe "audit" do
     before(:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       GenericFile.any_instance.stubs(:characterize).returns(true)
       f = GenericFile.new
       f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
@@ -265,7 +269,7 @@ describe GenericFile do
     it "should schedule a audit job" do
       @datastreams.each { |ds| ds.any_instance.stubs(:dsChecksumValid).returns(false) }
       ChecksumAuditLog.stubs(:create!).returns(true)
-      Resque.expects(:enqueue).times(@datastreams.count)
+      Sufia.queue.expects(:push).times(@datastreams.count)
       @f.audit!
     end
     it "should log a failing audit" do
@@ -288,7 +292,8 @@ describe GenericFile do
     end
     it "should schedule a characterization job" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-      Resque.expects(:enqueue).once
+      Sufia.queue.expects(:push).once.returns(true)
+      #Resque.expects(:enqueue).once
       @file.save
     end
   end
@@ -371,7 +376,6 @@ describe GenericFile do
   end
   describe "noid integration" do
     before(:all) do
-      GenericFile.any_instance.stubs(:terms_of_service).returns('1')
       GenericFile.any_instance.expects(:characterize_if_changed).yields
       @new_file = GenericFile.new(:pid => 'ns:123')
       @new_file.apply_depositor_metadata('mjg36')
@@ -387,30 +391,32 @@ describe GenericFile do
       @new_file.noid.should == '123'
     end
     it "should work outside of an instance" do
-      new_id = ScholarSphere::IdService.mint
+      new_id = Sufia::IdService.mint
       noid = new_id.split(':').last
-      ScholarSphere::Noid.noidify(new_id).should == noid
+      Sufia::Noid.noidify(new_id).should == noid
     end
   end
   describe "characterize" do
     it "should return expected results when called" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
+      @file.expects(:extract_content)
       @file.characterize
       doc = Nokogiri::XML.parse(@file.characterization.content)
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
     end
     it "should not be triggered unless the content ds is changed" do
-      Resque.expects(:enqueue).once
+      Sufia.queue.expects(:push).once.returns(true)
+      #Resque.expects(:enqueue).once
       @file.content.content = "hey"
       @file.save
       @file.related_url = 'http://example.com'
-      Resque.expects(:enqueue).never
+      Sufia.queue.expects(:push).never
+      #Resque.expects(:enqueue).never
       @file.save
       @file.delete
     end
     describe "after job runs" do
       before(:all) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         myfile = GenericFile.new
         myfile.add_file_datastream(File.new(Rails.root + 'spec/fixtures/scholarsphere/scholarsphere_test4.pdf'), :dsid=>'content')
         myfile.label = 'label123'
@@ -451,6 +457,9 @@ describe GenericFile do
         @myfile.append_metadata
         @myfile.format_label.should == ["Portable Document Format"]
         @myfile.title.should include("Microsoft Word - sample.pdf.docx")
+      end
+      it "should include extracted text" do
+        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
       end
     end
   end
@@ -494,7 +503,6 @@ describe GenericFile do
   describe "permissions validation" do
     context "depositor must have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @rightsmd = @file.rightsMetadata
@@ -594,7 +602,6 @@ describe GenericFile do
     end
     context "public must not have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['public']
@@ -695,7 +702,6 @@ describe GenericFile do
     end
     context "registered must not have edit access" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['registered']
@@ -796,7 +802,6 @@ describe GenericFile do
     end
     context "everything is copacetic" do
       before(:each) do
-        GenericFile.any_instance.stubs(:terms_of_service).returns('1')
         @file = GenericFile.new
         @file.apply_depositor_metadata('mjg36')
         @file.read_groups = ['public']

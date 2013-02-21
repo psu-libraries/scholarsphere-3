@@ -25,3 +25,4 @@ task 'resque:pool:setup' do
     Resque.redis.client.reconnect
   end
 end
+

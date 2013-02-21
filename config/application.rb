@@ -19,6 +19,9 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
+#require 'rubygems'
+#require 'RMagick'
+#include Magick
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,6 +29,13 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 Bundler.require *Rails.groups(:assets => %w(development, test))
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
+
+Sufia::Engine.configure do
+    # email to send on contact form - probably need one for the production
+    # environment
+    config.contact_email = 'DLT-GAMMA-PROJECT@lists.psu.edu'
+    config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
+end
 
 module ScholarSphere
   class Application < Rails::Application
@@ -47,7 +57,11 @@ module ScholarSphere
     config.application_name = "ScholarSphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # turning on the new asset pipeline for handling javascript, css, and image files
-    config.assets.enabled = true
+    config.assets.enabled = true    
+    # Default SASS Configuration, check out https://github.com/rails/sass-rails for details
+    config.assets.compress = !Rails.env.development?
+
+
     config.assets.paths << '#{Rails.root}/app/assets/javascripts'
     config.assets.paths << '#{Rails.root}/app/assets/stylesheets'
     config.assets.paths << '#{Rails.root}/app/assets/images'
@@ -58,9 +72,6 @@ module ScholarSphere
     config.assets.paths << '#{Rails.root}/vendor/assets/images'
     config.assets.paths << '#{Rails.root}/vendor/assets/fonts'
 
-    # email to send on contact form - probably need one for the production
-    # environment
-    config.contact_email = 'DLT-GAMMA-PROJECT@lists.psu.edu'
     config.scholarsphere_version = "v1.3.0"
     config.scholarsphere_release_date = "Dec. 18, 2012"
 
@@ -189,9 +200,9 @@ module ScholarSphere
   end
 end
 # this prevents LoadErrors, related to Rails autoload behavior
-require 'scholarsphere/permissions'
-require 'scholarsphere/id_service'
-require 'scholarsphere/noidify'
-require 'scholarsphere/model_methods'
-require 'scholarsphere/role_mapper'
-require 'scholarsphere/utils'
+#require 'sufia/permissions'
+#require 'sufia/id_service'
+#require 'sufia/noid'
+#require 'sufia/model_methods'
+#require 'sufia/role_mapper'
+#require 'sufia/utils'

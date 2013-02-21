@@ -13,8 +13,7 @@
 # limitations under the License.
 
 class DirectoryController < ApplicationController
-  include Hydra::Controller::ControllerBehavior
-  include ScholarSphere::Utils
+  #include Hydra::Controller::ControllerBehavior
 
   # returns true if the user exists and false otherwise
   def user
@@ -35,9 +34,6 @@ class DirectoryController < ApplicationController
   end
 
   def group
-    puts params[:cn]
-    render :json => retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      Hydra::LDAP.does_group_exist?(params[:cn]) rescue false
-    end
+    Group.exists?(params[:cn])
   end
 end
