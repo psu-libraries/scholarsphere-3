@@ -33,6 +33,8 @@ class StatsController < ApplicationController
 
     if user_logged_in?
        if current_user.groups.include?('umg/up.dlt.applicationsteam')
+       
+##       if current_user.groups.include?('umg/up.dlt.scholarsphere-admin-viewers')
 
 ###       listing of all users with valid display name (eliminates audituser)
           all_users=User.where("display_name != ''")
