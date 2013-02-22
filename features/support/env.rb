@@ -3,6 +3,7 @@
 # newer version of cucumber-rails. Consider adding your own code to a new file 
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
+require "rake"
 
 require 'cucumber/rails'
 
@@ -53,3 +54,27 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
+#load fixtures for cucumber tests
+def loaded_files_excluding_current_rake_file
+  $".reject { |file| file.include? "lib/tasks/scholarsphere-fixtures" }
+end
+def activefedora_path
+  Gem.loaded_specs['active-fedora'].full_gem_path
+end
+def load_rake
+  @rake = Rake::Application.new
+  Rake.application = @rake
+    Rake.application.rake_require("lib/tasks/scholarsphere-fixtures", ["."], loaded_files_excluding_current_rake_file)
+    Rake.application.rake_require("lib/tasks/active_fedora", [activefedora_path], loaded_files_excluding_current_rake_file)
+  Rake::Task.define_task(:environment)
+end
+  load_rake
+  @rake['scholarsphere:fixtures:refresh'].invoke
+  @rake['scholarsphere:fixtures:fix'].invoke
+
+at_exit do
+  load_rake
+  @rake['scholarsphere:fixtures:delete'].invoke
+end
+
