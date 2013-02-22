@@ -72,13 +72,47 @@ describe User do
     end
   end
   describe "#groups" do
-    before do
-      filter = Net::LDAP::Filter.eq('uid', @user.login)
-      Hydra::LDAP.expects(:groups_for_user).with(filter).returns(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
-      Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
+    describe "valid user" do
+      before do
+        filter = Net::LDAP::Filter.eq('uid', @user.login)
+        Hydra::LDAP.expects(:groups_for_user).with(filter).returns(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
+        Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
+      end
+      it "should return a list" do
+        @user.groups.should == ["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"]
+      end
     end
-    it "should return a list" do
-      @user.groups.should == ["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"]
+    describe "empty user" do
+      before do
+        Hydra::LDAP.expects(:groups_for_user).never
+        Hydra::LDAP.connection.expects(:get_operation_result).never
+      end
+      it "should return a list" do
+        u = User.new
+        u.groups.should == []
+      end
+    end
+  end
+  describe "#ldap_exist?" do
+    describe "valid user" do
+      before do
+        filter = Net::LDAP::Filter.eq('uid', @user.login)
+        Hydra::LDAP.expects(:does_user_exist?).with(filter).returns(true)
+        Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
+      end
+      it "should return a list" do
+        @user.ldap_exist?.should == true
+      end
+    end
+    describe "empty user" do
+      before do
+        Hydra::LDAP.expects(:does_user_exist?).never
+        Hydra::LDAP.connection.expects(:get_operation_result).never
+      end
+      it "should return a list" do
+        u = User.new
+        u.ldap_exist?.should == false
+      end
     end
   end
 
