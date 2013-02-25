@@ -13,6 +13,7 @@ gem 'rb-readline', '0.4.2'
 
 # Hydra community components
 gem 'sufia', '0.0.8'
+gem 'solrizer-fedora', '2.3.1'
 #gem 'sufia', :path => '../sufia' 
 #gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'1d78dfc6364c4ab893613e1931b5b59872e79005'
 # pointing to stewardship until pull request is complete
