@@ -19,7 +19,8 @@ class GenericFile < ActiveFedora::Base
   has_file_datastream :name => "full_text", :type => FullTextDatastream
 
   def characterize
-    self.characterization.ng_xml = self.content.extract_metadata
+    metadata = self.content.extract_metadata
+    self.characterization.ng_xml = metadata unless metadata.blank?
     self.append_metadata
     self.filename = self.label
     extract_content
@@ -45,7 +46,7 @@ class GenericFile < ActiveFedora::Base
          first = pdf.to_a[0]
          first.format = "PNG"
          scale = 338.0/first.page.width
-         scale = 0.20 if scale < 0.20
+         scale = 0.40 if scale < 0.40
          thumb = first.scale scale
          thumb.crop!(0, 0, 338, 493)
          self.thumbnail.content = thumb.to_blob { self.format = "PNG" }
