@@ -72,9 +72,8 @@ body
 {
     background-color: #FFFFFF;
 }
-table.table td a,
-.icon-cog:before  {
-    color: #0088CC;
+table.table thead tr th div.dropdown a.dropdown-toggle .icon-cog:before  {
+    color: #0088CC; 
 }
 
 table.table td a:hover
@@ -108,4 +107,7 @@ a:active
 {
     margin: 0;
     padding: 0;
+}
+a {
+    color: #0088CC; 
 }

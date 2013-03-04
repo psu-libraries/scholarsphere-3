@@ -41,7 +41,7 @@ $('#myTab a').click(function (e) {
       <%= image_tag @user.avatar.url(:thumb), :width => 100 %>
       <h3> <%= @user.name %><br /><%= @user.user_key %> </h3>
       <hr /> 
-        <i class="icon-time muted"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
+        <i class="icon-time"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
         <i class="icon-folder-open"></i> Deposited Files <%= link_to_field('depositor', @user.to_s, GenericFile.find(:depositor_t => @user.to_s).count) %> <br />
         <i class="icon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
         <i class="icon-briefcase"></i> <%= @user.title.titleize %> <br />
