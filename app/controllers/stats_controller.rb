@@ -30,44 +30,36 @@ class StatsController < ApplicationController
   include BlacklightAdvancedSearch::ParseBasicQ
 
   def list 
-
     if user_logged_in?
-       if current_user.groups.include?('umg/up.dlt.applicationsteam')
-       
-##       if current_user.groups.include?('umg/up.dlt.scholarsphere-admin-viewers')
+       if current_user.groups.include?("umg/up.dlt.scholarsphere-admin-viewers")
+
+          @totals=Hash.new
 
 ###       listing of all users with valid display name (eliminates audituser)
-          all_users=User.where("display_name != ''")
+          @all_users=User.where("display_name != ''")
 
-          @object_count = GenericFile.count
-          @user_count = all_users.count
+###       listing of all objects
+          @all_objs=GenericFile.all
 
-###       Get the 3 most recent users to join
-          @users_list = all_users.where("display_name != ''").order('created_at DESC').limit(5)
+#          @totals["objects"] = @all_objs.count
+#          @totals["users"] = @all_users.count
+
+###       Get the 5  most recent users to join
+            @recent_users = @all_users.select('display_name, login, created_at').order('created_at DESC').limit(5)
 
 ####      Get the 5 most active users
-          @gfl=GenericFile.all.group_by {|d|d.depositor}.sort_by {|k,v|v.count}.reverse
-          @gf=@gfl[0..4]
-   
+          @active_users=get_counts(@all_objs.group_by {|d|d.depositor}.sort_by {|k,v|v.count}.reverse.take(5))
+ 
 ####  Get count of documents by permissions
-          @private=0
-          @public=0
-          @psu=0
-          GenericFile.all.each do |gf|
-             if gf.permissions.map { |perm| perm[:access] if perm[:name] == "public" }.compact.first
-                @public+=1
-             elsif
-                gf.permissions.map { |perm| perm[:access] if perm[:name] == "registered"}.compact.first
-                   @psu+=1
-                else
-                   @private+=1
-             end
+          @totals['private']=0
+          @totals['public']=0
+          @totals['psu']=0
+          @all_objs.each do |gf| 
+             total_perms(gf.permissions.map { |perm| perm[:name] }.compact.first)
           end
 
-##        Get top 5 object formats 
-          @ffl=GenericFile.all.group_by {|f|f.format_label}.sort_by {|k,v|v.count}.reverse
-          @ff=@ffl[0..4]
-
+##        Get top 5 object formats
+          @formats=get_counts(@all_objs.group_by {|f|f.format_label}.sort_by {|k,v|v.count }.reverse.take(5))
           render "list"
        else
           render :template => '/error/404', :layout => "error", :formats => [:html], :status => 404
@@ -76,4 +68,31 @@ class StatsController < ApplicationController
        flash[:now] = 'OOOPS, login please'
     end
   end
+
+  def get_counts(list)
+     newlist={}
+     list.each do |k,v|
+       newlist[k]=v.count
+     end
+     return newlist
+  end
+
+  def total_perms(pm)
+    if  pm == "public" 
+       @totals['public']+=1
+    elsif pm == "registered"
+       @totals['psu']+=1
+    else
+       @totals['private']+=1
+    end
+  end
+
+ def get_stats_total()
+    newlist={}
+    self.each do |k,v|
+       newlist[k]=v.count
+    end
+    return newlist
+   end
+
 end
