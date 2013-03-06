@@ -15,13 +15,13 @@
 require 'spec_helper'
 
 describe 'host_to_vhost' do
-  it "should return the proper vhost on fedora1test" do
-    Socket.stubs(:gethostname).returns('fedora1test')
+  it "should return the proper vhost on ss1test" do
+    Socket.stubs(:gethostname).returns('ss1test')
     ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-integration.dlt.psu.edu-8443'
     ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-integration.dlt.psu.edu:8443/'
   end
-  it "should return the proper vhost on fedora2test" do
-    Socket.stubs(:gethostname).returns('fedora2test')
+  it "should return the proper vhost on ss2test" do
+    Socket.stubs(:gethostname).returns('ss2test')
     ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
     ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-test.dlt.psu.edu/'
   end

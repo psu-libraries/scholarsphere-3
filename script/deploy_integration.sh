@@ -22,8 +22,8 @@ echo hello ss-integration
 echo "=-=-=-=-= $0 export RAILS_ENV=integration"
 export RAILS_ENV=integration
 
-echo "=-=-=-=-= $0 exit if not fedora1test"
-[[ $(hostname -s) == "fedora1test" ]] || exit 1
+echo "=-=-=-=-= $0 exit if not ss1test"
+[[ $(hostname -s) == "ss1test" ]] || exit 1
 
 echo "=-=-=-=-= $0 source ${HHOME}/.bashrc"
 source ${HHOME}/.bashrc
