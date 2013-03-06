@@ -16,8 +16,8 @@ Sufia.config do |config|
   # TODO move these to an HttpAuth initializer
     # Map hostnames onto vhosts
   config.hosts_vhosts_map = {
-    'fedora1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
-    'fedora2test' => 'https://scholarsphere-test.dlt.psu.edu/',
+    'ss1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
+    'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
     'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
     'ss2stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
     'ss1prod' => 'https://scholarsphere.psu.edu/',
