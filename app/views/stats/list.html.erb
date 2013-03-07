@@ -1,53 +1,59 @@
 <div class="stats">
 <h1>Statistics for <%= ScholarSphere::Application.config.application_name %> 
 <%= ScholarSphere::Application.config.scholarsphere_version %></h1> 
-<h2>released on <%= ScholarSphere::Application.config.scholarsphere_release_date %></h2>
+<br />   
+<h3>Total objects: <%= @all_objs.count %> </h3>
 <br />
-<h3>Total objects: <%= @object_count %> </h3>
+<h4>File Permissions</h4>
 <ul>
-  <li>Public &nbsp;<span class="count">(<%= @public.to_s %>)</span></li>
-  <li>PSU &nbsp;<span class="count">(<%= @psu.to_s %>)</span></li>
-  <li>Private &nbsp;<span class="count">(<%= @private.to_s %>)</span></li>
+  <li>Public &nbsp;<span class="count">(<%= @totals['public'].to_s %>)</span></li>
+  <li>PSU &nbsp;<span class="count">(<%= @totals['psu'].to_s %>)</span></li>
+  <li>Private &nbsp;<span class="count">(<%= @totals['private'].to_s %>)</span></li>
 </ul>
-
-<h4>Top formats used:</h4>
-<ul>
-   <% @ff.each do |k,v| %>
+<% if !@formats.nil? %>
+<h4>Top formats used </h4>
+   <ul>
+   <% @formats.each do |k| %>
       <li>
-         <%= k.first %>&nbsp;
-         <span class="count">(
-         <%= v.count %>)
-         </span>
+      <%= k['format'].first %>&nbsp; 
+      <span class="count">(
+      <%= k['count'].to_s %>)
+      </span>
       </li>
-   <% end %>
-</ul>
+      <% end %>
+   </ul>
+<% end %>
+
 <br/>
-<h3>Total Scholarsphere Members: <%= @user_count %> </h3>
+<h3>Total Scholarsphere Members:&nbsp; <%= @all_users.count %> </h3>
 <br/>
+<% if !@recent_users.nil? %>
 <h4>Newest members:</h4>
 <ul>
-   <% @users_list.each do |usr| %>
+   <% @recent_users.each do |usr| %>
       <% if !usr.display_name.nil?  %>
           <li>
-             <a href="<%= sufia.profile_path(usr.login) %>"  title="click for User Profile"><%= usr.name %></a> member since 
+             <a href="<%= sufia.profile_path(usr.login) %>"  title="click for User Profile"><%= usr.display_name.titleize %></a> member since 
              <span class="date">
              <%= usr.created_at.to_time.strftime("%m/%d/%Y") %>
              </span>
           </li>
        <% end %>
    <%end %>
+<% end %>
 </ul>
 <br/>
-
+<% if !@active_users.nil? %>
 <h4>Members with the most files:</h4>
 <ul>
-   <% @gf.each do |k,v| %>
+   <% @active_users.each do |k| %>
       <li>
-         <a href="<%= sufia.profile_path(k) %>" title="click for User Profile">
-         <%= User.select(:display_name).where(:login => k).first[:display_name].titleize %></a>&nbsp;
-         <span class="count">(<%= v.count %>)</span>
+         <a href="<%= sufia.profile_path(k['login']) %>" title="click for User Profile">
+         <%= k['uname'] %></a>&nbsp;
+         <span class="count">(<%= k['count'].to_s %>)</span>
       </li>
    <% end %>
 </ul>
+<% end %>
 
 </div>

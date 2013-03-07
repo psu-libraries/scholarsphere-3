@@ -30,51 +30,39 @@ class StatsController < ApplicationController
   include BlacklightAdvancedSearch::ParseBasicQ
 
   def list 
-    if user_logged_in?
-       if current_user.groups.include?("umg/up.dlt.scholarsphere-admin-viewers")
 
           @totals=Hash.new
 
 ###       listing of all users with valid display name (eliminates audituser)
-          @all_users=User.where("display_name != ''")
+
+           @all_users=User.where("login NOT LIKE '%audituser%' AND login NOT LIKE '%batchuser%'")
 
 ###       listing of all objects
           @all_objs=GenericFile.all
 
-#          @totals["objects"] = @all_objs.count
-#          @totals["users"] = @all_users.count
-
-###       Get the 5  most recent users to join
-            @recent_users = @all_users.select('display_name, login, created_at').order('created_at DESC').limit(5)
-
-####      Get the 5 most active users
-          @active_users=get_counts(@all_objs.group_by {|d|d.depositor}.sort_by {|k,v|v.count}.reverse.take(5))
- 
 ####  Get count of documents by permissions
           @totals['private']=0
           @totals['public']=0
-          @totals['psu']=0
-          @all_objs.each do |gf| 
-             total_perms(gf.permissions.map { |perm| perm[:name] }.compact.first)
+          @totals['psu']=0          
+          @all_objs.each do |gf|
+             total_perms(gf.permissions.map { |perm| perm[:name] }.compact.first
+)
           end
 
-##        Get top 5 object formats
-          @formats=get_counts(@all_objs.group_by {|f|f.format_label}.sort_by {|k,v|v.count }.reverse.take(5))
-          render "list"
-       else
-          render :template => '/error/404', :layout => "error", :formats => [:html], :status => 404
-       end
-    else
-       flash[:now] = 'OOOPS, login please'
-    end
-  end
 
-  def get_counts(list)
-     newlist={}
-     list.each do |k,v|
-       newlist[k]=v.count
-     end
-     return newlist
+###       Get the 5  most recent users to join
+
+          @recent_users = @all_users.where("created_at != ''").select('display_name, login, created_at').order('created_at DESC').limit(5)
+
+
+####      Get the 5 most active users
+          @active_users=@all_objs.group_by{|d|d.depositor}.sort_by{|k,v|v.count}.reverse.take(5).map{|k,v| k={'login'=>k, 'count'=>v.count, 'uname'=>@all_users.where(:login => k).first.name || k}} 
+
+
+##        Get top 5 object formats
+          @formats=@all_objs.group_by{|f|f.format_label}.sort_by{|k,v|v.count}.reverse.take(5).map{|k,v| k={'format'=>k, 'count'=>v.count} }
+
+          render "list"
   end
 
   def total_perms(pm)
@@ -86,13 +74,5 @@ class StatsController < ApplicationController
        @totals['private']+=1
     end
   end
-
- def get_stats_total()
-    newlist={}
-    self.each do |k,v|
-       newlist[k]=v.count
-    end
-    return newlist
-   end
 
 end
