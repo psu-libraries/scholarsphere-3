@@ -72,8 +72,8 @@ module ScholarSphere
     config.assets.paths << '#{Rails.root}/vendor/assets/images'
     config.assets.paths << '#{Rails.root}/vendor/assets/fonts'
 
-    config.scholarsphere_version = "v1.3.0"
-    config.scholarsphere_release_date = "Dec. 18, 2012"
+    config.scholarsphere_version = "v1.4.0"
+    config.scholarsphere_release_date = "Feb. 28, 2013"
 
     config.fits_to_desc_mapping = {
       :file_title => :title,
@@ -88,8 +88,8 @@ module ScholarSphere
 
     # Map hostnames onto vhosts
     config.hosts_vhosts_map = {
-      'fedora1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
-      'fedora2test' => 'https://scholarsphere-test.dlt.psu.edu/',
+      'ss1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
+      'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
       'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss2stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss1prod' => 'https://scholarsphere.psu.edu/',

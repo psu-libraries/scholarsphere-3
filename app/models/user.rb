@@ -101,6 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def ldap_exist!
+    return false if self.login.blank?
     exist = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
       Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
     end rescue false
@@ -127,11 +128,12 @@ class User < ActiveRecord::Base
   end
 
   def groups!
+    return [] if self.login.blank?
     list = self.class.groups(login)
 
     if Hydra::LDAP.connection.get_operation_result.code == 0
       list.sort!
-      logger.debug "groups = #{list}"
+      logger.debug "$#{login}$ groups = #{list}"
       attrs = {}
       attrs[:ldap_na] = false
       attrs[:group_list] = list.join(";?;")

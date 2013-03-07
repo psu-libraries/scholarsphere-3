@@ -24,5 +24,14 @@ FactoryGirl.define do
   factory :curator, :class => User do |u|
     login 'curator1'
   end
+
+  factory :test_user_1, :class => User do |u|
+    login 'tstem31'
+  end
+
+  factory :test_user_2, :class => User do |u|
+    login 'testapp'
+  end
+
 end
 

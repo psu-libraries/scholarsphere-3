@@ -44,13 +44,7 @@ class CatalogController < ApplicationController
   end
 
   def recent
-    if user_signed_in?
-      # grab other people's documents
-      (resp, doc_list) = get_search_results(:q =>'{!lucene q.op=AND df=depositor_t}-'+current_user.user_key, :sort=>"system_create_dt desc", :rows=>3)      
-    else 
-      # grab any documents we do not know who you are
-      (resp, doc_list) = get_search_results(:q =>'', :sort=>"system_create_dt desc", :rows=>3)
-    end
+    (resp, doc_list) = get_search_results(:q =>'{!lucene q.op=AND df=read_access_group_t}public', :sort=>"system_create_dt desc", :rows=>3)      
     @recent_documents = doc_list[0..3]
   end
 

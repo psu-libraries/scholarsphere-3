@@ -21,8 +21,10 @@ require 'action_view'
 require 'rainbow'
   require 'cucumber'
   require 'cucumber/rake/task'
+  require 'blacklight/solr_helper'
 
 include ActionView::Helpers::NumberHelper
+include Blacklight::SolrHelper
 
 namespace :scholarsphere do
   desc "Restore missing user accounts"
@@ -90,21 +92,37 @@ namespace :scholarsphere do
     end
   end
 
-  desc "Characterize uncharacterized files"
-  task :characterize => :environment do
-    GenericFile.find(:all).each do |gf|
-      if gf.characterization.content.nil?
-        Resque.enqueue(CharacterizeJob, gf.pid)
-      end
-    end
+  def blacklight_config
+    @config ||= CatalogController.blacklight_config
+    @config.default_solr_params = {:qt=>"search", :rows=>100, :fl=>'id'}
+    return @config
   end
 
-  desc "Characterize uncharacterized files"
-  task :characterize! => :environment do
-    GenericFile.find(:all).each do |gf|
-      Resque.enqueue(CharacterizeJob, gf.pid)
-    end
+  def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
   end
+
+  desc "Characterize all files"
+  task :characterize => :environment do
+    # grab the first increment of document ids from solr
+    resp = query_solr(:q=>"#{ScholarSphere::Application.config.id_namespace}:*")
+    
+    #get the totalNumber and the size of the current response
+    totalNum =  resp["response"]["numFound"]
+    idList = resp["response"]["docs"]
+    page = 1
+    
+    #loop through each page appending the ids to the original list
+    while idList.length < totalNum
+       page += 1
+       resp = query_solr(:q=>"#{ScholarSphere::Application.config.id_namespace}:*", :page=>page)
+       idList = idList + resp["response"]["docs"]      
+       totalNum =  resp["response"]["numFound"]
+    end 
+    
+    #for each document in the database call characterize
+    idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"])}
+  end
+
 
   desc "Re-solrize all objects"
   task :resolrize => :environment do

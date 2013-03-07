@@ -46,7 +46,6 @@ describe CatalogController do
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
-        puts "docs = #{ assigns(:document_list)[0].inspect}"
         assigns(:document_list)[0].fetch(:desc_metadata__title_t)[0].should eql('Test Document PDF')
       end
     end

@@ -22,11 +22,7 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-<<<<<<< HEAD
     active-fedora (5.6.2)
-=======
-    active-fedora (5.5.2)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
       activeresource (>= 3.0.0)
       activesupport (>= 3.0.0)
       builder (~> 3.0.0)
@@ -37,11 +33,7 @@ GEM
       rdf
       rdf-rdfxml (~> 0.3.8)
       rsolr
-<<<<<<< HEAD
       rubydora (~> 1.3)
-=======
-      rubydora (~> 1.2)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
       solrizer (>= 2.1.0)
     activemodel (3.2.11)
       activesupport (= 3.2.11)
@@ -51,11 +43,7 @@ GEM
       activesupport (= 3.2.11)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-<<<<<<< HEAD
     activerecord-import (0.3.1)
-=======
-    activerecord-import (0.3.0)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
       activerecord (~> 3.0)
       activerecord (~> 3.0)
     activeresource (3.2.11)
@@ -98,13 +86,8 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-<<<<<<< HEAD
     childprocess (0.3.8)
       ffi (~> 1.0, >= 1.0.11)
-=======
-    childprocess (0.3.7)
-      ffi (~> 1.0, >= 1.0.6)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
     clamav (0.4.1)
     cocaine (0.4.2)
     coffee-rails (3.2.2)
@@ -127,11 +110,7 @@ GEM
     daemon_controller (1.1.1)
     daemons (1.1.9)
     database_cleaner (0.9.1)
-<<<<<<< HEAD
     debugger (1.3.1)
-=======
-    debugger (1.3.0)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
       debugger-ruby_core_source (~> 1.1.8)
@@ -166,11 +145,7 @@ GEM
       activerecord (>= 3.0.0)
     gherkin (2.11.6)
       json (>= 1.7.6)
-<<<<<<< HEAD
     headless (1.0.1)
-=======
-    headless (1.0.0)
->>>>>>> 82e9814c9a16d6628a30dc2cb8915670a92ba52c
     hike (1.2.1)
     hooks (0.2.2)
     hydra-access-controls (5.4.0)
@@ -381,7 +356,7 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
     stomp (1.2.8)
-    sufia (0.0.8)
+    sufia (0.1.0)
       active-fedora (>= 5.5)
       activerecord-import
       acts_as_follower (= 0.1.1)
@@ -442,11 +417,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_follower (= 0.1.1)
   bootstrap-sass
   capybara (~> 1.1.3)
   clamav (= 0.4.1)
   coffee-rails (= 3.2.2)
   cucumber-rails (~> 1.0)
+  daemons (= 1.1.9)
   database_cleaner
   debugger
   devise (= 2.1.3)
@@ -461,21 +438,28 @@ DEPENDENCIES
   jquery-rails (= 2.1.4)
   launchy
   mail_form
+  mailboxer (= 0.8.0)
   mocha (= 0.12.4)
   mysql2 (= 0.3.11)
+  nest (= 1.1.1)
   noid (= 0.5.5)
+  paperclip (= 3.3.0)
   passenger (= 3.0.13)
   rails (= 3.2.11)
+  rails_autolink (= 1.0.9)
   rb-readline (= 0.4.2)
   resque-pool (= 0.3.0)
+  rmagick (= 2.13.1)
   rspec-rails (>= 2.11.0)
   sass-rails (= 3.2.5)
   selenium-webdriver
+  sitemap (= 0.3.2)
   sqlite3
-  sufia (= 0.0.8)
+  sufia (= 0.1.0)
   therubyracer (= 0.10.2)
   uglifier (= 1.3.0)
   unicode
   unicorn-rails
   will_paginate (= 3.0.3)
-  yaml_db (~> 0.2.3)
+  yaml_db (= 0.2.3)
+  zipruby (= 0.3.6)

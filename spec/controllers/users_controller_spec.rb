@@ -52,6 +52,15 @@ describe UsersController do
       flash[:alert].should be_nil
     end
   end
+  describe "#index" do 
+    it "should not display test users" do 
+    @user = FactoryGirl.find_or_create(:test_user_1)
+    @another_user = FactoryGirl.find_or_create(:test_user_2)
+    get :index #, uid: user.login
+    response.should_not include("tstem31")
+    response.should_not include("testapp")
+    end
+  end
   describe "#edit" do
     it "show edit form when user edits own profile" do
       get :edit, uid: @user.login

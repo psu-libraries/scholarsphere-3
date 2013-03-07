@@ -22,9 +22,9 @@ class UsersController < ApplicationController
   def index
     sort_val = get_sort
     query = params[:uq].blank? ? nil : "%"+params[:uq].downcase+"%"
-    @users = User.where("(login like lower(?) OR display_name like lower(?)) and ldap_available = true ",query,query).paginate(:page => params[:page], 
-                           :per_page => 10, :order => sort_val) unless query.blank?   
-    @users = User.where("ldap_available = true").paginate(:page => params[:page], :per_page => 10, :order => sort_val) if query.blank?
+    @users = User.where("(login like lower(?) OR display_name like lower(?)) and ldap_available = true and login not in ('testppp','tstem31')",
+     query,query).paginate(:page => params[:page], :per_page => 10, :order => sort_val) unless query.blank?   
+    @users = User.where("ldap_available = true and login not in ('testapp','tstem31')").paginate(:page => params[:page], :per_page => 10, :order => sort_val) if query.blank?
   end
 
   # Display user profile
