@@ -1,0 +1,86 @@
+<%#
+Copyright © 2012 The Pennsylvania State University
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+%>
+
+<% content_for :local_js do %>
+   if (navigator.userAgent.match("MSIE")){
+      $("form").validate();
+   }
+initialize_audio();
+
+$('input[name=revision]:radio').on('click', function() {
+    $('#save_version_note').fadeIn('slow');
+    });
+
+confirmation_needed = false;
+window.onbeforeunload = confirmExit;
+function confirmExit(){
+      if(confirmation_needed){ 
+      // if you return a string it will be displayed in between "don't navigate away"
+      // and "click Ok to navigate away or cancel to stay put" in the confirm dialog
+         return "Your metadata has not been saved.";
+      }
+ }  
+
+<% if params[:tab] == 'versions' %>
+  versions_tab();
+<% elsif params[:tab] == 'permissions' %>
+  permissions_tab();
+<% else %>
+  descriptions_tab();
+<% end %>
+
+// only valid for perm tab
+set_access_levels();
+
+// initialize popover helpers
+$("a[rel=popover]").popover();
+
+<% end %>
+
+<% content_for :local_css do %>
+.audiojs {
+  width: 338px;
+}
+
+label.error { float: left; color: red; padding-left: .5em; vertical-align: top; }
+<% end %>
+<%= render :partial => 'page_title' %>
+<%= render :partial => 'breadcrumbs' %>
+
+<h1 class="lower">Edit <%= display_title(@generic_file) %></h1>
+
+<div class="row">
+  <div class="span40">
+    <%= render :partial => 'media_display' %>
+  </div>
+  <div class="span2">&nbsp;</div>
+  <div class="span68">
+    <%= link_to "&lt;&lt;Browse view".html_safe, sufia.generic_file_path %></li>
+    <ul class="nav nav-tabs">
+      <li id="edit_descriptions_link"><a href="#"><i class="icon-tags"></i> Descriptions</a></li>
+      <li id="edit_versioning_link"><a href="#"><i class="icon-sitemap"></i> Versions</a></li>
+      <li id="edit_permissions_link"><a href="#"><i class="icon-key"></i> Permissions</a></li>
+    </ul>
+    <%= render :partial => "descriptions", :locals => { :generic_file => @generic_file } %>
+
+    <%= form_for @generic_file, :url => sufia.generic_file_path, :html => {:multipart => true, :class => 'form-horizontal', :id => 'permission'} do |f| %>
+      <%= hidden_field_tag('redirect_tab', 'permissions') %>
+      <%= render :partial => "permission", :locals => { :gf => @generic_file, :f=> f } %>
+    <% end %>
+
+    <%= render :partial => "versioning", :locals => { :generic_file => @generic_file } %>
+  </div> <!-- /.span68-->
+</div><!-- /.row -->
