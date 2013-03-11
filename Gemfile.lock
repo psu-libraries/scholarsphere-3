@@ -445,6 +445,7 @@ DEPENDENCIES
   noid (= 0.5.5)
   paperclip (= 3.3.0)
   passenger (= 3.0.13)
+  rack (= 1.4.5)
   rails (= 3.2.11)
   rails_autolink (= 1.0.9)
   rb-readline (= 0.4.2)

@@ -8,6 +8,7 @@ source 'http://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '3.2.11'
+gem 'rack', '1.4.5'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
 
