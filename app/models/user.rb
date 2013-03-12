@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
   # Workaround to retry LDAP calls a number of times
   include Sufia::Utils
 
-  delegate :can?, :cannot?, :to => :ability
 
   Devise.add_module(:http_header_authenticatable,
                     :strategy => true,
@@ -33,31 +32,13 @@ class User < ActiveRecord::Base
 
   devise :http_header_authenticatable
 
-  # set this up as a messageable object
-  acts_as_messageable
-
-  # Users should be able to follow things
-  acts_as_follower
-  # Users should be followable
-  acts_as_followable
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :login, :display_name, :address, :admin_area, :department, :title, :office, :chat_id, :website, :affiliation, :telephone, :avatar, 
   :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle, :linkedin_handle
 
-  # Add user avatar (via paperclip library)
-  has_attached_file :avatar, :styles => { medium: "300x300>", thumb: "100x100>" }, :default_url => '/assets/missing_:style.png'
-  validates :avatar, :attachment_content_type => { :content_type => /^image\/(jpg|jpeg|pjpeg|png|x-png|gif)$/ }, :if => Proc.new { |p| p.avatar.file? }
-  validates :avatar, :attachment_size => { :less_than => 2.megabytes }, :if => Proc.new { |p| p.avatar.file? }
-
   # Pagination hook
   self.per_page = 5
 
-  # This method should display the unique identifier for this user as defined by devise.
-  # The unique identifier is what access controls will be enforced against.
-  def user_key
-    send(Devise.authentication_keys.first)
-  end
 
   #put in to remove deprication warnings since the parent class overrides our login with it's own
   def login
@@ -68,10 +49,6 @@ class User < ActiveRecord::Base
     self[:login]
   end
 
-  def email_address
-    return self.email
-  end
-
   def name
     return self.display_name.titleize || self.login rescue self.login
   end
@@ -80,18 +57,6 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
-
-  # method needed for messaging
-  def mailboxer_email(obj=nil)
-    return nil
-  end
-
-  # method needed for trophies
-  def trophies
-     trophies = Trophy.where(user_id:self.id)    
-    return trophies
-  end
-
 
   def ldap_exist?
     if (ldap_last_update.blank? || ((Time.now-ldap_last_update) > 24*60*60 ))
@@ -196,10 +161,6 @@ class User < ActiveRecord::Base
       Hydra::LDAP.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
     end rescue []
     return attrs
-  end
-
-  def ability
-    @ability ||= Ability.new(self)
   end
 
   def self.current
