@@ -28,9 +28,9 @@ banner "checking username"
     exit 1
 }
 
-banner "exit if not fedora2test"
-[[ $(hostname -s) == "fedora2test" ]] || {
-    echo -e "${ERROR_TERMCOLORS}*** ERROR: $0 must be run on fedora2test ${DEFAULT_TERMCOLORS}"
+banner "exit if not ss2test"
+[[ $(hostname -s) == "ss2test" ]] || {
+    echo -e "${ERROR_TERMCOLORS}*** ERROR: $0 must be run on ss2test ${DEFAULT_TERMCOLORS}"
     exit 1
 }
 
