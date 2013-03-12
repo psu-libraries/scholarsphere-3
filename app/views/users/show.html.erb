@@ -46,12 +46,11 @@ $('#myTab a').click(function (e) {
         <i class="icon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
         <i class="icon-briefcase"></i> <%= @user.title.titleize %> <br />
       <!-- following -->
-        <hr />
-      <div>
-        <h4><i class="icon-hand-left"></i> Follower(s): <%= @followers.count %></h4>
-        <h4><i class="icon-hand-right"></i> Following: <%= @following.count %></h4>
-      </div>
+      <hr />
 
+      <%= render :partial => "users/follower_modal" %>
+      <%= render :partial => "users/following_modal" %>
+ 
       <br />
       <a class="btn btn-primary" href="<%= sufia.profiles_path %>"><i class="icon-globe"></i> View Users</a>
     </span> <!-- /close span60 -->
@@ -93,3 +92,5 @@ $('#myTab a').click(function (e) {
 
     </span> <!-- /close span50 -->
   </div><!-- /close span110 -->
+
+
