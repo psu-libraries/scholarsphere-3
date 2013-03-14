@@ -61,6 +61,9 @@ class UsersController < ApplicationController
     end       
     @followers = @user.followers
     @following = @user.all_following
+    @linkedInUrl = @user.linkedin_handle
+    @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'linkedin.com'
+    @linkedInUrl = "http://"+ @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'http'
   end
 
   # Display form for users to edit their profile information
