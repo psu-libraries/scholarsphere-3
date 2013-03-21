@@ -13,9 +13,9 @@ gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
 
 # Hydra community components
-gem 'sufia', '0.1.0'
+#gem 'sufia', '0.1.0'
 #gem 'sufia', :path => '../sufia' 
-#gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'1d78dfc6364c4ab893613e1931b5b59872e79005'
+gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'019c88bc1fe8762adeeacbe6a58d26945efcbfef'
 # pointing to stewardship until pull request is complete
 #gem 'hydra-batch-edit' 
 gem 'hydra-batch-edit', :git => 'git://github.com/psu-stewardship/hydra-batch-edit.git'

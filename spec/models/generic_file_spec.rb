@@ -237,14 +237,15 @@ describe GenericFile do
         @f.add_file_datastream(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), :dsid=>'content')
         @f.apply_depositor_metadata('mjg36')
         @f.save
-        @mock_image = mock("image", :from_blob=>true)
-        Magick::ImageList.expects(:new).returns(@mock_image)
       end
       after do
         @f.delete
       end
       it "should scale the thumbnail to original size" do
-        @mock_image.expects(:scale).with(50, 50).returns(stub(:to_blob=>'fake content'))
+        @mock_image = mock("image", :from_blob=>true)
+        @mock_image.expects(:scale).never
+        @mock_image.expects(:to_blob).returns('fake content')
+        Magick::ImageList.expects(:new).returns(@mock_image)
         @f.create_thumbnail
         @f.content.changed?.should be_false
         @f.thumbnail.content.should == 'fake content'
