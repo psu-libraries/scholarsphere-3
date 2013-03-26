@@ -18,7 +18,7 @@ Sitemap::Generator.instance.load host: 'scholarsphere.psu.edu' do
   User.all.each do |user|
     path :profile, params: { uid: user.login }, priority: 0.8, change_frequency: 'daily'
   end
-  GenericFile.find('access_group_t' => 'public').each do |gf|
+  GenericFile.find('read_access_group_t' => 'public').each do |gf|
     path :generic_file, params: { id: gf.noid }, priority: 1, change_frequency: 'weekly'
   end
 
