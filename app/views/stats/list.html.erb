@@ -48,8 +48,7 @@
 <ul>
    <% @active_users.each do |k| %>
       <li>
-         <a href="<%= sufia.profile_path(k['login']) %>" title="click for User Profile">
-         <%= k['uname'] %></a>&nbsp;
+         <%= link_to_profile(k['login']) %>&nbsp;
          <span class="count">(<%= k['count'].to_s %>)</span>
       </li>
    <% end %>
