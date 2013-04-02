@@ -11,8 +11,10 @@ gem 'rails', '3.2.11'
 gem 'rack', '1.4.5'
 gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
+gem 'rubydora', '1.4.2'
 
 # Hydra community components
+gem 'solrizer', '2.1.0'
 #gem 'sufia', '0.1.0'
 #gem 'sufia', :path => '../sufia' 
 gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'019c88bc1fe8762adeeacbe6a58d26945efcbfef'
@@ -20,7 +22,7 @@ gem 'sufia', :git =>'git://github.com/curationexperts/sufia.git', :ref=>'019c88b
 #gem 'hydra-batch-edit' 
 gem 'hydra-batch-edit', :git => 'git://github.com/psu-stewardship/hydra-batch-edit.git'
 gem 'hydra-ldap', '0.1.0'
-gem 'noid', '0.5.5'
+#gem 'noid', '0.5.5'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
 # NOTE: the :require arg is necessary on Linux-based hosts
