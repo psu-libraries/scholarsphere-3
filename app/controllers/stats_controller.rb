@@ -56,7 +56,7 @@ class StatsController < ApplicationController
 
 
 ####      Get the 5 most active users
-          @active_users=@all_objs.group_by{|d|d.depositor}.sort_by{|k,v|v.count}.reverse.take(5).map{|k,v|puts "k = #{k} v = #{v}"; k={'login'=>k, 'count'=>v.count}} 
+          @active_users=@all_objs.group_by{|d|d.depositor}.sort_by{|k,v|v.count}.reverse.take(5).map{ |k,v| k={'login'=>k, 'count'=>v.count}}
 
 
 ##        Get top 5 object formats
