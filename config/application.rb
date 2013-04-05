@@ -19,9 +19,6 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
-#require 'rubygems'
-#require 'RMagick'
-#include Magick
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -57,10 +54,9 @@ module ScholarSphere
     config.application_name = "ScholarSphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # turning on the new asset pipeline for handling javascript, css, and image files
-    config.assets.enabled = true    
+    config.assets.enabled = true
     # Default SASS Configuration, check out https://github.com/rails/sass-rails for details
     config.assets.compress = !Rails.env.development?
-
 
     config.assets.paths << '#{Rails.root}/app/assets/javascripts'
     config.assets.paths << '#{Rails.root}/app/assets/stylesheets'
@@ -73,7 +69,7 @@ module ScholarSphere
     config.assets.paths << '#{Rails.root}/vendor/assets/fonts'
 
     config.scholarsphere_version = "v1.4.0"
-    config.scholarsphere_release_date = "Feb. 28, 2013"
+    config.scholarsphere_release_date = "March 13, 2013"
 
     config.fits_to_desc_mapping = {
       :file_title => :title,
@@ -145,18 +141,18 @@ module ScholarSphere
       'CC0 1.0 Universal' => 'http://creativecommons.org/publicdomain/zero/1.0/',
       'All rights reserved' => 'All rights reserved'
     }
-    
+
     config.cc_licenses_reverse = Hash[*config.cc_licenses.to_a.flatten.reverse]
 
     # help text to display for form metadata elements, these will need to be updated to
     # reflect a field name change (should one happen) in the generic file datastream
     config.metadata_help = {
       "generic_file_resource_type" => "Pre-defined categories to describe the type of file content being uploaded, such as \"article\" or \"dataset.\"  More than one type may be selected.",
-      "generic_file_title" => "A name for the file to aid in identifying it. Defaults to the file name, though a more descriptive title is encouraged. <em>This is a required field</em>.", 
+      "generic_file_title" => "A name for the file to aid in identifying it. Defaults to the file name, though a more descriptive title is encouraged. <em>This is a required field</em>.",
       "generic_file_tag" => "Words or phrases you select to describe what the file is about. These are used to search for content. <em>This is a required field</em>.",
       "generic_file_subject" => "Headings or index terms describing what the file is about; these <em>do</em> need to conform to an existing vocabulary. Currently ScholarSphere supports Library of Congress Subject Headings.",
       "generic_file_creator" => "The person or group responsible for the file being uploaded. Usually this is the author of the content. Personal names should be entered with the last name first, e.g. \"Smith, John.\" <em>This is a required field</em>.",
-      "generic_file_related_url" => "A link to a website or other specific content (audio, video, PDF document) related to the file. An example is the URL of a research project from which the file was derived.", 
+      "generic_file_related_url" => "A link to a website or other specific content (audio, video, PDF document) related to the file. An example is the URL of a research project from which the file was derived.",
       "generic_file_based_near" => "A place name related to the file, such as its site of publication, or the city, state, or country the file's contents are about. Calls upon the GeoNames web service (<a href=\"http://www.geonames.org\">http://www.geonames.org</a>).",
       "generic_file_contributor" => "A person or group you want to recognize for playing a role in the creation of the file, but not the primary role. If there is a specific role you would like noted, include it in parentheses, e.g. \"Jones, Mary (advisor).\"",
       "generic_file_date_created" => "The date on which the file was generated. Dates are accepted in the form YYYY-MM-DD, e.g. 1776-07-04.",
@@ -194,15 +190,9 @@ module ScholarSphere
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+
     #configure the number of fits array items shown on the Generic File show page
     config.fits_message_length = 5
   end
 end
-# this prevents LoadErrors, related to Rails autoload behavior
-#require 'sufia/permissions'
-#require 'sufia/id_service'
-#require 'sufia/noid'
-#require 'sufia/model_methods'
-#require 'sufia/role_mapper'
-#require 'sufia/utils'
+
