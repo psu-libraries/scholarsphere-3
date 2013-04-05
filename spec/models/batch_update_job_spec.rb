@@ -34,13 +34,12 @@ describe BatchUpdateJob do
   end
   describe "failing update" do
     it "should check permissions for each file before updating" do
-      BatchUpdateJob.any_instance.stubs(:get_permissions_solr_response_for_doc_id).returns(["","mock solr permissions"])
-      User.any_instance.expects(:can?).with(:edit, "mock solr permissions").times(2)
+      User.any_instance.expects(:can?).with(:edit, @file).returns(false)
+      User.any_instance.expects(:can?).with(:edit, @file2).returns(false)
       params = {'generic_file' => {'read_groups_string' => '', 'read_users_string' => 'archivist1, archivist2', 'tag' => ['']}, 'id' => @batch.pid, 'controller' => 'batch', 'action' => 'update'}.with_indifferent_access
       BatchUpdateJob.new(@user.user_key, params).run
       @user.mailbox.inbox[0].messages[0].subject.should == "Batch upload permission denied"
       @user.mailbox.inbox[0].messages[0].move_to_trash @user
-      #b = Batch.find(@batch.pid)
     end
   end
   describe "passing update" do
