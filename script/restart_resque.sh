@@ -16,4 +16,4 @@ RESQUE_POOL_PIDFILE="$(pwd)/tmp/pids/resque-pool.pid"
     kill -2 $PID && anywait $PID
 }
 
-resque-pool --daemon --environment development start
+bundle exec resque-pool --daemon --environment development start

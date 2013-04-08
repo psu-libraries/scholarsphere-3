@@ -47,26 +47,26 @@ echo "=-=-=-=-= $0 passenger-install-apache2-module -a"
 passenger-install-apache2-module -a
 
 echo "=-=-=-=-= $0 rake db:drop/create/migrate"
-RAILS_ENV=integration rake db:drop
-RAILS_ENV=integration rake db:create
-RAILS_ENV=integration rake db:migrate
+RAILS_ENV=integration bundle exec rake db:drop
+RAILS_ENV=integration bundle exec rake db:create
+RAILS_ENV=integration bundle exec rake db:migrate
 
 echo "=-=-=-=-= $0 rake fixtures:create/refresh"
-RAILS_ENV=integration rake scholarsphere:fixtures:generate
-RAILS_ENV=integration rake scholarsphere:fixtures:refresh
+RAILS_ENV=integration bundle exec rake scholarsphere:fixtures:generate
+RAILS_ENV=integration bundle exec rake scholarsphere:fixtures:refresh
 
 echo "=-=-=-=-= $0 resque-pool restart"
 [ -f $RESQUE_POOL_PIDFILE ] && {
     PID=$(cat $RESQUE_POOL_PIDFILE)
     kill -15 $PID && anywait $PID
 }
-resque-pool --daemon --environment integration start
+bundle exec resque-pool --daemon --environment integration start
 
 echo "=-=-=-=-= $0 rake scholarsphere:generate_secret"
-rake scholarsphere:generate_secret
+bundle exec rake scholarsphere:generate_secret
 
 echo "=-=-=-=-= $0 rake scholarsphere:resolrize"
-RAILS_ENV=integration rake scholarsphere:resolrize
+RAILS_ENV=integration bundle exec rake scholarsphere:resolrize
 
 echo "=-=-=-=-= $0 touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt

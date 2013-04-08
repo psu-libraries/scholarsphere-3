@@ -30,7 +30,7 @@ echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml $
 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml ${WORKSPACE}/config
 
 echo "=-=-=-=-= $0 resque-pool --daemon --environment test start"
-resque-pool --daemon --environment test start
+bundle exec resque-pool --daemon --environment test start
 
 echo "=-=-=-=-= $0 HEADLESS=true RAILS_ENV=test bundle exec rake --trace scholarsphere:ci"
 HEADLESS=true RAILS_ENV=test bundle exec rake --trace scholarsphere:ci

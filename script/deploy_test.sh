@@ -9,7 +9,6 @@ DEFAULT_TERMCOLORS="\e[0m"
 HIGHLIGHT_TERMCOLORS="\e[33m\e[44m\e[1m"
 ERROR_TERMCOLORS="\e[1m\e[31m"
 
-
 function anywait {
     for pid in "$@"; do
         while kill -0 "$pid"; do
@@ -60,23 +59,23 @@ banner "passenger-install-apache2-module -a"
 passenger-install-apache2-module -a
 
 banner "rake db:migrate"
-RAILS_ENV=production rake db:migrate
+RAILS_ENV=production bundle exec rake db:migrate
 
 banner "rake assets:precompile"
-RAILS_ENV=production rake assets:precompile
+RAILS_ENV=production bundle exec rake assets:precompile
 
 banner "resque-pool start"
-resque-pool --daemon --environment production start
+bundle exec resque-pool --daemon --environment production start
 
 banner "rake scholarsphere:generate_secret"
-rake scholarsphere:generate_secret
+bundle exec rake scholarsphere:generate_secret
 
 banner "rake scholarsphere:resolrize"
-RAILS_ENV=production rake scholarsphere:resolrize
+RAILS_ENV=production bundle exec rake scholarsphere:resolrize
 
 banner "rake sitemap:generate & ping"
-RAILS_ENV=production rake sitemap:generate
-RAILS_ENV=production rake sitemap:ping
+RAILS_ENV=production bundle exec rake sitemap:generate
+RAILS_ENV=production bundle exec rake sitemap:ping
 
 banner "touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt
