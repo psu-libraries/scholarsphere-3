@@ -13,16 +13,15 @@
 # limitations under the License.
 
 class ApplicationController < ActionController::Base
-  # Adds a few additional behaviors into the application controller 
-   include Blacklight::Controller  
-# Adds Hydra behaviors into the application controller 
-  include Hydra::Controller::ControllerBehavior  
-# Adds Sufia behaviors into the application controller 
+  # Adds a few additional behaviors into the application controller
+  include Blacklight::Controller
+  # Adds Hydra behaviors into the application controller
+  include Hydra::Controller::ControllerBehavior
+  # Adds Sufia behaviors into the application controller
   include Sufia::Controller
 
-
-  # Please be sure to impelement current_user and user_session. Blacklight depends on 
-  # these methods in order to perform user specific actions. 
+  # Please be sure to impelement current_user and user_session. Blacklight depends on
+  # these methods in order to perform user specific actions.
 
   layout 'hydra-head'
 
@@ -95,28 +94,16 @@ class ApplicationController < ActionController::Base
   end
 
   def notifications_number
-    @notify_number=0
-    @batches=[]
-    return  if ((action_name == "index") && (controller_name == "mailbox"))
+    @notify_number = 0
+    @batches = []
+    return if action_name == "index" and controller_name == "mailbox"
     if User.current
-      @notify_number= User.current.mailbox.inbox(:unread => true).count(:id, :distinct => true)
-      @batches=User.current.mailbox.inbox.map {|msg| msg.last_message.body[/<a class="batchid ui-helper-hidden">(.*)<\/a>The file(.*)/,1]}.select{|val| !val.blank?}
+      @notify_number = User.current.mailbox.inbox(:unread => true).count(:id, :distinct => true)
+      @batches = User.current.mailbox.inbox.map { |msg| msg.last_message.body[/<a class="batchid ui-helper-hidden">(.*)<\/a>The file(.*)/,1] }.select { |val| !val.blank? }
     end
   end
 
  protected
-  # Returns the solr permissions document for the given id
-  # @return solr permissions document
-  # @example This is the document that you can pass into permissions enforcement methods like 'can?'
-  #   gf = GenericFile.find(params[:id])
-  #   if can? :read, permissions_solr_doc_for_id(gf.pid)
-  #     gf.update_attributes(params[:generic_file])
-  #   end
-  def permissions_solr_doc_for_id(id)
-    permissions_solr_response, permissions_solr_document = get_permissions_solr_response_for_doc_id(id)
-    return permissions_solr_document
-  end
-
   def user_logged_in?
     env['warden'] and env['warden'].user and remote_user_set?
   end
@@ -135,5 +122,4 @@ class ApplicationController < ActionController::Base
       render :template => '/error/401', :layout => "error", :formats => [:html], :status => 401
     end
   end
-
 end

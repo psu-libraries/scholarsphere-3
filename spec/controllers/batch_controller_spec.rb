@@ -48,7 +48,7 @@ describe BatchController do
       s1 = mock('one')
       BatchUpdateJob.expects(:new).with(@user.login, params).returns(s1)
       Sufia.queue.expects(:push).with(s1).once
-      post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"", "read_users_string"=>"archivist1, archivist2", "tag"=>[""]}     
+      post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"", "read_users_string"=>"archivist1, archivist2", "tag"=>[""]}
     end
     describe "when views are shown" do
       render_views
@@ -90,7 +90,7 @@ describe BatchController do
         file.discover_groups.should == []
       end
       it "should set metadata like title" do
-        post :update, :id=>@batch.pid, "generic_file"=>{"tag"=>["footag", "bartag"]}, "title"=>{@file.pid=>"New Title"} 
+        post :update, :id=>@batch.pid, "generic_file"=>{"tag"=>["footag", "bartag"]}, "title"=>{@file.pid=>"New Title"}
         file = GenericFile.find(@file.pid)
         file.title.should == ["New Title"]
         file.tag.should == ["footag", "bartag"]
@@ -98,7 +98,7 @@ describe BatchController do
       it "should not set any tags" do
         post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"", "read_users_string"=>"archivist1", "tag"=>[""]}
         file = GenericFile.find(@file.pid)
-        file.tag.should be_empty
+        file.tag.should == [""]
       end
     end
     describe "when user does not have edit permissions on a file" do

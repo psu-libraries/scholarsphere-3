@@ -29,7 +29,7 @@ class GenericFile < ActiveFedora::Base
 
   def per_version(&block)
     self.datastreams.each do |dsid, ds|
-      return if ds == full_text
+      next if ds == full_text
       ds.versions.each do |ver|
         block.call(ver)
       end
@@ -54,9 +54,8 @@ class GenericFile < ActiveFedora::Base
          stat = self.save
          break
        rescue => e
-         puts e
          logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
-            sleep 1
+         sleep 1
        end
      end
      return stat
@@ -65,8 +64,8 @@ class GenericFile < ActiveFedora::Base
 
   def extract_content
     begin
-      url = Blacklight.solr_config[:url] ? Blacklight.solr_config[:url] : Blacklight.solr_config["url"] ? Blacklight.solr_config["url"] : Blacklight.solr_config[:fulltext] ? Blacklight.solr_config[:fulltext]["url"] : Blacklight.solr_config[:default]["url"] 
-      uri = URI(url+'/update/extract?&extractOnly=true&wt=ruby&extractFormat=text')
+      url = Blacklight.solr_config[:url] ? Blacklight.solr_config[:url] : Blacklight.solr_config["url"] ? Blacklight.solr_config["url"] : Blacklight.solr_config[:fulltext] ? Blacklight.solr_config[:fulltext]["url"] : Blacklight.solr_config[:default]["url"]
+      uri = URI(url+'/update/extract?extractOnly=true&wt=ruby&extractFormat=text')
       req = Net::HTTP.new(uri.host, uri.port)
       resp = req.post(uri.to_s, self.content.content, {'Content-type'=>self.mime_type+';charset=utf-8', "Content-Length"=>"#{self.content.content.size}" })
       full_text.content = eval(resp.body)[""]
@@ -75,14 +74,26 @@ class GenericFile < ActiveFedora::Base
     end
   end
 
+  # Unstemmed, searchable, stored
+  def self.noid_indexer
+    @noid_indexer ||= Solrizer::Descriptor.new(:text, :indexed, :stored)
+  end
+
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
-    solr_doc["label_t"] = self.label
-    solr_doc["noid_s"] = noid
-    solr_doc["file_format_t"] = file_format
-    solr_doc["file_format_facet"] = solr_doc["file_format_t"]
-    solr_doc["text"] = full_text.content 
+    solr_doc[Solrizer.solr_name('label')] = self.label
+    solr_doc[Solrizer.solr_name('noid', Sufia::GenericFile.noid_indexer)] = noid
+    solr_doc[Solrizer.solr_name('file_format')] = file_format
+    solr_doc[Solrizer.solr_name('file_format', :facetable)] = file_format
+    solr_doc["all_text_timv"] = full_text.content
     return solr_doc
+  end
+
+  def file_format
+    return nil if self.mime_type.blank? and self.format_label.blank?
+    return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
+    return self.mime_type.split('/')[1] unless self.mime_type.blank?
+    return self.format_label
   end
 
   def export_as_endnote

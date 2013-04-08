@@ -33,7 +33,7 @@ describe GenericFilesController do
       begin
         Batch.find("sample:batch_id").delete
       rescue
-      end                                         
+      end
       @mock.delete unless @mock.inner_object.class == ActiveFedora::UnsavedDigitalObject 
     end
 
@@ -114,14 +114,14 @@ describe GenericFilesController do
       # This is confirming that apply_depositor_metadata recorded the depositor
       saved_file.properties.depositor.should == ['jilluser']
       saved_file.depositor.should == 'jilluser'
-      saved_file.properties.to_solr.keys.should include('depositor_t')
-      saved_file.properties.to_solr['depositor_t'].should == ['jilluser']
-      saved_file.to_solr.keys.should include('depositor_t')
-      saved_file.to_solr['depositor_t'].should == ['jilluser']
+      saved_file.properties.to_solr.keys.should include('depositor_tesim')
+      saved_file.properties.to_solr['depositor_tesim'].should == ['jilluser']
+      saved_file.to_solr.keys.should include('depositor_tesim')
+      saved_file.to_solr['depositor_tesim'].should == ['jilluser']
     end
     it "Shoul call virus check" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      ClamAV.any_instance.expects(:scanfile).returns(0)      
+      ClamAV.any_instance.expects(:scanfile).returns(0)
       file = fixture_file_upload('/world.png','image/png')
       s1 = mock('one')
       ContentDepositEventJob.expects(:new).with('test:123','jilluser').returns(s1)
@@ -134,15 +134,15 @@ describe GenericFilesController do
 
     it "failing virus check should create flash" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      ClamAV.any_instance.expects(:scanfile).returns(1)      
+      ClamAV.any_instance.expects(:scanfile).returns(1)
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
       flash[:error].should_not be_empty
     end
 
     it "should error out of create and save after on continuos rsolr error" do
-      GenericFile.any_instance.stubs(:save).raises(RSolr::Error::Http.new({},{}))  
-          
+      GenericFile.any_instance.stubs(:save).raises(RSolr::Error::Http.new({},{}))
+
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
       response.body.should include("Error occurred while creating generic file.")

@@ -1,3 +1,4 @@
+
 # Copyright © 2012 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,8 +53,8 @@ describe UsersController do
       flash[:alert].should be_nil
     end
   end
-  describe "#index" do 
-    it "should not display test users" do 
+  describe "#index" do
+    it "should not display test users" do
     @user = FactoryGirl.find_or_create(:test_user_1)
     @another_user = FactoryGirl.find_or_create(:test_user_2)
     get :index #, uid: user.login

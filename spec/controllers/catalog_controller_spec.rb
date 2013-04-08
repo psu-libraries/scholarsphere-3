@@ -46,7 +46,7 @@ describe CatalogController do
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
-        assigns(:document_list)[0].fetch(:desc_metadata__title_t)[0].should eql('Test Document PDF')
+        assigns(:document_list)[0].fetch(:'desc_metadata__title_tesim')[0].should eql('Test Document PDF')
       end
     end
     describe "facet search" do
@@ -104,17 +104,17 @@ describe CatalogController do
       response.should render_template('catalog/recent')
       assigns(:recent_documents).count.should eql(4)
       # the order is reversed since the first in should be the last out in descending time order
-      #assigns(:recent_documents).each {|doc| logger.info doc.fetch(:generic_file__title_t)[0]}
       lgf4 = assigns(:recent_documents)[0]
       lgf3 = assigns(:recent_documents)[1]
       lgf2 = assigns(:recent_documents)[2]
       lgf1 = assigns(:recent_documents)[3]
-      lgf4.fetch(:desc_metadata__title_t)[0].should eql(@gf4.title[0])
-      lgf4.fetch(:desc_metadata__contributor_t)[0].should eql(@gf4.contributor[0])
-      lgf4.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(:desc_metadata__title_t)[0].should eql(@gf1.title[0])
-      lgf1.fetch(:desc_metadata__contributor_t)[0].should eql(@gf1.contributor[0])
-      lgf1.fetch(:desc_metadata__resource_type_t)[0].should eql(@gf1.resource_type[0])
+      descriptor = Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)
+      lgf4.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
+      lgf4.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
+      lgf4.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf1.title[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf1.contributor[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf1.resource_type[0])
     end
   end
 end
