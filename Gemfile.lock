@@ -1,15 +1,7 @@
 GIT
-  remote: git://github.com/psu-stewardship/hydra-batch-edit.git
-  revision: 5b597347b34e705a21a76a3b583545adf024843a
-  ref: 5b597347b34e705a21a76a3b583545adf024843a
-  specs:
-    hydra-batch-edit (0.1.0)
-      blacklight
-
-GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: 502a4f8193822d648bed8c7fdcadf7de26467b3f
-  ref: 502a4f8
+  revision: b63cc8afa0fea45492cdad027290b2e400639468
+  ref: b63cc8a
   branch: HH6.x+new_schema+travis
   specs:
     sufia (1.0.0.pre0)
@@ -20,7 +12,7 @@ GIT
       daemons (= 1.1.9)
       devise
       font-awesome-sass-rails (~> 2.0)
-      hydra-batch-edit (~> 0.1.0)
+      hydra-batch-edit (~> 0.3)
       hydra-head (~> 6.0)
       mail_form
       mailboxer (= 0.8.0)
@@ -184,6 +176,8 @@ GEM
       blacklight
       cancan
       deprecation
+    hydra-batch-edit (0.3.0)
+      blacklight
     hydra-core (6.0.0)
       active-fedora
       blacklight (~> 4.0)
@@ -429,7 +423,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 2.0.0.0)
   headless
-  hydra-batch-edit!
+  hydra-batch-edit (= 0.3.0)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
