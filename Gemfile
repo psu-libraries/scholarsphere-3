@@ -14,10 +14,10 @@ gem 'rb-readline', '0.4.2'
 
 # Hydra community components
 # pointing to stewardship branch until pull request into curationexperts/master is merged
-gem 'sufia', :git =>'git://github.com/psu-stewardship/sufia.git', :branch => 'HH6.x+new_schema+travis', :ref=>'502a4f8'
+gem 'sufia', :git =>'git://github.com/psu-stewardship/sufia.git', :branch => 'HH6.x+new_schema+travis', :ref=>'b63cc8a'
 #gem 'sufia', :path => '../sufia'
 # pointing to stewardship until pull request is complete
-gem 'hydra-batch-edit', :git => 'git://github.com/psu-stewardship/hydra-batch-edit.git', :ref => '5b597347b34e705a21a76a3b583545adf024843a'
+gem 'hydra-batch-edit', '0.3.0' 
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
