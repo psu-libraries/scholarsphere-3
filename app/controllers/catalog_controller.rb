@@ -147,7 +147,7 @@ class CatalogController < ApplicationController
     config.add_index_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), :label => "Date Created"
     config.add_index_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), :label => "Rights"
     config.add_index_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), :label => "Resource Type"
-    config.add_index_field Solrizer.solr_name("desc_metadata__format", :stored_searchable, type: :string), :label => "File Format"
+    config.add_index_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), :label => "File Format"
     config.add_index_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), :label => "Identifier"
 
     # solr fields to be displayed in the show (single result) view
@@ -166,7 +166,7 @@ class CatalogController < ApplicationController
     config.add_show_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), :label => "Date Created"
     config.add_show_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), :label => "Rights"
     config.add_show_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), :label => "Resource Type"
-    config.add_show_field Solrizer.solr_name("desc_metadata__format", :stored_searchable, type: :string), :label => "File Format"
+    config.add_show_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), :label => "File Format"
     config.add_show_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), :label => "Identifier"
 
     # "fielded" search configuration. Used by pulldown among other places.
@@ -187,11 +187,10 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
     config.add_search_field('all_fields', :label => 'All Fields', :include_in_advanced_search => false) do |field|
-      title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)
-      label_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)
-      contributor_name = Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string)
+      all_names = config.show_fields.values.map{|val| val.field}.join(" ")
+      title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)      
       field.solr_parameters = {
-        :qf => "#{title_name} noid_tsi #{label_name} file_format_tesim #{contributor_name}",
+        :qf => "#{all_names} noid_tsi all_text_timv",
         :pf => "#{title_name}"
       }
     end
