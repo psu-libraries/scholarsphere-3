@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: 96fbfded83102952c9d38e7086e38133da908538
-  ref: 96fbfde
+  revision: 739e3b45a6b85bd0e7b5bde980cdb90fc12e5960
+  ref: 739e3b4
   branch: HH6.x+new_schema+travis
   specs:
     sufia (1.0.0.pre0)
