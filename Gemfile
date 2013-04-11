@@ -49,7 +49,7 @@ group :assets do
 end
 
 group :production, :integration do
-  gem 'passenger', '3.0.13'
+  gem 'passenger', '4.0.0.rc6'
 end
 
 group :development, :test do
