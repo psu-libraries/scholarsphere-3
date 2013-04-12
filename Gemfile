@@ -14,7 +14,6 @@ gem 'rb-readline', '0.4.2'
 
 # Hydra community components
 gem 'sufia', '1.0.0'
-#gem 'sufia', :path => '../sufia'
 gem 'hydra-batch-edit', '0.3.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
@@ -37,7 +36,7 @@ gem 'equivalent-xml', '0.3.0'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
-gem 'font-awesome-sass-rails', '3.0.0.0'
+gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
 
 group :assets do
