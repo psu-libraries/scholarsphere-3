@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/curationexperts/sufia.git
-  revision: 2d4a4930cc21635dadfacb1a74c203dbb252a178
-  ref: 2d4a4930cc
+  revision: 8dc17399d848e09491da5d7d96dbd00ae44a847a
+  ref: 8dc17399d8
   branch: master
   specs:
     sufia (1.0.0.pre0)
