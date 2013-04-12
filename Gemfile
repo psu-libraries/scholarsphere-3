@@ -17,7 +17,7 @@ gem 'rb-readline', '0.4.2'
 gem 'sufia', :git =>'git://github.com/psu-stewardship/sufia.git', :branch => 'HH6.x+new_schema+travis', :ref=>'b63cc8a'
 #gem 'sufia', :path => '../sufia'
 # pointing to stewardship until pull request is complete
-gem 'hydra-batch-edit', '0.3.0' 
+gem 'hydra-batch-edit', '0.3.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
@@ -49,7 +49,7 @@ group :assets do
 end
 
 group :production, :integration do
-  gem 'passenger', '3.0.13'
+  gem 'passenger', '4.0.0.rc6'
 end
 
 group :development, :test do
