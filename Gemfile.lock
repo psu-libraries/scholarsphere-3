@@ -1,30 +1,30 @@
 GIT
-  remote: git://github.com/psu-stewardship/sufia.git
-  revision: 739e3b45a6b85bd0e7b5bde980cdb90fc12e5960
-  ref: 739e3b4
-  branch: HH6.x+new_schema+travis
+  remote: git://github.com/curationexperts/sufia.git
+  revision: 2d4a4930cc21635dadfacb1a74c203dbb252a178
+  ref: 2d4a4930cc
+  branch: master
   specs:
     sufia (1.0.0.pre0)
-      activerecord-import
+      activerecord-import (= 0.3.0)
       acts_as_follower (= 0.1.1)
-      blacklight (~> 4.0.0)
+      blacklight (~> 4.0)
       blacklight_advanced_search
       daemons (= 1.1.9)
       devise
-      font-awesome-sass-rails (~> 2.0)
-      hydra-batch-edit (~> 0.3)
+      font-awesome-sass-rails (~> 3.0)
+      hydra-batch-edit (~> 0.1)
       hydra-head (~> 6.0)
       mail_form
       mailboxer (= 0.8.0)
       nest (= 1.1.1)
-      noid (= 0.6.6)
+      noid (~> 0.6.6)
       paperclip (= 3.3.0)
-      rails (~> 3.2.11)
+      rails (~> 3.2.13)
       rails_autolink (= 1.0.9)
       rainbow (= 1.1.4)
       resque (~> 1.23.0)
       resque-pool (= 0.3.0)
-      rmagick (= 2.13.2)
+      rmagick
       sitemap (= 0.3.2)
       yaml_db (= 0.2.3)
       zipruby (= 0.3.6)
@@ -65,7 +65,7 @@ GEM
       activesupport (= 3.2.13)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-import (0.3.1)
+    activerecord-import (0.3.0)
       activerecord (~> 3.0)
       activerecord (~> 3.0)
     activeresource (3.2.13)
@@ -159,7 +159,7 @@ GEM
       railties (>= 3.0.0)
     fastercsv (1.5.5)
     ffi (1.6.0)
-    font-awesome-sass-rails (2.0.0.0)
+    font-awesome-sass-rails (3.0.2.2)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
     foreigner (1.4.0)
@@ -419,7 +419,7 @@ DEPENDENCIES
   equivalent-xml (= 0.3.0)
   execjs (= 1.4.0)
   factory_girl_rails (~> 4.1.0)
-  font-awesome-sass-rails (= 2.0.0.0)
+  font-awesome-sass-rails (= 3.0.2.2)
   headless
   hydra-batch-edit (= 0.3.0)
   hydra-ldap (= 0.1.0)

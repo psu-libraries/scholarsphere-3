@@ -13,10 +13,8 @@ gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
 
 # Hydra community components
-# pointing to stewardship branch until pull request into curationexperts/master is merged
-gem 'sufia', :git =>'git://github.com/psu-stewardship/sufia.git', :branch => 'HH6.x+new_schema+travis', :ref=>'739e3b4'
-#gem 'sufia', :path => '../sufia'
-# pointing to stewardship until pull request is complete
+# TODO: point at 1.0.0 gem when released
+gem 'sufia', :github => 'curationexperts/sufia', :branch => 'master', :ref=>'2d4a4930cc'
 gem 'hydra-batch-edit', '0.3.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
@@ -39,7 +37,7 @@ gem 'equivalent-xml', '0.3.0'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
-gem 'font-awesome-sass-rails', '2.0.0.0'
+gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
 
 group :assets do
