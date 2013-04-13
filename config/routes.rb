@@ -2,21 +2,23 @@ ScholarSphere::Application.routes.draw do
   # "Recently added files" route for catalog index view
   match "catalog/recent" => "catalog#recent", :as => :catalog_recent
 
-  # Statistics page
-  match "stats" => "stats#list", :via => :get, :as => :stats
-
   root :to => "catalog#index"
 
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
   Hydra::BatchEdit.add_routes(self)
 
-  # Resque monitoring routes 
-  namespace :admin do 
-    constraints ResqueAdmin do 
-      mount Resque::Server, :at => "queues" 
-    end 
-  end 
+  # Administrative URLs
+  namespace :admin do
+    # Job monitoring
+    constraints ResqueAdmin do
+      mount Resque::Server, :at => 'queues'
+    end
+    # Usage stats
+    constraints StatsAdmin do
+      match 'stats' => 'stats#index', :as => :stats
+    end
+  end
 
   # Login/logout route to destroy session
   match 'logout' => 'sessions#destroy', :as => :destroy_user_session
