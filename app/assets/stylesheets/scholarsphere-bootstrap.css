@@ -302,8 +302,12 @@ ol.faq ol ol li { list-style-type: lower-roman }
      color: goldenrod;
 }
 
-.icon-large {
-    font-size: 1.2em;
+.table th, .table td {
+    padding: 3px;
+}
+
+.icon-large.icon-magic, .icon-large.icon-gift {
+    font-size: 1.0em;
 }
 
 
