@@ -14,8 +14,8 @@ gem 'rb-readline', '0.4.2'
 
 # Hydra community components
 # TODO: point at 1.0.0 gem when released
-gem 'sufia', :github => 'curationexperts/sufia', :branch => 'master', :ref=>'8dc17399d8'
-gem 'hydra-batch-edit', '0.3.0'
+gem 'sufia', :github => 'curationexperts/sufia', :branch => 'master', :ref=>'2f55c3464705cec42bc0737f001cb9604617b4bc'
+gem 'hydra-batch-edit', '0.3.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'

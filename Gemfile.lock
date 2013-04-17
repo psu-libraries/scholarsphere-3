@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/curationexperts/sufia.git
-  revision: 8dc17399d848e09491da5d7d96dbd00ae44a847a
-  ref: 8dc17399d8
+  revision: 2f55c3464705cec42bc0737f001cb9604617b4bc
+  ref: 2f55c3464705cec42bc0737f001cb9604617b4bc
   branch: master
   specs:
     sufia (1.0.0.pre0)
@@ -12,7 +12,7 @@ GIT
       daemons (= 1.1.9)
       devise
       font-awesome-sass-rails (~> 3.0)
-      hydra-batch-edit (~> 0.1)
+      hydra-batch-edit (~> 0.3)
       hydra-head (~> 6.0)
       mail_form
       mailboxer (= 0.8.0)
@@ -79,12 +79,12 @@ GEM
     arel (3.0.2)
     backports (3.3.0)
     bcrypt-ruby (3.0.1)
-    blacklight (4.0.1)
+    blacklight (4.2.0)
       bootstrap-sass (~> 2.2.0)
       kaminari (~> 0.13)
       marc (>= 0.4.3, < 1.1)
       nokogiri (~> 1.5)
-      rails (~> 3.2)
+      rails (>= 3.2)
       rsolr (~> 1.0.6)
       sass-rails
     blacklight_advanced_search (2.0.0)
@@ -175,7 +175,7 @@ GEM
       blacklight
       cancan
       deprecation
-    hydra-batch-edit (0.3.0)
+    hydra-batch-edit (0.3.1)
       blacklight
     hydra-core (6.0.0)
       active-fedora
@@ -291,9 +291,9 @@ GEM
     raindrops (0.10.0)
     rake (10.0.4)
     rb-readline (0.4.2)
-    rdf (1.0.4)
+    rdf (1.0.5)
       addressable (>= 2.2)
-    rdf-rdfxml (1.0.0)
+    rdf-rdfxml (1.0.1)
       rdf (>= 1.0)
       rdf-xsd (>= 1.0)
     rdf-xsd (1.0.0)
@@ -421,7 +421,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 3.0.2.2)
   headless
-  hydra-batch-edit (= 0.3.0)
+  hydra-batch-edit (= 0.3.1)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)

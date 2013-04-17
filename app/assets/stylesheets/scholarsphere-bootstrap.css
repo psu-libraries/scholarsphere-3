@@ -310,4 +310,8 @@ ol.faq ol ol li { list-style-type: lower-roman }
     font-size: 1.0em;
 }
 
+.batch-select-all, .button_to {
+    float: right;
+    padding: 2px;
+}
 

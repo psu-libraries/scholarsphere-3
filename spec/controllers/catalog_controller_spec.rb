@@ -193,22 +193,21 @@ describe CatalogController do
       @gf4.delete
     end
 
-    it "should find my 4 files" do
+    it "should find my 3 files" do
       response.should be_success
       response.should render_template('catalog/recent')
-      assigns(:recent_documents).count.should eql(4)
+      assigns(:recent_documents).count.should eql(3)
       # the order is reversed since the first in should be the last out in descending time order
-      lgf4 = assigns(:recent_documents)[0]
-      lgf3 = assigns(:recent_documents)[1]
-      lgf2 = assigns(:recent_documents)[2]
-      lgf1 = assigns(:recent_documents)[3]
+      lgf3 = assigns(:recent_documents)[0]
+      lgf2 = assigns(:recent_documents)[1]
+      lgf1 = assigns(:recent_documents)[2]
       descriptor = Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf1.title[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf1.contributor[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf1.resource_type[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf2.title[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf2.contributor[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf2.resource_type[0])
     end
   end
 end
