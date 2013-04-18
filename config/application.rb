@@ -68,8 +68,8 @@ module ScholarSphere
     config.assets.paths << '#{Rails.root}/vendor/assets/images'
     config.assets.paths << '#{Rails.root}/vendor/assets/fonts'
 
-    config.scholarsphere_version = "v1.4.0"
-    config.scholarsphere_release_date = "March 13, 2013"
+    config.scholarsphere_version = "v1.5.0"
+    config.scholarsphere_release_date = "April 30, 2013"
 
     config.fits_to_desc_mapping = {
       :file_title => :title,
