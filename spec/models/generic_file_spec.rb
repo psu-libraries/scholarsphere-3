@@ -177,6 +177,9 @@ describe GenericFile do
       end
     end
   end
+  it 'should export as endnote' do
+    @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/__DO_NOT_USE__\n%~ ScholarSphere\n%W Penn State University"
+  end
   it "should support to_solr" do
     @file.part_of = "Arabiana"
     @file.contributor = "Mohammad"
