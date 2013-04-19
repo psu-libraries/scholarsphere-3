@@ -13,7 +13,7 @@ gem 'mysql2', '0.3.11'
 gem 'rb-readline', '0.4.2'
 
 # Hydra community components
-gem 'sufia', '1.0.0'
+gem 'sufia', :github => 'projecthydra/sufia', :ref => '7c456ee'
 gem 'hydra-batch-edit', '0.3.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
