@@ -18,6 +18,9 @@ class GenericFile < ActiveFedora::Base
 
   has_file_datastream :name => "full_text", :type => FullTextDatastream
 
+  delegate :proxy_depositor, :to=>:properties, :unique => true
+  
+
   def characterize
     metadata = self.content.extract_metadata
     self.characterization.ng_xml = metadata unless metadata.blank?

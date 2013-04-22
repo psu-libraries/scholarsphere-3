@@ -93,6 +93,8 @@ describe GenericFile do
     it "should delegate methods to properties metadata" do
       @file.should respond_to(:relative_path)
       @file.should respond_to(:depositor)
+      @file.proxy_depositor = "sally@example.com"
+      @file.proxy_depositor.should == 'sally@example.com'
     end
     it "should delegate methods to descriptive metadata" do
       @file.should respond_to(:related_url)
