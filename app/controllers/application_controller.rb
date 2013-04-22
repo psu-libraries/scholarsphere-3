@@ -34,22 +34,24 @@ class ApplicationController < ActionController::Base
   before_filter :notifications_number
 
   # Intercept errors and render user-friendly pages
-  rescue_from NameError, :with => :render_500
-  rescue_from RuntimeError, :with => :render_500
-  rescue_from ActionView::Template::Error, :with => :render_500
-  rescue_from ActiveRecord::StatementInvalid, :with => :render_500
-  rescue_from Mysql2::Error, :with => :render_500
-  rescue_from Net::LDAP::LdapError, :with => :render_500
-  rescue_from RSolr::Error::Http, :with => :render_500
-  rescue_from Blacklight::Exceptions::ECONNREFUSED, :with => :render_500
-  rescue_from Errno::ECONNREFUSED, :with => :render_500
-  rescue_from Rubydora::FedoraInvalidRequest, :with => :render_500
-  rescue_from ActionDispatch::Cookies::CookieOverflow, :with => :render_500
-  rescue_from Redis::CannotConnectError, :with => :render_500
-  rescue_from AbstractController::ActionNotFound, :with => :render_404
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
-  rescue_from ActionController::RoutingError, :with => :render_404
-  rescue_from Blacklight::Exceptions::InvalidSolrID, :with => :render_404
+  unless Rails.env.development? 
+    rescue_from NameError, :with => :render_500
+    rescue_from RuntimeError, :with => :render_500
+    rescue_from ActionView::Template::Error, :with => :render_500
+    rescue_from ActiveRecord::StatementInvalid, :with => :render_500
+    rescue_from Mysql2::Error, :with => :render_500
+    rescue_from Net::LDAP::LdapError, :with => :render_500
+    rescue_from RSolr::Error::Http, :with => :render_500
+    rescue_from Blacklight::Exceptions::ECONNREFUSED, :with => :render_500
+    rescue_from Errno::ECONNREFUSED, :with => :render_500
+    rescue_from Rubydora::FedoraInvalidRequest, :with => :render_500
+    rescue_from ActionDispatch::Cookies::CookieOverflow, :with => :render_500
+    rescue_from Redis::CannotConnectError, :with => :render_500
+    rescue_from AbstractController::ActionNotFound, :with => :render_404
+    rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+    rescue_from ActionController::RoutingError, :with => :render_404
+    rescue_from Blacklight::Exceptions::InvalidSolrID, :with => :render_404
+  end
 
   def clear_session_user
    if request.nil?

@@ -199,7 +199,7 @@ describe GenericFilesController do
       ClamAV.any_instance.stubs(:scanfile).returns(0)
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
-      @generic_file.save
+      @generic_file.save!
     end
     after do
       @generic_file.delete
@@ -312,6 +312,25 @@ describe GenericFilesController do
       post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
     end
 
+    describe "as a proxy" do
+      before do
+        @receiver = FactoryGirl.find_or_create(:test_user_1)
+        sign_in @user
+      end
+      it "should spawn a content update event job" do
+        s2 = mock('two')
+        post :update, id: @generic_file, generic_file:{title: 'new_title', proxy_for: @receiver.user_key}
+        proxy_request = @receiver.proxy_deposit_requests.first
+        proxy_request.pid.should == @generic_file.pid
+        proxy_request.sending_user.should == @user.user_key
+        # AND A NOTIFICATION SHOULD HAVE BEEN CREATED
+        notification = @receiver.reload.mailbox.inbox[0].messages[0]
+        notification.subject.should == "jilluser wants to transfer a file to you"
+        notification.body.should == "jilluser wants to transfer a file to you.\n" +
+          "Click here: to review it: /files/#{@generic_file.noid}/proxy"
+
+      end
+    end
   end
 
   describe "someone elses files" do

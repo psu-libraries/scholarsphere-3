@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   # Pagination hook
   self.per_page = 5
 
+  has_many :proxy_deposit_requests, foreign_key: 'receiving_user_id'
+
 
   #put in to remove deprication warnings since the parent class overrides our login with it's own
   def login

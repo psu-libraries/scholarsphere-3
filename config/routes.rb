@@ -45,6 +45,7 @@ ScholarSphere::Application.routes.draw do
       get 'citation', :as => :citation
       post 'audit'
       post 'permissions'
+      get 'proxy'
     end
   end
 

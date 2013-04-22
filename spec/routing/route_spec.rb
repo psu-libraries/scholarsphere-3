@@ -89,6 +89,10 @@ describe 'Routes' do
       { get: '/files/3/edit' }.should route_to(controller: 'generic_files', action: 'edit', id: '3')
     end
 
+    it 'should route to proxy' do
+      { get: '/files/3/proxy' }.should route_to(controller: 'generic_files', action: 'proxy', id: '3')
+    end
+
     it "should route to show" do
       { get: '/files/4' }.should route_to(controller: 'generic_files', action: 'show', id: '4')
     end

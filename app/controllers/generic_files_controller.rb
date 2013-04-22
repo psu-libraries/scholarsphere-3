@@ -21,6 +21,11 @@ class GenericFilesController < ApplicationController
        @generic_file.save
        return
     end
+    if params[:generic_file][:proxy_for]
+      requesting_user = User.find_by_user_key params[:generic_file][:proxy_for]
+      # TODO validate existence of requesting_user
+      @generic_file.request_transfer_to(requesting_user)
+    end
     super
   end
 end

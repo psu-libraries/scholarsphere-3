@@ -19,7 +19,13 @@ class GenericFile < ActiveFedora::Base
   has_file_datastream :name => "full_text", :type => FullTextDatastream
 
   delegate :proxy_depositor, :to=>:properties, :unique => true
-  
+
+  # @param [User] target Who this generic file should get transfered to
+  def request_transfer_to(target)
+    ProxyDepositRequest.create!(pid: pid, receiving_user: target, sending_user: depositor)
+    message = "#{depositor} wants to transfer a file to you.\nClick here: to review it: #{Rails.application.routes.url_helpers.proxy_generic_file_path(self)}"
+    User.batchuser.send_message(target, message, "#{depositor} wants to transfer a file to you")
+  end
 
   def characterize
     metadata = self.content.extract_metadata
