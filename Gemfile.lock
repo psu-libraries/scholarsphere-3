@@ -1,3 +1,10 @@
+PATH
+  remote: ../hydra-collections
+  specs:
+    hydra-collections (0.0.1)
+      blacklight
+      hydra-head
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -415,6 +422,7 @@ DEPENDENCIES
   font-awesome-sass-rails (= 3.0.2.2)
   headless
   hydra-batch-edit (= 0.3.0)
+  hydra-collections!
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)

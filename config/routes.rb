@@ -23,6 +23,7 @@ ScholarSphere::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :new_user_session
 
   devise_for :users
+  mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
 
   # LDAP-related routes for group and user lookups
