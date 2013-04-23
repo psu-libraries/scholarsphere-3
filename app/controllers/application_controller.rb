@@ -121,6 +121,7 @@ class ApplicationController < ActionController::Base
 
   def has_access?
     unless current_user && current_user.ldap_exist?
+      logger.error "User: `#{current_user.user_key}' does not exist in ldap"
       render :template => '/error/401', :layout => "error", :formats => [:html], :status => 401
     end
   end
