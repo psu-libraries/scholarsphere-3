@@ -17,15 +17,19 @@ class GenericFilesController < ApplicationController
   include Sufia::FilesControllerBehavior
 
   def update_metadata
-    if params[:generic_file].blank?
-       @generic_file.save
-       return
-    end
-    if params[:generic_file][:proxy_for]
-      requesting_user = User.find_by_user_key params[:generic_file][:proxy_for]
-      # TODO validate existence of requesting_user
-      @generic_file.request_transfer_to(requesting_user)
-    end
+    request_transfer if params[:generic_file][:proxy_for]
     super
+  end
+
+  def proxy
+    @proxy_deposit_request = ProxyDepositRequest.where(pid: @generic_file.id, fulfillment_date: nil, receiving_user_id: current_user.id).first 
+  end
+
+  private
+
+  def request_transfer
+    requesting_user = User.find_by_user_key params[:generic_file][:proxy_for]
+    # TODO validate existence of requesting_user
+    @generic_file.request_transfer_to(requesting_user)
   end
 end

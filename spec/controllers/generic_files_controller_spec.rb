@@ -312,12 +312,12 @@ describe GenericFilesController do
       post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
     end
 
-    describe "as a proxy" do
+    describe "requesting that this file is transfered to someone else" do
       before do
         @receiver = FactoryGirl.find_or_create(:test_user_1)
         sign_in @user
       end
-      it "should spawn a content update event job" do
+      it "should create a proxy request and a notification" do
         s2 = mock('two')
         post :update, id: @generic_file, generic_file:{title: 'new_title', proxy_for: @receiver.user_key}
         proxy_request = @receiver.proxy_deposit_requests.first
@@ -328,12 +328,49 @@ describe GenericFilesController do
         notification.subject.should == "jilluser wants to transfer a file to you"
         notification.body.should == "jilluser wants to transfer a file to you.\n" +
           "Click here: to review it: /files/#{@generic_file.noid}/proxy"
-
       end
+
+      it "should give an error if the user is not found"
     end
   end
 
-  describe "someone elses files" do
+
+  describe "#proxy" do
+    let(:depositor) { FactoryGirl.find_or_create(:test_user_1) }
+    before do
+      ClamAV.any_instance.stubs(:scanfile).raises('HEY')
+    end
+    let (:file) do
+      GenericFile.new.tap do|file|
+        file.apply_depositor_metadata(depositor.user_key)
+        file.save!
+      end
+    end
+    after do
+      file.delete
+    end
+    describe "of a file requested to be transfered to me" do
+      before do 
+        @proxy_request = ProxyDepositRequest.create!(pid: file.pid, receiving_user: @user, sending_user: 'foo')
+      end
+      it "should be successful" do
+        get :proxy, id: file
+        response.should be_successful
+        assigns[:proxy_deposit_request].should == @proxy_request
+      end
+    end
+    describe "of a file requested to be transfered to someone else" do
+      it "should be an error"
+    end
+    describe "of a file requested to be transfered that has already been accepted" do
+      it "should be an error"
+
+    end
+  end
+
+
+
+  describe "a file owned by someone else" do
     before(:all) do
       f = GenericFile.new(:pid => 'scholarsphere:test5')
       f.apply_depositor_metadata('archivist1')
