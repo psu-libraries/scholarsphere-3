@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+
+  sufia:
+    errors:
+      header: "There were errors that prevented this %{model} from being saved:"

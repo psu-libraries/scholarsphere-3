@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: aac07698b64314bf73858dde29c99c8202121e16
+  revision: d8e73f0c117d6756f8bf859d0cc183946dd33cdf
   branch: proxy_depositor
   specs:
     sufia (1.0.0)

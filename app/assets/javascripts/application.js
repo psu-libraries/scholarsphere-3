@@ -26,3 +26,21 @@ limitations under the License.
 //= require batch_edit
 //= require bootstrap-tab
 //= require scholarsphere_fileupload
+//
+
+// Patch for bootstrap-tab enabling linking/refreshing to a tab
+// TODO move to sufia
+$(document).ready(function(){
+  // Javascript to enable link to tab
+  var hash = document.location.hash;
+  var prefix = "tab_";
+  if (hash) {
+      $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+  } 
+  
+
+  // Change hash for page-reload
+  $('.nav-tabs a').on('shown', function (e) {
+    window.location.hash = e.target.hash.replace("#", "#" + prefix);
+  })
+});

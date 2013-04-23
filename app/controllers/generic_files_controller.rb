@@ -17,7 +17,8 @@ class GenericFilesController < ApplicationController
   include Sufia::FilesControllerBehavior
 
   def update_metadata
-    request_transfer if params[:generic_file][:proxy_for]
+    # transfer_to isn't an "editable" field, so force it in.
+    @generic_file.transfer_to = params[:generic_file][:transfer_to]
     super
   end
 
@@ -25,11 +26,4 @@ class GenericFilesController < ApplicationController
     @proxy_deposit_request = ProxyDepositRequest.where(pid: @generic_file.id, fulfillment_date: nil, receiving_user_id: current_user.id).first 
   end
 
-  private
-
-  def request_transfer
-    requesting_user = User.find_by_user_key params[:generic_file][:proxy_for]
-    # TODO validate existence of requesting_user
-    @generic_file.request_transfer_to(requesting_user)
-  end
 end

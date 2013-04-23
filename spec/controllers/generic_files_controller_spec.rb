@@ -318,8 +318,7 @@ describe GenericFilesController do
         sign_in @user
       end
       it "should create a proxy request and a notification" do
-        s2 = mock('two')
-        post :update, id: @generic_file, generic_file:{title: 'new_title', proxy_for: @receiver.user_key}
+        post :update, id: @generic_file, generic_file:{transfer_to: @receiver.user_key}
         proxy_request = @receiver.proxy_deposit_requests.first
         proxy_request.pid.should == @generic_file.pid
         proxy_request.sending_user.should == @user.user_key
@@ -330,7 +329,11 @@ describe GenericFilesController do
           "Click here: to review it: /files/#{@generic_file.noid}/proxy"
       end
 
-      it "should give an error if the user is not found"
+      it "should give an error if the user is not found" do
+        post :update, id: @generic_file, generic_file:{transfer_to: 'foo'}
+        response.should render_template('edit')
+        
+      end
     end
   end
 

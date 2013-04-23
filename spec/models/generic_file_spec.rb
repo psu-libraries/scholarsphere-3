@@ -89,6 +89,30 @@ describe GenericFile do
       @file.content.should be_kind_of FileContentDatastream
     end
   end
+
+  describe "transfer" do
+    describe "when the transfer_to field is set" do
+      describe "and the user isn't found" do
+        it "should be an error" do
+          @file.transfer_to = 'dave'
+          @file.should_not be_valid
+          @file.errors[:transfer_to].should == ["must be an existing user"]
+        end
+      end
+
+      describe "and the user is found" do
+        let (:receiver) { FactoryGirl.find_or_create(:test_user_1) }
+        it "should create a transfer_request" do
+          @file.transfer_to = receiver.user_key
+          @file.save!
+          proxy_request = receiver.proxy_deposit_requests.first
+          proxy_request.pid.should == @file.pid
+          proxy_request.sending_user.should == @file.depositor
+        end
+      end
+    end
+  end
+
   describe "delegations" do
     it "should delegate methods to properties metadata" do
       @file.should respond_to(:relative_path)
