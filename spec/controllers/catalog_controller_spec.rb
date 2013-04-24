@@ -36,7 +36,7 @@ describe CatalogController do
       @gf3 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag', 
                        based_near:"based_nearbased_near", language:"languagelanguage", 
                        creator:"creatorcreator", contributor:"contributorcontributor", publisher: "publisherpublisher",
-                       subject:"subjectsubject", resource_type:"resource_typeresource_type", resource_type:"resource_typeresource_type")
+                       subject:"subjectsubject", resource_type:"resource_typeresource_type")
       @gf3.description = "descriptiondescription"
       @gf3.format_label = "format_labelformat_label"
       @gf3.full_text.content = "full_textfull_text"
@@ -139,9 +139,18 @@ describe CatalogController do
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
       end
-      
-
-      
+      it "should find a file by depositor" do
+        xhr :get, :index, :q =>"mjg36"
+        response.should be_success
+        response.should render_template('catalog/index')
+        assigns(:document_list).count.should eql(3)
+      end
+      it "should find a file by depositor in advanced search" do
+        xhr :get, :index, :depositor =>"mjg36", :search_field => "advanced"
+        response.should be_success
+        response.should render_template('catalog/index')
+        assigns(:document_list).count.should eql(3)
+      end
     end
     describe "facet search" do
       before do
