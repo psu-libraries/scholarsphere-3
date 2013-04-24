@@ -1,0 +1,13 @@
+<% page_info = paginate_params(@response) %>
+<div id="search-results">
+  <ol class="catalog" start="<%=1+((page_info.current_page-1)*page_info.limit_value)%>">
+    <% docs.each_with_index do |document,counter| %>
+    <% case document["active_fedora_model_ssim"].first %>
+    <% when "GenericFile" %>
+      <%= render :partial => 'dashboard/_index_partials/list_files', :locals => {:document => document, :counter => counter} %>
+    <% when "Collection" %>
+      <%= render :partial => 'dashboard/_index_partials/list_collections', :locals => {:document => document, :counter => counter} %>    
+    <% end %>
+  <% end %>
+  </ol>
+</div>
