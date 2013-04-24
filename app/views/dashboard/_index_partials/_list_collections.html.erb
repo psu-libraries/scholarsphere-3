@@ -1,12 +1,19 @@
-<li>
-   <table class="table">
-    <tr>
-      <th><h4>Title:</h4></th>
-      <td><%= document.title %></td>
-    </tr>
-    <tr>
-      <th><h4>Description:</h4></th>
-      <td><%= iconify_auto_link(document.description) %></th>
-    </tr>
-  </table>
-</li>
+
+<!-- scholarsphere over ride -->
+<!-- the sub on ':' is b.c. jQuery has trouble with '.' or ':'
+on element ids -->
+<% noid = document.id %>
+<tr id="document_<%= noid.gsub(":", "_") %>" class="<%= cycle("","zebra") %>">
+  <td width="6%"><%= batch_edit_select(document) %>&nbsp;</td> 
+  <td width="1%">
+  </td>
+  <td width="37%">
+    <%= document.title %>
+  </td>
+  <td width="17%"> </td>
+  <td width="5%" align="center">
+  </td>
+  <td width="23%" class="center">
+      <%= iconify_auto_link(document.description) %>
+  </td>
+</tr>
