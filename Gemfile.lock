@@ -1,5 +1,6 @@
-PATH
-  remote: ../hydra-collections
+GIT
+  remote: git://github.com/psu-stewardship/hydra-collections.git
+  revision: 01bae2d44db2a1e1eed8ac1b7f5b1042955cab56
   specs:
     hydra-collections (0.0.1)
       blacklight

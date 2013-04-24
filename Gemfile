@@ -15,7 +15,7 @@ gem 'rb-readline', '0.4.2'
 # Hydra community components
 gem 'sufia', '1.0.0'
 #gem 'sufia',  :path => '../sufia'
-gem 'hydra-collections', :path => '../hydra-collections'
+gem 'hydra-collections', :git => 'git://github.com/psu-stewardship/hydra-collections.git'
 gem 'hydra-batch-edit', '0.3.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
