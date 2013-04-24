@@ -10,7 +10,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'rack', '1.4.5'
 gem 'mysql2', '0.3.11'
-gem 'rb-readline', '0.4.2'
+# gem 'rb-readline', '0.4.2'
 
 # Hydra community components
 gem 'sufia', '1.0.0'
