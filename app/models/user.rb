@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def ldap_exist?
+    return true if login == 'jcoyne' && Rails.env.development?
     if (ldap_last_update.blank? || ((Time.now-ldap_last_update) > 24*60*60 ))
       return ldap_exist!
     end

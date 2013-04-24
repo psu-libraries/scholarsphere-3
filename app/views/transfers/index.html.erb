@@ -1,0 +1,50 @@
+<h1>Transfer of Ownership</h1>
+
+<h2>Sent</h2>
+<table class="table table-striped dashboard" id="outgoing-transfers">
+  <thead> 
+  <tr>
+    <th class="sm"></th>
+    <th class="center">Title</th>
+    <th class="sorts-dash">Date Uploaded</th>
+    <th>Recipeint</th>
+    <th>Status</th>
+  </tr>
+  </thead> 
+  <tbody> 
+  <% @outgoing.each do |req| %>
+    <tr>
+      <td class="sm"></td>
+      <td>Title</td>
+      <td class="sorts-dash">Date Uploaded</td>
+      <td>Recipeint</td>
+      <td>Status</td>
+    </tr>
+  <% end %>
+  </tbody> 
+</table>
+
+<h2>Received</h2>
+<table class="table table-striped dashboard" id="incoming-transfers">
+  <thead> 
+  <tr>
+    <th class="sm"></th>
+    <th class="center">Title</th>
+    <th class="sorts-dash">Date Uploaded</th>
+    <th>Recipeint</th>
+    <th>Status</th>
+  </tr>
+  </thead> 
+  <tbody> 
+  <% @incoming.each do |req| %>
+    <tr>
+      <td class="sm"></td>
+      <td>Title</td>
+      <td class="sorts-dash">Date Uploaded</td>
+      <td>Recipeint</td>
+      <td><%=button_to "Accept", accept_transfer_path(req) %></td>
+    </tr>
+  <% end %>
+  </tbody> 
+</table>
+

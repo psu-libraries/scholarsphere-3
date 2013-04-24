@@ -22,8 +22,4 @@ class GenericFilesController < ApplicationController
     super
   end
 
-  def proxy
-    @proxy_deposit_request = ProxyDepositRequest.where(pid: @generic_file.id, fulfillment_date: nil, receiving_user_id: current_user.id).first 
-  end
-
 end

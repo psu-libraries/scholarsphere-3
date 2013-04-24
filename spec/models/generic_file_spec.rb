@@ -101,13 +101,17 @@ describe GenericFile do
       end
 
       describe "and the user is found" do
+        let (:sender) { FactoryGirl.find_or_create(:user) }
         let (:receiver) { FactoryGirl.find_or_create(:test_user_1) }
+        before do
+          @file.apply_depositor_metadata(sender.user_key)
+        end
         it "should create a transfer_request" do
           @file.transfer_to = receiver.user_key
           @file.save!
           proxy_request = receiver.proxy_deposit_requests.first
           proxy_request.pid.should == @file.pid
-          proxy_request.sending_user.should == @file.depositor
+          proxy_request.sending_user.should == sender
         end
       end
     end

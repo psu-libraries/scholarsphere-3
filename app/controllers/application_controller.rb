@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   before_filter :notifications_number
 
   # Intercept errors and render user-friendly pages
-  unless Rails.env.development? 
+  unless Rails.env.development? || Rails.env.test?
     rescue_from NameError, :with => :render_500
     rescue_from RuntimeError, :with => :render_500
     rescue_from ActionView::Template::Error, :with => :render_500
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_session_user
-   if request.nil?
+    if request.nil?
       logger.warn "Request is Nil, how weird!!!"
       return
     end

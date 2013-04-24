@@ -89,10 +89,6 @@ describe 'Routes' do
       { get: '/files/3/edit' }.should route_to(controller: 'generic_files', action: 'edit', id: '3')
     end
 
-    it 'should route to proxy' do
-      { get: '/files/3/proxy' }.should route_to(controller: 'generic_files', action: 'proxy', id: '3')
-    end
-
     it "should route to show" do
       { get: '/files/4' }.should route_to(controller: 'generic_files', action: 'show', id: '4')
     end
@@ -145,10 +141,16 @@ describe 'Routes' do
       { get: '/dashboard/facet/1' }.should route_to(controller: 'dashboard', action: 'facet', id: '1')
     end
 
-  
-
     it "should route to dashboard activity" do
       { get: '/dashboard/activity' }.should route_to(controller: 'dashboard', action: 'activity')
+    end
+
+    it "should route to transfers" do # NOT a sufia route
+      { get: '/dashboard/transfers' }.should route_to(controller: 'transfers', action: 'index')
+    end
+
+    it "should route to accept transfers" do # NOT a sufia route
+      { post: '/dashboard/transfers/7/accept' }.should route_to(controller: 'transfers', action: 'accept', id: '7')
     end
   end
 
@@ -265,6 +267,7 @@ describe 'Routes' do
 
   describe "Catch-all" do
     it "should route non-existent routes to errors" do
+      pending "We're not doing this route in development or test so we can detect routing errors"
       { get: '/awesome' }.should route_to(controller: 'errors', action: 'routing', error: 'awesome')
     end
   end
