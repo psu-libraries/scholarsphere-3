@@ -15,7 +15,8 @@ feature "Managing ownership change requests" do
     end
 
     scenario "then I should be able to accept it" do
-      visit transfers_path
+      visit '/'
+      click_link "transfer files"
       within("#incoming-transfers") do
         click_button "Accept"
       end
