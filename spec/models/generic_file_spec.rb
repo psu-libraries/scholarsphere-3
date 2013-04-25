@@ -491,7 +491,7 @@ describe GenericFile do
         @myfile.title.should include("Microsoft Word - sample.pdf.docx")
       end
       it "should include extracted text" do
-        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
+        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com"
       end
     end
   end
