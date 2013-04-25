@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: 01bae2d44db2a1e1eed8ac1b7f5b1042955cab56
+  revision: f3e1047c4d8f2d6b25e0488dcfa0f9c9c61961b3
   specs:
     hydra-collections (0.0.1)
       blacklight
@@ -267,7 +267,6 @@ GEM
     rainbow (1.1.4)
     raindrops (0.10.0)
     rake (10.0.4)
-    rb-readline (0.4.2)
     rdf (1.0.5)
       addressable (>= 2.2)
     rdf-rdfxml (1.0.1)
@@ -438,7 +437,6 @@ DEPENDENCIES
   rack (= 1.4.5)
   rails (= 3.2.13)
   rails_autolink (= 1.0.9)
-  rb-readline (= 0.4.2)
   resque-pool (= 0.3.0)
   rmagick (= 2.13.2)
   rspec-rails (>= 2.11.0)
