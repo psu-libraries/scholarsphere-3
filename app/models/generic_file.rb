@@ -72,7 +72,6 @@ class GenericFile < ActiveFedora::Base
       req = Net::HTTP.new(uri.host, uri.port)
       resp = req.post(uri.to_s, self.content.content, {'Content-type'=>self.mime_type+';charset=utf-8', "Content-Length"=>"#{self.content.content.size}" })
       extracted_text = eval(resp.body)[""].rstrip
-      puts "Extracted_text: `#{extracted_text}'"
       full_text.content = extracted_text if extracted_text.present?
     rescue Exception => e
       logger.warn ("Resued exception while extracting content for #{self.pid}: #{e.inspect} ")

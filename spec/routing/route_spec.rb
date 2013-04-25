@@ -148,6 +148,9 @@ describe 'Routes' do
     it "should route to transfers" do # NOT a sufia route
       { get: '/dashboard/transfers' }.should route_to(controller: 'transfers', action: 'index')
     end
+    it "should route to cancel transfers" do # NOT a sufia route
+      { delete: '/dashboard/transfers/7' }.should route_to(controller: 'transfers', action: 'destroy', id: '7')
+    end
 
     it "should route to accept transfers" do # NOT a sufia route
       { post: '/dashboard/transfers/7/accept' }.should route_to(controller: 'transfers', action: 'accept', id: '7')

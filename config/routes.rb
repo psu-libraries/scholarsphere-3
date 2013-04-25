@@ -27,7 +27,7 @@ ScholarSphere::Application.routes.draw do
   ## This route is not in sufia, must come before sufia is mounted or sufia's error route catches it.
   resource :dashboard, only: [] do
     collection do
-      resources :transfers, only: :index do
+      resources :transfers, only: [:index, :destroy] do
         member do
           post 'accept'
         end

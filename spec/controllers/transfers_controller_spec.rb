@@ -35,7 +35,6 @@ describe TransfersController do
     end
 
     describe "#accept" do
-
       context "when I am the receiver" do
         before do
           @incoming_file = GenericFile.new.tap do |f|
@@ -66,5 +65,38 @@ describe TransfersController do
         end
       end
     end
+
+    describe "#destroy" do
+      context "when I am the sender" do
+        before do
+          @incoming_file = GenericFile.new.tap do |f|
+            f.apply_depositor_metadata(@user.user_key)
+            f.save!
+            f.request_transfer_to(@another_user)
+          end
+        end
+        it "should be successful" do
+          delete :destroy, id: @another_user.proxy_deposit_requests.first
+          response.should redirect_to transfers_path
+          flash[:notice].should == "Transfer canceled"
+        end
+      end
+
+      context "accepting one that isn't mine" do
+        before do
+          @incoming_file = GenericFile.new.tap do |f|
+            f.apply_depositor_metadata(@another_user.user_key)
+            f.save!
+            f.request_transfer_to(@user)
+          end
+        end
+        it "should not allow me" do
+          delete :destroy, id: @user.proxy_deposit_requests.first
+          response.should redirect_to root_path
+          flash[:alert].should == "You are not authorized to access this page."
+        end
+      end
+    end
+
   end
 end

@@ -21,4 +21,9 @@ class TransfersController < ApplicationController
     @proxy_deposit_request.transfer!
     redirect_to transfers_path, notice: "Transfer complete"
   end
+
+  def destroy
+    @proxy_deposit_request.cancel!
+    redirect_to transfers_path, notice: "Transfer canceled"
+  end
 end

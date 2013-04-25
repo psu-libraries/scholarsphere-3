@@ -4,21 +4,27 @@
 <table class="table table-striped dashboard" id="outgoing-transfers">
   <thead> 
   <tr>
-    <th class="sm"></th>
-    <th class="center">Title</th>
-    <th class="sorts-dash">Date Uploaded</th>
+    <th>Title</th>
+    <th>Date</th>
     <th>Recipeint</th>
     <th>Status</th>
+    <th>Comments</th>
   </tr>
   </thead> 
   <tbody> 
   <% @outgoing.each do |req| %>
     <tr>
-      <td class="sm"></td>
-      <td>Title</td>
-      <td class="sorts-dash">Date Uploaded</td>
-      <td>Recipeint</td>
-      <td>Status</td>
+      <td><%=req.solr_doc.title%></td>
+      <td class="sorts-dash"><%=req.created_at%></td>
+      <td><%=req.receiving_user.to_s%></td>
+      <td>
+        <% if req.pending? %>
+          <%=button_to "Cancel", transfer_path(req), method: :delete %>
+        <% else %>
+          <%= req.status.capitalize %>
+        <% end %>
+      </td>
+      <td><%= req.sender_comment %></td>
     </tr>
   <% end %>
   </tbody> 
@@ -28,21 +34,28 @@
 <table class="table table-striped dashboard" id="incoming-transfers">
   <thead> 
   <tr>
-    <th class="sm"></th>
-    <th class="center">Title</th>
-    <th class="sorts-dash">Date Uploaded</th>
-    <th>Recipeint</th>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Requested by</th>
     <th>Status</th>
+    <th>Comments</th>
   </tr>
   </thead> 
   <tbody> 
   <% @incoming.each do |req| %>
     <tr>
-      <td class="sm"></td>
-      <td>Title</td>
-      <td class="sorts-dash">Date Uploaded</td>
-      <td>Recipeint</td>
-      <td><%=button_to "Accept", accept_transfer_path(req) %></td>
+      <td><%=req.solr_doc.title%></td>
+      <td class="sorts-dash"><%=req.created_at%></td>
+      <td><%=req.receiving_user.to_s%></td>
+      <td>
+        <% if req.pending? %>
+          <%=button_to "Accept", accept_transfer_path(req) %>
+        <% else %>
+          <%= req.status.capitalize %>
+        <% end %>
+      </td>
+
+      <td><%= req.sender_comment %></td>
     </tr>
   <% end %>
   </tbody> 
