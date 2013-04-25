@@ -1,0 +1,22 @@
+<h1>Transfer ownership of "<%= @proxy_deposit_request.solr_doc.title %>"</h1>
+<%= form_for @proxy_deposit_request, url: generic_file_transfers_path(@generic_file), html: {class: 'form-horizontal'} do |f| %>
+  <div class="well">
+    <%= error_messages_for(f.object) %>
+    <div class="control-group">
+      <%= f.label :transfer_to, "Search", class: 'control-label' %>
+      <div class="controls">
+      <%= f.text_field :transfer_to %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :sender_comment, "Comments", class: 'control-label' %>
+      <div class="controls">
+      <%= f.text_area :sender_comment %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "Transfer", class: 'btn btn-primary' %>
+  </div>
+<% end %>

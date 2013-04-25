@@ -12,6 +12,7 @@ describe Ability do
       end
     end
     subject { Ability.new(user)}
+    it {should be_able_to(:create, ProxyDepositRequest)}
 
     context "with a ProxyDepositRequest that they receive" do
       let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: user, sending_user: sender) }

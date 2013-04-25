@@ -46,4 +46,27 @@ describe ProxyDepositRequest do
     its(:status) {should == 'canceled'}
     its(:fulfillment_date) {should_not be_nil}
   end
+
+
+  describe "transfer" do
+    describe "when the transfer_to field is set" do
+      describe "and the user isn't found" do
+        it "should be an error" do
+          subject.transfer_to = 'dave'
+          subject.should_not be_valid
+          subject.errors[:transfer_to].should == ["must be an existing user"]
+        end
+      end
+
+      describe "and the user is found" do
+        it "should create a transfer_request" do
+          subject.transfer_to = receiver.user_key
+          subject.save!
+          proxy_request = receiver.proxy_deposit_requests.first
+          proxy_request.pid.should == file.pid
+          proxy_request.sending_user.should == sender
+        end
+      end
+    end
+  end
 end

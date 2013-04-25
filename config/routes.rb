@@ -36,6 +36,10 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
+  resources :generic_file, only:[] do
+    resources :transfers, only: [:new, :create]
+  end
+
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
 

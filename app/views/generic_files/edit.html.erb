@@ -65,15 +65,11 @@ label.error { float: left; color: red; padding-left: .5em; vertical-align: top; 
       <li id="edit_descriptions_link" class="active"><a href="#descriptions_display" data-toggle="tab"><i class="icon-tags"></i> Descriptions</a></li>
       <li id="edit_versioning_link"><a href="#versioning_display" data-toggle="tab"><i class="icon-sitemap"></i> Versions</a></li>
       <li id="edit_permissions_link"><a href="#permissions_display" data-toggle="tab"><i class="icon-key"></i> Permissions</a></li>
-      <li id="edit_proxy_link"><a href="#proxy_display" data-toggle="tab"><i class="icon-key"></i> Proxy</a></li>
     </ul>
     <div class="tab-content">
       <%= render :partial => "descriptions", :locals => { :generic_file => @generic_file } %>
-
       <%= render :partial => "permission", :locals => { :gf => @generic_file } %>
-
       <%= render :partial => "versioning", :locals => { :generic_file => @generic_file } %>
-      <%= render :partial => "proxy" %>
-    </div> <!-- /.tab-content -->
+    </div>
   </div> <!-- /.span68-->
 </div><!-- /.row -->

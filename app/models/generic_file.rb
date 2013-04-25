@@ -11,15 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-require 'datastreams/file_content_datastream'
 
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
-  include Transferable
   include Hydra::Collections::Collectible
 
   has_file_datastream "full_text", versionable: false
 
+  delegate :proxy_depositor, :to=>:properties, :unique => true
+
+  def request_transfer_to(target)
+    raise ArgumentError, "Must provide a target" unless target
+    deposit_user = User.find_by_user_key(depositor)
+    ProxyDepositRequest.create!(pid: pid, receiving_user: target, sending_user: deposit_user)
+  end
 
   def characterize
     metadata = self.content.extract_metadata

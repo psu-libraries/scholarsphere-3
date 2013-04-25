@@ -12,6 +12,25 @@ class TransfersController < ApplicationController
     end
   end
 
+  def new
+    pid = Sufia::Noid.namespaceize(params[:generic_file_id])
+    authorize! :edit, pid
+    @generic_file = GenericFile.new(pid: pid)
+    @proxy_deposit_request.pid = pid
+  end
+
+  def create
+    pid = Sufia::Noid.namespaceize(params[:generic_file_id])
+    authorize! :edit, pid
+    @proxy_deposit_request.sending_user = current_user
+    @proxy_deposit_request.pid = pid 
+    if @proxy_deposit_request.save
+      redirect_to transfers_path, notice: "Transfer request created"
+    else
+      render "new"
+    end
+  end
+
   def index
     @incoming = ProxyDepositRequest.where(receiving_user_id: current_user.id)
     @outgoing = ProxyDepositRequest.where(sending_user_id: current_user.id)

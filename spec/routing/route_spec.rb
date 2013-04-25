@@ -148,6 +148,15 @@ describe 'Routes' do
     it "should route to transfers" do # NOT a sufia route
       { get: '/dashboard/transfers' }.should route_to(controller: 'transfers', action: 'index')
     end
+
+    it "should route to create a transfer" do # NOT a sufia route
+      { post: '/generic_file/7/transfers' }.should route_to(controller: 'transfers', action: 'create', generic_file_id: '7')
+    end
+
+    it "should route to new transfers" do # NOT a sufia route
+      { get: '/generic_file/7/transfers/new'}.should route_to(generic_file_id: '7', controller: 'transfers', action: 'new')
+    end
+
     it "should route to cancel transfers" do # NOT a sufia route
       { delete: '/dashboard/transfers/7' }.should route_to(controller: 'transfers', action: 'destroy', id: '7')
     end
