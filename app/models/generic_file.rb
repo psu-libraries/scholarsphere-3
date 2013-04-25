@@ -16,6 +16,7 @@ require 'datastreams/file_content_datastream'
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
   include Transferable
+  include Hydra::Collections::Collectible
 
   has_file_datastream :name => "full_text", :type => FullTextDatastream
 
@@ -88,6 +89,7 @@ class GenericFile < ActiveFedora::Base
     solr_doc[Solrizer.solr_name('file_format')] = file_format
     solr_doc[Solrizer.solr_name('file_format', :facetable)] = file_format
     solr_doc["all_text_timv"] = full_text.content
+    index_collection_pids(solr_doc)
     return solr_doc
   end
 

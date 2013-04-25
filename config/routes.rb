@@ -35,6 +35,7 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
+  mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
 
   # LDAP-related routes for group and user lookups
