@@ -34,7 +34,7 @@ gem 'yaml_db', '0.2.3'
 gem 'mailboxer', '0.8.0'
 gem 'mail_form', '1.4.1'
 gem 'clamav', '0.4.1'
-gem 'will_paginate', '3.0.3'
+gem 'kaminari' #sufia is specifing a specific version, so don't set one here
 gem 'equivalent-xml', '0.3.0'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.2'

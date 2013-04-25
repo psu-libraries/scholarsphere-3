@@ -36,9 +36,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :login, :display_name, :address, :admin_area, :department, :title, :office, :chat_id, :website, :affiliation, :telephone, :avatar, 
   :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle, :linkedin_handle
 
-  # Pagination hook
-  self.per_page = 5
-
   has_many :proxy_deposit_requests, foreign_key: 'receiving_user_id'
 
 
