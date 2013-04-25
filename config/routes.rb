@@ -29,7 +29,8 @@ ScholarSphere::Application.routes.draw do
     collection do
       resources :transfers, only: [:index, :destroy] do
         member do
-          post 'accept'
+          put 'accept'
+          put 'reject'
         end
       end
     end

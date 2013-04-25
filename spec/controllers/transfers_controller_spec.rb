@@ -44,9 +44,10 @@ describe TransfersController do
           end
         end
         it "should be successful" do
-          post :accept, id: @user.proxy_deposit_requests.first
+          put :accept, id: @user.proxy_deposit_requests.first
           response.should redirect_to transfers_path
           flash[:notice].should == "Transfer complete"
+          assigns[:proxy_deposit_request].status.should == 'accepted'
         end
       end
 
@@ -59,7 +60,40 @@ describe TransfersController do
           end
         end
         it "should not allow me" do
-          post :accept, id: @another_user.proxy_deposit_requests.first
+          put :accept, id: @another_user.proxy_deposit_requests.first
+          response.should redirect_to root_path
+          flash[:alert].should == "You are not authorized to access this page."
+        end
+      end
+    end
+
+    describe "#reject" do
+      context "when I am the receiver" do
+        before do
+          @incoming_file = GenericFile.new.tap do |f|
+            f.apply_depositor_metadata(@another_user.user_key)
+            f.save!
+            f.request_transfer_to(@user)
+          end
+        end
+        it "should be successful" do
+          put :reject, id: @user.proxy_deposit_requests.first
+          response.should redirect_to transfers_path
+          flash[:notice].should == "Transfer rejected"
+          assigns[:proxy_deposit_request].status.should == 'rejected'
+        end
+      end
+
+      context "accepting one that isn't mine" do
+        before do
+          @incoming_file = GenericFile.new.tap do |f|
+            f.apply_depositor_metadata(@user.user_key)
+            f.save!
+            f.request_transfer_to(@another_user)
+          end
+        end
+        it "should not allow me" do
+          put :reject, id: @another_user.proxy_deposit_requests.first
           response.should redirect_to root_path
           flash[:alert].should == "You are not authorized to access this page."
         end

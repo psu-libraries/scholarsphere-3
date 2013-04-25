@@ -22,6 +22,11 @@ class TransfersController < ApplicationController
     redirect_to transfers_path, notice: "Transfer complete"
   end
 
+  def reject
+    @proxy_deposit_request.reject!
+    redirect_to transfers_path, notice: "Transfer rejected"
+  end
+
   def destroy
     @proxy_deposit_request.cancel!
     redirect_to transfers_path, notice: "Transfer canceled"

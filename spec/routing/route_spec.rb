@@ -153,7 +153,11 @@ describe 'Routes' do
     end
 
     it "should route to accept transfers" do # NOT a sufia route
-      { post: '/dashboard/transfers/7/accept' }.should route_to(controller: 'transfers', action: 'accept', id: '7')
+      { put: '/dashboard/transfers/7/accept' }.should route_to(controller: 'transfers', action: 'accept', id: '7')
+    end
+
+    it "should route to reject transfers" do # NOT a sufia route
+      { put: '/dashboard/transfers/7/reject' }.should route_to(controller: 'transfers', action: 'reject', id: '7')
     end
   end
 

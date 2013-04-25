@@ -25,7 +25,12 @@ feature "Managing ownership change requests" do
     end
 
     scenario "then I should be able to reject it" do
-      visit '/dashboard/proxy' 
+      visit '/'
+      click_link "transfer files"
+      within("#incoming-transfers") do
+        click_button "Reject"
+      end
+      page.should have_content("Transfer rejected") 
     end
   end
   context "when I have requested to transfer a file to someone else" do
