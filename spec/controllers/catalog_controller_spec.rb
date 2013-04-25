@@ -139,9 +139,6 @@ describe CatalogController do
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
       end
-      
-
-      
     end
     describe "facet search" do
       before do
