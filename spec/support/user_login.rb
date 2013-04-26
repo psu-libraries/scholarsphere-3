@@ -10,4 +10,29 @@ module UserLogin
       Capybara.current_driver = driver_name
   end  
 
+  
+  def login_js
+    
+    Devise::Strategies::HttpHeaderAuthenticatable.class_eval do
+    
+      # Called if the user doesn't already have a rails session cookie
+      def valid?
+        true
+      end
+     
+      def authenticate!
+        remote_user = 'jilluser'
+        u = User.find_by_login(remote_user)
+        if u.nil?
+          u = User.create(:login => remote_user)
+          u.populate_attributes
+        end
+        u.ldap_available = true
+        u.save
+        success!(u)
+      end
+    end
+    
+  end
+  
 end

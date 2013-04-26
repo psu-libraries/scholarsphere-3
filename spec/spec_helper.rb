@@ -33,6 +33,12 @@ RSpec.configure do |config|
     puts "WARNING #{batches_count} batches were not cleaned up by this test!" if batches_count > 0
   end
 
+  Capybara.register_driver :selenium do |app|
+      profile = Selenium::WebDriver::Firefox::Profile.new
+  
+    Capybara::Selenium::Driver.new(app, :profile => profile)
+  end
+
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
