@@ -27,6 +27,7 @@ class TransfersController < ApplicationController
     if @proxy_deposit_request.save
       redirect_to transfers_path, notice: "Transfer request created"
     else
+      @generic_file = GenericFile.new(pid: pid)
       render "new"
     end
   end

@@ -78,6 +78,7 @@ describe TransfersController do
         }.should_not change(ProxyDepositRequest, :count)
         assigns[:proxy_deposit_request].errors[:transfer_to].should == ['must be an existing user']
         response.should render_template('new')
+        assigns[:generic_file].id.should == file.id
       end
     end
 

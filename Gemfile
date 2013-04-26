@@ -14,9 +14,8 @@ gem 'mysql2', '0.3.11'
 
 # Hydra community components
 #gem 'sufia', '1.0.0'
-gem 'sufia', github: 'projecthydra/sufia', branch: 'proxy_depositor'
-#gem 'sufia',  :path => '../sufia'
-gem 'hydra-collections', :git => 'git://github.com/psu-stewardship/hydra-collections.git'
+gem 'sufia', github: 'projecthydra/sufia'
+gem 'hydra-collections', github: 'psu-stewardship/hydra-collections'
 gem 'hydra-batch-edit', '0.3.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
@@ -29,18 +28,18 @@ gem 'zipruby', '0.3.6'
 gem 'rails_autolink', '1.0.9'
 gem 'acts_as_follower', '0.1.1'
 gem 'nest', '1.1.1'
-gem 'sitemap', '0.3.2'
+gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'mailboxer', '0.8.0'
 gem 'mail_form', '1.4.1'
 gem 'clamav', '0.4.1'
-gem 'kaminari' #sufia is specifing a specific version, so don't set one here
 gem 'equivalent-xml', '0.3.0'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
+gem 'select2-rails', '3.3.1' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

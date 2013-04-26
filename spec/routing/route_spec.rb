@@ -182,31 +182,6 @@ describe 'Routes' do
     end
   end
 
-  describe 'Users' do
-    it 'should route to user trophies' do
-      { post: '/users/bob135/trophy' }.should route_to(controller: 'users', action: 'toggle_trophy', uid: 'bob135')
-    end
-    it 'should route to user profile' do
-      { get: '/users/bob135' }.should route_to(controller: 'users', action: 'show', uid: 'bob135')
-    end
-
-    it "should route to edit profile" do
-      { get: '/users/bob135/edit' }.should route_to(controller: 'users', action: 'edit', uid: 'bob135')
-    end
-
-    it "should route to update profile" do
-      { put: '/users/bob135/update' }.should route_to(controller: 'users', action: 'update', uid: 'bob135')
-    end
-
-    it "should route to user follow" do
-      { post: '/users/bob135/follow' }.should route_to(controller: 'users', action: 'follow', uid: 'bob135')
-    end
-
-    it "should route to user unfollow" do
-      { post: '/users/bob135/unfollow' }.should route_to(controller: 'users', action: 'unfollow', uid: 'bob135')
-    end
-  end
-
   describe "Directory" do
     it "should route to user" do
       { get: '/directory/user/xxx666' }.should route_to(controller: 'directory', action: 'user', uid: 'xxx666')

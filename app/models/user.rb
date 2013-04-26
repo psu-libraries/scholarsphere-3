@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   # Workaround to retry LDAP calls a number of times
   include Sufia::Utils
 
+  self.include_root_in_json = false
+
 
   Devise.add_module(:http_header_authenticatable,
                     :strategy => true,

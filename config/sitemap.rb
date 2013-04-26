@@ -16,7 +16,7 @@ Sitemap::Generator.instance.load host: 'scholarsphere.psu.edu' do
   path :root, priority: 1, change_frequency: 'daily'
   path :catalog_index, priority: 1, change_frequency: 'daily'
   User.all.each do |user|
-    path :profile, params: { uid: user.login }, priority: 0.8, change_frequency: 'daily'
+    literal "/profile/#{user.login}", priority: 0.8, change_frequency: 'daily'
   end
   GenericFile.find('read_access_group_ssim' => 'public').each do |gf|
     path :generic_file, params: { id: gf.noid }, priority: 1, change_frequency: 'weekly'

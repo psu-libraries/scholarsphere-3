@@ -15,18 +15,9 @@
  *= require batch_edit
  *= require sufia
  *= require sufia-psu-changes
+ *= require select2
  */
 
-/* So our links don't headbutt the top of the browser window */
-/* TODO move to sufia */
-.tab-pane:before { 
-  display: block; 
-  content: " "; 
-  margin-top: -285px; 
-  height: 285px; 
-  visibility: hidden; 
-}
-
-.controls > .field_with_errors > input{
-  border: 2px solid red;
-}
+/* .controls > .field_with_errors > input{ */
+/*   border: 2px solid red; */
+/* } */
