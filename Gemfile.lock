@@ -36,6 +36,37 @@ GIT
       blacklight
       hydra-head
 
+GIT
+  remote: git://github.com/psu-stewardship/sufia.git
+  revision: f61a72b2ded20b0062d7fa78a706162685fa34fd
+  ref: f61a72b2ded
+  branch: buttonize_dashboard_actions
+  specs:
+    sufia (1.0.0)
+      activerecord-import (= 0.3.0)
+      acts_as_follower (= 0.1.1)
+      blacklight (~> 4.0)
+      blacklight_advanced_search
+      daemons (= 1.1.9)
+      devise
+      font-awesome-sass-rails (~> 3.0)
+      hydra-batch-edit (~> 0.3)
+      hydra-head (~> 6.0)
+      mail_form
+      mailboxer (= 0.8.0)
+      nest (= 1.1.1)
+      noid (~> 0.6.6)
+      paperclip (= 3.3.0)
+      rails (~> 3.2.13)
+      rails_autolink (= 1.0.9)
+      rainbow (= 1.1.4)
+      resque (~> 1.23.0)
+      resque-pool (= 0.3.0)
+      rmagick
+      sitemap (= 0.3.2)
+      yaml_db (= 0.2.3)
+      zipruby (= 0.3.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
