@@ -25,6 +25,16 @@ describe 'host_to_vhost' do
     ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
     ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-test.dlt.psu.edu/'
   end
+  it "should return the proper vhost on ss3test" do
+    Socket.stubs(:gethostname).returns('ss3test')
+    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-demo.dlt.psu.edu'
+    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-demo.dlt.psu.edu/'
+  end
+  it "should return the proper vhost on ss1qa" do
+    Socket.stubs(:gethostname).returns('ss1qa')
+    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-qa.dlt.psu.edu'
+    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-qa.dlt.psu.edu/'
+  end
   it "should return the proper vhost on ss1stage" do
     Socket.stubs(:gethostname).returns('ss1stage')
     ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-staging.dlt.psu.edu'

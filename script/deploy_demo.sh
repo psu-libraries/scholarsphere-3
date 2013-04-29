@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# deploy script for scholarsphere-qa
+# deploy script for scholarsphere-demo
 
 HHOME="/opt/heracles"
-WORKSPACE="${HHOME}/scholarsphere/scholarsphere-qa"
+WORKSPACE="${HHOME}/scholarsphere/scholarsphere-demo"
 RESQUE_POOL_PIDFILE="${WORKSPACE}/tmp/pids/resque-pool.pid"
 DEFAULT_TERMCOLORS="\e[0m"
 HIGHLIGHT_TERMCOLORS="\e[33m\e[44m\e[1m"
@@ -28,9 +28,9 @@ banner "checking username"
     exit 1
 }
 
-banner "exit if not ss1qa or ss2qa"
-[[ $HOSTNAME == "ss1qa" || $HOSTNAME == "ss2qa" ]] || {
-    echo -e "${ERROR_TERMCOLORS}*** ERROR: $0 must be run on ss1qa or ss2qa ${DEFAULT_TERMCOLORS}"
+banner "exit if not ss3test"
+[[ $HOSTNAME == "ss3test" ]] || {
+    echo -e "${ERROR_TERMCOLORS}*** ERROR: $0 must be run on ss3test ${DEFAULT_TERMCOLORS}"
     exit 1
 }
 
@@ -59,23 +59,24 @@ banner "resque-pool stop"
 banner "passenger-install-apache2-module -a"
 passenger-install-apache2-module -a
 
-[[ $HOSTNAME == "ss1qa" ]] && {
+[[ $HOSTNAME == "ss3test" ]] && {
   banner "rake db:migrate"
-  RAILS_ENV=production bundle exec rake db:migrate
+  RAILS_ENV=production rake db:migrate
 }
 
 banner "rake assets:precompile"
-RAILS_ENV=production bundle exec rake assets:precompile
+RAILS_ENV=production rake assets:precompile
 
 banner "resque-pool start"
-bundle exec resque-pool --daemon --environment production start
+resque-pool --daemon --environment production start
 
 banner "rake scholarsphere:generate_secret"
-bundle exec rake scholarsphere:generate_secret
+rake scholarsphere:generate_secret
 
-[[ $HOSTNAME == "ss1qa" ]] && {
+
+[[ $HOSTNAME == "ss3test" ]] && {
   banner "rake scholarsphere:resolrize"
-  RAILS_ENV=production bundle exec rake scholarsphere:resolrize
+  RAILS_ENV=production rake scholarsphere:resolrize
 }
 
 banner "touch ${WORKSPACE}/tmp/restart.txt"

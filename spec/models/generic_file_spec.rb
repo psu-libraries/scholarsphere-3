@@ -177,6 +177,9 @@ describe GenericFile do
       end
     end
   end
+  it 'should export as endnote' do
+    @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/__DO_NOT_USE__\n%~ ScholarSphere\n%W Penn State University"
+  end
   it "should support to_solr" do
     @file.part_of = "Arabiana"
     @file.contributor = "Mohammad"
@@ -448,17 +451,17 @@ describe GenericFile do
         @myfile.characterization_terms.keys.should include(:last_modified)
         @myfile.characterization_terms.keys.should include(:filename)
       end
-      it "should append metadata from the characterization" do
-        @myfile.title.should include("Microsoft Word - sample.pdf.docx")
+      it "should NOT append metadata from the characterization" do
+        @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
         @myfile.filename[0].should == @myfile.label
       end
       it "should include thumbnail generation in characterization job" do
         @myfile.thumbnail.size.nil?.should be_false
       end
-      it "should append each term only once" do
+      it "should NOT append each term only once" do
         @myfile.append_metadata
         @myfile.format_label.should == ["Portable Document Format"]
-        @myfile.title.should include("Microsoft Word - sample.pdf.docx")
+        @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
       end
       it "should include extracted text" do
         @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"

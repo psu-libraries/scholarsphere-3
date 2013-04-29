@@ -302,3 +302,16 @@ ol.faq ol ol li { list-style-type: lower-roman }
      color: goldenrod;
 }
 
+.table th, .table td {
+    padding: 3px;
+}
+
+.icon-large.icon-magic, .icon-large.icon-gift {
+    font-size: 1.0em;
+}
+
+.batch-select-all, .button_to {
+    float: right;
+    padding: 2px;
+}
+

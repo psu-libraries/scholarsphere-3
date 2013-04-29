@@ -33,10 +33,10 @@ describe CatalogController do
       @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib2', read_groups:['public'])
       @gf2.apply_depositor_metadata('mjg36')
       @gf2.save
-      @gf3 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag', 
-                       based_near:"based_nearbased_near", language:"languagelanguage", 
+      @gf3 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag',
+                       based_near:"based_nearbased_near", language:"languagelanguage",
                        creator:"creatorcreator", contributor:"contributorcontributor", publisher: "publisherpublisher",
-                       subject:"subjectsubject", resource_type:"resource_typeresource_type", resource_type:"resource_typeresource_type")
+                       subject:"subjectsubject", resource_type:"resource_typeresource_type")
       @gf3.description = "descriptiondescription"
       @gf3.format_label = "format_labelformat_label"
       @gf3.full_text.content = "full_textfull_text"
@@ -139,6 +139,18 @@ describe CatalogController do
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
       end
+      it "should find a file by depositor" do
+        xhr :get, :index, :q =>"mjg36"
+        response.should be_success
+        response.should render_template('catalog/index')
+        assigns(:document_list).count.should eql(3)
+      end
+      it "should find a file by depositor in advanced search" do
+        xhr :get, :index, :depositor =>"mjg36", :search_field => "advanced"
+        response.should be_success
+        response.should render_template('catalog/index')
+        assigns(:document_list).count.should eql(3)
+      end
     end
     describe "facet search" do
       before do
@@ -190,22 +202,21 @@ describe CatalogController do
       @gf4.delete
     end
 
-    it "should find my 4 files" do
+    it "should find my 3 files" do
       response.should be_success
       response.should render_template('catalog/recent')
-      assigns(:recent_documents).count.should eql(4)
+      assigns(:recent_documents).count.should eql(3)
       # the order is reversed since the first in should be the last out in descending time order
-      lgf4 = assigns(:recent_documents)[0]
-      lgf3 = assigns(:recent_documents)[1]
-      lgf2 = assigns(:recent_documents)[2]
-      lgf1 = assigns(:recent_documents)[3]
+      lgf3 = assigns(:recent_documents)[0]
+      lgf2 = assigns(:recent_documents)[1]
+      lgf1 = assigns(:recent_documents)[2]
       descriptor = Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
-      lgf4.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf1.title[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf1.contributor[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf1.resource_type[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
+      lgf3.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf2.title[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf2.contributor[0])
+      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf2.resource_type[0])
     end
   end
 end

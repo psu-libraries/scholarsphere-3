@@ -78,10 +78,6 @@ bundle exec rake scholarsphere:generate_secret
   RAILS_ENV=production bundle exec rake scholarsphere:resolrize
 }
 
-banner "rake sitemap:generate & ping"
-RAILS_ENV=production bundle exec rake sitemap:generate
-RAILS_ENV=production bundle exec rake sitemap:ping
-
 banner "touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt
 
