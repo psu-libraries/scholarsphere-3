@@ -89,10 +89,14 @@ describe GenericFile do
       @file.content.should be_kind_of FileContentDatastream
     end
   end
+
+
   describe "delegations" do
     it "should delegate methods to properties metadata" do
       @file.should respond_to(:relative_path)
       @file.should respond_to(:depositor)
+      @file.proxy_depositor = "sally@example.com"
+      @file.proxy_depositor.should == 'sally@example.com'
     end
     it "should delegate methods to descriptive metadata" do
       @file.should respond_to(:related_url)
@@ -464,7 +468,7 @@ describe GenericFile do
         @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
       end
       it "should include extracted text" do
-        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com \n\n\n\n"
+        @myfile.full_text.content.should == "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMicrosoft Word - sample.pdf.docx\n\n\n \n \n\n \n\n \n\n \n\nThis PDF file was created using CutePDF. \n\nwww.cutepdf.com"
       end
     end
   end

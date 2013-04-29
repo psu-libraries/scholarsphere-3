@@ -1,0 +1,71 @@
+<h1>Transfer of Ownership</h1>
+
+<h2>Sent</h2>
+<% if @outgoing.present? %>
+  <table class="table table-striped" id="outgoing-transfers">
+    <thead> 
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Recipeint</th>
+      <th>Status</th>
+      <th>Comments</th>
+    </tr>
+    </thead> 
+    <tbody> 
+    <% @outgoing.each do |req| %>
+      <tr>
+        <td><%=req.solr_doc.title%></td>
+        <td class="sorts-dash"><%=req.created_at%></td>
+        <td><%=req.receiving_user.to_s%></td>
+        <td>
+          <% if req.pending? %>
+            <%=button_to "Cancel", transfer_path(req), method: :delete, class:'btn btn-danger', confirm: "Are you sure you want to cancel this request?" %>
+          <% else %>
+            <%= req.status.capitalize %>
+          <% end %>
+        </td>
+        <td><%= req.sender_comment %></td>
+      </tr>
+    <% end %>
+    </tbody> 
+  </table>
+<% else %>
+  You haven't transfered any files.
+<% end %>
+
+<h2>Received</h2>
+<% if @incoming.present? %>
+  <table class="table table-striped" id="incoming-transfers">
+    <thead> 
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Requested by</th>
+      <th>Status</th>
+      <th>Comments</th>
+    </tr>
+    </thead> 
+    <tbody> 
+    <% @incoming.each do |req| %>
+      <tr>
+        <td><%=req.solr_doc.title%></td>
+        <td class="sorts-dash"><%=req.created_at%></td>
+        <td><%=req.receiving_user.to_s%></td>
+        <td>
+          <% if req.pending? %>
+            <%=button_to "Accept", accept_transfer_path(req), method: :put, class: 'btn btn-primary' %>
+            <%=button_to "Reject", reject_transfer_path(req), method: :put, class: 'btn btn-danger' %>
+          <% else %>
+            <%= req.status.capitalize %>
+          <% end %>
+        </td>
+
+        <td><%= req.sender_comment %></td>
+      </tr>
+    <% end %>
+    </tbody> 
+  </table>
+<% else %>
+  You haven't received any file transfer requests
+<% end %>

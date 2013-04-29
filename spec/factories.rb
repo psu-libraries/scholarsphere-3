@@ -15,16 +15,21 @@
 FactoryGirl.define do
   factory :user, :class => User do |u|
     login 'jilluser'
+    ldap_available true
   end
 
   factory :archivist, :class => User do |u|
     login 'archivist1'
+    ldap_available true
   end
 
   factory :curator, :class => User do |u|
     login 'curator1'
+    ldap_available true
   end
 
+
+  #these two users are ONLY for ensuring our staging test users don't show up in search results
   factory :test_user_1, :class => User do |u|
     login 'tstem31'
   end

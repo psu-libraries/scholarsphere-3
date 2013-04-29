@@ -199,7 +199,7 @@ describe GenericFilesController do
       ClamAV.any_instance.stubs(:scanfile).returns(0)
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
-      @generic_file.save
+      @generic_file.save!
     end
     after do
       @generic_file.delete
@@ -314,7 +314,7 @@ describe GenericFilesController do
 
   end
 
-  describe "someone elses files" do
+  describe "a file owned by someone else" do
     before(:all) do
       f = GenericFile.new(:pid => 'scholarsphere:test5')
       f.apply_depositor_metadata('archivist1')
@@ -323,7 +323,7 @@ describe GenericFilesController do
       # grant public read access explicitly
       f.read_groups = ['public']
       f.expects(:characterize_if_changed).yields
-      f.save
+      f.save!
       @file = f
     end
     after(:all) do
@@ -355,6 +355,7 @@ describe GenericFilesController do
         flash[:alert].should include("You need to sign in or sign up before continuing")
       end
       it "should filter flash if they signin" do
+        pending "This method was getting a Blacklight::Exceptions::InvalidSolrID, but the assertions still passed"
         request.env['warden'].stubs(:user).returns(@user)
         sign_out @user
         get :new

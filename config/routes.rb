@@ -25,6 +25,23 @@ ScholarSphere::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :new_user_session
 
   devise_for :users
+
+  ## This route is not in sufia, must come before sufia is mounted or sufia's error route catches it.
+  resource :dashboard, only: [] do
+    collection do
+      resources :transfers, only: [:index, :destroy] do
+        member do
+          put 'accept'
+          put 'reject'
+        end
+      end
+    end
+  end
+
+  resources :generic_file, only:[] do
+    resources :transfers, only: [:new, :create]
+  end
+
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
 
@@ -56,17 +73,9 @@ ScholarSphere::Application.routes.draw do
   match 'dashboard/activity' => 'dashboard#activity', :as => :dashboard_activity
   match 'dashboard/facet/:id' => 'dashboard#facet', :as => :dashboard_facet
 
+
   # Static page routes (workaround)
   match ':action' => 'static#:action', :constraints => { :action => /about|help|terms|zotero|mendeley|agreement|subject_libraries|versions/ }, :as => :static
-
-  # User profile & follows
-  match 'users' => 'users#index', :as => :profiles
-  match 'users/:uid' => 'users#show', :as => :profile
-  match 'users/:uid/edit' => 'users#edit', :as => :edit_profile
-  match 'users/:uid/update' => 'users#update', :as => :update_profile, :via => :put
-  match "users/:uid/trophy" => "users#toggle_trophy", :as => :update_trophy_user, :via => :post
-  match 'users/:uid/follow' => 'users#follow', :as => :follow_user
-  match 'users/:uid/unfollow' => 'users#unfollow', :as => :unfollow_user
 
   # Downloads controller route
   resources :downloads, :only => "show"
@@ -77,7 +86,7 @@ ScholarSphere::Application.routes.draw do
   # advanced routes for advanced search
   match 'search' => 'advanced#index', :as => :advanced
 
- match 'single_use_link/generate_download/:id' => 'single_use_link#generate_download', :as => :generate_download_single_use_link
+  match 'single_use_link/generate_download/:id' => 'single_use_link#generate_download', :as => :generate_download_single_use_link
   match 'single_use_link/generate_show/:id' => 'single_use_link#generate_show', :as => :generate_show_single_use_link
   match 'single_use_link/show/:id' => 'single_use_link#show', :as => :show_single_use_link
   match 'single_use_link/download/:id' => 'single_use_link#download', :as => :download_single_use_link
@@ -88,7 +97,9 @@ ScholarSphere::Application.routes.draw do
   match 'notifications/:uid/delete' => 'mailbox#delete', :as => :mailbox_delete
 
   # Catch-all (for routing errors)
-  match '*error' => 'errors#routing'
+  unless Rails.env.development? || Rails.env.test?
+    match '*error' => 'errors#routing'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

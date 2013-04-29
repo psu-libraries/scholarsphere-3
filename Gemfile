@@ -12,8 +12,8 @@ gem 'rack', '1.4.5'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'projecthydra/sufia', :ref => '41f1a1b0cbdd3daa936c558ce9fbf7389b76df2a'
-gem 'hydra-collections', :github => 'psu-stewardship/hydra-collections', :branch => 'master'
+gem 'sufia', github: 'projecthydra/sufia', :ref => 'f68669c2545d35d9b66a60a2eed4f8400ec50726'
+gem 'hydra-collections', :github => 'psu-stewardship/hydra-collections', :ref => '7b4cde6e8a94f8ff496d97f1f256af0c5ef37a06'
 gem 'hydra-batch-edit', '0.3.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
@@ -26,18 +26,18 @@ gem 'zipruby', '0.3.6'
 gem 'rails_autolink', '1.0.9'
 gem 'acts_as_follower', '0.1.1'
 gem 'nest', '1.1.1'
-gem 'sitemap', '0.3.2'
+gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'mailboxer', '0.8.0'
 gem 'mail_form', '1.4.1'
 gem 'clamav', '0.4.1'
-gem 'will_paginate', '3.0.3'
 gem 'equivalent-xml', '0.3.0'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
+gem 'select2-rails', '3.3.1' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

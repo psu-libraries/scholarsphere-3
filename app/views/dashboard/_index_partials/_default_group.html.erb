@@ -1,4 +1,3 @@
-
 <%#
 Copyright © 2012 The Pennsylvania State University
 
@@ -18,7 +17,7 @@ limitations under the License.
 <table class="table table-striped dashboard">
   <caption class="accessible-hidden">Listing of files you have deposited in <%= t('sufia.product_name') %></caption>
 <% unless params[:display_type] == 'list' %>
-  <thead> 
+  <thead>
   <tr>
     <th class="sm"><%= render :partial => 'batch_edits/check_all' %></th>
     <th>&nbsp;</th>
@@ -27,16 +26,16 @@ limitations under the License.
     <th>Visibility</th>
     <th class="center">Action</th>
   </tr>
-  </thead> 
+  </thead>
   <% end %>
-  <tbody> 
+  <tbody>
   <% docs.each_with_index do |document,counter| %>
-    <% case document["active_fedora_model_ssim"].first %>
-	    <% when "GenericFile" %>
-	      <%= render :partial => 'dashboard/_index_partials/list_files', :locals => {:document => document, :counter => counter} %>
-	    <% when "Collection" %>
-	      <%= render :partial => 'dashboard/_index_partials/list_collections', :locals => {:document => document, :counter => counter} %>    
+    <% case document.hydra_model %>
+    <% when "GenericFile" %>
+      <%= render :partial => 'dashboard/_index_partials/list_files', :locals => {:document => document, :counter => counter} %>
+    <% when "Collection" %>
+      <%= render :partial => 'dashboard/_index_partials/list_collections', :locals => {:document => document, :counter => counter} %>
     <% end %>
   <% end %>
-  </tbody> 
+  </tbody>
 </table>

@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   # Workaround to retry LDAP calls a number of times
   include Sufia::Utils
 
+  self.include_root_in_json = false
+
 
   Devise.add_module(:http_header_authenticatable,
                     :strategy => true,
@@ -36,8 +38,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :login, :display_name, :address, :admin_area, :department, :title, :office, :chat_id, :website, :affiliation, :telephone, :avatar, 
   :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle, :linkedin_handle
 
-  # Pagination hook
-  self.per_page = 5
+  has_many :proxy_deposit_requests, foreign_key: 'receiving_user_id'
 
 
   #put in to remove deprication warnings since the parent class overrides our login with it's own
@@ -59,6 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def ldap_exist?
+    return true if login == 'jcoyne' && Rails.env.development?
     if (ldap_last_update.blank? || ((Time.now-ldap_last_update) > 24*60*60 ))
       return ldap_exist!
     end

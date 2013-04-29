@@ -15,4 +15,9 @@
  *= require batch_edit
  *= require sufia
  *= require sufia-psu-changes
+ *= require select2
  */
+
+/* .controls > .field_with_errors > input{ */
+/*   border: 2px solid red; */
+/* } */

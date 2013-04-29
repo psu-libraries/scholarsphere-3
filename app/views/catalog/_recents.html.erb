@@ -10,15 +10,14 @@
 
       <div id="recent_docs">
         <table class="table table-bordered table-striped">
-	        <% recent_documents.each_with_index do |document,counter| %>
-	         
-			    <% case document["active_fedora_model_ssim"].first %>
-			    <% when "GenericFile" %>
-		          <%= render :partial => "recent_document",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
-			    <% when "Collection" %>
-		          <%= render :partial => "recent_collection",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
-			    <% end %>
-	        <% end %>
+                <% recent_documents.each do |document| %>
+                  <% case document.hydra_model %>
+                  <% when "GenericFile" %>
+                    <%= render :partial => "recent_document",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
+                  <% when "Collection" %>
+                    <%= render :partial => "recent_collection",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
+                  <% end %>
+                <% end %>
         </table>
       </div>
    <% end %>

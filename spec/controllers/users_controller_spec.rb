@@ -17,6 +17,7 @@ require 'spec_helper'
 
 describe UsersController do
   before(:each) do
+    @routes = Sufia::Engine.routes
     @user = FactoryGirl.find_or_create(:user)
     @another_user = FactoryGirl.find_or_create(:archivist)
     sign_in @user
@@ -54,12 +55,24 @@ describe UsersController do
     end
   end
   describe "#index" do
-    it "should not display test users" do
-    @user = FactoryGirl.find_or_create(:test_user_1)
-    @another_user = FactoryGirl.find_or_create(:test_user_2)
-    get :index #, uid: user.login
-    response.should_not include("tstem31")
-    response.should_not include("testapp")
+    describe "requesting html" do
+      it "should not display test users" do
+      @user = FactoryGirl.find_or_create(:test_user_1)
+      @another_user = FactoryGirl.find_or_create(:test_user_2)
+      get :index
+      response.should_not include("tstem31")
+      response.should_not include("testapp")
+      end
+    end
+    describe "requesting json" do
+      it "should display test users" do
+      @user2 = FactoryGirl.find_or_create(:curator)
+      @user3 = FactoryGirl.find_or_create(:archivist)
+      get :index, format: :json
+      json = JSON.parse(response.body)
+      json.map{|u| u['id'] }.should include(@user.login, @user2.login, @user3.login)
+      json.map{|u| u['text'] }.should include(@user.login, @user2.login, @user3.login)
+      end
     end
   end
   describe "#edit" do
@@ -71,7 +84,7 @@ describe UsersController do
     end
     it "redirects to show profile when user attempts to edit another profile" do
       get :edit, uid: @another_user.login
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
     it "removes unmatched trophy in edit" do
@@ -89,7 +102,7 @@ describe UsersController do
   describe "#update" do
     it "should not allow other users to update" do
       post :update, uid: @another_user.login, user: { avatar: nil }
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
     it "should set an avatar and redirect to profile" do
@@ -100,7 +113,7 @@ describe UsersController do
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
       f = fixture_file_upload('/world.png', 'image/png')
       post :update, uid: @user.login, user: { avatar: f }
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       User.find_by_login(@user.login).avatar.file?.should be_true
     end
@@ -109,7 +122,7 @@ describe UsersController do
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).never
       f = fixture_file_upload('/image.jp2', 'image/jp2')
       post :update, uid: @user.login, user: { avatar: f }
-      response.should redirect_to(edit_profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
       flash[:alert].should include("Avatar content type is invalid")
     end
     it "should validate the size of an avatar" do
@@ -117,7 +130,7 @@ describe UsersController do
       UserEditProfileEventJob.expects(:new).with(@user.login).never
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).never
       post :update, uid: @user.login, user: { avatar: f }
-      response.should redirect_to(edit_profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
       flash[:alert].should include("Avatar file size must be less than 2097152 Bytes")
     end
     it "should delete an avatar" do
@@ -126,7 +139,7 @@ describe UsersController do
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
       post :update, uid: @user.login, delete_avatar: true
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       @user.avatar.file?.should be_false
     end
@@ -137,7 +150,7 @@ describe UsersController do
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
       User.any_instance.expects(:populate_attributes).once
       post :update, uid: @user.login, update_directory: true
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
     end
     it "should set an social handles" do
@@ -145,7 +158,7 @@ describe UsersController do
       @user.facebook_handle.blank?.should be_true
       @user.googleplus_handle.blank?.should be_true
       post :update, uid: @user.login, user: { twitter_handle: 'twit', facebook_handle: 'face', googleplus_handle: 'goo' }
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       u = User.find_by_login(@user.login)
       u.twitter_handle.should == 'twit'
@@ -164,7 +177,7 @@ describe UsersController do
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).once
       post :follow, uid: @another_user.login
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
     end
     it "should redirect to profile if already following and not log an event" do
@@ -172,14 +185,14 @@ describe UsersController do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).never
       post :follow, uid: @another_user.login
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @user.login).never
       post :follow, uid: @user.login
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")
     end
   end
@@ -191,7 +204,7 @@ describe UsersController do
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).once
       post :unfollow, uid: @another_user.login
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
     end
     it "should redirect to profile if not following and not log an event" do
@@ -199,14 +212,14 @@ describe UsersController do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).never
       post :unfollow, uid: @another_user.login
-      response.should redirect_to(profile_path(@another_user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @user.login).never
       post :unfollow, uid: @user.login
-      response.should redirect_to(profile_path(@user.login))
+      response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")
     end
   end

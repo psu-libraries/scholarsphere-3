@@ -141,10 +141,32 @@ describe 'Routes' do
       { get: '/dashboard/facet/1' }.should route_to(controller: 'dashboard', action: 'facet', id: '1')
     end
 
-  
-
     it "should route to dashboard activity" do
       { get: '/dashboard/activity' }.should route_to(controller: 'dashboard', action: 'activity')
+    end
+
+    it "should route to transfers" do # NOT a sufia route
+      { get: '/dashboard/transfers' }.should route_to(controller: 'transfers', action: 'index')
+    end
+
+    it "should route to create a transfer" do # NOT a sufia route
+      { post: '/generic_file/7/transfers' }.should route_to(controller: 'transfers', action: 'create', generic_file_id: '7')
+    end
+
+    it "should route to new transfers" do # NOT a sufia route
+      { get: '/generic_file/7/transfers/new'}.should route_to(generic_file_id: '7', controller: 'transfers', action: 'new')
+    end
+
+    it "should route to cancel transfers" do # NOT a sufia route
+      { delete: '/dashboard/transfers/7' }.should route_to(controller: 'transfers', action: 'destroy', id: '7')
+    end
+
+    it "should route to accept transfers" do # NOT a sufia route
+      { put: '/dashboard/transfers/7/accept' }.should route_to(controller: 'transfers', action: 'accept', id: '7')
+    end
+
+    it "should route to reject transfers" do # NOT a sufia route
+      { put: '/dashboard/transfers/7/reject' }.should route_to(controller: 'transfers', action: 'reject', id: '7')
     end
   end
 
@@ -157,31 +179,6 @@ describe 'Routes' do
   describe 'Authorities' do
     it "should route to query" do
       { get: '/authorities/subject/bio' }.should route_to(controller: 'authorities', action: 'query', model: 'subject', term: 'bio')
-    end
-  end
-
-  describe 'Users' do
-    it 'should route to user trophies' do
-      { post: '/users/bob135/trophy' }.should route_to(controller: 'users', action: 'toggle_trophy', uid: 'bob135')
-    end
-    it 'should route to user profile' do
-      { get: '/users/bob135' }.should route_to(controller: 'users', action: 'show', uid: 'bob135')
-    end
-
-    it "should route to edit profile" do
-      { get: '/users/bob135/edit' }.should route_to(controller: 'users', action: 'edit', uid: 'bob135')
-    end
-
-    it "should route to update profile" do
-      { put: '/users/bob135/update' }.should route_to(controller: 'users', action: 'update', uid: 'bob135')
-    end
-
-    it "should route to user follow" do
-      { post: '/users/bob135/follow' }.should route_to(controller: 'users', action: 'follow', uid: 'bob135')
-    end
-
-    it "should route to user unfollow" do
-      { post: '/users/bob135/unfollow' }.should route_to(controller: 'users', action: 'unfollow', uid: 'bob135')
     end
   end
 
@@ -261,6 +258,7 @@ describe 'Routes' do
 
   describe "Catch-all" do
     it "should route non-existent routes to errors" do
+      pending "We're not doing this route in development or test so we can detect routing errors"
       { get: '/awesome' }.should route_to(controller: 'errors', action: 'routing', error: 'awesome')
     end
   end

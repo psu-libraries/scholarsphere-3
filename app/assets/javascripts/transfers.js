@@ -1,0 +1,24 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+//
+//= require select2
+//
+$(document).ready(function() { 
+  $("#proxy_deposit_request_transfer_to").select2( {
+    placeholder: "Search for a user",
+    minimumInputLength: 2,
+    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+      url: "/users.json",
+      dataType: 'json',
+      data: function (term, page) {
+        return {
+          uq: term // search term
+        };
+      },
+      results: function (data, page) { // parse the results into the format expected by Select2.
+        // since we are using custom formatting functions we do not need to alter remote JSON data
+        return {results: data};
+      }
+    },
+  }).select2('data', null);
+});
