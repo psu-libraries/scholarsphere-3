@@ -38,8 +38,8 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: fd28ae619a0b5442b0441f55595937f5cfc1e632
-  ref: fd28ae619a
+  revision: 3920498d218340d311b5fd46abad46b3d1c8362c
+  ref: 3920498
   branch: buttonize_dashboard_actions
   specs:
     sufia (1.0.0)
