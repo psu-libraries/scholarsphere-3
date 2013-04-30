@@ -86,11 +86,6 @@ ScholarSphere::Application.routes.draw do
   # advanced routes for advanced search
   match 'search' => 'advanced#index', :as => :advanced
 
-  match 'single_use_link/generate_download/:id' => 'single_use_link#generate_download', :as => :generate_download_single_use_link
-  match 'single_use_link/generate_show/:id' => 'single_use_link#generate_show', :as => :generate_show_single_use_link
-  match 'single_use_link/show/:id' => 'single_use_link#show', :as => :show_single_use_link
-  match 'single_use_link/download/:id' => 'single_use_link#download', :as => :download_single_use_link
-
   # Messages
   match 'notifications' => 'mailbox#index', :as => :mailbox
   match 'notifications/delete_all' => 'mailbox#delete_all', :as => :mailbox_delete_all

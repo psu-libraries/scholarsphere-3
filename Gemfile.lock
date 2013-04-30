@@ -38,8 +38,8 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: f61a72b2ded20b0062d7fa78a706162685fa34fd
-  ref: f61a72b2ded
+  revision: fd28ae619a0b5442b0441f55595937f5cfc1e632
+  ref: fd28ae619a
   branch: buttonize_dashboard_actions
   specs:
     sufia (1.0.0)
@@ -207,25 +207,25 @@ GEM
     headless (1.0.1)
     hike (1.2.2)
     hooks (0.2.2)
-    hydra-access-controls (6.0.0)
-      active-fedora (>= 6.0.0)
+    hydra-access-controls (6.1.0)
+      active-fedora (~> 6.1)
       activesupport
       blacklight
       cancan
       deprecation
     hydra-batch-edit (0.3.1)
       blacklight
-    hydra-core (6.0.0)
+    hydra-core (6.1.0)
       active-fedora
       blacklight (~> 4.0)
       block_helpers
       deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.0.0)
+      hydra-access-controls (= 6.1.0)
       jettywrapper (>= 1.4.1)
       rails (~> 3.2.3)
-    hydra-head (6.0.0)
-      hydra-access-controls (= 6.0.0)
-      hydra-core (= 6.0.0)
+    hydra-head (6.1.0)
+      hydra-access-controls (= 6.1.0)
+      hydra-core (= 6.1.0)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
