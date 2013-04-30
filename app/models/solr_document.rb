@@ -7,6 +7,6 @@ class SolrDocument
 
   # Method to return the ActiveFedora model
   def hydra_model
-    Array(self[Solrizer.solr_name('has_model', :symbol)]).first
+    Array(self[Solrizer.solr_name('active_fedora_model', :symbol)]).first
   end
 end
