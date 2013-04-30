@@ -39,7 +39,7 @@
         <str name="qf">
           id
           all_text_timv
-          active_fedora_model_ssim
+          active_fedora_model_ssi
           object_type_si
         </str>
         <str name="pf">
@@ -67,7 +67,7 @@
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
        <str name="facet.limit">10</str>
-       <str name="facet.field">active_fedora_model_ssim</str>
+       <str name="facet.field">active_fedora_model_ssi</str>
        <str name="facet.field">object_type_si</str>
        
        <str name="spellcheck">true</str>

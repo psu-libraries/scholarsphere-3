@@ -35,7 +35,7 @@ describe Admin::StatsController do
       get :index
       response.should be_success
       response.body.should include('Statistics for ScholarSphere')
-      response.body.should include('Total Scholarsphere Members')
+      response.body.should include('Total ScholarSphere Users')
     end
 
     it 'redirects when an unauthorized user attempts to view the page' #do

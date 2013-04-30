@@ -14,7 +14,7 @@
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
 
 	<!--these fields are hard coded in places in hydra-head -->
-	<field name="active_fedora_model_ssim" type="string" stored="true" indexed="true" multiValued="true"/>
+	<field name="active_fedora_model_ssi" type="string" stored="true" indexed="true" multiValued="false"/>
 	<field name="object_profile_display" type="string" stored="true" indexed="true"/>
 	<field name="has_model_ssim" type="string" stored="true" indexed="true" multiValued="true"/>
 	<field name="is_governed_by_s" type="string" stored="true" indexed="true"/>
