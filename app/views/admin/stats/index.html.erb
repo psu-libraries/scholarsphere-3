@@ -1,58 +1,45 @@
 <div class="stats">
-<h1>Statistics for <%= ScholarSphere::Application.config.application_name %> 
-<%= ScholarSphere::Application.config.scholarsphere_version %></h1> 
-<br />   
-<h3>Total objects: <%= @all_objs.count %> </h3>
+<h1>Statistics for <%= ScholarSphere::Application.config.application_name %>
+<%= ScholarSphere::Application.config.scholarsphere_version %></h1>
 <br />
-<h4>File Permissions</h4>
+<h3>Total Files: <%= @files_count[:total] %> </h3>
+<br />
+<h4>Totals by Visibility</h4>
 <ul>
-  <li>Public &nbsp;<span class="count">(<%= @totals['public'].to_s %>)</span></li>
-  <li>PSU &nbsp;<span class="count">(<%= @totals['psu'].to_s %>)</span></li>
-  <li>Private &nbsp;<span class="count">(<%= @totals['private'].to_s %>)</span></li>
+  <li>Open Access <span class="count">(<%= @files_count[:public] %>)</span></li>
+  <li>Penn State <span class="count">(<%= @files_count[:psu] %>)</span></li>
+  <li>Private <span class="count">(<%= @files_count[:private] %>)</span></li>
 </ul>
-<% if !@formats.nil? %>
-<h4>Top formats used </h4>
-   <ul>
-   <% @formats.each do |k| %>
-      <li>
-      <%= k['format'].first %>&nbsp; 
-      <span class="count">(
-      <%= k['count'].to_s %>)
-      </span>
-      </li>
-      <% end %>
-   </ul>
+
+<h4>Top File Formats</h4>
+<ul>
+<% @top_formats.each do |k, v| %>
+  <li><%= k  %> <span class="count">(<%= v %>)</span></li>
 <% end %>
+</ul>
 
 <br/>
-<h3>Total Scholarsphere Members:&nbsp; <%= @all_users.count %> </h3>
+<h3>Total ScholarSphere Users:&nbsp; <%= @users_count %> </h3>
 <br/>
-<% if !@recent_users.nil? %>
-<h4>Newest members:</h4>
+
+<h4>Newest Users</h4>
 <ul>
    <% @recent_users.each do |usr| %>
-      <% if !usr.display_name.nil?  %>
           <li>
-             <a href="<%= sufia.profile_path(usr.login) %>"  title="click for User Profile"><%= usr.display_name.titleize %></a> member since 
+             <a href="<%= sufia.profile_path(usr.login) %>" title="View user's profile"><%= usr.name %></a> registered
              <span class="date">
              <%= usr.created_at.to_time.strftime("%m/%d/%Y") %>
              </span>
           </li>
-       <% end %>
-   <%end %>
-<% end %>
+   <% end %>
 </ul>
 <br/>
-<% if !@active_users.nil? %>
-<h4>Members with the most files:</h4>
+<h4>Most Active Users</h4>
 <ul>
-   <% @active_users.each do |k| %>
+   <% @active_users.each do |k, v| %>
       <li>
-         <%= link_to_profile(k['login']) %>&nbsp;
-         <span class="count">(<%= k['count'].to_s %>)</span>
+         <%= link_to_profile(k) %> <span class="count">(<%= v %>)</span>
       </li>
    <% end %>
 </ul>
-<% end %>
-
 </div>
