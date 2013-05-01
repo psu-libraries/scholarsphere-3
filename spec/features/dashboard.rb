@@ -14,6 +14,10 @@ module Dashboard
      Warden.test_reset!
      Resque.inline = @old_resque_inline_value
     end
+    after(:all) do
+      GenericFile.find(:all).each(&:delete)
+      Collection.find(:all).each(&:delete)
+    end
     let(:user) { FactoryGirl.find_or_create(:user) }
   
     describe 'visit dashboard' do

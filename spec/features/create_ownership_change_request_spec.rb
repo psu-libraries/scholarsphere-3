@@ -7,6 +7,9 @@ feature "Creating ownership change requests" do
   background do
     sign_in user
   end
+  after(:all) do
+    GenericFile.find(:all).each(&:delete)
+  end
   context "when I have a file on my dashboard" do
     background do
       GenericFile.new.tap do |f|

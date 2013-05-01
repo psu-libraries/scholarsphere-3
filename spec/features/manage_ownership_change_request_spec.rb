@@ -5,6 +5,10 @@ feature "Managing ownership change requests" do
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
   end
+  after(:all) do
+    GenericFile.find(:all).each(&:delete)
+    Collection.find(:all).each(&:delete)
+  end
   context "when someone has request to transfer a file to me" do
     background do
       sender = FactoryGirl.find_or_create(:test_user_1)
