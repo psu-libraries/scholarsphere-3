@@ -208,6 +208,11 @@ $(function() {
 
   $("a[rel=popover]").click(function() { return false;});
 
+  $('#MoreModal').modal().css( {
+       'margin-top': function () {
+        return -($(this).height() / 2);  
+        }
+  });
 
   /*
    *
