@@ -12,7 +12,7 @@ gem 'rack', '1.4.5'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', :ref => 'f68669c2545d35d9b66a60a2eed4f8400ec50726'
+gem 'sufia', github: 'projecthydra/sufia', :ref => '289c783c9494fddec22afe5af6de7b64b1cd8963'
 gem 'hydra-collections', :github => 'psu-stewardship/hydra-collections', :ref => 'eca169de446db282376ffdee9bf8358a8baf9793'
 gem 'hydra-batch-edit', '0.3.1'
 gem 'hydra-ldap', '0.1.0'
