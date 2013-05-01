@@ -11,7 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+require 'sufia/http_header_auth'
 
+Sufia::Engine.configure do
+  config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'
+  config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
+  config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[1]}"
+  config.login_url = "https://webaccess.psu.edu?cosign-#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[0]}&#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[1]}"
+end
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -84,9 +91,4 @@ ScholarSphere::Application.configure do
   config.assets.precompile += %w( generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js)
   config.assets.precompile += %w( *.jpg *.png *.gif *.ico )
 
-  config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{get_vhost_by_host[1]}"
-  config.login_url = "https://webaccess.psu.edu?cosign-#{get_vhost_by_host[0]}&#{get_vhost_by_host[1]}"
-
-  # uncomment this when ready to put contact form into production
-  config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'
 end

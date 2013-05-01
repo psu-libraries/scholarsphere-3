@@ -5,10 +5,6 @@ Sufia::Engine.configure do
   config.fits_path = "fits.sh"
   config.fits_to_desc_mapping= {}
   config.max_days_between_audits = 7
-  config.contact_email = 'DLT-GAMMA-PROJECT@lists.psu.edu'
-  config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
-  config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[1]}"
-  config.login_url = "https://webaccess.psu.edu?cosign-#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[0]}&#{Sufia::HttpHeaderAuth.get_vhost_by_host(config)[1]}"
 
   config.cc_licenses = {
     'Attribution 3.0 United States' => 'http://creativecommons.org/licenses/by/3.0/us/',
