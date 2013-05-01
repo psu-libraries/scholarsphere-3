@@ -14,6 +14,8 @@
 Sufia::Engine.configure do
   config.contact_email = 'dmc186@psu.edu'
   config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
+  config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost/'
+  config.login_url = 'https://webaccess.psu.edu?cosign-localhost&https://localhost/'
 end
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -50,9 +52,4 @@ ScholarSphere::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-
-  config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost/'
-  config.login_url = 'https://webaccess.psu.edu?cosign-localhost&https://localhost/'
-
-  config.contact_email = 'dmc186@psu.edu'
 end
