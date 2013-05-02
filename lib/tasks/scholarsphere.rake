@@ -130,10 +130,7 @@ namespace :scholarsphere do
 
   desc "Execute Continuous Integration build (docs, tests with coverage)"
   task :ci => :environment do
-    #Rake::Task["hyhead:doc"].invoke
     Rake::Task["jetty:config"].invoke
-    #Rake::Task["db:drop"].invoke
-    #Rake::Task["db:create"].invoke
     Rake::Task["db:migrate"].invoke
 
     require 'jettywrapper'
@@ -141,10 +138,10 @@ namespace :scholarsphere do
 
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
-        Rake::Task['spec'].invoke
-  Cucumber::Rake::Task.new(:features) do |t|
-    t.cucumber_opts = "--format pretty"
-  end
+      Rake::Task['spec'].invoke
+      Cucumber::Rake::Task.new(:features) do |t|
+        t.cucumber_opts = "--format pretty"
+      end
     end
     raise "test failures: #{error}" if error
   end

@@ -1,4 +1,33 @@
 GIT
+  remote: git://github.com/projecthydra/sufia.git
+  revision: 9f37753677ca98fcf0422d47f01e35b582f21e53
+  ref: 9f37753677ca98fcf0422d47f01e35b582f21e53
+  specs:
+    sufia (1.1.0)
+      activerecord-import (= 0.3.0)
+      acts_as_follower (= 0.1.1)
+      blacklight (~> 4.0)
+      blacklight_advanced_search
+      daemons (= 1.1.9)
+      devise
+      font-awesome-sass-rails (~> 3.0)
+      hydra-batch-edit (~> 0.3)
+      hydra-head (~> 6.0)
+      mail_form
+      mailboxer (= 0.8.0)
+      nest (= 1.1.1)
+      noid (~> 0.6.6)
+      paperclip (= 3.3.0)
+      rails (~> 3.2.13)
+      rails_autolink (= 1.0.9)
+      rainbow (= 1.1.4)
+      resque (~> 1.23.0)
+      resque-pool (= 0.3.0)
+      rmagick
+      yaml_db (= 0.2.3)
+      zipruby (= 0.3.6)
+
+GIT
   remote: git://github.com/psu-stewardship/hydra-collections.git
   revision: eca169de446db282376ffdee9bf8358a8baf9793
   ref: eca169de446db282376ffdee9bf8358a8baf9793
@@ -350,29 +379,6 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
     stomp (1.2.9)
-    sufia (1.1.0)
-      activerecord-import (= 0.3.0)
-      acts_as_follower (= 0.1.1)
-      blacklight (~> 4.0)
-      blacklight_advanced_search
-      daemons (= 1.1.9)
-      devise
-      font-awesome-sass-rails (~> 3.0)
-      hydra-batch-edit (~> 0.3)
-      hydra-head (~> 6.0)
-      mail_form
-      mailboxer (= 0.8.0)
-      nest (= 1.1.1)
-      noid (~> 0.6.6)
-      paperclip (= 3.3.0)
-      rails (~> 3.2.13)
-      rails_autolink (= 1.0.9)
-      rainbow (= 1.1.4)
-      resque (~> 1.23.0)
-      resque-pool (= 0.3.0)
-      rmagick
-      yaml_db (= 0.2.3)
-      zipruby (= 0.3.6)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
     thor (0.18.1)
@@ -447,7 +453,7 @@ DEPENDENCIES
   selenium-webdriver
   sitemap (= 0.3.3)
   sqlite3
-  sufia (= 1.1.0)
+  sufia!
   therubyracer (= 0.10.2)
   uglifier (= 1.3.0)
   unicode
