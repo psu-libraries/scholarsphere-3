@@ -13,16 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 %>
+
 <% content_for :local_js do %>
+
 $('#myTab a').click(function (e) {
   e.preventDefault();
   $(this).tab('show');
 })
+
 <% end %>
-
-
-
-
 
   <div class="span110"> 
     <div class="pull-right">
@@ -42,7 +41,8 @@ $('#myTab a').click(function (e) {
       <h3> <%= @user.name %><br /><%= @user.user_key %> </h3>
       <hr /> 
         <i class="icon-time"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
-        <i class="icon-folder-open"></i> Deposited Files <%= link_to_field('depositor', @user.to_s, GenericFile.find(:depositor => @user.to_s).count) %> <br />
+        <i class="icon-folder-open"></i> Deposited Files
+        <%= link_to_field('depositor', @user.to_s, ActiveFedora::SolrService.query("#{Solrizer.solr_name('depositor', :stored_searchable, :type => :string)}:#{@user.user_key}").count) %> <br />
         <i class="icon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
         <i class="icon-briefcase"></i> <%= @user.title.titleize %> <br />
       <!-- following -->
@@ -71,7 +71,7 @@ $('#myTab a').click(function (e) {
             <dt><i class="icon-trophy trophy-on" ></i> Highlighted Files</dt>
             <% if @trophies.count > 0 %>
               <% @trophies.each do |t| %>
-                <dd> <%= link_to display_title(t), sufia.generic_file_path(t) %></dd>
+                <dd> <%= link_to t.title_or_label, sufia.generic_file_path(t) %></dd>
               <% end %>
             <% else %>
               <%= @user.name %> has no highlighted files.

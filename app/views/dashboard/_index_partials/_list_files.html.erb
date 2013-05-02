@@ -19,8 +19,8 @@ limitations under the License.
 on element ids -->
 <% noid = document.noid %>
 <tr id="document_<%= noid.gsub(":", "_") %>" class="<%= cycle("","zebra") %>">
-  <% gf = GenericFile.find(document.id) %>
-  <td width="6%"><%= batch_edit_select(document) %>&nbsp;</td> 
+  <% gf = GenericFile.load_instance_from_solr(document.id) %>
+  <td width="6%"><%= batch_edit_select(document) %>&nbsp;</td>
   <td width="1%">
   <% if gf.processing? %>
      <i class="icon-magic icon-large <%= 'ss-'+gf.batch.noid%>"/>

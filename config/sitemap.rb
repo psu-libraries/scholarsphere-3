@@ -18,12 +18,7 @@ Sitemap::Generator.instance.load host: 'scholarsphere.psu.edu' do
   User.all.each do |user|
     literal Sufia::Engine.routes.url_helpers.profile_path(user.login), priority: 0.8, change_frequency: 'daily'
   end
-  GenericFile.find('read_access_group_ssim' => 'public').each do |gf|
-    path :generic_file, params: { id: gf.noid }, priority: 1, change_frequency: 'weekly'
+  ActiveFedora::SolrService.query("#{Solrizer.solr_name('read_access_group', :symbol)}:public").each do |gf|
+    path :generic_file, params: { id: gf[Solrizer.solr_name('noid', Sufia::GenericFile.noid_indexer)] }, priority: 1, change_frequency: 'weekly'
   end
-
-  # TODO: figure out why these don't work as expected
-  #path :static, params: { action: 'about' }, priority: 0.7, change_frequency: 'monthly'
-  #path :static, params: { action: 'help' }, priority: 0.6, change_frequency: 'monthly'
-  #path :static, params: { action: 'terms' }, priority: 0.2, change_frequency: 'monthly'
 end

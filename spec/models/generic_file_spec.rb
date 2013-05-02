@@ -224,7 +224,7 @@ describe GenericFile do
     local[Solrizer.solr_name("desc_metadata__based_near")].should == ["Medina, Saudi Arabia"]
     local[Solrizer.solr_name("file_format")].should == "jpeg (JPEG Image)"
     local[Solrizer.solr_name("mime_type")].should == ["image/jpeg"]
-    local[Solrizer.solr_name("noid", Solrizer::Descriptor.new(:text, :indexed, :stored))].should == "__DO_NOT_USE__"
+    local[Solrizer.solr_name("noid", Sufia::GenericFile.noid_indexer)].should == "__DO_NOT_USE__"
     local["all_text_timv"].should == "abc"
   end
   it "should support multi-valued fields in solr" do

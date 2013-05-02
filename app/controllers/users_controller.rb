@@ -11,44 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 class UsersController < ApplicationController
   include Sufia::UsersControllerBehavior
+
   # Display user profile
   def show
-    if @user.respond_to? :profile_events
-      @events = @user.profile_events(100)
-    else
-      @events = []
-    end
-
-    num_retry = 0
-    begin
-      problem_index = 0
-      num_retry += 1
-      @trophies = []
-      @user.trophies.each do |t|
-        problem_index += 1
-        @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
-      end
-      rescue ActiveFedora::ObjectNotFoundError => e
-        loop_counter = 0
-        @user.trophies.each do |t|
-          loop_counter += 1
-          if problem_index == loop_counter
-             t.delete
-          end
-        end
-        if num_retry <= 5
-          retry
-        else
-          raise
-        end
-    end
+    @events = @user.profile_events(100) rescue []
     @followers = @user.followers
     @following = @user.all_following
     @linkedInUrl = @user.linkedin_handle
     @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'linkedin.com'
     @linkedInUrl = "http://"+ @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'http'
+    adjust_trophies!
   end
 
   # Display form for users to edit their profile information
@@ -56,7 +31,12 @@ class UsersController < ApplicationController
     @user = current_user
     @groups = @user.groups
     @trophies = []
+    adjust_trophies!
+  end
 
+  protected
+
+  def adjust_trophies!
     num_retry = 0
     begin
       problem_index = 0
@@ -64,28 +44,23 @@ class UsersController < ApplicationController
       @trophies = []
       @user.trophies.each do |t|
         problem_index += 1
-        @trophies << GenericFile.find("scholarsphere:#{t.generic_file_id}")
+        @trophies << ActiveFedora::SolrService.load_instance_from_solr("#{Rails.application.config.id_namespace}:#{t.generic_file_id}")
       end
-      rescue ActiveFedora::ObjectNotFoundError => e
-        loop_counter = 0
-        @user.trophies.each do |t|
-          loop_counter += 1
-          if problem_index == loop_counter
-             t.delete
-          end
-        end
-        if num_retry <= 5
-          retry
-        else
-          raise
-        end
+    rescue ActiveFedora::ObjectNotFoundError => e
+      loop_counter = 0
+      @user.trophies.each do |t|
+        loop_counter += 1
+        t.delete if problem_index == loop_counter
+      end
+      if num_retry <= 5
+        retry
+      else
+        raise
+      end
     end
   end
-
-  protected 
 
   def base_query
     ["ldap_available = ? AND login not in ('testapp','tstem31')", true]
   end
-
 end

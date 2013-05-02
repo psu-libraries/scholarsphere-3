@@ -7,9 +7,9 @@
     <% trophies.each do |t| %>
       <dd>
         <div class="controls">
-          <%= link_to display_title(t), sufia.generic_file_path(t) %>
+          <%= link_to t.title_or_label, sufia.generic_file_path(t) %>
           <label class="checkbox fleft">
-            <%= check_box_tag "remove_trophy_#{t.id}" %> Yes &nbsp;
+            <%= check_box_tag "remove_trophy_#{t.noid}" %> Yes &nbsp;
           </label>
         </div>
       </dd>
