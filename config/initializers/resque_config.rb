@@ -20,3 +20,4 @@ Resque.redis = Redis.new(host: config[:host], port: config[:port], thread_safe: 
 
 Resque.inline = rails_env == 'test'
 Resque.redis.namespace = "scholarsphere:#{rails_env}"
+Resque.logger.level = Logger::INFO
