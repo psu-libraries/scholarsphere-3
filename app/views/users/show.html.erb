@@ -74,7 +74,7 @@ $('#myTab a').click(function (e) {
                 <dd> <%= link_to display_title(t), sufia.generic_file_path(t) %></dd>
               <% end %>
             <% else %>
-              You can highlight up to 5 files by clicking the file's corresponding trophy icon (<i class="icon-trophy"></i>) in <%= link_to "your dashboard", dashboard_path %> and the highlighted files will appear here, on your ScholarSphere profile.
+              <%= @user.name %> has no highlighted files.
             <% end %>
           </dl>
         </div> <!-- /contributions -->
