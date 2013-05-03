@@ -67,16 +67,29 @@ $('#myTab a').click(function (e) {
       <div class="tab-content">
 
         <div class="tab-pane active" id="contributions">
-          <dl>
-            <dt><i class="icon-trophy trophy-on" ></i> Highlighted Files</dt>
-            <% if @trophies.count > 0 %>
-              <% @trophies.each do |t| %>
-                <dd> <%= link_to display_title(t), sufia.generic_file_path(t) %></dd>
-              <% end %>
-            <% else %>
-              <%= @user.name %> has no highlighted files.
-            <% end %>
-          </dl>
+		      <i class="icon-trophy trophy-on" ></i> <strong>Highlighted Files</strong>
+		      <% if @trophies.count > 0 %>
+		        <table>
+		        <% @trophies.each do |t| %>
+		          <tr>   
+		          <% if t.image? || t.pdf? %>
+		            <% temp_thumbnail_path = sufia.download_path(t) + "?datastream_id=thumbnail" %>
+		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"" + temp_thumbnail_path + "\" width=\"90\" /></a>" %>
+		          <% else %>
+		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"/assets/default.png\"  width=\"90\" /></a>" %>
+		          <% end %>                                 
+		          <td>  
+		             <%= temp_href.html_safe() %> 
+		          </td>
+		          <td>
+		            <%= link_to display_title(t), sufia.generic_file_path(t) %>
+		          </td>
+		          </tr>
+		        <% end %>
+		        </table>
+		      <% else %>
+		        <%= @user.name %> has no highlighted files.
+		      <% end %>
         </div> <!-- /contributions -->
 
         <div class="tab-pane" id="profile">
