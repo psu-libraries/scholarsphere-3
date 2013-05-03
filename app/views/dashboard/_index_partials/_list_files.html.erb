@@ -63,7 +63,7 @@ limitations under the License.
          <%= display_trophy_link(@user, noid) %>
        </li>
        <li>
-         <%= link_to raw('<i class="icon-exchange"></i> Transfer Ownership of File'), new_generic_file_transfer_path(noid), :class => 'itemicon itemtransfer', :title => 'Transfer Ownership of File', :data => { :confirm => "Transferring ownership of a file in #{t('sufia.product_name')} is permanent. Click OK to revoke your ownership claims to this file and specify a new owner, or Cancel to cancel this operation"} %>
+         <%= link_to raw('<i class="icon-exchange"></i> Transfer Ownership of File'), new_generic_file_transfer_path(noid), :class => 'itemicon itemtransfer', :title => 'Transfer Ownership of File' %>
        </li>
       </ul>
     </div>

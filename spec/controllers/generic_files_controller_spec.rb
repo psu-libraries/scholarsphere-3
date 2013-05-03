@@ -152,7 +152,6 @@ describe GenericFilesController do
 
   describe "audit" do
     before do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       @generic_file = GenericFile.new
       @generic_file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
       @generic_file.apply_depositor_metadata('mjg36')

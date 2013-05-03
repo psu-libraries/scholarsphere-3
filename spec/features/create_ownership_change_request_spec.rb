@@ -21,7 +21,7 @@ feature "Creating ownership change requests" do
     scenario "then I should be able to transfer it" do
       visit '/'
       click_link "dashboard"
-      click_link "transfer ownership"
+      click_link "Transfer Ownership of File"
 
       fill_in "Search", with: another_user.user_key
       fill_in "Comments", with: "Just a few comments for my friends"
