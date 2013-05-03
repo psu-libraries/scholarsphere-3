@@ -71,7 +71,7 @@ $('#myTab a').click(function (e) {
             <dt><i class="icon-trophy trophy-on" ></i> Highlighted Files</dt>
             <% if @trophies.count > 0 %>
               <% @trophies.each do |t| %>
-                <dd> <%= link_to t.title_or_label, sufia.generic_file_path(t) %></dd>
+                <dd> <%= link_to display_title(t), sufia.generic_file_path(t) %></dd>
               <% end %>
             <% else %>
               <%= @user.name %> has no highlighted files.

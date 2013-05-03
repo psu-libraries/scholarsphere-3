@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       @trophies = []
       @user.trophies.each do |t|
         problem_index += 1
-        @trophies << ActiveFedora::SolrService.load_instance_from_solr("#{Rails.application.config.id_namespace}:#{t.generic_file_id}")
+        @trophies << GenericFile.load_instance_from_solr("#{Rails.application.config.id_namespace}:#{t.generic_file_id}")
       end
     rescue ActiveFedora::ObjectNotFoundError => e
       loop_counter = 0
