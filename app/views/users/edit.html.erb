@@ -93,12 +93,12 @@ $("a[rel=popover]").popover({ html: true });
 </div><!-- /span /well-->
 
 <div class="span53 offset1 well">
-  <h3><i class="icon-user"></i> Directory Info (LDAP) <%= link_to 'Edit Instructions', 'http://www.psu.edu/directory/#update', :class => 'btn btn-mini btn-primary' %></h3>
+  <h3><i class="icon-user"></i> Directory Info (LDAP) <i class="icon-external-link"></i> <%= link_to 'Edit Directory Info', 'http://www.psu.edu/directory/#update', :class => 'btn btn-mini btn-primary' %></h3>
   <%= render :partial => 'user_info', :locals => {:user => @user} %>
 
   <hr />
 
-  <h3><i class="icon-group"></i> User Managed Groups Info (UMG) <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', :class => 'btn btn-mini btn-primary' %> </h3>
+  <h3><i class="icon-group"></i> User Managed Groups Info (UMG) <i class="icon-external-link"></i> <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', :class => 'btn btn-mini btn-primary' %> </h3>
   <% if @groups %>
     <% @groups.each do |g| %>
       <i class="icon-caret-right"></i> <%= g %><br />
