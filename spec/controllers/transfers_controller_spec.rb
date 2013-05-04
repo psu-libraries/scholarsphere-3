@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe TransfersController do
+  after(:all) do
+    GenericFile.destroy_all
+  end
   describe "with a signed in user" do
-
     let(:another_user) { FactoryGirl.find_or_create(:test_user_1) }
     let(:user) { FactoryGirl.find_or_create(:user) }
     before do
@@ -42,9 +44,9 @@ describe TransfersController do
         end
       end
       it "should be successful" do
-        get :new, generic_file_id: file
+        get :new, id: file
         response.should be_success
-        assigns[:generic_file].should == file 
+        assigns[:generic_file].should == file
         assigns[:proxy_deposit_request].should be_kind_of ProxyDepositRequest
         assigns[:proxy_deposit_request].pid.should == file.pid
       end
@@ -58,8 +60,8 @@ describe TransfersController do
         end
       end
       it "should be successful" do
-        lambda { 
-          post :create, generic_file_id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
+        lambda {
+          post :create, id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
         }.should change(ProxyDepositRequest, :count).by(1)
         response.should redirect_to transfers_path
         flash[:notice].should == 'Transfer request created'
@@ -73,8 +75,8 @@ describe TransfersController do
           "Click here: to review it: /dashboard/transfers"
       end
       it "should give an error if the user is not found" do
-        lambda { 
-          post :create, generic_file_id: file.id, proxy_deposit_request: {transfer_to: 'foo' }
+        lambda {
+          post :create, id: file.id, proxy_deposit_request: {transfer_to: 'foo' }
         }.should_not change(ProxyDepositRequest, :count)
         assigns[:proxy_deposit_request].errors[:transfer_to].should == ['must be an existing user']
         response.should render_template('new')

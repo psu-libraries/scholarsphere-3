@@ -36,20 +36,20 @@ describe "sitemap:generate" do
   ensure
     $stdout = STDOUT
   end
-  
+
   def sitemap_path
     Gem.loaded_specs['sitemap'].full_gem_path
   end
- 
+
   def run_generate
     o = capture_stdout do
       @rake['sitemap:generate'].invoke
     end
-  end 
+  end
 
   # set up the rake environment
   before(:each) do
-    @rake = Rake::Application.new 
+    @rake = Rake::Application.new
     Rake.application = @rake
     Rake.application.rake_require("lib/tasks/sitemap", [sitemap_path], loaded_files_excluding_current_rake_file)
     Rake::Task.define_task(:environment)
@@ -57,7 +57,7 @@ describe "sitemap:generate" do
 
   after(:each) do
   end
-    
+
   describe 'sitemap generation' do
     it 'should include public generic files and users' do
       gf = GenericFile.new
@@ -72,6 +72,7 @@ describe "sitemap:generate" do
       output =  f.read
       output.should include gf.noid
       output.should include @user.login
-    end    
+      gf.destroy
+    end
   end
 end

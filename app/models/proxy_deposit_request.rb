@@ -1,16 +1,17 @@
 class ProxyDepositRequest < ActiveRecord::Base
-  belongs_to :receiving_user, class_name: 'User'
-  belongs_to :sending_user, class_name: 'User'
-  
-  validates :sending_user, :pid, presence: true
-
   include Blacklight::SolrHelper
 
-  attr_reader :transfer_to
+  belongs_to :receiving_user, class_name: 'User'
+  belongs_to :sending_user, class_name: 'User'
+
+  validates :sending_user, :pid, presence: true
   validate :transfer_to_should_be_a_valid_username
+
   after_save :send_request_transfer_message
-  
-  def transfer_to= key
+
+  attr_reader :transfer_to
+
+  def transfer_to=(key)
     @transfer_to = key
     self.receiving_user = User.find_by_user_key(key)
   end
@@ -24,13 +25,11 @@ class ProxyDepositRequest < ActiveRecord::Base
     User.batchuser.send_message(receiving_user, message, "#{sending_user.user_key} wants to transfer a file to you")
   end
 
-
-
   def pending?
     self.status == 'pending'
   end
 
-  def transfer!()
+  def transfer!
     Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key))
     self.status = 'accepted'
     self.fulfillment_date= Time.now
@@ -51,8 +50,8 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def solr_doc
-    query =ActiveFedora::SolrService.construct_query_for_pids([pid])
-    solr_response = ActiveFedora::SolrService.query(query, :raw=>true)
+    query = ActiveFedora::SolrService.construct_query_for_pids([pid])
+    solr_response = ActiveFedora::SolrService.query(query, :raw => true)
     SolrDocument.new(solr_response['response']['docs'].first, solr_response)
   end
 end

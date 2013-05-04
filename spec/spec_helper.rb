@@ -26,6 +26,13 @@ require 'mocha/setup'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.after(:all) do
+    files_count = GenericFile.count
+    batches_count = Batch.count
+    puts "WARNING: #{files_count} files were not cleaned up by this test!" if files_count > 0
+    puts "WARNING #{batches_count} batches were not cleaned up by this test!" if batches_count > 0
+  end
+
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

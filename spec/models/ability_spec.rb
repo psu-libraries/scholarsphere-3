@@ -2,6 +2,9 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe Ability do
+  after(:all) do
+    GenericFile.destroy_all
+  end
   describe "a user" do
     let (:sender) { FactoryGirl.create(:test_user_1) }
     let (:user) { FactoryGirl.create(:user) }
@@ -26,7 +29,7 @@ describe Ability do
         it { should_not be_able_to(:reject, request) }
         it { should_not be_able_to(:destroy, request) }
       end
-    end 
+    end
 
     context "with a ProxyDepositRequest they are the sender of" do
       let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: sender, sending_user: user) }
