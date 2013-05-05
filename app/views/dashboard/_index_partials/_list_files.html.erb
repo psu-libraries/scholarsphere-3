@@ -63,7 +63,7 @@ limitations under the License.
          <%= display_trophy_link(@user, noid) %>
        </li>
        <li>
-         <%= link_to raw('<i class="icon-exchange"></i> Transfer Ownership of File'), new_generic_file_transfer_path(noid), :class => 'itemicon itemtransfer', :title => 'Transfer Ownership of File' %>
+         <%= link_to raw('<i class="icon-exchange"></i> Transfer Ownership of File'), new_generic_file_transfer_path(noid), :class => 'itemicon itemtransfer', :title => 'Transfer Ownership of File' if gf.depositor == @user.user_key%>
        </li>
       </ul>
     </div>

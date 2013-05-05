@@ -43,12 +43,15 @@ describe TransfersController do
           f.save!
         end
       end
-      it "should be successful" do
-        get :new, id: file
-        response.should be_success
-        assigns[:generic_file].should == file
-        assigns[:proxy_deposit_request].should be_kind_of ProxyDepositRequest
-        assigns[:proxy_deposit_request].pid.should == file.pid
+      context 'when user is the depositor' do
+        it "should be successful" do
+          sign_in user
+          get :new, id: file
+          response.should be_success
+          assigns[:generic_file].should == file
+          assigns[:proxy_deposit_request].should be_kind_of ProxyDepositRequest
+          assigns[:proxy_deposit_request].pid.should == file.pid
+        end
       end
     end
 
@@ -70,17 +73,15 @@ describe TransfersController do
         proxy_request.sending_user.should == user
         # AND A NOTIFICATION SHOULD HAVE BEEN CREATED
         notification = another_user.reload.mailbox.inbox[0].messages[0]
-        notification.subject.should == "jilluser wants to transfer a file to you"
-        notification.body.should == "jilluser wants to transfer a file to you.\n" +
-          "Click here: to review it: /dashboard/transfers"
+        notification.subject.should == "Ownership Change Request"
+        notification.body.should == "jilluser wants to transfer a file to you. Review all <a href=\"#{Rails.application.routes.url_helpers.transfers_path}\">transfer requests</a>"
       end
       it "should give an error if the user is not found" do
         lambda {
           post :create, id: file.id, proxy_deposit_request: {transfer_to: 'foo' }
         }.should_not change(ProxyDepositRequest, :count)
         assigns[:proxy_deposit_request].errors[:transfer_to].should == ['must be an existing user']
-        response.should render_template('new')
-        assigns[:generic_file].id.should == file.id
+        response.should redirect_to(root_path)
       end
     end
 

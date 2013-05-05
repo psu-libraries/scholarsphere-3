@@ -154,7 +154,7 @@ describe CatalogController do
     end
     describe "facet search" do
       before do
-        xhr :get, :index, :q=>"{f=generic_file__contributor_facet}Contrib2"
+        xhr :get, :index, :q=>"{f=desc_metadata__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success
@@ -165,7 +165,7 @@ describe CatalogController do
     describe "user with group search" do
       before do
         User.any_instance.stubs(:groups).returns(['umg/personal.testuser.testgroup'])
-        xhr :get, :index, :q=>"{f=generic_file__contributor_facet}Contrib2"
+        xhr :get, :index, :q=>"{f=desc_metadata__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success

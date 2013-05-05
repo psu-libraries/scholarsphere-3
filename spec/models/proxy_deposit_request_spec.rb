@@ -9,7 +9,7 @@ describe ProxyDepositRequest do
   let (:file) do
     GenericFile.new.tap do |f|
       f.title = "Test file"
-      f.apply_depositor_metadata('jcoyne')
+      f.apply_depositor_metadata(sender.user_key)
       f.save!
     end
   end
@@ -23,7 +23,6 @@ describe ProxyDepositRequest do
   it "should have a solr_doc for the file" do
     subject.solr_doc.title.should == 'Test file'
   end
-
 
   context "After approval" do
     before do
@@ -67,6 +66,14 @@ describe ProxyDepositRequest do
           proxy_request = receiver.proxy_deposit_requests.first
           proxy_request.pid.should == file.pid
           proxy_request.sending_user.should == sender
+        end
+      end
+
+      describe 'and the receiving user is the sending user' do
+        it 'should be an error' do
+          subject.transfer_to = sender.user_key
+          subject.should_not be_valid
+          subject.errors[:sending_user].should == ['must specify another user to receive the file']
         end
       end
     end

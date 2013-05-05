@@ -6,25 +6,30 @@ describe Ability do
     GenericFile.destroy_all
   end
   describe "a user" do
-    let (:sender) { FactoryGirl.create(:test_user_1) }
-    let (:user) { FactoryGirl.create(:user) }
-    let (:file) do
+    let(:sender) { FactoryGirl.create(:test_user_1) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:file) do
       GenericFile.new.tap do|file|
         file.apply_depositor_metadata(sender.user_key)
         file.save!
       end
     end
-    subject { Ability.new(user)}
-    it {should be_able_to(:create, ProxyDepositRequest)}
+    subject { Ability.new(user) }
+    it { should_not be_able_to(:transfer, file.pid) }
+
+    context "with a ProxyDepositRequest for a file they have deposited" do
+      subject { Ability.new(sender) }
+      it { should be_able_to(:transfer, file.pid) }
+    end
 
     context "with a ProxyDepositRequest that they receive" do
-      let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: user, sending_user: sender) }
+      let(:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: user, sending_user: sender) }
       it { should be_able_to(:accept, request) }
       it { should be_able_to(:reject, request) }
       it { should_not be_able_to(:destroy, request) }
 
       context "and the request has already been accepted" do
-        let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: user, sending_user: sender, status: 'accepted') }
+        let(:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: user, sending_user: sender, status: 'accepted') }
         it { should_not be_able_to(:accept, request) }
         it { should_not be_able_to(:reject, request) }
         it { should_not be_able_to(:destroy, request) }
@@ -32,13 +37,13 @@ describe Ability do
     end
 
     context "with a ProxyDepositRequest they are the sender of" do
-      let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: sender, sending_user: user) }
+      let(:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: sender, sending_user: user) }
       it { should_not be_able_to(:accept, request) }
       it { should_not be_able_to(:reject, request) }
       it { should be_able_to(:destroy, request) }
 
       context "and the request has already been accepted" do
-        let (:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: sender, sending_user: user, status: 'accepted') }
+        let(:request) { ProxyDepositRequest.create!(pid: file.pid, receiving_user: sender, sending_user: user, status: 'accepted') }
         it { should_not be_able_to(:accept, request) }
         it { should_not be_able_to(:reject, request) }
         it { should_not be_able_to(:destroy, request) }

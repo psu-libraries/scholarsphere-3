@@ -21,7 +21,7 @@ feature "Managing ownership change requests" do
 
     scenario "then I should be able to accept it" do
       visit '/'
-      click_link "proxy requests"
+      click_link "transfer requests"
       within("#incoming-transfers") do
         click_button "Accept"
       end
@@ -30,7 +30,7 @@ feature "Managing ownership change requests" do
 
     scenario "then I should be able to reject it" do
       visit '/'
-      click_link "proxy requests"
+      click_link "transfer requests"
       within("#incoming-transfers") do
         click_button "Reject"
       end
@@ -49,7 +49,7 @@ feature "Managing ownership change requests" do
 
     scenario "then I should be able to cancel the request" do
       visit '/'
-      click_link "proxy requests"
+      click_link "transfer requests"
       within("#outgoing-transfers") do
         click_button "Cancel"
       end
@@ -62,7 +62,7 @@ feature "Managing ownership change requests" do
       end
       scenario "then I should be able to see the status of requests" do
         visit '/'
-        click_link "proxy requests"
+        click_link "transfer requests"
         page.find('#outgoing-transfers').should have_content("Accepted")
       end
     end

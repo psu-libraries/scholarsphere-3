@@ -6,6 +6,7 @@ class ProxyDepositRequest < ActiveRecord::Base
 
   validates :sending_user, :pid, presence: true
   validate :transfer_to_should_be_a_valid_username
+  validate :sending_user_should_not_be_receiving_user
 
   after_save :send_request_transfer_message
 
@@ -20,9 +21,13 @@ class ProxyDepositRequest < ActiveRecord::Base
     errors.add(:transfer_to, "must be an existing user") unless receiving_user
   end
 
+  def sending_user_should_not_be_receiving_user
+    errors.add(:sending_user, 'must specify another user to receive the file') if receiving_user and receiving_user.user_key == sending_user.user_key
+  end
+
   def send_request_transfer_message
-    message = "#{sending_user.user_key} wants to transfer a file to you.\nClick here: to review it: #{Rails.application.routes.url_helpers.transfers_path}"
-    User.batchuser.send_message(receiving_user, message, "#{sending_user.user_key} wants to transfer a file to you")
+    message = "#{sending_user.user_key} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
+    User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
   end
 
   def pending?

@@ -3,7 +3,7 @@
   <div class="well">
     <%= error_messages_for(f.object) %>
     <div class="control-group">
-      <%= f.label :transfer_to, "Search", class: 'control-label' %>
+      <%= f.label :transfer_to, "User", class: 'control-label' %>
       <div class="controls">
         <%= f.text_field :transfer_to %>
       </div>
@@ -17,6 +17,6 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit "Transfer", class: 'btn btn-primary' %>
+    <%= f.submit "Transfer", class: 'btn btn-primary', confirm: "Are you sure you want to transfer ownership of this file to another user?" %>
   </div>
 <% end %>

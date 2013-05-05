@@ -4,4 +4,5 @@ resolrize: 1
 audit: 5
 unzip: 3
 event: 10
+proxy_deposit: 3
 "*": 1

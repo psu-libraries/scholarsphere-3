@@ -23,7 +23,7 @@ feature "Creating ownership change requests" do
       click_link "dashboard"
       click_link "Transfer Ownership of File"
 
-      fill_in "Search", with: another_user.user_key
+      fill_in "User", with: another_user.user_key
       fill_in "Comments", with: "Just a few comments for my friends"
       click_button "Transfer"
     end

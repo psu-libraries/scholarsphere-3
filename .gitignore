@@ -12,6 +12,9 @@ config/initializers/secret_token.rb
 ## MAC OS
 .DS_Store
 
+## Garbage
+C\:\\nppdf32Log\\debuglog.txt
+
 ## TEXTMATE
 *.tmproj
 tmtags
@@ -77,6 +80,7 @@ db/schema.rb
 /.bundle
 /.yardoc
 /doc
+
 ## PROJECT::SPECIFIC
 
 ## generates foxml

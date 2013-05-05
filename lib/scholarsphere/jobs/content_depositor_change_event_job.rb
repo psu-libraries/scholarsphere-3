@@ -1,5 +1,5 @@
 class ContentDepositorChangeEventJob
-    def queue_name
+  def queue_name
     :proxy_deposit
   end
 
@@ -13,9 +13,8 @@ class ContentDepositorChangeEventJob
   def run
     file = GenericFile.find(pid)
     file.proxy_depositor = file.depositor
-    file.depositor = login
-    # NOTE: we could be erasing any edit permissions the depositor previously established.
-    file.edit_users = [login]
+    # TODO: Determine whether this should retain or reset permissions
+    file.apply_depositor_metadata(login)
     file.save!
   end
 end
