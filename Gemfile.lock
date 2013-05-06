@@ -1,14 +1,7 @@
 GIT
-  remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: eca169de446db282376ffdee9bf8358a8baf9793
-  ref: eca169de446db282376ffdee9bf8358a8baf9793
-  specs:
-    hydra-collections (0.0.1)
-      blacklight
-      hydra-head
-
-PATH
-  remote: ../sufia
+  remote: git://github.com/projecthydra/sufia.git
+  revision: 76c66db62b634430465b6d1b2db93f068a518e1f
+  ref: 76c66db62b634430465b6d1b2db93f068a518e1f
   specs:
     sufia (1.1.0)
       activerecord-import (= 0.3.0)
@@ -33,6 +26,15 @@ PATH
       rmagick
       yaml_db (= 0.2.3)
       zipruby (= 0.3.6)
+
+GIT
+  remote: git://github.com/psu-stewardship/hydra-collections.git
+  revision: eca169de446db282376ffdee9bf8358a8baf9793
+  ref: eca169de446db282376ffdee9bf8358a8baf9793
+  specs:
+    hydra-collections (0.0.1)
+      blacklight
+      hydra-head
 
 GEM
   remote: http://rubygems.org/
