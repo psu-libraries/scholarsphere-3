@@ -15,9 +15,15 @@
     <tbody> 
     <% @outgoing.each do |req| %>
       <tr>
-        <td><%=req.solr_doc.title%></td>
-        <td class="sorts-dash"><%=req.created_at%></td>
-        <td><%=req.receiving_user.to_s%></td>
+        <td> <%= link_to req.solr_doc.title, "/files/#{req['pid'].split(':').last}" %> </td>
+        <td class="sorts-dash">
+          <% if req.created_at > Time.now.beginning_of_day %>
+            <%= "#{time_ago_in_words(req.created_at)} ago"%>
+          <% else %>
+            <%= req.created_at.strftime("%b %d %Y") %>
+          <% end %>
+        </td>
+        <td><%= link_to req.receiving_user.name, "/users/#{req.receiving_user.login}"  %></td>
         <td>
           <% if req.pending? %>
             <%=button_to "Cancel", transfer_path(req), method: :delete, class:'btn btn-danger', confirm: "Are you sure you want to cancel this request?" %>
@@ -49,13 +55,19 @@
     <tbody> 
     <% @incoming.each do |req| %>
       <tr>
-        <td><%=req.solr_doc.title%></td>
-        <td class="sorts-dash"><%=req.created_at%></td>
-        <td><%=req.receiving_user.to_s%></td>
+        <td> <%= link_to req.solr_doc.title, "/files/#{req['pid'].split(':').last}" %> </td>
+        <td class="sorts-dash">
+          <% if req.created_at > Time.now.beginning_of_day %>
+            <%= "#{time_ago_in_words(req.created_at)} ago"%>
+          <% else %>
+            <%= req.created_at.strftime("%b %d %Y") %>
+          <% end %>
+        </td>
+        <td><%= link_to req.receiving_user.name, "/users/#{req.receiving_user.login}"  %></td>
         <td>
           <% if req.pending? %>
             <%=button_to "Accept", accept_transfer_path(req), method: :put, class: 'btn btn-primary' %>
-            <%=button_to "Reject", reject_transfer_path(req), method: :put, class: 'btn btn-danger' %>
+            <%=button_to "Reject", reject_transfer_path(req), method: :put, class: 'btn btn-danger', confirm: "Are you sure you want to reject this request?" %>
           <% else %>
             <%= req.status.capitalize %>
           <% end %>
