@@ -87,11 +87,11 @@ describe DownloadsController do
       user = FactoryGirl.find(:user) rescue
       user.delete if user
     end
-    
+
     describe "show" do
       it "should deny access" do
         get "show", :id => "test1"
-        response.should redirect_to("/assets/NoAccess.png")
+        response.should redirect_to("http://test.host/")
       end
     end
   end
