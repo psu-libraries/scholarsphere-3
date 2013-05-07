@@ -138,6 +138,8 @@ namespace :scholarsphere do
 
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
+      # do not run the js examples since selenium is not set up for jenkins
+      ENV['SPEC_OPTS']="-t ~js"      
       Rake::Task['spec'].invoke
       Cucumber::Rake::Task.new(:features) do |t|
         t.cucumber_opts = "--format pretty"
