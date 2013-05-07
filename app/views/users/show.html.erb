@@ -74,9 +74,9 @@ $('#myTab a').click(function (e) {
 		          <tr>   
 		          <% if t.image? || t.pdf? %>
 		            <% temp_thumbnail_path = sufia.download_path(t) + "?datastream_id=thumbnail" %>
-		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"" + temp_thumbnail_path + "\" width=\"90\" /></a>" %>
+		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"" + temp_thumbnail_path + "\" width=\"90\" alt=\"Download the full-sized image\"/></a>" %>
 		          <% else %>
-		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"/assets/default.png\"  width=\"90\" /></a>" %>
+		            <% temp_href = "<a href=\"" + sufia.download_path(t) + "\"> <img src=\"/assets/default.png\"  width=\"90\" alt=\"Download file\"/></a>" %>
 		          <% end %>                                 
 		          <td>  
 		             <%= temp_href.html_safe() %> 
