@@ -71,6 +71,9 @@ RAILS_ENV=integration bundle exec rake scholarsphere:resolrize
 echo "=-=-=-=-= $0 touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt
 
+echo "=-=-=-=-= $0 curl -s -k -o /dev/null --head https://..."
+curl -s -k -o /dev/null --head https://scholarsphere-integration.dlt.psu.edu/
+
 retval=$?
 
 echo "=-=-=-=-= $0 finished $retval"

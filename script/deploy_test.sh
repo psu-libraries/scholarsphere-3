@@ -76,6 +76,9 @@ RAILS_ENV=production bundle exec rake scholarsphere:resolrize
 banner "touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt
 
+banner "curl -s -k -o /dev/null --head https://..."
+curl -s -k -o /dev/null --head https://scholarsphere-test.dlt.psu.edu/
+
 retval=$?
 
 banner "finished $retval"

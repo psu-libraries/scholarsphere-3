@@ -82,6 +82,9 @@ rake scholarsphere:generate_secret
 banner "touch ${WORKSPACE}/tmp/restart.txt"
 touch ${WORKSPACE}/tmp/restart.txt
 
+banner "curl -s -k -o /dev/null --head https://..."
+curl -s -k -o /dev/null --head https://scholarsphere-demo.dlt.psu.edu/
+
 retval=$?
 
 banner "finished $retval"
