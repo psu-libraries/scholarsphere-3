@@ -2,6 +2,7 @@ require 'sufia/http_header_auth'
 
 Sufia::Engine.configure do
   config.application_name = "ScholarSphere"
+  config.google_analytics_id = 'UA-33252017-2'
   config.fits_path = "fits.sh"
   config.fits_to_desc_mapping= {}
   config.max_days_between_audits = 7
