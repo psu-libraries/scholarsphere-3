@@ -15,8 +15,8 @@ module Dashboard
      Resque.inline = @old_resque_inline_value
     end
     after(:all) do
-      GenericFile.find(:all).each(&:delete)
-      Collection.find(:all).each(&:delete)
+      GenericFile.destroy_all
+      Collection.destroy_all
     end
     let(:user) { FactoryGirl.find_or_create(:user) }
   

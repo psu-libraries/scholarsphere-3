@@ -16,8 +16,8 @@ describe 'end to end behavior', describe_options do
     Resque.inline = @old_resque_inline_value
   end
   after(:all) do
-    User.find(:all).each(&:delete)    
-    Batch.find(:all).each(&:delete)    
+    User.destroy_all
+    Batch.destroy_all
   end
   
   let(:user) { FactoryGirl.find_or_create(:user) }

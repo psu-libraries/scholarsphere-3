@@ -60,9 +60,9 @@ describe LocalAuthority do
       @num_entries = LocalAuthorityEntry.count
     end
     after(:all) do
-      DomainTerm.all.each(&:delete)
-      LocalAuthority.all.each(&:delete)
-      LocalAuthorityEntry.all.each(&:delete)
+      DomainTerm.destroy_all
+      LocalAuthority.destroy_all
+      LocalAuthorityEntry.destroy_all
       Object.send(:remove_const, :MyTestRdfDatastream)
     end
     it "should not harvest an RDF vocab twice" do
@@ -89,9 +89,9 @@ describe LocalAuthority do
         DomainTerm.count.should == 2
       end
       after(:all) do
-        DomainTerm.all.each(&:delete)
-        LocalAuthority.all.each(&:delete)
-        LocalAuthorityEntry.all.each(&:delete)
+        DomainTerm.destroy_all
+        LocalAuthority.destroy_all
+        LocalAuthorityEntry.destroy_all
       end
       it "should return nil for empty queries" do
         LocalAuthority.entries_by_term("my_test", "geographic", "").should be_nil

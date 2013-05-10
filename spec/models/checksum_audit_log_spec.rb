@@ -30,7 +30,7 @@ describe ChecksumAuditLog do
   end
   after(:all) do
     @f.delete
-    ChecksumAuditLog.all.each(&:delete)
+    ChecksumAuditLog.destroy_all
   end
   it "should return a list of logs for this datastream sorted by date descending" do
     @f.logs(@version.dsid).should == [@new, @old]

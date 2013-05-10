@@ -6,8 +6,8 @@ feature "Managing ownership change requests" do
     sign_in @user
   end
   after(:all) do
-    GenericFile.find(:all).each(&:delete)
-    Collection.find(:all).each(&:delete)
+    GenericFile.destroy_all
+    Collection.destroy_all
   end
   context "when someone has request to transfer a file to me" do
     background do
