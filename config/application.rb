@@ -33,14 +33,19 @@ module ScholarSphere
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Returns an array containing the vhost 'CoSign service' value and URL
     def get_vhost_by_host
       hostname = Socket.gethostname
-      vhost = Rails.application.config.hosts_vhosts_map[hostname] || "https://#{hostname}/"
-      service = URI.parse(vhost).host
-      port = URI.parse(vhost).port
+      vhost = config.hosts_vhosts_map[hostname] || "https://#{hostname}/"
+      uri = URI.parse(vhost)
+      service = uri.host
+      port = uri.port
       service << "-#{port}" unless port == 443
-      return [service, vhost]
+      [service, vhost]
+    end
+
+    def google_analytics_id
+      vhost = get_vhost_by_host[1]
+      config.ga_host_map[vhost]
     end
 
     config.scholarsphere_version = "v1.5.0"
@@ -54,6 +59,8 @@ module ScholarSphere
     config.ga_host_map = {
       'scholarsphere-test.dlt.psu.edu' => 'UA-33252017-1',
       'scholarsphere.psu.edu' => 'UA-33252017-2',
+      'scholarsphere-qa.dlt.psu.edu' => 'UA-33252017-3',
+      'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
     }
 
     config.hosts_vhosts_map = {

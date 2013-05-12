@@ -17,32 +17,37 @@ require 'spec_helper'
 describe 'host_to_vhost' do
   it "should return the proper vhost on ss1test" do
     Socket.stubs(:gethostname).returns('ss1test')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-integration.dlt.psu.edu-8443'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-integration.dlt.psu.edu:8443/'
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-integration.dlt.psu.edu-8443'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-integration.dlt.psu.edu:8443/'
   end
   it "should return the proper vhost on ss2test" do
     Socket.stubs(:gethostname).returns('ss2test')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-test.dlt.psu.edu/'
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-test.dlt.psu.edu/'
   end
   it "should return the proper vhost on ss3test" do
     Socket.stubs(:gethostname).returns('ss3test')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-demo.dlt.psu.edu'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-demo.dlt.psu.edu/'
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-demo.dlt.psu.edu'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-demo.dlt.psu.edu/'
   end
   it "should return the proper vhost on ss1qa" do
     Socket.stubs(:gethostname).returns('ss1qa')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-qa.dlt.psu.edu'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-qa.dlt.psu.edu/'
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-qa.dlt.psu.edu'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-qa.dlt.psu.edu/'
   end
   it "should return the proper vhost on ss1stage" do
     Socket.stubs(:gethostname).returns('ss1stage')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'scholarsphere-staging.dlt.psu.edu'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://scholarsphere-staging.dlt.psu.edu/'
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-staging.dlt.psu.edu'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-staging.dlt.psu.edu/'
+  end
+  it "should return the proper vhost on ss1prod" do
+    Socket.stubs(:gethostname).returns('ss1prod')
+    Rails.application.get_vhost_by_host[0].should == 'scholarsphere.psu.edu'
+    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere.psu.edu/'
   end
   it "should return the proper vhost on dev" do
     Socket.stubs(:gethostname).returns('some1host')
-    ScholarSphere::Application.get_vhost_by_host[0].should == 'some1host'
-    ScholarSphere::Application.get_vhost_by_host[1].should == 'https://some1host/'
+    Rails.application.get_vhost_by_host[0].should == 'some1host'
+    Rails.application.get_vhost_by_host[1].should == 'https://some1host/'
   end
 end

@@ -2,21 +2,12 @@ module Sufia
   module HttpHeaderAuth
     extend ActiveSupport::Concern
 
-    included do 
+    included do
       ## Force the session to be restarted on every request.  The ensures that when the REMOTE_USER header is not set, the user will be logged out.
       prepend_before_filter :clear_session_user
       before_filter :filter_notify
     end
 
-    def self.get_vhost_by_host(config)
-      hosts_vhosts_map = config.hosts_vhosts_map
-      hostname = Socket.gethostname
-      vhost = hosts_vhosts_map[hostname] || "https://#{hostname}/"
-      service = URI.parse(vhost).host
-      port = URI.parse(vhost).port
-      service << "-#{port}" unless port == 443
-      return [service, vhost]
-    end
     def clear_session_user
       if request.nil?
         logger.warn "Request is Nil, how weird!!!"
@@ -27,7 +18,8 @@ module Sufia
       # logout clears the entire session including flash messages
       request.env['warden'].logout unless user_logged_in?
     end
-    # Override devise method 
+
+    # Override devise method
     def user_signed_in?
       env['warden'] and env['warden'].user and remote_user_set?
     end
@@ -55,7 +47,6 @@ module Sufia
         flash[:alert] = nil if flash[:alert].blank?
       end
     end
-
   end
 end
 
