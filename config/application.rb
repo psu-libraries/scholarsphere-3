@@ -44,7 +44,7 @@ module ScholarSphere
     end
 
     def google_analytics_id
-      vhost = get_vhost_by_host[1]
+      vhost = get_vhost_by_host[0]
       config.ga_host_map[vhost]
     end
 
