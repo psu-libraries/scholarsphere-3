@@ -11,9 +11,7 @@ gem 'rails', '3.2.13'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'projecthydra/sufia', :ref => '1d7473f6da60a5ed1a314ede04b2699807538d95'
-gem 'hydra-collections', :github => 'psu-stewardship/hydra-collections', :ref => '46604f6e3cc2bd3fdcc8d76c5da417456443e027'
-gem 'hydra-batch-edit', '0.3.1'
+gem 'sufia', :github => 'projecthydra/sufia', :ref => 'f31241e8523ed6c80039c956d91ebbac5768e33a'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
