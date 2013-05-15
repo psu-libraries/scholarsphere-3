@@ -23,7 +23,7 @@ describe 'batch_edit', describe_options do
   
   let (:subject) {"fffzzz"}
 
-  describe 'batch edit all files' do   
+  describe 'batch modify all files' do   
     let(:agreed_to_terms_of_service) { false }
     before (:each) do
       @gf1 =  GenericFile.new title: 'title 1' 
@@ -36,7 +36,7 @@ describe 'batch_edit', describe_options do
     
            
     
-    it "should show up on dashboard", js: true do
+    it "should edit all files", js: true do
       login_js
       visit '/'
       first('a.dropdown-toggle').click
@@ -66,5 +66,23 @@ describe 'batch_edit', describe_options do
       page.has_content?(@gf2.title.first)
       
     end
+
+    it "should delete all files", js: true do
+      login_js
+      visit '/'
+      first('a.dropdown-toggle').click
+      click_link('my dashboard')
+      wait_until(10) do
+        page.has_content?('My Dashboard')
+      end
+      first('input#check_all').click
+      click_button('Delete Selected')
+      page.driver.browser.switch_to.alert.accept
+      page.has_content?('My Dashboard')
+      puts "Title 1 #{@gf1.title.first}"
+      page.should_not have_content(@gf1.title.first)
+      page.should_not have_content(@gf2.title.first)      
+    end
+
   end
 end

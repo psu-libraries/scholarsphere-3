@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: f31241e8523ed6c80039c956d91ebbac5768e33a
-  ref: f31241e8523ed6c80039c956d91ebbac5768e33a
+  revision: 4568b1b6a6ed503c5082eab9ab6c750aeaaa8a46
+  ref: 4568b1b6a6ed503c5082eab9ab6c750aeaaa8a46
   specs:
     sufia (1.2.0)
       activerecord-import (= 0.3.0)
