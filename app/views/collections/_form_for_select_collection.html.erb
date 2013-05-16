@@ -1,0 +1,18 @@
+<div>
+  <%= button_for_create_collection %>
+  <% if user_collections.blank? %>
+    <b> You do not have access to any existing collections please create a collection. </b>  
+  <% else %>
+    <%= button_for_update_collection %>
+    Please Select your collection to add you files to:
+    <%= form_tag(collections.collection_path('collection_replace_id'), :method => "put") do %>
+      <div class="collection-list">
+        <ul>
+        <% user_collections.each do |collection| %>
+          <li> <%= radio_button_tag(:id, collection.id, false, :class => "collection-selector") %><%= label_tag(:collection, collection.title) %> </li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+</div>

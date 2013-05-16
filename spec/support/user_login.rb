@@ -34,5 +34,18 @@ module UserLogin
     end
     
   end
-  
+ 
+  def wait_on_page(text, time=5)
+    wait_until(time) do
+      page.has_content?(text)
+    end
+    return page.has_content?(text)
+  end
+   
+  def go_to_dashboard
+    visit '/'
+    first('a.dropdown-toggle').click
+    click_link('my dashboard')
+    wait_on_page('My Dashboard').should be_true
+  end
 end

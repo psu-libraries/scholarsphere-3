@@ -38,12 +38,7 @@ describe 'batch_edit', describe_options do
     
     it "should edit all files", js: true do
       login_js
-      visit '/'
-      first('a.dropdown-toggle').click
-      click_link('my dashboard')
-      wait_until(10) do
-        page.has_content?('My Dashboard')
-      end
+      go_to_dashboard
       first('input#check_all').click
       click_button('Edit Selected')
       page.has_content?('2 files')

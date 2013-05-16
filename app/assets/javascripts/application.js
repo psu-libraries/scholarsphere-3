@@ -22,3 +22,5 @@ limitations under the License.
 //= require batch_edit
 //= require scholarsphere_fileupload
 //= require transfers
+//= require hydra/batch_select
+//= require hydra_collections

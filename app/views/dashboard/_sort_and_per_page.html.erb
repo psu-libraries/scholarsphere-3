@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 %>
-
+<div>
+<%= render partial: 'collections/form_for_select_collection', locals: {user_collections: @user_collections}  %>
+</div>
 <div class="batch-info">
    <% session[:batch_edit_state] = "on" %>
     <%=batch_delete%> <%=batch_edit_continue("Edit Selected") %>  

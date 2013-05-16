@@ -315,3 +315,6 @@ ol.faq ol ol li { list-style-type: lower-roman }
     padding: 2px;
 }
 
+.btn.collection-add, btn.collection-update {
+    flaot:none;
+}

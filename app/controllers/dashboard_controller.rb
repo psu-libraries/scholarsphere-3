@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright © 2012 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class CollectionsController < ApplicationController
-  include Hydra::CollectionsControllerBehavior
-  include BlacklightAdvancedSearch::ParseBasicQ
-  include BlacklightAdvancedSearch::Controller
-  include Sufia::Noid # for normalize_identifier method
-  prepend_before_filter :normalize_identifier, :except => [:index, :create, :new]
-  before_filter :has_access?, :except => [:show]
+require 'blacklight/catalog'
+class DashboardController < ApplicationController
+  include  Sufia::DashboardControllerBehavior
+  include Hydra::Collections::SelectsCollections
+  
+  # not filtering further with a specific access level since the catalog controller already gets the colections with edit access
+  #  if we include other access levels in this controller we will need to modify this.
+  before_filter :find_collections, :only=>:index  
 end
