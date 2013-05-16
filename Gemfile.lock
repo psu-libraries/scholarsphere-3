@@ -60,6 +60,15 @@ GIT
       yaml_db (= 0.2.3)
       zipruby (= 0.3.6)
 
+GIT
+  remote: git://github.com/psu-stewardship/hydra-collections.git
+  revision: 24b346bf4e366e1a8cfd866ed3ce9bff897aa024
+  ref: 24b346bf4e366e1a8cfd866ed3ce9bff897aa024
+  specs:
+    hydra-collections (0.0.1)
+      blacklight
+      hydra-head
+
 GEM
   remote: http://rubygems.org/
   specs:
