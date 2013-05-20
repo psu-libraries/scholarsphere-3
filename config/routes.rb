@@ -25,9 +25,6 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
-  mount Hydra::Collections::Engine => '/'
-  mount Sufia::Engine => '/'
-
   # Administrative URLs
   namespace :admin do
     # Job monitoring
@@ -49,6 +46,9 @@ ScholarSphere::Application.routes.draw do
       post 'permissions'
     end
   end
+
+  mount Hydra::Collections::Engine => '/'
+  mount Sufia::Engine => '/'
 
   # Downloads controller route
   resources :downloads, :only => "show"
