@@ -1,7 +1,7 @@
 GIT
-  remote: git://github.com/psu-stewardship/sufia.git
-  revision: 69765f610ad717959ce2e3c43203d2d1942bca70
-  ref: 69765f610ad717959ce2e3c43203d2d1942bca70
+  remote: git://github.com/projecthydra/sufia.git
+  revision: 38fbc91fd83d96f5a155eb406e8834ccf0f17a6f
+  ref: 38fbc91fd83d96f5a155eb406e8834ccf0f17a6f
   specs:
     sufia (1.2.0)
       activerecord-import (= 0.3.0)
@@ -75,7 +75,7 @@ GEM
     acts_as_follower (0.1.1)
     addressable (2.3.4)
     arel (3.0.2)
-    backports (3.3.0)
+    backports (3.3.1)
     bcrypt-ruby (3.0.1)
     blacklight (4.2.1)
       bootstrap-sass (>= 2.2.0, < 2.4)
