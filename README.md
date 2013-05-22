@@ -22,7 +22,7 @@ ScholarSphere is available under the Apache 2.0 license.
 
 Infrastructural components
 
- * Ruby 1.9.3 (we use RVM to manage our Rubies)
+ * Ruby 2.0 (we use RVM to manage our Rubies)
  * Fedora (if you don't have access to an instance, use the built-in
    hydra-jetty submodule)
  * Solr (if you don't have access to an instance, use the built-in
