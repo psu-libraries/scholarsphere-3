@@ -3,7 +3,7 @@
 ScholarSphere is a Ruby on Rails application utilizing the Blacklight
 and Hydra-head gems for integration with the search & indexing system,
 Solr, and the digital asset management platform, Fedora Commons.  The
-application runs on Fedora 3.5.0 and Solr 3.5.0.
+application runs on Fedora 3.5.0 and Solr 4.0.0.
 
 ScholarSphere is being developed as part of
 [Penn State's Digital Stewardship Program](http://stewardship.psu.edu/).
