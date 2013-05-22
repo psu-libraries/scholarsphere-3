@@ -1,3 +1,5 @@
+require 'scholarsphere/jobs/content_depositor_change_event_job'
+
 class ProxyDepositRequest < ActiveRecord::Base
   include Blacklight::SolrHelper
 
