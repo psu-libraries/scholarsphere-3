@@ -1,4 +1,28 @@
 GIT
+  remote: git://github.com/projecthydra/hydra-head.git
+  revision: bed79f66bb5381dc1338c80ff09e32d5c062bcc7
+  ref: bed79f66bb5381dc1338c80ff09e32d5c062bcc7
+  specs:
+    hydra-access-controls (6.1.1)
+      active-fedora (~> 6.1)
+      activesupport
+      blacklight
+      cancan
+      deprecation
+    hydra-core (6.1.1)
+      active-fedora
+      blacklight (~> 4.0)
+      block_helpers
+      deprecation (>= 0.0.5)
+      hydra-access-controls (= 6.1.1)
+      jettywrapper (>= 1.4.1)
+      rails (~> 3.2.3)
+    hydra-head (6.1.1)
+      hydra-access-controls (= 6.1.1)
+      hydra-core (= 6.1.1)
+      rails (>= 3.2.6)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 38fbc91fd83d96f5a155eb406e8834ccf0f17a6f
   ref: 38fbc91fd83d96f5a155eb406e8834ccf0f17a6f
@@ -167,30 +191,12 @@ GEM
     headless (1.0.1)
     hike (1.2.2)
     hooks (0.2.2)
-    hydra-access-controls (6.1.1)
-      active-fedora (~> 6.1)
-      activesupport
-      blacklight
-      cancan
-      deprecation
     hydra-batch-edit (1.0.1)
       blacklight
       hydra-collections
     hydra-collections (0.0.1)
       blacklight
       hydra-head
-    hydra-core (6.1.1)
-      active-fedora
-      blacklight (~> 4.0)
-      block_helpers
-      deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.1.1)
-      jettywrapper (>= 1.4.1)
-      rails (~> 3.2.3)
-    hydra-head (6.1.1)
-      hydra-access-controls (= 6.1.1)
-      hydra-core (= 6.1.1)
-      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -422,6 +428,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 3.0.2.2)
   headless
+  hydra-head!
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
