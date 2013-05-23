@@ -194,7 +194,7 @@ GEM
     hydra-batch-edit (1.0.1)
       blacklight
       hydra-collections
-    hydra-collections (0.0.1)
+    hydra-collections (0.0.2)
       blacklight
       hydra-head
     hydra-ldap (0.1.0)
@@ -428,6 +428,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 3.0.2.2)
   headless
+  hydra-collections (= 0.0.2)
   hydra-head!
   hydra-ldap (= 0.1.0)
   jettywrapper

@@ -13,6 +13,7 @@ gem 'mysql2', '0.3.11'
 # Hydra community components
 gem 'sufia', :github => 'projecthydra/sufia', :ref => '38fbc91fd83d96f5a155eb406e8834ccf0f17a6f'
 gem 'hydra-head', :github => 'projecthydra/hydra-head', :ref => 'bed79f66bb5381dc1338c80ff09e32d5c062bcc7'
+gem 'hydra-collections', '0.0.2'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
