@@ -57,6 +57,10 @@ ScholarSphere::Application.routes.draw do
   match 'batches/:id/edit' => 'batch#edit', :as => :batch_edit
   match 'batches/:id/' => 'batch#update', :as => :batch_generic_files
 
+  # adding user route here to fix routing issue not found page=nil
+  match 'users' => 'users#index', :as => :profiles
+
+
   # Dashboard routes (based partly on catalog routes)
   match 'dashboard' => 'dashboard#index', :as => :dashboard
   match 'dashboard/activity' => 'dashboard#activity', :as => :dashboard_activity
