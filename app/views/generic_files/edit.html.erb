@@ -40,6 +40,14 @@ set_access_levels();
 // initialize popover helpers
 $("a[rel=popover]").popover({ html: true });
 
+  <% if params[:tab] == 'versions' %>
+    $('#edit_versioning_link a').tab('show');
+  <% elsif params[:tab] == 'permissions' %>
+    $('#edit_permissions_link a').tab('show');
+  <% else %>
+    $('#edit_descriptions_link a').tab('show');
+  <% end %>
+
 <% end %>
 
 <% content_for :local_css do %>

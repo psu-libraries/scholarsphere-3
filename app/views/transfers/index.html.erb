@@ -63,7 +63,7 @@
             <%= req.created_at.strftime("%b %d %Y") %>
           <% end %>
         </td>
-        <td><%= link_to req.receiving_user.name, sufia.profile_path(req.receiving_user.login)  %></td>
+        <td><%= link_to req.sending_user.name, sufia.profile_path(req.sending_user.login)  %></td>
         <td>
           <% if req.pending? %>
             <%= button_to "Accept", accept_transfer_path(req), method: :put, class: 'btn btn-primary' %>

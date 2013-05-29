@@ -25,9 +25,6 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
-  mount Hydra::Collections::Engine => '/'
-  mount Sufia::Engine => '/'
-
   # Administrative URLs
   namespace :admin do
     # Job monitoring
@@ -50,12 +47,19 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
+  mount Hydra::Collections::Engine => '/'
+  mount Sufia::Engine => '/'
+
   # Downloads controller route
   resources :downloads, :only => "show"
 
   # Batch edit routes
   match 'batches/:id/edit' => 'batch#edit', :as => :batch_edit
   match 'batches/:id/' => 'batch#update', :as => :batch_generic_files
+
+  # adding user route here to fix routing issue not found page=nil
+  match 'users' => 'users#index', :as => :profiles
+
 
   # Dashboard routes (based partly on catalog routes)
   match 'dashboard' => 'dashboard#index', :as => :dashboard
