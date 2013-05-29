@@ -87,4 +87,45 @@ describe 'collection', describe_options do
       page.should_not have_content(@collection.title)
     end
   end
+
+  describe 'show collection' do
+    before (:each) do
+      @collection = Collection.new title:'collection title'
+      @collection.description = 'collection description'
+      @collection.apply_depositor_metadata(@user_key)
+      @collection.members = [@gf1,@gf2]
+      @collection.save
+    end
+    it "should show a collection", js: true do
+      login_js
+      go_to_dashboard
+      page.has_content?(@collection.title)
+      within('#document_'+@collection.id.gsub(":","_")) do
+        click_link("collection title")
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
+    end
+    it "should search a collection", js: true do
+      login_js
+      go_to_dashboard
+      page.has_content?(@collection.title)
+      within('#document_'+@collection.id.gsub(":","_")) do
+        click_link("collection title")
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
+      fill_in('collection_search',with:@gf1.title.first)
+      click_button('collection_submit')
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should have_content(@gf1.title.first)
+      page.should_not have_content(@gf2.title.first)
+
+    end
+  end
 end
