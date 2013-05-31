@@ -1,18 +1,27 @@
 <div>
   <%= button_for_create_collection %>
-  <% if user_collections.blank? %>
-    <b> You do not have access to any existing collections please create a collection. </b>  
-  <% else %>
-    <%= button_for_update_collection %>
-    Please Select your collection to add you files to:
-    <%= form_tag(collections.collection_path('collection_replace_id'), :method => "put") do %>
-      <div class="collection-list">
-        <ul>
-        <% user_collections.each do |collection| %>
-          <li> <%= radio_button_tag(:id, collection.id, false, :class => "collection-selector") %><%= label_tag(:collection, collection.title) %> </li>
+  <div class="collection-list-container">
+    <div class="vertical-offset">
+      <div class="collection-list-box">
+        <% if user_collections.blank? %>
+          <b> You do not have access to any existing collections please create a collection. </b>  
+        <% else %>
+          <a href="#" onclick="modal_collection_list('close', event)"><div id="modalClose">&#10006;</div></a>
+          Please Select your collection to add you files to:
+          <%= form_tag(collections.collection_path('collection_replace_id'), :method => "put") do %>
+          <div class="collection-list">
+            <ul>
+              <% user_collections.each do |collection| %>
+              <li> <%= radio_button_tag(:id, collection.id, false, :class => "collection-selector") %><%= label_tag(:collection, collection.title) %> </li>
+              <% end %>
+            </ul>
+          </div><!-- collection-list -->
+          <%= button_for_update_collection %>
+          <%= button_for_create_collection %>
         <% end %>
-        </ul>
-      </div>
-    <% end %>
-  <% end %>
+      <% end %>
+      </div><!-- collection-list-box -->
+    </div><!-- vertical-offest -->
+  </div><!-- collection-list-container -->
 </div>
+
