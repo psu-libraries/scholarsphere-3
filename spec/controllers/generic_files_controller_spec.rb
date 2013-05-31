@@ -97,7 +97,7 @@ describe GenericFilesController do
     end
 
     it "should create batch associations from batch_id" do
-      Sufia::Engine.config.stubs(:id_namespace).returns('sample')
+      Sufia.config.stubs(:id_namespace).returns('sample')
       file = fixture_file_upload('/world.png','image/png')
       controller.stubs(:add_posted_blob_to_asset)
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"

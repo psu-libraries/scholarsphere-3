@@ -192,7 +192,7 @@ class CatalogController < ApplicationController
       all_names = config.show_fields.values.map{|val| val.field}.join(" ")
       title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)      
       field.solr_parameters = {
-        :qf => "#{all_names} noid_tsi all_text_timv",
+        :qf => "#{all_names} id noid_tsi all_text_timv",
         :pf => "#{title_name}"
       }
     end

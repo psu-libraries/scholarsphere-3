@@ -24,50 +24,45 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: 24b346bf4e366e1a8cfd866ed3ce9bff897aa024
-  ref: 24b346bf4e366e1a8cfd866ed3ce9bff897aa024
+  revision: aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43
+  ref: aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43
   specs:
-    hydra-collections (0.0.1)
+    hydra-collections (0.0.2)
       blacklight
       hydra-head
 
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: 9c5cda4a4f059e45b1fa23defe7fe2a76196f4ec
-  ref: 9c5cda4a4f059e45b1fa23defe7fe2a76196f4ec
+  revision: 06c0061ceb8661c9a3883bf374bf15be1b80b726
+  ref: 06c0061ceb8661c9a3883bf374bf15be1b80b726
   specs:
-    sufia (1.2.0)
-      activerecord-import (= 0.3.0)
-      acts_as_follower (= 0.1.1)
+    sufia (1.3.0)
       blacklight (~> 4.0)
       blacklight_advanced_search
       daemons (= 1.1.9)
-      devise
       font-awesome-sass-rails (~> 3.0)
       hydra-batch-edit (~> 1.0)
       hydra-head (~> 6.0)
       mail_form
-      mailboxer (= 0.8.0)
-      nest (= 1.1.1)
-      noid (~> 0.6.6)
-      paperclip (= 3.3.0)
       rails (~> 3.2.13)
       rails_autolink (= 1.0.9)
       rainbow (= 1.1.4)
+      sufia-models
+      yaml_db (= 0.2.3)
+    sufia-models (0.1.1)
+      activerecord-import (= 0.3.0)
+      acts_as_follower (= 0.1.1)
+      devise
+      hydra-head (~> 6.0)
+      mailboxer (= 0.8.0)
+      nest (~> 1.1.1)
+      noid (~> 0.6.6)
+      paperclip (= 3.3.0)
+      rails (~> 3.2.13)
       resque (~> 1.23.0)
       resque-pool (= 0.3.0)
       rmagick
-      yaml_db (= 0.2.3)
       zipruby (= 0.3.6)
-
-GIT
-  remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: 49f83afb082175ca346ff662e3854b6a6e182610
-  ref: 49f83afb082175ca346ff662e3854b6a6e182610
-  specs:
-    hydra-collections (0.0.2)
-      blacklight
-      hydra-head
 
 GEM
   remote: http://rubygems.org/
