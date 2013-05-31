@@ -79,7 +79,6 @@ describe 'batch_edit', describe_options do
       click_button('Delete Selected')
       page.driver.browser.switch_to.alert.accept
       page.has_content?('My Dashboard')
-      puts "Title 1 #{@gf1.title.first}"
       page.should_not have_content(@gf1.title.first)
       page.should_not have_content(@gf2.title.first)      
     end

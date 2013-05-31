@@ -2,6 +2,7 @@ require 'scholarsphere/jobs/content_depositor_change_event_job'
 
 class ProxyDepositRequest < ActiveRecord::Base
   include Blacklight::SolrHelper
+  include ActionView::Helpers::UrlHelper
 
   belongs_to :receiving_user, class_name: 'User'
   belongs_to :sending_user, class_name: 'User'
@@ -28,7 +29,7 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def send_request_transfer_message
-    message = "#{sending_user.user_key} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
+    message = "#{link_to(sending_user.name, Sufia::Engine.routes.url_helpers.profile_path(sending_user.user_key))} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
     User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
   end
 

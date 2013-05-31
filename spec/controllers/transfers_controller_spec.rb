@@ -63,6 +63,7 @@ describe TransfersController do
         end
       end
       it "should be successful" do
+        User.any_instance.stubs(:display_name).returns("Jill Z. User")
         lambda {
           post :create, id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
         }.should change(ProxyDepositRequest, :count).by(1)
@@ -74,7 +75,7 @@ describe TransfersController do
         # AND A NOTIFICATION SHOULD HAVE BEEN CREATED
         notification = another_user.reload.mailbox.inbox[0].messages[0]
         notification.subject.should == "Ownership Change Request"
-        notification.body.should == "jilluser wants to transfer a file to you. Review all <a href=\"#{Rails.application.routes.url_helpers.transfers_path}\">transfer requests</a>"
+        notification.body.should == "<a href=\"/users/jilluser\">Jill Z. User</a> wants to transfer a file to you. Review all <a href=\"#{Rails.application.routes.url_helpers.transfers_path}\">transfer requests</a>"
       end
       it "should give an error if the user is not found" do
         lambda {
