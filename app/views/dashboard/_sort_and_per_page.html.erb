@@ -18,7 +18,7 @@ limitations under the License.
 </div>
 <div class="batch-info">
    <% session[:batch_edit_state] = "on" %>
-    <%=batch_delete%> <%=batch_edit_continue("Edit Selected") %>  
+    <!-- <%=batch_delete%> <%=batch_edit_continue("Edit Selected") %>  --><!-- Don't think buttons are needed here if they're in the batch edit drop down-->
         <% unless @response.response['numFound'] < 2 %>
           <%-# kind of hacky way to get this to work on catalog and folder controllers.  May be able to simple do {:action=>"index"} but I'm not sure -%>
     <%= form_tag params[:controller] == "folder" ? sufia.folder_index_path : sufia.dashboard_index_path, :method=>:get, :class=>'per_page form-inline' do %>

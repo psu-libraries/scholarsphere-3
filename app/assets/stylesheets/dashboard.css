@@ -71,3 +71,29 @@
   font-size: 25px;
   float: right;
 }
+
+#cog-drop{
+  overflow-x: hidden
+  width: 180px;
+}
+#cog-drop li{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#cog-drop .btn{
+  background: white;
+  color: black;
+  box-shadow: none;
+  text-shadow: none;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  width: 160px;
+  display: block;
+  white-space: no-wrap;
+  padding: none;
+}
+#cog-drop .btn:hover{
+  background-color: #0088cc;
+  color: white;
+}
