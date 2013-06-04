@@ -73,7 +73,7 @@
 }
 
 #cog-drop{
-  overflow-x: hidden
+  overflow-x: hidden;
   width: 180px;
 }
 #cog-drop li{

@@ -11,7 +11,7 @@ gem 'rails', '3.2.13'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'psu-stewardship/sufia', :ref => '06c0061ceb8661c9a3883bf374bf15be1b80b726'
+gem 'sufia', :github => 'projecthydra/sufia', :ref => '06c0061ceb8661'
 gem 'hydra-head', :github => 'projecthydra/hydra-head', :ref => 'bed79f66bb5381dc1338c80ff09e32d5c062bcc7'
 gem 'hydra-batch-edit', '1.0.1'
 gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref:'aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43'

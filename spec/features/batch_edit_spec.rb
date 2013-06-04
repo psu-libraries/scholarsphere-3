@@ -40,6 +40,9 @@ describe 'batch_edit', describe_options do
       login_js
       go_to_dashboard
       first('input#check_all').click
+      within('th.sm') do
+        first('a.dropdown-toggle').click
+      end
       click_button('Edit Selected')
       page.has_content?('2 files')
       page.has_content?(@gf1.title.first)
@@ -64,13 +67,11 @@ describe 'batch_edit', describe_options do
 
     it "should delete all files", js: true do
       login_js
-      visit '/'
-      first('a.dropdown-toggle').click
-      click_link('my dashboard')
-      wait_until(10) do
-        page.has_content?('My Dashboard')
-      end
+      go_to_dashboard
       first('input#check_all').click
+      within('th.sm') do
+        first('a.dropdown-toggle').click
+      end
       click_button('Delete Selected')
       page.driver.browser.switch_to.alert.accept
       page.has_content?('My Dashboard')

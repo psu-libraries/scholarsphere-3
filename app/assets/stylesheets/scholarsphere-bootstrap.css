@@ -319,7 +319,7 @@ ol.faq ol ol li { list-style-type: lower-roman }
     flaot:none;
 }
 
-.btn.collection-remove {
+.btn.collection-remove, .btn.collection-remove-selected {
     background:none;
     border:none; 
 /*     padding:0!important;    
@@ -336,7 +336,7 @@ ol.faq ol ol li { list-style-type: lower-roman }
     white-space: nowrap;
     border-radius:0px
 }
-.btn.collection-remove:hover{
+.btn.collection-remove:hover, .btn.collection-remove-selected:hover{
     text-decoration:underline;
     background-color:#0088CC;
 }

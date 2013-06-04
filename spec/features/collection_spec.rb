@@ -127,5 +127,50 @@ describe 'collection', describe_options do
       page.should_not have_content(@gf2.title.first)
 
     end
+    it "should remove a file from a collection", js: true do
+      login_js
+      go_to_dashboard
+      page.has_content?(@collection.title)
+      within('#document_'+@collection.id.gsub(":","_")) do
+        click_link("collection title")
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
+      within('#document_'+@gf1.noid) do
+        first('button.dropdown-toggle').click
+        click_button('Remove from Collection')
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should_not have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
+
+    end
+    it "should remove all files from a collection", js: true do
+      login_js
+      go_to_dashboard
+      page.has_content?(@collection.title)
+      within('#document_'+@collection.id.gsub(":","_")) do
+        click_link("collection title")
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
+      first('input#check_all').click
+      within('th.sm') do
+        first('a.dropdown-toggle').click
+      end
+      within('ul.dropdown-menu') do
+        click_button('Remove From Collection')
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      page.should_not have_content(@gf1.title.first)
+      page.should_not have_content(@gf2.title.first)
+
+    end
   end
 end
