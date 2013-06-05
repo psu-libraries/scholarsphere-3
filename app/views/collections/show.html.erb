@@ -1,0 +1,8 @@
+<% @generic_file = GenericFile.new ({title:[@collection.title]}) %>
+<%= render :partial => 'generic_files/breadcrumbs', locals:{include_file:false}%>
+
+<h1><%=@collection.title%><h1>
+  <h3><%=@collection.description%> </h3>
+  <h3> <u>Contained Files </u></h3>
+  <%= render partial: 'search_form'%>
+  <%= render partial:'document_list', locals:{documents: @member_docs} %>
