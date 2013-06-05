@@ -81,7 +81,8 @@ describe 'collection', describe_options do
       go_to_dashboard
       page.has_content?(@collection.title)
       within('#document_'+@collection.id.gsub(":","_")) do
-        click_button("Delete Collection")
+        first('button.dropdown-toggle').click
+        first(".itemtrash").click
         page.driver.browser.switch_to.alert.accept
       end
       page.should_not have_content(@collection.title)
