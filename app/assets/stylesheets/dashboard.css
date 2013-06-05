@@ -76,11 +76,11 @@
   overflow-x: hidden;
   width: 180px;
 }
-#cog-drop li{
+li .be-actions{
   padding-left: 5px;
   padding-right: 5px;
 }
-#cog-drop .btn{
+.be-actions .btn{
   background: white;
   color: black;
   box-shadow: none;
@@ -93,7 +93,7 @@
   white-space: no-wrap;
   padding: none;
 }
-#cog-drop .btn:hover{
+.be-actions .btn:hover{
   background-color: #0088cc;
   color: white;
 }
