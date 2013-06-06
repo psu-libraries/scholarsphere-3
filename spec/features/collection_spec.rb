@@ -86,6 +86,7 @@ describe 'collection', describe_options do
         page.driver.browser.switch_to.alert.accept
       end
       page.should_not have_content(@collection.title)
+      page.should have_content("Dashboard")
     end
   end
 
