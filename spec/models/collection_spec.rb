@@ -1,4 +1,4 @@
-# Copyright © 2013 The Pennsylvania State University
+# Copyright © 2012 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,27 +11,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-class Collection < ActiveFedora::Base
-  include Hydra::Collection
-  
-  include Sufia::ModelMethods
-  include Sufia::Noid
-  include Sufia::GenericFile::Permissions
 
+require 'spec_helper'
 
-  before_save :update_permissions
-
-  has_metadata :name => "properties", :type => PropertiesDatastream
-  
-  def to_solr(solr_doc={}, opts={})
-    super(solr_doc, opts)
-    solr_doc[Solrizer.solr_name("noid", Sufia::GenericFile.noid_indexer)] = noid
-    return solr_doc
+describe Collection do
+  before(:all) do
+    @user = FactoryGirl.find_or_create(:user)
+    @collection = Collection.create(:title => "test collection")
+    @collection.apply_depositor_metadata(@user.user_key)
   end
-
-  def update_permissions
-    self.set_visibility("open")
+  after(:all) do
+    @user.delete
+    @collection.delete
   end
-
+  it "should have open visibility" do
+    @collection.save
+    (@collection.datastreams["rightsMetadata"].permissions({group:"public"})).should == "read"
+  end
 
 end
