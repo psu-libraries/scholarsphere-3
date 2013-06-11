@@ -97,3 +97,12 @@ li .be-actions{
   background-color: #0088cc;
   color: white;
 }
+
+.btn.collection-add.collection-empty, div.collection-empty form.button_to{
+  padding: 2px 1px 2px 0px;
+  float: left;
+}
+
+th.sm .dropdown-toggle {
+    visibility: hidden;
+}
