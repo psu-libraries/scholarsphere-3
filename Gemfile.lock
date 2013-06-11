@@ -1,31 +1,7 @@
 GIT
-  remote: git://github.com/projecthydra/hydra-head.git
-  revision: bed79f66bb5381dc1338c80ff09e32d5c062bcc7
-  ref: bed79f66bb5381dc1338c80ff09e32d5c062bcc7
-  specs:
-    hydra-access-controls (6.1.1)
-      active-fedora (~> 6.1)
-      activesupport
-      blacklight
-      cancan
-      deprecation
-    hydra-core (6.1.1)
-      active-fedora
-      blacklight (~> 4.0)
-      block_helpers
-      deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.1.1)
-      jettywrapper (>= 1.4.1)
-      rails (~> 3.2.3)
-    hydra-head (6.1.1)
-      hydra-access-controls (= 6.1.1)
-      hydra-core (= 6.1.1)
-      rails (>= 3.2.6)
-
-GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 06c0061ceb8661c9a3883bf374bf15be1b80b726
-  ref: 06c0061ceb8661
+  revision: c5c9e7d1194a47f61d3e7de1faa484980b4bbc4c
+  ref: c5c9e7d
   specs:
     sufia (1.3.0)
       blacklight (~> 4.0)
@@ -38,9 +14,9 @@ GIT
       rails (~> 3.2.13)
       rails_autolink (= 1.0.9)
       rainbow (= 1.1.4)
-      sufia-models
+      sufia-models (~> 0.1.2)
       yaml_db (= 0.2.3)
-    sufia-models (0.1.1)
+    sufia-models (0.1.2)
       activerecord-import (= 0.3.0)
       acts_as_follower (= 0.1.1)
       devise
@@ -80,10 +56,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active-fedora (6.1.1)
-      activeresource (>= 3.0.0)
+    active-fedora (6.2.0)
       activesupport (>= 3.0.0)
-      builder (~> 3.0.0)
       deprecation
       mediashelf-loggable
       nom-xml (>= 0.5.1)
@@ -203,10 +177,28 @@ GEM
       multi_json (~> 1.3)
     headless (1.0.1)
     hike (1.2.2)
-    hooks (0.2.2)
+    hooks (0.3.1)
+    hydra-access-controls (6.2.0)
+      active-fedora (~> 6.1)
+      activesupport
+      blacklight
+      cancan
+      deprecation
     hydra-batch-edit (1.0.1)
       blacklight
       hydra-collections
+    hydra-core (6.2.0)
+      active-fedora
+      blacklight (~> 4.0)
+      block_helpers
+      deprecation (>= 0.0.5)
+      hydra-access-controls (= 6.2.0)
+      jettywrapper (>= 1.4.1)
+      rails (~> 3.2.3)
+    hydra-head (6.2.0)
+      hydra-access-controls (= 6.2.0)
+      hydra-core (= 6.2.0)
+      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -345,13 +337,13 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
-    rubydora (1.6.4)
+    rubydora (1.6.5)
       activemodel
       activesupport
       deprecation
       equivalent-xml
       fastercsv
-      hooks (~> 0.2.2)
+      hooks (~> 0.3.0)
       mime-types
       nokogiri
       rest-client
@@ -440,7 +432,7 @@ DEPENDENCIES
   headless
   hydra-batch-edit (= 1.0.1)
   hydra-collections!
-  hydra-head!
+  hydra-head (~> 6.2.0)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
