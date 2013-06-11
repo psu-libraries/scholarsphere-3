@@ -2,7 +2,7 @@
 <!-- scholarsphere over ride -->
 <!-- the sub on ':' is b.c. jQuery has trouble with '.' or ':'
 on element ids -->
-<% noid = document.id %>
+<% noid = document.noid %>
 <tr id="document_<%= noid.gsub(":", "_") %>" class="<%= cycle("","zebra") %>">
   <td width="6%"></td> 
   <td width="1%">

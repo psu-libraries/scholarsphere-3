@@ -13,16 +13,18 @@
 # limitations under the License.
 class Collection < ActiveFedora::Base
   include Hydra::Collection
-  
   include Sufia::ModelMethods
   include Sufia::Noid
   include Sufia::GenericFile::Permissions
 
-
   before_save :update_permissions
 
   has_metadata :name => "properties", :type => PropertiesDatastream
-  
+
+  def to_param
+    noid
+  end
+
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
     solr_doc[Solrizer.solr_name("noid", Sufia::GenericFile.noid_indexer)] = noid
@@ -32,6 +34,4 @@ class Collection < ActiveFedora::Base
   def update_permissions
     self.set_visibility("open")
   end
-
-
 end
