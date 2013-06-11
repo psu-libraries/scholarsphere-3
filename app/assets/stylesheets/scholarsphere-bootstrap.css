@@ -341,7 +341,8 @@ ol.faq ol ol li { list-style-type: lower-roman }
 li form{
    margin: 0;
 }
-div#documents.clear
+
+.table.table-striped.dashboard
 {
     float: left;
 }

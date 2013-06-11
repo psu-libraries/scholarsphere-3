@@ -40,9 +40,9 @@ describe 'batch_edit', describe_options do
       login_js
       go_to_dashboard
       first('input#check_all').click
-      within('th.sm') do
-        first('a.dropdown-toggle').click
-      end
+#      within('th.sm') do
+#        first('a.dropdown-toggle').click
+#      end
       click_button('Edit Selected')
       page.has_content?('2 files')
       page.has_content?(@gf1.title.first)
@@ -69,9 +69,9 @@ describe 'batch_edit', describe_options do
       login_js
       go_to_dashboard
       first('input#check_all').click
-      within('th.sm') do
-        first('a.dropdown-toggle').click
-      end
+#      within('th.sm') do
+#        first('a.dropdown-toggle').click
+#      end
       click_button('Delete Selected')
       page.driver.browser.switch_to.alert.accept
       page.has_content?('My Dashboard')
