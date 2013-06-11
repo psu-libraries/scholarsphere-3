@@ -150,7 +150,7 @@ describe 'collection', describe_options do
       page.should have_content(@gf2.title.first)
 
     end
-    it "should remove all files from a collection", js: true do
+    it "should remove all files from a collection", js: true, pending:true do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
