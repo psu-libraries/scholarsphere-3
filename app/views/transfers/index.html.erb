@@ -15,7 +15,7 @@
     <tbody> 
     <% @outgoing.each do |req| %>
       <tr>
-        <td> <%= link_to req.solr_doc.title, sufia.generic_file_path(req['pid'].split(':').last) %> </td>
+        <td> <%= link_to req.title, sufia.generic_file_path(req['pid'].split(':').last) %> </td>
         <td class="sorts-dash">
           <% if req.created_at > Time.now.beginning_of_day %>
             <%= "#{time_ago_in_words(req.created_at)} ago"%>
@@ -55,7 +55,7 @@
     <tbody> 
     <% @incoming.each do |req| %>
       <tr>
-        <td> <%= link_to req.solr_doc.title, sufia.generic_file_path(req['pid'].split(':').last) %> </td>
+        <td> <%= link_to req.title, sufia.generic_file_path(req['pid'].split(':').last) %> </td>
         <td class="sorts-dash">
           <% if req.created_at > Time.now.beginning_of_day %>
             <%= "#{time_ago_in_words(req.created_at)} ago"%>

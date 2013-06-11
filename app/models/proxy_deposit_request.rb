@@ -40,26 +40,30 @@ class ProxyDepositRequest < ActiveRecord::Base
   def transfer!
     Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key))
     self.status = 'accepted'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
   def reject!(comment = nil)
     self.receiver_comment = comment if comment
     self.status = 'rejected'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
   def cancel!
     self.status = 'canceled'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
-  def solr_doc
+  def title
     query = ActiveFedora::SolrService.construct_query_for_pids([pid])
     solr_response = ActiveFedora::SolrService.query(query, :raw => true)
-    SolrDocument.new(solr_response['response']['docs'].first, solr_response)
+    begin
+      SolrDocument.new(solr_response['response']['docs'].first, solr_response).title
+    rescue NoMethodError
+      'file not found'
+    end
   end
 end
