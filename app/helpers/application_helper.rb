@@ -31,5 +31,10 @@ module ApplicationHelper
       '' # return empty string
     end
   end
+  
+  def has_collection_search_parameters?
+    !params[:cq].blank?
+  end
+  
 end
 

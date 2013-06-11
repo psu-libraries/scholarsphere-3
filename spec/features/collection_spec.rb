@@ -15,7 +15,7 @@ describe 'collection', describe_options do
     fill_in('Title', with:title)
     fill_in('Description', with:description)
     click_button("Create Collection")
-    wait_on_page('Contained Files').should be_true
+    wait_on_page('Items in this Collection').should be_true
     page.has_content?(title)
     page.has_content?(description)
   end
@@ -98,7 +98,7 @@ describe 'collection', describe_options do
       @collection.members = [@gf1,@gf2]
       @collection.save
     end
-    it "should show a collection", js: true do
+    it "should show a collection with a listing of Descriptive Metadata and catalog-style search results", js: true do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
@@ -107,10 +107,13 @@ describe 'collection', describe_options do
       end
       page.should have_content(@collection.title)
       page.should have_content(@collection.description)
+      # Should not have Collection Descriptive metadata table
+      page.should have_content("Descriptions")    
+      # Should have search results / contents listing
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
     end
-    it "should search a collection", js: true do
+    it "should hide collection descriptive metadata when searching a collection", js: true do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
@@ -123,24 +126,33 @@ describe 'collection', describe_options do
       page.should have_content(@gf2.title.first)
       fill_in('collection_search',with:@gf1.title.first)
       click_button('collection_submit')
+      # Should not have Collection Descriptive metadata table
+      page.should_not have_content("Descriptions")
       page.should have_content(@collection.title)
       page.should have_content(@collection.description)
+      # Should have search results / contents listing 
       page.should have_content(@gf1.title.first)
       page.should_not have_content(@gf2.title.first)
-
+      # Should not have Dashboard content in contents listing
+      page.should_not have_content("Visibility")
     end
+  end
+  describe 'edit collection' do
     it "should remove a file from a collection", js: true do
+      pending "Waiting for Collections#edit to show dashboard-view of contents"
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
       within('#document_'+@collection.noid) do
-        click_link("collection title")
+        within('ul.dropdown-menu') do
+          click_button('Edit Collection')
+        end
       end
       page.should have_content(@collection.title)
       page.should have_content(@collection.description)
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
-      within('#document_'+@gf1.noid) do
+        within('#document_'+@gf1.noid) do
         first('button.dropdown-toggle').click
         click_button('Remove from Collection')
       end
@@ -148,14 +160,15 @@ describe 'collection', describe_options do
       page.should have_content(@collection.description)
       page.should_not have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
-
     end
     it "should remove all files from a collection", js: true, pending:true do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
       within('#document_'+@collection.noid) do
-        click_link("collection title")
+        within('ul.dropdown-menu') do
+          click_button('Edit Collection')
+        end
       end
       page.should have_content(@collection.title)
       page.should have_content(@collection.description)
