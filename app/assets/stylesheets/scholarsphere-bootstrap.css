@@ -309,14 +309,12 @@ ol.faq ol ol li { list-style-type: lower-roman }
 .icon-large.icon-magic, .icon-large.icon-gift {
     font-size: 1.0em;
 }
-
 .batch-select-all, .button_to {
-    float: right;
+    float: left;
     padding: 2px;
 }
-
 .btn.collection-add, btn.collection-update {
-    flaot:none;
+    float:left;
 }
 
 .btn.collection-remove, .btn.collection-remove-selected {
@@ -342,4 +340,8 @@ ol.faq ol ol li { list-style-type: lower-roman }
 }
 li form{
    margin: 0;
+}
+div#documents.clear
+{
+    float: left;
 }
