@@ -1,7 +1,7 @@
-<% @generic_file = GenericFile.new ({title:[@collection.title]}) %>
+<% @generic_file = @collection %>
 <%= render :partial => 'generic_files/breadcrumbs', locals:{include_file:false}%>
 
-<% @page_title = "#{display_title(@generic_file)} - #{application_name}" %>
+<% @page_title = "#{display_title(@collection)} - #{application_name}" %>
 
 <h1 class="lower"><%= @collection.title %></h1>
 
@@ -10,12 +10,12 @@
 <% unless has_collection_search_parameters? %>
   <div class="row">
     <div class="span40">
-      <%= render :partial => 'generic_files/media_display', locals: {generic_file: @collection} %>
+      <%= render :partial => 'collections/media_display', locals: {generic_file: @collection} %>
     </div>
     <div class="span2">&nbsp;</div>
     <div class="span68"><!-- class="column second"> -->
       <%= render partial: 'collections/show_actions' %>
-      <%= render partial: 'generic_files/show_descriptions', locals: {generic_file: @collection} %>
+      <%= render partial: 'collections/show_descriptions', locals: {generic_file: @collection} %>
       <%#= render partial: 'generic_files/show_details', locals: {generic_file: @collection} %>
     </div><!-- /columns second -->
   </div> <!-- /columns two-b -->
