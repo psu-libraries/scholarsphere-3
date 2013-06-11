@@ -80,7 +80,7 @@ describe 'collection', describe_options do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
-      within('#document_'+@collection.id.gsub(":","_")) do
+      within('#document_'+@collection.noid) do
         first('button.dropdown-toggle').click
         first(".itemtrash").click
         page.driver.browser.switch_to.alert.accept
@@ -102,7 +102,7 @@ describe 'collection', describe_options do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
-      within('#document_'+@collection.id.gsub(":","_")) do
+      within('#document_'+@collection.noid) do
         click_link("collection title")
       end
       page.should have_content(@collection.title)
@@ -114,7 +114,7 @@ describe 'collection', describe_options do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
-      within('#document_'+@collection.id.gsub(":","_")) do
+      within('#document_'+@collection.noid) do
         click_link("collection title")
       end
       page.should have_content(@collection.title)
@@ -133,7 +133,7 @@ describe 'collection', describe_options do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
-      within('#document_'+@collection.id.gsub(":","_")) do
+      within('#document_'+@collection.noid) do
         click_link("collection title")
       end
       page.should have_content(@collection.title)
@@ -154,7 +154,7 @@ describe 'collection', describe_options do
       login_js
       go_to_dashboard
       page.has_content?(@collection.title)
-      within('#document_'+@collection.id.gsub(":","_")) do
+      within('#document_'+@collection.noid) do
         click_link("collection title")
       end
       page.should have_content(@collection.title)
