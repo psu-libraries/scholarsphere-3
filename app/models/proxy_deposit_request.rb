@@ -57,13 +57,16 @@ class ProxyDepositRequest < ActiveRecord::Base
     save!
   end
 
+  def deleted_file?
+    return false if GenericFile.find(pid)
+  rescue ActiveFedora::ObjectNotFoundError
+    true
+  end
+
   def title
+    return 'file not found' if deleted_file?
     query = ActiveFedora::SolrService.construct_query_for_pids([pid])
     solr_response = ActiveFedora::SolrService.query(query, :raw => true)
-    begin
-      SolrDocument.new(solr_response['response']['docs'].first, solr_response).title
-    rescue NoMethodError
-      'file not found'
-    end
+    SolrDocument.new(solr_response['response']['docs'].first, solr_response).title
   end
 end

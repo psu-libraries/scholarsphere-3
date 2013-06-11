@@ -31,12 +31,14 @@ describe ProxyDepositRequest do
     end
     its(:status) {should == 'accepted'}
     its(:fulfillment_date) {should_not be_nil}
+    its(:deleted_file?) {should be_false}
 
     describe "and the file is deleted" do
       before do
         file.destroy
       end
       its(:title) {should == 'file not found'}
+      its(:deleted_file?) {should be_true}
     end
   end
 
