@@ -342,7 +342,7 @@ li form{
    margin: 0;
 }
 
-.table.table-striped.dashboard
+.table.table-striped.dashboard, div#documents.clear
 {
     float: left;
 }
