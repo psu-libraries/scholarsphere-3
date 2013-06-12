@@ -17,7 +17,6 @@ require 'spec_helper'
 describe DashboardController do
   before do
     User.any_instance.stubs(:groups).returns([])
-    controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
   end
   # This doesn't really belong here, but it works for now
   describe "authenticate!" do
@@ -53,7 +52,6 @@ describe DashboardController do
     before (:each) do
       @user = FactoryGirl.find_or_create(:archivist)
       sign_in @user
-      controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
       User.any_instance.stubs(:groups).returns([])
     end
     describe "#index" do

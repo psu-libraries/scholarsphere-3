@@ -8,7 +8,6 @@ describe TransfersController do
     let(:another_user) { FactoryGirl.find_or_create(:test_user_1) }
     let(:user) { FactoryGirl.find_or_create(:user) }
     before do
-      controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
       sign_in user
     end
 
