@@ -24,7 +24,6 @@ describe MailboxController do
     @rec2 = @user.send_message(@another_user, @message, @subject)
     sign_in @user
     User.any_instance.stubs(:groups).returns([])
-    controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
    end
   after(:each) do
     @rec1.delete

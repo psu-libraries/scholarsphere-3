@@ -107,7 +107,11 @@ class ApplicationController < ActionController::Base
 
  protected
   def user_logged_in?
-    env['warden'] and env['warden'].user and remote_user_set?
+    if Rails.env.test?
+      request.env['warden'].user
+    else
+      env['warden'] and env['warden'].user and remote_user_set?
+    end
   end
 
   def remote_user_set?
