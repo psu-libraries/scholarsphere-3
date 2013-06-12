@@ -37,7 +37,7 @@ gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
-gem 'select2-rails', '3.3.1' # for transfer ownership javascript
+gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

@@ -60,6 +60,10 @@ ScholarSphere::Application.routes.draw do
   # adding user route here to fix routing issue not found page=nil
   match 'users' => 'users#index', :as => :profiles
 
+  resources :users do
+    resources :depositors, only: [:create, :destroy]
+  end
+
 
   # Dashboard routes (based partly on catalog routes)
   match 'dashboard' => 'dashboard#index', :as => :dashboard
