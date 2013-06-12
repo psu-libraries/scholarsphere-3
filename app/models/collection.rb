@@ -16,11 +16,20 @@ class Collection < ActiveFedora::Base
   include Sufia::ModelMethods
   include Sufia::Noid
   include Sufia::GenericFile::Permissions
+  include Sufia::GenericFile::WebForm # provides initialize_fields method
 
   before_save :update_permissions
 
   has_metadata :name => "properties", :type => PropertiesDatastream
 
+  def terms_for_display
+    [:title, :creator, :description, :date_modified, :date_uploaded]
+  end
+  
+  def terms_for_editing
+    terms_for_display - [:date_modified, :date_uploaded]
+  end
+  
   def to_param
     noid
   end
