@@ -22,6 +22,8 @@ class PropertiesDatastream < ActiveFedora::OmDatastream
     t.relative_path
 
     t.proxy_depositor path: 'proxyDepositor', :index_as=>:symbol
+
+    # This value is set when a user indicates they are depositing this for someone else
     t.on_behalf_of path: 'onBehalfOf', :index_as=>:symbol
   end
 
