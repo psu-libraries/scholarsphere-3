@@ -21,6 +21,12 @@ class GenericFile < ActiveFedora::Base
   delegate :proxy_depositor, :to=>:properties, :unique => true
   delegate :on_behalf_of, :to=>:properties, :unique => true
 
+  after_create :create_transfer_request
+
+  def create_transfer_request
+    request_transfer_to(User.find_by_user_key(on_behalf_of)) if on_behalf_of.present?
+  end
+
   def request_transfer_to(target)
     raise ArgumentError, "Must provide a target" unless target
     deposit_user = User.find_by_user_key(depositor)
