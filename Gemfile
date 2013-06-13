@@ -11,10 +11,11 @@ gem 'rails', '3.2.13'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'projecthydra/sufia', :ref => '153a7b2e57'
-gem 'hydra-head', '~> 6.2.0'
+gem 'sufia', :github => 'projecthydra/sufia', :ref => '153a7b2e57bd13af896d20787c29a4bfc573a554'
+gem 'hydra-head', '~> 6.2.1'
 gem 'hydra-batch-edit', '1.0.1'
-gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref:'aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43'
+gem 'hydra-editor', github:'projecthydra/hydra-editor', ref: "c2c6442346122baead246c5bf3863dfc03e15a91" # Currently using this for its edit view partials (used when editing collections)
+gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref:'bbedc4f01eedaab1a8dad94cff53f972a3583cbd'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
@@ -37,7 +38,7 @@ gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
-gem 'select2-rails', '3.4.2' # for transfer ownership javascript
+gem 'select2-rails', '3.3.1' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

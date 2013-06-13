@@ -1,7 +1,17 @@
 GIT
+  remote: git://github.com/projecthydra/hydra-editor.git
+  revision: c2c6442346122baead246c5bf3863dfc03e15a91
+  ref: c2c6442346122baead246c5bf3863dfc03e15a91
+  specs:
+    hydra-editor (0.0.2)
+      active-fedora (>= 6.3.0)
+      bootstrap_forms
+      rails (~> 3.2.13)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 153a7b2e57bd13af896d20787c29a4bfc573a554
-  ref: 153a7b2e57
+  ref: 153a7b2e57bd13af896d20787c29a4bfc573a554
   specs:
     sufia (1.3.0)
       blacklight (~> 4.0)
@@ -33,8 +43,8 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43
-  ref: aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43
+  revision: bbedc4f01eedaab1a8dad94cff53f972a3583cbd
+  ref: bbedc4f01eedaab1a8dad94cff53f972a3583cbd
   specs:
     hydra-collections (0.0.2)
       blacklight
@@ -56,7 +66,7 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active-fedora (6.2.0)
+    active-fedora (6.3.0)
       activesupport (>= 3.0.0)
       deprecation
       mediashelf-loggable
@@ -65,7 +75,7 @@ GEM
       rdf
       rdf-rdfxml (~> 1.0.0)
       rsolr
-      rubydora (~> 1.6)
+      rubydora (~> 1.6, >= 1.6.5)
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -105,6 +115,7 @@ GEM
       activesupport (>= 2.0)
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
+    bootstrap_forms (3.0.1)
     builder (3.0.4)
     cancan (1.6.10)
     capybara (1.1.4)
@@ -178,7 +189,7 @@ GEM
     headless (1.0.1)
     hike (1.2.3)
     hooks (0.3.1)
-    hydra-access-controls (6.2.0)
+    hydra-access-controls (6.2.1)
       active-fedora (~> 6.1)
       activesupport
       blacklight
@@ -187,17 +198,17 @@ GEM
     hydra-batch-edit (1.0.1)
       blacklight
       hydra-collections
-    hydra-core (6.2.0)
+    hydra-core (6.2.1)
       active-fedora
       blacklight (~> 4.0)
       block_helpers
       deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.2.0)
+      hydra-access-controls (= 6.2.1)
       jettywrapper (>= 1.4.1)
       rails (~> 3.2.3)
-    hydra-head (6.2.0)
-      hydra-access-controls (= 6.2.0)
-      hydra-core (= 6.2.0)
+    hydra-head (6.2.1)
+      hydra-access-controls (= 6.2.1)
+      hydra-core (= 6.2.1)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
@@ -355,8 +366,8 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.4.2)
-      sass-rails
+    select2-rails (3.3.1)
+      sass-rails (>= 3.2)
       thor (~> 0.14)
     selenium-webdriver (2.33.0)
       childprocess (>= 0.2.5)
@@ -434,7 +445,8 @@ DEPENDENCIES
   headless
   hydra-batch-edit (= 1.0.1)
   hydra-collections!
-  hydra-head (~> 6.2.0)
+  hydra-editor!
+  hydra-head (~> 6.2.1)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
@@ -452,7 +464,7 @@ DEPENDENCIES
   rmagick (= 2.13.2)
   rspec-rails (>= 2.11.0)
   sass-rails (= 3.2.5)
-  select2-rails (= 3.4.2)
+  select2-rails (= 3.3.1)
   selenium-webdriver
   sitemap (= 0.3.3)
   sqlite3

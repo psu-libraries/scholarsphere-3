@@ -30,6 +30,13 @@ class Collection < ActiveFedora::Base
     terms_for_display - [:date_modified, :date_uploaded]
   end
   
+  # Test to see if the given field is required
+  # @param [Symbol] key a field
+  # @return [Boolean] is it required or not
+  def required?(key)
+    self.class.validators_on(key).any?{|v| v.kind_of? ActiveModel::Validations::PresenceValidator}
+  end
+  
   def to_param
     noid
   end

@@ -9,10 +9,8 @@
     </div>
     <div class="span2">&nbsp;</div>
     <div class="span68"><!-- class="column second"> -->
-      <%= render partial: 'collections/show_actions' %>
-      <%= render partial: 'collections/edit_descriptions', locals: {collection: @collection} %>
-      <%#= render 'form' %>
-      <%#= render partial: 'generic_files/show_details', locals: {generic_file: @collection} %>
+      <%= render partial: 'collections/edit_actions' %>
+      <%= render partial: 'collections/form', locals: {record: @collection}  %>
     </div><!-- /columns second -->
   </div> <!-- /columns two-b -->
 <% end %>

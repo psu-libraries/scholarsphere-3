@@ -138,6 +138,37 @@ describe 'collection', describe_options do
     end
   end
   describe 'edit collection' do
+    before (:each) do
+      @collection = Collection.new title:'collection title'
+      @collection.description = 'collection description'
+      @collection.apply_depositor_metadata(@user_key)
+      @collection.members = [@gf1,@gf2]
+      @collection.save
+    end
+    it "should edit and update collection metadata" do
+      login_js
+      go_to_dashboard
+      page.has_content?(@collection.title)
+      within('#document_'+@collection.noid) do
+        within('ul.dropdown-menu') do
+          click_link('Edit Collection')
+        end
+      end
+      page.should have_content(@collection.title)
+      page.should have_content(@collection.description)
+      new_title = "Altered Title"
+      new_description = "Completely new Description text."
+      creators = ["Dorje Trollo", "Vajrayogini"]
+      fill_in('Title', with:new_title)
+      fill_in('Description', with:new_description)
+      fill_in('Creator', with:creators.first)
+      click_button('Update Collection')
+      page.should_not have_content(@collection.title)
+      page.should_not have_content(@collection.description)
+      page.should have_content(new_title)
+      page.should have_content(new_description)
+      page.should have_content(creators.first)
+    end
     it "should remove a file from a collection", js: true do
       pending "Waiting for Collections#edit to show dashboard-view of contents"
       login_js

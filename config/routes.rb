@@ -49,6 +49,7 @@ ScholarSphere::Application.routes.draw do
 
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
+  mount HydraEditor::Engine => '/'
 
   # Downloads controller route
   resources :downloads, :only => "show"
