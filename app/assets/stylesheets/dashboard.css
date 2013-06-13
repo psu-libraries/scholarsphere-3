@@ -108,8 +108,9 @@ li .be-actions{
 
 .btn.submits-batches-add
 {
-    line-height: 16px;
-    margin-top: 2px;
+
+    line-height: 18px;
+    margin-top: 2px;   
 }
 
 th.sm .dropdown-toggle {
