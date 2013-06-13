@@ -43,9 +43,12 @@
   display: inline;
   padding-left: 5px;
 }
+
 .collection-list-container .collection-add{
-  float: right;
-  margin-right: 190px;
+  position: relative;
+ /*float: right; 
+  margin-right: 190px;*/
+  margin-left: 300px;
   margin-top: -46px;
 }
 
