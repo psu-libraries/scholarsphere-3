@@ -111,6 +111,7 @@ class ApplicationController < ActionController::Base
   end
 
   def remote_user_set?
+    return true if Rails.env.test?
     # Unicorn seems to translate REMOTE_USER into HTTP_REMOTE_USER
     if Rails.env.development?
       request.env['HTTP_REMOTE_USER'].present?
