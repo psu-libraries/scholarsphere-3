@@ -22,6 +22,7 @@ class PropertiesDatastream < ActiveFedora::OmDatastream
     t.relative_path
 
     t.proxy_depositor path: 'proxyDepositor', :index_as=>:symbol
+    t.on_behalf_of path: 'onBehalfOf', :index_as=>:symbol
   end
 
   def self.xml_template
