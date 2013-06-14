@@ -19,4 +19,12 @@
 
   <h2>Manage Items in this Collection</h2>
   <%= render partial: 'search_collection_dashboard_form'%>
+  <%= render :partial => 'dashboard/did_you_mean' %>
+  <%= render :partial => 'dashboard/facet_selected' %>
+
+	<%= render 'dashboard/constraints', :localized_params=>params %>
+  
+  <% render_pagination_info @response, :entry_name=>'item' %>
+
+  <%= render 'collections/sort_and_per_page' %>
   <%= render partial:'document_list', locals:{documents: @member_docs, document_list_format:"dashboard"} %>
