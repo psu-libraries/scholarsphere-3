@@ -209,9 +209,6 @@ describe 'collection', describe_options do
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
       first('input#check_all').click
-      # within('th.sm') do
-      #   first('a.dropdown-toggle').click
-      # end
       within('.batch-info') do
         click_button('Remove From Collection')
       end
