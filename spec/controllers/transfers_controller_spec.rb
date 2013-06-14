@@ -100,6 +100,14 @@ describe TransfersController do
           flash[:notice].should == "Transfer complete"
           assigns[:proxy_deposit_request].status.should == 'accepted'
         end
+        it "should handle sticky requests " do
+          put :accept, id: user.proxy_deposit_requests.first, sticky: true
+          response.should redirect_to transfers_path
+          flash[:notice].should == "Transfer complete"
+          assigns[:proxy_deposit_request].status.should == 'accepted'
+          user.can_receive_deposits_from.should include(another_user)
+
+        end
       end
 
       context "accepting one that isn't mine" do

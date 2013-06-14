@@ -67,6 +67,7 @@
         <td>
           <% if req.pending? %>
             <%= button_to "Accept", accept_transfer_path(req), method: :put, class: 'btn btn-primary' %>
+            <%= button_to "Accept and always allow requests from #{req.sending_user.name}", accept_transfer_path(req, sticky: true), method: :put, class: 'btn btn-primary' %>
             <%= button_to "Reject", reject_transfer_path(req), method: :put, class: 'btn btn-danger', confirm: "Are you sure you want to reject this request?" %>
           <% else %>
             <%= req.status.capitalize %>
