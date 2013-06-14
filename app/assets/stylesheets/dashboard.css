@@ -26,7 +26,6 @@
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-
 /* **************************
 *  Below added by Cal
 *************************** */
@@ -109,8 +108,12 @@ li .be-actions{
 .btn.submits-batches-add
 {
 
-    line-height: 18px;
-    margin-top: 2px;   
+    line-height: 18px; 
+    margin: 2px 1px 1px 1px;   
+    vertical-align: bottom;
+/*
+    margin-top: 2px;
+    padding: 3px 10px;  */
 }
 
 th.sm .dropdown-toggle {
