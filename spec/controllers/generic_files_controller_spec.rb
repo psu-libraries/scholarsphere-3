@@ -84,6 +84,14 @@ describe GenericFilesController do
       saved_file.date_modified.should_not be nil
     end
 
+    it "should record on_behalf_of" do
+      file = fixture_file_upload('/world.png','image/png')
+      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :on_behalf_of=>'carolyn', :terms_of_service=>"1"
+      response.should be_success
+      saved_file = GenericFile.find('test:123')
+      saved_file.on_behalf_of.should == 'carolyn'
+    end
+
     it "should record what user created the first version of content" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
       file = fixture_file_upload('/world.png','image/png')
@@ -118,7 +126,7 @@ describe GenericFilesController do
       saved_file.to_solr.keys.should include('depositor_tesim')
       saved_file.to_solr['depositor_tesim'].should == ['jilluser']
     end
-    it "Shoul call virus check" do
+    it "should call virus check" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
       ClamAV.any_instance.expects(:scanfile).returns(0)
       file = fixture_file_upload('/world.png','image/png')

@@ -11,7 +11,8 @@ gem 'rails', '3.2.13'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'projecthydra/sufia', :ref => 'c5c9e7d'
+gem 'sufia', :github => 'projecthydra/sufia', :ref => 'e2470b6'
+#gem 'sufia', path: '../sufia'
 gem 'hydra-head', '~> 6.2.0'
 gem 'hydra-batch-edit', '1.0.1'
 gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref:'aec2c6f4e3ca823fd07505c369e5b5b5f23e6e43'
@@ -37,7 +38,7 @@ gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
-gem 'select2-rails', '3.3.1' # for transfer ownership javascript
+gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

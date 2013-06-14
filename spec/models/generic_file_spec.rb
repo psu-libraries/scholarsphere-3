@@ -15,9 +15,19 @@
 require 'spec_helper'
 
 describe GenericFile do
+  let(:user) { FactoryGirl.create :random_user }
   before(:each) do
     @file = GenericFile.new
-    @file.apply_depositor_metadata('jcoyne')
+    @file.apply_depositor_metadata(user.user_key)
+  end
+  describe "created for someone (proxy)" do
+    before do
+      @transfer_to = FactoryGirl.create :random_user
+    end
+    it "booo" do
+      @file.on_behalf_of = @transfer_to.user_key
+      expect {@file.save!}.to change { ProxyDepositRequest.count}.by(1)
+    end
   end
   describe "attributes" do
     it "should have rightsMetadata" do
@@ -27,8 +37,8 @@ describe GenericFile do
       @file.properties.should be_instance_of PropertiesDatastream
     end
     it "should have apply_depositor_metadata" do
-      @file.rightsMetadata.edit_access.should == ['jcoyne']
-      @file.depositor.should == 'jcoyne'
+      @file.rightsMetadata.edit_access.should == [user.user_key]
+      @file.depositor.should == user.user_key
     end
     it "should have a set of permissions" do
       @file.read_groups=['group1', 'group2']
@@ -44,38 +54,38 @@ describe GenericFile do
       it "should create new group permissions" do
         @file.permissions = {:new_group_name => {'group1'=>'read'}}
         @file.permissions.should == [{:type=>"group", :access=>"read", :name=>"group1"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
       it "should create new user permissions" do
         @file.permissions = {:new_user_name => {'user1'=>'read'}}
         @file.permissions.should == [{:type=>"user", :access=>"read", :name=>"user1"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
       it "should not replace existing groups" do
         @file.permissions = {:new_group_name=> {'group1' => 'read'}}
         @file.permissions = {:new_group_name=> {'group2' => 'read'}}
         @file.permissions.should == [{:type=>"group", :access=>"read", :name=>"group1"},
                                      {:type=>"group", :access=>"read", :name=>"group2"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
       it "should not replace existing users" do
         @file.permissions = {:new_user_name=>{'user1'=>'read'}}
         @file.permissions = {:new_user_name=>{'user2'=>'read'}}
         @file.permissions.should == [{:type=>"user", :access=>"read", :name=>"user1"},
                                      {:type=>"user", :access=>"read", :name=>"user2"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
       it "should update permissions on existing users" do
         @file.permissions = {:new_user_name=>{'user1'=>'read'}}
         @file.permissions = {:user=>{'user1'=>'edit'}}
         @file.permissions.should == [{:type=>"user", :access=>"edit", :name=>"user1"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
       it "should update permissions on existing groups" do
         @file.permissions = {:new_group_name=>{'group1'=>'read'}}
         @file.permissions = {:group=>{'group1'=>'edit'}}
         @file.permissions.should == [{:type=>"group", :access=>"edit", :name=>"group1"},
-                                     {:type=>"user", :access=>"edit", :name=>"jcoyne"}]
+                                     {:type=>"user", :access=>"edit", :name=>user.user_key}]
       end
     end
     it "should have a characterization datastream" do

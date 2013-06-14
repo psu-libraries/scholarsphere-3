@@ -33,6 +33,9 @@ class TransfersController < ApplicationController
 
   def accept
     @proxy_deposit_request.transfer!
+    if params[:sticky]
+      current_user.can_receive_deposits_from << @proxy_deposit_request.sending_user
+    end
     redirect_to transfers_path, notice: "Transfer complete"
   end
 

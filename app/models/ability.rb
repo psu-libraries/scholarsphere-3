@@ -7,7 +7,9 @@ class Ability
     end
     can :accept, ProxyDepositRequest, receiving_user_id: current_user.id, status: 'pending'
     can :reject, ProxyDepositRequest, receiving_user_id: current_user.id, status: 'pending'
-    can :destroy, ProxyDepositRequest, sending_user_id: current_user.id, status: 'pending' # cancel
+    # a user who sent a proxy deposit request can cancel it if it's pending.
+    can :destroy, ProxyDepositRequest, sending_user_id: current_user.id, status: 'pending'
+    can :edit, User, id: current_user.id
   end
 
   private
