@@ -189,7 +189,7 @@ GEM
     headless (1.0.1)
     hike (1.2.3)
     hooks (0.3.1)
-    hydra-access-controls (6.2.1)
+    hydra-access-controls (6.2.2)
       active-fedora (~> 6.1)
       activesupport
       blacklight
@@ -198,17 +198,17 @@ GEM
     hydra-batch-edit (1.0.1)
       blacklight
       hydra-collections
-    hydra-core (6.2.1)
+    hydra-core (6.2.2)
       active-fedora
       blacklight (~> 4.0)
       block_helpers
       deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.2.1)
+      hydra-access-controls (= 6.2.2)
       jettywrapper (>= 1.4.1)
       rails (~> 3.2.3)
-    hydra-head (6.2.1)
-      hydra-access-controls (= 6.2.1)
-      hydra-core (= 6.2.1)
+    hydra-head (6.2.2)
+      hydra-access-controls (= 6.2.2)
+      hydra-core (= 6.2.2)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
@@ -249,7 +249,7 @@ GEM
     mini_portile (0.5.0)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
-    multi_json (1.7.6)
+    multi_json (1.7.7)
     mysql2 (0.3.11)
     nest (1.1.1)
       redis
@@ -446,7 +446,7 @@ DEPENDENCIES
   hydra-batch-edit (= 1.0.1)
   hydra-collections!
   hydra-editor!
-  hydra-head (~> 6.2.1)
+  hydra-head (~> 6.2.2)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
