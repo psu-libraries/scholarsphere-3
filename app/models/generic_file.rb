@@ -24,7 +24,7 @@ class GenericFile < ActiveFedora::Base
   after_create :create_transfer_request
 
   def create_transfer_request
-    request_transfer_to(User.find_by_user_key(on_behalf_of)) if on_behalf_of.present?
+    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, on_behalf_of))
   end
 
   def request_transfer_to(target)

@@ -24,9 +24,12 @@ describe GenericFile do
     before do
       @transfer_to = FactoryGirl.create :random_user
     end
-    it "booo" do
+    it "should transfer the request" do
       @file.on_behalf_of = @transfer_to.user_key
-      expect {@file.save!}.to change { ProxyDepositRequest.count}.by(1)
+      stub_job = stub('change depositor job') 
+      ContentDepositorChangeEventJob.expects(:new).returns(stub_job)
+      Sufia.queue.expects(:push).with(stub_job).once.returns(true)
+      @file.save!
     end
   end
   describe "attributes" do
