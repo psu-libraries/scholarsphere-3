@@ -3,4 +3,8 @@
 <% @all_checked = false %>
 <% @max_batch_size = 100 %>
 <% @user = current_user %>
-<%= render partial:'catalog/_index_partials/default_group', locals:{documents: documents, docs:documents} %>
+<% if params[:action] == "edit" %>
+  <%= render partial:'dashboard/_index_partials/default_group', locals:{documents: documents, docs:documents} %>
+<% else %>
+  <%= render partial:'catalog/_index_partials/default_group', locals:{documents: documents, docs:documents} %>
+<% end %>

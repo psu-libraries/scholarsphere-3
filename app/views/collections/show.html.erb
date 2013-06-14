@@ -1,6 +1,6 @@
-<%= render :partial => 'generic_files/breadcrumbs', locals:{include_file:false, generic_file:GenericFile.new(title:@collection.title)}%>
-
 <% @page_title = "#{@collection.title} - #{application_name}" %>
+
+<%= render :partial => 'generic_files/breadcrumbs', locals:{include_file:false, generic_file:GenericFile.new(title:@collection.title)}%>
 
 <h1 class="lower"><%= @collection.title %></h1>
 
