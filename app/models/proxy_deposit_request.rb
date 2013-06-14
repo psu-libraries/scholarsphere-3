@@ -37,8 +37,9 @@ class ProxyDepositRequest < ActiveRecord::Base
     self.status == 'pending'
   end
 
-  def transfer!
-    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key))
+  # @param [Boolean] reset (false) should the access controls be reset. This means revoking edit access from the depositor
+  def transfer!(reset = false)
+    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key, reset))
     self.status = 'accepted'
     self.fulfillment_date = Time.now
     save!

@@ -32,7 +32,7 @@ class TransfersController < ApplicationController
   end
 
   def accept
-    @proxy_deposit_request.transfer!
+    @proxy_deposit_request.transfer!(params[:reset])
     if params[:sticky]
       current_user.can_receive_deposits_from << @proxy_deposit_request.sending_user
     end
