@@ -23,7 +23,12 @@ limitations under the License.
      <% session[:batch_edit_state] = "on" %>
      <%=batch_edit_continue("Edit Selected") %></li>
      <%=batch_delete %>
-     <a href="#" class="btn btn-primary submits-batches-add" onclick="modal_collection_list('open', event)">Add to Collection</a>
+     <%=  form_tag  do %>
+        <%= hidden_field_tag :type, nil, :value => "Add to Collection" %>
+        <div>
+           <%= submit_tag "Add to Collection", :class => 'btn btn-primary submits-batches submits-batches-add', :onclick=>"return modal_collection_list('open', event)" %>
+        </div>
+     <% end %>
    </div>
    <div class="sort-toggle">
      <%-# kind of hacky way to get this to work on catalog and folder controllers.  May be able to simple do {:action=>"index"} but I'm not sure -%>
