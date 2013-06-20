@@ -27,6 +27,8 @@ class CatalogController < ApplicationController
   include Hydra::Controller::ControllerBehavior
   include BlacklightAdvancedSearch::ParseBasicQ
 
+  layout :search_layout
+
   # These before_filters apply the hydra access controls
   before_filter :enforce_show_permissions, :only=>:show
   # This applies appropriate access controls to all solr queries
