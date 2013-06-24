@@ -46,6 +46,9 @@ ScholarSphere::Application.routes.draw do
       post 'permissions'
     end
   end
+  
+  match '/users/:user_id/depositors' =>  'depositors#create', via: :post, as:'user_depositors'
+  match '/users/:user_id/depositors/:id' =>  'depositors#destroy', via: :delete, as:'user_depositor'
 
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
@@ -61,9 +64,6 @@ ScholarSphere::Application.routes.draw do
   # adding user route here to fix routing issue not found page=nil
   match 'users' => 'users#index', :as => :profiles
 
-  resources :users do
-    resources :depositors, only: [:create, :destroy]
-  end
 
 
   # Dashboard routes (based partly on catalog routes)
