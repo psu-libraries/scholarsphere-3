@@ -1,12 +1,28 @@
+<% noid = document.noid %>
 <li>
+  <h2>
+    <%= link_to document.title_or_label, collections.collection_path(noid) %>
+  </h2>
   <table class="table">
+    <td rowspan="5" class="span20"> <%= link_to image_tag("/assets/folder.png", {:width=>150}), collections.collection_path(noid) %>
+    </td>
+    <th><h4>Title:</h4></th>
+    <td><%= document.title %></td>
     <tr>
-      <th><h4>Title:</h4></th>
-      <td><%= document.title %></td>
+      <th><h4>Depositor:<h4></div>
+        <td><%= link_to_profile document.depositor("no depositor value") %></td>
+    </tr>
+    <tr>
+      <th><h4>Creator:<h4></div>
+        <td><%= document.creator %></td>
     </tr>
     <tr>
       <th><h4>Description:</h4></th>
       <td><%= iconify_auto_link(document.description) %></th>
+    </tr>
+    <tr>
+      <th><h4>Created:</h4></th>
+      <td><%= iconify_auto_link(document.date_uploaded) %></th>
     </tr>
   </table>
 </li>
