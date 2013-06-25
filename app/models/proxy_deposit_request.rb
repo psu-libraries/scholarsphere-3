@@ -29,12 +29,22 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def send_request_transfer_message
-    message = "#{link_to(sending_user.name, Sufia::Engine.routes.url_helpers.profile_path(sending_user.user_key))} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
-    User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
+    if self.updated_at == self.created_at
+      message = "#{link_to(sending_user.name, Sufia::Engine.routes.url_helpers.profile_path(sending_user.user_key))} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
+      User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
+      else
+        message = "Your transfer request was #{status}."
+        message = message + " Comments: #{receiver_comment}" if !receiver_comment.blank?
+        User.batchuser.send_message(sending_user, message, "Ownership Change #{status}")
+    end
   end
 
   def pending?
     self.status == 'pending'
+  end
+
+  def accepted?
+    self.status == 'accepted'
   end
 
   # @param [Boolean] reset (false) should the access controls be reset. This means revoking edit access from the depositor
