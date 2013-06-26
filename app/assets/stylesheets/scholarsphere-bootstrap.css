@@ -347,3 +347,9 @@ li form{
     float: left;
     width: 100%;
 }
+
+.vertical-offset .collection-list-box .button_to
+{
+    float: none;
+    margin-top: -48px;
+}
