@@ -61,6 +61,7 @@ $('#myTab a').click(function (e) {
       <ul class="nav nav-tabs" id="myTab">
         <li class="active"><a href="#contributions"><i class="icon-trophy"></i> Contributions</a></li>
         <li><a href="#profile"><i class="icon-info-sign"></i> Profile</a></li>
+        <li><a href="#proxies" ><i class="icon-group"></i> Proxies</a></li>
         <li><a href="#activity_log" ><i class="icon-rss"></i> Activity</a></li>
       </ul>
        
@@ -99,6 +100,15 @@ $('#myTab a').click(function (e) {
                 <%= render :partial => 'user_info', :locals => {:user => @user} %>
              </dl>
         </div> <!-- /profile -->
+        <div class="tab-pane" id="proxies">
+          <h2>Proxies</h2>
+          <% @user.can_receive_deposits_from.each do |depositor| %>
+              <tr><td><%= link_to_profile depositor.user_key %></td>
+              </tr>
+          <% end %>
+
+        </div> <!-- /profile -->
+
 
         <div class="tab-pane" id="activity_log">
           <%= render :partial => 'users/activity_log', :locals => {:events => @events} %>
