@@ -38,6 +38,26 @@ describe CollectionsController do
       post :create, collection: {title: "My First Collection ", description: "The Description\r\n\r\nand more"}
       Collection.count.should == old_count+1
     end
+    it "should create a Collection with files I can access" do
+      @asset1 = GenericFile.new(title: "First of the Assets")
+      @asset1.apply_depositor_metadata(@user.user_key)
+      @asset1.save
+      @asset2 = GenericFile.new(title: "Second of the Assets", depositor:@user.user_key)
+      @asset2.apply_depositor_metadata(@user.user_key)
+      @asset2.save
+      @asset3 = GenericFile.new(title: "Third of the Assets", depositor:'abc')
+      @asset3.apply_depositor_metadata('abc')
+      @asset3.save
+      controller.expects(:has_access?).returns(true)
+      old_count = Collection.count
+      post :create, collection: {title: "My own Collection ", description: "The Description\r\n\r\nand more"}, batch_document_ids:[@asset1.id, @asset2.id, @asset3.id]
+      Collection.count.should == old_count+1
+      collection = assigns(:collection)
+      collection.members.should include (@asset1)
+      collection.members.should include (@asset2)
+      collection.members.should_not include (@asset3)
+    end
+
   end
   
   describe "#show" do
