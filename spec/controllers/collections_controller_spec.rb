@@ -56,6 +56,9 @@ describe CollectionsController do
       collection.members.should include (@asset1)
       collection.members.should include (@asset2)
       collection.members.should_not include (@asset3)
+      @asset1.destroy
+      @asset2.destroy
+      @asset3.destroy
     end
 
   end
