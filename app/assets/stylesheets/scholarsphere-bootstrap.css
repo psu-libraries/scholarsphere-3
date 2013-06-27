@@ -313,11 +313,11 @@ ol.faq ol ol li { list-style-type: lower-roman }
     float: left;
     padding: 2px;
 }
-.btn.collection-add, btn.collection-update {
+.btn.collection-add, btn.collection-update, .btn.collection-remove-selected {
     float:left;
 }
 
-.btn.collection-remove, .btn.collection-remove-selected {
+.btn.collection-remove {
     background:none;
     border:none; 
 /*     padding:0!important;    
@@ -334,7 +334,7 @@ ol.faq ol ol li { list-style-type: lower-roman }
     white-space: nowrap;
     border-radius:0px
 }
-.btn.collection-remove:hover, .btn.collection-remove-selected:hover{
+.btn.collection-remove:hover{
     text-decoration:underline;
     background-color:#0088CC;
 }
@@ -352,4 +352,9 @@ li form{
 {
     float: none;
     margin-top: -48px;
+}
+.edit_collection {
+    float: left;
+    margin-top: 2px;
+    width: auto;
 }
