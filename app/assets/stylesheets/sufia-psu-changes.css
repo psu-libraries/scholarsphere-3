@@ -112,3 +112,11 @@ a:active
 a {
     color: #0088CC; 
 }
+
+
+.announce {
+    background-color: yellow;
+    color:#0088CC;
+    font-size: 23px;
+
+}
