@@ -66,6 +66,16 @@ limitations under the License.
           Users: <%= document.edit_people.join(', ') %>
         </td>
       </tr>
+      <% unless document.collections.blank?  %>
+          <tr>
+            <td><strong>collection: </strong>
+              <% document.collections.each do |col| %>
+                  <%= link_to col.title, collections.collection_path(col.noid) %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+
     </table>
   </td>
 </tr>

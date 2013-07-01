@@ -61,8 +61,64 @@ describe CollectionsController do
       @asset3.destroy
     end
 
+    it "should add docs to collection if batch ids provided and add the collection id to the documents int he colledction" do
+      @asset1 = GenericFile.new(title: "First of the Assets")
+      @asset1.apply_depositor_metadata(@user.user_key)
+      @asset1.save
+      post :create, batch_document_ids: [@asset1.id], collection: {title: "My Secong Collection ", description: "The Description\r\n\r\nand more"}
+      assigns[:collection].members.should == [@asset1]
+      asset_results = Blacklight.solr.get "select", params:{fq:["id:\"#{@asset1.id}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results["response"]["numFound"].should == 1
+      doc = asset_results["response"]["docs"].first
+      doc["id"].should == @asset1.id
+      afterupdate = GenericFile.find(@asset1.pid)
+      doc[Solrizer.solr_name(:collection)].should == afterupdate.to_solr[Solrizer.solr_name(:collection)]
+    end
+
   end
-  
+
+  describe "#update" do
+    before do
+      @collection = Collection.new
+      @collection.apply_depositor_metadata(@user.user_key)
+      @collection.save
+      @asset1 = GenericFile.new(title: "First of the Assets")
+      @asset1.apply_depositor_metadata(@user.user_key)
+      @asset1.save
+      @asset2 = GenericFile.new(title: "Second of the Assets", depositor:@user.user_key)
+      @asset2.apply_depositor_metadata(@user.user_key)
+      @asset2.save
+      @asset3 = GenericFile.new(title: "Third of the Assets", depositor:'abc')
+      @asset3.apply_depositor_metadata(@user.user_key)
+      @asset3.save
+    end
+    after do
+      @collection.destroy
+      @asset1.destroy
+      @asset2.destroy
+      @asset3.destroy
+    end
+
+    it "should set collection on members" do
+      put :update, id: @collection.id, collection: {members:"add"}, batch_document_ids:[@asset3.pid,@asset1.pid, @asset2.pid]
+      response.should redirect_to Hydra::Collections::Engine.routes.url_helpers.collection_path(@collection.noid)
+      assigns[:collection].members.map{|m| m.pid}.sort.should == [@asset2, @asset3, @asset1].map {|m| m.pid}.sort
+      asset_results = Blacklight.solr.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results["response"]["numFound"].should == 1
+      doc = asset_results["response"]["docs"].first
+      doc["id"].should == @asset2.id
+      afterupdate = GenericFile.find(@asset2.pid)
+      doc[Solrizer.solr_name(:collection)].should == afterupdate.to_solr[Solrizer.solr_name(:collection)]
+      put :update, id: @collection.id, collection: {members:"remove"}, batch_document_ids:[@asset2]
+      asset_results = Blacklight.solr.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results["response"]["numFound"].should == 1
+      doc = asset_results["response"]["docs"].first
+      doc["id"].should == @asset2.pid
+      afterupdate = GenericFile.find(@asset2.pid)
+      doc[Solrizer.solr_name(:collection)].should be_nil
+    end
+  end
+
   describe "#show" do
     before do
       @asset1 = GenericFile.new(title: "First of the Assets")
