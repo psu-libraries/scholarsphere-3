@@ -11,6 +11,7 @@
           <%= form_tag(collections.collection_path('collection_replace_id'), :method => "put") do %>
             <div class="collection-list">
               <ul>
+                <% user_collections.sort! { |c1,c2| c1['desc_metadata__date_modified_dtsi'] <=> c2['desc_metadata__date_modified_dtsi'] }  %>
                 <% user_collections.each do |collection| %>
                   <li> <%= radio_button_tag(:id, collection.id, true, :class => "collection-selector") %><%= label_tag(:collection, collection.title) %> </li>
                 <% end %>
