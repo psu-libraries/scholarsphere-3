@@ -22,9 +22,7 @@ feature "Managing ownership change requests" do
     scenario "then I should be able to accept it" do
       visit '/'
       click_link "transfer requests"
-      within("#incoming-transfers") do
-        click_button "Accept"
-      end
+      click_link "Allow depositor to retain edit access"
       page.should have_content("Transfer complete")
     end
 

@@ -26,16 +26,20 @@ require 'mocha/setup'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    before_files_count = GenericFile.count
+    before_batches_count = Batch.count
+    puts "WARNING: Your jetty is not clean, so tests may be funky! (#{before_files_count} files, #{before_batches_count} batches)" if before_files_count > 0 or before_batches_count > 0
+  end
   config.after(:all) do
     files_count = GenericFile.count
     batches_count = Batch.count
-    puts "WARNING: #{files_count} files were not cleaned up by this test!" if files_count > 0
-    puts "WARNING #{batches_count} batches were not cleaned up by this test!" if batches_count > 0
+    puts "WARNING: #{files_count} files need cleaning up" if files_count > 0
+    puts "WARNING: #{batches_count} batches need cleaning up" if batches_count > 0
   end
 
   Capybara.register_driver :selenium do |app|
-      profile = Selenium::WebDriver::Firefox::Profile.new
-  
+    profile = Selenium::WebDriver::Firefox::Profile.new
     Capybara::Selenium::Driver.new(app, :profile => profile)
   end
 

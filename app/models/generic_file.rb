@@ -19,6 +19,13 @@ class GenericFile < ActiveFedora::Base
   has_file_datastream "full_text", versionable: false
 
   delegate :proxy_depositor, :to=>:properties, :unique => true
+  delegate :on_behalf_of, :to=>:properties, :unique => true
+
+  after_create :create_transfer_request
+
+  def create_transfer_request
+    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, on_behalf_of)) if on_behalf_of.present?
+  end
 
   def request_transfer_to(target)
     raise ArgumentError, "Must provide a target" unless target
@@ -95,7 +102,7 @@ class GenericFile < ActiveFedora::Base
     solr_doc[Solrizer.solr_name('file_format')] = file_format
     solr_doc[Solrizer.solr_name('file_format', :facetable)] = file_format
     solr_doc["all_text_timv"] = full_text.content
-    index_collection_pids(solr_doc)
+    solr_doc = index_collection_pids(solr_doc)
     return solr_doc
   end
 

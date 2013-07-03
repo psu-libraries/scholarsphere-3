@@ -5,10 +5,9 @@ describe TransfersController do
     GenericFile.destroy_all
   end
   describe "with a signed in user" do
-    let(:another_user) { FactoryGirl.find_or_create(:test_user_1) }
-    let(:user) { FactoryGirl.find_or_create(:user) }
+    let(:another_user) { FactoryGirl.create(:random_user) }
+    let(:user) { FactoryGirl.create(:random_user) }
     before do
-      controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
       sign_in user
     end
 
@@ -63,6 +62,7 @@ describe TransfersController do
         end
       end
       it "should be successful" do
+        User.any_instance.stubs(:display_name).returns("Jill Z. User")
         lambda {
           post :create, id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
         }.should change(ProxyDepositRequest, :count).by(1)
@@ -74,7 +74,7 @@ describe TransfersController do
         # AND A NOTIFICATION SHOULD HAVE BEEN CREATED
         notification = another_user.reload.mailbox.inbox[0].messages[0]
         notification.subject.should == "Ownership Change Request"
-        notification.body.should == "jilluser wants to transfer a file to you. Review all <a href=\"#{Rails.application.routes.url_helpers.transfers_path}\">transfer requests</a>"
+        notification.body.should == "<a href=\"/users/#{user.user_key}\">#{user.name}</a> wants to transfer a file to you. Review all <a href=\"#{Rails.application.routes.url_helpers.transfers_path}\">transfer requests</a>"
       end
       it "should give an error if the user is not found" do
         lambda {
@@ -94,11 +94,27 @@ describe TransfersController do
             f.request_transfer_to(user)
           end
         end
-        it "should be successful" do
+        it "should be successful when retaining access rights" do
           put :accept, id: user.proxy_deposit_requests.first
           response.should redirect_to transfers_path
           flash[:notice].should == "Transfer complete"
           assigns[:proxy_deposit_request].status.should == 'accepted'
+          @incoming_file.reload.edit_users.should == [another_user.user_key, user.user_key]
+        end
+        it "should be successful when resetting access rights" do
+          put :accept, id: user.proxy_deposit_requests.first, reset: true
+          response.should redirect_to transfers_path
+          flash[:notice].should == "Transfer complete"
+          assigns[:proxy_deposit_request].status.should == 'accepted'
+          @incoming_file.reload.edit_users.should == [user.user_key]
+        end
+        it "should handle sticky requests " do
+          put :accept, id: user.proxy_deposit_requests.first, sticky: true
+          response.should redirect_to transfers_path
+          flash[:notice].should == "Transfer complete"
+          assigns[:proxy_deposit_request].status.should == 'accepted'
+          user.can_receive_deposits_from.should include(another_user)
+
         end
       end
 

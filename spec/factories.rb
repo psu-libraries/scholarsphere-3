@@ -28,6 +28,11 @@ FactoryGirl.define do
     ldap_available true
   end
 
+  factory :random_user, :class => User do |u|
+    sequence(:login) {|n| "user#{n}" }
+    ldap_available true
+  end
+
 
   #these two users are ONLY for ensuring our staging test users don't show up in search results
   factory :test_user_1, :class => User do |u|

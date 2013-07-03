@@ -22,7 +22,6 @@ describe UsersController do
     @another_user = FactoryGirl.find_or_create(:archivist)
     sign_in @user
     User.any_instance.stubs(:groups).returns([])
-    controller.stubs(:clear_session_user) ## Don't clear out the authenticated session
   end
   after(:all) do
     @user = FactoryGirl.find(:user) rescue

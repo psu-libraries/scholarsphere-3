@@ -11,20 +11,21 @@ module UserLogin
   end  
 
   
-  def login_js
+  def login_js (remote_user = 'jilluser')
     
     Devise::Strategies::HttpHeaderAuthenticatable.class_eval do
-    
+
+      @@remote_user = remote_user
+
       # Called if the user doesn't already have a rails session cookie
       def valid?
         true
       end
      
       def authenticate!
-        remote_user = 'jilluser'
-        u = User.find_by_login(remote_user)
+        u = User.find_by_login(@@remote_user)
         if u.nil?
-          u = User.create(:login => remote_user)
+          u = User.create(:login => @@remote_user)
           u.populate_attributes
         end
         u.ldap_available = true
@@ -34,5 +35,18 @@ module UserLogin
     end
     
   end
-  
+ 
+  def wait_on_page(text, time=5)
+    wait_until(time) do
+      page.has_content?(text)
+    end
+    return page.has_content?(text)
+  end
+   
+  def go_to_dashboard
+    visit '/'
+    first('a.dropdown-toggle').click
+    click_link('my dashboard')
+    wait_on_page('My Dashboard').should be_true
+  end
 end

@@ -2,6 +2,7 @@ require 'scholarsphere/jobs/content_depositor_change_event_job'
 
 class ProxyDepositRequest < ActiveRecord::Base
   include Blacklight::SolrHelper
+  include ActionView::Helpers::UrlHelper
 
   belongs_to :receiving_user, class_name: 'User'
   belongs_to :sending_user, class_name: 'User'
@@ -28,37 +29,55 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def send_request_transfer_message
-    message = "#{sending_user.user_key} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
-    User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
+    if self.updated_at == self.created_at
+      message = "#{link_to(sending_user.name, Sufia::Engine.routes.url_helpers.profile_path(sending_user.user_key))} wants to transfer a file to you. Review all <a href='#{Rails.application.routes.url_helpers.transfers_path}'>transfer requests</a>"
+      User.batchuser.send_message(receiving_user, message, "Ownership Change Request")
+      else
+        message = "Your transfer request was #{status}."
+        message = message + " Comments: #{receiver_comment}" if !receiver_comment.blank?
+        User.batchuser.send_message(sending_user, message, "Ownership Change #{status}")
+    end
   end
 
   def pending?
     self.status == 'pending'
   end
 
-  def transfer!
-    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key))
+  def accepted?
+    self.status == 'accepted'
+  end
+
+  # @param [Boolean] reset (false) should the access controls be reset. This means revoking edit access from the depositor
+  def transfer!(reset = false)
+    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, receiving_user.user_key, reset))
     self.status = 'accepted'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
   def reject!(comment = nil)
     self.receiver_comment = comment if comment
     self.status = 'rejected'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
   def cancel!
     self.status = 'canceled'
-    self.fulfillment_date= Time.now
+    self.fulfillment_date = Time.now
     save!
   end
 
-  def solr_doc
+  def deleted_file?
+    return false if GenericFile.find(pid)
+  rescue ActiveFedora::ObjectNotFoundError
+    true
+  end
+
+  def title
+    return 'file not found' if deleted_file?
     query = ActiveFedora::SolrService.construct_query_for_pids([pid])
     solr_response = ActiveFedora::SolrService.query(query, :raw => true)
-    SolrDocument.new(solr_response['response']['docs'].first, solr_response)
+    SolrDocument.new(solr_response['response']['docs'].first, solr_response).title
   end
 end

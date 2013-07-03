@@ -46,9 +46,13 @@ ScholarSphere::Application.routes.draw do
       post 'permissions'
     end
   end
+  
+  match '/users/:user_id/depositors' =>  'depositors#create', via: :post, as:'user_depositors'
+  match '/users/:user_id/depositors/:id' =>  'depositors#destroy', via: :delete, as:'user_depositor'
 
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
+  mount HydraEditor::Engine => '/'
 
   # Downloads controller route
   resources :downloads, :only => "show"
@@ -59,6 +63,7 @@ ScholarSphere::Application.routes.draw do
 
   # adding user route here to fix routing issue not found page=nil
   match 'users' => 'users#index', :as => :profiles
+
 
 
   # Dashboard routes (based partly on catalog routes)

@@ -11,9 +11,11 @@ gem 'rails', '3.2.13'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', :github => 'projecthydra/sufia', :ref => '38fbc91fd83d96f5a155eb406e8834ccf0f17a6f'
-gem 'hydra-head', :github => 'projecthydra/hydra-head', :ref => 'bed79f66bb5381dc1338c80ff09e32d5c062bcc7'
-gem 'hydra-collections', '0.0.2'
+gem 'sufia', '~> 2.0.1'
+gem 'hydra-head', '~> 6.2.2'
+gem 'hydra-batch-edit', '1.0.1'
+gem 'hydra-editor', github:'projecthydra/hydra-editor', ref: "c2c6442346122baead246c5bf3863dfc03e15a91" # Currently using this for its edit view partials (used when editing collections)
+gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref:'d475e4134533a0c7d'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
@@ -22,7 +24,6 @@ gem 'devise', '2.2.3'
 gem 'paperclip', '3.3.0'
 gem 'daemons', '1.1.9'
 gem 'zipruby', '0.3.6'
-gem 'rails_autolink', '1.0.9'
 gem 'acts_as_follower', '0.1.1'
 gem 'nest', '1.1.1'
 gem 'sitemap', '0.3.3'
@@ -36,7 +37,7 @@ gem 'therubyracer', '0.10.2'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
-gem 'select2-rails', '3.3.1' # for transfer ownership javascript
+gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 
 group :assets do
   gem 'sass-rails', '3.2.5'

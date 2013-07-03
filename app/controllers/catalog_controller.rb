@@ -27,6 +27,8 @@ class CatalogController < ApplicationController
   include Hydra::Controller::ControllerBehavior
   include BlacklightAdvancedSearch::ParseBasicQ
 
+  layout :search_layout
+
   # These before_filters apply the hydra access controls
   before_filter :enforce_show_permissions, :only=>:show
   # This applies appropriate access controls to all solr queries
@@ -118,7 +120,7 @@ class CatalogController < ApplicationController
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     config.add_facet_field Solrizer.solr_name("desc_metadata__resource_type", :facetable), :label => "Resource Type", :limit => 5
-    config.add_facet_field Solrizer.solr_name("collection", :facetable), :label => "Collection", :limit => 5
+    config.add_facet_field Solrizer.solr_name("collection", :facetable), :label => "Collection",  :helper_method => :collection_helper_method,  :limit => 5
     config.add_facet_field Solrizer.solr_name("desc_metadata__creator", :facetable), :label => "Creator", :limit => 5
     config.add_facet_field Solrizer.solr_name("desc_metadata__tag", :facetable), :label => "Keyword", :limit => 5
     config.add_facet_field Solrizer.solr_name("desc_metadata__subject", :facetable), :label => "Subject", :limit => 5
@@ -192,7 +194,7 @@ class CatalogController < ApplicationController
       all_names = config.show_fields.values.map{|val| val.field}.join(" ")
       title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)      
       field.solr_parameters = {
-        :qf => "#{all_names} noid_tsi all_text_timv",
+        :qf => "#{all_names} id noid_tsi all_text_timv",
         :pf => "#{title_name}"
       }
     end

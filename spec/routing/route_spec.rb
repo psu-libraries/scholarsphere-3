@@ -182,6 +182,15 @@ describe 'Routes' do
     end
   end
 
+  # describe "Users" do
+  #   it "should be able to add depositors" do
+  #     { post: '/users/xxx666/depositors' }.should route_to(controller: 'depositors', action: 'create', user_id: 'xxx666')
+  #   end
+  #   it "should be able to remove depositors" do
+  #     { delete: '/users/xxx666/depositor/33' }.should route_to(controller: 'depositors', action: 'destroy', user_id: 'xxx666', id: '33')
+  #   end
+  # end
+
   describe "Directory" do
     it "should route to user" do
       { get: '/directory/user/xxx666' }.should route_to(controller: 'directory', action: 'user', uid: 'xxx666')

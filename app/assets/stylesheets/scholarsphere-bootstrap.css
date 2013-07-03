@@ -106,7 +106,7 @@ a.advanced_search:hover {
   top: 40px;
   left: 85px;
 }
-.nav li a.top_nav{
+.nav li a.top_nav, btn.collection-remove{
 	font-size: 14px;
 	line-height: 18px; 
 	padding: 6px 12px;
@@ -309,9 +309,52 @@ ol.faq ol ol li { list-style-type: lower-roman }
 .icon-large.icon-magic, .icon-large.icon-gift {
     font-size: 1.0em;
 }
-
 .batch-select-all, .button_to {
-    float: right;
+    float: left;
     padding: 2px;
 }
+.btn.collection-add, btn.collection-update, .btn.collection-remove-selected {
+    float:left;
+}
 
+.btn.collection-remove {
+    background:none;
+    border:none; 
+/*     padding:0!important;    
+  padding: 6px 12px;*/
+
+    cursor:pointer;
+    clear: both;
+    color: #333333;
+    display: block;
+    width: 100%;
+    font-weight: normal;
+    line-height: 18px;
+    padding: 3px 15px;
+    white-space: nowrap;
+    border-radius:0px
+}
+.btn.collection-remove:hover{
+    text-decoration:underline;
+    background-color:#0088CC;
+}
+li form{
+   margin: 0;
+}
+
+.table.table-striped.dashboard, div#documents.clear
+{
+    float: left;
+    width: 100%;
+}
+
+.vertical-offset .collection-list-box .button_to
+{
+    float: none;
+    margin-top: -48px;
+}
+.edit_collection {
+    float: left;
+    margin-top: 2px;
+    width: auto;
+}
