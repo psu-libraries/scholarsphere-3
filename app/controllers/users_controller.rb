@@ -34,7 +34,23 @@ class UsersController < ApplicationController
     adjust_trophies!
   end
 
-  protected
+
+  def index
+    sort_val = get_sort
+    query = params[:uq].blank? ? nil : "%"+params[:uq].downcase+"%"
+    base = User.where(*base_query)
+    unless query.blank?
+      base = base.where("#{Devise.authentication_keys.first} like lower(?) OR lower( display_name) like lower(?)", query, query)
+    end
+    @users = base.order(sort_val).page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @users.to_json }
+    end
+
+  end
+    protected
 
   def adjust_trophies!
     num_retry = 0
