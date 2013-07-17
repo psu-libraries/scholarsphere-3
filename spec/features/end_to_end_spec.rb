@@ -50,6 +50,7 @@ describe 'end to end behavior', describe_options do
         page.has_content?('Apply Metadata')
       end
       fill_in('Title 1', :with => 'MY Tite for World')
+      first('i.icon-question-sign').click
       fill_in('Keyword', :with => 'test')
       fill_in('Creator', :with => 'me')
       click_on('upload_submit')
@@ -77,6 +78,14 @@ describe 'end to end behavior', describe_options do
       
       page.has_content?('world.png').should be_true
       page.has_content?('MY Tite for World').should be_true
+
+      first('button.dropdown-toggle').click
+      click_link('Edit File')
+      wait_on_page('Edit MY Tite for World').should be_true
+      first('i.icon-question-sign').click
+      #todo more test for edit?
+
+      click_link('Dashboard')
       count = all('button.dropdown-toggle').count
       1.upto(count) do
         first('button.dropdown-toggle').click

@@ -35,6 +35,12 @@ module ApplicationHelper
   def has_collection_search_parameters?
     !params[:cq].blank?
   end
-  
+
+  def collection_helper_method  value
+    logger.warn "Got to collection helper #{value}"
+    c = Collection.load_instance_from_solr(value)
+    logger.warn "Title: #{c.title}"
+    return c.title
+  end
 end
 

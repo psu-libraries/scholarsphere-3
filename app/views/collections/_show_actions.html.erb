@@ -5,6 +5,7 @@
   <%# link_to "Cite", citation_generic_file_path, {:id => 'citeLink', :name => 'citation', :class => 'lightboxLink'}, :action => 'citation' %>
   <% if can? :edit, @collection %>
       <!-- &nbsp;|&nbsp; -->
-      <%= link_to "Edit", collections.edit_collection_path %>
+      <%= link_to "Edit", collections.edit_collection_path %> &nbsp;&nbsp;
+      <%= link_to "Add files from your dashboard",  sufia.dashboard_index_path %>
   <%end %>
 </p>

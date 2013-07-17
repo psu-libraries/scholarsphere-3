@@ -102,7 +102,7 @@ class GenericFile < ActiveFedora::Base
     solr_doc[Solrizer.solr_name('file_format')] = file_format
     solr_doc[Solrizer.solr_name('file_format', :facetable)] = file_format
     solr_doc["all_text_timv"] = full_text.content
-    index_collection_pids(solr_doc)
+    solr_doc = index_collection_pids(solr_doc)
     return solr_doc
   end
 

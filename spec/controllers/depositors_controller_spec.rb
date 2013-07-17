@@ -14,6 +14,13 @@ describe DepositorsController do
         expect { post :create, user_id: user.user_key, grantee_id: grantee.user_key, format: 'json' }.to change{ ProxyDepositRights.count }.by(1)
         response.should be_success
       end
+
+      it "should not add current user" do
+        expect { post :create, user_id: user.user_key, grantee_id: user.user_key, format: 'json' }.to change{ ProxyDepositRights.count }.by(0)
+        response.should be_success
+        response.body.should == "{}"
+      end
+
     end
     describe "destroy" do
       before do

@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: 5ce5a5b71f72a952af22ac46ab4f4dab9e9e0e96
-  ref: 5ce5a5b71f72a952af22ac46ab4f4dab9e9e0e96
+  revision: d475e4134533a0c7dc0f0eeda2ab8856278cc11c
+  ref: d475e4134533a0c7d
   specs:
     hydra-collections (0.0.2)
       blacklight

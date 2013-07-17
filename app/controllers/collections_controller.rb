@@ -19,6 +19,7 @@ class CollectionsController < ApplicationController
   include BlacklightAdvancedSearch::Controller
   include Sufia::Noid # for normalize_identifier method
   prepend_before_filter :normalize_identifier, :except => [:index, :create, :new]
+  before_filter :filter_docs_with_read_access!, :except => [:show]
   before_filter :has_access?, :except => [:show]
   before_filter :initialize_fields_for_edit, only:[:edit, :new]
   layout "sufia-one-column"
