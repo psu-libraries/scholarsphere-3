@@ -1,4 +1,6 @@
 ScholarSphere::Application.routes.draw do
+  resource :landing_page, only: [:new, :create]
+
   root :to => "catalog#index"
 
   devise_for :users

@@ -114,6 +114,10 @@ module ScholarSphere
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    #configure the landing page email
+    config.landing_email = 'cam156@psu.edu'
+    config.landing_from_email = 'cam156@psu.edu'
   end
 end
 

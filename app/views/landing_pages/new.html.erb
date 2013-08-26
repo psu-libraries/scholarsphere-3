@@ -1,0 +1,46 @@
+<%#
+Copyright © 2012 The Pennsylvania State University
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+%>
+
+<h1>Landing Page</h1>
+
+<% if user_signed_in? %>
+  <% nm = current_user.name %>
+  <% em = current_user.email_address %>
+<% else %>
+  <% nm = '' %>
+  <% em = '' %>
+<% end %>
+
+<%= form_for(@landing_page, :url => landing_page_path, :html => {:class => 'form-horizontal well'}) do |f| %>
+  <%= f.text_field :contact_method, :class => 'hide' %>
+
+  <div class="control-group">
+    <%= f.label :name, 'Your Name', :class=>"control-label" %>
+    <div class="controls"><%= f.text_field :name, :class=>"input-xlarge", :value => nm, :required => true %>  </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :email, 'Your Email', :class=>"control-label" %>
+    <div class="controls">
+    <%= f.text_field :email, :class=>"input-xlarge", :value => em, :required => true %>
+    </div>
+  </div>
+
+
+  <div class="form-actions">
+    <%= f.submit :value => "Request More Information", :class => "btn-primary btn-large"  %>
+  </div>
+<% end %>
