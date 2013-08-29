@@ -32,24 +32,13 @@ limitations under the License.
         class="post-35 page type-page status-publish hentry fpost post-number-1"
         id="post-35">
 
-            <%= form_for(@landing_page, :url => landing_page_path, :html => {:class => 'landing-form'}) do |f| %>
-              <%= f.text_field :contact_method, :class => 'hide' %>
-
-              <div class="landing-control">
-                <%= f.label :name, 'Name', :class=>"element-invisible" %>
-                <%= f.text_field :name, :class=>"name", :value => nm, :required => true, placeholder:"name", size:20 %>
-              </div>
-
-              <div class="landing-control">
-                <%= f.label :email, 'Email', :class=>"element-invisible" %>
-                <%= f.text_field :email, :class=>"email", :value => em, :required => true, placeholder:'email *', size:20 %>
-              </div>
-
-
-              <div class="contact-submit">
-                <%= f.submit :value => "Request More Information", :class => "pushbutton-wide"  %>
-              </div>
-            <% end %>
+            <h3 id="thankyou">
+              Thank you for your request.
+            </h3>
+            <div id="thankyoutext">
+              <p>A ScholarSphere team member will</p>
+              <p>be in touch with you shortly.</p>
+            </div>
         </article>
         <%= render 'footer' %>
       </div> <!-- page-canvas -->
