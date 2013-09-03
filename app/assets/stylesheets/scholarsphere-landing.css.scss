@@ -214,8 +214,8 @@ body {
 }
 
 .fboxtitle h3 {
-  color: #0066cc;
-  font-weight: 300;
+  color: #06c;
+  font-weight: bold;
   font-size: 2.6em;
   font-style: italic;
   text-align: left;
@@ -416,7 +416,7 @@ form #thankyoutext {
    input {
         background-color: #FAE24C;
         background-image: none;
-        border: medium none;
+        border: 2px solid #D3D3D3;
         color: black;
         margin: 0;
         padding: 10px 0;

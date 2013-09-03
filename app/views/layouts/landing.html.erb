@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!--[if lt IE 9]>
+  <%= stylesheet_link_tag "ie9-and-down", :media => "all" %>
+<![endif]-->
+  <!--[if lt IE 8]>
+  <%= stylesheet_link_tag "ie8-and-down", :media => "all" %>
+<![endif]-->
   <%= render :partial => "layouts/head-tag-content"%>
 </head>
 <body>
