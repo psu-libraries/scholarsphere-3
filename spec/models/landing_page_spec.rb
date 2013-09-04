@@ -10,9 +10,9 @@ describe LandingPage do
 
   it "should include the name and email" do
     lp.email = "test@email.com"
-    lp.name = "test name"
+    lp.first_name = "test name"
     lp.headers[:subject].should include(lp.email)
-    lp.headers[:subject].should include(lp.name)
+    lp.headers[:subject].should include(lp.first_name)
   end
 
   it "should validate email" do

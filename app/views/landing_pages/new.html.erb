@@ -15,10 +15,8 @@ limitations under the License.
 %>
 
 <% if user_signed_in? %>
-    <% nm = current_user.name %>
     <% em = current_user.email_address %>
 <% else %>
-    <% nm = '' %>
     <% em = '' %>
 <% end %>
 
@@ -36,8 +34,10 @@ limitations under the License.
               <%= f.text_field :contact_method, :class => 'hide' %>
 
               <div class="landing-control">
-                <%= f.label :name, 'Name', :class=>"element-invisible" %>
-                <%= f.text_field :name, :class=>"name", :value => nm, :required => true, placeholder:"name", size:20 %>
+                <%= f.label :first_name, 'First Name', :class=>"element-invisible" %>
+                <%= f.text_field :first_name, :class=>"name", :required => true, placeholder:"first name *", size:20 %>
+                <%= f.label :last_name, 'Last Name', :class=>"element-invisible" %>
+                <%= f.text_field :last_name, :class=>"name", placeholder:"last name", size:20 %>
               </div>
 
               <div class="landing-control">

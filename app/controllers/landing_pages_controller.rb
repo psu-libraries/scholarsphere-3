@@ -11,7 +11,7 @@ class LandingPagesController < ApplicationController
     @landing_page.request = request
     # not spam and a valid form
     if @landing_page.valid?
-      UserMailer.response_for_information(@landing_page.email, @landing_page.name).deliver
+      UserMailer.response_for_information(@landing_page.email, @landing_page.first_name).deliver
       #flash.now[:notice] = 'Thank you for your request. A ScholarSphere team member will be in touch with you shortly.'
       after_deliver
       redirect_to :request_thanks
