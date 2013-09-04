@@ -116,8 +116,8 @@ module ScholarSphere
     config.filter_parameters += [:password]
 
     #configure the landing page email
-    config.landing_email = 'cam156@psu.edu'
-    config.landing_from_email = 'carolyn@psu.edu'
+    config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
+    config.landing_from_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
   end
 end
 
