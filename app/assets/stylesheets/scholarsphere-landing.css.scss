@@ -3,7 +3,34 @@
 //@import "compass/css3";
 
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+/*CSS Fixes 9/05/13 9:00am*/
+form.landing-form input.email,
+form.landing-form input.name,
+form.landing-form input.name{
+  border: 2px solid #C5C5C5;
+  line-height: 100% !important;
+}
+
+#landing_page_last_name {
+  margin-top: 10px;
+}
+
+#slogan {
+  max-width: 25em;
+  padding-left: 1em;
+}
+
+#greylogo {
+  margin-right: .8em;
+}
+
+@media screen and (min-width: 500px) {
+  #footer .logos .col-sm-12 img {
+    margin: 0 25px !important;
+  }
 }
 
 @mixin cross-browser-inline-block {
@@ -58,7 +85,6 @@ body {
     width:100%;
   }
   #slogan.col-sm-4 {
-    margin-left:0;
     width:100%;
   }
 
@@ -70,7 +96,7 @@ body {
       float: left;
     }
     #slogan.col-sm-4 {
-      margin-left:50%;
+      margin-left:51%;
       width:33%;
     }
     #slogan {
@@ -84,7 +110,7 @@ body {
       float: left;
     }
     #slogan.col-sm-4 {
-      margin-left:50%;
+      margin-left:51%;
       width:33%;
     }
   }
@@ -239,7 +265,8 @@ body {
 }
 
 #slogan p#url a, #slogan p#url a:visited{
-  color: #8c8c8c;
+  color: #06c;
+  font-weight: bold;
 }
 
 #service {
@@ -325,10 +352,7 @@ form.landing-form  input {
 form.landing-form  input.email, form.landing-form  input.name {
   background-color: white;
   padding-right: 0px;
-  border: 2px solid #888888;
-  border-right: 1px solid #EEEEEE;
-  border-bottom: 1px solid #EEEEEE;
-  /*border-left: 2px solid #00000;   */
+  border: 2px solid #D3D3D3 !important;
 
 }
 
@@ -416,8 +440,7 @@ form #thankyoutext {
    input {
         background-color: #FAE24C;
         background-image: none;
-        border: 2px solid #D3D3D3;
-        color: black;
+         color: black;
         margin: 0;
         padding: 10px 0;
         font-family: 'Open Sans', sans-serif;
@@ -674,7 +697,13 @@ body {
   
   #greylogo { text-align: center; }
   
-  #slogan { border: none; text-align: center; }
+  #slogan {
+    border: none;
+    text-align: center;
+    max-width: 25em;
+    padding-left:1em;
+    margin: auto;
+  }
 }
 
 
