@@ -98,9 +98,10 @@ body {
     #slogan.col-sm-4 {
       margin-left:51%;
       width:33%;
+      max-width: 20em;
     }
     #slogan {
-
+      max-width: 20em;
     }
   }
   @media (min-width: 50em) {
@@ -112,6 +113,7 @@ body {
     #slogan.col-sm-4 {
       margin-left:51%;
       width:33%;
+      max-width: 20em;
     }
   }
   @media (min-width: 80em) {
@@ -123,6 +125,7 @@ body {
     #slogan.col-sm-4 {
       margin-left:50%;
       width:33%;
+      max-width: 20em;
     }
   }
 }
