@@ -117,7 +117,7 @@ module ScholarSphere
 
     #configure the landing page email
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
-    config.landing_from_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
+    config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
   end
 end
 
