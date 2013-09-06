@@ -8,6 +8,6 @@ class UserMailer < ActionMailer::Base
     attachments.inline['scholarshere-logo.png'] = File.read(Rails.root.join('app/assets/images/scholarshere-logo.png'))
     attachments.inline['pennstate-it.png'] = File.read(Rails.root.join('app/assets/images/pennstate-it.png'))
     attachments.inline['universitylibraries.png'] = File.read(Rails.root.join('app/assets/images/universitylibraries.png'))
-    mail( to: email, bcc:ScholarSphere::Application.config.landing_email, from: ScholarSphere::Application.config.landing_from_email, subject: "ScholarSphere - We'er here to help")
+    mail( to: email, bcc:ScholarSphere::Application.config.landing_email, from: ScholarSphere::Application.config.landing_from_email, subject: "ScholarSphere - We're here to help")
   end
 end
