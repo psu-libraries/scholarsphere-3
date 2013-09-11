@@ -1,4 +1,8 @@
 ScholarSphere::Application.routes.draw do
+  resource :landing_page, only: [:new, :create]
+  match 'ManageData' => 'landing_pages#new', :as => :request_info
+  match 'ManageData/ThankYou' => 'landing_pages#thanks', :as => :request_thanks
+
   root :to => "catalog#index"
 
   devise_for :users

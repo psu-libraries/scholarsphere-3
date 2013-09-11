@@ -1,0 +1,58 @@
+<%#
+Copyright © 2012 The Pennsylvania State University
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+%>
+
+<% if user_signed_in? %>
+    <% em = current_user.email_address %>
+<% else %>
+    <% em = '' %>
+<% end %>
+
+<div class="container">
+  <div id="site" class="fullwidth">
+    <div id="page" class="thepage">
+      <div class="page-canvas">
+
+        <%= render 'heading' %>
+        <article
+        class="post-35 page type-page status-publish hentry fpost post-number-1"
+        id="post-35">
+
+            <%= form_for(@landing_page, :url => landing_page_path, :html => {:class => 'landing-form'}) do |f| %>
+              <%= f.text_field :contact_method, :class => 'hide' %>
+
+              <div class="landing-control">
+                <%= f.label :first_name, 'First Name', :class=>"element-invisible" %>
+                <%= f.text_field :first_name, :class=>"name", :required => true, placeholder:"first name *", size:20 %>
+                <%= f.label :last_name, 'Last Name', :class=>"element-invisible" %>
+                <%= f.text_field :last_name, :class=>"name", placeholder:"last name", size:20 %>
+              </div>
+
+              <div class="landing-control">
+                <%= f.label :email, 'Email', :class=>"element-invisible" %>
+                <%= f.text_field :email, :class=>"email", :value => em, :required => true, placeholder:'email *', size:20 %>
+              </div>
+
+
+              <div class="contact-submit">
+                <%= f.submit :value => "Request More Information", :class => "pushbutton-wide"  %>
+              </div>
+            <% end %>
+        </article>
+        <%= render 'footer' %>
+      </div> <!-- page-canvas -->
+    </div> <!-- thepage -->
+  </div> <!-- fullwidth -->
+</div> <!-- container -->

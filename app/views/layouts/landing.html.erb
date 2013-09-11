@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--[if lt IE 9]>
+  <%= stylesheet_link_tag "ie9-and-down", :media => "all" %>
+<![endif]-->
+  <!--[if lt IE 8]>
+  <%= stylesheet_link_tag "ie8-and-down", :media => "all" %>
+<![endif]-->
+  <%= render :partial => "layouts/head-tag-content"%>
+</head>
+<body>
+<%= render :partial => '/flash_msg' %>
+
+<%= yield %>
+
+</body>
+</html>
