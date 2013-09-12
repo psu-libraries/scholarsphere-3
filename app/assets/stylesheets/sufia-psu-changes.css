@@ -1,3 +1,6 @@
+#search-form-header input {
+    height: auto;
+}
 body
 {
    font: 13px/1.4em Arial,sans-serif;
