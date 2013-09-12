@@ -1,7 +1,7 @@
 ScholarSphere::Application.routes.draw do
   resource :landing_page, only: [:new, :create]
-  match 'ManageData' => 'landing_pages#new', :as => :request_info
-  match 'ManageData/ThankYou' => 'landing_pages#thanks', :as => :request_thanks
+  match ':managedata' => 'landing_pages#new', :as => :request_info, :constraints => { :managedata => /managedata/i }
+  match ':managedata/:thankyou' => 'landing_pages#thanks', :as => :request_thanks, :constraints => { :managedata => /managedata/i, :thankyou=> /thankyou/i }
 
   root :to => "catalog#index"
 
