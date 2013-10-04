@@ -216,7 +216,7 @@ GEM
     mini_portile (0.5.0)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
-    multi_json (1.7.7)
+    multi_json (1.8.0)
     mysql2 (0.3.11)
     nest (1.1.1)
       redis
@@ -336,7 +336,7 @@ GEM
     select2-rails (3.4.2)
       sass-rails
       thor (~> 0.14)
-    selenium-webdriver (2.33.0)
+    selenium-webdriver (2.34.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -456,9 +456,10 @@ DEPENDENCIES
   resque-pool (= 0.3.0)
   rmagick (= 2.13.2)
   rspec-rails (>= 2.11.0)
+  rubyzip (< 1.0.0)
   sass-rails (= 3.2.5)
   select2-rails (= 3.4.2)
-  selenium-webdriver
+  selenium-webdriver (~> 2.34.0)
   sitemap (= 0.3.3)
   sqlite3
   sufia (~> 2.0.1)
