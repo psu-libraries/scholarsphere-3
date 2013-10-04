@@ -11,6 +11,7 @@ config/initializers/secret_token.rb
 
 ## MAC OS
 .DS_Store
+.idea/*
 
 ## Garbage
 C\:\\nppdf32Log\\debuglog.txt

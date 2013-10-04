@@ -53,7 +53,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'unicorn-rails'
   gem 'debugger'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 2.34.0'
+  gem 'rubyzip', '< 1.0.0' 
   gem 'headless'
   gem 'rspec-rails', '>= 2.11.0'
   gem 'mocha', '0.13.3', :require => false
