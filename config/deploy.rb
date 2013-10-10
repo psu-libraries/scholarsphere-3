@@ -73,7 +73,7 @@ namespace :deploy do
     CMD
   end
 end
-#after "deploy:migrate", "deploy:resolrize"
+after "deploy:migrate", "deploy:resolrize"
 
 # Restart resque-pool.
 namespace :deploy do
