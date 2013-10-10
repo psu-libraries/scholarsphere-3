@@ -42,8 +42,9 @@ gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 # crontab it up
 gem 'whenever'
 
-# capistrano needs rake, which needs rspec
+# capistrano needs rake, which needs rspec and cucumber
 gem 'rspec'
+gem 'cucumber'
 
 group :assets do
   gem 'sass-rails', '3.2.5'
