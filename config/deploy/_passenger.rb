@@ -36,7 +36,7 @@ namespace :passenger do
         #PassengerLogLevel 3
         #PassengerDebugLogFile /var/log/httpd/passenger_debug.log
 
-        PassengerTempDir #{shared_path}/passenger
+        PassengerTempDir /opt/heracles/deploy/passenger
         EOF
 
         put passenger_config, "/opt/heracles/deploy/.passenger.tmp"
