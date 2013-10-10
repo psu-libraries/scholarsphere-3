@@ -47,12 +47,15 @@ spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
 
+## control ruby, gems, etc.
+.ruby-gemset
+.rvmrc
+/.bundle
 
 ## PROJECT::GENERAL
 coverage
 rdoc
 pkg
-/.bundle
 db/*.sqlite3
 db/*.sqlite3-journal
 log/*.log
@@ -78,7 +81,6 @@ db/schema.rb
 .project
 .buildpath
 
-/.bundle
 /.yardoc
 /doc
 

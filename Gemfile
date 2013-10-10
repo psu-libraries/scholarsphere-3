@@ -39,14 +39,13 @@ gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 
+# crontab it up
+gem 'whenever'
+
 group :assets do
   gem 'sass-rails', '3.2.5'
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.3.0'
-end
-
-group :production, :integration do
-  gem 'passenger', '4.0.0.rc6'
 end
 
 group :development, :test do
@@ -64,5 +63,10 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'
   gem 'database_cleaner'
+  # capistrano deployments
+  gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-notification'
 end
 
