@@ -7,7 +7,7 @@ end
 source 'http://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.15'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
