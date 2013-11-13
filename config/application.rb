@@ -48,8 +48,8 @@ module ScholarSphere
       config.ga_host_map[vhost]
     end
 
-    config.scholarsphere_version = "v1.7"
-    config.scholarsphere_release_date = "July 9, 2013"
+    config.scholarsphere_version = "v1.8"
+    config.scholarsphere_release_date = "November 26, 2013"
     config.id_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
