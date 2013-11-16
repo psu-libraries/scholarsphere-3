@@ -17,6 +17,7 @@
  *= require sufia-psu-changes
  *= require select2
  *= require proxy_rights
+ *= require scholarsphere-landing
  */
 
 /* .controls > .field_with_errors > input{ */
