@@ -18,15 +18,13 @@ function banner {
     echo -e "$0 ↠ $1"
 }
 
-
-#if [ $# -eq 0 ]; then 
-if [ $ENVIRONMENT != "production" ] && [ $ENVIRONMENT != "development" ]; then 
+if [ $# -eq 0 ]; then
     echo -e "ERROR: no environment argument [production|development] provided" 
     exit 1
 fi
 
-if [ $ENVIRONMENT == "production" ] && [[ $HOSTNAME != "ss1prod" || $HOSTNAME != "ss2prod" ]]; then
-    echo -e "ERROR: you are trying to restart production resque on a non production host"
+if [ $ENVIRONMENT != "production" ] && [ $ENVIRONMENT != "development" ]; then 
+    echo -e "ERROR: environment argument must be either [production|development]" 
     exit 1
 fi
 
