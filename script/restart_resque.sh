@@ -24,7 +24,7 @@ if [ $# -eq 0 ]; then
 fi
 
 if [ $ENVIRONMENT != "production" ] && [ $ENVIRONMENT != "development" ]; then 
-    echo -e "ERROR: environment argument must be either [production|development]" 
+    echo -e "ERROR: environment argument must be either [production|development] most likely this will be development for local machines and production otherwise" 
     exit 1
 fi
 
