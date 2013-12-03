@@ -15,13 +15,17 @@ limitations under the License.
 %>
 <div class="batch-info">
   <div>
-    <%= render partial: 'collections/form_for_select_collection', locals: {user_collections: @user_collections}  %>
+    <%= render partial: 'collections/destination_collection_list', locals: {user_collections: @user_collections}  %>
   </div>
 
   <div class="batch-toggle">
      <% session[:batch_edit_state] = "on" %>
      <!--a href="#" class="btn btn-primary submits-batches-add" onclick="modal_collection_list('open', event)">Add to Another Collection</a-->
     <%= button_for_remove_selected_from_collection @collection %>
+    <div>
+       <%= submit_tag "Move to Another Collection", :class => 'btn btn-primary submits-batches submits-batches-add', :onclick=>"return modal_collection_list('open', event)" %>
+    </div>
+    
    </div>
    <div class="sort-toggle">
      <%-# kind of hacky way to get this to work on catalog and folder controllers.  May be able to simple do {:action=>"index"} but I'm not sure -%>
