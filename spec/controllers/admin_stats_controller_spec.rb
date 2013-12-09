@@ -38,6 +38,40 @@ describe Admin::StatsController do
       response.body.should include('Total ScholarSphere Users')
     end
 
+    describe "querying user_stats" do
+      it "defaults to latest 5 users" do
+        sign_in @user1
+        get :index
+        assigns[:recent_users].should == User.order('created_at DESC').limit(5).select('display_name, login, created_at, department')
+      end
+      it "allows queries against user_stats" do
+        sign_in @user1
+        User.expects(:where).with('id' => @user1.id).returns([@user1]).once
+        User.expects(:where).with('created_at >= ?',  1.days.ago.strftime("%Y-%m-%d")).returns([@user2])
+        get :index, users_stats: {start_date:1.days.ago.strftime("%Y-%m-%d")}
+        assigns[:recent_users].should == [@user2]
+      end
+    end
+
+    describe "files_count" do
+      before do
+        @poltergeist = GenericFile.new
+        @poltergeist.apply_depositor_metadata(@user1)
+        @poltergeist.save
+      end
+      after do
+        @poltergeist.delete
+        Blacklight.solr.commit("expungeDeletes"=>true)
+      end
+      it "should provide accurate files_count, ensuring that solr deletes have been expunged first" do
+        original_files_count = GenericFile.count
+        Blacklight.solr.delete_by_id(@poltergeist.pid) # send delete message to solr without sending commit message
+        sign_in @user1
+        get :index
+        assigns[:files_count][:total].should == original_files_count - 1
+      end
+    end
+
     it 'redirects when an unauthorized user attempts to view the page' #do
       # advanced constraint rspec is hard, apparently
       #sign_in @user2

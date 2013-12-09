@@ -20,7 +20,13 @@ class Admin::StatsController < ApplicationController
     @users_count = User.count
 
     # The 5 most recent users to join
-    @recent_users = User.order('created_at DESC').limit(5).select('display_name, login, created_at')
+    @users_stats = params.fetch(:users_stats, {})
+    if @users_stats[:start_date]
+      #@user_stats[:start_date] ||= 7.days.ago
+      @recent_users = User.where('created_at >= ?',  @users_stats[:start_date])
+    else
+      @recent_users = User.order('created_at DESC').limit(5).select('display_name, login, created_at, department')
+    end
 
     # Query Solr for top 5 depositors
     depositor_key = Solrizer.solr_name('depositor', :stored_searchable, type: :string)
@@ -42,6 +48,7 @@ class Admin::StatsController < ApplicationController
     visibility_hash.select! { |k, v| ['registered', 'public'].include? k }
 
     # Count of documents by permissions
+    Blacklight.solr.commit("expungeDeletes"=>true)
     @files_count = {}
     @files_count[:total] = GenericFile.count
     @files_count[:psu] = visibility_hash['registered'].to_i
