@@ -8,6 +8,12 @@ if ENV['JS']
 end
 
 describe 'batch_edit', describe_options do
+  after(:all) do
+    User.destroy_all
+    Batch.destroy_all
+    GenericFile.destroy_all
+    Collection.destroy_all
+  end
   before(:each) do
     @old_resque_inline_value = Resque.inline
     Resque.inline = true

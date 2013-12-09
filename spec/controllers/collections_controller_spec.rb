@@ -24,6 +24,12 @@ describe CollectionsController do
     User.any_instance.stubs(:groups).returns([])
   end
 
+  after (:all) do
+    Collection.destroy_all
+    GenericFile.destroy_all
+    User.destroy_all
+  end
+
   describe '#new' do
     it 'should assign @collection' do
       get :new
@@ -159,6 +165,15 @@ describe CollectionsController do
       ids.should include @asset1.pid
       ids.should_not include @asset2.pid
       ids.should_not include @asset3.pid
+    end
+    context "signed out" do
+      before do
+        sign_out @user
+      end
+      it "should not show me files in the collection" do
+        get :show, id: @collection.id
+        assigns[:member_docs].count.should == 0
+      end
     end
   end
 end
