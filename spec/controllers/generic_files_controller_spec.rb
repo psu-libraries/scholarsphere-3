@@ -128,7 +128,7 @@ describe GenericFilesController do
     end
     it "should call virus check" do
       GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      ClamAV.any_instance.expects(:scanfile).returns(0)
+      Sufia::GenericFile::Actions.expects(:virus_check).at_least_once
       file = fixture_file_upload('/world.png','image/png')
       s1 = mock('one')
       ContentDepositEventJob.expects(:new).with('test:123','jilluser').returns(s1)
@@ -171,7 +171,7 @@ describe GenericFilesController do
       xhr :post, :audit, :id=>@generic_file.pid
       response.should be_success
       lambda { JSON.parse(response.body) }.should_not raise_error
-      audit_results = JSON.parse(response.body).collect { |result| result["checksum_audit_log"]["pass"] }
+      audit_results = JSON.parse(response.body).collect { |result| result["pass"] }
       audit_results.reduce(true) { |sum, value| sum && value }.should be_true
     end
   end

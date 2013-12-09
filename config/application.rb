@@ -22,8 +22,7 @@ require 'uri'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
-Bundler.require *Rails.groups(:assets => %w(development, test))
+Bundler.require(:default, Rails.env)
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
@@ -90,6 +89,8 @@ module ScholarSphere
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
+
+    config.i18n.enforce_available_locales = true
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

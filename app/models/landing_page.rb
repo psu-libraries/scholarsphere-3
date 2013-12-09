@@ -1,3 +1,4 @@
+require 'mail_form'
 class LandingPage  < MailForm::Base
 
   attribute :contact_method,  :captcha  => true

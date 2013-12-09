@@ -48,6 +48,6 @@ class Collection < ActiveFedora::Base
   end
 
   def update_permissions
-    self.set_visibility("open")
+    self.visibility = "open"
   end
 end

@@ -15,6 +15,7 @@
 require 'spec_helper'
 
 describe BatchController do
+  routes { Sufia::Engine.routes }
   before do
     Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
     Hydra::LDAP.stubs(:does_user_exist?).returns(true)
@@ -53,7 +54,7 @@ describe BatchController do
       render_views
       it "should show flash messages" do
         post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"","read_users_string"=>"archivist1, archivist2", "tag"=>[""]}
-        response.should redirect_to dashboard_path
+        response.should redirect_to Sufia::Engine.routes.url_helpers.dashboard_index_path
         flash[:notice].should_not be_nil
         flash[:notice].should_not be_empty
         flash[:notice].should include("Your files are being processed")
@@ -65,7 +66,7 @@ describe BatchController do
         file = GenericFile.find(@file.pid)
         file.read_users.should == ['archivist1', 'archivist2']
 
-        response.should redirect_to dashboard_path
+        response.should redirect_to Sufia::Engine.routes.url_helpers.dashboard_index_path
       end
       it "should set the groups with read access" do
         post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"group1, group2", "read_users_string"=>"", "tag"=>[""]}

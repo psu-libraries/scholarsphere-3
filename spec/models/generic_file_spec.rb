@@ -195,9 +195,11 @@ describe GenericFile do
     end
   end
   it 'should export as endnote' do
-    @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/__DO_NOT_USE__\n%~ ScholarSphere\n%W Penn State University"
+    @file.stubs(pid: 'stubbed_pid')
+    @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/stubbed_pid\n%~ ScholarSphere\n%W Penn State University"
   end
   it "should support to_solr" do
+    @file.stubs(pid: 'stubbed_pid')
     @file.part_of = "Arabiana"
     @file.contributor = "Mohammad"
     @file.creator = "Allah"
@@ -237,7 +239,7 @@ describe GenericFile do
     local[Solrizer.solr_name("desc_metadata__based_near")].should == ["Medina, Saudi Arabia"]
     local[Solrizer.solr_name("file_format")].should == "jpeg (JPEG Image)"
     local[Solrizer.solr_name("mime_type")].should == ["image/jpeg"]
-    local[Solrizer.solr_name("noid", Sufia::GenericFile.noid_indexer)].should == "__DO_NOT_USE__"
+    local[Solrizer.solr_name("noid", Sufia::GenericFile.noid_indexer)].should == "stubbed_pid"
     local["all_text_timv"].should == "abc"
   end
   it "should support multi-valued fields in solr" do
@@ -254,7 +256,6 @@ describe GenericFile do
       before do
         @f = GenericFile.new
         @f.stubs(:mime_type=>'image/png', :width=>['50'], :height=>['50'])  #Would get set by the characterization job
-        #@f.stubs(:to_solr).returns({ :id => "foo:123" })
         @f.add_file_datastream(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), :dsid=>'content')
         @f.apply_depositor_metadata('mjg36')
         @f.save
@@ -262,14 +263,9 @@ describe GenericFile do
       after do
         @f.delete
       end
-      it "should scale the thumbnail to original size" do
-        @mock_image = mock("image", :from_blob=>true)
-        @mock_image.expects(:scale).never
-        @mock_image.expects(:to_blob).returns('fake content')
-        Magick::ImageList.expects(:new).returns(@mock_image)
+      it "should keep the thumbnail at its original size" do
         @f.create_thumbnail
         @f.content.changed?.should be_false
-        @f.thumbnail.content.should == 'fake content'
       end
     end
   end

@@ -23,7 +23,7 @@ limitations under the License.
      <% session[:batch_edit_state] = "on" %>
      <%=batch_edit_continue("Edit Selected") %></li>
      <%=batch_delete %>
-     <%=  form_tag  do %>
+     <%= form_tag sufia.dashboard_index_path  do %>
         <%= hidden_field_tag :type, nil, :value => "Add to Collection" %>
         <div>
            <%= submit_tag "Add to Collection", :class => 'btn btn-primary submits-batches submits-batches-add', :onclick=>"return modal_collection_list('open', event)" %>
