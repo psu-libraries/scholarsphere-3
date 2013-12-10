@@ -51,7 +51,6 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'unicorn-rails'
-  gem 'debugger'
   gem 'selenium-webdriver', '~> 2.35.0'
   gem 'rubyzip', '< 1.0.0' 
   gem 'headless'
