@@ -17,9 +17,9 @@ require 'spec_helper'
 describe Admin::StatsController do
   before do
     @user1 = FactoryGirl.find_or_create(:user)
-    @user1.stubs(:groups).returns(['umg/up.dlt.scholarsphere-admin-viewers'])
+    @user1.stub(:groups).and_return(['umg/up.dlt.scholarsphere-admin-viewers'])
     @user2 = FactoryGirl.find_or_create(:archivist)
-    @user2.stubs(:groups).returns(['umg/up.dlt.some-other-group'])
+    @user2.stub(:groups).and_return(['umg/up.dlt.some-other-group'])
   end
 
   after do
@@ -46,8 +46,8 @@ describe Admin::StatsController do
       end
       it "allows queries against user_stats" do
         sign_in @user1
-        User.expects(:where).with('id' => @user1.id).returns([@user1]).once
-        User.expects(:where).with('created_at >= ?',  1.days.ago.strftime("%Y-%m-%d")).returns([@user2])
+        User.should_receive(:where).with('id' => @user1.id).once.and_return([@user1])
+        User.should_receive(:where).with('created_at >= ?',  1.days.ago.strftime("%Y-%m-%d")).and_return([@user2])
         get :index, users_stats: {start_date:1.days.ago.strftime("%Y-%m-%d")}
         assigns[:recent_users].should == [@user2]
       end

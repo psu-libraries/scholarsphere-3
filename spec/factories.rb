@@ -15,6 +15,7 @@
 FactoryGirl.define do
   factory :user, :class => User do |u|
     login 'jilluser'
+    display_name 'Jill Z. User'
     ldap_available true
   end
 

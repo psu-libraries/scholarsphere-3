@@ -26,7 +26,7 @@ describe DirectoryController do
   end
   describe "#user" do
     it "should get an existing user" do
-      User.stubs(:directory_attributes).returns('{"attr":"abc"}')
+      User.stub(:directory_attributes).and_return('{"attr":"abc"}')
       get :user, uid:@user.id
       response.should be_success
       lambda { JSON.parse(response.body) }.should_not raise_error

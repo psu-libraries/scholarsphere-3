@@ -62,7 +62,7 @@ describe TransfersController do
         end
       end
       it "should be successful" do
-        User.any_instance.stubs(:display_name).returns("Jill Z. User")
+        User.any_instance.stub(:display_name).and_return("Jill Z. User")
         lambda {
           post :create, id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
         }.should change(ProxyDepositRequest, :count).by(1)

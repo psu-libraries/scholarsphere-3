@@ -26,9 +26,9 @@ describe GenericFile do
     end
     it "should transfer the request" do
       @file.on_behalf_of = @transfer_to.user_key
-      stub_job = stub('change depositor job') 
-      ContentDepositorChangeEventJob.expects(:new).returns(stub_job)
-      Sufia.queue.expects(:push).with(stub_job).once.returns(true)
+      stub_job = double('change depositor job') 
+      ContentDepositorChangeEventJob.should_receive(:new).and_return(stub_job)
+      Sufia.queue.should_receive(:push).with(stub_job).once.and_return(true)
       @file.save!
     end
   end
@@ -148,8 +148,8 @@ describe GenericFile do
     describe "that have been saved" do
       before(:each) do
         @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-        Sufia.queue.expects(:push).once.returns(true)
-        #Resque.expects(:enqueue).once.returns(true)
+        Sufia.queue.should_receive(:push).once.and_return(true)
+        #Resque.should_receive(:enqueue).once.and_return(true)
       end
       after(:each) do
         unless @file.inner_object.class == ActiveFedora::UnsavedDigitalObject
@@ -195,11 +195,11 @@ describe GenericFile do
     end
   end
   it 'should export as endnote' do
-    @file.stubs(pid: 'stubbed_pid')
+    @file.stub(pid: 'stubbed_pid')
     @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/stubbed_pid\n%~ ScholarSphere\n%W Penn State University"
   end
   it "should support to_solr" do
-    @file.stubs(pid: 'stubbed_pid')
+    @file.stub(pid: 'stubbed_pid')
     @file.part_of = "Arabiana"
     @file.contributor = "Mohammad"
     @file.creator = "Allah"
@@ -255,7 +255,7 @@ describe GenericFile do
     describe "with an image that doesn't get resized" do
       before do
         @f = GenericFile.new
-        @f.stubs(:mime_type=>'image/png', :width=>['50'], :height=>['50'])  #Would get set by the characterization job
+        @f.stub(:mime_type=>'image/png', :width=>['50'], :height=>['50'])  #Would get set by the characterization job
         @f.add_file_datastream(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), :dsid=>'content')
         @f.apply_depositor_metadata('mjg36')
         @f.save
@@ -270,33 +270,46 @@ describe GenericFile do
     end
   end
   describe "audit" do
-    before(:all) do
-      GenericFile.any_instance.stubs(:characterize).returns(true)
+    before do
       f = GenericFile.new
-      f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
+      f.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
       f.apply_depositor_metadata('mjg36')
-      f.save
-      @f = GenericFile.find(f.pid)
-      @datastreams = [FileContentDatastream, ActiveFedora::RelsExtDatastream,
-                      ActiveFedora::Datastream, PropertiesDatastream,
-                      ParanoidRightsDatastream]
+      f.stub(:characterize_if_changed).and_yield # don't run characterization
+      f.save!
+      @f = f.reload
     end
-    after(:all) do
+    after do
       @f.delete
     end
     it "should schedule a audit job" do
-      @datastreams.each { |ds| ds.any_instance.stubs(:dsChecksumValid).returns(false) }
-      ChecksumAuditLog.stubs(:create!).returns(true)
-      Sufia.queue.expects(:push).times(@datastreams.count)
+      s0 = double('zero')
+      AuditJob.should_receive(:new).with(@f.pid, 'descMetadata', "descMetadata.0").and_return(s0)
+      Sufia.queue.should_receive(:push).with(s0)
+      s1 = double('one')
+      AuditJob.should_receive(:new).with(@f.pid, 'DC', "DC1.0").and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1)
+      s2 = double('two')
+      AuditJob.should_receive(:new).with(@f.pid, 'RELS-EXT', "RELS-EXT.0").and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2)
+      s3 = double('three')
+      AuditJob.should_receive(:new).with(@f.pid, 'rightsMetadata', "rightsMetadata.0").and_return(s3)
+      Sufia.queue.should_receive(:push).with(s3)
+      s4 = double('four')
+      AuditJob.should_receive(:new).with(@f.pid, 'properties', "properties.0").and_return(s4)
+      Sufia.queue.should_receive(:push).with(s4)
+      s5 = double('five')
+      AuditJob.should_receive(:new).with(@f.pid, 'content', "content.0").and_return(s5)
+      Sufia.queue.should_receive(:push).with(s5)
       @f.audit!
     end
     it "should log a failing audit" do
-      @datastreams.each { |ds| ds.any_instance.stubs(:dsChecksumValid).returns(false) }
+      @f.datastreams.each { |ds| ds.stub(:dsChecksumValid).and_return(false) }
+      GenericFile.stub(:run_audit).and_return(double(:respose, :pass=>1, :created_at=>'2005-12-20', :pid=>'foo:123', :dsid=>'foo', :version=>'1'))
       @f.audit!
       ChecksumAuditLog.all.all? { |cal| cal.pass == 0 }.should be_true
     end
     it "should log a passing audit" do
-      @datastreams.each { |ds| ds.any_instance.stubs(:dsChecksumValid).returns(true) }
+      GenericFile.stub(:run_audit).and_return(double(:respose, :pass=>1, :created_at=>'2005-12-20', :pid=>'foo:123', :dsid=>'foo', :version=>'1'))
       @f.audit!
       ChecksumAuditLog.all.all? { |cal| cal.pass == 1 }.should be_true
     end
@@ -310,8 +323,8 @@ describe GenericFile do
     end
     it "should schedule a characterization job" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-      Sufia.queue.expects(:push).once.returns(true)
-      #Resque.expects(:enqueue).once
+      Sufia.queue.should_receive(:push).once.and_return(true)
+      #Resque.should_receive(:enqueue).once
       @file.save
     end
   end
@@ -357,9 +370,9 @@ describe GenericFile do
       @f2.add_relationship("isPartOf", "info:fedora/#{@batch_id}")
       @f1.save
       @f2.save
-      mock_batch = mock("batch")
-      mock_batch.stubs(:generic_files => [@f1, @f2])
-      @f1.expects(:batch).returns(mock_batch)
+      mock_batch = double("batch")
+      mock_batch.stub(:generic_files => [@f1, @f2])
+      @f1.should_receive(:batch).and_return(mock_batch)
       @f1.related_files.should == [@f2]
     end
     it "should work when batch is not defined by querying solr" do
@@ -367,7 +380,7 @@ describe GenericFile do
       @f2.add_relationship("isPartOf", "info:fedora/#{@batch_id}")
       @f1.save
       @f2.save
-      @f1.expects(:batch).twice.raises(NoMethodError)
+      @f1.should_receive(:batch).twice.and_raise(NoMethodError)
       lambda { @f1.related_files }.should_not raise_error
       @f1.related_files.should == [@f2]
     end
@@ -376,7 +389,7 @@ describe GenericFile do
       @f2.add_relationship(:is_part_of, "info:fedora/#{@batch_id}")
       @f1.save
       @f2.save
-      @f1.expects(:batch).twice.raises(NoMethodError)
+      @f1.should_receive(:batch).twice.and_raise(NoMethodError)
       lambda { @f1.related_files }.should_not raise_error
       @f1.related_files.should == [@f2]
     end
@@ -385,16 +398,16 @@ describe GenericFile do
       @f2.add_relationship("isPartOf", "info:fedora/#{@batch_id}")
       @f1.save
       @f2.save
-      mock_batch = mock("batch")
-      mock_batch.stubs(:generic_files).raises(NoMethodError)
-      @f1.expects(:batch).twice
+      mock_batch = double("batch")
+      mock_batch.stub(:generic_files).and_raise(NoMethodError)
+      @f1.should_receive(:batch).twice
       lambda { @f1.related_files }.should_not raise_error
       @f1.related_files.should == [@f2]
     end
   end
   describe "noid integration" do
     before(:all) do
-      GenericFile.any_instance.expects(:characterize_if_changed).yields
+      GenericFile.any_instance.should_receive(:characterize_if_changed).and_yield
       @new_file = GenericFile.new(:pid => 'ns:123')
       @new_file.apply_depositor_metadata('mjg36')
       @new_file.save
@@ -417,19 +430,19 @@ describe GenericFile do
   describe "characterize" do
     it "should return expected results when called" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-      @file.expects(:extract_content)
+      @file.should_receive(:extract_content)
       @file.characterize
       doc = Nokogiri::XML.parse(@file.characterization.content)
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
     end
     it "should not be triggered unless the content ds is changed" do
-      Sufia.queue.expects(:push).once.returns(true)
-      #Resque.expects(:enqueue).once
+      Sufia.queue.should_receive(:push).once.and_return(true)
+      #Resque.should_receive(:enqueue).once
       @file.content.content = "hey"
       @file.save
       @file.related_url = 'http://example.com'
-      Sufia.queue.expects(:push).never
-      #Resque.expects(:enqueue).never
+      Sufia.queue.should_receive(:push).never
+      #Resque.should_receive(:enqueue).never
       @file.save
       @file.delete
     end

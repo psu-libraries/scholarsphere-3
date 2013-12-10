@@ -24,7 +24,7 @@ describe MailboxController do
     @rec1 = @another_user.send_message(@user, @message, @subject)
     @rec2 = @user.send_message(@another_user, @message, @subject)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
    end
   after(:each) do
     @rec1.delete
@@ -33,7 +33,7 @@ describe MailboxController do
   describe "#index" do
     render_views
     it "should show message" do
-      Conversation.any_instance.expects(:mark_as_read)
+      Conversation.any_instance.should_receive(:mark_as_read)
       get :index
       response.should be_success
       assigns[:messages].first.last_message.body.should == 'Test Message'

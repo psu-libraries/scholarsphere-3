@@ -69,7 +69,7 @@ describe 'collection', describe_options do
   describe 'use a proxy' do
     before (:all) do
       @user1 = FactoryGirl.find_or_create(:user)
-      User.any_instance.stubs(:can_make_deposits_for).returns([@user1])
+      User.any_instance.stub(:can_make_deposits_for).and_return([@user1])
     end
     after (:all) do
       @user1.destroy

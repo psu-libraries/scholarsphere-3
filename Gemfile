@@ -56,7 +56,6 @@ group :development, :test do
   gem 'rubyzip', '< 1.0.0' 
   gem 'headless'
   gem 'rspec-rails', '>= 2.11.0'
-  gem 'mocha', '0.13.3', :require => false
   gem 'cucumber-rails', '~> 1.0', :require => false
   gem 'capybara', '~>1.1.3'
   gem 'jettywrapper'

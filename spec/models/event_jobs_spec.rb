@@ -16,10 +16,11 @@ require 'spec_helper'
 
 describe 'event jobs' do
   before(:each) do
+    @now = Time.now
     @user = FactoryGirl.find_or_create(:user)
     @another_user = FactoryGirl.find_or_create(:archivist)
     @third_user = FactoryGirl.find_or_create(:curator)
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
+    GenericFile.any_instance.stub(:terms_of_service).and_return('1')
     @gf = GenericFile.new(pid: 'test:123')
     @gf.apply_depositor_metadata(@user.login)
     @gf.title = 'Hamlet'
@@ -39,8 +40,8 @@ describe 'event jobs' do
     @another_user.follow(@user)
     count_user = @user.events.length
     count_another = @another_user.events.length
-    Time.expects(:now).returns(1).at_least_once
-    event = { action: 'User <a href="/users/jilluser">jilluser</a> has edited his or her profile', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> has edited his or her profile', timestamp: '1' }
     #UserEditProfileEventJob.perform(@user.login)
     UserEditProfileEventJob.new(@user.user_key).run
     @user.events.length.should == count_user + 1
@@ -54,8 +55,8 @@ describe 'event jobs' do
     @user.events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = { action: 'User <a href="/users/jilluser">jilluser</a> is now following <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> is now following <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
     #UserFollowEventJob.perform(@user.login, @another_user.login)
     UserFollowEventJob.new(@user.user_key, @another_user.user_key).run
     @user.events.length.should == 1
@@ -72,8 +73,8 @@ describe 'event jobs' do
     @user.events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = { action: 'User <a href="/users/jilluser">jilluser</a> has unfollowed <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> has unfollowed <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
     #UserUnfollowEventJob.perform(@user.login, @another_user.login)
     UserUnfollowEventJob.new(@user.user_key, @another_user.user_key).run
     @user.events.length.should == 1
@@ -87,13 +88,13 @@ describe 'event jobs' do
     # ContentDeposit should log the event to the depositor's profile, followers' dashboards, and the GF
     @another_user.follow(@user)
     @third_user.follow(@user)
-    User.any_instance.stubs(:can?).returns(true)
+    User.any_instance.stub(:can?).and_return(true)
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has deposited <a href="/files/123">Hamlet</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deposited <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentDepositEventJob.perform('test:123', @user.login)
     ContentDepositEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1
@@ -109,13 +110,13 @@ describe 'event jobs' do
     # ContentUpdate should log the event to the depositor's profile, followers' dashboards, and the GF
     @another_user.follow(@user)
     @third_user.follow(@user)
-    User.any_instance.stubs(:can?).returns(true)
+    User.any_instance.stub(:can?).and_return(true)
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has updated <a href="/files/123">Hamlet</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has updated <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentUpdateEventJob.perform('test:123', @user.login)
     ContentUpdateEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1
@@ -131,13 +132,13 @@ describe 'event jobs' do
     # ContentNewVersion should log the event to the depositor's profile, followers' dashboards, and the GF
     @another_user.follow(@user)
     @third_user.follow(@user)
-    User.any_instance.stubs(:can?).returns(true)
+    User.any_instance.stub(:can?).and_return(true)
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has added a new version of <a href="/files/123">Hamlet</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has added a new version of <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentNewVersionEventJob.perform('test:123', @user.login)
     ContentNewVersionEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1
@@ -153,13 +154,13 @@ describe 'event jobs' do
     # ContentRestoredVersion should log the event to the depositor's profile, followers' dashboards, and the GF
     @another_user.follow(@user)
     @third_user.follow(@user)
-    User.any_instance.stubs(:can?).returns(true)
+    User.any_instance.stub(:can?).and_return(true)
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has restored a version \'content.0\' of <a href="/files/123">Hamlet</a>', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has restored a version \'content.0\' of <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentRestoredVersionEventJob.perform('test:123', @user.login, 'content.0')
     ContentRestoredVersionEventJob.new('test:123', @user.user_key, 'content.0').run
     @user.profile_events.length.should == 1
@@ -178,8 +179,8 @@ describe 'event jobs' do
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.expects(:now).returns(1).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has deleted file \'test:123\'', timestamp: '1' }
+    Time.stub(:now => 1)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deleted file \'test:123\'', timestamp: '1' }
     #ContentDeleteEventJob.perform('test:123', @user.login)
     ContentDeleteEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1
@@ -198,8 +199,8 @@ describe 'event jobs' do
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
     @now = Time.now
-    Time.expects(:now).returns(@now).at_least_once
-    event = {action: 'User <a href="/users/jilluser">jilluser</a> has updated <a href="/files/123">Hamlet</a>', timestamp: @now.to_i.to_s }
+    Time.stub(:now => @now)
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has updated <a href="/files/123">Hamlet</a>', timestamp: @now.to_i.to_s }
     #ContentUpdateEventJob.perform('test:123', @user.login)
     ContentUpdateEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1

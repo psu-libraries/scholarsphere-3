@@ -15,17 +15,16 @@
 require 'spec_helper'
 
 describe UnzipJob do
-  before(:all) do
+  before do
     @batch = Batch.create
-    GenericFile.any_instance.expects(:characterize_if_changed).at_least_once.yields
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     @generic_file = GenericFile.new(:batch=>@batch)
-    @generic_file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/icons.zip'), :dsid=>'content')
+    @generic_file.add_file(File.open(fixture_path + '/icons.zip'), 'content', 'icons.zip')
     @generic_file.apply_depositor_metadata('mjg36')
+    @generic_file.stub(:characterize_if_changed).and_yield #don't run characterization
     @generic_file.save
   end
 
-  after(:all) do
+  after do
     @batch.delete
     @generic_file.delete
   end
@@ -34,7 +33,7 @@ describe UnzipJob do
     one = GenericFile.new
     two = GenericFile.new
     three = GenericFile.new
-    GenericFile.expects(:new).times(3).returns(one, two, three)
+    GenericFile.should_receive(:new).exactly(3).times.and_return(one, two, three)
     #Resque.enqueue(UnzipJob, @generic_file.pid)
     UnzipJob.new(@generic_file.pid).run
 

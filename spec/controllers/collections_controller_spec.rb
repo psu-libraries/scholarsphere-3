@@ -17,11 +17,11 @@ require 'spec_helper'
 describe CollectionsController do
   before(:each) { @routes = Hydra::Collections::Engine.routes }
   before do
-    controller.stubs(:has_access?).returns(true)
+    controller.stub(:has_access?).and_return(true)
 
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
   end
 
   after (:all) do
@@ -39,7 +39,7 @@ describe CollectionsController do
   
   describe '#create' do
     it "should create a Collection" do
-      controller.expects(:has_access?).returns(true)
+      controller.should_receive(:has_access?).and_return(true)
       old_count = Collection.count
       post :create, collection: {title: "My First Collection ", description: "The Description\r\n\r\nand more"}
       Collection.count.should == old_count+1
@@ -54,7 +54,7 @@ describe CollectionsController do
       @asset3 = GenericFile.new(title: "Third of the Assets", depositor:'abc')
       @asset3.apply_depositor_metadata('abc')
       @asset3.save
-      controller.expects(:has_access?).returns(true)
+      controller.should_receive(:has_access?).and_return(true)
       old_count = Collection.count
       post :create, collection: {title: "My own Collection ", description: "The Description\r\n\r\nand more"}, batch_document_ids:[@asset1.id, @asset2.id, @asset3.id]
       Collection.count.should == old_count+1
@@ -145,8 +145,8 @@ describe CollectionsController do
       @collection.apply_depositor_metadata(@user.user_key)
       @collection.members = [@asset1,@asset2,@asset3]
       @collection.save
-      controller.stubs(:authorize!).returns(true)
-      controller.stubs(:apply_gated_search)
+      controller.stub(:authorize!).and_return(true)
+      controller.stub(:apply_gated_search)
     end
     it "should return the collection and its members" do
       get :show, id: @collection.id

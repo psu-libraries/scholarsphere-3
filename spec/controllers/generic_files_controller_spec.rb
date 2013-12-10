@@ -16,17 +16,17 @@ require 'spec_helper'
 
 describe GenericFilesController do
   before do
-    Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
-    Hydra::LDAP.stubs(:does_user_exist?).returns(true)
+    Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+    Hydra::LDAP.stub(:does_user_exist?).and_return(true)
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
   end
   describe "#create" do
     before do
       @file_count = GenericFile.count
       @mock = GenericFile.new({:pid => 'test:123'})
-      GenericFile.stubs(:new).returns(@mock)
+      GenericFile.stub(:new).and_return(@mock)
     end
     after do
       begin
@@ -38,30 +38,30 @@ describe GenericFilesController do
 
     it "should spawn a content deposit event job" do
       file = fixture_file_upload('/world.png','image/png')
-      s1 = mock('one')
-      ContentDepositEventJob.expects(:new).with('test:123', 'jilluser').returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
+      s1 = double('one')
+      ContentDepositEventJob.should_receive(:new).with('test:123', 'jilluser').and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
 
-      s2 = stub('two')
-      CharacterizeJob.expects(:new).with('test:123').returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s2 = double('two')
+      CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
     end
 
     it "should expand zip files" do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
+      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "test:123" })
       #file = fixture_file_upload('/world.png','application/zip')
       file = fixture_file_upload('/icons.zip','application/zip')
 
-      s1 = mock('one')
-      CharacterizeJob.expects(:new).with('test:123').returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
-      s2 = mock('two')
-      UnzipJob.expects(:new).with('test:123').returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
-      s3 = mock('three')
-      ContentDepositEventJob.expects(:new).with('test:123', 'jilluser').returns(s3)
-      Sufia.queue.expects(:push).with(s3).once
+      s1 = double('one')
+      CharacterizeJob.should_receive(:new).with('test:123').and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
+      s2 = double('two')
+      UnzipJob.should_receive(:new).with('test:123').and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
+      s3 = double('three')
+      ContentDepositEventJob.should_receive(:new).with('test:123', 'jilluser').and_return(s3)
+      Sufia.queue.should_receive(:push).with(s3).once
 
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
     end
@@ -93,7 +93,7 @@ describe GenericFilesController do
     end
 
     it "should record what user created the first version of content" do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "test:123" })
+      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "test:123" })
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :terms_of_service=>"1"
 
@@ -104,9 +104,9 @@ describe GenericFilesController do
     end
 
     it "should create batch associations from batch_id" do
-      Sufia.config.stubs(:id_namespace).returns('sample')
+      Sufia.config.stub(:id_namespace).and_return('sample')
       file = fixture_file_upload('/world.png','image/png')
-      controller.stubs(:add_posted_blob_to_asset)
+      controller.stub(:add_posted_blob_to_asset)
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
       lambda {Batch.find("sample:batch_id")}.should raise_error(ActiveFedora::ObjectNotFoundError) # The controller shouldn't actually save the Batch
       b = Batch.create(pid: "sample:batch_id")
@@ -127,28 +127,29 @@ describe GenericFilesController do
       saved_file.to_solr['depositor_tesim'].should == ['jilluser']
     end
     it "should call virus check" do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      Sufia::GenericFile::Actions.expects(:virus_check).at_least_once
+      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "foo:123" })
+      Sufia::GenericFile::Actions.should_receive(:virus_check).at_least(:once)
       file = fixture_file_upload('/world.png','image/png')
-      s1 = mock('one')
-      ContentDepositEventJob.expects(:new).with('test:123','jilluser').returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
-      s2 = mock('two')
-      CharacterizeJob.expects(:new).with('test:123').returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s1 = double('one')
+      ContentDepositEventJob.should_receive(:new).with('test:123','jilluser').and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
+      s2 = double('two')
+      CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
     end
 
     it "failing virus check should create flash" do
-      GenericFile.any_instance.stubs(:to_solr).returns({ :id => "foo:123" })
-      ClamAV.any_instance.expects(:scanfile).returns(1)
       file = fixture_file_upload('/world.png','image/png')
+      Sufia::GenericFile::Actions.should_receive(:virus_check).with(file.path).and_raise(Sufia::VirusFoundError.new('A virus was found'))
+      
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
-      flash[:error].should_not be_empty
+      flash[:error].should include('A virus was found')
+      
     end
 
     it "should error out of create and save after on continuos rsolr error" do
-      GenericFile.any_instance.stubs(:save).raises(RSolr::Error::Http.new({},{}))
+      GenericFile.any_instance.stub(:save).and_raise(RSolr::Error::Http.new({},{}))
 
       file = fixture_file_upload('/world.png','image/png')
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
@@ -193,16 +194,16 @@ describe GenericFilesController do
       lambda { GenericFile.find(@generic_file.pid) }.should raise_error(ActiveFedora::ObjectNotFoundError)
     end
     it "should spawn a content delete event job" do
-      s2 = mock('two')
-      ContentDeleteEventJob.expects(:new).with(@generic_file.noid, @user.login).returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s2 = double('two')
+      ContentDeleteEventJob.should_receive(:new).with(@generic_file.noid, @user.login).and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
       delete :destroy, :id=>@generic_file.pid
     end
   end
 
   describe "update" do
     before do
-      ClamAV.any_instance.stubs(:scanfile).returns(0)
+      ClamAV.any_instance.stub(:scanfile).and_return(0)
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
       @generic_file.save!
@@ -212,9 +213,9 @@ describe GenericFilesController do
     end
 
     it "should spawn a content update event job" do
-      s2 = mock('two')
-      ContentUpdateEventJob.expects(:new).with(@generic_file.pid, @user.login).returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s2 = double('two')
+      ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       post :update, :id=>@generic_file.pid, :generic_file=>{:title=>'new_title', :tag=>[''], :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
@@ -222,12 +223,12 @@ describe GenericFilesController do
     end
 
     it "should spawn a content new version event job" do
-      s1 = mock('one')
-      ContentNewVersionEventJob.expects(:new).with(@generic_file.pid, @user.login).returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
-      s2 = mock('two')
-      CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s1 = double('one')
+      ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
+      s2 = double('two')
+      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
 
@@ -249,17 +250,17 @@ describe GenericFilesController do
 
       # other user uploads new version
       archivist = FactoryGirl.find_or_create(:archivist)
-      controller.stubs(:current_user).returns(archivist)
+      controller.stub(:current_user).and_return(archivist)
       sign_in archivist
 
-      ContentUpdateEventJob.expects(:new).with(@generic_file.pid, @user.login).never
+      ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
       
-      s2 = mock('two')
-      ContentNewVersionEventJob.expects(:new).with(@generic_file.pid, archivist.login).returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
-      s3 = mock('three')
-      CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s3)
-      Sufia.queue.expects(:push).with(s3).once
+      s2 = double('two')
+      ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, archivist.login).and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
+      s3 = double('three')
+      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
+      Sufia.queue.should_receive(:push).with(s3).once
       file = fixture_file_upload('/image.jp2','image/jp2')
       post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:tag=>[''] }
       edited_file = GenericFile.find(@generic_file.pid)
@@ -268,16 +269,16 @@ describe GenericFilesController do
       edited_file.content.version_committer(version2).should == archivist.login
 
       # original user restores his or her version
-      controller.stubs(:current_user).returns(@user)
+      controller.stub(:current_user).and_return(@user)
       sign_in @user
-      ContentUpdateEventJob.expects(:new).with(@generic_file.pid, @user.login).never
+      ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
       
-      s2 = mock('two')
-      ContentRestoredVersionEventJob.expects(:new).with(@generic_file.pid, @user.login, 'content.0').returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
-      s3 = mock('three')
-      CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s3)
-      Sufia.queue.expects(:push).with(s3)
+      s2 = double('two')
+      ContentRestoredVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login, 'content.0').and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
+      s3 = double('three')
+      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
+      Sufia.queue.should_receive(:push).with(s3)
       post :update, :id=>@generic_file.pid, :revision=>'content.0', :generic_file=>{:tag=>['']}
 
       restored_file = GenericFile.find(@generic_file.pid)
@@ -302,16 +303,16 @@ describe GenericFilesController do
       assigns[:generic_file].read_groups.should == ["group3"]
     end
     it "should spawn a virus check" do
-      s1 = mock('one')
-      ContentNewVersionEventJob.expects(:new).with(@generic_file.pid, @user.login).returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
-      s2 = mock('two')
-      CharacterizeJob.expects(:new).with(@generic_file.pid).returns(s2)
-      Sufia.queue.expects(:push).with(s2).once
+      s1 = double('one')
+      ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
+      s2 = double('two')
+      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s2)
+      Sufia.queue.should_receive(:push).with(s2).once
 
 
-      GenericFile.stubs(:save).returns({})
-      ClamAV.any_instance.expects(:scanfile).returns(0)
+      GenericFile.stub(:save).and_return({})
+      ClamAV.any_instance.should_receive(:scanfile).and_return(0)
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       file = fixture_file_upload('/world.png','image/png')
@@ -328,7 +329,7 @@ describe GenericFilesController do
       f.add_file_datastream(File.new(Rails.root +  'spec/fixtures/world.png'))
       # grant public read access explicitly
       f.read_groups = ['public']
-      f.expects(:characterize_if_changed).yields
+      f.should_receive(:characterize_if_changed).and_yield
       f.save!
       @file = f
     end
@@ -360,7 +361,7 @@ describe GenericFilesController do
       end
       it "should filter flash if they signin" do
         pending "This method was getting a Blacklight::Exceptions::InvalidSolrID, but the assertions still passed"
-        request.env['warden'].stubs(:user).returns(@user)
+        request.env['warden'].stub(:user).and_return(@user)
         sign_out @user
         get :new
         sign_in @user
@@ -369,7 +370,7 @@ describe GenericFilesController do
       end
       describe "failing audit" do
         before(:all) do
-          ActiveFedora::RelsExtDatastream.any_instance.stubs(:dsChecksumValid).returns(false)
+          ActiveFedora::RelsExtDatastream.any_instance.stub(:dsChecksumValid).and_return(false)
           @archivist = FactoryGirl.find_or_create(:archivist)
         end
         after(:all) do
