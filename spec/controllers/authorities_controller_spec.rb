@@ -15,6 +15,7 @@
 require 'spec_helper'
 
 describe AuthoritiesController do
+  routes { Sufia::Engine.routes }
   describe "#query" do
     it "should return an array of hashes" do
       mock_hits = [{:label => "English", :uri => "http://example.org/eng"}, 

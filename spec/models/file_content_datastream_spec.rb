@@ -67,9 +67,6 @@ describe FileContentDatastream do
     end
   end
   describe "extract_metadata" do
-    it "should have the path" do
-      @subject.send(:fits_path).should be_present
-    end
     it "should return an xml document" do
       repo = mock("repo")
       repo.stubs(:config=>{})
@@ -77,7 +74,7 @@ describe FileContentDatastream do
       content = mock("file")
       content.stubs(:read=>f.read)
       content.stubs(:rewind=>f.rewind)
-      @subject.expects(:content).times(5).returns(f)
+      @subject.stubs(:content => f)
       xml = @subject.extract_metadata
       doc = Nokogiri::XML.parse(xml)
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
@@ -90,7 +87,7 @@ describe FileContentDatastream do
       content = mock("file")
       content.stubs(:read=>f.read)
       content.stubs(:rewind=>f.rewind)
-      @subject.expects(:content).times(5).returns(f)
+      @subject.stubs(:content => f)
       xml = @subject.extract_metadata
       doc = Nokogiri::XML.parse(xml)
       doc.root.xpath('//ns:identity/@mimetype', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).first.value.should == 'image/png'

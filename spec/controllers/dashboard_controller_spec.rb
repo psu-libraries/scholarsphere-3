@@ -15,6 +15,7 @@
 require 'spec_helper'
 
 describe DashboardController do
+  routes { Sufia::Engine.routes }
   before do
     User.any_instance.stubs(:groups).returns([])
   end

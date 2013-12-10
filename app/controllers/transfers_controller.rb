@@ -1,6 +1,7 @@
 class TransfersController < ApplicationController
+  before_action :load_proxy_deposit_request, only: :create
   load_and_authorize_resource :proxy_deposit_request, parent: false, except: :index
-  before_filter :get_pid_and_authorize_depositor, only: [:new, :create]
+  before_action :get_pid_and_authorize_depositor, only: [:new, :create]
 
   # Catch permission errors
   # TODO we should make this a module in Sufia
@@ -58,5 +59,13 @@ class TransfersController < ApplicationController
     @proxy_deposit_request.pid = @pid
   rescue
     redirect_to root_url, :alert => 'You are not authorized to transfer this file'
+  end
+  
+  def load_proxy_deposit_request
+    @proxy_deposit_request = ProxyDepositRequest.new(proxy_deposit_request_params)
+  end
+
+  def proxy_deposit_request_params
+    params.require(:proxy_deposit_request).permit(:transfer_to)
   end
 end

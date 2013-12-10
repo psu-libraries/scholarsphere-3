@@ -18,8 +18,7 @@ class GenericFile < ActiveFedora::Base
 
   has_file_datastream "full_text", versionable: false
 
-  delegate :proxy_depositor, :to=>:properties, :unique => true
-  delegate :on_behalf_of, :to=>:properties, :unique => true
+  has_attributes :proxy_depositor, :on_behalf_of, :datastream=>:properties, :multiple => false
 
   after_create :create_transfer_request
 

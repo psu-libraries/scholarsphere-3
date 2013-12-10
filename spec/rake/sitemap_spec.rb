@@ -55,21 +55,18 @@ describe "sitemap:generate" do
     Rake::Task.define_task(:environment)
   end
 
-  after(:each) do
-  end
-
   describe 'sitemap generation' do
     it 'should include public generic files and users' do
       gf = GenericFile.new
       gf.apply_depositor_metadata "architect"
       gf.read_groups = ['public']
-      gf.save
+      gf.save!
       @user = FactoryGirl.find_or_create(:user)
       run_generate
       filename= Rails.root.join(File.expand_path("public"), "sitemap.xml")
       Dir.glob(filename).length.should == 1
-      f = File.open  filename
-      output =  f.read
+      f = File.open filename
+      output = f.read
       output.should include gf.noid
       output.should include @user.login
       gf.destroy

@@ -16,12 +16,9 @@ require 'spec_helper'
 
 describe FitsDatastream do
   before(:all) do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
     @file = GenericFile.new
-    @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-    @file.apply_depositor_metadata('mjg36')
-    @file.save
-    @file = GenericFile.find(@file.pid)
+    @file.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
+    @file.characterize
   end
   after(:all) do
     @file.delete

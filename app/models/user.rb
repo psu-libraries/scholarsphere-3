@@ -35,9 +35,6 @@ class User < ActiveRecord::Base
   devise :http_header_authenticatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :login, :display_name, :address, :admin_area, :department, :title, :office, :chat_id, :website, :affiliation, :telephone, :avatar, 
-  :ldap_available, :ldap_last_update, :group_list, :groups_last_update, :facebook_handle, :twitter_handle, :googleplus_handle, :linkedin_handle
-
   has_many :proxy_deposit_requests, foreign_key: 'receiving_user_id'
 
   has_many :deposit_rights_given, foreign_key: 'grantor_id', class_name: 'ProxyDepositRights', dependent: :destroy
@@ -63,6 +60,23 @@ class User < ActiveRecord::Base
   # Redefine this for more intuitive keys in Redis
   def to_param
     login
+  end
+
+
+  def self.batchuser
+    User.find_by_user_key(batchuser_key) || User.create!(Devise.authentication_keys.first => batchuser_key)
+  end
+
+  def self.batchuser_key
+    'batchuser'
+  end
+
+  def self.audituser
+    User.find_by_user_key(audituser_key) || User.create!(Devise.authentication_keys.first => audituser_key)
+  end
+
+  def self.audituser_key
+    'audituser'
   end
 
   def ldap_exist?
@@ -108,7 +122,6 @@ class User < ActiveRecord::Base
       list.sort!
       logger.debug "$#{login}$ groups = #{list}"
       attrs = {}
-      attrs[:ldap_na] = false
       attrs[:group_list] = list.join(";?;")
       attrs[:groups_last_update] = Time.now
       update_attributes(attrs)

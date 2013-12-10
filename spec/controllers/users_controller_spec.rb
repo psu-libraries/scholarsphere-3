@@ -31,13 +31,13 @@ describe UsersController do
   end
   describe "#show" do
     it "show the user profile if user exists" do
-      get :show, uid: @user.login
+      get :show, id: @user.login
       response.should be_success
       response.should_not redirect_to(root_path)
       flash[:alert].should be_nil
     end
     it "redirects to root if user does not exist" do
-      get :show, uid: 'johndoe666'
+      get :show, id: 'johndoe666'
       response.should redirect_to(root_path)
       flash[:alert].should include ("User 'johndoe666' does not exist")
     end
@@ -45,9 +45,9 @@ describe UsersController do
       @file = GenericFile.new
       @file.apply_depositor_metadata(@user.login)
       @file.save
-      post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      post :toggle_trophy, {id: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
       @file.delete
-      get :show, uid: @user.login
+      get :show, id: @user.login
       response.should be_success
       response.should_not redirect_to(root_path)
       flash[:alert].should be_nil
@@ -76,13 +76,13 @@ describe UsersController do
   end
   describe "#edit" do
     it "show edit form when user edits own profile" do
-      get :edit, uid: @user.login
+      get :edit, id: @user.login
       response.should be_success
       response.should render_template('users/edit')
       flash[:alert].should be_nil
     end
     it "redirects to show profile when user attempts to edit another profile" do
-      get :edit, uid: @another_user.login
+      get :edit, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
@@ -90,9 +90,9 @@ describe UsersController do
       @file = GenericFile.new
       @file.apply_depositor_metadata(@user.login)
       @file.save
-      post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      post :toggle_trophy, {id: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
       @file.delete
-      get :show, uid: @user.login
+      get :show, id: @user.login
       response.should be_success
       response.should_not redirect_to(root_path)
       flash[:alert].should be_nil
@@ -100,7 +100,7 @@ describe UsersController do
   end
   describe "#update" do
     it "should not allow other users to update" do
-      post :update, uid: @another_user.login, user: { avatar: nil }
+      post :update, id: @another_user.login, user: { avatar: nil }
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
@@ -111,7 +111,7 @@ describe UsersController do
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
       f = fixture_file_upload('/world.png', 'image/png')
-      post :update, uid: @user.login, user: { avatar: f }
+      post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       User.find_by_login(@user.login).avatar.file?.should be_true
@@ -120,7 +120,7 @@ describe UsersController do
       UserEditProfileEventJob.expects(:new).with(@user.login).never
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).never
       f = fixture_file_upload('/image.jp2', 'image/jp2')
-      post :update, uid: @user.login, user: { avatar: f }
+      post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
       flash[:alert].should include("Avatar content type is invalid")
     end
@@ -128,7 +128,7 @@ describe UsersController do
       f = fixture_file_upload('/4-20.png', 'image/png')
       UserEditProfileEventJob.expects(:new).with(@user.login).never
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).never
-      post :update, uid: @user.login, user: { avatar: f }
+      post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
       flash[:alert].should include("Avatar file size must be less than 2097152 Bytes")
     end
@@ -137,7 +137,7 @@ describe UsersController do
       UserEditProfileEventJob.expects(:new).with(@user.login).returns(s1)
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
-      post :update, uid: @user.login, delete_avatar: true
+      post :update, id: @user.login, delete_avatar: true
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       @user.avatar.file?.should be_false
@@ -148,7 +148,7 @@ describe UsersController do
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserEditProfileEventJob, @user.login).once
       User.any_instance.expects(:populate_attributes).once
-      post :update, uid: @user.login, update_directory: true
+      post :update, id: @user.login, update_directory: true
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
     end
@@ -156,7 +156,7 @@ describe UsersController do
       @user.twitter_handle.blank?.should be_true
       @user.facebook_handle.blank?.should be_true
       @user.googleplus_handle.blank?.should be_true
-      post :update, uid: @user.login, user: { twitter_handle: 'twit', facebook_handle: 'face', googleplus_handle: 'goo' }
+      post :update, id: @user.login, user: { twitter_handle: 'twit', facebook_handle: 'face', googleplus_handle: 'goo' }
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
       u = User.find_by_login(@user.login)
@@ -175,7 +175,7 @@ describe UsersController do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).returns(s1)
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).once
-      post :follow, uid: @another_user.login
+      post :follow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
     end
@@ -183,14 +183,14 @@ describe UsersController do
       User.any_instance.stubs(:following?).with(@another_user).returns(true)
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).never
-      post :follow, uid: @another_user.login
+      post :follow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserFollowEventJob, @user.login, @user.login).never
-      post :follow, uid: @user.login
+      post :follow, id: @user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")
     end
@@ -202,7 +202,7 @@ describe UsersController do
       UserUnfollowEventJob.expects(:new).with(@user.login, @another_user.login).returns(s1)
       Sufia.queue.expects(:push).with(s1).once
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).once
-      post :unfollow, uid: @another_user.login
+      post :unfollow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
     end
@@ -210,14 +210,14 @@ describe UsersController do
       @user.stubs(:following?).with(@another_user).returns(false)
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).never
-      post :unfollow, uid: @another_user.login
+      post :unfollow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.expects(:new).with(@user.login, @another_user.login).never
       #Resque.expects(:enqueue).with(UserUnfollowEventJob, @user.login, @user.login).never
-      post :unfollow, uid: @user.login
+      post :unfollow, id: @user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")
     end
@@ -232,18 +232,18 @@ describe UsersController do
        @file.delete
      end
      it "should trophy a file" do
-      post :toggle_trophy, {uid: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
-      JSON.parse(response.body)['trophy']['user_id'].should == @user.id
-      JSON.parse(response.body)['trophy']['generic_file_id'].should == @file.pid["scholarsphere:".length..-1]
+      post :toggle_trophy, {id: @user.login, file_id: @file.pid["scholarsphere:".length..-1]}
+      JSON.parse(response.body)['user_id'].should == @user.id
+      JSON.parse(response.body)['generic_file_id'].should == @file.pid["scholarsphere:".length..-1]
     end
      it "should not trophy a file for a different user" do
-      post :toggle_trophy, {uid: @another_user.login, file_id: @file.pid}
+      post :toggle_trophy, {id: @another_user.login, file_id: @file.pid}
       response.should_not be_success
     end
      it "should not trophy a file with no edit privs" do
       sign_out @user
       sign_in @another_user
-      post :toggle_trophy, {uid: @another_user.login, file_id: @file.pid}
+      post :toggle_trophy, {id: @another_user.login, file_id: @file.pid}
       response.should_not be_success
     end
   end
