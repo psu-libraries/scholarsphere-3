@@ -60,7 +60,9 @@ group :development, :test do
   gem 'launchy'
   gem 'database_cleaner'
   # capistrano deployments
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
+  gem 'capistrano', '2.15.5'
+  gem 'capistrano-rbenv', '1.0.5'
+  gem 'capistrano-ext', '1.2.1'
+  gem 'capistrano-notification', '0.1.1'
 end
 
