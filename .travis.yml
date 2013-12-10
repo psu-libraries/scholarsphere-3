@@ -1,0 +1,20 @@
+language: ruby
+before_install:
+  - sudo apt-get install libclamav-dev clamav-data
+rvm:
+  - "2.0.0"
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+notifications:
+  email:
+    recipients:
+      - "ul-dlt-applications@lists.psu.edu"
+      - "michael@psu.edu"
+    on_success: "change"
+    on_failure: "always"
+  irc:
+    channels:
+      - "irc.freenode.org#scholarsphere"
+    template:
+      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
