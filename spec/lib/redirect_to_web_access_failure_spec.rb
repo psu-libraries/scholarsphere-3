@@ -20,7 +20,7 @@ describe RedirectToWebAccessFailure do
     it "should not set flash" do
       call_failure
       expect(@response.first).to eq 302
-      expect(@response.second['Location']).to eq 'https://webaccess.psu.edu?cosign-localhost&https://localhost/'
+      expect(@response.second['Location']).to eq 'https://webaccess.psu.edu/?cosign-localhost&https://localhost'
       expect(@request.flash[:alert]).to be_nil
     end
   end
