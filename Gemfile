@@ -50,7 +50,6 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'unicorn-rails'
   gem 'selenium-webdriver', '~> 2.35.0'
   gem 'rubyzip', '< 1.0.0' 
   gem 'headless'
@@ -61,6 +60,10 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'
   gem 'database_cleaner'
+end
+
+group :development do
+  gem 'unicorn-rails'
   # capistrano deployments
   gem 'capistrano', '2.15.5'
   gem 'capistrano-rbenv', '1.0.5'
