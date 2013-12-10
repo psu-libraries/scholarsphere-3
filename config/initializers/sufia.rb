@@ -1,4 +1,3 @@
-require 'sufia/http_header_auth'
 
 Sufia::Engine.configure do
   config.application_name = "ScholarSphere"

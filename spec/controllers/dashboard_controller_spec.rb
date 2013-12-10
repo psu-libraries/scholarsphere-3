@@ -32,7 +32,7 @@ describe DashboardController do
     end
     it "should populate LDAP attrs if user is new" do
       User.stubs(:find_by_login).with(@user.login).returns(nil)
-      User.expects(:create).with(login: @user.login).returns(@user).once
+      User.expects(:create).with(login: @user.login, email:@user.login).returns(@user).once
       User.any_instance.expects(:populate_attributes).once
       @strategy.should be_valid
       @strategy.authenticate!.should == :success

@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-require 'sufia/http_header_auth'
 
 Sufia::Engine.configure do
   config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'

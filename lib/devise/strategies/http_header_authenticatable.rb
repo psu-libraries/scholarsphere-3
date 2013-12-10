@@ -1,4 +1,4 @@
-# Copyright © 2012 The Pennsylvania State University
+# Copyright © 2013 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,15 +19,16 @@ module Devise
 
       # Called if the user doesn't already have a rails session cookie
       def valid?
-        request.headers['REMOTE_USER'].present?
+        remote_user.present?
+        request.headers['REMOTE_USER'].present? || request.headers['HTTP_REMOTE_USER'].present?
       end
 
       def authenticate!
-        remote_user = request.headers['REMOTE_USER']
-        if remote_user.present?
-          u = User.find_by_login(remote_user)
+        user = remote_user
+        if user.present?
+          u = User.find_by_login(user)
           if u.nil?
-            u = User.create(:login => remote_user)
+            u = User.create(login: user, email: user)
             u.populate_attributes
           end
           success!(u)
@@ -35,6 +36,18 @@ module Devise
           fail!
         end
       end
+
+      protected
+
+      def remote_user
+        if request.headers['REMOTE_USER']
+          user = request.headers['REMOTE_USER']
+        elsif request.headers['HTTP_REMOTE_USER'] && Rails.env.development?
+          user = request.headers['HTTP_REMOTE_USER']
+        end
+        user
+      end
+
     end
   end
 end

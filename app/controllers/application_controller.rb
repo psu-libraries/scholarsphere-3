@@ -107,17 +107,7 @@ class ApplicationController < ActionController::Base
 
  protected
   def user_logged_in?
-    user_signed_in? and remote_user_set?
-  end
-
-  def remote_user_set?
-    return true if Rails.env.test?
-    # Unicorn seems to translate REMOTE_USER into HTTP_REMOTE_USER
-    if Rails.env.development?
-      request.env['HTTP_REMOTE_USER'].present?
-    else
-      request.env['REMOTE_USER'].present?
-    end
+    user_signed_in?
   end
 
   def has_access?
