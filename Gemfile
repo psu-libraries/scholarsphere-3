@@ -38,8 +38,9 @@ gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 # crontab it up
 gem 'whenever'
 
-# rake needs rspec in all environments
+# rake needs rspec and cucumber in all environments
 gem 'rspec'
+gem 'cucumber'
 
 group :assets do
   gem 'sass-rails', '4.0.1'
