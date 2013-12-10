@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/harai/kaminari.git
+  revision: 384fcb5d11b66a0cc8fad030104bf80f82616355
+  branch: route_prefix_prototype
+  specs:
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -200,9 +209,6 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
-    kaminari (0.15.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     kgio (2.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -470,6 +476,7 @@ DEPENDENCIES
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
+  kaminari!
   launchy
   mocha (= 0.13.3)
   mysql2 (= 0.3.11)
