@@ -14,7 +14,7 @@
 
 class RedirectToWebAccessFailure < Devise::FailureApp
   def redirect_url
-    Sufia::Engine.config.login_url+ (request.env["ORIGINAL_FULLPATH"].blank? ? '' : request.env["ORIGINAL_FULLPATH"])
+    Sufia::Engine.config.login_url.chomp("/")+ (request.env["ORIGINAL_FULLPATH"].blank? ? '' : request.env["ORIGINAL_FULLPATH"])
   end
 
   def respond
