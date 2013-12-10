@@ -357,8 +357,6 @@ describe GenericFilesController do
         sign_out @user
         get :new
         response.should_not be_success
-        flash[:alert].should_not be_nil
-        flash[:alert].should include("You need to sign in or sign up before continuing")
       end
       it "should filter flash if they signin" do
         pending "This method was getting a Blacklight::Exceptions::InvalidSolrID, but the assertions still passed"
