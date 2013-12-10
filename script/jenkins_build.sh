@@ -26,8 +26,8 @@ source ${WORKSPACE}/.rvmrc
 echo "=-=-=-=-= $0 bundle install"
 bundle install
 
-echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml ${WORKSPACE}/config"
-cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml ${WORKSPACE}/config
+echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config"
+cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config
 
 echo "=-=-=-=-= $0 resque-pool --daemon --environment test start"
 bundle exec resque-pool --daemon --environment test start
