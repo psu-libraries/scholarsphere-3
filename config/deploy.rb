@@ -50,6 +50,7 @@ namespace :deploy do
   task :symlink_shared do
     run <<-CMD.compact
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/database.yml #{release_path}/config/ &&
+    ln -sf /dlt/#{application}/config_#{stage}/#{application}/devise.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/fedora.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/hydra-ldap.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/solr.yml #{release_path}/config/ &&
