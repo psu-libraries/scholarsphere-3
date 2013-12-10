@@ -115,10 +115,35 @@ namespace :scholarsphere do
     idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"])}
   end
 
-
   desc "Re-solrize all objects"
   task :resolrize => :environment do
     Sufia.queue.push(ResolrizeJob.new)
+  end
+
+  desc 'copy fits configuration files into the fits submodule'
+  task :fits_conf do
+     puts 'copying fits config files'
+     out =  `cp fits_conf/* fits/xml`
+  end
+
+  desc "Execute Continuous Integration build (docs, tests with coverage)"
+  task :ci => :environment do
+    Rake::Task["jetty:config"].invoke
+    Rake::Task["db:migrate"].invoke
+    Rake::Task["scholarsphere:fits_conf"].invoke
+    Rake::Task["scholarsphere:generate_secret"].invoke
+
+    require 'jettywrapper'
+    jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
+
+    error = nil
+    error = Jettywrapper.wrap(jetty_params) do
+      Rake::Task['spec'].invoke
+      Cucumber::Rake::Task.new(:features) do |t|
+        t.cucumber_opts = "--format pretty"
+      end
+    end
+    raise "test failures: #{error}" if error
   end
 
   namespace :export do
@@ -179,7 +204,7 @@ namespace :scholarsphere do
     task :lexvo_languages => :environment do |cmd, args|
       vocabs = ["/tmp/lexvo_2012-03-04.rdf"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs,
-                                 :format => 'rdfxml', 
+                                 :format => 'rdfxml',
                                  :predicate => RDF::URI("http://www.w3.org/2008/05/skos#prefLabel"))
     end
 

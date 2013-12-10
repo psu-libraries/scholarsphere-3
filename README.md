@@ -1,9 +1,6 @@
-﻿# ScholarSphere
+﻿# ScholarSphere [![Version](https://badge.fury.io/gh/psu-stewardship%2Fscholarsphere.png)](http://badge.fury.io/gh/psu-stewardship%2Fscholarsphere) [![Build Status](https://travis-ci.org/psu-stewardship/scholarsphere.png?branch=develop)](https://travis-ci.org/psu-stewardship/scholarsphere) [![Dependency Status](https://gemnasium.com/psu-stewardship/scholarsphere.png)](https://gemnasium.com/psu-stewardship/scholarsphere)
 
-ScholarSphere is a Ruby on Rails application utilizing the Blacklight
-and Hydra-head gems for integration with the search & indexing system,
-Solr, and the digital asset management platform, Fedora Commons.  The
-application runs on Fedora 3.5.0 and Solr 4.0.0.
+ScholarSphere is Penn State's self- and proxy-deposit repository for access to and preservation of scholarly works and data. It is built atop [Sufia](https://github.com/projecthydra/sufia), a [Hydra](http://projecthydra.org)/Rails-based component.
 
 ScholarSphere is being developed as part of
 [Penn State's Digital Stewardship Program](http://stewardship.psu.edu/).
@@ -153,7 +150,7 @@ discovery system.
 
      rake scholarsphere:export:rdfxml
 
-Note that if you want to run this on any environment other than development, you will need to 
+Note that if you want to run this on any environment other than development, you will need to
 call the script with RAILS_ENV=environment in front.
 
 ### Harvesting Authorities Locally
@@ -183,13 +180,4 @@ available database tasks via `rake -T db`)
 1. Register the vocabulary with a domain term in generic_file_rdf_datastream.rb
 (See the bottom of the file for examples)
 
-## Contribute
-
-1. Fork the codebase e.g. to https://github.com/your-username/scholarsphere
-1. Clone your fork locally (`git clone
-git@github.com:your-username/scholarsphere.git my-scholarsphere`)
-1. Create a branch to hold your changes (`git checkout -b new-feature`)
-1. Commit the changes you've made (`git commit -am "Some descriptive text around
-what you've added"`)
-1. Push your branch to github (`git push origin new-feature`)
-1. Create a pull request e.g. at https://github.com/your-username/scholarsphere/pull/new/master
+## [Contribute](CONTRIBUTING.md)

@@ -1,13 +1,14 @@
 module UserLogin
-
   def login_as(login)
-      driver_name = "rack_test_authenticated_header_#{login}".to_s
-      Capybara.register_driver(driver_name) do |app|
-        Capybara::RackTest::Driver.new(app, headers: { 'REMOTE_USER' => login })
-      end
-      user = User.find_or_create_by(login: login)
-      User.find_by_login(login).should_not be_nil
-      Capybara.current_driver = driver_name
+    driver_name = "rack_test_authenticated_header_#{login}".to_s
+    Capybara.register_driver(driver_name) do |app|
+      Capybara::RackTest::Driver.new(app,
+        respect_data_method: true,
+        headers: { 'REMOTE_USER' => login })
+    end
+    user = User.find_or_create_by(login: login)
+    User.find_by_login(login).should_not be_nil
+    Capybara.current_driver = driver_name
   end
 
   class FakeHeaderAuthenticatableStrategy < ::Devise::Strategies::Base
@@ -31,7 +32,6 @@ module UserLogin
     end
   end
 
-
   def login_js (remote_user = 'jilluser')
     FakeHeaderAuthenticatableStrategy.class_eval do
       @@remote_user = remote_user
@@ -48,10 +48,9 @@ module UserLogin
   end
 
   def wait_on_page(text, time=5)
-    # causes selenium to wait until text appears on the page
     page.should have_content(text)
   end
-   
+
   def go_to_dashboard
     visit '/'
     first('a.dropdown-toggle').click

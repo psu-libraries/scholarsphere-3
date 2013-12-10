@@ -20,22 +20,27 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
+require 'mocha/setup'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
     before_files_count = GenericFile.count
     before_batches_count = Batch.count
-    puts "WARNING: Your jetty is not clean, so tests may be funky! (#{before_files_count} files, #{before_batches_count} batches)" if before_files_count > 0 or before_batches_count > 0
+    before_collections_count = Collection.count
+    puts "WARNING: Your jetty is not clean, so tests may be funky! (#{before_files_count} files, #{before_batches_count} batches, #{before_collections_count} collections)" if before_files_count > 0 or before_batches_count > 0 or before_collections_count > 0
   end
   config.after(:all) do
     files_count = GenericFile.count
     batches_count = Batch.count
+    collections_count = Collection.count
     puts "WARNING: #{files_count} files need cleaning up" if files_count > 0
     puts "WARNING: #{batches_count} batches need cleaning up" if batches_count > 0
+    puts "WARNING: #{collections_count} batches need cleaning up" if collections_count > 0
   end
 
   config.after :each do
@@ -43,10 +48,19 @@ RSpec.configure do |config|
     unspoof_http_auth if example.options[:js]
   end
 
-  Capybara.register_driver :selenium do |app|
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    Capybara::Selenium::Driver.new(app, :profile => profile)
+  # Make Capybara wait a bit longer so sluggish AJAX reqs can finish
+  Capybara.default_wait_time = 5
+
+  # Use poltergeist (phantomjs driver) for feature tests requiring javascript
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, {
+        js_errors: false,
+        inspector: true,
+        phantomjs_options: ['--proxy-type=none']
+      })
   end
+  Capybara.default_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

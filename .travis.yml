@@ -1,29 +1,31 @@
 language: ruby
-before_install:
-  - sudo apt-get install libclamav-dev clamav-data
 rvm:
   - "2.0.0"
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-
-script:
-  - bundle exec rake scholarsphere:ci
-
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - HEADLESS=true
+    - JS=true
+before_install:
+  - sudo apt-get install -qq clamav-daemon libclamav-dev clamav-data
+  - sudo freshclam -v
+  - export PATH="$PATH:$(pwd)/fits"
 before_script:
-  - cp config/database.yml.sample config/database.yml
-  - cp config/fedora.yml.sample config/fedora.yml
-  - cp config/solr.yml.sample config/solr.yml
-  - cp config/redis.yml.sample config/redis.yml
-  - cp config/hydra-ldap.yml.sample config/hydra-ldap.yml
-  - cp config/devise.yml.sample config/devise.yml
-  - bundle exec rake scholarsphere:generate_secret
-
+  - "cp config/database.yml.travis config/database.yml"
+  - "cp config/redis.yml.sample config/redis.yml"
+  - "cp config/devise.yml.sample config/devise.yml"
+  - "cp config/solr.yml.sample config/solr.yml"
+  - "cp config/fedora.yml.sample config/fedora.yml"
+  - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
+  - "bundle exec rails g hydra:jetty"
+services:
+  - redis-server
+script:
+  - "bundle exec rake scholarsphere:ci"
 notifications:
   email:
     recipients:
-      - "ul-dlt-applications@lists.psu.edu"
-      - "michael@psu.edu"
+      - "ul-dlt-hydra@lists.psu.edu"
     on_success: "change"
     on_failure: "always"
   irc:
@@ -31,5 +33,3 @@ notifications:
       - "irc.freenode.org#scholarsphere"
     template:
       - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
-services:
-  - redis-server

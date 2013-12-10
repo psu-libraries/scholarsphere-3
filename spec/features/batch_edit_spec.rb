@@ -2,82 +2,71 @@ require 'spec_helper'
 
 include Warden::Test::Helpers
 
-describe_options = {type: :feature}
-if ENV['JS']
-  describe_options[:js] = true
-end
+describe_options = { type: :feature }
+describe_options[:js] = true if ENV['JS']
 
-describe 'batch_edit', describe_options do
+describe 'batch editing', describe_options do
+  before(:all) do
+    @old_resque_inline_value = Resque.inline
+    Resque.inline = true
+  end
+
   after(:all) do
+    Resque.inline = @old_resque_inline_value
     User.destroy_all
     Batch.destroy_all
     GenericFile.destroy_all
     Collection.destroy_all
   end
-  before(:each) do
-    @old_resque_inline_value = Resque.inline
-    Resque.inline = true
-  end
-  after(:each) do
-    Resque.inline = @old_resque_inline_value
-  end
 
-  let (:subject) {"fffzzz"}
+  describe 'all files' do
+    let(:subject_value) { 'fffzzz' }
 
-  describe 'batch modify all files' do   
-    let(:agreed_to_terms_of_service) { false }
-    before (:each) do
-      @gf1 =  GenericFile.new title: 'title 1' 
-      @gf1.apply_depositor_metadata('jilluser')
-      @gf1.save
-      @gf2 =  GenericFile.new title: 'title 2' 
-      @gf2.apply_depositor_metadata('jilluser')
-      @gf2.save
+    before(:each) do
+      @gf1 =  GenericFile.new.tap do |f|
+        f.title = 'title 1'
+        f.apply_depositor_metadata('jilluser')
+        f.save
+      end
+      @gf2 =  GenericFile.new.tap do |f|
+        f.title = 'title 2'
+        f.apply_depositor_metadata('jilluser')
+        f.save
+      end
     end
-    
-           
-    
-    it "should edit all files", js: true do
+
+    it "edits multiple files" do
       login_js
       go_to_dashboard
       first('input#check_all').click
-#      within('th.sm') do
-#        first('a.dropdown-toggle').click
-#      end
       click_button('Edit Selected')
-      page.has_content?('2 files')
-      page.has_content?(@gf1.title.first)
-      page.has_content?(@gf2.title.first)
+      page.should have_content('2 files')
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
       click_link('Subject')
       within('#collapse_subject') do
-        fill_in('Subject', with:subject)
-        click_button("Save changes")
+        fill_in('Subject', with: subject_value)
+        click_button('subject_save')
       end
-      page.find("#collapse_subject").should have_content("Changes Saved")
+      page.find('#collapse_subject').should have_content('Changes Saved')
       within('#masthead') do
-      fill_in 'search-field-header', with:subject
+        fill_in('search-field-header', with: subject_value)
         click_button("Go")
       end
-      page.driver.browser.switch_to.alert.accept rescue
       page.should have_content('Search Results')
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
-      
     end
 
-    it "should delete all files", js: true do
+    it "deletes multiple files" do
       login_js
       go_to_dashboard
       first('input#check_all').click
-#      within('th.sm') do
-#        first('a.dropdown-toggle').click
-#      end
       click_button('Delete Selected')
-      page.driver.browser.switch_to.alert.accept
-      page.has_content?('My Dashboard')
+      go_to_dashboard
+      page.should have_content('My Dashboard')
       page.should_not have_content(@gf1.title.first)
-      page.should_not have_content(@gf2.title.first)      
+      page.should_not have_content(@gf2.title.first)
     end
-
   end
 end

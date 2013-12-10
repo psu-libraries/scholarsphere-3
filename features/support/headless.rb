@@ -15,7 +15,7 @@
 # Headless for Jenkins CI builds
 Before("@javascript") do
   if ENV['HEADLESS'] == 'true'
-    Capybara.current_driver = :selenium
+    Capybara.current_driver = :poltergeist
     require 'headless'
     headless = Headless.new
     headless.start

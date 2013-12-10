@@ -8,7 +8,6 @@
     var $container = this;
 
     function addContributor(name, id) {
-      console.log("Adding");
       data = {name: name, id: id}
       row = tmpl("tmpl-proxy-row", data);
       $('#authorizedProxies tbody', $container).append(row);
