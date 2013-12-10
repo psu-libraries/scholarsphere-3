@@ -483,6 +483,7 @@ DEPENDENCIES
   capybara (~> 1.1.3)
   clamav (= 0.4.1)
   coffee-rails (= 4.0.1)
+  cucumber
   cucumber-rails (~> 1.0)
   daemons (= 1.1.9)
   database_cleaner
