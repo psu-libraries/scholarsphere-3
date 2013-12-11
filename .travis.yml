@@ -10,6 +10,7 @@ before_script:
   - cp config/database.yml.sample config/database.yml
   - cp config/fedora.yml.sample config/fedora.yml
   - cp config/solr.yml.sample config/solr.yml
+  - cp config/redis.yml.sample config/redis.yml
   - cp config/hydra-ldap.yml.sample config/hydra-ldap.yml
   - cp config/devise.yml.sample config/devise.yml
   - bundle exec rake scholarsphere:generate_secret
