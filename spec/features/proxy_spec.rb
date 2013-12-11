@@ -45,10 +45,12 @@ describe 'collection', describe_options do
 
   describe 'create a proxy' do
     before (:all) do
+      spoof_http_auth
       @user2 = FactoryGirl.find_or_create(:archivist)
     end
     after (:all) do
       @user2.destroy
+      unspoof_http_auth
     end
     it "should create proxy", js: true do
       login_js

@@ -20,6 +20,9 @@ class ApplicationController < ActionController::Base
   # Adds Sufia behaviors into the application controller
   include Sufia::Controller
 
+  # allow you to check for a valid user in the session
+  include Behaviors::HttpHeaderAuthenticatableBehavior
+
   # Please be sure to impelement current_user and user_session. Blacklight depends on
   # these methods in order to perform user specific actions.
 
@@ -107,7 +110,7 @@ class ApplicationController < ActionController::Base
 
  protected
   def user_logged_in?
-    user_signed_in?
+    user_signed_in? and ( valid_user?(request.headers) || Rails.env.test?)
   end
 
   def has_access?

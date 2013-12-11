@@ -8,11 +8,16 @@ if ENV['JS']
 end
 
 describe 'batch_edit', describe_options do
+  before (:all) do
+    spoof_http_auth
+  end
+
   after(:all) do
     User.destroy_all
     Batch.destroy_all
     GenericFile.destroy_all
     Collection.destroy_all
+    unspoof_http_auth
   end
   before(:each) do
     @old_resque_inline_value = Resque.inline
@@ -21,12 +26,7 @@ describe 'batch_edit', describe_options do
   after(:each) do
     Resque.inline = @old_resque_inline_value
   end
-  after(:all) do
-    User.destroy_all
-    Batch.destroy_all
-    GenericFile.destroy_all
-  end
-  
+
   let (:subject) {"fffzzz"}
 
   describe 'batch modify all files' do   

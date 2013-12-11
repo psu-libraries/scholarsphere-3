@@ -8,34 +8,47 @@ module UserLogin
       user = User.find_or_create_by(login: login)
       User.find_by_login(login).should_not be_nil
       Capybara.current_driver = driver_name
-  end  
-
-  
-  def login_js (remote_user = 'jilluser')
-    
-    Devise::Strategies::HttpHeaderAuthenticatable.class_eval do
-
-      @@remote_user = remote_user
-
-      # Called if the user doesn't already have a rails session cookie
-      def valid?
-        true
-      end
-     
-      def authenticate!
-        u = User.find_by_login(@@remote_user)
-        if u.nil?
-          u = User.create(:login => @@remote_user)
-          u.populate_attributes
-        end
-        u.ldap_available = true
-        u.save
-        success!(u)
-      end
-    end
-    
   end
- 
+
+  class FakeHeaderAuthenticatableStrategy < ::Devise::Strategies::Base
+
+    @@remote_user = "jilluser"
+
+    # Called if the user doesn't already have a rails session cookie
+    def valid?
+      true
+    end
+
+    def authenticate!
+      u = User.find_by_login(@@remote_user)
+      if u.nil?
+        u = User.create(:login => @@remote_user)
+        u.populate_attributes
+      end
+      u.ldap_available = true
+      u.save
+      success!(u)
+    end
+  end
+
+
+  def login_js (remote_user = 'jilluser')
+
+    FakeHeaderAuthenticatableStrategy.class_eval do
+      @@remote_user = remote_user
+    end
+    Warden::Strategies.add(:http_header_authenticatable, FakeHeaderAuthenticatableStrategy) unless remote_user == 'jilluser'
+
+  end
+
+  def spoof_http_auth
+    Warden::Strategies.add(:http_header_authenticatable, FakeHeaderAuthenticatableStrategy)
+  end
+
+  def unspoof_http_auth
+    Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHeaderAuthenticatable)
+  end
+
   def wait_on_page(text, time=5)
     wait_until(time) do
       page.has_content?(text)
