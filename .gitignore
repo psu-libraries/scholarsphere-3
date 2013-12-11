@@ -77,8 +77,6 @@ log/*
 public/plugin_assets
 public/plugin_assets/
 
-db/schema.rb
-
 .project
 .buildpath
 
