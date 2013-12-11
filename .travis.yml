@@ -12,7 +12,7 @@ before_script:
   - cp config/solr.yml.sample config/solr.yml
   - cp config/hydra-ldap.yml.sample config/hydra-ldap.yml
   - cp config/devise.yml.sample config/devise.yml
-  - rake scholarsphere:generate_secret
+  - bundle exec rake scholarsphere:generate_secret
 notifications:
   email:
     recipients:
