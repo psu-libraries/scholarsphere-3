@@ -50,24 +50,24 @@ describe 'batch_edit', describe_options do
 #        first('a.dropdown-toggle').click
 #      end
       click_button('Edit Selected')
+      puts "got here"
       page.has_content?('2 files')
       page.has_content?(@gf1.title.first)
       page.has_content?(@gf2.title.first)
       click_link('Subject')
-      fill_in('Subject', with:subject)
-      click_button("Save changes")
-      wait_until(10) do
-        page.has_content?('Changes Saved')
+      within('#collapse_subject') do
+        fill_in('Subject', with:subject)
+        click_button("Save changes")
       end
+      page.find("#collapse_subject").should have_content("Changes Saved")
       within('#masthead') do
       fill_in 'search-field-header', with:subject
         click_button("Go")
       end
-      wait_until(10) do
-        page.has_content?('Search Results')
-      end
-      page.has_content?(@gf1.title.first)
-      page.has_content?(@gf2.title.first)
+      page.driver.browser.switch_to.alert.accept rescue
+      page.should have_content('Search Results')
+      page.should have_content(@gf1.title.first)
+      page.should have_content(@gf2.title.first)
       
     end
 
