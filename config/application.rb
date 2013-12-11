@@ -65,7 +65,7 @@ module ScholarSphere
     config.hosts_vhosts_map = {
       'ss1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
       'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
-      'ss3test' => 'https://scholarsphere-demo.dlt.psu.edu/',
+      'ss1demo' => 'https://scholarsphere-demo.dlt.psu.edu/',
       'ss1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss2qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',

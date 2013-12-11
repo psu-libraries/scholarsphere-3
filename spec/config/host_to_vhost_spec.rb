@@ -25,8 +25,8 @@ describe 'host_to_vhost' do
     Rails.application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
     Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-test.dlt.psu.edu/'
   end
-  it "should return the proper vhost on ss3test" do
-    Socket.stub(:gethostname).and_return('ss3test')
+  it "should return the proper vhost on ss1demo" do
+    Socket.stub(:gethostname).and_return('ss1demo')
     Rails.application.get_vhost_by_host[0].should == 'scholarsphere-demo.dlt.psu.edu'
     Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-demo.dlt.psu.edu/'
   end
