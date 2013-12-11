@@ -14,7 +14,8 @@ gem 'mysql2', '0.3.11'
 gem 'sufia', github:"projecthydra/sufia"
 gem 'hydra-batch-edit'
 gem 'hydra-editor' # Currently using this for its edit view partials (used when editing collections)
-gem 'hydra-collections'#, github:'psu-stewardship/hydra-collections', ref:'d475e4134533a0c7d'
+gem 'hydra-collections', github:"projecthydra/hydra-collections"
+#gem 'hydra-collections'
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
