@@ -11,7 +11,7 @@ gem 'rails', '4.0.2'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', github:"projecthydra/sufia"
+gem 'sufia', github:"projecthydra/sufia", :ref => '3bbe2e8b549756a98fb3e3dda7a715516b4ad709'
 gem 'hydra-batch-edit'
 gem 'hydra-editor' # Currently using this for its edit view partials (used when editing collections)
 gem 'hydra-collections', github:"projecthydra/hydra-collections"
