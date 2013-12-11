@@ -19,10 +19,7 @@ gem 'hydra-collections', github:"projecthydra/hydra-collections"
 gem 'hydra-ldap', '0.1.0'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
-gem 'rmagick', '2.13.2', :require => 'RMagick' # :require arg is necessary on Linux-based hosts
 gem 'devise'
-gem 'daemons', '1.1.9'
-gem 'zipruby', '0.3.6'
 gem 'nest', '1.1.1'
 gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
@@ -38,10 +35,6 @@ gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
 # crontab it up
 gem 'whenever'
-
-# rake needs rspec and cucumber in all environments
-gem 'rspec'
-gem 'cucumber'
 
 group :assets do
   gem 'sass-rails', '4.0.1'
