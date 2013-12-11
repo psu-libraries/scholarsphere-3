@@ -59,9 +59,6 @@
           </div>
         </div>
         -->
-        <% if @trophies.count > 0 %>
-          <%= render :partial => 'trophy_edit', :locals => {:trophies => @trophies} %>
-        <% end %>
 
         <div class="form-actions">
           <%= f.button '<i class="icon-save"></i> Save Profile'.html_safe, :type => 'submit', :class => "btn-primary btn-large" %>
