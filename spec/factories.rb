@@ -16,11 +16,13 @@ FactoryGirl.define do
   factory :user, :class => User do |u|
     login 'jilluser'
     display_name 'Jill Z. User'
+    title "User"
     ldap_available true
   end
 
   factory :user_with_fixtures, :class => User do |u|
     login 'userwithfixtures'
+    title "User"
     after(:create) do |user|
       message = '<span class="batchid ui-helper-hidden">fake_batch_noid</span>You\'ve got mail.'
       User.batchuser().send_message(user, message, "Sample notification.")
@@ -29,16 +31,19 @@ FactoryGirl.define do
 
   factory :archivist, :class => User do |u|
     login 'archivist1'
+    title "Archivist"
     ldap_available true
   end
 
   factory :curator, :class => User do |u|
     login 'curator1'
+    title "Curator"
     ldap_available true
   end
 
   factory :random_user, :class => User do |u|
     sequence(:login) {|n| "user#{n}" }
+    title "User"
     ldap_available true
   end
 
