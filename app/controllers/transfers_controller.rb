@@ -28,7 +28,7 @@ class TransfersController < ApplicationController
   end
 
   def index
-    @incoming = ProxyDepositRequest.where(receiving_user_id: current_user.id)
+    @incoming = ProxyDepositRequest.where(receiving_user_id: current_user.id).reject &:deleted_file?
     @outgoing = ProxyDepositRequest.where(sending_user_id: current_user.id)
   end
 

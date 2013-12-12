@@ -75,9 +75,7 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def deleted_file?
-    return false if GenericFile.find(pid)
-  rescue ActiveFedora::ObjectNotFoundError
-    true
+    !GenericFile.exists?(pid)
   end
 
   def title

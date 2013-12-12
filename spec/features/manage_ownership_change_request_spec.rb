@@ -10,9 +10,9 @@ feature "Managing ownership change requests" do
     Collection.destroy_all
   end
   context "when someone has request to transfer a file to me" do
+    let(:sender) { FactoryGirl.find_or_create(:test_user_1) }
     background do
-      sender = FactoryGirl.find_or_create(:test_user_1)
-      @file = GenericFile.new.tap do |f|
+      GenericFile.new.tap do |f|
         f.apply_depositor_metadata(sender.user_key)
         f.save!
         f.request_transfer_to(@user)
@@ -36,12 +36,12 @@ feature "Managing ownership change requests" do
     end
   end
   context "when I have requested to transfer a file to someone else" do
+    let(:receiver) { FactoryGirl.find_or_create(:test_user_1) }
     background do
-      @receiver = FactoryGirl.find_or_create(:test_user_1)
-      @file = GenericFile.new.tap do |f|
+      GenericFile.new.tap do |f|
         f.apply_depositor_metadata(@user.user_key)
         f.save!
-        f.request_transfer_to(@receiver)
+        f.request_transfer_to(receiver)
       end
     end
 
@@ -56,7 +56,7 @@ feature "Managing ownership change requests" do
 
     context "and it has been accepted" do
       background do
-        @receiver.proxy_deposit_requests.first.transfer!
+        receiver.proxy_deposit_requests.first.transfer!
       end
       scenario "then I should be able to see the status of requests" do
         visit '/'
