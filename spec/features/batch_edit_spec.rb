@@ -8,16 +8,11 @@ if ENV['JS']
 end
 
 describe 'batch_edit', describe_options do
-  before (:all) do
-    spoof_http_auth
-  end
-
   after(:all) do
     User.destroy_all
     Batch.destroy_all
     GenericFile.destroy_all
     Collection.destroy_all
-    unspoof_http_auth
   end
   before(:each) do
     @old_resque_inline_value = Resque.inline
@@ -50,7 +45,6 @@ describe 'batch_edit', describe_options do
 #        first('a.dropdown-toggle').click
 #      end
       click_button('Edit Selected')
-      puts "got here"
       page.has_content?('2 files')
       page.has_content?(@gf1.title.first)
       page.has_content?(@gf2.title.first)

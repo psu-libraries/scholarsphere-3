@@ -33,8 +33,6 @@ describe 'collection', describe_options do
   after(:each) do
     Resque.inline = @old_resque_inline_value
   end
-  before (:all) do
-  end
   after(:all) do
     User.destroy_all
     Batch.destroy_all
@@ -44,13 +42,11 @@ describe 'collection', describe_options do
   
 
   describe 'create a proxy' do
-    before (:all) do
-      spoof_http_auth
+    before(:all) do
       @user2 = FactoryGirl.find_or_create(:archivist)
     end
-    after (:all) do
+    after(:all) do
       @user2.destroy
-      unspoof_http_auth
     end
     it "should create proxy", js: true do
       login_js

@@ -34,7 +34,6 @@ describe 'collection', describe_options do
     Resque.inline = @old_resque_inline_value
   end
   before (:all) do
-    spoof_http_auth
     @user_key = 'jilluser'
     @gf1 =  GenericFile.new title: 'title 1' 
     @gf1.apply_depositor_metadata(@user_key)
@@ -48,7 +47,6 @@ describe 'collection', describe_options do
     Batch.destroy_all
     GenericFile.destroy_all
     Collection.destroy_all
-    unspoof_http_auth
   end
   
 

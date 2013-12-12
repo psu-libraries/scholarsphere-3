@@ -33,12 +33,10 @@ module UserLogin
 
 
   def login_js (remote_user = 'jilluser')
-
     FakeHeaderAuthenticatableStrategy.class_eval do
       @@remote_user = remote_user
     end
-    Warden::Strategies.add(:http_header_authenticatable, FakeHeaderAuthenticatableStrategy) unless remote_user == 'jilluser'
-
+    spoof_http_auth
   end
 
   def spoof_http_auth
@@ -50,16 +48,15 @@ module UserLogin
   end
 
   def wait_on_page(text, time=5)
-    wait_until(time) do
-      page.has_content?(text)
-    end
-    return page.has_content?(text)
+    # causes selenium to wait until text appears on the page
+    page.should have_content(text)
   end
    
   def go_to_dashboard
     visit '/'
     first('a.dropdown-toggle').click
     click_link('my dashboard')
-    wait_on_page('My Dashboard').should be_true
+    # causes selenium to wait until text appears on the page
+    page.should have_content('My Dashboard')
   end
 end

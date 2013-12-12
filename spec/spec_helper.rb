@@ -38,6 +38,11 @@ RSpec.configure do |config|
     puts "WARNING: #{batches_count} batches need cleaning up" if batches_count > 0
   end
 
+  config.after :each do
+    # Unspoof the warden strategy.  See support/user_login.rb for more info.
+    unspoof_http_auth if example.options[:js]
+  end
+
   Capybara.register_driver :selenium do |app|
     profile = Selenium::WebDriver::Firefox::Profile.new
     Capybara::Selenium::Driver.new(app, :profile => profile)

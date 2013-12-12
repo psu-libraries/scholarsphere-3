@@ -8,10 +8,6 @@ if ENV['JS']
 end
 
 describe 'end to end behavior', describe_options do
-
-  before (:all) do
-    spoof_http_auth
-  end
   before(:each) do
     @old_resque_inline_value = Resque.inline
     Resque.inline = true
@@ -22,7 +18,6 @@ describe 'end to end behavior', describe_options do
   after(:all) do
     User.destroy_all
     Batch.destroy_all
-    unspoof_http_auth
   end
   
   let(:user) { FactoryGirl.find_or_create(:user) }
