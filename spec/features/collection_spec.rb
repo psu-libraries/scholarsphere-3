@@ -154,8 +154,8 @@ describe 'collection', describe_options do
         find('button.dropdown-toggle').click
         click_link('Edit Collection')
       end
-      page.should have_field('#collection_title', with: @collection.title)
-      page.should have_field('#collection_description', with: @collection.description)
+      page.should have_field('collection_title', with: @collection.title)
+      page.should have_field('collection_description', with: @collection.description)
       new_title = "Altered Title"
       new_description = "Completely new Description text."
       creators = ["Dorje Trollo", "Vajrayogini"]
@@ -182,8 +182,8 @@ describe 'collection', describe_options do
         first('button.dropdown-toggle').click
         click_link('Edit Collection')
       end
-      page.should have_field('#collection_title', with: @collection.title)
-      page.should have_field('#collection_description', with: @collection.description)
+      page.should have_field('collection_title', with: @collection.title)
+      page.should have_field('collection_description', with: @collection.description)
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
       within("#document_#{@gf1.noid}") do
@@ -204,8 +204,8 @@ describe 'collection', describe_options do
         first('button.dropdown-toggle').click
         click_link('Edit Collection')
       end
-      page.should have_field('#collection_title', with: @collection.title)
-      page.should have_field('#collection_description', with: @collection.description)
+      page.should have_field('collection_title', with: @collection.title)
+      page.should have_field('collection_description', with: @collection.description)
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
       first('input#check_all').click

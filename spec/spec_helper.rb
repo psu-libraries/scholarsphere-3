@@ -21,7 +21,6 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
-require 'mocha/setup'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -43,8 +42,8 @@ RSpec.configure do |config|
     puts "WARNING: #{collections_count} batches need cleaning up" if collections_count > 0
   end
 
-  config.after :each do
-    # Unspoof the warden strategy.  See support/user_login.rb for more info.
+  config.after(:each) do
+    # Unspoof the warden strategy.  See spec/support/user_login.rb for more info.
     unspoof_http_auth if example.options[:js]
   end
 

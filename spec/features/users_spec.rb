@@ -1,19 +1,20 @@
 require 'spec_helper'
 
-describe "User Profile" do
+describe "User Profile", describe_options do
 
   before do
+    # This really shouldn't be necessary
+    unspoof_http_auth
     sign_in :curator
     visit "/"
+    click_link "curator1"
   end
 
   it "should be displayed" do
-    click_link "curator1"
     page.should have_content "Edit Your Profile"
   end
 
   it "should be editable" do
-    click_link "curator1"
     click_link "Edit Your Profile"
     fill_in 'user_twitter_handle', with: 'curatorOfData'
     click_button 'Save Profile'
@@ -22,14 +23,12 @@ describe "User Profile" do
   end
 
   it "should display all users" do
-    click_link "curator1"
     click_link "View Users"
     page.should have_xpath("//td/a[@href='/users/curator1']")
   end
 
-  it "should allow searchin through all users" do
+  it "should allow searching through all users" do
     @archivist = FactoryGirl.find_or_create(:archivist)
-    click_link "curator1"
     click_link "View Users"
     page.should have_xpath("//td/a[@href='/users/curator1']")
     page.should have_xpath("//td/a[@href='/users/archivist1']")
