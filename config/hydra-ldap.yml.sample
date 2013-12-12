@@ -14,11 +14,6 @@ test:
   group_base: dc=psu,dc=edu
   # base: dc=example,dc=com
   # uid: uid
-integration:
-  host: ldap.example.com
-  port: 389
-  group_base: dc=example,dc=com
-  uid: uid
 production:  
   host: ldap.example.com
   port: 389

@@ -4,9 +4,6 @@ development:
 test:
   host: localhost
   port: 6379
-integration:
-  host: localhost
-  port: 6379
 production:
   host: localhost
   port: 6379

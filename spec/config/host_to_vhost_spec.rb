@@ -15,11 +15,6 @@
 require 'spec_helper'
 
 describe 'host_to_vhost' do
-  it "should return the proper vhost on ss1test" do
-    Socket.stub(:gethostname).and_return('ss1test')
-    Rails.application.get_vhost_by_host[0].should == 'scholarsphere-integration.dlt.psu.edu-8443'
-    Rails.application.get_vhost_by_host[1].should == 'https://scholarsphere-integration.dlt.psu.edu:8443/'
-  end
   it "should return the proper vhost on ss2test" do
     Socket.stub(:gethostname).and_return('ss2test')
     Rails.application.get_vhost_by_host[0].should == 'scholarsphere-test.dlt.psu.edu'
