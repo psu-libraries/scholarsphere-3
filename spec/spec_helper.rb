@@ -48,7 +48,7 @@ RSpec.configure do |config|
   end
 
   # Make Capybara wait a bit longer so sluggish AJAX reqs can finish
-  Capybara.default_wait_time = 5
+  Capybara.default_wait_time = 10
 
   # Use poltergeist (phantomjs driver) for feature tests requiring javascript
   Capybara.register_driver :poltergeist do |app|
