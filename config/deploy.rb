@@ -25,7 +25,7 @@ ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")]
 set :use_sudo, false
 default_run_options[:pty] = true
 
-set :rbenv_ruby_version, "2.0.0-p247"
+set :rbenv_ruby_version, "2.0.0-p353"
 set :rbenv_setup_shell, false
 
 notification.irc do |irc|
