@@ -33,9 +33,6 @@ gem 'unicode', :platforms => [:mri_18, :mri_19]
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
-gem 'rspec'     # capistrano needs rake. rake needs rspec and cucumber.
-gem 'cucumber'  # capistrano needs rake. rake needs rspec and cucumber.
-
 # crontab it up
 gem 'whenever'
 

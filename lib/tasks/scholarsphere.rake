@@ -11,17 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-require 'rspec/core'
-require 'rspec/core/rake_task'
-require 'rdf'
-require 'rdf/rdfxml'
-require 'rubygems'
+#
 require 'action_view'
-require 'rainbow'
-require 'cucumber'
-require 'cucumber/rake/task'
 require 'blacklight/solr_helper'
+require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
 include Blacklight::SolrHelper
@@ -126,26 +119,6 @@ namespace :scholarsphere do
   desc "Re-solrize all objects"
   task :resolrize => :environment do
     Sufia.queue.push(ResolrizeJob.new)
-  end
-
-  desc "Execute Continuous Integration build (docs, tests with coverage)"
-  task :ci => :environment do
-    Rake::Task["jetty:config"].invoke
-    Rake::Task["db:migrate"].invoke
-
-    require 'jettywrapper'
-    jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
-
-    error = nil
-    error = Jettywrapper.wrap(jetty_params) do
-      # do not run the js examples since selenium is not set up for jenkins
-      ENV['SPEC_OPTS']="-t ~js"      
-      Rake::Task['spec'].invoke
-      Cucumber::Rake::Task.new(:features) do |t|
-        t.cucumber_opts = "--format pretty"
-      end
-    end
-    raise "test failures: #{error}" if error
   end
 
   namespace :export do
