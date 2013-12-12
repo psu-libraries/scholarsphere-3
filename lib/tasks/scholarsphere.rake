@@ -126,26 +126,6 @@ namespace :scholarsphere do
      out =  `cp fits_conf/* fits/xml`
   end
 
-  desc "Execute Continuous Integration build (docs, tests with coverage)"
-  task :ci => :environment do
-    Rake::Task["jetty:config"].invoke
-    Rake::Task["db:migrate"].invoke
-    Rake::Task["scholarsphere:fits_conf"].invoke
-    Rake::Task["scholarsphere:generate_secret"].invoke
-
-    require 'jettywrapper'
-    jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
-
-    error = nil
-    error = Jettywrapper.wrap(jetty_params) do
-      Rake::Task['spec'].invoke
-      Cucumber::Rake::Task.new(:features) do |t|
-        t.cucumber_opts = "--format pretty"
-      end
-    end
-    raise "test failures: #{error}" if error
-  end
-
   namespace :export do
     desc "Dump metadata as RDF/XML for e.g. Summon integration"
     task :rdfxml => :environment do

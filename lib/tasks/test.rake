@@ -7,14 +7,14 @@ namespace :scholarsphere do
     task :ci => :environment do
       Rake::Task["jetty:config"].invoke
       Rake::Task["db:migrate"].invoke
+      Rake::Task["scholarsphere:fits_conf"].invoke
+      Rake::Task["scholarsphere:generate_secret"].invoke
 
       require 'jettywrapper'
       jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
 
       error = nil
       error = Jettywrapper.wrap(jetty_params) do
-        # do not run the js examples since selenium is not set up for jenkins
-        ENV['SPEC_OPTS']="-t ~js"      
         Rake::Task['spec'].invoke
         Cucumber::Rake::Task.new(:features) do |t|
           t.cucumber_opts = "--format pretty"

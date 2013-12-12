@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "User Profile", describe_options do
+describe "User Profile" do
 
   before do
-    # This really shouldn't be necessary
+    # TODO: This really shouldn't be necessary
     unspoof_http_auth
     sign_in :curator
     visit "/"
