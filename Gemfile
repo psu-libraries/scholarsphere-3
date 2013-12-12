@@ -25,7 +25,7 @@ gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'clamav', '0.4.1'
 gem 'equivalent-xml', '0.3.0'
-gem 'therubyracer', '0.10.2'
+gem 'therubyracer', '0.12.0'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'unicode', :platforms => [:mri_18, :mri_19]
