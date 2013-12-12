@@ -31,3 +31,5 @@ notifications:
       - "irc.freenode.org#scholarsphere"
     template:
       - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
+services:
+  - redis-server
