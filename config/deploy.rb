@@ -14,7 +14,7 @@ require 'capistrano-notification'
 set :application, "scholarsphere"
 set :whenever_command, "bundle exec whenever"
 
-set :scm, :git 
+set :scm, :git
 set :deploy_via, :remote_cache
 set :repository,  "https://github.com/psu-stewardship/#{application}.git"
 
@@ -25,7 +25,7 @@ ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")]
 set :use_sudo, false
 default_run_options[:pty] = true
 
-set :rbenv_ruby_version, "2.0.0-p353"
+set :rbenv_ruby_version, File.read(File.join(Rails.root, '.ruby-version')).chomp
 set :rbenv_setup_shell, false
 
 notification.irc do |irc|
@@ -69,7 +69,7 @@ namespace :deploy do
   desc "Re-solrize objects"
   task :resolrize, :roles => :solr do
     run <<-CMD.compact
-    cd -- #{latest_release} && 
+    cd -- #{latest_release} &&
     RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize
     CMD
   end
