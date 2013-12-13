@@ -42,9 +42,6 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'unicorn-rails'
-  gem 'debugger'
-  gem 'rubyzip', '< 1.0.0'
   gem 'poltergeist'
   gem 'rspec-rails', '>= 2.11.0'
   gem 'cucumber-rails', '~> 1.0', :require => false
@@ -57,6 +54,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'debugger'
   gem 'unicorn-rails'
   # capistrano deployments
   gem 'capistrano', '2.15.5'

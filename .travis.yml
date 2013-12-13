@@ -1,10 +1,10 @@
 language: ruby
+bundler_args: --without development
 rvm:
   - "2.0.0"
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - HEADLESS=true
     - JS=true
 before_install:
   - sudo apt-get install -qq clamav-daemon libclamav-dev clamav-data
