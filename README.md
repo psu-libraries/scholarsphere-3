@@ -94,7 +94,7 @@ configure it, & fire it up
     rake jetty:start
 
 Start the resque-pool workers (needed for characterization, audit,
-unzip, and resolrization services)
+and resolrization services)
 
     resque-pool --daemon --environment development start
 

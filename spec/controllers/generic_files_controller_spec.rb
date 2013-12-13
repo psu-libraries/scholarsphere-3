@@ -33,7 +33,7 @@ describe GenericFilesController do
         Batch.find("sample:batch_id").delete
       rescue
       end
-      @mock.delete unless @mock.inner_object.class == ActiveFedora::UnsavedDigitalObject 
+      @mock.delete unless @mock.inner_object.class == ActiveFedora::UnsavedDigitalObject
     end
 
     it "should spawn a content deposit event job" do
@@ -45,24 +45,6 @@ describe GenericFilesController do
       s2 = double('two')
       CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
-    end
-
-    it "should expand zip files" do
-      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "test:123" })
-      #file = fixture_file_upload('/world.png','application/zip')
-      file = fixture_file_upload('/icons.zip','application/zip')
-
-      s1 = double('one')
-      CharacterizeJob.should_receive(:new).with('test:123').and_return(s1)
-      Sufia.queue.should_receive(:push).with(s1).once
-      s2 = double('two')
-      UnzipJob.should_receive(:new).with('test:123').and_return(s2)
-      Sufia.queue.should_receive(:push).with(s2).once
-      s3 = double('three')
-      ContentDepositEventJob.should_receive(:new).with('test:123', 'jilluser').and_return(s3)
-      Sufia.queue.should_receive(:push).with(s3).once
-
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
     end
 
@@ -142,10 +124,10 @@ describe GenericFilesController do
     it "failing virus check should create flash" do
       file = fixture_file_upload('/world.png','image/png')
       Sufia::GenericFile::Actions.should_receive(:virus_check).with(file.path).and_raise(Sufia::VirusFoundError.new('A virus was found'))
-      
+
       xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
       flash[:error].should include('A virus was found')
-      
+
     end
 
     it "should error out of create and save after on continuos rsolr error" do
@@ -187,7 +169,7 @@ describe GenericFilesController do
     end
     after do
       @user.delete
-    end    
+    end
     it "should delete the file" do
       GenericFile.find(@generic_file.pid).should_not be_nil
       delete :destroy, :id=>@generic_file.pid
@@ -219,7 +201,7 @@ describe GenericFilesController do
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       post :update, :id=>@generic_file.pid, :generic_file=>{:title=>'new_title', :tag=>[''], :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
-      @user.delete      
+      @user.delete
     end
 
     it "should spawn a content new version event job" do
@@ -254,7 +236,7 @@ describe GenericFilesController do
       sign_in archivist
 
       ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
-      
+
       s2 = double('two')
       ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, archivist.login).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
@@ -272,7 +254,7 @@ describe GenericFilesController do
       controller.stub(:current_user).and_return(@user)
       sign_in @user
       ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
-      
+
       s2 = double('two')
       ContentRestoredVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login, 'content.0').and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
@@ -309,7 +291,6 @@ describe GenericFilesController do
       s2 = double('two')
       CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-
 
       GenericFile.stub(:save).and_return({})
       ClamAV.any_instance.should_receive(:scanfile).and_return(0)
