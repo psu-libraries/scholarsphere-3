@@ -4,14 +4,14 @@ if RUBY_VERSION =~ /1.9/
   Encoding.default_internal = Encoding::UTF_8
 end
 
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '4.0.2'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', github:"projecthydra/sufia", :ref => '0ff61e7'
+gem 'sufia', github:"projecthydra/sufia", :ref => '7ec5c36' # WARNING, this is on a branch
 
 gem 'hydra-batch-edit'
 gem 'hydra-editor' # Currently using this for its edit view partials (used when editing collections)

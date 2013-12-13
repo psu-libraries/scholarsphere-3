@@ -2,10 +2,12 @@ require 'spec_helper'
 
 describe 'users/show.html.erb' do
 
+  let(:join_date) { 5.days.ago }
+  
   before do
     allow(view).to receive(:signed_in?).and_return(true)
     allow(view).to receive(:current_user).and_return(stub_model(User, user_key: 'mjg'))
-    assign(:user, stub_model(User, user_key: 'cam156', created_at: 5.days.ago, title: 'mrs'))
+    assign(:user, stub_model(User, user_key: 'cam156', created_at: join_date))
     assign(:followers, [])
     assign(:following, [])
     assign(:trophies, [])
@@ -23,5 +25,25 @@ describe 'users/show.html.erb' do
     expect(page).to have_selector(".tab-content > div#profile.tab-pane")
     expect(page).to have_selector(".tab-content > div#proxies.tab-pane")
     expect(page).to have_selector(".tab-content > div#activity_log.tab-pane")
+  end
+
+
+  describe "when the user doesn't have a title" do
+    it "should have the vitals" do
+      render
+      rendered.should match /<i class="icon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
+      rendered.should_not match /<i class="icon-briefcase"><\/i>/
+    end
+  end
+
+  describe "when user has a title" do
+    before do
+      assign(:user, stub_model(User, user_key: 'cam156', created_at: join_date, title: 'mrs'))
+    end
+    it "should have the vitals" do
+      render
+      rendered.should match /<i class="icon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
+      rendered.should match /<i class="icon-briefcase"><\/i> Mrs/
+    end
   end
 end
