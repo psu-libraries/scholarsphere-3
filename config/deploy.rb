@@ -55,7 +55,8 @@ namespace :deploy do
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/hydra-ldap.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/solr.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/redis.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/secret_token.rb #{release_path}/config/initializers/
+    ln -sf /dlt/#{application}/config_#{stage}/#{application}/secret_token.rb #{release_path}/config/initializers/ &&
+    ln -sf /dlt/#{application}/config_#{stage}/#{application}/sufia-secret.rb #{release_path}/config/initializers/
     CMD
   end
 end
