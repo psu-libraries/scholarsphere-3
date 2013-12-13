@@ -18,8 +18,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 689264ffd8068eb61b065b95f1c830116590adeb
-  ref: 689264f
+  revision: 0ff61e7a7fb041f5a7ec5d582797e4c4dc9a7c14
+  ref: 0ff61e7
   specs:
     sufia (3.5.0)
       blacklight_advanced_search (~> 2.1.0)
@@ -189,7 +189,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     ensure_valid_encoding (0.5.3)
-    equivalent-xml (0.3.0)
+    equivalent-xml (0.4.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -207,7 +207,6 @@ GEM
       activerecord (>= 3.0.0)
     gherkin (2.12.2)
       multi_json (~> 1.3)
-    headless (1.0.1)
     highline (1.6.20)
     hike (1.2.3)
     hooks (0.3.3)
@@ -448,7 +447,6 @@ GEM
     unf (0.1.3)
       unf_ext
     unf_ext (0.0.6)
-    unicode (0.4.4)
     unicorn (4.7.0)
       kgio (~> 2.6)
       rack
@@ -487,10 +485,9 @@ DEPENDENCIES
   database_cleaner
   debugger
   devise
-  equivalent-xml (= 0.3.0)
+  equivalent-xml (= 0.4.0)
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 3.0.2.2)
-  headless
   hydra-batch-edit
   hydra-collections!
   hydra-editor
@@ -513,7 +510,6 @@ DEPENDENCIES
   sufia!
   therubyracer (= 0.12.0)
   uglifier (= 2.3.2)
-  unicode
   unicorn-rails
   whenever
   yaml_db (= 0.2.3)

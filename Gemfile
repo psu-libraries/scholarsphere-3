@@ -11,7 +11,7 @@ gem 'rails', '4.0.2'
 gem 'mysql2', '0.3.11'
 
 # Hydra community components
-gem 'sufia', github:"projecthydra/sufia", :ref => '689264f'
+gem 'sufia', github:"projecthydra/sufia", :ref => '0ff61e7'
 
 gem 'hydra-batch-edit'
 gem 'hydra-editor' # Currently using this for its edit view partials (used when editing collections)
@@ -25,11 +25,9 @@ gem 'nest', '1.1.1'
 gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'clamav', '0.4.1'
-gem 'equivalent-xml', '0.3.0'
 gem 'therubyracer', '0.12.0'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
-gem 'unicode', :platforms => [:mri_18, :mri_19]
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
@@ -47,7 +45,6 @@ group :development, :test do
   gem 'unicorn-rails'
   gem 'debugger'
   gem 'rubyzip', '< 1.0.0'
-  gem 'headless'
   gem 'poltergeist'
   gem 'rspec-rails', '>= 2.11.0'
   gem 'cucumber-rails', '~> 1.0', :require => false
@@ -56,6 +53,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'equivalent-xml', '0.4.0'
 end
 
 group :development do
