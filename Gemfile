@@ -1,9 +1,3 @@
-# workaround for "invalid byte sequence in US-ASCII (ArgumentError)" breaking the Jenkins build
-if RUBY_VERSION =~ /1.9/
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
-
 source 'https://rubygems.org'
 
 # Ruby on Rails components
@@ -12,11 +6,9 @@ gem 'mysql2', '0.3.14'
 
 # Hydra community components
 gem 'sufia', '3.6.1'
-
-gem 'hydra-batch-edit'
-gem 'hydra-editor' # Currently using this for its edit view partials (used when editing collections)
-gem 'hydra-collections', github:"projecthydra/hydra-collections"
-#gem 'hydra-collections'
+gem 'hydra-batch-edit', '1.1.1'
+gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
+gem 'hydra-collections', '1.3.1'
 gem 'hydra-ldap', '0.1.0'
 
 # Other components
@@ -31,8 +23,8 @@ gem 'therubyracer', '0.12.0'
 gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
-gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 gem 'whenever', '0.8.4'
+gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
 group :assets do
   gem 'sass-rails', '4.0.1'

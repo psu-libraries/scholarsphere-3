@@ -7,15 +7,6 @@ GIT
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
 
-GIT
-  remote: git://github.com/projecthydra/hydra-collections.git
-  revision: 91e89642b01e1245e74b2a771834bc981161b4db
-  specs:
-    hydra-collections (1.3.1)
-      active-fedora (>= 6.7.0)
-      blacklight
-      hydra-head (~> 6.4.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -468,7 +459,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active-fedora (= 6.7.1)
   bootstrap-sass (= 2.2.2.0)
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)
