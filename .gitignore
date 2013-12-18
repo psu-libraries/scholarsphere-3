@@ -100,3 +100,6 @@ public/system/
 
 ## Sitemap
 public/sitemap.xml
+
+## Magick-related artifacts
+mini_magick*.png

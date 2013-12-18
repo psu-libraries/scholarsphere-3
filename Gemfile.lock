@@ -195,6 +195,10 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
+    hydra-collections (1.3.1)
+      active-fedora (>= 6.7.0)
+      blacklight
+      hydra-head (~> 6.4.0)
     hydra-core (6.4.1)
       active-fedora
       blacklight (~> 4.0)
@@ -259,7 +263,7 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.8.2)
     multi_test (0.0.2)
-    mysql2 (0.3.11)
+    mysql2 (0.3.14)
     nest (1.1.1)
       redis
     net-ldap (0.3.1)
@@ -464,6 +468,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (= 6.7.1)
   bootstrap-sass (= 2.2.2.0)
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)
@@ -475,19 +480,19 @@ DEPENDENCIES
   cucumber-rails (~> 1.0)
   database_cleaner
   debugger
-  devise
+  devise (= 3.2.2)
   equivalent-xml (= 0.4.0)
   factory_girl_rails (~> 4.1.0)
   font-awesome-sass-rails (= 3.0.2.2)
-  hydra-batch-edit
-  hydra-collections!
-  hydra-editor
+  hydra-batch-edit (= 1.1.1)
+  hydra-collections (= 1.3.1)
+  hydra-editor (= 0.1.1)
   hydra-ldap (= 0.1.0)
   jettywrapper
   jquery-rails (= 2.1.4)
   kaminari!
   launchy
-  mysql2 (= 0.3.11)
+  mysql2 (= 0.3.14)
   nest (= 1.1.1)
   poltergeist
   rails (= 4.0.2)
@@ -501,5 +506,5 @@ DEPENDENCIES
   therubyracer (= 0.12.0)
   uglifier (= 2.3.2)
   unicorn-rails
-  whenever
+  whenever (= 0.8.4)
   yaml_db (= 0.2.3)

@@ -1,4 +1,3 @@
-
 # Copyright © 2012 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,48 +104,43 @@ describe UsersController do
       flash[:alert].should include("Permission denied: cannot access this page.")
     end
     it "should set an avatar and redirect to profile" do
-      @user.avatar.file?.should be_false
+      @user.avatar?.should be_false
       s1 = double('one')
       UserEditProfileEventJob.should_receive(:new).with(@user.login).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
-      #Resque.should_receive(:enqueue).with(UserEditProfileEventJob, @user.login).once
       f = fixture_file_upload('/world.png', 'image/png')
       post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
-      User.find_by_login(@user.login).avatar.file?.should be_true
+      User.find_by_login(@user.login).avatar?.should be_true
     end
     it "should validate the content type of an avatar" do
       UserEditProfileEventJob.should_receive(:new).with(@user.login).never
-      #Resque.should_receive(:enqueue).with(UserEditProfileEventJob, @user.login).never
       f = fixture_file_upload('/image.jp2', 'image/jp2')
       post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
-      flash[:alert].should include("Avatar content type is invalid")
+      flash[:alert].should include("Avatar You are not allowed to upload \"jp2\" files, allowed types: jpg, jpeg, png, gif, bmp, tif, tiff")
     end
     it "should validate the size of an avatar" do
       f = fixture_file_upload('/4-20.png', 'image/png')
       UserEditProfileEventJob.should_receive(:new).with(@user.login).never
-      #Resque.should_receive(:enqueue).with(UserEditProfileEventJob, @user.login).never
       post :update, id: @user.login, user: { avatar: f }
       response.should redirect_to(@routes.url_helpers.edit_profile_path(@user.login))
-      flash[:alert].should include("Avatar file size must be less than 2097152 Bytes")
+      flash[:alert].should include("Avatar file size must be less than 2MB")
     end
     it "should delete an avatar" do
       s1 = double('one')
       UserEditProfileEventJob.should_receive(:new).with(@user.login).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
-      #Resque.should_receive(:enqueue).with(UserEditProfileEventJob, @user.login).once
       post :update, id: @user.login, delete_avatar: true
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:notice].should include("Your profile has been updated")
-      @user.avatar.file?.should be_false
+      @user.avatar?.should be_false
     end
     it "should refresh directory attributes" do
       s1 = double('one')
       UserEditProfileEventJob.should_receive(:new).with(@user.login).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
-      #Resque.should_receive(:enqueue).with(UserEditProfileEventJob, @user.login).once
       User.any_instance.should_receive(:populate_attributes).once
       post :update, id: @user.login, update_directory: true
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
@@ -174,7 +168,6 @@ describe UsersController do
       s1 = double('one')
       UserFollowEventJob.should_receive(:new).with(@user.login, @another_user.login).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
-      #Resque.should_receive(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).once
       post :follow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
@@ -182,14 +175,12 @@ describe UsersController do
     it "should redirect to profile if already following and not log an event" do
       User.any_instance.stub(:following?).with(@another_user).and_return(true)
       UserFollowEventJob.should_receive(:new).with(@user.login, @another_user.login).never
-      #Resque.should_receive(:enqueue).with(UserFollowEventJob, @user.login, @another_user.login).never
       post :follow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.should_receive(:new).with(@user.login, @another_user.login).never
-      #Resque.should_receive(:enqueue).with(UserFollowEventJob, @user.login, @user.login).never
       post :follow, id: @user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")
@@ -201,7 +192,6 @@ describe UsersController do
       s1 = double('one')
       UserUnfollowEventJob.should_receive(:new).with(@user.login, @another_user.login).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
-      #Resque.should_receive(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).once
       post :unfollow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
@@ -209,14 +199,12 @@ describe UsersController do
     it "should redirect to profile if not following and not log an event" do
       @user.stub(:following?).with(@another_user).and_return(false)
       UserFollowEventJob.should_receive(:new).with(@user.login, @another_user.login).never
-      #Resque.should_receive(:enqueue).with(UserUnfollowEventJob, @user.login, @another_user.login).never
       post :unfollow, id: @another_user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@another_user.login))
       flash[:notice].should include("You are no longer following #{@another_user.login}")
     end
     it "should redirect to profile if user attempts to self-follow and not log an event" do
       UserFollowEventJob.should_receive(:new).with(@user.login, @another_user.login).never
-      #Resque.should_receive(:enqueue).with(UserUnfollowEventJob, @user.login, @user.login).never
       post :unfollow, id: @user.login
       response.should redirect_to(@routes.url_helpers.profile_path(@user.login))
       flash[:alert].should include("You cannot follow or unfollow yourself")

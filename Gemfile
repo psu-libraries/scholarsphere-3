@@ -8,7 +8,7 @@ source 'https://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '4.0.2'
-gem 'mysql2', '0.3.11'
+gem 'mysql2', '0.3.14'
 
 # Hydra community components
 gem 'sufia', '3.6.1'
@@ -18,9 +18,11 @@ gem 'hydra-editor' # Currently using this for its edit view partials (used when 
 gem 'hydra-collections', github:"projecthydra/hydra-collections"
 #gem 'hydra-collections'
 gem 'hydra-ldap', '0.1.0'
+
+# Other components
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
-gem 'devise'
+gem 'devise','3.2.2'
 gem 'nest', '1.1.1'
 gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
@@ -30,9 +32,7 @@ gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
-
-# crontab it up
-gem 'whenever'
+gem 'whenever', '0.8.4'
 
 group :assets do
   gem 'sass-rails', '4.0.1'
@@ -56,7 +56,6 @@ end
 group :development do
   gem 'debugger'
   gem 'unicorn-rails'
-  # capistrano deployments
   gem 'capistrano', '2.15.5'
   gem 'capistrano-rbenv', '1.0.5'
   gem 'capistrano-ext', '1.2.1'
