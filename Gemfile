@@ -33,6 +33,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
   gem 'rspec-rails', '>= 2.11.0'
