@@ -8,7 +8,7 @@ gem 'mysql2', '0.3.14'
 gem 'sufia', '3.6.1'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
-gem 'hydra-collections', '1.3.1'
+gem 'hydra-collections', '1.3.2'
 gem 'hydra-ldap', '0.1.0'
 
 # Other components
