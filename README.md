@@ -19,7 +19,7 @@ ScholarSphere is available under the Apache 2.0 license.
 
 Infrastructural components
 
- * Ruby 2.0 (we use RVM to manage our Rubies)
+ * Ruby 2.0 (we use RVM and rbenv to manage our Rubies)
  * Fedora (if you don't have access to an instance, use the built-in
    hydra-jetty submodule)
  * Solr (if you don't have access to an instance, use the built-in
@@ -36,9 +36,10 @@ Install system dependencies
  * clamav
  * clamav-daemon
  * libclamav-dev
- * [FITS](http://code.google.com/p/fits/) -- put it in a
-  directory on your PATH
  * ghostscript (required to create thumbnails from pdfs)
+ * [FITS](http://code.google.com/p/fits/) -- put it in a
+  directory on your PATH, or just use the included git submodule
+ * [phantomjs](http://phantomjs.org/download.html) -- if you're running the test suite, you'll need phantomjs (headless webkit browser) on your PATH for the feature specs
 
 Get the ScholarSphere code
 
@@ -50,6 +51,7 @@ Install gems
 
 Copy config samples
 
+    cp config/devise.yml.sample config/devise.yml
     cp config/database.yml.sample config/database.yml
     cp config/fedora.yml.sample config/fedora.yml
     cp config/solr.yml.sample config/solr.yml
@@ -69,24 +71,15 @@ Create database
 
     rake db:create
 
-(Re-)Generate the app's secret token
+Generate a new secret token
 
     rake scholarsphere:generate_secret
 
-Migrate database
+Migrate relational database
 
     rake db:migrate
 
-If you'll be *developing* ScholarSphere, setup test databases and load
-fixture data
-
-    RAILS_ENV=test rake db:create
-    RAILS_ENV=test rake db:migrate
-    RAILS_ENV=test rake scholarsphere:fixtures:generate
-    RAILS_ENV=test rake scholarsphere:fixtures:refresh
-
-To use the built-in Fedora and Solr instances, get the bundled hydra-jetty,
-configure it, & fire it up
+To use the built-in Fedora and Solr instances, get the bundled hydra-jetty, configure it, & fire it up
 
     git submodule init
     git submodule update
