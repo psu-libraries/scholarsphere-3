@@ -9,7 +9,7 @@ env:
     - CONTINUOUS_INTEGRATION=true
 before_install:
   - sudo apt-get install -qq clamav-daemon libclamav-dev clamav-data
-  - travis_retry sudo freshclam
+  - sudo touch /var/lib/clamav/{bytecode,daily,main}.cvd
   - export PATH="$PATH:$(pwd)/fits"
 before_script:
   - "cp config/database.yml.travis config/database.yml"

@@ -268,6 +268,7 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    newrelic_rpm (3.7.0.177)
     noid (0.6.6)
       backports
     nokogiri (1.6.1)
@@ -493,6 +494,7 @@ DEPENDENCIES
   launchy
   mysql2 (= 0.3.14)
   nest (= 1.1.1)
+  newrelic_rpm
   poltergeist
   rails (= 4.0.2)
   resque-pool (= 0.3.0)

@@ -26,6 +26,9 @@ gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'whenever', '0.8.4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
+#devops r us
+gem 'newrelic_rpm'
+
 group :assets do
   gem 'sass-rails', '4.0.1'
   gem 'coffee-rails', '4.0.1'
