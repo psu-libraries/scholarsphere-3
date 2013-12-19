@@ -24,9 +24,12 @@ describe GenericFile do
     before do
       @transfer_to = FactoryGirl.create :random_user
     end
+    after do
+      @file.destroy
+    end
     it "should transfer the request" do
       @file.on_behalf_of = @transfer_to.user_key
-      stub_job = double('change depositor job') 
+      stub_job = double('change depositor job')
       ContentDepositorChangeEventJob.should_receive(:new).and_return(stub_job)
       Sufia.queue.should_receive(:push).with(stub_job).once.and_return(true)
       @file.save!
@@ -102,7 +105,6 @@ describe GenericFile do
       @file.content.should be_kind_of FileContentDatastream
     end
   end
-
 
   describe "delegations" do
     it "should delegate methods to properties metadata" do

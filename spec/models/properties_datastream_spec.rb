@@ -11,7 +11,7 @@ describe PropertiesDatastream do
     before do
       @doc = PropertiesDatastream.new.tap do |ds|
         ds.proxy_depositor = 'kim@example.com'
-      end 
+      end
     end
     subject { @doc.to_solr}
     it "should have proxy_depositor" do

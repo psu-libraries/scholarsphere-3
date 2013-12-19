@@ -33,6 +33,7 @@ RSpec.configure do |config|
     before_collections_count = Collection.count
     puts "WARNING: Your jetty is not clean, so tests may be funky! (#{before_files_count} files, #{before_batches_count} batches, #{before_collections_count} collections)" if before_files_count > 0 or before_batches_count > 0 or before_collections_count > 0
   end
+
   config.after(:all) do
     files_count = GenericFile.count
     batches_count = Batch.count

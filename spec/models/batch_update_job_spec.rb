@@ -18,14 +18,15 @@ require 'spec_helper'
 describe BatchUpdateJob do
   before do
     @user = FactoryGirl.find_or_create(:user)
-    @batch = Batch.new
-    @batch.save
-    @file = GenericFile.new(:batch=>@batch)
-    @file.apply_depositor_metadata(@user.user_key)
-    @file.save
-    @file2 = GenericFile.new(:batch=>@batch)
-    @file2.apply_depositor_metadata('otherUser')
-    @file2.save
+    @batch = Batch.create
+    @file = GenericFile.new(batch: @batch).tap do |f|
+      f.apply_depositor_metadata(@user.user_key)
+      f.save
+    end
+    @file2 = GenericFile.new(batch: @batch).tap do |f|
+      f.apply_depositor_metadata('otherUser')
+      f.save
+    end
   end
   after do
     @batch.delete
@@ -46,7 +47,7 @@ describe BatchUpdateJob do
     it "should log a content update event" do
       User.any_instance.should_receive(:can?).with(:edit, @file).and_return(true)
       User.any_instance.should_receive(:can?).with(:edit, @file2).and_return(true)
-      s1 = mock('one')
+      s1 = double('one')
       ContentUpdateEventJob.should_receive(:new).with(@file.pid, @user.user_key).and_return(s1)
       Sufia.queue.should_receive(:push).with(s1).once
       s2 = double('two')
