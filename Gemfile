@@ -25,9 +25,7 @@ gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'whenever', '0.8.4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
-
-#devops r us
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '3.7.0.177' # devops r us
 
 group :assets do
   gem 'sass-rails', '4.0.1'

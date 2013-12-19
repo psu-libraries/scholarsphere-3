@@ -494,7 +494,7 @@ DEPENDENCIES
   launchy
   mysql2 (= 0.3.14)
   nest (= 1.1.1)
-  newrelic_rpm
+  newrelic_rpm (= 3.7.0.177)
   poltergeist
   rails (= 4.0.2)
   resque-pool (= 0.3.0)
