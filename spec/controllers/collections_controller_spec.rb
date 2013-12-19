@@ -36,7 +36,7 @@ describe CollectionsController do
       assigns(:collection).should be_kind_of(Collection)
     end
   end
-  
+
   describe '#create' do
     it "should create a Collection" do
       controller.should_receive(:has_access?).and_return(true)
@@ -156,15 +156,6 @@ describe CollectionsController do
       ids.should include @asset2.pid
       ids.should include @asset3.pid
       ids.should_not include @asset4.pid
-    end
-    it "should query the collection members" do
-      pending "The query isn't working here for some reason.  This is covered by a test in features/collection_spec.rb"
-      get :show, id: @collection.id, cq:@asset1.title, id: @collection.pid
-      assigns[:collection].title.should == @collection.title
-      ids = assigns[:member_docs].map {|d| d.id}
-      ids.should include @asset1.pid
-      ids.should_not include @asset2.pid
-      ids.should_not include @asset3.pid
     end
     context "signed out" do
       before do

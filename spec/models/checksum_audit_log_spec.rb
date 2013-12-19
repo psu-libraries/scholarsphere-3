@@ -46,18 +46,4 @@ describe ChecksumAuditLog do
     ChecksumAuditLog.find(success1.id).should_not be_nil
     @f.logs(@version.dsid).should == [success1, @new, @old]
   end
-  it "should not prune failed audits" do
-    pending "I can't make sense of this. - JC "
-    FileContentDatastream.any_instance.should_receive(:dsChecksumValid).and_return(true)
-    @f.audit!
-    FileContentDatastream.any_instance.should_receive(:dsChecksumValid).and_return(false)
-    @f.audit!
-    FileContentDatastream.any_instance.should_receive(:dsChecksumValid).and_return(false)
-    @f.audit!
-    FileContentDatastream.any_instance.should_receive(:dsChecksumValid).and_return(true)
-    @f.audit!
-    FileContentDatastream.any_instance.should_receive(:dsChecksumValid).and_return(false)
-    @f.audit!
-    @f.logs(@version.dsid).map(&:pass).should == [0, 1, 0, 0, 1, 0, 1]
-  end
 end

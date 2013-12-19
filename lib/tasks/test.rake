@@ -6,7 +6,7 @@ namespace :scholarsphere do
 
     desc "Run specs"
     RSpec::Core::RakeTask.new(:rspec) do |t|
-      t.rspec_opts = ['--color', '--backtrace', '--profile 20', '--format Fuubar']
+      t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
     end
 
     desc "Execute Continuous Integration build (docs, tests with coverage)"

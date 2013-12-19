@@ -71,12 +71,5 @@ describe Admin::StatsController do
         assigns[:files_count][:total].should == original_files_count - 1
       end
     end
-
-    it 'redirects when an unauthorized user attempts to view the page' #do
-      # advanced constraint rspec is hard, apparently
-      #sign_in @user2
-      #get :index
-      #response.should redirect_to(root_path)
-    #end
   end
 end

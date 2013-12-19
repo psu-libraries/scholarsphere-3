@@ -66,7 +66,6 @@ describe 'Routes' do
     end
   end
 
-
   describe 'Dashboard' do
     it "should route to dashboard" do
       { get: '/dashboard' }.should route_to(controller: 'dashboard', action: 'index')
@@ -117,7 +116,6 @@ describe 'Routes' do
     end
   end
 
-
   describe "Static Pages" do
     it "should route to about" do
       { get: '/about' }.should route_to(controller: 'static', action: 'about')
@@ -145,13 +143,6 @@ describe 'Routes' do
 
     it "should *not* route a bogus static page" do
       { get: '/awesome' }.should_not route_to(controller: 'static', action: 'awesome')
-    end
-  end
-
-  describe "Catch-all" do
-    it "should route non-existent routes to errors" do
-      pending "We're not doing this route in development or test so we can detect routing errors"
-      { get: '/awesome' }.should route_to(controller: 'errors', action: 'routing', error: 'awesome')
     end
   end
 end

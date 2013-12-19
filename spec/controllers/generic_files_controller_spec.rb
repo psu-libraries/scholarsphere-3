@@ -340,15 +340,6 @@ describe GenericFilesController do
         get :new
         response.should_not be_success
       end
-      it "should filter flash if they signin" do
-        pending "This method was getting a Blacklight::Exceptions::InvalidSolrID, but the assertions still passed"
-        request.env['warden'].stub(:user).and_return(@user)
-        sign_out @user
-        get :new
-        sign_in @user
-        get :show, id:"test5"
-        response.body.should_not include("You need to sign in or sign up before continuing")
-      end
       describe "failing audit" do
         before(:all) do
           ActiveFedora::RelsExtDatastream.any_instance.stub(:dsChecksumValid).and_return(false)
