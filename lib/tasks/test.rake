@@ -1,6 +1,6 @@
 namespace :scholarsphere do
-  if Rails.env.test?
-    # Don't load these files in production
+  if defined?(RSpec)
+    # Only load these files in testing environments
     require 'rspec/core/rake_task'
     require 'cucumber/rake/task'
 
