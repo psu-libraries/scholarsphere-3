@@ -9,8 +9,8 @@ env:
     - CONTINUOUS_INTEGRATION=true
 before_install:
   - sudo apt-get install -qq libclamav-dev clamav-base
-  - sudo cp /usr/share/doc/clamav-base/examples/*cvd /var/lib/clamav/
-  - sudo touch /var/lib/clamav/*.cvd
+  - sudo cp /usr/share/doc/clamav-base/examples/{daily,main}.cvd /var/lib/clamav/
+  - sudo touch /var/lib/clamav/{daily,main}..cvd
   - export PATH="$PATH:$(pwd)/fits"
 before_script:
   - "cp config/database.yml.travis config/database.yml"
