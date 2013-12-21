@@ -8,7 +8,7 @@ env:
     - JS=true
     - CONTINUOUS_INTEGRATION=true
 before_install:
-  - sudo apt-get install -qq clamav-dev clamav-base
+  - sudo apt-get install -qq libclamav-dev clamav-base
   - sudo cp /usr/share/doc/clamav-base/examples/*cvd /var/lib/clamav/
   - sudo touch /var/lib/clamav/*.cvd
   - export PATH="$PATH:$(pwd)/fits"
