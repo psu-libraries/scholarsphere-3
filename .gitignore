@@ -35,8 +35,6 @@ tmtags
 .DS_Store
 nohup.out
 
-## Cucumber
-
 rerun.txt
 
 ## rcov

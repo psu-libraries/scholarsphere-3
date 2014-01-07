@@ -2,7 +2,6 @@ namespace :scholarsphere do
   if defined?(RSpec)
     # Only load these files in testing environments
     require 'rspec/core/rake_task'
-    require 'cucumber/rake/task'
 
     desc "Run specs"
     RSpec::Core::RakeTask.new(:rspec) do |t|
@@ -22,9 +21,6 @@ namespace :scholarsphere do
       error = nil
       error = Jettywrapper.wrap(jetty_params) do
         Rake::Task['scholarsphere:rspec'].invoke
-        Cucumber::Rake::Task.new(:features) do |t|
-          t.cucumber_opts = "--format pretty"
-        end
       end
       raise "test failures: #{error}" if error
     end
