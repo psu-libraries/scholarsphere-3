@@ -53,27 +53,15 @@ class UsersController < ApplicationController
     protected
 
   def adjust_trophies!
-    num_retry = 0
-    begin
-      problem_index = 0
-      num_retry += 1
-      @trophies = []
-      @user.trophies.each do |t|
-        problem_index += 1
-        @trophies << GenericFile.load_instance_from_solr("#{Rails.application.config.id_namespace}:#{t.generic_file_id}")
-      end
-    rescue ActiveFedora::ObjectNotFoundError => e
-      loop_counter = 0
-      @user.trophies.each do |t|
-        loop_counter += 1
-        t.delete if problem_index == loop_counter
-      end
-      if num_retry <= 5
-        retry
-      else
-        raise
+    @user.trophies.reject!  do  |t|
+      begin
+        GenericFile.find(Sufia::Noid.namespaceize(t.generic_file_id))
+        false
+      rescue ActiveFedora::ObjectNotFoundError
+        true
       end
     end
+    @trophies = @user.trophies
   end
 
   def base_query
