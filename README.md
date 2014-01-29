@@ -81,8 +81,7 @@ Migrate relational database
 
 To use the built-in Fedora and Solr instances, get the bundled hydra-jetty, configure it, & fire it up
 
-    git submodule init
-    git submodule update
+    rake jetty:clean
     rake jetty:config
     rake jetty:start
 
