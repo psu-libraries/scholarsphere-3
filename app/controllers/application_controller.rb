@@ -98,16 +98,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def notifications_number
-    @notify_number = 0
-    @batches = []
-    return if action_name == "index" and controller_name == "mailbox"
-    if User.current
-      @notify_number = User.current.mailbox.inbox(:unread => true).distinct(:id).count
-      @batches = User.current.mailbox.inbox.map { |msg| msg.last_message.body[/<a class="batchid ui-helper-hidden">(.*)<\/a>The file(.*)/,1] }.select { |val| !val.blank? }
-    end
-  end
-
  protected
   def user_logged_in?
     user_signed_in? and ( valid_user?(request.headers) || Rails.env.test?)
