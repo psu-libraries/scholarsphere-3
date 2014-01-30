@@ -24,20 +24,20 @@ describe "User Generic File" do
       @gf1.related_url = "http://example.org/TheWork/"
       @gf1.save!
       visit "/"
+      click_link @gf1.title.first
     end
     after do
       @gf1.destroy  rescue puts "error occured destroying object"
     end
 
     it "loads the page" do
-      click_link @gf1.title.first
-     #save_and_open_page
       page.status_code.should == 200
       page.should have_content @gf1.title.first
     end
 
     it "displays a link for 'Related URL'" do
-      page.should have_link "http://example.org/TheWork/"
+      #save_and_open_page
+      page.should have_link @gf1.related_url.first
     end
   end
 end
