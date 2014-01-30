@@ -1,14 +1,3 @@
+<%= render "generic_files/show_fields/linked_field", local_assigns.merge({link_function: method(:link_to_facet), opt_param:'generic_file__creator_facet'}) %>
 
-<% vals =  Array(generic_file[key]) %>
-<tr>
-  <th><%= get_label(key) %></th>
-  <td>
-    <% vals.each do |creator| %>
-      <span itemprop="name">
-        <%= link_to_facet(creator, 'generic_file__creator_facet') %>
-      </span>
-      <br />
-    <% end %>
-  </td>
-</tr>
 

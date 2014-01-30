@@ -1,13 +1,1 @@
-
-<% vals =  Array(generic_file[key]) %>
-<tr>
-  <th><%= get_label(key) %></th>
-  <td>
-    <% vals.each do |v| %>
-      <span itemprop="name">
-        <%= iconify_auto_link(v) %>
-      </span>
-      <br />
-    <% end %>
-  </td>
-</tr>
+<%= render "generic_files/show_fields/linked_field", local_assigns.merge({link_function: method(:iconify_auto_link)}) %>
