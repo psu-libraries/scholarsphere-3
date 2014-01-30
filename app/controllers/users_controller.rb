@@ -58,10 +58,12 @@ class UsersController < ApplicationController
         GenericFile.find(Sufia::Noid.namespaceize(t.generic_file_id))
         false
       rescue ActiveFedora::ObjectNotFoundError
+        t.destroy
         true
       end
     end
-    @trophies = @user.trophies
+    @user.reload
+    @trophies = @user.trophy_files
   end
 
   def base_query

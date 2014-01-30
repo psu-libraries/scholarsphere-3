@@ -42,7 +42,7 @@ describe "User Trophy" do
     it "allows to view profile with trophies" do
       click_link user_name
       page.status_code.should == 200
-      page.should have_content @gf1.title
+      page.should have_content @gf1.title.first
     end
   end
 end
