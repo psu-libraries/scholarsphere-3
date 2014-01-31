@@ -4,8 +4,7 @@
   <td>
     <% vals.each do |v| %>
       <span itemprop="name">
-        <%= link_function.call v unless local_assigns.has_key? :opt_param %>
-        <%= link_function.call v, opt_param if local_assigns.has_key? :opt_param %>
+        <%= render_linked_field v, link_function, local_assigns[:opt_param] %>
       </span>
         <br />
     <% end %>
