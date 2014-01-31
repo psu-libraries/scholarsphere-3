@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def adjust_trophies!
     @user.trophies.reject!  do  |t|
       begin
-        GenericFile.find(Sufia::Noid.namespaceize(t.generic_file_id))
+        GenericFile.load_instance_from_solr(Sufia::Noid.namespaceize(t.generic_file_id))
         false
       rescue ActiveFedora::ObjectNotFoundError
         t.destroy
