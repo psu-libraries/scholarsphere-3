@@ -31,11 +31,11 @@ describe "Showing the Generic File" do
     unspoof_http_auth
     sign_in :curator
     @user = User.where(login: @user_name).first
+    visit "/"
   end
 
   context "User with generic files" do
     before do
-      visit "/"
       click_link @gf1.title.first
     end
 
@@ -80,6 +80,33 @@ describe "Showing the Generic File" do
       page.should have_link 'http://example.org/TheDescriptionLink/'
       page.should have_link @gf1.related_url.first
     end
+  end
+  context "thumbnail display" do
+    it "shows image thumbnail" do
+      allow_any_instance_of(GenericFile).to receive(:image?).and_return(true)
+      click_link @gf1.title.first
+      page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(@gf1.noid, {datastream_id: 'thumbnail'})}']")
+    end
+    it "shows pdf thumbnail" do
+      allow_any_instance_of(GenericFile).to receive(:pdf?).and_return(true)
+      click_link @gf1.title.first
+      page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(@gf1.noid, {datastream_id: 'thumbnail'})}']")
+    end
+    it "shows video thumbnail" do
+      allow_any_instance_of(GenericFile).to receive(:video?).and_return(true)
+      click_link @gf1.title.first
+      page.should have_css("video")
+    end
+    it "shows audio thumbnail" do
+      allow_any_instance_of(GenericFile).to receive(:audio?).and_return(true)
+      click_link @gf1.title.first
+      page.should have_css("audio")
+    end
+    it "shows default thumbnail" do
+      click_link @gf1.title.first
+      page.should have_css("img[src*='/assets/default.png']")
+    end
+
   end
 
   def check_page(link_name)
