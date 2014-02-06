@@ -59,6 +59,7 @@ describe "sitemap:generate" do
         @file_noids << f.noid
       end
       Collection.new.tap do |c|
+        c.title = "Collection Title"
         c.apply_depositor_metadata(u.user_key)
         c.save
         @collection_noids << c.noid
