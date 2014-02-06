@@ -6,12 +6,11 @@ gem 'mysql2', '0.3.14'
 
 # Hydra community components
 #gem 'sufia'#, '3.6.1'
-gem 'sufia', github: 'projecthydra/sufia', ref: '20b865a6618af1c78db57ee07a16eb7cbc6b7aa5'
+gem 'sufia', github: 'projecthydra/sufia', ref: '5731333f93d2f3e8b3b2eb971ce97dd5fdafc0e3'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
 gem 'hydra-collections', '1.3.2'
 gem 'hydra-ldap', '0.1.0'
-gem 'blacklight', github:'projectblacklight/blacklight', branch: 'release-4.6' #path:'../blacklight'
 gem 'rainbow'
 
 # Other components

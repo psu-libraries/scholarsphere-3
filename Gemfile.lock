@@ -8,24 +8,9 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projectblacklight/blacklight.git
-  revision: 106ccab42cfde5368b8c29d98e62e900324f55a0
-  branch: release-4.6
-  specs:
-    blacklight (4.6.2)
-      bootstrap-sass (>= 2.2.0, < 2.4)
-      deprecation
-      kaminari (~> 0.13)
-      marc (>= 0.4.3, < 1.1)
-      nokogiri (~> 1.6)
-      rails (>= 3.2.6, < 5)
-      rsolr (~> 1.0.6)
-      sass-rails
-
-GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 20b865a6618af1c78db57ee07a16eb7cbc6b7aa5
-  ref: 20b865a6618af1c78db57ee07a16eb7cbc6b7aa5
+  revision: 5731333f93d2f3e8b3b2eb971ce97dd5fdafc0e3
+  ref: 5731333f93d2f3e8b3b2eb971ce97dd5fdafc0e3
   specs:
     sufia (3.6.1)
       blacklight (>= 4.5)
@@ -41,7 +26,7 @@ GIT
       activerecord-import
       activeresource
       acts_as_follower (>= 0.1.1, < 0.3)
-      blacklight (~> 4.6.2)
+      blacklight (~> 4.7.0)
       carrierwave (~> 0.9.0)
       hydra-derivatives (~> 0.0.5)
       hydra-head (~> 6.4.1)
@@ -98,10 +83,19 @@ GEM
       tzinfo (~> 0.3.37)
     acts_as_follower (0.2.1)
     addressable (2.3.5)
-    arel (4.0.1)
+    arel (4.0.2)
     atomic (1.1.14)
-    backports (3.4.0)
+    backports (3.5.0)
     bcrypt-ruby (3.1.2)
+    blacklight (4.7.0)
+      bootstrap-sass (>= 2.2.0, < 2.4)
+      deprecation (~> 0.1)
+      kaminari (~> 0.13)
+      marc (>= 0.4.3, < 1.1)
+      nokogiri (~> 1.6)
+      rails (>= 3.2.6, < 5)
+      rsolr (~> 1.0.6)
+      sass-rails
     blacklight_advanced_search (2.1.1)
       blacklight (~> 4.0)
       parslet
@@ -161,7 +155,7 @@ GEM
       debugger-ruby_core_source (~> 1.2.4)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.4)
-    deprecation (0.0.5)
+    deprecation (0.1.0)
       activesupport
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
@@ -457,7 +451,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  blacklight!
   bootstrap-sass (= 2.2.2.0)
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)

@@ -39,6 +39,7 @@ describe 'batch editing', describe_options do
       login_js
       go_to_dashboard
       first('input#check_all').click
+      page.should have_css("div.batch-toggle[style*='display: block;']")
       click_button('Edit Selected')
       page.should have_content('2 files')
       page.should have_content(@gf1.title.first)
@@ -62,6 +63,7 @@ describe 'batch editing', describe_options do
       login_js
       go_to_dashboard
       first('input#check_all').click
+      page.should have_css("div.batch-toggle[style*='display: block;']")
       click_button('Delete Selected')
       go_to_dashboard
       page.should have_content('My Dashboard')
