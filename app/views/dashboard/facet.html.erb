@@ -4,7 +4,7 @@
  It implements the facets in the same manner as blacklight does for the main catalog for the individual's dashbord 
 -->
  <% sidebar_items << capture do %>
-  <p><%= link_back_to_catalog %></p>
+  <p><%= link_back_to_catalog (route_set: sufia) %></p>
 <% end %>
 
 <div id="facet_top_links" class="modal-footer">
