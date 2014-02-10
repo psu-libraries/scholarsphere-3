@@ -7,37 +7,6 @@ GIT
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
 
-GIT
-  remote: git://github.com/projecthydra/sufia.git
-  revision: 121454d99638265d2ad584aa3073e79bddc06d5e
-  ref: 121454d99638265d2ad584aa3073e79bddc06d5e
-  specs:
-    sufia (3.6.1)
-      blacklight (>= 4.5)
-      blacklight_advanced_search (~> 2.1.0)
-      daemons (= 1.1.9)
-      font-awesome-sass-rails (~> 3.0)
-      hydra-batch-edit (>= 1.1.1, < 2.0.0)
-      mail_form
-      rails_autolink (~> 1.1.0)
-      sufia-models (= 3.6.1)
-      yaml_db (= 0.2.3)
-    sufia-models (3.6.1)
-      activerecord-import
-      activeresource
-      acts_as_follower (>= 0.1.1, < 0.3)
-      blacklight (~> 4.7.0)
-      carrierwave (~> 0.9.0)
-      hydra-derivatives (~> 0.0.5)
-      hydra-head (~> 6.4.1)
-      mailboxer (~> 0.11.0)
-      nest (~> 1.1.1)
-      noid (~> 0.6.6)
-      rails (> 4.0.0, < 5.0)
-      resque (~> 1.23)
-      resque-pool (= 0.3.0)
-      rubydora (~> 1.7.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -134,7 +103,7 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
-    childprocess (0.3.9)
+    childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     clamav (0.4.1)
@@ -227,7 +196,7 @@ GEM
       net-ldap
       rails
     i18n (0.6.9)
-    jettywrapper (1.5.0)
+    jettywrapper (1.5.2)
       activesupport (>= 3.0.0)
       childprocess
       i18n
@@ -300,7 +269,7 @@ GEM
       websocket-driver (>= 0.2.0)
     polyglot (0.3.3)
     rack (1.5.2)
-    rack-protection (1.5.1)
+    rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -330,7 +299,7 @@ GEM
       rdf-xsd (>= 1.0)
     rdf-xsd (1.1.0)
       rdf (>= 1.1)
-    redis (3.0.6)
+    redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
     ref (1.0.5)
@@ -364,7 +333,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     ruby-progressbar (1.3.2)
-    rubydora (1.7.0)
+    rubydora (1.7.1)
       activemodel
       activesupport
       deprecation
@@ -408,6 +377,31 @@ GEM
     sqlite3 (1.3.8)
     stomp (1.3.2)
     subexec (0.2.3)
+    sufia (3.7.0)
+      blacklight (>= 4.5)
+      blacklight_advanced_search (~> 2.1.0)
+      daemons (= 1.1.9)
+      font-awesome-sass-rails (~> 3.0)
+      hydra-batch-edit (>= 1.1.1, < 2.0.0)
+      mail_form
+      rails_autolink (~> 1.1.0)
+      sufia-models (= 3.7.0)
+      yaml_db (= 0.2.3)
+    sufia-models (3.7.0)
+      activerecord-import
+      activeresource
+      acts_as_follower (>= 0.1.1, < 0.3)
+      blacklight (~> 4.7.0)
+      carrierwave (~> 0.9.0)
+      hydra-derivatives (~> 0.0.5)
+      hydra-head (~> 6.4.1)
+      mailboxer (~> 0.11.0)
+      nest (~> 1.1.1)
+      noid (~> 0.6.6)
+      rails (> 4.0.0, < 5.0)
+      resque (~> 1.23)
+      resque-pool (= 0.3.0)
+      rubydora (~> 1.7.0)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
@@ -486,7 +480,7 @@ DEPENDENCIES
   select2-rails (= 3.4.2)
   sitemap (= 0.3.3)
   sqlite3
-  sufia!
+  sufia (= 3.7)
   therubyracer (= 0.12.0)
   uglifier (= 2.3.2)
   unicorn-rails
