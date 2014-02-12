@@ -468,6 +468,7 @@ DEPENDENCIES
   fuubar
   hydra-batch-edit (= 1.1.1)
   hydra-collections (= 1.3.2)
+  hydra-derivatives
   hydra-editor (= 0.1.1)
   hydra-ldap (= 0.1.0)
   jettywrapper

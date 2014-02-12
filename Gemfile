@@ -10,6 +10,7 @@ gem 'sufia', github:"projecthydra/sufia", ref: "0c52a10ed57b491130f036253fcad1c8
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
 gem 'hydra-collections', '1.3.2'
+gem 'hydra-derivatives'
 gem 'hydra-ldap', '0.1.0'
 gem 'rainbow'
 
