@@ -17,7 +17,7 @@ module Sufia
                 :ogg => {format: 'ogg', datastream: 'ogg'} }, processor: :audio
           when *video_mime_types
             obj.transform_datastream :content,
-              { :mp4 => {format: "mp4", datastream: 'mp4'} }, processor: :video
+              { :webm => {format: "webm", datastream: 'webm'}, processor: :video
           when *image_mime_types
             obj.transform_datastream :content, { :thumbnail => {size: "200x150>", datastream: 'thumbnail'} }
           end
