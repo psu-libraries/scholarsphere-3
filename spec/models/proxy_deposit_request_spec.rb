@@ -6,12 +6,17 @@ describe ProxyDepositRequest do
   end
   let (:sender) { FactoryGirl.find_or_create(:user) }
   let (:receiver) { FactoryGirl.find_or_create(:test_user_1) }
+  let (:receiver2) { FactoryGirl.find_or_create(:test_user_2) }
   let (:file) do
     GenericFile.new.tap do |f|
       f.title = "Test file"
       f.apply_depositor_metadata(sender.user_key)
       f.save!
     end
+  end
+
+  after do
+    subject.destroy if subject.persisted?
   end
 
   subject { ProxyDepositRequest.new(pid: file.pid, sending_user: sender, receiving_user: receiver, sender_comment: "please take this") }
@@ -83,6 +88,15 @@ describe ProxyDepositRequest do
         subject.transfer_to = sender.user_key
         subject.should_not be_valid
         subject.errors[:sending_user].should == ['must specify another user to receive the file']
+      end
+    end
+
+    context 'when the file is already being transferred' do
+      it 'should be an error' do
+        subject.save!
+        subject2 = ProxyDepositRequest.new(pid: file.pid, sending_user: sender, receiving_user: receiver2, sender_comment: "please take this")
+        subject2.should_not be_valid
+        subject2.errors[:open_transfer].should == ['must close open transfer on the file before creating a new one']
       end
     end
   end

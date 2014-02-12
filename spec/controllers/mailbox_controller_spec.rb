@@ -15,6 +15,7 @@
 require 'spec_helper'
 
 describe MailboxController do
+  routes { Sufia::Engine.routes }
   before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @another_user = FactoryGirl.find_or_create(:archivist)
@@ -23,7 +24,7 @@ describe MailboxController do
     @rec1 = @another_user.send_message(@user, @message, @subject)
     @rec2 = @user.send_message(@another_user, @message, @subject)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
    end
   after(:each) do
     @rec1.delete
@@ -32,7 +33,7 @@ describe MailboxController do
   describe "#index" do
     render_views
     it "should show message" do
-      User.any_instance.expects(:mark_as_read)
+      Conversation.any_instance.should_receive(:mark_as_read)
       get :index
       response.should be_success
       assigns[:messages].first.last_message.body.should == 'Test Message'
@@ -49,16 +50,16 @@ describe MailboxController do
       get :index
       messages =  assigns[:messages].sort
       messages.last.last_message.body.should == 'message 2'
-      get :delete, :uid=> rec.conversation.id
-      response.should redirect_to(@routes.url_helpers.mailbox_path)
+      delete :destroy, :id=> rec.conversation.id
+      response.should redirect_to(@routes.url_helpers.notifications_path)
       @user.mailbox.inbox.count.should ==1
     end
     it "should not delete message" do
       @curator = FactoryGirl.find_or_create(:curator)
       rec = @another_user.send_message(@curator, 'message 3', 'subject 3')
       @curator.mailbox.inbox.count.should == 1
-      get :delete, :uid=> rec.conversation.id
-      response.should redirect_to(@routes.url_helpers.mailbox_path)
+      delete :destroy, :id=> rec.conversation.id
+      response.should redirect_to(@routes.url_helpers.notifications_path)
       @curator.mailbox.inbox.count.should ==1
       rec.delete
       @curator.delete       

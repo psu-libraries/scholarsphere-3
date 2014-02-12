@@ -19,6 +19,7 @@ class Collection < ActiveFedora::Base
   include Sufia::GenericFile::WebForm # provides initialize_fields method
 
   before_save :update_permissions
+  validates :title, presence: true
 
   has_metadata :name => "properties", :type => PropertiesDatastream
 
@@ -48,6 +49,6 @@ class Collection < ActiveFedora::Base
   end
 
   def update_permissions
-    self.set_visibility("open")
+    self.visibility = "open"
   end
 end

@@ -26,20 +26,23 @@ source ${WORKSPACE}/.rvmrc
 echo "=-=-=-=-= $0 bundle install"
 bundle install
 
-echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml ${WORKSPACE}/config"
-cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap}.yml ${WORKSPACE}/config
+echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config"
+cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config
 
-echo "=-=-=-=-= $0 resque-pool --daemon --environment test start"
-bundle exec resque-pool --daemon --environment test start
+#echo "=-=-=-=-= $0 resque-pool --daemon --environment test start"
+#bundle exec resque-pool --daemon --environment test start
+
+echo "=-=-=-=-= $0 bundle exec rake --trace scholarsphere:generate_secret"
+bundle exec rake --trace scholarsphere:generate_secret
 
 echo "=-=-=-=-= $0 HEADLESS=true RAILS_ENV=test bundle exec rake --trace scholarsphere:ci"
 HEADLESS=true RAILS_ENV=test bundle exec rake --trace scholarsphere:ci
 retval=$?
 
-echo "=-=-=-=-= $0 kill resque-pool's pid to stop it"
-[ -f $RESQUE_POOL_PIDFILE ] && {
-    kill -2 $(cat $RESQUE_POOL_PIDFILE)
-}
+# echo "=-=-=-=-= $0 kill resque-pool's pid to stop it"
+# [ -f $RESQUE_POOL_PIDFILE ] && {
+#     kill -2 $(cat $RESQUE_POOL_PIDFILE)
+# }
 
 echo "=-=-=-=-= $0 finished $retval"
 exit $retval

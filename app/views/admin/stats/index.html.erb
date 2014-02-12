@@ -23,16 +23,34 @@
 <br/>
 
 <h4>Newest Users</h4>
+  <%= form_for "users_stats", method:"GET" do |f| %>
+    <%= f.label "Display users registered since" %>
+    <input type="date" name="users_stats[start_date]" value="<%=@users_stats[:start_date]%>"></input>
+    <%= f.submit "Load Stats" %>
+  <%- end %>
+
+  <%- if @users_stats[:start_date] %>
+    <div>Total: <%= @recent_users.count %></div>
+  <%- else %>
+    Five most recent users:
+  <%- end %>
+
 <ul>
-   <% @recent_users.each do |usr| %>
-          <li>
-             <a href="<%= sufia.profile_path(usr.login) %>" title="View user's profile"><%= usr.name %></a> registered
-             <span class="date">
-             <%= usr.created_at.to_time.strftime("%m/%d/%Y") %>
-             </span>
-          </li>
-   <% end %>
+  <% @recent_users.each do |usr| %>
+    <li>
+      <a href="<%= sufia.profile_path(usr.login) %>" title="View user's profile"><%= usr.name %></a>
+      <%- if usr.department %>
+        of <%= usr.department %>
+      <%- end %>
+      registered
+      <span class="date">
+        <%= usr.created_at.to_time.strftime("%m/%d/%Y") %>
+      </span>
+    </li>
+  <% end %>
 </ul>
+
+
 <br/>
 <h4>Most Active Users</h4>
 <ul>

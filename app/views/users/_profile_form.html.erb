@@ -1,4 +1,4 @@
-      <%= form_for @user, :url => sufia.update_profile_path(URI.escape(@user.to_s, '@.')), :html => {:multipart => true, :class => 'form-horizontal' } do |f| %>
+      <%= form_for @user, :url => sufia.profile_path(URI.escape(@user.to_s, '@.')), :html => {:multipart => true, :class => 'form-horizontal' } do |f| %>
         <div class="control-group">
           <%= f.label :avatar, '<i class="icon-camera-retro"></i> Change picture'.html_safe, :class => "control-label" %>
           <div class="controls">
@@ -59,9 +59,6 @@
           </div>
         </div>
         -->
-        <% if @trophies.count > 0 %>
-          <%= render :partial => 'trophy_edit', :locals => {:trophies => @trophies} %>
-        <% end %>
 
         <div class="form-actions">
           <%= f.button '<i class="icon-save"></i> Save Profile'.html_safe, :type => 'submit', :class => "btn-primary btn-large" %>

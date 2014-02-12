@@ -15,7 +15,7 @@ Sufia::Engine.configure do
   config.contact_email = 'dmc186@psu.edu'
   config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
   config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost/'
-  config.login_url = 'https://webaccess.psu.edu?cosign-localhost&https://localhost/'
+  config.login_url = 'https://webaccess.psu.edu/?cosign-localhost&https://localhost/'
 end
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -27,15 +27,17 @@ ScholarSphere::Application.configure do
   # and recreated between test runs.  Don't rely on the data there!
   config.cache_classes = true
 
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # Do not eager load code on boot. This avoids loading your whole application
+  # just for the purpose of running a single test. If you are using a tool that
+  # preloads Rails for running tests, you may have to set it to true.
+  config.eager_load = false
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = true
 
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
@@ -44,6 +46,9 @@ ScholarSphere::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+
+  # Disable concatenation and pre-processing of assets
+  config.assets.debug = true
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,

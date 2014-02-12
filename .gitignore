@@ -5,10 +5,12 @@ config/fedora.yml
 config/solr.yml
 config/hydra-ldap.yml
 config/redis.yml
+config/devise.yml
+config/newrelic.yml
 
 # This file is generated automatically by: rake scholarsphere:generate_secret
 config/initializers/secret_token.rb
-
+config/initializers/sufia-secret.rb
 ## MAC OS
 .DS_Store
 .idea/*
@@ -32,8 +34,6 @@ tmtags
 ## OSX
 .DS_Store
 nohup.out
-
-## Cucumber
 
 rerun.txt
 
@@ -76,8 +76,6 @@ log/*
 public/plugin_assets
 public/plugin_assets/
 
-db/schema.rb
-
 .project
 .buildpath
 
@@ -101,3 +99,6 @@ public/system/
 
 ## Sitemap
 public/sitemap.xml
+
+## Magick-related artifacts
+mini_magick*.png

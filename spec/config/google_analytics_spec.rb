@@ -19,7 +19,7 @@ describe Rails.application do
     subject.should respond_to(:google_analytics_id)
   end
   it 'should have the proper google analytics id' do
-    Socket.stubs(:gethostname).returns('ss1prod')
+    Socket.stub(:gethostname).and_return('ss1prod')
     subject.google_analytics_id.should == 'UA-33252017-2'
   end
 end

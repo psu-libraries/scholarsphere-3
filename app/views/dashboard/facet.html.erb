@@ -4,7 +4,7 @@
  It implements the facets in the same manner as blacklight does for the main catalog for the individual's dashbord 
 -->
  <% sidebar_items << capture do %>
-  <p><%= link_back_to_catalog %></p>
+  <p><%= link_back_to_catalog(route_set: sufia) %></p>
 <% end %>
 
 <div id="facet_top_links" class="modal-footer">
@@ -13,7 +13,7 @@
    </div>
 </div>
 
-<div id="MoreModal" class="modal">
+<div id="MoreModal">
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
   <h3><%= facet_field_labels[params[:id]] %></h3>

@@ -75,8 +75,8 @@ describe User do
     describe "valid user" do
       before do
         filter = Net::LDAP::Filter.eq('uid', @user.login)
-        Hydra::LDAP.expects(:groups_for_user).with(filter).returns(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
-        Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
+        Hydra::LDAP.should_receive(:groups_for_user).with(filter).and_return(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
+        Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
       end
       it "should return a list" do
         @user.groups.should == ["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"]
@@ -84,8 +84,8 @@ describe User do
     end
     describe "empty user" do
       before do
-        Hydra::LDAP.expects(:groups_for_user).never
-        Hydra::LDAP.connection.expects(:get_operation_result).never
+        Hydra::LDAP.should_receive(:groups_for_user).never
+        Hydra::LDAP.connection.should_receive(:get_operation_result).never
       end
       it "should return a list" do
         u = User.new
@@ -97,8 +97,8 @@ describe User do
     describe "valid user" do
       before do
         filter = Net::LDAP::Filter.eq('uid', @user.login)
-        Hydra::LDAP.expects(:does_user_exist?).with(filter).returns(true)
-        Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
+        Hydra::LDAP.should_receive(:does_user_exist?).with(filter).and_return(true)
+        Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
       end
       it "should return a list" do
         @user.ldap_exist?.should == true
@@ -106,8 +106,8 @@ describe User do
     end
     describe "empty user" do
       before do
-        Hydra::LDAP.expects(:does_user_exist?).never
-        Hydra::LDAP.connection.expects(:get_operation_result).never
+        Hydra::LDAP.should_receive(:does_user_exist?).never
+        Hydra::LDAP.connection.should_receive(:get_operation_result).never
       end
       it "should return a list" do
         u = User.new
@@ -121,7 +121,7 @@ describe User do
       entry = Net::LDAP::Entry.new()
       entry['dn'] = ["uid=mjg36,dc=psu,edu"]
       entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
-      Hydra::LDAP.expects(:get_user).returns([entry])
+      Hydra::LDAP.should_receive(:get_user).and_return([entry])
     end
     it "should return user attributes from LDAP" do
       User.directory_attributes('mjg36', ['cn']).first['cn'].should == ['MICHAEL JOSEPH GIARLO']

@@ -15,12 +15,13 @@
 require 'spec_helper'
 
 describe BatchController do
+  routes { Sufia::Engine.routes }
   before do
-    Hydra::LDAP.connection.stubs(:get_operation_result).returns(OpenStruct.new({code:0, message:"Success"}))
-    Hydra::LDAP.stubs(:does_user_exist?).returns(true)
+    Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+    Hydra::LDAP.stub(:does_user_exist?).and_return(true)
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
   end
   after do
     @user.delete
@@ -43,17 +44,17 @@ describe BatchController do
     end
     it "should equeue a batch update job" do
       params = {'generic_file' => {'read_groups_string' => '', 'read_users_string' => 'archivist1, archivist2', 'tag' => ['']}, 'id' => @batch.pid, 'controller' => 'batch', 'action' => 'update'}
-      #Resque.expects(:enqueue).with(BatchUpdateJob, @user.login, params, params['generic_file']).once
-      s1 = mock('one')
-      BatchUpdateJob.expects(:new).with(@user.login, params).returns(s1)
-      Sufia.queue.expects(:push).with(s1).once
+      #Resque.should_receive(:enqueue).with(BatchUpdateJob, @user.login, params, params['generic_file']).once
+      s1 = double('one')
+      BatchUpdateJob.should_receive(:new).with(@user.login, params).and_return(s1)
+      Sufia.queue.should_receive(:push).with(s1).once
       post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"", "read_users_string"=>"archivist1, archivist2", "tag"=>[""]}
     end
     describe "when views are shown" do
       render_views
       it "should show flash messages" do
         post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"","read_users_string"=>"archivist1, archivist2", "tag"=>[""]}
-        response.should redirect_to dashboard_path
+        response.should redirect_to Sufia::Engine.routes.url_helpers.dashboard_index_path
         flash[:notice].should_not be_nil
         flash[:notice].should_not be_empty
         flash[:notice].should include("Your files are being processed")
@@ -65,7 +66,7 @@ describe BatchController do
         file = GenericFile.find(@file.pid)
         file.read_users.should == ['archivist1', 'archivist2']
 
-        response.should redirect_to dashboard_path
+        response.should redirect_to Sufia::Engine.routes.url_helpers.dashboard_index_path
       end
       it "should set the groups with read access" do
         post :update, :id=>@batch.pid, "generic_file"=>{"read_groups_string"=>"group1, group2", "read_users_string"=>"", "tag"=>[""]}
@@ -115,17 +116,16 @@ describe BatchController do
   end
   describe "#edit" do
     before do
-      User.any_instance.stubs(:display_name).returns("Jill Z. User")
-      GenericFile.any_instance.stubs(:characterize_if_changed).yields
-      @b1 = Batch.new
-      @b1.save
-      @file = GenericFile.new(:batch=>@b1, :label=>'f1')
-      @file.apply_depositor_metadata(@user.login)
-      @file.save
-      @file2 = GenericFile.new(:batch=>@b1, :label=>'f2')
-      @file2.apply_depositor_metadata(@user.login)
-      @file2.save
-      controller.stubs(:params).returns({id:@b1.id})
+      GenericFile.any_instance.stub(:characterize_if_changed).and_yield
+      @b1 = Batch.create
+      @file = GenericFile.new(:batch=>@b1, :label=>'f1').tap do |f|
+        f.apply_depositor_metadata(@user.login)
+        f.save!
+      end
+      @file2 = GenericFile.new(:batch=>@b1, :label=>'f2').tap do |f|
+        f.apply_depositor_metadata(@user.login)
+        f.save!
+      end
     end
     after do
       @b1.delete
@@ -133,9 +133,9 @@ describe BatchController do
       @file2.delete
     end
     it "should default creator" do
-       controller.edit
-       controller.instance_variable_get(:@generic_file).creator[0].should == @user.display_name
-       controller.instance_variable_get(:@generic_file).title[0].should == 'f1'
+      get :edit, id: @b1.id
+      assigns[:generic_file].creator[0].should == 'Jill Z. User'
+      assigns[:generic_file].title[0].should == 'f1'
     end
   end
 end

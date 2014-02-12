@@ -14,11 +14,11 @@
 
 # scholarsphere-fixtures
 #
-# This was extracted from the original Hydra version in 
+# This was extracted from the original Hydra version in
 #                      ~/rvm/gems/<rails version>@scholarsphere/bundler/gems/lib/railties
 # It has been changed to read all files out of a directory and pass those as fixtures.
-# Any _ in the file name will be modified to a : for the id, since colons are not valid in a file name. 
-# The files should be named id_[fixture id] which should relates to the id within the foxml scholarsphere:[fixture id] where 
+# Any _ in the file name will be modified to a : for the id, since colons are not valid in a file name.
+# The files should be named id_[fixture id] which should relates to the id within the foxml scholarsphere:[fixture id] where
 # [fixture id] is some alpha numeric id ('test1')
 #
 # There are 2 sets of data needed to attach to a ScholarSphere fixture, 1 the data file, and 2 the metadata.
@@ -27,21 +27,21 @@
 # Usage: rake scholarsphere:fixtures:create [DIR=<fixture dir>] [FIXTURE_ID=<fixture id>] [FIXTURE_TITLE=<fixture title>] [FIXTURE_USER=<fixture user>]
 #              <fixture dir> is an optional directory under spec/fixtures to find the fixtures to load
 #                      DEFAULT: scholarsphere
-#              <fixture id> is the id given to this fixture with fedora and solr.   
-#                            This must be unique and any old files will be overwritten. 
+#              <fixture id> is the id given to this fixture with fedora and solr.
+#                            This must be unique and any old files will be overwritten.
 #                      DEFAULT: scholarsphere1
-#              <fixture title> is the title given to the fixture in fedora and solor, 
+#              <fixture title> is the title given to the fixture in fedora and solor,
 #                            along with being put in the description and subject by default.
 #                      DEFAULT: scholarsphere test
-#              <fixture user> is the user given to the fixture in fedora and solor, 
+#              <fixture user> is the user given to the fixture in fedora and solor,
 #                            along with being put in the contributor and rights.
 #                      DEFAULT: archivist1
-#           
-#          
-#               Creates new fixture files including the erb, descMeta, and text for loading into ScholarSphere.  
+#
+#
+#               Creates new fixture files including the erb, descMeta, and text for loading into ScholarSphere.
 #               The Files are named based on the scholarsphere: id_<fixture id>.foxml.erb, id_<fixture id>.descMeta.txt, and id_<fixture id>.txt
-#               The foxml.erb file references the descMeta.txt and .txt file.  You can edit the erb to point to other data and/or edit the 
-#               .descMeta.txt  and/or .txt file to contain the data you wish.  
+#               The foxml.erb file references the descMeta.txt and .txt file.  You can edit the erb to point to other data and/or edit the
+#               .descMeta.txt  and/or .txt file to contain the data you wish.
 #
 #            *** Please note that the id must be changed in the file name, foxml.erb, and descMeta.txt if you change it after creation. ***
 #
@@ -50,26 +50,26 @@
 #                      DEFAULT: scholarsphere
 #
 #               Creates foxml.xml files from the foxml.erb files doing any erb substitutions within the erb file.
-#               This task is mostly used to put the appropriate Rails.root into the foxml.xml file so that 
-#               the data and meta-data files can be located on load. 
+#               This task is mostly used to put the appropriate Rails.root into the foxml.xml file so that
+#               the data and meta-data files can be located on load.
 #
 #        rake scholarsphere:fixtures:delete [DIR=<fixture dir>]
 #              <fixture dir> is an optional directory under spec/fixtures to find the fixtures to load
 #                      DEFAULT: scholarsphere
 #
-#               Remove any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> from fedora and solr. 
+#               Remove any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> from fedora and solr.
 #
 #        rake scholarsphere:fixtures:load [DIR=<fixture dir>]
 #              <fixture dir> is an optional directory under spec/fixtures to find the fixtures to load
 #                      DEFAULT: scholarsphere
 #
-#               load any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> into fedora and solr. 
+#               load any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> into fedora and solr.
 #
 #        rake scholarsphere:fixtures:refresh [DIR=<fixture dir>]
 #              <fixture dir> is an optional directory under spec/fixtures to find the fixtures to load
 #                      DEFAULT: scholarsphere
 #
-#               delete then load any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> into fedora and solr. 
+#               delete then load any fixtures defined by .xml.foxml files in Rais.root/spec/fixtures/<fixture dir> into fedora and solr.
 #
 # Example meta-data:
 #
@@ -126,7 +126,7 @@
 #    b3JhL2lkOnRlc3QyPiA8aHR0cDovL3B1cmwub3JnL2RjL3Rlcm1zL2NyZWF0b3I+ICJDQUMiIC4K
 #    PGluZm86ZmVkb3JhL2lkOnRlc3QyPiA8aHR0cDovL3B1cmwub3JnL2RjL3Rlcm1zL2lkZW50aWZp
 #    ZXI+ICJmaXh0dXJlIiAuCg==
-#          </foxml:binaryContent>      
+#          </foxml:binaryContent>
 #        </foxml:datastreamVersion>
 #      </foxml:datastream>
 #      <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
@@ -144,7 +144,7 @@
 #      <foxml:datastream CONTROL_GROUP="M" ID="content" STATE="A" VERSIONABLE="true">
 #        <foxml:datastreamVersion ID="content.0" LABEL="testFixture2.txt"
 #          MIMETYPE="text/plain" >
-#          <foxml:binaryContent> VGhpcyBpcyBhIHRlc3QgZml4dHVyZS4gCkJpbmFyeSBkYXRhIGZvciBmaXh0dXJlIDIuCg== </foxml:binaryContent>      
+#          <foxml:binaryContent> VGhpcyBpcyBhIHRlc3QgZml4dHVyZS4gCkJpbmFyeSBkYXRhIGZvciBmaXh0dXJlIDIuCg== </foxml:binaryContent>
 #        </foxml:datastreamVersion>
 #      </foxml:datastream>
 #      <foxml:datastream CONTROL_GROUP="X" ID="rightsMetadata" STATE="A" VERSIONABLE="true">
@@ -186,8 +186,8 @@
 require 'active_fedora'
 
 namespace :scholarsphere do
-  
-  desc "Init Hydra configuration" 
+
+  desc "Init Hydra configuration"
   task :init => [:environment] do
     # We need to just start rails so that all the models are loaded
   end
@@ -198,7 +198,7 @@ namespace :scholarsphere do
 
     desc "Create ScholarSphere Hydra fixtures for generation and loading"
     task :create => :environment do
-      
+
       @id = ENV["FIXTURE_ID"] ||'scholarsphere1'
       @title = ENV["FIXTURE_TITLE"] || 'scholarsphere test'
       @user = ENV["FIXTURE_USER"] || 'archivist1'
@@ -218,7 +218,7 @@ namespace :scholarsphere do
 
     desc "Generate default ScholarSphere Hydra fixtures"
     task :generate do
-      ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
+      ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir)
       fixtures = find_fixtures_erb(@fixtureDir)
       fixtures.each do |fixture|
         unless fixture.include?('generic_stub')
@@ -229,11 +229,11 @@ namespace :scholarsphere do
         end
       end
     end
-   
+
     desc "Load default ScholarSphere Hydra fixtures"
     task :load do
-      #ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir) 
-      dir = File.join(Rails.root, @localPart, @fixtureDir) 
+      #ENV["dir"] = File.join(Rails.root, @localPart, @fixtureDir)
+      dir = File.join(Rails.root, @localPart, @fixtureDir)
       loader = ActiveFedora::FixtureLoader.new(dir)
 
       fixtures = find_fixtures_scholar(@fixtureDir)
@@ -260,18 +260,6 @@ namespace :scholarsphere do
 
     desc "Refresh default ScholarSphere Hydra fixtures"
     task :refresh => [:delete, :load]
-
-    desc "Fix fixtures so they work with Cucumber [KLUDGE]"
-    task :fix => :environment do
-      puts "Attempting to fix fixtures that break cuke"
-      ## Kludgy workarounds to get past lack of depositor in fixtures
-      # First, create a user record
-      User.create(login: 'archivist1', display_name: 'Captain Archivist')
-      # Then, set this user as the depositor of test4 to appease this damn failing cuke
-      gf = GenericFile.find('scholarsphere:test4')
-      gf.apply_depositor_metadata('archivist1')
-      gf.save
-    end
 
     private
 

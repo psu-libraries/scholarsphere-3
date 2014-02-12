@@ -10,15 +10,9 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test: &test
+test:
   adapter: sqlite3
   database: db/test.sqlite3
-  pool: 5
-  timeout: 5000
-
-integration:
-  adapter: sqlite3
-  database: db/integration.sqlite3
   pool: 5
   timeout: 5000
 
@@ -45,7 +39,7 @@ production:
 ## Warning: The database defined as 'test' will be erased and
 ## re-generated from your development database when you run 'rake'.
 ## Do not set this db to the same as development or production.
-#test: &test
+#test:
 #  adapter: mysql2
 #  encoding: utf8
 #  pool: 5
@@ -67,9 +61,3 @@ production:
 #  password: pass
 #  socket: /path/to/mysql.sock
 #
-###################################
-# This should work for both SQLite and MySQL
-###################################
-cucumber:
-  <<: *test
-

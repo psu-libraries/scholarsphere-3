@@ -1,4 +1,4 @@
-development:  
+development:
   host: ldap.example.com
   port: 389
   # username: cn=admin,dc=example,dc=com
@@ -6,7 +6,7 @@ development:
   group_base: dc=psu,dc=edu
   base: dc=example,dc=com
   uid: uid
-test:  
+test:
   host: ldap.example.com
   port: 389
   # username: cn=admin,dc=example,dc=com
@@ -14,12 +14,7 @@ test:
   group_base: dc=psu,dc=edu
   # base: dc=example,dc=com
   # uid: uid
-integration:
-  host: ldap.example.com
-  port: 389
-  group_base: dc=example,dc=com
-  uid: uid
-production:  
+production:
   host: ldap.example.com
   port: 389
   #username: cn=admin,dc=example,dc=com
@@ -27,5 +22,3 @@ production:
   group_base: dc=psu,dc=edu
   base: dc=example,dc=com
   uid: uid
-
-

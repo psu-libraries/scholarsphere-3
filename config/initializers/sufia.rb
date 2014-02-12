@@ -1,4 +1,3 @@
-require 'sufia/http_header_auth'
 
 Sufia::Engine.configure do
   config.application_name = "ScholarSphere"
@@ -17,10 +16,10 @@ Sufia::Engine.configure do
     The ScholarSphere Service Team
   EOM
   config.contact_form_delivery_from = 'do-not-reply@scholarsphere.psu.edu'
-  config.dropbox_api_key = 'lud63vmoih6ub49'
   config.fits_path = "fits.sh"
   config.fits_to_desc_mapping= {}
   config.max_days_between_audits = 7
+  config.enable_ffmpeg = true
 
   config.cc_licenses = {
     'Attribution 3.0 United States' => 'http://creativecommons.org/licenses/by/3.0/us/',

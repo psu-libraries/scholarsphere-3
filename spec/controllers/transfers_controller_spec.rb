@@ -13,12 +13,15 @@ describe TransfersController do
 
     describe "#index" do
       before do
-        @incoming_file = GenericFile.new.tap do |f|
+      let!(:incoming_file) do
+        GenericFile.new.tap do |f|
           f.apply_depositor_metadata(another_user.user_key)
           f.save!
           f.request_transfer_to(user)
         end
-        @outgoing_file = GenericFile.new.tap do |f|
+      end
+      let!(:outgoing_file) do
+        GenericFile.new.tap do |f|
           f.apply_depositor_metadata(user.user_key)
           f.save!
           f.request_transfer_to(another_user)
@@ -32,6 +35,17 @@ describe TransfersController do
 
         assigns[:outgoing].first.should be_kind_of ProxyDepositRequest
         assigns[:outgoing].first.pid.should == @outgoing_file.pid
+      end
+
+      describe "When the incoming request is for a deleted file" do
+        before
+          @incoming_file.destroy
+        end
+        it "should not show that file" do
+          get :index
+          response.should be_success
+          assigns[:incoming].should be_empty
+        end
       end
     end
 
@@ -62,7 +76,7 @@ describe TransfersController do
         end
       end
       it "should be successful" do
-        User.any_instance.stubs(:display_name).returns("Jill Z. User")
+        User.any_instance.stub(:display_name).and_return("Jill Z. User")
         lambda {
           post :create, id: file.id, proxy_deposit_request: {transfer_to: another_user.user_key}
         }.should change(ProxyDepositRequest, :count).by(1)

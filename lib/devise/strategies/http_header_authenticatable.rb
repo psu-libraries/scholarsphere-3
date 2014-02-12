@@ -1,4 +1,4 @@
-# Copyright © 2012 The Pennsylvania State University
+# Copyright © 2013 The Pennsylvania State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,17 +17,19 @@ module Devise
   module Strategies
     class HttpHeaderAuthenticatable < ::Devise::Strategies::Base
 
+      include Behaviors::HttpHeaderAuthenticatableBehavior
+
       # Called if the user doesn't already have a rails session cookie
       def valid?
-        request.headers['REMOTE_USER'].present?
+        valid_user?(request.headers)
       end
 
       def authenticate!
-        remote_user = request.headers['REMOTE_USER']
-        if remote_user.present?
-          u = User.find_by_login(remote_user)
+        user = remote_user(request.headers)
+        if user.present?
+          u = User.find_by_login(user)
           if u.nil?
-            u = User.create(:login => remote_user)
+            u = User.create(login: user, email: user)
             u.populate_attributes
           end
           success!(u)
@@ -35,6 +37,7 @@ module Devise
           fail!
         end
       end
+
     end
   end
 end

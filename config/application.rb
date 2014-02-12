@@ -22,8 +22,7 @@ require 'uri'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
-Bundler.require *Rails.groups(:assets => %w(development, test))
+Bundler.require(:default, Rails.env)
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
@@ -48,8 +47,8 @@ module ScholarSphere
       config.ga_host_map[vhost]
     end
 
-    config.scholarsphere_version = "v1.8"
-    config.scholarsphere_release_date = "November 26, 2013"
+    config.scholarsphere_version = "v1.9"
+    config.scholarsphere_release_date = "February 13, 2014"
     config.id_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
@@ -64,9 +63,8 @@ module ScholarSphere
     }
 
     config.hosts_vhosts_map = {
-      'ss1test' => 'https://scholarsphere-integration.dlt.psu.edu:8443/',
       'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
-      'ss3test' => 'https://scholarsphere-demo.dlt.psu.edu/',
+      'ss1demo' => 'https://scholarsphere-demo.dlt.psu.edu/',
       'ss1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss2qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
@@ -90,6 +88,8 @@ module ScholarSphere
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
+
+    config.i18n.enforce_available_locales = true
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

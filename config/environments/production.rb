@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-require 'sufia/http_header_auth'
 
 Sufia::Engine.configure do
   config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'
   config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
   config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Rails.application.get_vhost_by_host[1]}"
-  config.login_url = "https://webaccess.psu.edu?cosign-#{Rails.application.get_vhost_by_host[0]}&#{Rails.application.get_vhost_by_host[1]}"
+  config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.get_vhost_by_host[0]}&#{Rails.application.get_vhost_by_host[1]}"
 end
 
 ScholarSphere::Application.configure do
@@ -29,6 +28,12 @@ ScholarSphere::Application.configure do
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
+
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both thread web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false

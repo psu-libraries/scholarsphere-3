@@ -10,6 +10,7 @@ class ProxyDepositRequest < ActiveRecord::Base
   validates :sending_user, :pid, presence: true
   validate :transfer_to_should_be_a_valid_username
   validate :sending_user_should_not_be_receiving_user
+  validate :should_not_be_already_part_of_a_transfer
 
   after_save :send_request_transfer_message
 
@@ -26,6 +27,11 @@ class ProxyDepositRequest < ActiveRecord::Base
 
   def sending_user_should_not_be_receiving_user
     errors.add(:sending_user, 'must specify another user to receive the file') if receiving_user and receiving_user.user_key == sending_user.user_key
+  end
+
+  def should_not_be_already_part_of_a_transfer
+    transfers = ProxyDepositRequest.where(pid: pid)
+    errors.add(:open_transfer, 'must close open transfer on the file before creating a new one') unless transfers.blank? || ( transfers.count == 1 && transfers[0].id == self.id)
   end
 
   def send_request_transfer_message
@@ -69,9 +75,7 @@ class ProxyDepositRequest < ActiveRecord::Base
   end
 
   def deleted_file?
-    return false if GenericFile.find(pid)
-  rescue ActiveFedora::ObjectNotFoundError
-    true
+    !GenericFile.exists?(pid)
   end
 
   def title

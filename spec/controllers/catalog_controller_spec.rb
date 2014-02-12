@@ -16,10 +16,10 @@ require 'spec_helper'
 
 describe CatalogController do
   before do
-    GenericFile.any_instance.stubs(:characterize_if_changed).yields
+    GenericFile.any_instance.stub(:characterize_if_changed).and_yield
     @user = FactoryGirl.find_or_create(:user)
     sign_in @user
-    User.any_instance.stubs(:groups).returns([])
+    User.any_instance.stub(:groups).and_return([])
   end
   after do
     @user.delete
@@ -163,7 +163,7 @@ describe CatalogController do
     end
     describe "user with group search" do
       before do
-        User.any_instance.stubs(:groups).returns(['umg/personal.testuser.testgroup'])
+        User.any_instance.stub(:groups).and_return(['umg/personal.testuser.testgroup'])
         xhr :get, :index, :q=>"{f=desc_metadata__contributor_facet}Contrib2"
       end
       it "should find facet files" do

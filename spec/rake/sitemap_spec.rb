@@ -47,6 +47,34 @@ describe "sitemap:generate" do
     end
   end
 
+  before(:all) do
+    (1..15).each do |n|
+      u = User.create(login: "user#{n}", email: "user#{n}@example.org")
+      @file_noids = []
+      @collection_noids = []
+      GenericFile.new.tap do |f|
+        f.apply_depositor_metadata(u.user_key)
+        f.read_groups = ['public']
+        f.save
+        @file_noids << f.noid
+      end
+      Collection.new.tap do |c|
+        c.title = "Collection Title"
+        c.apply_depositor_metadata(u.user_key)
+        c.save
+        @collection_noids << c.noid
+      end
+    end
+  end
+
+  after(:all) do
+    GenericFile.destroy_all
+    Collection.destroy_all
+    (1..15).each do |n|
+      User.find_by(login: "user#{n}").destroy
+    end
+  end
+
   # set up the rake environment
   before(:each) do
     @rake = Rake::Application.new
@@ -55,24 +83,22 @@ describe "sitemap:generate" do
     Rake::Task.define_task(:environment)
   end
 
-  after(:each) do
-  end
-
   describe 'sitemap generation' do
     it 'should include public generic files and users' do
-      gf = GenericFile.new
-      gf.apply_depositor_metadata "architect"
-      gf.read_groups = ['public']
-      gf.save
-      @user = FactoryGirl.find_or_create(:user)
       run_generate
-      filename= Rails.root.join(File.expand_path("public"), "sitemap.xml")
-      Dir.glob(filename).length.should == 1
-      f = File.open  filename
-      output =  f.read
-      output.should include gf.noid
-      output.should include @user.login
-      gf.destroy
+      filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")
+      expect(Dir.glob(filename)).to have(1).entry
+      f = File.open(filename)
+      output = f.read
+      (1..15).each do |n|
+        expect(output).to include("/users/user#{n}")
+      end
+      @file_noids.each do |noid|
+        expect(output).to include("/files/#{noid}")
+      end
+      @collection_noids.each do |noid|
+        expect(output).to include("/collections/#{noid}")
+      end
     end
   end
 end

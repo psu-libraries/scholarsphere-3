@@ -22,11 +22,13 @@ class CollectionsController < ApplicationController
   before_filter :filter_docs_with_read_access!, :except => [:show]
   before_filter :has_access?, :except => [:show]
   before_filter :initialize_fields_for_edit, only:[:edit, :new]
+  CollectionsController.solr_search_params_logic += [:add_access_controls_to_solr_params]
+
   layout "sufia-one-column"
 
   def after_destroy (id)
     respond_to do |format|
-      format.html { redirect_to dashboard_path, notice: 'Collection was successfully deleted.' }
+      format.html { redirect_to sufia.dashboard_index_path, notice: 'Collection was successfully deleted.' }
       format.json { render json: {id:id}, status: :destroyed, location: @collection }
     end
   end

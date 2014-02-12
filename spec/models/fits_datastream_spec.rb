@@ -16,15 +16,14 @@ require 'spec_helper'
 
 describe FitsDatastream do
   before(:all) do
-    GenericFile.any_instance.stubs(:terms_of_service).returns('1')
-    @file = GenericFile.new
-    @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
-    @file.apply_depositor_metadata('mjg36')
-    @file.save
-    @file = GenericFile.find(@file.pid)
+    @file = GenericFile.new.tap do |f|
+      f.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
+      f.characterize
+      f.save
+    end
   end
   after(:all) do
-    @file.delete
+    @file.destroy if @file.persisted?
   end
   it "should have a format label" do
     @file.format_label.should == ["Portable Network Graphics"]
@@ -45,4 +44,3 @@ describe FitsDatastream do
     @file.original_checksum.should == ["28da6259ae5707c68708192a40b3e85c"]
   end
 end
-

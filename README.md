@@ -1,9 +1,6 @@
-﻿# ScholarSphere
+﻿# ScholarSphere [![Version](https://badge.fury.io/gh/psu-stewardship%2Fscholarsphere.png)](http://badge.fury.io/gh/psu-stewardship%2Fscholarsphere) [![Build Status](https://travis-ci.org/psu-stewardship/scholarsphere.png?branch=develop)](https://travis-ci.org/psu-stewardship/scholarsphere) [![Dependency Status](https://gemnasium.com/psu-stewardship/scholarsphere.png)](https://gemnasium.com/psu-stewardship/scholarsphere)
 
-ScholarSphere is a Ruby on Rails application utilizing the Blacklight
-and Hydra-head gems for integration with the search & indexing system,
-Solr, and the digital asset management platform, Fedora Commons.  The
-application runs on Fedora 3.5.0 and Solr 4.0.0.
+ScholarSphere is Penn State's self- and proxy-deposit repository for access to and preservation of scholarly works and data. It is built atop [Sufia](https://github.com/projecthydra/sufia), a [Hydra](http://projecthydra.org)/Rails-based component.
 
 ScholarSphere is being developed as part of
 [Penn State's Digital Stewardship Program](http://stewardship.psu.edu/).
@@ -22,7 +19,7 @@ ScholarSphere is available under the Apache 2.0 license.
 
 Infrastructural components
 
- * Ruby 2.0 (we use RVM to manage our Rubies)
+ * Ruby 2.0 (we use RVM and rbenv to manage our Rubies)
  * Fedora (if you don't have access to an instance, use the built-in
    hydra-jetty submodule)
  * Solr (if you don't have access to an instance, use the built-in
@@ -39,9 +36,10 @@ Install system dependencies
  * clamav
  * clamav-daemon
  * libclamav-dev
- * [FITS](http://code.google.com/p/fits/) -- put it in a
-  directory on your PATH
  * ghostscript (required to create thumbnails from pdfs)
+ * [FITS](http://code.google.com/p/fits/) -- put it in a
+  directory on your PATH, or just use the included git submodule
+ * [phantomjs](http://phantomjs.org/download.html) -- if you're running the test suite, you'll need phantomjs (headless webkit browser) on your PATH for the feature specs
 
 Get the ScholarSphere code
 
@@ -53,6 +51,7 @@ Install gems
 
 Copy config samples
 
+    cp config/devise.yml.sample config/devise.yml
     cp config/database.yml.sample config/database.yml
     cp config/fedora.yml.sample config/fedora.yml
     cp config/solr.yml.sample config/solr.yml
@@ -72,32 +71,22 @@ Create database
 
     rake db:create
 
-(Re-)Generate the app's secret token
+Generate a new secret token
 
     rake scholarsphere:generate_secret
 
-Migrate database
+Migrate relational database
 
     rake db:migrate
 
-If you'll be *developing* ScholarSphere, setup test databases and load
-fixture data
+To use the built-in Fedora and Solr instances, get the bundled hydra-jetty, configure it, & fire it up
 
-    RAILS_ENV=test rake db:create
-    RAILS_ENV=test rake db:migrate
-    RAILS_ENV=test rake scholarsphere:fixtures:generate
-    RAILS_ENV=test rake scholarsphere:fixtures:refresh
-
-To use the built-in Fedora and Solr instances, get the bundled hydra-jetty,
-configure it, & fire it up
-
-    git submodule init
-    git submodule update
+    rake jetty:clean
     rake jetty:config
     rake jetty:start
 
 Start the resque-pool workers (needed for characterization, audit,
-unzip, and resolrization services)
+and resolrization services)
 
     resque-pool --daemon --environment development start
 
@@ -153,7 +142,7 @@ discovery system.
 
      rake scholarsphere:export:rdfxml
 
-Note that if you want to run this on any environment other than development, you will need to 
+Note that if you want to run this on any environment other than development, you will need to
 call the script with RAILS_ENV=environment in front.
 
 ### Harvesting Authorities Locally
@@ -183,13 +172,4 @@ available database tasks via `rake -T db`)
 1. Register the vocabulary with a domain term in generic_file_rdf_datastream.rb
 (See the bottom of the file for examples)
 
-## Contribute
-
-1. Fork the codebase e.g. to https://github.com/your-username/scholarsphere
-1. Clone your fork locally (`git clone
-git@github.com:your-username/scholarsphere.git my-scholarsphere`)
-1. Create a branch to hold your changes (`git checkout -b new-feature`)
-1. Commit the changes you've made (`git commit -am "Some descriptive text around
-what you've added"`)
-1. Push your branch to github (`git push origin new-feature`)
-1. Create a pull request e.g. at https://github.com/your-username/scholarsphere/pull/new/master
+## [Contribute](CONTRIBUTING.md)

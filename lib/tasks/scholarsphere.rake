@@ -11,17 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-require 'rspec/core'
-require 'rspec/core/rake_task'
-require 'rdf'
-require 'rdf/rdfxml'
-require 'rubygems'
+#
 require 'action_view'
-require 'rainbow'
-require 'cucumber'
-require 'cucumber/rake/task'
 require 'blacklight/solr_helper'
+require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
 include Blacklight::SolrHelper
@@ -88,7 +81,7 @@ namespace :scholarsphere do
   task :generate_secret => :environment do
     include ActiveSupport
     File.open("#{Rails.root}/config/initializers/secret_token.rb", 'w') do |f|
-      f.puts "#{Rails.application.class.parent_name}::Application.config.secret_token = '#{SecureRandom.hex(64)}'"
+      f.puts "#{Rails.application.class.parent_name}::Application.config.secret_key_base = '#{SecureRandom.hex(64)}'"
     end
   end
 
@@ -122,30 +115,15 @@ namespace :scholarsphere do
     idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"])}
   end
 
-
   desc "Re-solrize all objects"
   task :resolrize => :environment do
     Sufia.queue.push(ResolrizeJob.new)
   end
 
-  desc "Execute Continuous Integration build (docs, tests with coverage)"
-  task :ci => :environment do
-    Rake::Task["jetty:config"].invoke
-    Rake::Task["db:migrate"].invoke
-
-    require 'jettywrapper'
-    jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
-
-    error = nil
-    error = Jettywrapper.wrap(jetty_params) do
-      # do not run the js examples since selenium is not set up for jenkins
-      ENV['SPEC_OPTS']="-t ~js"      
-      Rake::Task['spec'].invoke
-      Cucumber::Rake::Task.new(:features) do |t|
-        t.cucumber_opts = "--format pretty"
-      end
-    end
-    raise "test failures: #{error}" if error
+  desc 'copy fits configuration files into the fits submodule'
+  task :fits_conf do
+     puts 'copying fits config files'
+     out =  `cp fits_conf/* fits/xml`
   end
 
   namespace :export do
@@ -206,7 +184,7 @@ namespace :scholarsphere do
     task :lexvo_languages => :environment do |cmd, args|
       vocabs = ["/tmp/lexvo_2012-03-04.rdf"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs,
-                                 :format => 'rdfxml', 
+                                 :format => 'rdfxml',
                                  :predicate => RDF::URI("http://www.w3.org/2008/05/skos#prefLabel"))
     end
 
