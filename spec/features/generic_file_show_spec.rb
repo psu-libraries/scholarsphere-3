@@ -80,6 +80,17 @@ describe "Showing the Generic File" do
       page.should have_link 'http://example.org/TheDescriptionLink/'
       page.should have_link @gf1.related_url.first
     end
+
+    it "displays Mendeley modal" do
+      click_link "Mendeley"
+      page.should have_css(".modal-header")
+    end
+
+    it "displays Zotero modal" do
+      click_link "Zotero"
+      page.should have_css(".modal-header")
+    end
+
   end
   context "thumbnail display" do
     it "shows image thumbnail" do
