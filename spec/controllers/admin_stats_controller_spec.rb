@@ -61,11 +61,11 @@ describe Admin::StatsController do
       end
       after do
         @poltergeist.delete
-        Blacklight.solr.commit("expungeDeletes"=>true)
+        blacklight_solr.commit("expungeDeletes"=>true)
       end
       it "should provide accurate files_count, ensuring that solr deletes have been expunged first" do
         original_files_count = GenericFile.count
-        Blacklight.solr.delete_by_id(@poltergeist.pid) # send delete message to solr without sending commit message
+        blacklight_solr.delete_by_id(@poltergeist.pid) # send delete message to solr without sending commit message
         sign_in @user1
         get :index
         assigns[:files_count][:total].should == original_files_count - 1
