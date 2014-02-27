@@ -5,11 +5,12 @@ gem 'rails', '4.0.3'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', '3.7.1'
+#gem 'sufia', '3.7.1'
+gem 'sufia', github:'psu-stewardship/sufia', ref: "b3bdb226df524a3da622f73"
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
 #gem 'hydra-collections', '1.3.2'
-gem 'hydra-collections', github:'psu-stewardship/hydra-collections', ref: "bb11029d41d08e0ea57426b21a25f8bbd0d2e1b7"
+gem 'hydra-collections', github:'projecthydra/hydra-collections', ref: "302c4aa779831080ef3597ca3a07cdcf1ef3f9bd"
 gem 'hydra-derivatives'
 gem 'hydra-ldap', '0.1.0'
 gem 'rainbow'
