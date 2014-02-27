@@ -15,6 +15,9 @@
 require 'spec_helper'
 
 describe CatalogController do
+  before(:all) do
+    GenericFile.all.each(&:destroy)
+  end
   before do
     GenericFile.any_instance.stub(:characterize_if_changed).and_yield
     @user = FactoryGirl.find_or_create(:user)
