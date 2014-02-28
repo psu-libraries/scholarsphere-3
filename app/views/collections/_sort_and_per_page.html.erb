@@ -18,15 +18,17 @@ limitations under the License.
     <%= render partial: 'collections/form_for_select_collection', locals: {user_collections: @user_collections}  %>
   </div>
 
+  <% if  params[:action] == "edit" %>
   <div class="batch-toggle">
      <% session[:batch_edit_state] = "on" %>
      <!--a href="#" class="btn btn-primary submits-batches-add" onclick="modal_collection_list('open', event)">Add to Another Collection</a-->
     <%= button_for_remove_selected_from_collection @collection %>
    </div>
+  <%end %>
    <div class="sort-toggle">
      <%-# kind of hacky way to get this to work on catalog and folder controllers.  May be able to simple do {:action=>"index"} but I'm not sure -%>
      <% unless @response.response['numFound'] < 2 %>
-        <%= form_tag params[:controller] == "folder" ? sufia.folder_index_path : sufia.dashboard_index_path, :method=>:get, :class=>'per_page form-inline' do %>
+        <%= form_tag collections.collection_path(@collection.noid), :method=>:get, :class=>'per_page form-inline' do %>
           <%= label_tag(:sort, "<span>Sort By:</span>".html_safe) %>
           <%= select_tag(:sort, options_for_select(sort_fields, h(params[:sort])), :class => "span15") %>
           &nbsp;&nbsp;&nbsp;

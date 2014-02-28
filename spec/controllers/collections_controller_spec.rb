@@ -167,4 +167,19 @@ describe CollectionsController do
       end
     end
   end
+
+  describe "#edit" do
+    before do
+      @collection = Collection.new
+      @collection.title = "My collection"
+      @collection.description = "My incredibly detailed description of the collection"
+      @collection.apply_depositor_metadata(@user.user_key)
+      @collection.save
+    end
+    it "should not show flash" do
+      get :edit, id: @collection.id
+      #should not include "Select something first"
+      flash[:notice].should be_nil
+    end
+  end
 end
