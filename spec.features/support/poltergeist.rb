@@ -2,8 +2,8 @@
 # compatible with ajax
 require 'capybara/poltergeist'
 
+# Register driver and tell it not to print javascript
 Capybara.register_driver :poltergeist do |app|
-  # Register driver and tell it not to print javascript
   Capybara::Poltergeist::Driver.new(app, js_errors: false)
 end
 
