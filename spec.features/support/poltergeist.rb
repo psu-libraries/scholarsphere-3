@@ -9,3 +9,9 @@ end
 
 Capybara.default_driver = :poltergeist
 Capybara.javascript_driver = :poltergeist
+
+# Phantomjs runs in a separate process so our transactions will not be visible
+# to it; we need to commit all our changes to the database.
+RSpec.configure do |config|
+  config.use_transactional_fixtures = false
+end
