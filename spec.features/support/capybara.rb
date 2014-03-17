@@ -1,3 +1,4 @@
+# Capybara is a high level DSL for driving a browser.
 require 'capybara/rspec'
 require 'capybara/dsl'
 
