@@ -2,3 +2,4 @@
 require_relative './support/rails'
 require_relative './support/capybara'
 require_relative './support/poltergeist'
+require_relative './support/authentication'
