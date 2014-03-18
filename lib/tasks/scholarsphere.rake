@@ -206,4 +206,23 @@ namespace :scholarsphere do
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end
   end
+
+  namespace "checksum" do
+    desc "Run a checksum on all the GenericFiles"
+    task "all"  => :environment do
+      errors =[]
+      GenericFile.all.each do |gf|
+        next unless gf.content.checksum.blank?
+        gf.content.checksumType="MD5"
+        if gf.content.checksum == gf.original_checksum[0]
+          gf.content.checksumType="SHA-1"
+          gf.save # to do update version committer to checksum
+        else
+          errors << gf
+        end
+      end
+      errors.each {|gf| puts "Invalid Checksum: #{gf.pid} new: #{gf.content.checksum} original: #{gf.original_checksum[0]} "}
+
+    end
+  end
 end
