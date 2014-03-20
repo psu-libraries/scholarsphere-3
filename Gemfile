@@ -6,7 +6,7 @@ gem 'mysql2', '0.3.14'
 
 # Hydra community components
 #gem 'sufia', '3.7.1'
-gem 'sufia', github:'psu-stewardship/sufia', ref: "52d7443c06c2d87f09300"
+gem 'sufia', github:'psu-stewardship/sufia', ref: "2b5c3b9bf5f2aa476d6505b"
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
 #gem 'hydra-collections', '1.3.2'

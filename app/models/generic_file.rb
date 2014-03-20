@@ -166,4 +166,12 @@ class GenericFile < ActiveFedora::Base
     end
     return text.join("\n")
   end
+
+  def registered?
+    read_groups.include?('registered')
+  end
+
+  def public?
+    read_groups.include?('public')
+  end
 end

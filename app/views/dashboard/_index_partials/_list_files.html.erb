@@ -34,13 +34,7 @@ limitations under the License.
   </td>
   <td width="17%"><%= document.date_uploaded %> </td>
   <td width="5%" align="center">
-    <% if document.registered? %>
-      <a href="<%= sufia.generic_file_path(noid) %>/edit/?tab=permissions" id="permission_<%= noid %>"><span class="label label-info" title="<%=t('sufia.institution_name') %>"><%=t('sufia.institution_name') %></span></a>
-    <% elsif document.public? %>
-      <a href="<%= sufia.generic_file_path(noid) %>/edit/?tab=permissions" id="permission_<%= noid %>"><span class="label label-success" title="Open Access">Open Access</span></a>
-    <% else %>
-      <a href="<%= sufia.generic_file_path(noid) %>/edit/?tab=permissions" id="permission_<%= noid %>"><span class="label label-important" title="Private">Private</span></a>
-    <% end %>
+    <%= permission_level_tag document %>
   </td>
   <td width="23%">
     <%= render partial:'action_menu', locals:{noid:noid, gf:gf} %>

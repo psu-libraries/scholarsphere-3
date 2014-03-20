@@ -41,6 +41,7 @@ var addthis_config = {"data_track_addressbar":true};
   <div class="span2">&nbsp;</div>
   <div class="span68"><!-- class="column second"> -->
     <%= render partial: 'show_actions' %>
+    <span class="gfshow permission"><%= permission_level_tag @generic_file %> </span>
     <%= render partial: 'show_descriptions' %>
     <%= render partial: 'show_details' %>
     <%= render :partial => 'users/activity_log', :locals => {:events => @events} %>
