@@ -20,8 +20,7 @@ describe "Generic File uploading and downloading", request: true do
       visit new_generic_file_path
       check "terms_of_service"
       test_file_path = Rails.root.join("spec/fixtures/#{filename}").to_s
-      page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileselect");})
-      attach_file("fileselect", test_file_path)
+      attach_file("files[]", test_file_path)
       click_button 'main_upload_start'
       page.should have_content 'Apply Metadata'
       fill_in 'generic_file_tag', with: 'test_generic_file_tag'
