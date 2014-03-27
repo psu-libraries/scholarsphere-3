@@ -4,6 +4,7 @@ describe "Generic File uploading and downloading", request: true do
 
   after(:all) do
     User.destroy_all
+    GenericFile.destroy_all
     Batch.destroy_all
   end
 
