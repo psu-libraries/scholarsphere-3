@@ -9,5 +9,9 @@ Capybara.default_selector = :css
 Capybara.default_wait_time = 5
 
 RSpec.configure do |config|
+  # Provide support for #visit, #click_link, etc.
   config.include(Capybara::DSL)
+
+  # Provide access to Rails path helpers
+  config.include Rails.application.routes.url_helpers
 end
