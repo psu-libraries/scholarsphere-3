@@ -8,12 +8,20 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require blacklight
  *= require_self
  *= require bootstrap.min
  *= require scholarsphere-bootstrap
  *= require batch_edit
- *= require sufia
+ *= require application-bootstrap
+ *= require trophy
+ *= require blacklight_more_facets
+ *= require batch_edit
+ *= require generic_files
+ *= require video-js
+ *= require audio-js
+ *= require dashboard
+ *= require jquery-ui
+ *= require sufia-audio-overrides
  *= require sufia-psu-changes
  *= require select2
  *= require proxy_rights

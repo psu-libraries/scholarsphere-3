@@ -2,6 +2,8 @@ class Ability
   include Hydra::Ability
 
   def custom_permissions
+    can :create, :all if user_groups.include? 'registered'
+
     can :transfer, String do |pid|
       get_depositor_from_pid(pid) == current_user.user_key
     end
@@ -19,4 +21,7 @@ class Ability
   rescue
     nil
   end
+
+  "\n    can :create, :all if user_groups.include? 'registered'\n"
+
 end

@@ -73,7 +73,7 @@ describe CollectionsController do
       @asset1.save
       post :create, batch_document_ids: [@asset1.id], collection: {title: "My Secong Collection ", description: "The Description\r\n\r\nand more"}
       assigns[:collection].members.should == [@asset1]
-      asset_results = blacklight_solr.get "select", params:{fq:["id:\"#{@asset1.id}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results = ActiveFedora::SolrService.instance.conn.get "select", params:{fq:["id:\"#{@asset1.id}\""],fl:['id',Solrizer.solr_name(:collection)]}
       asset_results["response"]["numFound"].should == 1
       doc = asset_results["response"]["docs"].first
       doc["id"].should == @asset1.id
@@ -109,14 +109,14 @@ describe CollectionsController do
       put :update, id: @collection.id, collection: {members:"add"}, batch_document_ids:[@asset3.pid,@asset1.pid, @asset2.pid]
       response.should redirect_to Hydra::Collections::Engine.routes.url_helpers.collection_path(@collection.noid)
       assigns[:collection].members.map{|m| m.pid}.sort.should == [@asset2, @asset3, @asset1].map {|m| m.pid}.sort
-      asset_results = blacklight_solr.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results = ActiveFedora::SolrService.instance.conn.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
       asset_results["response"]["numFound"].should == 1
       doc = asset_results["response"]["docs"].first
       doc["id"].should == @asset2.id
       afterupdate = GenericFile.find(@asset2.pid)
       doc[Solrizer.solr_name(:collection)].should == afterupdate.to_solr[Solrizer.solr_name(:collection)]
       put :update, id: @collection.id, collection: {members:"remove"}, batch_document_ids:[@asset2]
-      asset_results = blacklight_solr.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
+      asset_results = ActiveFedora::SolrService.instance.conn.get "select", params:{fq:["id:\"#{@asset2.pid}\""],fl:['id',Solrizer.solr_name(:collection)]}
       asset_results["response"]["numFound"].should == 1
       doc = asset_results["response"]["docs"].first
       doc["id"].should == @asset2.pid
