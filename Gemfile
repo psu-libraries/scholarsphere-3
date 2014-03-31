@@ -6,11 +6,12 @@ gem 'mysql2', '0.3.14'
 
 # Hydra community components
 #gem 'sufia', '3.7.2'
-gem 'sufia', path:'../sufia'
+gem 'sufia', github:'psu-stewardship/sufia', branch:'hydra-head7'
 gem 'hydra-batch-edit'#, '1.1.1'
 gem 'hydra-editor'#,'0.1.1' # for edit view partials (editing collections)
 #gem 'hydra-collections'#, '1.3.2'
-gem 'hydra-collections', path:'../hydra-collections'
+gem 'hydra-collections', github:'psu-stewardship/hydra-collections', branch:'activefedora7'
+#gem 'hydra-collections', path:'../hydra-collections'
 gem 'hydra-derivatives'
 gem 'hydra-ldap'#, '0.1.0'
 gem 'rainbow'
