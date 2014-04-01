@@ -15,6 +15,15 @@ FactoryGirl.define do
     # is where we stub that information out to force it to be true.
     ldap_available true
     ldap_last_update { Time.zone.now }
+
+    # This user should be able to log in and modify metadata, but not
+    # upload files.
+    factory :non_psu_user do
+      ldap_available false
+      ldap_last_update nil
+    end
+
   end
+
 
 end
