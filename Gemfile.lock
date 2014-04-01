@@ -8,19 +8,9 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: 702462fac476210b640431483c0daf5ee95d5bb7
-  branch: activefedora7
-  specs:
-    hydra-collections (1.3.2)
-      active-fedora (>= 6.7.0)
-      blacklight
-      hydra-head (= 7.0.0)
-
-GIT
-  remote: git://github.com/psu-stewardship/sufia.git
-  revision: 6a4ac9a670d931013dc68de8b5597844744f7a87
-  branch: hydra-head7
+  remote: git://github.com/projecthydra/sufia.git
+  revision: 818094c03a91d53f78e85af4880cf7d2868a5b5b
+  ref: 818094c03a91d53f78e85af4880cf7d2868a5b5b
   specs:
     sufia (3.7.2)
       blacklight (~> 5.0)
@@ -48,6 +38,16 @@ GIT
       resque (~> 1.23)
       resque-pool (= 0.3.0)
       rubydora (~> 1.7.0)
+
+GIT
+  remote: git://github.com/psu-stewardship/hydra-collections.git
+  revision: bf694a062249d499a1217c9a9e7c541b96e71984
+  branch: activefedora7
+  specs:
+    hydra-collections (1.3.2)
+      active-fedora (>= 6.7.0)
+      blacklight
+      hydra-head (= 7.0.0)
 
 GEM
   remote: https://rubygems.org/
