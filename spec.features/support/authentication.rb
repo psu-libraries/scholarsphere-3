@@ -11,14 +11,6 @@ class StubbedAuthenticationStrategy < ::Devise::Strategies::Base
 
   # We're a fake authentication strategy; we always succeed.
   def authenticate!
-    #TODO: ldap_last_update can't be nil for authentication
-    # This happens somewhere in Hydra.
-    # Since our user may have ldap_last_update as nil if created with
-    # the existing factories, we'll update it here.
-    # We should ideally have a separate set of factories to
-    # ensure the user has the proper attributes set for authentication.
-    @@user.ldap_last_update = Time.now
-    @@user.save
     success!(@@user)
   end
 

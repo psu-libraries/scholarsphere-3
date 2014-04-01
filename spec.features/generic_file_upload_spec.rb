@@ -8,8 +8,8 @@ describe "Generic File uploading and downloading", request: true do
     Batch.destroy_all
   end
 
-  context "when logged in as a curator" do
-    let(:current_user) { FactoryGirl.create(:user) }
+  context "when logged in as an LDAP user" do
+    let(:current_user) { create(:user) }
     let(:filename) { 'world.png' }
 
     before do
