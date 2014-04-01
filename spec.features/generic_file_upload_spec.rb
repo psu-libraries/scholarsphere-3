@@ -2,12 +2,6 @@ require_relative './feature_spec_helper'
 
 describe "Generic File uploading and downloading", request: true do
 
-  after(:all) do
-    User.destroy_all
-    GenericFile.destroy_all
-    Batch.destroy_all
-  end
-
   context "when logged in as an LDAP user" do
     let(:current_user) { create(:user) }
     let(:filename) { 'world.png' }
