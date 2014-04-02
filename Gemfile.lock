@@ -39,16 +39,6 @@ GIT
       resque-pool (= 0.3.0)
       rubydora (~> 1.7.0)
 
-GIT
-  remote: git://github.com/psu-stewardship/hydra-collections.git
-  revision: bf694a062249d499a1217c9a9e7c541b96e71984
-  branch: activefedora7
-  specs:
-    hydra-collections (1.3.2)
-      active-fedora (>= 6.7.0)
-      blacklight
-      hydra-head (= 7.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -61,7 +51,7 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    active-fedora (7.0.0)
+    active-fedora (7.0.1)
       activesupport (>= 3.0.0)
       deprecation
       linkeddata
@@ -202,7 +192,7 @@ GEM
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.1)
-    hydra-access-controls (7.0.0)
+    hydra-access-controls (7.0.1)
       active-fedora (~> 7.0.0)
       activesupport
       blacklight (~> 5.3)
@@ -212,9 +202,13 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-core (7.0.0)
+    hydra-collections (2.0.0)
+      active-fedora (>= 6.7.0)
+      blacklight
+      hydra-head (~> 7.0.1)
+    hydra-core (7.0.1)
       block_helpers
-      hydra-access-controls (= 7.0.0)
+      hydra-access-controls (= 7.0.1)
       jettywrapper (>= 1.4.1)
       rails (>= 3.2.3, < 5)
     hydra-derivatives (0.0.7)
@@ -228,9 +222,9 @@ GEM
       rails (>= 3.2.13, < 5.0)
     hydra-file_characterization (0.3.1)
       activesupport (>= 3.0.0)
-    hydra-head (7.0.0)
-      hydra-access-controls (= 7.0.0)
-      hydra-core (= 7.0.0)
+    hydra-head (7.0.1)
+      hydra-access-controls (= 7.0.1)
+      hydra-core (= 7.0.1)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
@@ -532,7 +526,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit
-  hydra-collections!
+  hydra-collections (= 2.0.0)
   hydra-derivatives
   hydra-editor
   hydra-ldap
