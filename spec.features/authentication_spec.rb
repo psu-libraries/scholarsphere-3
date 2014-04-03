@@ -6,14 +6,18 @@ describe "Site authentication", stub_authentication: false do
       specify "I should be redirected to the appropriate central login page" do
         visit '/'
         click_on 'Login'
-        URI.unescape(current_url).should == Sufia::Engine.config.login_url
+        current_url.should == centralized_login_url
       end
     end
     describe "And I attempt to visit a restricted page on the site" do
       specify "The restricted path should be included in my redirected url" do
         visit '/dashboard'
-        URI.unescape(current_url).should == Sufia::Engine.config.login_url.chomp("/") + "/dashboard"
+        current_url.should == centralized_login_url + "dashboard"
       end
     end
+  end
+
+  def centralized_login_url
+    Sufia::Engine.config.login_url
   end
 end
