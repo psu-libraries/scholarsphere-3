@@ -37,13 +37,13 @@ describe DepositorsController do
       sign_in FactoryGirl.create(:random_user)
     end
     describe "create" do
-      it "should be successful" do
-        expect { post :create, user_id: user, grantee_id: grantee, format: 'json' }.to raise_error(CanCan::AccessDenied)
+      it "should not be successful" do
+        expect { post :create, user_id: user, grantee_id: grantee, format: 'json' }.to raise_error
       end
     end
     describe "destroy" do
-      it "should be successful" do
-        expect { delete :destroy, user_id: user, id: grantee, format: 'json' }.to raise_error(CanCan::AccessDenied)
+      it "should not be successful" do
+        expect { delete :destroy, user_id: user, id: grantee, format: 'json' }.to raise_error
       end
     end
   end

@@ -5,13 +5,14 @@ gem 'rails', '4.0.3'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', '3.7.2'
-gem 'hydra-batch-edit', '1.1.1'
-gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
-#gem 'hydra-collections', '1.3.2'
-gem 'hydra-collections', github:'projecthydra/hydra-collections', ref: "302c4aa779831080ef3597ca3a07cdcf1ef3f9bd"
+#gem 'sufia', '3.7.2'
+gem 'sufia', github:'projecthydra/sufia', ref:'818094c03a91d53f78e85af4880cf7d2868a5b5b'
+gem 'hydra-batch-edit'#, '1.1.1'
+gem 'hydra-editor'#,'0.1.1' # for edit view partials (editing collections)
+gem 'hydra-collections', '2.0.0'
+#gem 'hydra-collections', path:'../hydra-collections'
 gem 'hydra-derivatives'
-gem 'hydra-ldap', '0.1.0'
+gem 'hydra-ldap'#, '0.1.0'
 gem 'rainbow'
 
 # Other components
@@ -23,15 +24,14 @@ gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'clamav', '0.4.1'
 gem 'therubyracer', '0.12.0'
-gem 'bootstrap-sass', '2.2.2.0'
-gem 'font-awesome-sass-rails', '3.0.2.2'
+#gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'whenever', '0.8.4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 gem 'newrelic_rpm', '3.7.0.177' # devops r us
 
 group :assets do
-  gem 'sass-rails', '4.0.1'
+  gem 'sass-rails', '~> 4.0.2'
   gem 'coffee-rails', '4.0.1'
   gem 'uglifier', '2.3.2'
 end

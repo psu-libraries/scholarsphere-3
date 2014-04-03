@@ -34,4 +34,8 @@ class PropertiesDatastream < ActiveFedora::OmDatastream
     end
     builder.doc
   end
+
+  def prefix
+    ""
+  end
 end
