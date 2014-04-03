@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe "Generic File uploading and downloading:", request: true do
+describe "Generic File uploading and downloading:" do
 
   context "When logged in as a PSU user" do
     let(:current_user) { create(:user) }
