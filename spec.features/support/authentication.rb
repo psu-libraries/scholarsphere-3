@@ -27,25 +27,16 @@ module StubbedAuthenticationHelper
   # (pass in the entire user object, not just a username).
   def sign_in_as(user)
     StubbedAuthenticationStrategy.user = user
+    Warden::Strategies.add(:http_header_authenticatable, StubbedAuthenticationStrategy)
   end
 
 end
 
 RSpec.configure do |config|
 
-  # Stub authentication by default. If you do *not* want this to happen, then add
-  # `stub_authentication: false` to your examples/blocks.
-
-  config.before(:each) do
-    unless example.metadata[:stub_authentication] == false
-      Warden::Strategies.add(:http_header_authenticatable, StubbedAuthenticationStrategy)
-    end
-  end
-
   config.after(:each) do
-    unless example.metadata[:stub_authentication] == false
-      Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHeaderAuthenticatable)
-    end
+    Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHeaderAuthenticatable)
+    StubbedAuthenticationStrategy.user = nil
   end
 
   config.include(StubbedAuthenticationHelper)

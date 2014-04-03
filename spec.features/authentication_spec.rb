@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe "Site authentication", stub_authentication: false do
+describe "Site authentication" do
   context "When I'm not signed in" do
     describe "And I click 'Login' from the home page" do
       specify "I should be redirected to the appropriate central login page" do
