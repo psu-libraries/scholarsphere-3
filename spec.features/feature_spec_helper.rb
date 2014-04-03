@@ -5,3 +5,5 @@ require_relative './support/poltergeist'
 require_relative './support/authentication'
 require_relative './support/factories'
 require_relative './support/cleanup'
+require_relative './support/helpers/fixtures'
+
