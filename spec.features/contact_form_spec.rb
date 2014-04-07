@@ -1,37 +1,41 @@
 require_relative './feature_spec_helper'
 
 describe "Contact form:" do
-  before do
-    submit_contact_form
-  end
-  it "Sends a thank you message" do
-    @thank_you_message.subject.should == "ScholarSphere Contact Form - #{@contact_form_subject}"
-  end
-  it "Sends a 'Scholarsphere Form' message to the admin" do
-    @admin_message.subject.should == "Contact Form:#{@contact_form_subject}"
-  end
-  it "Produces a plaintext section for Redmine" do
-    redmine_part = @admin_message.body.parts.find { |p| p.content_type.match /plain/ }.body.raw_source
-    redmine_part.should have_content "Email: #{@contact_form_email}"
-  end
-  it "Produces an HTML section for humans" do
-    scholarsphere_form_part = @admin_message.body.parts.find { |p| p.content_type.match /html/ }.body.raw_source
-    scholarsphere_form_part.should have_content @contact_form_email
-  end
+  let(:email_address) { 'kurt@example.com' }
+  let(:email_subject) { 'Help with file upload' }
 
-  def submit_contact_form
-    @contact_form_email = "kurt@example.com"
-    @contact_form_subject = "Help with file upload"
+  before do
     visit '/contact'
     page.should have_content "Contact Form"
     select "Making changes to my content", from: "contact_form_category"
     fill_in "contact_form_name", with: "Kurt Baker"
-    fill_in "contact_form_email", with: @contact_form_email
-    fill_in "contact_form_subject", with: @contact_form_subject
+    fill_in "contact_form_email", with: email_address
+    fill_in "contact_form_subject", with: email_subject
     fill_in "contact_form_message", with: "Please help me to upload a file."
     click_button "Send"
-    sent_messages = ActionMailer::Base.deliveries
-    @thank_you_message = sent_messages.select { |message| message.to == ["#{@contact_form_email}"] }.first
-    @admin_message = sent_messages.select { |message| message.from == ["scholarsphere-service-support@dlt.psu.edu"] }.first
+  end
+
+  let(:sent_messages) { ActionMailer::Base.deliveries }
+  let(:thank_you_message) { sent_messages.detect { |message| message.to == [email_address] } }
+  let(:admin_message) { sent_messages.detect { |message| message.from == ["scholarsphere-service-support@dlt.psu.edu"] } }
+
+  it "Sends a thank you message" do
+    thank_you_message.subject.should == "ScholarSphere Contact Form - #{email_subject}"
+  end
+
+  it "Sends a 'Scholarsphere Form' message to the admin" do
+    admin_message.subject.should == "Contact Form:#{email_subject}"
+  end
+
+  let(:plaintext_message) { admin_message.body.parts.find { |p| p.content_type.match /plain/ } }
+
+  it "Produces a plaintext section for Redmine" do
+    plaintext_message.should have_content "Email: #{email_address}"
+  end
+
+  let(:html_message) { admin_message.body.parts.find { |p| p.content_type.match /html/ } }
+
+  it "Produces an HTML section for humans" do
+    html_message.should have_content email_address
   end
 end
