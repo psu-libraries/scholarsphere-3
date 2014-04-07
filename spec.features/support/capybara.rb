@@ -1,6 +1,7 @@
 # Capybara is a high level DSL for driving a browser.
 require 'capybara/rspec'
 require 'capybara/rails'
+require_relative './feature'
 
 # Tell capybara to use css selectors, as opposed to xpath
 Capybara.default_selector = :css

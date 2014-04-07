@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe "Contact form:", type: :feature do
+describe "Contact form:" do
   before do
     submit_contact_form
   end
