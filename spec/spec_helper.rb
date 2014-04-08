@@ -55,7 +55,7 @@ RSpec.configure do |config|
   # Use poltergeist (phantomjs driver) for feature tests requiring javascript
   Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, {
-        js_errors: false,
+        js_errors: true,
         inspector: true,
         phantomjs_options: ['--proxy-type=none']
       })

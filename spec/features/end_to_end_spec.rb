@@ -55,6 +55,8 @@ describe 'end to end behavior', describe_options do
         click_on(file_format)
       end
       page.should have_content('Dashboard')
+      page.should have_content(file_format)
+      puts page.body
       within('.alert-warning') do
         page.should have_content(file_format)
       end
