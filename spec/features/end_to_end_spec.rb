@@ -52,11 +52,13 @@ describe 'end to end behavior', describe_options do
         all('a.accordion-toggle').each do |elem|
           elem.click if elem.text == 'File Format'
         end
-        click_on(file_format)
+        within ('#collapse_File_Format_db') do
+          click_on(file_format)
+        end
       end
-      page.should have_content('Dashboard')
+      page.should have_no_content("Your files are being processed by ScholarSphere in the background.")
+      page.should have_content('X png (Portable Network Graphics)')
       page.should have_content(file_format)
-      puts page.body
       within('.alert-warning') do
         page.should have_content(file_format)
       end
