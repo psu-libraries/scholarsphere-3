@@ -3,7 +3,7 @@ require_relative './feature_spec_helper'
 describe "Visting the home page" do
 
   context "when logged in as a curator" do
-    let(:current_user) { FactoryGirl.create(:curator) }
+    let(:current_user) { create(:user) }
 
     before do
       sign_in_as current_user
@@ -27,7 +27,7 @@ describe "Visting the home page" do
         page.should have_content 'What is ScholarSphere?'
       end
       it "shows that I'm logged in" do
-        page.should have_content current_user.login
+        page.should have_content current_user.display_name
       end
     end
 
@@ -40,7 +40,7 @@ describe "Visting the home page" do
         page.should have_content 'What is ScholarSphere?'
       end
       it "shows that I'm logged in" do
-        page.should have_content current_user.login
+        page.should have_content current_user.display_name
       end
     end
   end
