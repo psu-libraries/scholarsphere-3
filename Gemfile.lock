@@ -8,9 +8,9 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projecthydra/sufia.git
-  revision: dcc1b7e501d463a716d9f025994950cdf6119792
-  ref: dcc1b7e501d463a716d9f025994950cdf6119792
+  remote: git://github.com/psu-stewardship/sufia.git
+  revision: c9e6a5f31caf1b7d56dccd29df1ddeca910822cb
+  ref: c9e6a5f31caf1b7d56dccd29df1ddeca910822cb
   specs:
     sufia (3.7.2)
       blacklight (~> 5.0)
@@ -227,11 +227,11 @@ GEM
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.1)
-    httmultiparty (0.3.13)
+    httmultiparty (0.3.14)
       httparty (>= 0.7.3)
       mimemagic
       multipart-post
-    httparty (0.13.0)
+    httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     hydra-access-controls (7.0.1)
