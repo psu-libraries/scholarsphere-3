@@ -104,7 +104,11 @@ def verify_links(path)
     end
     if unique_anchored_links.include? href
       anchor = href.split('#').last
-      page.find("##{anchor}").should_not be_nil
+      begin
+        page.should have_selector("##{anchor}", visible: false)
+      rescue => e
+        page.should have_selector("##{anchor}")
+      end
     end
     expect(status_code).to be(200)
   end
