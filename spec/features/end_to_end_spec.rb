@@ -54,7 +54,7 @@ describe 'end to end behavior', describe_options do
         end
         click_on(file_format)
       end
-      page.should have_content('Dashboard')
+      page.should have_content("My Dashboard X png (Portable Network Graphics)")
       within('.alert-warning') do
         page.should have_content(file_format)
       end

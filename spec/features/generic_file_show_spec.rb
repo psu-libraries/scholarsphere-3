@@ -23,7 +23,8 @@ describe "Showing the Generic File" do
       @gf2.save!
   end
   after(:all) do
-    @gf1.destroy  rescue puts "error occured destroying object"
+    @gf1.destroy
+    @gf2.destroy
   end
 
   before do
@@ -80,6 +81,17 @@ describe "Showing the Generic File" do
       page.should have_link 'http://example.org/TheDescriptionLink/'
       page.should have_link @gf1.related_url.first
     end
+
+    it "displays Mendeley modal" do
+      click_link "Mendeley"
+      page.should have_css(".modal-header")
+    end
+
+    it "displays Zotero modal" do
+      click_link "Zotero"
+      page.should have_css(".modal-header")
+    end
+
   end
   context "thumbnail display" do
     it "shows image thumbnail" do
@@ -112,7 +124,7 @@ describe "Showing the Generic File" do
   def check_page(link_name)
       page.should have_link link_name
       click_on link_name
-      page.should have_content @gf1.title.first 
-      page.should_not have_content @gf2.title.first 
+      page.should have_content @gf1.title.first
+      page.should_not have_content @gf2.title.first
   end
 end

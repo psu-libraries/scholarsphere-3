@@ -2,6 +2,9 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe Ability do
+  before(:all) do
+    User.all.each(&:destroy)
+  end
   after(:all) do
     GenericFile.destroy_all
   end

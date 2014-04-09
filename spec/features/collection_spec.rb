@@ -26,16 +26,16 @@ describe 'collection', describe_options do
     @old_resque_inline_value = Resque.inline
     Resque.inline = true
     @user_key = 'jilluser'
-    @gf1 =  GenericFile.new.tap do |f|
-      f.title = 'title 1'
-      f.apply_depositor_metadata(@user_key)
-      f.save
+    @gfs = []
+    (0..12).each do |x|
+      @gfs[x] =  GenericFile.new.tap do |f|
+        f.title = "title #{x}"
+        f.apply_depositor_metadata(@user_key)
+        f.save
+      end
     end
-    @gf2 =  GenericFile.new.tap do |f|
-      f.title = 'title 2'
-      f.apply_depositor_metadata(@user_key)
-      f.save
-    end
+    @gf1 = @gfs[0]
+    @gf2 = @gfs[1]
   end
 
   after(:all) do
@@ -110,6 +110,7 @@ describe 'collection', describe_options do
       # Should have search results / contents listing
       page.should have_content(@gf1.title.first)
       page.should have_content(@gf2.title.first)
+      page.should_not have_css(".pager")
     end
 
     it "should hide collection descriptive metadata when searching a collection", js: true do
@@ -214,6 +215,26 @@ describe 'collection', describe_options do
       page.should have_content(@collection.description)
       page.should_not have_content(@gf1.title.first)
       page.should_not have_content(@gf2.title.first)
+    end
+  end
+
+  describe 'show pages of a collection' do
+    before (:each) do
+      @collection = Collection.new title:'collection title'
+      @collection.description = 'collection description'
+      @collection.apply_depositor_metadata(@user_key)
+      @collection.members = @gfs
+      @collection.save
+    end
+
+    it "should show a collection with a listing of Descriptive Metadata and catalog-style search results", js: true do
+      login_js
+      go_to_dashboard
+      page.should have_content(@collection.title)
+      within('#document_'+@collection.noid) do
+        click_link("collection title")
+      end
+      page.should have_css(".pager")
     end
   end
 end

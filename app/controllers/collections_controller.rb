@@ -26,6 +26,18 @@ class CollectionsController < ApplicationController
 
   layout "sufia-one-column"
 
+  def query_collection_members
+    flash[:notice]=nil if flash[:notice] == "Select something first"
+    query = params[:cq]
+
+    #merge in the user parameters and the attach the collection query
+    solr_params =  (params.symbolize_keys).merge({:q => query})
+
+    # run the solr query to find the collections
+    (@response, @member_docs) = get_search_results(solr_params)
+  end
+
+
   def after_destroy (id)
     respond_to do |format|
       format.html { redirect_to sufia.dashboard_index_path, notice: 'Collection was successfully deleted.' }

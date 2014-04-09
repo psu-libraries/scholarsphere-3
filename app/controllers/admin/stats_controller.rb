@@ -48,7 +48,7 @@ class Admin::StatsController < ApplicationController
     visibility_hash.select! { |k, v| ['registered', 'public'].include? k }
 
     # Count of documents by permissions
-    Blacklight.solr.commit("expungeDeletes"=>true)
+    blacklight_solr.commit("expungeDeletes"=>true)
     @files_count = {}
     @files_count[:total] = GenericFile.count
     @files_count[:psu] = visibility_hash['registered'].to_i
