@@ -63,7 +63,7 @@ describe "Static pages" do
       end
       if unique_anchored_links.include? href
         anchor = href.split('#').last
-        page.find("##{anchor}").should_not be_nil
+        page.should have_selector("##{anchor}", visible: false)
       end
       expect(status_code).to be(200)
     end
