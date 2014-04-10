@@ -8,6 +8,7 @@ en:
     errors:
       header: "There were errors that prevented this %{model} from being saved:"
 
+
   hydra:
 
     metadata_help:
@@ -30,3 +31,9 @@ en:
     search:
       facets:
         count: ' (%{number})'
+
+  scholarsphere:
+    notifications:
+      permissions:
+        subject: "Permission change notification"
+        notification: "You can now %{access} file %{file}"

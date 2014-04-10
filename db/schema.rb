@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130611161958) do
+ActiveRecord::Schema.define(version: 20140117161959) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
   end
 
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.integer  "pass"
     t.string   "expected_result"
     t.string   "actual_result"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.integer  "follower_id",                     null: false
     t.string   "follower_type",                   null: false
     t.boolean  "blocked",         default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.string   "status",            default: "pending", null: false
     t.text     "sender_comment"
     t.text     "receiver_comment"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "proxy_deposit_requests", ["receiving_user_id"], name: "index_proxy_deposit_requests_on_receiving_user_id"
@@ -119,8 +119,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
   create_table "proxy_deposit_rights", force: true do |t|
     t.integer  "grantor_id"
     t.integer  "grantee_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "proxy_deposit_rights", ["grantee_id"], name: "index_proxy_deposit_rights_on_grantee_id"
@@ -143,8 +143,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
   create_table "searches", force: true do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
   end
 
@@ -155,16 +155,16 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.string   "path"
     t.string   "itemId"
     t.datetime "expires"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subject_local_authority_entries", force: true do |t|
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label"
@@ -176,8 +176,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
   create_table "trophies", force: true do |t|
     t.integer  "user_id"
     t.string   "generic_file_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "login",                              default: "", null: false
     t.string   "display_name"
     t.string   "address"
@@ -226,8 +226,8 @@ ActiveRecord::Schema.define(version: 20130611161958) do
     t.string   "datastream_id"
     t.string   "version_id"
     t.string   "committer_login"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

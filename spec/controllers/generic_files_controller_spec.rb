@@ -280,9 +280,17 @@ describe GenericFilesController do
     it "should update existing groups and users" do
       @generic_file.read_groups = ['group3']
       @generic_file.save
-      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_group_name=>'', :new_group_permission=>'', :new_user_name=>'', :new_user_permission=>'', :group=>{'group3' =>'read'}}}
+      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{ :new_group_name=>'', :new_group_permission=>'', :new_user_name=>'', :new_user_permission=>'', :group=>{'group3' =>'read'}}}
 
       assigns[:generic_file].read_groups.should == ["group3"]
+    end
+    it "should notify user when added to the list of file permissions" do
+      #create or retrieve current user
+      recipient = User.audituser
+      #update file adding user to the permission set, triggering the notification
+      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_user_name=>{'audituser'=>'edit'}}}
+      #test to see if user has received any messages
+      recipient.mailbox.inbox.count.should == 1
     end
     it "should spawn a virus check" do
       s1 = double('one')
@@ -299,7 +307,6 @@ describe GenericFilesController do
       file = fixture_file_upload('/world.png','image/png')
       post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
     end
-
   end
 
   describe "a file owned by someone else" do

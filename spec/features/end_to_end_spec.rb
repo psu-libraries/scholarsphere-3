@@ -40,7 +40,7 @@ describe 'end to end behavior', describe_options do
       page.first('.start').click
       page.should have_content('Apply Metadata')
       fill_in('Title 1', :with => 'MY Tite for World')
-      first('i.icon-question-sign').click
+      first('i.glyphicon-question-sign').click
       fill_in('Keyword', :with => 'test')
       fill_in('Creator', :with => 'me')
       click_on('upload_submit')
@@ -52,9 +52,13 @@ describe 'end to end behavior', describe_options do
         all('a.accordion-toggle').each do |elem|
           elem.click if elem.text == 'File Format'
         end
-        click_on(file_format)
+        within ('#collapse_File_Format_db') do
+          click_on(file_format)
+        end
       end
-      page.should have_content('Dashboard')
+      page.should have_no_content("Your files are being processed by ScholarSphere in the background.")
+      page.should have_content('X png (Portable Network Graphics)')
+      page.should have_content(file_format)
       within('.alert-warning') do
         page.should have_content(file_format)
       end
@@ -62,7 +66,7 @@ describe 'end to end behavior', describe_options do
       first('button.dropdown-toggle').click
       click_link('Edit File')
       wait_on_page('Edit MY Tite for World').should be_true
-      first('i.icon-question-sign').click
+      first('i.glyphicon-question-sign').click
       # TODO: more test for edit?
       click_link('Dashboard')
       count = all('button.dropdown-toggle').count
