@@ -7,4 +7,5 @@ require_relative './support/factories'
 require_relative './support/cleanup'
 require_relative './support/helpers/fixtures'
 require_relative './support/mail'
+require_relative './support/helpers/generic_files'
 
