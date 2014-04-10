@@ -12,11 +12,10 @@ describe "Batch management of generic files" do
     end
   end
   describe "Editing multiple files" do
-    let(:file_1) { GenericFile.where(filename: ['world.png']) }
-    let(:file_2) { GenericFile.where(filename: ['small_file.txt']) }
+    let(:file_1) { GenericFile.first }
+    let(:file_2) { GenericFile.last }
     context "Filling in each field on the batch edit form" do
       before do
-        p "#{GenericFile.count} %%"
         # visit the page and fill in all form fields
         check 'check_all'
         click_on 'batch-edit'
@@ -59,7 +58,6 @@ describe "Batch management of generic files" do
     context "Viewing the batch edit form" do
       before do
         # assign all form fields
-        p "#{GenericFile.count} %%"
         file_1.contributor  = ['NEW contributor']
         file_2.contributor  = ['NEW contributor']
         file_1.description  = ['NEW description']
@@ -105,7 +103,6 @@ describe "Batch management of generic files" do
   describe "Deleting multiple files" do
     context "Selecting all my files to delete" do
       before do
-        p "#{GenericFile.count} %%"
         # visit dashboard, select all files, and delete them
         visit '/dashboard'
         check 'check_all'
