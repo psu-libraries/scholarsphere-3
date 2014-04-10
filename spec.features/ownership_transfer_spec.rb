@@ -17,7 +17,6 @@ describe "Sending a transfer" do
     let (:file) { GenericFile.first }
     context "Transferring the file to someone else" do
       before do
-        save_and_open_page
         within "#document_#{file.noid}" do
           caret = find ".dropdown-toggle"
           caret.click
