@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: c9e6a5f31caf1b7d56dccd29df1ddeca910822cb
-  ref: c9e6a5f31caf1b7d56dccd29df1ddeca910822cb
+  revision: 0d3505e5563f08625e13544dad6a5528d43bdad2
+  ref: 0d3505e5563f08625e13544dad6a5528d43bdad2
   specs:
     sufia (3.7.2)
       blacklight (~> 5.0)

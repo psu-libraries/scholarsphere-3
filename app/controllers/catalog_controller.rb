@@ -96,7 +96,10 @@ class CatalogController < ApplicationController
       :qt => "search",
       :rows => 10
     }
-
+    
+    # specify which field to use in the tag cloud on the homepage
+    config.tag_cloud_field_name = Solrizer.solr_name('desc_metadata__tag', :facetable)
+    
     # solr field configuration for search results/index views
     config.index.show_link = Solrizer.solr_name("desc_metadata__title", :displayable)
     config.index.record_display_type = "id"
