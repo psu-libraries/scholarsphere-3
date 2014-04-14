@@ -23,16 +23,46 @@ describe "Sending a transfer" do
         end
         click_link "Transfer Ownership of File"
 
-        fill_in "User", with: new_owner.user_key
+       #fill_in "User", with: new_owner.user_key
+       #select2(new_owner.user_key)
+        select3
         fill_in "Comments", with: "File transfer comments"
         within ".form-actions" do
-          click_button "Transfer"
+          button = find(".btn.btn-primary")
+          button.click
         end
       end
       pending "Creates a proxy_deposit_request" do
-        p = ProxyDepositRequest.first
-        p.receiving_user.should == new_owner  
+       #p = ProxyDepositRequest.first
+       #p.receiving_user.should == new_owner  
+        save_and_open_page
+        page.should have_content "Transfer request created"
       end
     end
+  end
+  def select2(value)
+    p "%%%% #{value}"
+    page.execute_script %Q{
+      i = $('.select2-input');
+      i.focus().val("#{value}").blur();
+    }
+    #i.trigger('keydown').val('#{value}').trigger('keyup');
+    sleep 2
+   #user_option = find('div.select2-result-label')
+   #user_option.click
+  end
+  def select3
+    p "%%%% in select3"
+    page.execute_script %Q{
+      i = $('.select2-input');
+      e = $.Event('keypress');
+      e.which = 48;
+      i.trigger(e);
+      e.which = 49;
+      i.trigger(e);
+    }
+    sleep 2
+    user_option = find('div.select2-result-label')
+    user_option.click
   end
 end
