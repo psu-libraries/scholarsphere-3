@@ -14,6 +14,7 @@
     </thead> 
     <tbody> 
     <% @outgoing.each do |req| %>
+      <% unless req.receiving_user.blank? %>
       <tr>
         <td> <%= show_transfer_request_title(req) %> </td>
         <td class="sorts-dash">
@@ -33,6 +34,7 @@
         </td>
         <td><%= req.sender_comment %></td>
       </tr>
+    <% end %>
     <% end %>
     </tbody> 
   </table>
