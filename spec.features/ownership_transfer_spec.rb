@@ -1,5 +1,8 @@
 require_relative './feature_spec_helper'
 
+include Selectors::NewTransfers
+include Selectors::Dashboard
+
 describe "Sending a transfer" do
 
   let(:original_owner) { create(:user) }
@@ -14,55 +17,36 @@ describe "Sending a transfer" do
       upload_generic_file 'world.png'
     end
 
-    let (:file) { GenericFile.first }
+    let (:file) { GenericFile.last }
+
     context "Transferring the file to someone else" do
       before do
-        within "#document_#{file.noid}" do
-          caret = find ".dropdown-toggle"
-          caret.click
-        end
-        click_link "Transfer Ownership of File"
-
-       #fill_in "User", with: new_owner.user_key
-       #select2(new_owner.user_key)
-        select3
-        fill_in "Comments", with: "File transfer comments"
-        within ".form-actions" do
-          button = find(".btn.btn-primary")
-          button.click
-        end
+        transfer_ownership_of_file(file, new_owner)
       end
-      pending "Creates a proxy_deposit_request" do
-       #p = ProxyDepositRequest.first
-       #p.receiving_user.should == new_owner  
-        save_and_open_page
-        page.should have_content "Transfer request created"
+
+      it "Creates a transfer request" do
+       page.should have_content "Transfer request created"
+      end
+    end
+
+    context "Transferring the file to myself" do
+      before do
+        transfer_ownership_of_file(file, original_owner)
+      end
+
+      it "Displays an appropriate error message" do
+       page.should have_content "Sending user must specify another user to receive the file"
       end
     end
   end
-  def select2(value)
-    p "%%%% #{value}"
-    page.execute_script %Q{
-      i = $('.select2-input');
-      i.focus().val("#{value}").blur();
-    }
-    #i.trigger('keydown').val('#{value}').trigger('keyup');
-    sleep 2
-   #user_option = find('div.select2-result-label')
-   #user_option.click
-  end
-  def select3
-    p "%%%% in select3"
-    page.execute_script %Q{
-      i = $('.select2-input');
-      e = $.Event('keypress');
-      e.which = 48;
-      i.trigger(e);
-      e.which = 49;
-      i.trigger(e);
-    }
-    sleep 2
-    user_option = find('div.select2-result-label')
-    user_option.click
+
+  def transfer_ownership_of_file(file, new_owner)
+    file_actions_toggle(file.noid).click
+    click_link "Transfer Ownership of File"
+    new_owner_dropdown.click
+    new_owner_search_field.set(new_owner.user_key)
+    new_owner_search_result.click
+    fill_in "proxy_deposit_request[sender_comment]", with: "File transfer comments"
+    submit_button.click
   end
 end

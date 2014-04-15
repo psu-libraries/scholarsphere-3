@@ -8,4 +8,5 @@ require_relative './support/cleanup'
 require_relative './support/helpers/fixtures'
 require_relative './support/mail'
 require_relative './support/helpers/generic_files'
+require_relative './support/selectors'
 
