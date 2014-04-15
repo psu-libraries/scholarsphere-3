@@ -8,7 +8,7 @@ describe "Batch management of generic files" do
     sign_in_as current_user
     # create some files
     filenames.each do |filename|
-      upload_generic_files filename
+      upload_generic_file filename
     end
   end
   describe "Editing multiple files" do
