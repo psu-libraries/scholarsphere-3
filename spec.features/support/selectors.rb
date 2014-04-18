@@ -1,5 +1,21 @@
 module Selectors
 
+  module Header
+
+    def user_notifications_link
+      within '#user_utility_links' do
+        find('#notify_link')
+      end
+    end
+
+    def user_utility_toggle
+      within '#user_utility_links' do
+        find('.dropdown-toggle.btn.btn-default')
+      end
+    end
+
+  end
+
   module Dashboard
 
     def file_actions_toggle(id)
@@ -30,6 +46,27 @@ module Selectors
     def submit_button
       within '#new_transfer' do
         find 'input[type=submit]'
+      end
+    end
+  end
+
+  module Transfers
+
+    def first_sent_cancel_button
+      within('#outgoing-transfers') do
+        find '.btn.btn-danger'
+      end
+    end
+
+    def first_received_accept_dropdown
+      within '#incoming-transfers' do
+        find '.dropdown-toggle.accept'
+      end
+    end
+
+    def first_received_reject_button
+      within '#incoming-transfers' do
+        find '.btn.btn-danger'
       end
     end
   end
