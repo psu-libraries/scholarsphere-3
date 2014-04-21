@@ -5,7 +5,7 @@ include Selectors::Dashboard
 include Selectors::NewTransfers
 include Selectors::Transfers
 
-describe "Transferring file ownership" do
+describe "Transferring file ownership:" do
 
   let(:original_owner) { create(:user, display_name: 'Original Owner') }
   let(:new_owner) { create(:user, display_name: 'New Owner') }
@@ -15,8 +15,14 @@ describe "Transferring file ownership" do
     upload_generic_file 'world.png'
   end
 
-  describe "When I request a file transfer" do
+  describe "When I request a file transfer:" do
     let (:file) { GenericFile.last }
+
+    context 'For a file I do not own' do
+      specify "The transfer option is not available" do
+        pending 'Not sure how this is supposed to work.'
+      end
+    end
 
     context "To myself" do
       before { transfer_ownership_of_file(file, original_owner) }
