@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text     "group_list",             limit: 255
+    t.text     "group_list"
     t.datetime "groups_last_update"
     t.boolean  "ldap_available"
     t.datetime "ldap_last_update"
