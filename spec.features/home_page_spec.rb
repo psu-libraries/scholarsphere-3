@@ -33,7 +33,7 @@ describe "Visting the home page" do
 
     context "when we belong to a lot of groups" do
       before do
-        add_groups_to_current_user 5 # See issue #17
+        add_groups_to_current_user 100 # See issue #17
         visit '/'
       end
       it "loads the page successfully" do

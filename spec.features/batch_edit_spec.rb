@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe "Batch management of generic files" do
+describe 'Batch management of generic files' do
   let(:current_user) { create(:user) }
   let(:filenames) { %w{world.png small_file.txt} }
   before do
@@ -11,10 +11,10 @@ describe "Batch management of generic files" do
       upload_generic_file filename
     end
   end
-  describe "Editing multiple files" do
+  describe 'Editing multiple files' do
     let(:file_1) { GenericFile.first }
     let(:file_2) { GenericFile.last }
-    context "Filling in each field on the batch edit form" do
+    context 'Filling in each field on the batch edit form' do
       before do
         # visit the page and fill in all form fields
         check 'check_all'
@@ -32,7 +32,7 @@ describe "Batch management of generic files" do
     #   fill_in_field 'based_near'
     #   fill_in_field 'related_url'
       end
-      it "Saves each field to the database" do
+      it 'Saves each field to the database' do
         file_1.contributor.should == ['NEW contributor']
         file_2.contributor.should == ['NEW contributor']
     #   file_1.description.should == ['NEW description']
@@ -55,7 +55,7 @@ describe "Batch management of generic files" do
     #   file_2.related_url.should == ['NEW related_url']
       end
     end
-    context "Viewing the batch edit form" do
+    context 'Viewing the batch edit form' do
       before do
         # assign all form fields
         file_1.contributor  = ['NEW contributor']
@@ -86,7 +86,7 @@ describe "Batch management of generic files" do
         page.should have_content 'Batch Edit Descriptions'
         expand_all_fields
       end
-      it "Fills in each field from the database" do
+      it 'Fills in each field from the database' do
         find('#generic_file_contributor').value.should == 'NEW contributor'
         find('#generic_file_description').value.should == 'NEW description'
         find('#generic_file_tag').value.should == 'NEW tag'
@@ -100,15 +100,15 @@ describe "Batch management of generic files" do
       end
     end
   end
-  describe "Deleting multiple files" do
-    context "Selecting all my files to delete" do
+  describe 'Deleting multiple files' do
+    context 'Selecting all my files to delete' do
       before do
         # visit dashboard, select all files, and delete them
         visit '/dashboard'
         check 'check_all'
         click_button 'Delete Selected'
       end
-      it "Removes the files from the system" do
+      it 'Removes the files from the system' do
         GenericFile.count.should be_zero
       end
     end
@@ -127,9 +127,9 @@ describe "Batch management of generic files" do
   end
 
   def expand_all_fields
-    all(".accordion-toggle:not(.btn)").each do |link| 
+    all(".accordion-toggle:not(.btn)").each do |link|
       label = link.text
-      click_link label 
+      click_link label
     end
   end
 end
