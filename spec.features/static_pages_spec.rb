@@ -2,7 +2,7 @@ require_relative './feature_spec_helper'
 
 describe "Static pages" do
 
-  shared_examples "Verifies each static page" do |logged_in|
+  shared_examples "verify each static page" do |logged_in|
     before { create(:user) } if logged_in
 
     [
@@ -26,11 +26,11 @@ describe "Static pages" do
   end
 
   describe "When not logged in" do
-    it_behaves_like "Verifies each static page", false
+    we_can "verify each static page", false
   end
 
   describe "When logged in" do
-    it_behaves_like "Verifies each static page", true
+    we_can "verify each static page", true
   end
 
   def verify_links(path)

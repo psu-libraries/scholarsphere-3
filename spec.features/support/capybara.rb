@@ -15,4 +15,7 @@ RSpec.configure do |config|
 
   # Provide access to Rails path helpers
   config.include Rails.application.routes.url_helpers
+
+  # Alias for shared examples
+  config.alias_it_should_behave_like_to :we_can, "We can"
 end
