@@ -5,6 +5,7 @@ RSpec.configure do |config|
     User.destroy_all
     GenericFile.destroy_all
     Batch.destroy_all
+    Collection.destroy_all
     ActionMailer::Base.deliveries.clear
   end
 end

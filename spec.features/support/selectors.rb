@@ -25,10 +25,15 @@ module Selectors
     end
 
     def db_item_title(item)
-      within("#document_#{item.noid}") do
-        find("#src_copy_link#{item.noid}")
+      within "#document_#{item.noid}" do
+        find "#src_copy_link#{item.noid}"
       end 
     end
+
+    def db_create_collection_button
+      first('#hydra-collection-add')
+    end
+
   end
 
   module NewTransfers
