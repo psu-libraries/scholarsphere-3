@@ -18,10 +18,16 @@ module Selectors
 
   module Dashboard
 
-    def file_actions_toggle(id)
-      within "#document_#{id}" do
+    def db_item_actions_toggle(item)
+      within "#document_#{item.noid}" do
         find ".dropdown-toggle"
       end
+    end
+
+    def db_item_title(item)
+      within("#document_#{item.noid}") do
+        find("#src_copy_link#{item.noid}")
+      end 
     end
   end
 
