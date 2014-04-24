@@ -78,6 +78,7 @@ describe 'collection', describe_options do
       fill_in('Keyword', :with => 'proxy')
       fill_in('Creator', :with => 'me')
       click_on('upload_submit')
+      page.should have_content('Dashboard')
       first('i.icon-plus').click
       node = first('table.expanded-details')
       node.text.should include('Depositor: jilluser')
