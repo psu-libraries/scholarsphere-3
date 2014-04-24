@@ -72,6 +72,8 @@ Sufia::Engine.configure do
     "Choose Access"=>"none",
     "View/Download" => "read"
   }
+
+  config.usage_statistics = true
 end
 
 

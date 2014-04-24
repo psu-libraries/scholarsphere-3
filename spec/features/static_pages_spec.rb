@@ -24,24 +24,25 @@ describe "Visting the static pages" do
       page.should have_css 'h1', text:"About"
     end
 
-    it "allows contact form link" do
-      click_link "Contact us"
-      page.status_code.should == 200
-      current_path.should == Sufia::Engine.routes.url_helpers.contact_path
-      page.should have_css 'h1', text:"Contact"
-    end
-
-    it "allows help page link" do
-      click_link "Help page"
-      page.status_code.should == 200
-      page.should have_css '#faq'
-    end
-
-    it "allows deposit agreement link" do
-      first(:link, "Deposit Agreement").click
-      page.status_code.should == 200
-      page.should have_css 'h1', text:"ScholarSphere Deposit Agreement"
-    end
+    # todo: This is no longer set so this should not necessarily be tested...
+    #it "allows contact form link" do
+    #  click_link "Contact us"
+    #  page.status_code.should == 200
+    #  current_path.should == Sufia::Engine.routes.url_helpers.contact_path
+    #  page.should have_css 'h1', text:"Contact"
+    #end
+    #
+    #it "allows help page link" do
+    #  click_link "Help page"
+    #  page.status_code.should == 200
+    #  page.should have_css '#faq'
+    #end
+    #
+    #it "allows deposit agreement link" do
+    #  first(:link, "Deposit Agreement").click
+    #  page.status_code.should == 200
+    #  page.should have_css 'h1', text:"ScholarSphere Deposit Agreement"
+    #end
 
   end
 
