@@ -1,4 +1,3 @@
-
 FactoryGirl.define do
 
   sequence :login, 1000 do |n|
@@ -7,8 +6,8 @@ FactoryGirl.define do
 
   factory :user do |u|
     login
-    display_name "Joe Example"
-    title "User"
+    display_name 'Joe Example'
+    title 'User'
 
     # Scholarsphere grants uploading rights to PSU users. We know
     # that a user is a PSU user if their information is in LDAP. This
@@ -22,8 +21,6 @@ FactoryGirl.define do
       ldap_available false
       ldap_last_update nil
     end
-
   end
-
 
 end
