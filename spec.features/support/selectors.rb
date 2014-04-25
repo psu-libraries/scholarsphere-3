@@ -4,13 +4,13 @@ module Selectors
 
     def user_notifications_link
       within '#user_utility_links' do
-        find('#notify_link')
+        find '#notify_link'
       end
     end
 
     def user_utility_toggle
       within '#user_utility_links' do
-        find('.dropdown-toggle.btn.btn-default')
+        find '.dropdown-toggle.btn.btn-default'
       end
     end
 
@@ -18,20 +18,20 @@ module Selectors
 
   module Dashboard
 
-    def db_item_actions_toggle(item)
+    def db_item_actions_toggle item
       within "#document_#{item.noid}" do
-        find ".dropdown-toggle"
+        find '.dropdown-toggle'
       end
     end
 
-    def db_item_title(item)
+    def db_item_title item
       within "#document_#{item.noid}" do
         find "#src_copy_link#{item.noid}"
       end 
     end
 
     def db_create_collection_button
-      first('#hydra-collection-add')
+      first '#hydra-collection-add'
     end
 
   end
@@ -64,7 +64,7 @@ module Selectors
   module Transfers
 
     def first_sent_cancel_button
-      within('#outgoing-transfers') do
+      within '#outgoing-transfers' do
         find '.btn.btn-danger'
       end
     end
