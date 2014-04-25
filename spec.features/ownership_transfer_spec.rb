@@ -90,7 +90,7 @@ describe "Transferring file ownership:" do
   end
 
   def transfer_ownership_of_file(file, new_owner)
-    file_actions_toggle(file.noid).click
+    db_item_actions_toggle(file).click
     click_link 'Transfer Ownership of File'
     new_owner_dropdown.click
     new_owner_search_field.set(new_owner.user_key)
