@@ -1,12 +1,11 @@
 require_relative './feature_spec_helper'
 
 describe 'Batch management of generic files' do
-  let(:current_user) { create(:user) }
+  let(:current_user) { create :user }
   let(:filenames) { %w{world.png small_file.txt} }
   before do
     GenericFile.destroy_all
     sign_in_as current_user
-    # create some files
     filenames.each do |filename|
       upload_generic_file filename
     end
@@ -34,24 +33,24 @@ describe 'Batch management of generic files' do
       end
       it 'Saves each field to the database' do
         file_1.contributor.should == ['NEW contributor']
-        file_2.contributor.should == ['NEW contributor']
     #   file_1.description.should == ['NEW description']
-    #   file_2.description.should == ['NEW description']
     #   file_1.tag.should == ['NEW tag']
-    #   file_2.tag.should == ['NEW tag']
     #   file_1.publisher.should == ['NEW publisher']
-    #   file_2.publisher.should == ['NEW publisher']
     #   file_1.date_created.should == ['NEW date_created']
-    #   file_2.date_created.should == ['NEW date_created']
     #   file_1.subject.should == ['NEW subject']
-    #   file_2.subject.should == ['NEW subject']
     #   file_1.language.should == ['NEW language']
-    #   file_2.language.should == ['NEW language']
     #   file_1.identifier.should == ['NEW identifier']
-    #   file_2.identifier.should == ['NEW identifier']
     #   file_1.based_near.should == ['NEW based_near']
-    #   file_2.based_near.should == ['NEW based_near']
     #   file_1.related_url.should == ['NEW related_url']
+        file_2.contributor.should == ['NEW contributor']
+    #   file_2.description.should == ['NEW description']
+    #   file_2.tag.should == ['NEW tag']
+    #   file_2.publisher.should == ['NEW publisher']
+    #   file_2.date_created.should == ['NEW date_created']
+    #   file_2.subject.should == ['NEW subject']
+    #   file_2.language.should == ['NEW language']
+    #   file_2.identifier.should == ['NEW identifier']
+    #   file_2.based_near.should == ['NEW based_near']
     #   file_2.related_url.should == ['NEW related_url']
       end
     end
@@ -59,26 +58,26 @@ describe 'Batch management of generic files' do
       before do
         # assign all form fields
         file_1.contributor  = ['NEW contributor']
-        file_2.contributor  = ['NEW contributor']
         file_1.description  = ['NEW description']
-        file_2.description  = ['NEW description']
         file_1.tag          = ['NEW tag']
-        file_2.tag          = ['NEW tag']
         file_1.publisher    = ['NEW publisher']
-        file_2.publisher    = ['NEW publisher']
         file_1.date_created = ['NEW date_created']
-        file_2.date_created = ['NEW date_created']
         file_1.subject      = ['NEW subject']
-        file_2.subject      = ['NEW subject']
         file_1.language     = ['NEW language']
-        file_2.language     = ['NEW language']
         file_1.identifier   = ['NEW identifier']
-        file_2.identifier   = ['NEW identifier']
         file_1.based_near   = ['NEW based_near']
-        file_2.based_near   = ['NEW based_near']
         file_1.related_url  = ['NEW related_url']
-        file_2.related_url  = ['NEW related_url']
         file_1.save!
+        file_2.contributor  = ['NEW contributor']
+        file_2.description  = ['NEW description']
+        file_2.tag          = ['NEW tag']
+        file_2.publisher    = ['NEW publisher']
+        file_2.date_created = ['NEW date_created']
+        file_2.subject      = ['NEW subject']
+        file_2.language     = ['NEW language']
+        file_2.identifier   = ['NEW identifier']
+        file_2.based_near   = ['NEW based_near']
+        file_2.related_url  = ['NEW related_url']
         file_2.save!
         visit '/dashboard'
         check 'check_all'
@@ -114,7 +113,7 @@ describe 'Batch management of generic files' do
     end
   end
 
-  def fill_in_field(label)
+  def fill_in_field label
     within "#form_#{label}" do
       fill_in "generic_file[#{label}][]", with: "NEW #{label}"
       click_button "#{label}_save"
@@ -122,7 +121,7 @@ describe 'Batch management of generic files' do
     end
   end
 
-  def expand(label)
+  def expand label
     click_link label
   end
 
