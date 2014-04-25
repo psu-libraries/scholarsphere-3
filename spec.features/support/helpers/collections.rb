@@ -4,11 +4,11 @@ module CollectionsHelper
     fill_in('Title', with: title)
     fill_in('Creator', with: creator)
     fill_in('Description', with: description)
-    click_button("Create Collection")
+    click_button 'Create Collection'
     page.should have_content 'Items in this Collection'
-    page.should have_content(title)
-    page.should have_content(creator)
-    page.should have_content(description)
+    page.should have_content title
+    page.should have_content creator
+    page.should have_content description
   end
 end
 
