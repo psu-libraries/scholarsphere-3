@@ -36,20 +36,20 @@ describe "Static pages" do
   def verify_links(path)
     visit path
     links_on_page = Array.new
-    unique_links = Array.new
     anchored_links = Array.new
-    unique_anchored_links = Array.new
   
     all('#content a').each do |page_link|
-      unless ['delete','post','put'].include? page_link[:method]
+      unless ['delete', 'post', 'put'].include? page_link[:method]
         links_on_page << page_link[:href]
         anchored_links << page_link[:href] if page_link[:href].include? "#"
       end
     end
-  
+
+    unique_links = Array.new
+    unique_anchored_links = Array.new
     unique_links = links_on_page.uniq
     unique_anchored_links = anchored_links.uniq
-  
+
     unique_links.each do |href|
       next if href == '#'
       next if href.blank?
