@@ -1,6 +1,6 @@
 module FixturesHelper
 
-  def test_file_path(filename)
+  def test_file_path filename
     Rails.root.join("spec/fixtures/#{filename}").to_s
   end
 end
