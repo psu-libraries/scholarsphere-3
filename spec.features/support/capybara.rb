@@ -11,11 +11,11 @@ Capybara.default_wait_time = 15
 
 RSpec.configure do |config|
   # Provide support for #visit, #click_link, etc.
-  config.include(Capybara::DSL)
+  config.include Capybara::DSL
 
   # Provide access to Rails path helpers
   config.include Rails.application.routes.url_helpers
 
   # Alias for shared examples
-  config.alias_it_should_behave_like_to :we_can, "We can"
+  config.alias_it_should_behave_like_to :we_can, 'We can'
 end
