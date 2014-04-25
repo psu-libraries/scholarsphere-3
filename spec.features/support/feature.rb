@@ -1,7 +1,8 @@
 # Since we can't set metadata[:type] globally for our suite, and since it will
 # be the default once our suite is moved under spec/features, we want to include
 # Capybara's whole type: feature config for now:
-# https://github.com/jnicklas/capybara/blob/096c1fe832b0d808e20687cbde2d0e33e36f0d13/lib/capybara/rspec.rb
+# https://github.com/jnicklas/capybara/blob/
+# 096c1fe832b0d808e20687cbde2d0e33e36f0d13/lib/capybara/rspec.rb
 
 RSpec.configure do |config|
   config.include Capybara::RSpecMatchers
@@ -21,9 +22,9 @@ RSpec.configure do |config|
   end
   config.before do
     if self.class.include?(Capybara::DSL)
-      example = fetch_current_example.call(self)
-      Capybara.current_driver = Capybara.javascript_driver if example.metadata[:js]
-      Capybara.current_driver = example.metadata[:driver] if example.metadata[:driver]
+      e = fetch_current_example.call(self)
+      Capybara.current_driver = Capybara.javascript_driver if e.metadata[:js]
+      Capybara.current_driver = e.metadata[:driver] if e.metadata[:driver]
     end
   end
 end
