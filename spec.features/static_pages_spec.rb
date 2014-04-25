@@ -37,7 +37,7 @@ describe "Static pages" do
     visit path
     links_on_page = Array.new
     anchored_links = Array.new
-  
+
     all('#content a').each do |page_link|
       unless ['delete', 'post', 'put'].include? page_link[:method]
         links_on_page << page_link[:href]
@@ -68,7 +68,7 @@ describe "Static pages" do
       expect(status_code).to be(200)
     end
   end
-  
+
   def verfiy_youtube_links(path)
     # Check all iframes containing youtube links for valid youtube ids
     visit path

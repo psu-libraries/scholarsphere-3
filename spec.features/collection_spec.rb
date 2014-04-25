@@ -79,7 +79,6 @@ describe 'Collections:' do
       page.should have_content file_1.title.first
       page.should have_content file_2.title.first
     end
-
   end
 
   describe 'When searching within a collection' do
@@ -90,7 +89,6 @@ describe 'Collections:' do
       @collection.members = [file_1, file_2]
       @collection.save!
     end
-
     specify 'I should see the correct results' do
       page.should have_content @collection.title
       db_item_title(@collection).click

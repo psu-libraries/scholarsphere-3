@@ -3,6 +3,7 @@ require_relative './feature_spec_helper'
 describe 'Batch management of generic files' do
   let(:current_user) { create :user }
   let(:filenames) { %w{world.png small_file.txt} }
+
   before do
     GenericFile.destroy_all
     sign_in_as current_user
@@ -10,9 +11,11 @@ describe 'Batch management of generic files' do
       upload_generic_file filename
     end
   end
+
   describe 'Editing multiple files' do
     let(:file_1) { GenericFile.first }
     let(:file_2) { GenericFile.last }
+
     context 'Filling in each field on the batch edit form' do
       before do
         # visit the page and fill in all form fields
@@ -54,6 +57,7 @@ describe 'Batch management of generic files' do
     #   file_2.related_url.should == ['NEW related_url']
       end
     end
+
     context 'Viewing the batch edit form' do
       before do
         # assign all form fields
@@ -99,6 +103,7 @@ describe 'Batch management of generic files' do
       end
     end
   end
+
   describe 'Deleting multiple files' do
     context 'Selecting all my files to delete' do
       before do
