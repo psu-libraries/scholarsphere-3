@@ -10,4 +10,3 @@ require_relative './support/mail'
 require_relative './support/helpers/generic_files'
 require_relative './support/selectors'
 require_relative './support/helpers/collections'
-
