@@ -27,14 +27,14 @@ describe 'Collections:' do
 
     specify 'I should be able to create it without any files' do
       db_create_collection_button.click
-      create_collection(title1, creator, description1)
+      create_collection title1, creator, description1
     end
 
     specify 'I should be able to create it with files' do
       check 'check_all'
       click_button 'Add to Collection'
       click_button 'Add to new Collection'
-      create_collection(title1, creator, description1)
+      create_collection title1, creator, description1
       files.each do |file|
         page.should have_content file.title.first
       end
@@ -43,7 +43,7 @@ describe 'Collections:' do
 
   describe 'When deleting a collection:' do
     before do
-      @collection = Collection.new(title: 'collection title 1')
+      @collection = Collection.new title: 'collection title 1'
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata current_user.user_key
       @collection.save!
@@ -61,7 +61,7 @@ describe 'Collections:' do
 
   describe 'When viewing a collection:' do
     before do
-      @collection = Collection.new(title: 'collection title 2')
+      @collection = Collection.new title: 'collection title 2'
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata current_user.user_key
       @collection.members = [file_1, file_2]
@@ -83,7 +83,7 @@ describe 'Collections:' do
 
   describe 'When searching within a collection' do
     before do
-      @collection = Collection.new title:'collection title 3'
+      @collection = Collection.new title: 'collection title 3'
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata current_user.user_key
       @collection.members = [file_1, file_2]
@@ -112,7 +112,7 @@ describe 'Collections:' do
 
   describe 'When updating a collection:' do
     before do
-      @collection = Collection.new(title: 'collection title')
+      @collection = Collection.new title: 'collection title'
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata current_user.user_key
       @collection.members = [file_1, file_2]
@@ -127,15 +127,16 @@ describe 'Collections:' do
       page.should have_content @collection.title
       db_item_actions_toggle(@collection).click
       click_link 'Edit Collection'
-      page.should have_field('collection_title', with: @collection.title)
-      page.should have_field('collection_description', with: @collection.description)
+      page.should have_field 'collection_title', with: @collection.title
+      page.should have_field 'collection_description',
+          with: @collection.description
       new_title = 'Altered Title'
       new_description = 'Completely new description text.'
       creators = ['Dorje Trollo', 'Vajrayogini']
-      fill_in('Title', with: new_title)
-      fill_in('Description', with: new_description)
-      fill_in('Creator', with: creators.first)
-      within('.span68') do
+      fill_in 'Title', with: new_title
+      fill_in 'Description', with: new_description
+      fill_in 'Creator', with: creators.first
+      within '.span68' do
         within '.form-actions' do
           click_button 'Update Collection'
         end
@@ -151,8 +152,9 @@ describe 'Collections:' do
       page.should have_content @collection.title
       db_item_actions_toggle(@collection).click
       click_link 'Edit Collection'
-      page.should have_field('collection_title', with: @collection.title)
-      page.should have_field('collection_description', with: @collection.description)
+      page.should have_field 'collection_title', with: @collection.title
+      page.should have_field 'collection_description',
+          with: @collection.description
       page.should have_content file_1.title.first
       page.should have_content file_2.title.first
       db_item_actions_toggle(@collection).click
@@ -167,8 +169,9 @@ describe 'Collections:' do
       page.should have_content @collection.title
       db_item_actions_toggle(@collection).click
       click_link 'Edit Collection'
-      page.should have_field('collection_title', with: @collection.title)
-      page.should have_field('collection_description', with: @collection.description)
+      page.should have_field 'collection_title', with: @collection.title
+      page.should have_field 'collection_description',
+          with: @collection.description
       page.should have_content file_1.title.first
       page.should have_content file_2.title.first
       check 'check_all'

@@ -1,9 +1,9 @@
 require_relative './feature_spec_helper'
 
-describe "Static pages" do
+describe 'Static pages:' do
 
-  shared_examples "verify each static page" do |logged_in|
-    before { create(:user) } if logged_in
+  shared_examples 'verify each static page' do |logged_in|
+    before { create :user } if logged_in
 
     [
         '/about',
@@ -11,29 +11,29 @@ describe "Static pages" do
         '/contact'
     ].each do |path|
       describe "The '#{path}' page" do
-        it "has verified hyperlinks" do
-          verify_links(path)
+        it 'has verified hyperlinks' do
+          verify_links path
         end
         unless logged_in
           # Verifying youtube links is done via visiting an external url.
           # We can only do so if we are not logged in as a user.
-          it "has verified videos exist" do
-            verfiy_youtube_links(path)
+          it 'has verified videos exist' do
+            verfiy_youtube_links path
           end
         end
       end
     end
   end
 
-  describe "When not logged in" do
-    we_can "verify each static page", false
+  describe 'When not logged in' do
+    we_can 'verify each static page', false
   end
 
-  describe "When logged in" do
-    we_can "verify each static page", true
+  describe 'When logged in' do
+    we_can 'verify each static page', true
   end
 
-  def verify_links(path)
+  def verify_links path
     visit path
     links_on_page = Array.new
     anchored_links = Array.new
@@ -41,7 +41,7 @@ describe "Static pages" do
     all('#content a').each do |page_link|
       unless ['delete', 'post', 'put'].include? page_link[:method]
         links_on_page << page_link[:href]
-        anchored_links << page_link[:href] if page_link[:href].include? "#"
+        anchored_links << page_link[:href] if page_link[:href].include?('#')
       end
     end
 
@@ -61,21 +61,21 @@ describe "Static pages" do
         # link on same page
         visit "#{path}/#{href}"
       end
-      if unique_anchored_links.include? href
+      if unique_anchored_links.include?(href)
         anchor = href.split('#').last
-        page.should have_selector("##{anchor}", visible: false)
+        page.should have_selector "##{anchor}", visible: false
       end
-      expect(status_code).to be(200)
+      expect(status_code).to be 200
     end
   end
 
-  def verfiy_youtube_links(path)
+  def verfiy_youtube_links path
     # Check all iframes containing youtube links for valid youtube ids
     visit path
-    all("iframe[src*='youtube']").each do |iframe|
+    all('iframe[src*="youtube"]').each do |iframe|
       youtube_id = iframe[:src].split('embed/').last.split('?').first
       visit "https://gdata.youtube.com/feeds/api/videos/#{youtube_id}"
-      expect(status_code).to be(200)
+      expect(status_code).to be 200
     end
   end
 end

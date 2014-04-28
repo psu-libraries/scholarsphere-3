@@ -27,8 +27,8 @@ module StubbedAuthenticationHelper
   # (pass in the entire user object, not just a username).
   def sign_in_as user
     StubbedAuthenticationStrategy.user = user
-    Warden::Strategies.add(:http_header_authenticatable,
-                           StubbedAuthenticationStrategy)
+    Warden::Strategies.add :http_header_authenticatable,
+                           StubbedAuthenticationStrategy
   end
 
 end
@@ -36,8 +36,8 @@ end
 RSpec.configure do |config|
 
   config.after(:each) do
-    Warden::Strategies.add(:http_header_authenticatable,
-                           Devise::Strategies::HttpHeaderAuthenticatable)
+    Warden::Strategies.add :http_header_authenticatable,
+                           Devise::Strategies::HttpHeaderAuthenticatable
     StubbedAuthenticationStrategy.user = nil
   end
 

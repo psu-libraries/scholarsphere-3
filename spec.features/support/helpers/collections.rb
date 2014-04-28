@@ -1,9 +1,9 @@
 module CollectionsHelper
   def create_collection (title, creator, description)
     page.should have_content 'Create New Collection'
-    fill_in('Title', with: title)
-    fill_in('Creator', with: creator)
-    fill_in('Description', with: description)
+    fill_in 'Title', with: title
+    fill_in 'Creator', with: creator
+    fill_in 'Description', with: description
     click_button 'Create Collection'
     page.should have_content 'Items in this Collection'
     page.should have_content title
