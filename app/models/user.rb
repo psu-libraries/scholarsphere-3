@@ -106,6 +106,13 @@ class User < ActiveRecord::Base
     return exist
   end
 
+  # Get all users that belong to group
+  def self.users_of_group(group)
+    users = User.where("group_list like '%#{group}%'")
+    return users
+  end
+
+
   # Groups that user is a member of
   def groups
     if (groups_last_update.blank? || ((Time.now-groups_last_update) > 24*60*60 ))
