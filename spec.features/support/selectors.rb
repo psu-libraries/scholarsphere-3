@@ -30,8 +30,38 @@ module Selectors
       end 
     end
 
-    def db_create_collection_button
+    def db_file_checkbox file
+      within "#document_#{file.noid}" do
+        find '.batch_document_selector'
+      end
+    end
+
+    def db_collection_radio_button collection
+      within '.collection-list-box' do
+        find "input[id*=#{collection.noid}]"
+      end
+    end
+
+    def db_create_empty_collection_button
       first '#hydra-collection-add'
+    end
+
+    def db_create_populated_collection_button
+      within '.collection-list-box' do
+        first '#hydra-collection-add'
+      end
+    end
+
+  end
+
+  module EditCollections
+
+    def ec_update_submit
+      within '.span68' do
+        within '.form-actions' do
+          find_button 'Update Collection'
+        end
+      end
     end
 
   end
