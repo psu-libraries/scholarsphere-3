@@ -1,3 +1,7 @@
+# This spec unconvered a front end bug when editing
+# multiple attributes. Although the attributes seem
+# to be saved in the database, the front end behavior
+# does not allow us to confirm any updates.
 require_relative './feature_spec_helper'
 
 describe 'Batch management of generic files' do
