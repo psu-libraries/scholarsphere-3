@@ -9,7 +9,7 @@ include Selectors::EditCollections
 describe 'Collections:' do
 
   let(:current_user) { create :user }
-  let(:filenames) { %w{world.png small_file.txt} }
+  let(:filenames) { %w{world.png small_file.txt scholarsphere_test4.pdf} }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -24,8 +24,9 @@ describe 'Collections:' do
   end
 
   let(:files) { GenericFile.all }
-  let(:file_1) { GenericFile.first }
-  let(:file_2) { GenericFile.last }
+  let(:file_1) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
+  let(:file_2) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"small_file.txt").first }
+  let(:file_3) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"scholarsphere_test4.pdf").first }
   let(:collection) { Collection.first }
 
   describe 'When creating a collection:' do
@@ -108,6 +109,7 @@ describe 'Collections:' do
   describe 'Updating a collection:' do
     before do
       db_file_checkbox(file_1).click
+      db_file_checkbox(file_2).click
       click_button 'Add to Collection'
       db_create_populated_collection_button.click
       create_collection title, creator, description
@@ -116,7 +118,7 @@ describe 'Collections:' do
 
     describe 'When adding a file to a collection' do
       before do
-        db_file_checkbox(file_2).click
+        db_file_checkbox(file_3).click
         click_button 'Add to Collection'
         db_collection_radio_button(collection).click
         click_button 'Update Collection'
@@ -124,7 +126,7 @@ describe 'Collections:' do
 
       specify 'I should be able to add files to it' do
         page.should have_content 'Collection was successfully updated.'
-        page.should have_content file_2.title.first
+        page.should have_content file_3.title.first
       end
     end
 
@@ -157,11 +159,6 @@ describe 'Collections:' do
 
     describe 'When removing a file from a collection' do
       before do
-        db_file_checkbox(file_2).click
-        click_button 'Add to Collection'
-        db_collection_radio_button(collection).click
-        click_button 'Update Collection'
-        visit '/dashboard'
         db_item_actions_toggle(collection).click
         click_link 'Edit Collection'
         page.should have_content file_1.title.first
@@ -180,11 +177,6 @@ describe 'Collections:' do
 
     describe 'When removing all files from a collection' do
       before do
-        db_file_checkbox(file_2).click
-        click_button 'Add to Collection'
-        db_collection_radio_button(collection).click
-        click_button 'Update Collection'
-        visit '/dashboard'
         db_item_actions_toggle(collection).click
         click_link 'Edit Collection'
         page.should have_content file_1.title.first
