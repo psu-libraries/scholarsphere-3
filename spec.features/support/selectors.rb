@@ -38,7 +38,7 @@ module Selectors
 
     def db_collection_radio_button collection
       within '.collection-list-box' do
-        find "input[id*=#{collection.noid}]"
+        find "input[id*='#{collection.noid}']"
       end
     end
 
