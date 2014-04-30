@@ -1,7 +1,8 @@
 module FixturesHelper
 
   def test_file_path filename
-    Rails.root.join("spec/fixtures/#{filename}").to_s
+    path = Dir.glob("spec/fixtures/**/#{filename}").first
+    Rails.root.join(path).to_s
   end
 end
 
