@@ -7,8 +7,10 @@ GIT
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
 
-PATH
-  remote: ../sufia
+GIT
+  remote: git://github.com/psu-stewardship/sufia.git
+  revision: 05a2ed374cdee8265a091ff653e2c67f83dc86b6
+  branch: about_login
   specs:
     sufia (4.0.0.beta1)
       blacklight (~> 5.0)

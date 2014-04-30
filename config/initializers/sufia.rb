@@ -46,7 +46,6 @@ Sufia::Engine.configure do
     "Image" => "Image",
     "Journal" => "Journal",
     "Map or Cartographic Material" => "Map or Cartographic Material",
-    "Masters Thesis" => "Masters Thesis",
     "Part of Book" => "Part of Book",
     "Poster" => "Poster",
     "Presentation" => "Presentation",
@@ -54,6 +53,7 @@ Sufia::Engine.configure do
     "Report" => "Report",
     "Research Paper" => "Research Paper",
     "Software or Program Code" => "Software or Program Code",
+    "Thesis" => "Thesis",
     "Video" => "Video",
     "Other" => "Other",
   }
