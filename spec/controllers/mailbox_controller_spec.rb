@@ -33,7 +33,7 @@ describe MailboxController do
   describe "#index" do
     render_views
     it "should show message" do
-      Conversation.any_instance.should_receive(:mark_as_read)
+      Mailboxer::Conversation.any_instance.should_receive(:mark_as_read)
       get :index
       response.should be_success
       assigns[:messages].first.last_message.body.should == 'Test Message'

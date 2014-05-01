@@ -54,6 +54,8 @@ ScholarSphere::Application.routes.draw do
   post '/users/:user_id/depositors' =>  'depositors#create', as:'user_depositors'
   delete '/users/:user_id/depositors/:id' =>  'depositors#destroy', as:'user_depositor'
 
+  get '/why-use-scholarsphere', to: redirect('/scholarsphere_student_flyer.pdf')
+
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
   mount HydraEditor::Engine => '/'

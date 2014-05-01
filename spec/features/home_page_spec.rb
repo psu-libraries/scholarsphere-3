@@ -23,7 +23,7 @@ describe "Visting the home page" do
     it "loads the page" do
       visit '/'
       page.should have_content "#{@user.login}"
-      page.should have_content "What is ScholarSphere?"
+      page.should have_content "Share. Manage. Preserve."
       page.status_code.should == 200
     end
   end
@@ -33,7 +33,7 @@ describe "Visting the home page" do
     it "loads the page" do
       visit '/'
       page.should have_content "#{@user.login}"
-      page.should have_content "What is ScholarSphere?"
+      page.should have_content "Share. Manage. Preserve."
       page.status_code.should == 200
     end
   end
