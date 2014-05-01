@@ -58,6 +58,7 @@ if [ "${RUBY_VERSION}" != "${INSTALLED_RUBY_VERSION}" ]; then
 
     cd $HHOME
     gem install bundler
+    sudo /sbin/service httpd stop    
     gem install passenger --no-ri --no-rdoc
     rbenv rehash
     passenger-install-apache2-module --auto
