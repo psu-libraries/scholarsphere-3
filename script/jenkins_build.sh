@@ -77,7 +77,7 @@ rbenv_environment
 rbenv rehash
 rbenv shell 2.0.0-p353
 
-cd $HHOME
+cd ${WORKSPACE}
 
 echo "=-=-=-=-= $0 bundle install"
 bundle install
