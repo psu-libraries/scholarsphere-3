@@ -6,7 +6,7 @@ include Selectors::EditCollections
 describe 'Collections:' do
 
   let(:current_user) { create :user }
-  let(:filenames) { %w{world.png small_file.txt scholarsphere_test4.pdf} }
+  let(:filenames) { %w{world.png small_file.txt scholarsphere_test5.txt} }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -23,7 +23,7 @@ describe 'Collections:' do
   let(:files) { GenericFile.all }
   let(:file_1) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
   let(:file_2) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"small_file.txt").first }
-  let(:file_3) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"scholarsphere_test4.pdf").first }
+  let(:file_3) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"scholarsphere_test5.txt").first }
   let(:collection) { Collection.first }
 
   describe 'When creating a collection:' do
