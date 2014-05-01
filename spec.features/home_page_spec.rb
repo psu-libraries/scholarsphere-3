@@ -14,7 +14,7 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'What is ScholarSphere?'
+        page.should have_content 'Share. Manage. Preserve.'
       end
     end
 
@@ -24,7 +24,7 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'What is ScholarSphere?'
+        page.should have_content 'Share. Manage. Preserve.'
       end
       specify 'I can see that I am logged in' do
         page.should have_content current_user.display_name
@@ -37,7 +37,7 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'What is ScholarSphere?'
+        page.should have_content 'Share. Manage. Preserve.'
       end
       specify 'I can see that I am logged in' do
         page.should have_content current_user.display_name
