@@ -1,7 +1,6 @@
 require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
-include Selectors::EditCollections
 
 describe 'Collection creation and deletion:' do
 
@@ -26,7 +25,7 @@ describe 'Collection creation and deletion:' do
     end
   end
 
-  let(:filenames) { %w{world.png small_file.txt scholarsphere_test5.txt} }
+  let(:filenames) { %w{world.png small_file.txt} }
   let(:files) { GenericFile.all }
 
   describe 'When creating a collection with files' do
@@ -50,7 +49,7 @@ describe 'Collection creation and deletion:' do
 
   let(:collection) { Collection.first }
 
-  describe 'When deleting a collection:' do
+  describe 'When deleting a collection' do
     before do
       visit '/dashboard'
       db_create_empty_collection_button.click
