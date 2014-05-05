@@ -5,17 +5,15 @@ gem 'rails', '4.0.3'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', '4.0.0.beta1'
-#gem 'sufia', github:'psu-stewardship/sufia', branch:'about_login'
-gem 'hydra-batch-edit'#, '1.1.1'
-gem 'hydra-editor'#,'0.1.1' # for edit view partials (editing collections)
+gem 'sufia', '4.0.0.beta2'
+gem 'hydra-batch-edit', '1.1.1'
+gem 'hydra-editor', '0.1.1'
 gem 'hydra-collections', '2.0.0'
-#gem 'hydra-collections', path:'../hydra-collections'
-gem 'hydra-derivatives'
-gem 'hydra-ldap'#, '0.1.0'
-gem 'rainbow'
+gem 'hydra-derivatives', '0.0.7'
+gem 'hydra-ldap', '0.1.0'
 
 # Other components
+gem 'rainbow', '1.1.4'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
 gem 'devise','3.2.2'
@@ -24,11 +22,10 @@ gem 'sitemap', '0.3.3'
 gem 'yaml_db', '0.2.3'
 gem 'clamav', '0.4.1'
 gem 'therubyracer', '0.12.0'
-#gem 'font-awesome-sass-rails', '3.0.2.2'
-gem 'select2-rails', '3.4.2' # for transfer ownership javascript
+gem 'select2-rails', '3.4.2'
 gem 'whenever', '0.8.4'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
-gem 'newrelic_rpm', '3.7.0.177' # devops r us
+gem 'newrelic_rpm', '3.7.0.177'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.2'
