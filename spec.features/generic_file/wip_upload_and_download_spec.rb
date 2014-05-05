@@ -1,4 +1,4 @@
-require_relative './feature_spec_helper'
+require_relative '../feature_spec_helper'
 
 describe 'Generic File uploading and downloading:' do
 
@@ -14,6 +14,16 @@ describe 'Generic File uploading and downloading:' do
       upload_generic_file filename
       page.should have_content 'My Dashboard'
       page.should have_content filename
+    end
+
+    pending 'I can download an uploaded file' do
+      # db_item_actions_toggle(file).click
+      # click_link 'Download File'
+      # p ">>> #{page.response_headers.inspect}"
+    end
+
+    pending 'I can delete an uploaded file' do
+
     end
   end
 
