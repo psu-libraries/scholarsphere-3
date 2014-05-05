@@ -52,6 +52,11 @@ module Selectors
       end
     end
 
+    def db_visibility_link file
+      within "#document_#{file.noid}" do
+        find "#permission_#{file.noid}"
+      end
+    end
   end
 
   module EditCollections
