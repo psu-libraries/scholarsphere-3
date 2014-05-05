@@ -9,7 +9,6 @@ describe 'Batch management of generic files' do
   let(:filenames) { %w{world.png small_file.txt} }
 
   before do
-    GenericFile.destroy_all
     sign_in_as current_user
     filenames.each do |filename|
       upload_generic_file filename
@@ -111,7 +110,6 @@ describe 'Batch management of generic files' do
   describe 'Deleting multiple files' do
     context 'Selecting all my files to delete' do
       before do
-        # visit dashboard, select all files, and delete them
         visit '/dashboard'
         check 'check_all'
         click_button 'Delete Selected'
