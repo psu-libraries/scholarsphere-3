@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117161959) do
+ActiveRecord::Schema.define(version: 20140428172016) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -33,29 +33,42 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.datetime "updated_at"
   end
 
-  add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid"
+  add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid", using: :btree
 
-  create_table "conversations", force: true do |t|
-    t.string   "subject",    default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+  create_table "content_blocks", force: true do |t|
+    t.string   "name"
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "content_blocks", ["name"], name: "index_content_blocks_on_name", unique: true, using: :btree
 
   create_table "domain_terms", force: true do |t|
     t.string "model"
     t.string "term"
   end
 
-  add_index "domain_terms", ["model", "term"], name: "terms_by_model_and_term"
+  add_index "domain_terms", ["model", "term"], name: "terms_by_model_and_term", using: :btree
 
   create_table "domain_terms_local_authorities", id: false, force: true do |t|
     t.integer "domain_term_id"
     t.integer "local_authority_id"
   end
 
-  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "domain_terms_by_domain_term_id_and_local_authority", unique: true
-  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "dtla_by_ids2"
-  add_index "domain_terms_local_authorities", ["local_authority_id", "domain_term_id"], name: "dtla_by_ids1"
+  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "domain_terms_by_domain_term_id_and_local_authority", unique: true, using: :btree
+  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "dtla_by_ids2", using: :btree
+  add_index "domain_terms_local_authorities", ["local_authority_id", "domain_term_id"], name: "dtla_by_ids1", using: :btree
+
+  create_table "featured_works", force: true do |t|
+    t.integer  "order",           default: 5
+    t.string   "generic_file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "featured_works", ["generic_file_id"], name: "index_featured_works_on_generic_file_id", using: :btree
+  add_index "featured_works", ["order"], name: "index_featured_works_on_order", using: :btree
 
   create_table "follows", force: true do |t|
     t.integer  "followable_id",                   null: false
@@ -67,8 +80,8 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.datetime "updated_at"
   end
 
-  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
-  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
   create_table "local_authorities", force: true do |t|
     t.string "name"
@@ -80,10 +93,24 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string  "uri"
   end
 
-  add_index "local_authority_entries", ["local_authority_id", "label"], name: "entries_by_term_and_label"
-  add_index "local_authority_entries", ["local_authority_id", "uri"], name: "entries_by_term_and_uri"
+  add_index "local_authority_entries", ["local_authority_id", "label"], name: "entries_by_term_and_label", using: :btree
+  add_index "local_authority_entries", ["local_authority_id", "uri"], name: "entries_by_term_and_uri", using: :btree
 
-  create_table "notifications", force: true do |t|
+  create_table "mailboxer_conversation_opt_outs", force: true do |t|
+    t.integer "unsubscriber_id"
+    t.string  "unsubscriber_type"
+    t.integer "conversation_id"
+  end
+
+  add_index "mailboxer_conversation_opt_outs", ["conversation_id"], name: "mb_opt_outs_on_conversations_id", using: :btree
+
+  create_table "mailboxer_conversations", force: true do |t|
+    t.string   "subject",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "mailboxer_notifications", force: true do |t|
     t.string   "type"
     t.text     "body"
     t.string   "subject",              default: ""
@@ -99,7 +126,21 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "attachment"
   end
 
-  add_index "notifications", ["conversation_id"], name: "index_notifications_on_conversation_id"
+  add_index "mailboxer_notifications", ["conversation_id"], name: "index_mailboxer_notifications_on_conversation_id", using: :btree
+
+  create_table "mailboxer_receipts", force: true do |t|
+    t.integer  "receiver_id"
+    t.string   "receiver_type"
+    t.integer  "notification_id",                            null: false
+    t.boolean  "is_read",                    default: false
+    t.boolean  "trashed",                    default: false
+    t.boolean  "deleted",                    default: false
+    t.string   "mailbox_type",    limit: 25
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
 
   create_table "proxy_deposit_requests", force: true do |t|
     t.string   "pid",                                   null: false
@@ -113,8 +154,8 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.datetime "updated_at"
   end
 
-  add_index "proxy_deposit_requests", ["receiving_user_id"], name: "index_proxy_deposit_requests_on_receiving_user_id"
-  add_index "proxy_deposit_requests", ["sending_user_id"], name: "index_proxy_deposit_requests_on_sending_user_id"
+  add_index "proxy_deposit_requests", ["receiving_user_id"], name: "index_proxy_deposit_requests_on_receiving_user_id", using: :btree
+  add_index "proxy_deposit_requests", ["sending_user_id"], name: "index_proxy_deposit_requests_on_sending_user_id", using: :btree
 
   create_table "proxy_deposit_rights", force: true do |t|
     t.integer  "grantor_id"
@@ -123,22 +164,8 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.datetime "updated_at"
   end
 
-  add_index "proxy_deposit_rights", ["grantee_id"], name: "index_proxy_deposit_rights_on_grantee_id"
-  add_index "proxy_deposit_rights", ["grantor_id"], name: "index_proxy_deposit_rights_on_grantor_id"
-
-  create_table "receipts", force: true do |t|
-    t.integer  "receiver_id"
-    t.string   "receiver_type"
-    t.integer  "notification_id",                            null: false
-    t.boolean  "is_read",                    default: false
-    t.boolean  "trashed",                    default: false
-    t.boolean  "deleted",                    default: false
-    t.string   "mailbox_type",    limit: 25
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-  end
-
-  add_index "receipts", ["notification_id"], name: "index_receipts_on_notification_id"
+  add_index "proxy_deposit_rights", ["grantee_id"], name: "index_proxy_deposit_rights_on_grantee_id", using: :btree
+  add_index "proxy_deposit_rights", ["grantor_id"], name: "index_proxy_deposit_rights_on_grantor_id", using: :btree
 
   create_table "searches", force: true do |t|
     t.text     "query_params"
@@ -148,7 +175,7 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "user_type"
   end
 
-  add_index "searches", ["user_id"], name: "index_searches_on_user_id"
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "single_use_links", force: true do |t|
     t.string   "downloadKey"
@@ -163,14 +190,20 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", default: '2014-04-30 20:07:28'
+    t.datetime "updated_at", default: '2014-04-30 20:07:28'
   end
 
-  add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label"
+  add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
 
   create_table "superusers", force: true do |t|
     t.integer "user_id", null: false
+  end
+
+  create_table "tinymce_assets", force: true do |t|
+    t.string   "file"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "trophies", force: true do |t|
@@ -181,19 +214,19 @@ ActiveRecord::Schema.define(version: 20140117161959) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                              default: ""
-    t.string   "encrypted_password",                 default: ""
+    t.string   "email",                  default: ""
+    t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "login",                              default: "", null: false
+    t.string   "login",                  default: "", null: false
     t.string   "display_name"
     t.string   "address"
     t.string   "admin_area"
@@ -208,7 +241,7 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text     "group_list",             limit: 255
+    t.text     "group_list"
     t.datetime "groups_last_update"
     t.boolean  "ldap_available"
     t.datetime "ldap_last_update"
@@ -218,8 +251,8 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.string   "linkedin_handle"
   end
 
-  add_index "users", ["login"], name: "index_users_on_login", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "version_committers", force: true do |t|
     t.string   "obj_id"
@@ -229,5 +262,11 @@ ActiveRecord::Schema.define(version: 20140117161959) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", name: "mb_opt_outs_on_conversations_id", column: "conversation_id"
+
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_development", column: "conversation_id"
+
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_development", column: "notification_id"
 
 end

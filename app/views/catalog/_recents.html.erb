@@ -1,25 +1,21 @@
-<% msg = 'Login to see your recently added documents' if msg.blank? and current_user.blank? %>
-<% msg = 'You have no documents to display. Contribute some of your documents!' if msg.blank? %>
 <div>
-  <div class='hide'>
-    <%= link_to "Recent", sufia.catalog_recent_path, :remote => true, :id => 'recent_doc_link' %>
-  </div>
   <% if recent_documents.blank? %>
-      <h3>  <%= msg %> </h3>
+      <% msg = 'Login to see your recently added documents' if msg.blank? and current_user.blank? %>
+      <% msg = 'You have no documents to display. Contribute some of your documents!' if msg.blank? %>
+      <h3><%= msg %></h3>
   <% else %>
 
       <div id="recent_docs">
         <table class="table table-bordered table-striped">
-                <% recent_documents.each do |document| %>
-                  <% case document.hydra_model %>
-                  <% when "GenericFile" %>
-                    <%= render :partial => "recent_document",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
-                  <% when "Collection" %>
-                    <%= render :partial => "recent_collection",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
-                  <% end %>
-                <% end %>
+          <% recent_documents.each do |document| %>
+              <% case document.hydra_model %>
+          <% when "GenericFile" %>
+                  <%= render :partial => "recent_document",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
+              <% when "Collection" %>
+                  <%= render :partial => "recent_collection",  :locals=>{:recent_document=> document, :display_thumbs=> display_thumbs, :display_access=> display_access} %>
+              <% end %>
+          <% end %>
         </table>
       </div>
-   <% end %>
-
+  <% end %>
 </div>

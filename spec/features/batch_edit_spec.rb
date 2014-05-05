@@ -50,7 +50,7 @@ describe 'batch editing', describe_options do
         click_button('subject_save')
       end
       page.find('#collapse_subject').should have_content('Changes Saved')
-      within('#masthead') do
+      within('#masthead_controls') do
         fill_in('search-field-header', with: subject_value)
         click_button("Go")
       end

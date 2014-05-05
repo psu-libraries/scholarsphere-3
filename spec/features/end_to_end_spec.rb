@@ -56,8 +56,8 @@ describe 'end to end behavior', describe_options do
           click_on(file_format)
         end
       end
-      page.should have_no_content("Your files are being processed by ScholarSphere in the background.")
       page.should have_content('X png (Portable Network Graphics)')
+      page.should have_no_content("Your files are being processed by ScholarSphere in the background.")
       page.should have_content(file_format)
       within('.alert-warning') do
         page.should have_content(file_format)

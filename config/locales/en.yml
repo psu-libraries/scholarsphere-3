@@ -5,7 +5,8 @@ en:
   hello: "Hello world"
 
   sufia:
-    errors:
+   product_name:       "ScholarSphere"
+   errors:
       header: "There were errors that prevented this %{model} from being saved:"
 
 

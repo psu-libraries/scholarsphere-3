@@ -225,4 +225,24 @@ namespace :scholarsphere do
 
     end
   end
+
+  desc "Convert Resource Type"
+  task "master_thesis" => :environment do
+    def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
+      solr_parameters[:fq]="{!raw f=desc_metadata__resource_type_sim}Masters Thesis"
+    end
+
+    resp = query_solr(q:"")
+    docs = resp["response"]["docs"]
+    docs.each do |doc|
+      gf = GenericFile.find(doc["id"])
+      puts "File Found #{gf.title} #{gf.resource_type}"
+      resources =  gf.resource_type
+      resources.map! {|type| type == "Masters Thesis" ? "Thesis" : type}
+      gf.resource_type = resources
+      puts "File Updated #{gf.title} #{gf.resource_type}"
+      gf.save
+
+    end
+  end
 end

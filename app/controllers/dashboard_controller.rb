@@ -18,5 +18,12 @@ class DashboardController < ApplicationController
   
   # not filtering further with a specific access level since the catalog controller already gets the colections with edit access
   #  if we include other access levels in this controller we will need to modify this.
-  before_filter :find_collections, :only=>:index  
+  before_filter :find_collections, :only=>:index
+
+  # TODO: This can be removed after we upgrade to hydra-collections 2.0.1 or greater
+  def add_collection_filter(solr_parameters, user_parameters)
+    super(solr_parameters, user_parameters)
+    solr_parameters[:rows] = 100
+  end
+
 end

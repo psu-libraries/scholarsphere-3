@@ -16,6 +16,7 @@ describe "Showing the Generic File" do
       @gf1.related_url = "http://example.org/TheRelatedURLLink/"
       @gf1.tag = "tag string!"
       @gf1.rights = "http://creativecommons.org/licenses/by-nc-nd/3.0/us/"
+      @gf1.read_groups = ['public']
       @gf1.save!
 
       @gf2 =  GenericFile.new title: 'different file title', resource_type: 'Video'
