@@ -1,7 +1,6 @@
 require_relative './feature_spec_helper'
 
 include Selectors::Dashboard
-include Selectors::EditCollections
 
 describe 'Collections:' do
 
