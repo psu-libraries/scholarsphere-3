@@ -121,6 +121,7 @@ class CatalogController < ApplicationController
     config.add_facet_field Solrizer.solr_name("desc_metadata__based_near", :facetable), :label => "Location", :limit => 5
     config.add_facet_field Solrizer.solr_name("desc_metadata__publisher", :facetable), :label => "Publisher", :limit => 5
     config.add_facet_field Solrizer.solr_name("file_format", :facetable), :label => "File Format", :limit => 5
+    config.add_facet_field Solrizer.solr_name("active_fedora_model", :stored_sortable), :label => "Object Type", :helper_method => :titleize
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

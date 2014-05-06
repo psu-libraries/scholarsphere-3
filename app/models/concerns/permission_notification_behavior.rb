@@ -63,7 +63,6 @@ module Scholarsphere
     # retrieve user/user(s) who should be notified and send notification
     def notify_users_of_access(permission_state)
       depositor = self.depositor
-      puts("DEBUG #{depositor}")
       permission_state[:added].each do |entityid,entry|
         if entry[:type]=="user"
           user = User.find_by_user_key(entityid)
