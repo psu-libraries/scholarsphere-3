@@ -62,13 +62,15 @@ module Scholarsphere
 
     # retrieve user/user(s) who should be notified and send notification
     def notify_users_of_access(permission_state)
+      depositor = self.depositor
+      puts("DEBUG #{depositor}")
       permission_state[:added].each do |entityid,entry|
         if entry[:type]=="user"
           user = User.find_by_user_key(entityid)
-          send_notification(user,entry[:access]) unless user.nil? || user.login == User.current.login
+          send_notification(user,entry[:access]) unless user.nil? || user.login == depositor
         else
           User.users_of_group(entityid).each do |user|
-            send_notification(user,entry[:access]) unless user.login == User.current.login
+            send_notification(user,entry[:access]) unless user.login == depositor
           end
         end
       end
@@ -76,10 +78,11 @@ module Scholarsphere
 
     # send user notification
     def send_notification(recipient,access)
+      depositor = self.depositor
       sender = User.batchuser
       sender.send_message(recipient,
                           I18n.t('scholarsphere.notifications.permissions.notification',
-                                 user: User.current.login,
+                                 user: depositor,
                                  file: title[0],
                                  access: access == 'read'? 'View/Download' : 'Edit'),
                           I18n.t('scholarsphere.notifications.permissions.subject')) unless recipient.nil?
