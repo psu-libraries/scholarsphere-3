@@ -29,6 +29,10 @@ module GenericFilesHelper
       f.save!
     end
   end
+
+  def find_file_by_title title
+    GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>title).first
+  end
 end
 
 RSpec.configure do |config|
