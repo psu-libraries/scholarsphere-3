@@ -47,6 +47,15 @@ FactoryGirl.define do
     ldap_available true
   end
 
+  factory :user_with_groups, :class => User do |u|
+    login 'userwithgroups'
+    title "User"
+    display_name 'UserWithGroup'
+    ldap_available true
+    group_list %w("umg/up.dlt.gamma-ci umg/up.dlt.redmine")
+    groups_last_update Time.now
+  end
+
 
   #these two users are ONLY for ensuring our staging test users don't show up in search results
   factory :test_user_1, :class => User do |u|

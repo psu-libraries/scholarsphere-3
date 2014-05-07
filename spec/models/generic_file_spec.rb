@@ -330,6 +330,26 @@ describe GenericFile do
       @file.save
     end
   end
+  describe "permission notification" do
+    before do
+      @user_add = FactoryGirl.create :random_user # create random user
+      User.current=user #set environment user
+    end
+    it "should notify user on addition of file permission" do
+      @file.permissions = {:new_user_name => {@user_add.login=>'read'}}
+      @file.should_receive(:send_notification).with(@user_add,'read')
+      @file.run_callbacks(:update)
+    end
+    before do
+      @group_add = FactoryGirl.find_or_create(:user_with_groups) # create user with groups associated
+      User.current=user #set environment user
+    end
+    it "should notify a group of users on addition of file permission" do
+      @file.permissions = {:new_group_name => { 'umg/up.dlt.gamma-ci' =>'read'}}
+      @file.should_receive(:send_notification).with(@group_add,'read')
+      @file.run_callbacks(:update)
+    end
+  end
   describe "related_files" do
     before(:all) do
       @batch_id = "foobar:100"
