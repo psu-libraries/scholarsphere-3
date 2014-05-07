@@ -57,6 +57,10 @@ module Selectors
         find "#permission_#{file.noid}"
       end
     end
+
+    def db_facet_category_toggle id
+      find("a[data-target='#{id}']")
+    end
   end
 
   module EditCollections
