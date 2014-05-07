@@ -52,7 +52,7 @@ FactoryGirl.define do
     title "User"
     display_name 'UserWithGroup'
     ldap_available true
-    group_list %w("umg/up.dlt.gamma-ci umg/up.dlt.redmine")
+    group_list ['umg/up.dlt.gamma-ci','umg/up.dlt.redmine'].join(";?;")
     groups_last_update Time.now
   end
 
