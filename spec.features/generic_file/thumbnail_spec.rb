@@ -10,7 +10,7 @@ describe 'Generic File Thumbnail Creation:' do
     sign_in_as current_user
   end
 
-  let(:image) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
+  let(:image) { find_file_by_title "world.png" }
   context 'When I upload an image' do
     before do
       upload_generic_file image_filename
@@ -22,7 +22,7 @@ describe 'Generic File Thumbnail Creation:' do
     end
   end
 
-  let(:pdf) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"scholarsphere_test4.pdf").first }
+  let(:pdf) { find_file_by_title "scholarsphere_test4.pdf" }
   context 'When I upload a PDF' do
     before do
       upload_generic_file pdf_filename
@@ -34,7 +34,7 @@ describe 'Generic File Thumbnail Creation:' do
     end
   end
 
-  let(:file) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"small_file.txt").first }
+  let(:file) { find_file_by_title "small_file.txt" }
   context 'When I upload a video' do
     before do
       upload_generic_file generic_filename

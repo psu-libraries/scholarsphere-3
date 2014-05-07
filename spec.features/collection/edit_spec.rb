@@ -10,9 +10,9 @@ describe 'Collection editing:' do
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
-  let(:file_1) { GenericFile.find(Solrizer.solr_name("desc_metadata__title") => "world.png").first }
-  let(:file_2) { GenericFile.find(Solrizer.solr_name("desc_metadata__title") => "small_file.txt").first }
-  let(:file_3) { GenericFile.find(Solrizer.solr_name("desc_metadata__title") => "scholarsphere_test5.txt").first }
+  let(:file_1) { find_file_by_title "world.png" }
+  let(:file_2) { find_file_by_title "small_file.txt" }
+  let(:file_3) { find_file_by_title "scholarsphere_test5.txt" }
   let(:collection) { Collection.first }
 
   before do
