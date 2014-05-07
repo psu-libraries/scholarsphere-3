@@ -12,6 +12,23 @@ module GenericFilesHelper
     page.should have_content 'My Dashboard'
     page.should have_content filename
   end
+
+  def create_file (user, options={})
+    GenericFile.new.tap do |f|
+      f.title         = options[:title] || 'new title'
+      f.resource_type = options[:resource_type] || 'Video'
+      f.creator       = options[:creator] || 'Creator1'
+      f.tag           = options[:tag] || 'Keyword1'
+      f.subject       = options[:subject] || 'Subject1'
+      f.language      = options[:language] || 'Language1'
+      f.based_near    = options[:based_near] || 'Location1'
+      f.publisher     = options[:publisher] || 'Publisher1'
+      f.rights        = options[:rights] || 'http://creativecommons.org/licenses/by-nc-nd/3.0/us/'
+      f.read_groups   = options[:read_groups] || ['public']
+      f.apply_depositor_metadata(user.login)
+      f.save!
+    end
+  end
 end
 
 RSpec.configure do |config|
