@@ -2,6 +2,6 @@
 
 require_relative '../feature_spec_helper'
 
-describe 'Generic File Edit:' do
+describe 'Generic File editing:' do
 
 end
