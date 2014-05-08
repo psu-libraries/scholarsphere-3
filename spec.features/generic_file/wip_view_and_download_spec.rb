@@ -2,52 +2,67 @@
 
 require_relative '../feature_spec_helper'
 
-describe 'Generic File Show:' do
+include Selectors::Dashboard
 
-  before do
+describe 'Generic File viewing and downloading:' do
 
+  let(:current_user) { create :user }
+  let!(:file_1) { create_file current_user, { title: 'File 1' } }
+  let!(:file_2) do
+    create_file current_user, { title: 'File 2',
+        creator: '',
+        tag: '',
+        subject: '',
+        language: '',
+        based_near: '',
+        publisher: '',
+        rights: '',
+        read_groups: []}
   end
 
-  context "When logged in with an uploaded file" do
-    before do
-      click_link @gf1.title.first
-    end
+  before do
+    sign_in_as current_user
+    visit '/dashboard'
+    db_item_title(file_1).click
+  end
 
-    pending "I can see the file's page" do
+  context "When viewing a file" do
+
+    specify "I can see the file's page" do
       page.status_code.should == 200
-      page.should have_content @gf1.title.first
+      page.should have_content file_1.title.first
     end
 
-    pending "I can see the link for creator" do
-      check_page(@gf1.creator.first)
+    specify "I can see the link for creator and searches correctly" do
+      check_page file_1.creator.first
     end
 
-    pending "I can see the link for contributor" do
-      check_page(@gf1.contributor.first)
+    pending "I can see the link for contributor and searches correctly" do
+      check_page(file_1.contributor.first)
     end
 
-    pending "I can see the link for publisher" do
-      check_page(@gf1.publisher.first)
+    pending "I can see the link for publisher and searches correctly" do
+      check_page(file_1.publisher.first)
     end
 
-    pending "I can see the link for subject" do
-      check_page(@gf1.subject.first)
+    pending "I can see the link for subject and searches correctly" do
+      check_page(file_1.subject.first)
     end
 
-    pending "I can see the link for language" do
-      check_page(@gf1.language.first)
+    pending "I can see the link for language and searches correctly" do
+      check_page(file_1.language.first)
     end
 
-    pending "I can see the link for based_near" do
-      check_page(@gf1.based_near.first)
+    pending "I can see the link for based_near and searches correctly" do
+      check_page(file_1.based_near.first)
     end
 
-    pending "I can see the link for a tag" do
-      check_page(@gf1.tag.first)
+    pending "I can see the link for a tag and searches correctly" do
+      check_page(file_1.tag.first)
     end
 
-    pending "I can see the link for rights" do
-      check_page(@gf1.rights.first)
+    pending "I can see the link for rights and searches correctly" do
+      check_page(file_1.rights.first)
     end
 
     pending "I can see the link for all the linkable items" do
@@ -70,8 +85,8 @@ describe 'Generic File Show:' do
   def check_page(link_name)
     page.should have_link link_name
     click_on link_name
-    page.should have_content @gf1.title.first
-    page.should_not have_content @gf2.title.first
+    page.should have_content file_1.title.first
+    page.should_not have_content file_2.title.first
   end
 
 end
