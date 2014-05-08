@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.5'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
@@ -24,11 +24,11 @@ gem 'clamav', '0.4.1'
 gem 'therubyracer', '0.12.0'
 gem 'select2-rails', '3.4.2'
 gem 'whenever', '0.8.4'
-gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 gem 'newrelic_rpm', '3.7.0.177'
+gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
 
 group :assets do
-  gem 'sass-rails', '~> 4.0.2'
+  gem 'sass-rails', '4.0.3'
   gem 'coffee-rails', '4.0.1'
   gem 'uglifier', '2.3.2'
 end
@@ -37,8 +37,8 @@ group :development, :test do
   gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
-  gem 'rspec-rails', '>= 2.11.0'
-  gem 'capybara', '~> 2.0'
+  gem 'rspec-rails', '2.14.0'
+  gem 'capybara', '2.2.0'
   gem 'jettywrapper'
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'
