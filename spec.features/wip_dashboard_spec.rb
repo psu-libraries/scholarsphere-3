@@ -18,14 +18,19 @@ describe 'Dashboard:' do
 
   describe 'For a file in my list:' do
 
-    pending 'Clicking the Visibility link loads the edit permissions page' do
-      db_visibility_link(file).click
+    specify 'Clicking the Visibility link loads the edit permissions page' do
+      # The link is not visible in poltergeist unless we resize
+      # the page (1440w x 1200h). Somehow using .trigger gets around
+      # this issue though.
+      db_visibility_link(file).trigger('click')
       page.should have_content 'Permissions'
       page.should have_content 'Visibility'
       page.should have_content 'Share With'
     end
 
-    specify 'Clicking + displays additional metadata about that file'
+    pending 'Clicking + displays additional metadata about that file'
+      # This is currently backwards: metadata is displayed by default
+      # and clicking '+' hides the metadata.
 
     specify 'Clicking Edit File goes directly to the metadata edit page' do
       db_item_actions_toggle(file).click

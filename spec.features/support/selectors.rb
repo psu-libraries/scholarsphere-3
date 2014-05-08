@@ -54,7 +54,7 @@ module Selectors
 
     def db_visibility_link file
       within "#document_#{file.noid}" do
-        find "#permission_#{file.noid}"
+        find "a#permission_#{file.noid}"
       end
     end
 
