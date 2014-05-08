@@ -266,8 +266,7 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (2.0.0)
-      active-fedora (>= 6.7.0)
+    hydra-collections (2.0.1)
       blacklight
       hydra-head (~> 7.0.1)
     hydra-core (7.0.2)
@@ -616,7 +615,7 @@ DEPENDENCIES
   capistrano-ext (= 1.2.1)
   capistrano-notification (= 0.1.1)
   capistrano-rbenv (= 1.0.5)
-  capybara (= 2.2.0)
+  capybara (~> 2.0)
   clamav (= 0.4.1)
   coffee-rails (= 4.0.1)
   database_cleaner
@@ -626,7 +625,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections (= 2.0.0)
+  hydra-collections (= 2.0.1)
   hydra-derivatives (= 0.0.7)
   hydra-editor (= 0.1.1)
   hydra-ldap (= 0.1.0)
@@ -641,9 +640,9 @@ DEPENDENCIES
   rails (= 4.0.5)
   rainbow (= 1.1.4)
   resque-pool (= 0.3.0)
-  rspec-rails (= 2.14.0)
+  rspec-rails (>= 2.11.0)
   sass (= 3.2.18)
-  sass-rails (= 4.0.3)
+  sass-rails (~> 4.0.2)
   select2-rails (= 3.4.2)
   sitemap (= 0.3.3)
   sqlite3

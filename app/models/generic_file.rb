@@ -38,7 +38,7 @@ class GenericFile < ActiveFedora::Base
     self.append_metadata
     self.filename = self.label
     extract_content
-    save unless self.new_object?
+    save unless self.new_record?
   end
 
   def per_version(&block)
@@ -90,7 +90,6 @@ class GenericFile < ActiveFedora::Base
     self.thumbnail.content = File.open(output_file, 'rb').read
     self.thumbnail.mimeType = 'image/png'
   end
-
 
   def extract_content
     begin

@@ -10,7 +10,7 @@ gem 'sufia', github: 'psu-stewardship/sufia', branch:'scss'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', branch:'scss'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.1.1'
-gem 'hydra-collections', '2.0.0'
+gem 'hydra-collections', '2.0.1'
 gem 'hydra-derivatives', '0.0.7'
 gem 'hydra-ldap', '0.1.0'
 
@@ -31,7 +31,7 @@ gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref:
 gem 'sass', '3.2.18'
 
 group :assets do
-  gem 'sass-rails', '4.0.3'
+  gem 'sass-rails', '~> 4.0.2'
   gem 'coffee-rails', '4.0.1'
   gem 'uglifier', '2.3.2'
 end
@@ -40,8 +40,8 @@ group :development, :test do
   gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
-  gem 'rspec-rails', '2.14.0'
-  gem 'capybara', '2.2.0'
+  gem 'rspec-rails', '>= 2.11.0'
+  gem 'capybara', '~> 2.0'
   gem 'jettywrapper'
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'

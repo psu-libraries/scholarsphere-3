@@ -37,7 +37,6 @@ class CatalogController < ApplicationController
 
   skip_before_filter :default_html_head
 
-
   def self.uploaded_field
     Solrizer.solr_name('desc_metadata__date_uploaded', :stored_sortable, type: :date)
   end
@@ -45,7 +44,6 @@ class CatalogController < ApplicationController
   def self.modified_field
     Solrizer.solr_name('desc_metadata__date_modified', :stored_sortable, type: :date)
   end
-
 
   # COPIED AND MODIFIED from:
   #	/usr/local/rvm/gems/ree-1.8.7-2011.03@scholarsphere/gems/blacklight-3.3.2/lib/blacklight/catalog.rb
@@ -68,26 +66,24 @@ class CatalogController < ApplicationController
     end
   end
 
-
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
       :qt => "search",
       :rows => 10
     }
-    
+
     # specify which field to use in the tag cloud on the homepage
     config.tag_cloud_field_name = Solrizer.solr_name('desc_metadata__tag', :facetable)
-    
+
     # solr field configuration for search results/index views
-    config.index.show_link = Solrizer.solr_name("desc_metadata__title", :displayable)
-    config.index.record_display_type = "id"
+    config.index.title_field = Solrizer.solr_name("desc_metadata__title", :displayable)
+    config.index.display_type_field = "id"
     config.index.thumbnail_method = :sufia_thumbnail_tag
 
     # solr field configuration for document/show views
-    config.show.html_title = Solrizer.solr_name("desc_metadata__title", :displayable)
-    config.show.heading = Solrizer.solr_name("desc_metadata__title", :displayable)
-    config.show.display_type = Solrizer.solr_name("has_model", :symbol)
+    config.show.title_field = Solrizer.solr_name("desc_metadata__title", :displayable)
+    config.show.display_type_field = Solrizer.solr_name("has_model", :symbol)
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -165,7 +161,7 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
     config.add_search_field('all_fields', :label => 'All Fields', :include_in_advanced_search => false) do |field|
       all_names = config.show_fields.values.map{|val| val.field}.join(" ")
-      title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)      
+      title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)
       field.solr_parameters = {
         :qf => "#{all_names} id noid_tsi all_text_timv",
         :pf => "#{title_name}"
@@ -341,7 +337,6 @@ class CatalogController < ApplicationController
         :pf => solr_name
       }
     end
-
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
