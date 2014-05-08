@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.5'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
@@ -9,12 +9,12 @@ gem 'sufia', '3.7.2'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor','0.1.1' # for edit view partials (editing collections)
 #gem 'hydra-collections', '1.3.2'
-gem 'hydra-collections', github:'projecthydra/hydra-collections', ref: "302c4aa779831080ef3597ca3a07cdcf1ef3f9bd"
-gem 'hydra-derivatives'
+gem 'hydra-collections', github: 'projecthydra/hydra-collections', ref: "302c4aa779831080ef3597ca3a07cdcf1ef3f9bd"
+gem 'hydra-derivatives', '0.0.7'
 gem 'hydra-ldap', '0.1.0'
-gem 'rainbow'
 
 # Other components
+gem 'rainbow', '1.1.4'
 gem 'jquery-rails', '2.1.4'
 gem 'resque-pool', '0.3.0'
 gem 'devise','3.2.2'
@@ -27,11 +27,11 @@ gem 'bootstrap-sass', '2.2.2.0'
 gem 'font-awesome-sass-rails', '3.0.2.2'
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'whenever', '0.8.4'
-gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
+gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
 gem 'newrelic_rpm', '3.7.0.177' # devops r us
 
 group :assets do
-  gem 'sass-rails', '4.0.1'
+  gem 'sass-rails', '4.0.3'
   gem 'coffee-rails', '4.0.1'
   gem 'uglifier', '2.3.2'
 end
@@ -40,8 +40,8 @@ group :development, :test do
   gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
-  gem 'rspec-rails', '>= 2.11.0'
-  gem 'capybara', '~> 2.0'
+  gem 'rspec-rails', '2.14.0'
+  gem 'capybara', '2.2.0'
   gem 'jettywrapper'
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'
