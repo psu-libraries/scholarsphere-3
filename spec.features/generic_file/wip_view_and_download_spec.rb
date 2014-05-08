@@ -11,6 +11,7 @@ describe 'Generic File viewing and downloading:' do
   let!(:file_2) do
     create_file current_user, { title: 'File 2',
         creator: '',
+        contributor: '',
         tag: '',
         subject: '',
         language: '',
@@ -26,63 +27,74 @@ describe 'Generic File viewing and downloading:' do
     db_item_title(file_1).click
   end
 
-  context "When viewing a file" do
+  context 'When viewing a file' do
 
     specify "I can see the file's page" do
       page.status_code.should == 200
       page.should have_content file_1.title.first
     end
 
-    specify "I can see the link for creator and searches correctly" do
-      check_page file_1.creator.first
+    specify 'I can see the link for creator and it filters correctly' do
+      test_link file_1.creator.first
     end
 
-    pending "I can see the link for contributor and searches correctly" do
-      check_page(file_1.contributor.first)
+    specify 'I can see the link for contributor and it filters correctly' do
+      test_link file_1.contributor.first
     end
 
-    pending "I can see the link for publisher and searches correctly" do
-      check_page(file_1.publisher.first)
+    specify 'I can see the link for publisher and it filters correctly' do
+      test_link file_1.publisher.first
     end
 
-    pending "I can see the link for subject and searches correctly" do
-      check_page(file_1.subject.first)
+    specify 'I can see the link for subject and it filters correctly' do
+      test_link file_1.subject.first
     end
 
-    pending "I can see the link for language and searches correctly" do
-      check_page(file_1.language.first)
+    specify 'I can see the link for language and it filters correctly' do
+      test_link file_1.language.first
     end
 
-    pending "I can see the link for based_near and searches correctly" do
-      check_page(file_1.based_near.first)
+    specify 'I can see the link for based_near and it filters correctly' do
+      test_link file_1.based_near.first
     end
 
-    pending "I can see the link for a tag and searches correctly" do
-      check_page(file_1.tag.first)
+    specify 'I can see the link for a tag and it filters correctly' do
+      test_link file_1.tag.first
     end
 
-    pending "I can see the link for rights and searches correctly" do
-      check_page(file_1.rights.first)
+    specify 'I can see the link for rights and it filters correctly' do
+      test_link file_1.rights.first
     end
 
-    pending "I can see the link for all the linkable items" do
+    specify 'I can see the link for all the linkable items' do
       page.should have_link 'http://example.org/TheDescriptionLink/'
-      page.should have_link @gf1.related_url.first
+      page.should have_link file_1.related_url.first
     end
 
-    pending "I can see the Mendeley modal" do
-      click_link "Mendeley"
-      page.should have_css(".modal-header")
+    specify 'I can download an Endnote version of the file' do
+      click_link 'EndNote'
+      page.response_headers['Content-Type'].should == 'application/x-endnote-refer; charset=utf-8'
     end
 
-    pending "I can see the Zotero modal" do
-      click_link "Zotero"
-      page.should have_css(".modal-header")
+    specify 'I can see the Mendeley modal' do
+      pending 'This does not appear to be functioning properly'
+      click_link 'Mendeley'
+      page.should have_css('.modal-header')
+    end
+
+    specify 'I can see the Zotero modal' do
+      pending 'This does not appear to be functioning properly'
+      click_link 'Zotero'
+      page.should have_css('.modal-header')
     end
 
   end
 
-  def check_page(link_name)
+  context 'When downloading a file' do
+
+  end
+
+  def test_link link_name
     page.should have_link link_name
     click_on link_name
     page.should have_content file_1.title.first
