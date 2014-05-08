@@ -7,7 +7,7 @@ describe 'Generic File uploading and deletion:' do
   context 'When logged in as a PSU user' do
     let(:current_user) { create :user }
     let(:filename) { 'world.png' }
-    let(:file) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
+    let(:file) { find_file_by_title "world.png" }
 
     before do
       sign_in_as current_user

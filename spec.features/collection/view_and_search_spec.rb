@@ -24,8 +24,8 @@ describe 'Collection viewing and searching:' do
     db_item_title(collection).click
   end
 
-  let(:file_1) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
-  let(:file_2) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"small_file.txt").first }
+  let(:file_1) { find_file_by_title "world.png" }
+  let(:file_2) { find_file_by_title "small_file.txt" }
 
   describe 'When viewing a collection' do
     specify "I should see the collection's metadata" do
