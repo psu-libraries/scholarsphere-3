@@ -3,7 +3,6 @@ ScholarSphere::Application.routes.draw do
   get ':managedata' => 'landing_pages#new', :as => :request_info, :constraints => { :managedata => /managedata/i }
   get ':managedata/:thankyou' => 'landing_pages#thanks', :as => :request_thanks, :constraints => { :managedata => /managedata/i, :thankyou=> /thankyou/i }
 
-  root :to => "catalog#index"
 
   devise_for :users
 
@@ -59,6 +58,8 @@ ScholarSphere::Application.routes.draw do
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
   mount HydraEditor::Engine => '/'
+
+  root :to => "homepage#index"
 
   # Downloads controller route
   # resources :downloads, :only => "show"

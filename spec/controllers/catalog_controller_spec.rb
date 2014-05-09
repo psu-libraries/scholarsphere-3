@@ -177,48 +177,4 @@ describe CatalogController do
     end
   end
 
-  describe "#recent" do
-    before do
-      @gf1 = GenericFile.new(title:'Generic File 1', contributor:'contributor 1', resource_type:'type 1', read_groups:['public'])
-      @gf1.apply_depositor_metadata('mjg36')
-      @gf1.save
-      sleep 1 # make sure next file is not at the same time compare
-      @gf2 = GenericFile.new(title:'Generic File 2', contributor:'contributor 2', resource_type:'type 2', read_groups:['public'])
-      @gf2.apply_depositor_metadata('mjg36')
-      @gf2.save
-      sleep 1 # make sure next file is not at the same time compare
-      @gf3 = GenericFile.new(title:'Generic File 3', contributor:'contributor 3', resource_type:'type 3', read_groups:['public'])
-      @gf3.apply_depositor_metadata('mjg36')
-      @gf3.save
-      sleep 1 # make sure next file is not at the same time compare
-      @gf4 = GenericFile.new(title:'Generic File 4', contributor:'contributor 4', resource_type:'type 4', read_groups:['public'])
-      @gf4.apply_depositor_metadata('mjg36')
-      @gf4.save
-      xhr :get, :recent
-    end
-
-    after do
-      @gf1.delete
-      @gf2.delete
-      @gf3.delete
-      @gf4.delete
-    end
-
-    it "should find my 3 files" do
-      response.should be_success
-      response.should render_template('catalog/recent')
-      assigns(:recent_documents).count.should eql(3)
-      # the order is reversed since the first in should be the last out in descending time order
-      lgf3 = assigns(:recent_documents)[0]
-      lgf2 = assigns(:recent_documents)[1]
-      lgf1 = assigns(:recent_documents)[2]
-      descriptor = Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)
-      lgf3.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf4.title[0])
-      lgf3.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf4.contributor[0])
-      lgf3.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf4.resource_type[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__title', descriptor))[0].should eql(@gf2.title[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__contributor', descriptor))[0].should eql(@gf2.contributor[0])
-      lgf1.fetch(Solrizer.solr_name('desc_metadata__resource_type', descriptor))[0].should eql(@gf2.resource_type[0])
-    end
-  end
 end

@@ -5,6 +5,17 @@ include Warden::Test::Helpers
 describe_options = { type: :feature }
 
 describe "Visting the home page" do
+  before :all do
+    @blk = ContentBlock.find_or_create_by( name: "marketing_text").tap do |market|
+      market.value = "Share. Manage. Preserve."
+      market.save
+    end
+
+  end
+
+  after :all do
+    @blk.destroy
+  end
 
   before do
     # TODO: This really shouldn't be necessary
@@ -29,7 +40,9 @@ describe "Visting the home page" do
   end
 
   context "when there are only a lot of groups" do
-    before { add_groups_to_user(100) }
+    before {
+      add_groups_to_user(100)
+    }
     it "loads the page" do
       visit '/'
       page.should have_content "#{@user.login}"

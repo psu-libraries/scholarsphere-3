@@ -75,15 +75,6 @@ module ScholarSphere
 
     config.assets.enabled = true
     config.assets.compress = !Rails.env.development?
-    config.assets.paths << '#{Rails.root}/app/assets/javascripts'
-    config.assets.paths << '#{Rails.root}/app/assets/stylesheets'
-    config.assets.paths << '#{Rails.root}/app/assets/images'
-    config.assets.paths << '#{Rails.root}/lib/assets/javascripts'
-    config.assets.paths << '#{Rails.root}/lib/assets/stylesheets'
-    config.assets.paths << '#{Rails.root}/lib/assets/images'
-    config.assets.paths << '#{Rails.root}/vendor/assets/javascripts'
-    config.assets.paths << '#{Rails.root}/vendor/assets/images'
-    config.assets.paths << '#{Rails.root}/vendor/assets/fonts'
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]

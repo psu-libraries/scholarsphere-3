@@ -37,28 +37,6 @@ class CatalogController < ApplicationController
 
   skip_before_filter :default_html_head
 
-  def index
-    super
-    recent
-    #also grab my recent docs too
-    recent_me
-  end
-
-  def recent
-    (resp, doc_list) = get_search_results(:q =>"{!lucene q.op=AND df=#{read_group_field}}public", :sort=>sort_field, :rows=>3)
-    @recent_documents = doc_list[0..3]
-  end
-
-  def recent_me
-    if user_signed_in?
-      (resp, doc_list) = get_search_results(:q =>"{!lucene q.op=AND df=#{depositor_field}}"+current_user.user_key,
-                                            :sort=>sort_field,
-                                            :rows=>3)
-      @recent_user_documents = doc_list[0..3]
-    else
-      @recent_user_documents = nil
-    end
-  end
 
   def self.uploaded_field
     Solrizer.solr_name('desc_metadata__date_uploaded', :stored_sortable, type: :date)

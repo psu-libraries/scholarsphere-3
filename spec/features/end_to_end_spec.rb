@@ -63,16 +63,20 @@ describe 'end to end behavior', describe_options do
         page.should have_content(file_format)
       end
       page.should have_content('MY Tite for World')
-      first('button.dropdown-toggle').click
-      click_link('Edit File')
+      within('#documents') do
+        first('button.dropdown-toggle').click
+        click_link('Edit File')
+      end
       wait_on_page('Edit MY Tite for World').should be_true
       first('i.glyphicon-question-sign').click
       # TODO: more test for edit?
       click_link('Dashboard')
-      count = all('button.dropdown-toggle').count
-      1.upto(count) do
-        first('button.dropdown-toggle').click
-        click_link('Delete File')
+      within('#documents') do
+        count = all('button.dropdown-toggle').count
+        1.upto(count) do
+          first('button.dropdown-toggle').click
+          click_link('Delete File')
+        end
       end
       # TODO: should we verify the deletes worked? feels like this
       #       test ends abruptly.

@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on
   # these methods in order to perform user specific actions.
 
-  layout 'sufia-two-column'
+  layout 'sufia-one-column'
 
   protect_from_forgery
 
