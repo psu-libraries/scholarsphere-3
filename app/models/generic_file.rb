@@ -13,8 +13,10 @@
 # limitations under the License.
 
 class GenericFile < ActiveFedora::Base
+  require_relative '../../app/models/concerns/permission_notification_behavior'
   include Sufia::GenericFile
   include Hydra::Collections::Collectible
+  include Scholarsphere::PermissionNotification
 
   has_file_datastream "full_text", versionable: false
 

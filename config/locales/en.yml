@@ -37,4 +37,4 @@ en:
     notifications:
       permissions:
         subject: "Permission change notification"
-        notification: "You can now %{access} file %{file}"
+        notification: "User %{user} has granted you '%{access}' access to file %{file}"

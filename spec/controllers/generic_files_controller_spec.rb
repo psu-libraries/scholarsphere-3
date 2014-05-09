@@ -284,14 +284,6 @@ describe GenericFilesController do
 
       assigns[:generic_file].read_groups.should == ["group3"]
     end
-    it "should notify user when added to the list of file permissions" do
-      #create or retrieve current user
-      recipient = User.audituser
-      #update file adding user to the permission set, triggering the notification
-      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_user_name=>{'audituser'=>'edit'}}}
-      #test to see if user has received any messages
-      recipient.mailbox.inbox.count.should == 1
-    end
     it "should spawn a virus check" do
       s1 = double('one')
       ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s1)
