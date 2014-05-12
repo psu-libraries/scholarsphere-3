@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: git://github.com/psu-stewardship/sufia.git
-  revision: 7708ccf51e7ca798180a9356e3bf9b54deb721c7
+  revision: e8b0624cc62dde2f0e6f38b539c5760d51491e60
   branch: scss
   specs:
     sufia (4.0.0.beta2)
