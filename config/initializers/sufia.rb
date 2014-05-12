@@ -73,7 +73,5 @@ Sufia::Engine.configure do
     "View/Download" => "read"
   }
 
-  config.usage_statistics = true
+  config.analytics = true
 end
-
-
