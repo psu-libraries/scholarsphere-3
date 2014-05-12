@@ -9,13 +9,29 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projecthydra/sufia.git
-  revision: 7048ae43b8ce3ec58b34418eb436020c7ee2c0f8
-  ref: 7048ae43b8ce3ec58b34418eb436020c7ee2c0f8
-  branch: master
+  remote: git://github.com/projecthydra-labs/browse-everything.git
+  revision: 4a5be547a865c9fed1e463274db761f0ac272272
+  branch: scss
+  specs:
+    browse-everything (0.4.3)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client
+      google_drive
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
+
+GIT
+  remote: git://github.com/psu-stewardship/sufia.git
+  revision: 7708ccf51e7ca798180a9356e3bf9b54deb721c7
+  branch: scss
   specs:
     sufia (4.0.0.beta2)
       blacklight (~> 5.0)
+      blacklight-gallery
       blacklight_advanced_search (~> 5.0)
       bootstrap_form (~> 2.1.1)
       browse-everything (>= 0.4.0)
@@ -108,6 +124,10 @@ GEM
       nokogiri (~> 1.6)
       rails (>= 3.2.6, < 5)
       rsolr (~> 1.0.6)
+    blacklight-gallery (0.0.1)
+      blacklight (>= 5.0.0.pre4, < 6.0)
+      bootstrap-sass (~> 3.0)
+      rails
     blacklight_advanced_search (5.0.1)
       blacklight (>= 5.1, < 6.0)
       parslet
@@ -118,16 +138,6 @@ GEM
       sass (~> 3.2)
     bootstrap_form (2.1.1)
     bootstrap_forms (4.0.1)
-    browse-everything (0.4.3)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client
-      google_drive
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
     builder (3.1.4)
     cancancan (1.8.0)
     capistrano (2.15.5)
@@ -496,7 +506,7 @@ GEM
       mime-types
       nokogiri
       rest-client
-    sass (3.2.19)
+    sass (3.2.18)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.2.0)
@@ -601,6 +611,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  browse-everything!
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)
   capistrano-notification (= 0.1.1)
@@ -631,6 +642,7 @@ DEPENDENCIES
   rainbow (= 1.1.4)
   resque-pool (= 0.3.0)
   rspec-rails (= 2.14.0)
+  sass (= 3.2.18)
   sass-rails (= 4.0.3)
   select2-rails (= 3.4.2)
   sitemap (= 0.3.3)

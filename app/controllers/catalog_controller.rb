@@ -82,6 +82,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.show_link = Solrizer.solr_name("desc_metadata__title", :displayable)
     config.index.record_display_type = "id"
+    config.index.thumbnail_method = :sufia_thumbnail_tag
 
     # solr field configuration for document/show views
     config.show.html_title = Solrizer.solr_name("desc_metadata__title", :displayable)

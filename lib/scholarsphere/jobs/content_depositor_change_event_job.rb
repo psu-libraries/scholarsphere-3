@@ -3,7 +3,7 @@ class ContentDepositorChangeEventJob
   include ActionView::Helpers
   include ActionView::Helpers::DateHelper
   include Hydra::AccessControlsEnforcement
-  include SufiaHelper
+  include ::SufiaHelper
 
   def queue_name
     :proxy_deposit

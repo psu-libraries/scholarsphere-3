@@ -6,7 +6,8 @@ gem 'mysql2', '0.3.14'
 
 # Hydra community components
 #gem 'sufia', '4.0.0.beta2'
-gem 'sufia', github: 'projecthydra/sufia', branch:'master', ref:'7048ae43b8ce3ec58b34418eb436020c7ee2c0f8'
+gem 'sufia', github: 'psu-stewardship/sufia', branch:'scss'
+gem 'browse-everything', github: 'projecthydra-labs/browse-everything', branch:'scss'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.1.1'
 gem 'hydra-collections', '2.0.0'
@@ -27,6 +28,7 @@ gem 'select2-rails', '3.4.2'
 gem 'whenever', '0.8.4'
 gem 'newrelic_rpm', '3.7.0.177'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
+gem 'sass', '3.2.18'
 
 group :assets do
   gem 'sass-rails', '4.0.3'
