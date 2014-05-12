@@ -39,7 +39,7 @@ end
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
+  task :restart, roles: :app, except: { no_release: true } do
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
@@ -69,7 +69,7 @@ after "deploy:update_code", "deploy:migrate"
 # Resolrize.
 namespace :deploy do
   desc "Re-solrize objects"
-  task :resolrize, :roles => :solr do
+  task :resolrize, roles: :solr do
     run <<-CMD.compact
     cd -- #{latest_release} &&
     RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize

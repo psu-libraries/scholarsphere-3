@@ -6,11 +6,11 @@ describe RedirectToWebAccessFailure do
       'REQUEST_URI' => 'http://test.host/',
       'HTTP_HOST' => 'test.host',
       'REQUEST_METHOD' => 'GET',
-      'warden.options' => { :scope => :user },
+      'warden.options' => { scope: :user },
       'rack.session' => {},
       'action_dispatch.request.formats' => Array(env_params.delete('formats') || Mime::HTML),
       'rack.input' => "",
-      'warden' => OpenStruct.new(:message => nil)
+      'warden' => OpenStruct.new(message: nil)
     }.merge!(env_params)
 
     @response = RedirectToWebAccessFailure.call(env).to_a

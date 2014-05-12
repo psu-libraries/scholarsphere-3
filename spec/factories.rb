@@ -13,14 +13,14 @@
 # limitations under the License.
 
 FactoryGirl.define do
-  factory :user, :class => User do |u|
+  factory :user, class: User do |u|
     login 'jilluser'
     display_name 'Jill Z. User'
     title "User"
     ldap_available true
   end
 
-  factory :user_with_fixtures, :class => User do |u|
+  factory :user_with_fixtures, class: User do |u|
     login 'userwithfixtures'
     title "User"
     after(:create) do |user|
@@ -29,19 +29,19 @@ FactoryGirl.define do
     end
   end
 
-  factory :archivist, :class => User do |u|
+  factory :archivist, class: User do |u|
     login 'archivist1'
     title "Archivist"
     ldap_available true
   end
 
-  factory :curator, :class => User do |u|
+  factory :curator, class: User do |u|
     login 'curator1'
     title "Curator"
     ldap_available true
   end
 
-  factory :random_user, :class => User do |u|
+  factory :random_user, class: User do |u|
     sequence(:login) {|n| "user#{n}" }
     title "User"
     ldap_available true
@@ -49,11 +49,11 @@ FactoryGirl.define do
 
 
   #these two users are ONLY for ensuring our staging test users don't show up in search results
-  factory :test_user_1, :class => User do |u|
+  factory :test_user_1, class: User do |u|
     login 'tstem31'
   end
 
-  factory :test_user_2, :class => User do |u|
+  factory :test_user_2, class: User do |u|
     login 'testapp'
   end
 

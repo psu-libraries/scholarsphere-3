@@ -81,7 +81,7 @@ class ProxyDepositRequest < ActiveRecord::Base
   def title
     return 'file not found' if deleted_file?
     query = ActiveFedora::SolrService.construct_query_for_pids([pid])
-    solr_response = ActiveFedora::SolrService.query(query, :raw => true)
+    solr_response = ActiveFedora::SolrService.query(query, raw: true)
     SolrDocument.new(solr_response['response']['docs'].first, solr_response).title
   end
 end

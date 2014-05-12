@@ -52,103 +52,103 @@ describe CatalogController do
     end
     describe "term search" do
       it "should find pdf files" do
-        xhr :get, :index, :q =>"pdf"
+        xhr :get, :index, q:"pdf"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__title_tesim')[0].should eql('Test Document PDF')
       end
       it "should find a file by title" do
-        xhr :get, :index, :q =>"titletitle"
+        xhr :get, :index, q:"titletitle"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__title_tesim')[0].should eql('titletitle')
       end
       it "should find a file by tag" do
-        xhr :get, :index, :q =>"tagtag"
+        xhr :get, :index, q:"tagtag"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__tag_tesim')[0].should eql('tagtag')
       end
       it "should find a file by subject" do
-        xhr :get, :index, :q =>"subjectsubject"
+        xhr :get, :index, q:"subjectsubject"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__subject_tesim')[0].should eql('subjectsubject')
       end
       it "should find a file by creator" do
-        xhr :get, :index, :q =>"creatorcreator"
+        xhr :get, :index, q:"creatorcreator"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__creator_tesim')[0].should eql('creatorcreator')
       end
       it "should find a file by contributor" do
-        xhr :get, :index, :q =>"contributorcontributor"
+        xhr :get, :index, q:"contributorcontributor"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__contributor_tesim')[0].should eql('contributorcontributor')
       end
       it "should find a file by publisher" do
-        xhr :get, :index, :q =>"publisherpublisher"
+        xhr :get, :index, q:"publisherpublisher"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__publisher_tesim')[0].should eql('publisherpublisher')
       end
       it "should find a file by based_near" do
-        xhr :get, :index, :q =>"based_nearbased_near"
+        xhr :get, :index, q:"based_nearbased_near"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__based_near_tesim')[0].should eql('based_nearbased_near')
       end
       it "should find a file by language" do
-        xhr :get, :index, :q =>"languagelanguage"
+        xhr :get, :index, q:"languagelanguage"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__language_tesim')[0].should eql('languagelanguage')
       end
       it "should find a file by resource_type" do
-        xhr :get, :index, :q =>"resource_typeresource_type"
+        xhr :get, :index, q:"resource_typeresource_type"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__resource_type_tesim')[0].should eql('resource_typeresource_type')
       end
       it "should find a file by format_label" do
-        xhr :get, :index, :q =>"format_labelformat_label"
+        xhr :get, :index, q:"format_labelformat_label"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'file_format_tesim')[0].should eql('format_labelformat_label')
       end
       it "should find a file by description" do
-        xhr :get, :index, :q =>"descriptiondescription"
+        xhr :get, :index, q:"descriptiondescription"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
         assigns(:document_list)[0].fetch(:'desc_metadata__description_tesim')[0].should eql('descriptiondescription')
       end
       it "should find a file by full_text" do
-        xhr :get, :index, :q =>"full_textfull_text"
+        xhr :get, :index, q:"full_textfull_text"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(1)
       end
       it "should find a file by depositor" do
-        xhr :get, :index, :q =>"mjg36"
+        xhr :get, :index, q:"mjg36"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(3)
       end
       it "should find a file by depositor in advanced search" do
-        xhr :get, :index, :depositor =>"mjg36", :search_field => "advanced"
+        xhr :get, :index, depositor:"mjg36", search_field: "advanced"
         response.should be_success
         response.should render_template('catalog/index')
         assigns(:document_list).count.should eql(3)
@@ -156,7 +156,7 @@ describe CatalogController do
     end
     describe "facet search" do
       before do
-        xhr :get, :index, :q=>"{f=desc_metadata__contributor_facet}Contrib2"
+        xhr :get, :index, q:"{f=desc_metadata__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success
@@ -167,7 +167,7 @@ describe CatalogController do
     describe "user with group search" do
       before do
         User.any_instance.stub(:groups).and_return(['umg/personal.testuser.testgroup'])
-        xhr :get, :index, :q=>"{f=desc_metadata__contributor_facet}Contrib2"
+        xhr :get, :index, q:"{f=desc_metadata__contributor_facet}Contrib2"
       end
       it "should find facet files" do
         response.should be_success

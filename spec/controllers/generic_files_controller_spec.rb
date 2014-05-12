@@ -25,7 +25,7 @@ describe GenericFilesController do
   describe "#create" do
     before do
       @file_count = GenericFile.count
-      @mock = GenericFile.new({:pid => 'test:123'})
+      @mock = GenericFile.new({pid: 'test:123'})
       GenericFile.stub(:new).and_return(@mock)
     end
     after do
@@ -45,12 +45,12 @@ describe GenericFilesController do
       s2 = double('two')
       CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
     end
 
     it "should create and save a file asset from the given params" do
       file = fixture_file_upload('/world.png','image/png')
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
       response.should be_success
       GenericFile.count.should == @file_count + 1
 
@@ -68,16 +68,16 @@ describe GenericFilesController do
 
     it "should record on_behalf_of" do
       file = fixture_file_upload('/world.png','image/png')
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :on_behalf_of=>'carolyn', :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", on_behalf_of:'carolyn', terms_of_service:"1"
       response.should be_success
       saved_file = GenericFile.find('test:123')
       saved_file.on_behalf_of.should == 'carolyn'
     end
 
     it "should record what user created the first version of content" do
-      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "test:123" })
+      GenericFile.any_instance.stub(:to_solr).and_return({ id: "test:123" })
       file = fixture_file_upload('/world.png','image/png')
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", terms_of_service:"1"
 
       saved_file = GenericFile.find('test:123')
       version = saved_file.content.latest_version
@@ -89,14 +89,14 @@ describe GenericFilesController do
       Sufia.config.stub(:id_namespace).and_return('sample')
       file = fixture_file_upload('/world.png','image/png')
       controller.stub(:add_posted_blob_to_asset)
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
       lambda {Batch.find("sample:batch_id")}.should raise_error(ActiveFedora::ObjectNotFoundError) # The controller shouldn't actually save the Batch
       b = Batch.create(pid: "sample:batch_id")
       b.generic_files.first.pid.should == "test:123"
     end
     it "should set the depositor id" do
       file = fixture_file_upload('/world.png','image/png')
-      xhr :post, :create, :files => [file], :Filename => "The world", :batch_id => "sample:batch_id", :permission => {"group"=>{"public"=>"read"} }, :terms_of_service => "1"
+      xhr :post, :create, files: [file], Filename: "The world", batch_id: "sample:batch_id", permission: {"group"=>{"public"=>"read"} }, terms_of_service: "1"
       response.should be_success
 
       saved_file = GenericFile.find('test:123')
@@ -109,7 +109,7 @@ describe GenericFilesController do
       saved_file.to_solr['depositor_tesim'].should == ['jilluser']
     end
     it "should call virus check" do
-      GenericFile.any_instance.stub(:to_solr).and_return({ :id => "foo:123" })
+      GenericFile.any_instance.stub(:to_solr).and_return({ id: "foo:123" })
       Sufia::GenericFile::Actions.should_receive(:virus_check).at_least(:once)
       file = fixture_file_upload('/world.png','image/png')
       s1 = double('one')
@@ -118,14 +118,14 @@ describe GenericFilesController do
       s2 = double('two')
       CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
     end
 
     it "failing virus check should create flash" do
       file = fixture_file_upload('/world.png','image/png')
       Sufia::GenericFile::Actions.should_receive(:virus_check).with(file.path).and_raise(Sufia::VirusFoundError.new('A virus was found'))
 
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
       flash[:error].should include('A virus was found')
 
     end
@@ -134,7 +134,7 @@ describe GenericFilesController do
       GenericFile.any_instance.stub(:save).and_raise(RSolr::Error::Http.new({},{}))
 
       file = fixture_file_upload('/world.png','image/png')
-      xhr :post, :create, :files=>[file], :Filename=>"The world", :batch_id => "sample:batch_id", :permission=>{"group"=>{"public"=>"read"} }, :terms_of_service=>"1"
+      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
       response.body.should include("Error occurred while creating generic file.")
     end
 
@@ -143,7 +143,7 @@ describe GenericFilesController do
   describe "audit" do
     before do
       @generic_file = GenericFile.new
-      @generic_file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), :dsid=>'content')
+      @generic_file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
       @generic_file.apply_depositor_metadata('mjg36')
       @generic_file.save
     end
@@ -151,7 +151,7 @@ describe GenericFilesController do
       @generic_file.delete
     end
     it "should return json with the result" do
-      xhr :post, :audit, :id=>@generic_file.pid
+      xhr :post, :audit, id:@generic_file.pid
       response.should be_success
       lambda { JSON.parse(response.body) }.should_not raise_error
       audit_results = JSON.parse(response.body).collect { |result| result["pass"] }
@@ -172,14 +172,14 @@ describe GenericFilesController do
     end
     it "should delete the file" do
       GenericFile.find(@generic_file.pid).should_not be_nil
-      delete :destroy, :id=>@generic_file.pid
+      delete :destroy, id:@generic_file.pid
       lambda { GenericFile.find(@generic_file.pid) }.should raise_error(ActiveFedora::ObjectNotFoundError)
     end
     it "should spawn a content delete event job" do
       s2 = double('two')
       ContentDeleteEventJob.should_receive(:new).with(@generic_file.noid, @user.login).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      delete :destroy, :id=>@generic_file.pid
+      delete :destroy, id:@generic_file.pid
     end
   end
 
@@ -200,7 +200,7 @@ describe GenericFilesController do
       Sufia.queue.should_receive(:push).with(s2).once
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
-      post :update, :id=>@generic_file.pid, :generic_file=>{:title=>'new_title', :tag=>[''], :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, generic_file:{title:'new_title', tag:[''], permissions:{new_user_name:{'archivist1'=>'edit'}}}
       @user.delete
     end
 
@@ -215,7 +215,7 @@ describe GenericFilesController do
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, filedata:file, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
       @user.delete
     end
 
@@ -224,7 +224,7 @@ describe GenericFilesController do
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, filedata:file, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
 
       posted_file = GenericFile.find(@generic_file.pid)
       version1 = posted_file.content.latest_version
@@ -244,7 +244,7 @@ describe GenericFilesController do
       CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
       Sufia.queue.should_receive(:push).with(s3).once
       file = fixture_file_upload('/image.jp2','image/jp2')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The new world", :generic_file=>{:tag=>[''] }
+      post :update, id:@generic_file.pid, filedata:file, Filename:"The new world", generic_file:{tag:[''] }
       edited_file = GenericFile.find(@generic_file.pid)
       version2 = edited_file.content.latest_version
       version2.versionID.should_not == version1.versionID
@@ -261,7 +261,7 @@ describe GenericFilesController do
       s3 = double('three')
       CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
       Sufia.queue.should_receive(:push).with(s3)
-      post :update, :id=>@generic_file.pid, :revision=>'content.0', :generic_file=>{:tag=>['']}
+      post :update, id:@generic_file.pid, revision:'content.0', generic_file:{tag:['']}
 
       restored_file = GenericFile.find(@generic_file.pid)
       version3 = restored_file.content.latest_version
@@ -272,7 +272,7 @@ describe GenericFilesController do
     end
 
     it "should add a new groups and users" do
-      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_group_name=>{'group1'=>'read'}, :new_user_name=>{'user1'=>'edit'}}}
+      post :update, id:@generic_file.pid, generic_file:{tag:[''], permissions:{new_group_name:{'group1'=>'read'}, new_user_name:{'user1'=>'edit'}}}
 
       assigns[:generic_file].read_groups.should == ["group1"]
       assigns[:generic_file].edit_users.should include("user1", @user.login)
@@ -280,7 +280,7 @@ describe GenericFilesController do
     it "should update existing groups and users" do
       @generic_file.read_groups = ['group3']
       @generic_file.save
-      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{ :new_group_name=>'', :new_group_permission=>'', :new_user_name=>'', :new_user_permission=>'', :group=>{'group3' =>'read'}}}
+      post :update, id:@generic_file.pid, generic_file:{tag:[''], permissions:{ new_group_name:'', new_group_permission:'', new_user_name:'', new_user_permission:'', group:{'group3' =>'read'}}}
 
       assigns[:generic_file].read_groups.should == ["group3"]
     end
@@ -288,7 +288,7 @@ describe GenericFilesController do
       #create or retrieve current user
       recipient = User.audituser
       #update file adding user to the permission set, triggering the notification
-      post :update, :id=>@generic_file.pid, :generic_file=>{:tag=>[''], :permissions=>{:new_user_name=>{'audituser'=>'edit'}}}
+      post :update, id:@generic_file.pid, generic_file:{tag:[''], permissions:{new_user_name:{'audituser'=>'edit'}}}
       #test to see if user has received any messages
       recipient.mailbox.inbox.count.should == 1
     end
@@ -305,13 +305,13 @@ describe GenericFilesController do
       @user = FactoryGirl.find_or_create(:user)
       sign_in @user
       file = fixture_file_upload('/world.png','image/png')
-      post :update, :id=>@generic_file.pid, :filedata=>file, :Filename=>"The world", :generic_file=>{:tag=>[''],  :permissions=>{:new_user_name=>{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, filedata:file, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
     end
   end
 
   describe "a file owned by someone else" do
     before(:all) do
-      f = GenericFile.new(:pid => 'scholarsphere:test5')
+      f = GenericFile.new(pid: 'scholarsphere:test5')
       f.apply_depositor_metadata('archivist1')
       f.set_title_and_label('world.png')
       f.add_file_datastream(File.new(Rails.root +  'spec/fixtures/world.png'))
@@ -327,7 +327,7 @@ describe GenericFilesController do
     describe "edit" do
       it "should give me a flash error" do
         get :edit, id:"test5"
-        response.should redirect_to(:action => 'show')
+        response.should redirect_to(action: 'show')
         flash[:alert].should_not be_nil
         flash[:alert].should_not be_empty
         flash[:alert].should include("You do not have sufficient privileges to edit this document")
@@ -336,7 +336,7 @@ describe GenericFilesController do
     describe "view" do
       it "should show me the file" do
         get :show, id:"test5"
-        response.should_not redirect_to(:action => 'show')
+        response.should_not redirect_to(action: 'show')
         flash[:alert].should be_nil
       end
     end

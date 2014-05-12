@@ -40,7 +40,7 @@ describe 'event jobs' do
     @another_user.follow(@user)
     count_user = @user.events.length
     count_another = @another_user.events.length
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> has edited his or her profile', timestamp: '1' }
     #UserEditProfileEventJob.perform(@user.login)
     UserEditProfileEventJob.new(@user.user_key).run
@@ -55,7 +55,7 @@ describe 'event jobs' do
     @user.events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> is now following <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
     #UserFollowEventJob.perform(@user.login, @another_user.login)
     UserFollowEventJob.new(@user.user_key, @another_user.user_key).run
@@ -73,7 +73,7 @@ describe 'event jobs' do
     @user.events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = { action: 'User <a href="/users/jilluser">Jill Z. User</a> has unfollowed <a href="/users/archivist1">archivist1</a>', timestamp: '1' }
     #UserUnfollowEventJob.perform(@user.login, @another_user.login)
     UserUnfollowEventJob.new(@user.user_key, @another_user.user_key).run
@@ -93,7 +93,7 @@ describe 'event jobs' do
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deposited <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentDepositEventJob.perform('test:123', @user.login)
     ContentDepositEventJob.new('test:123', @user.user_key).run
@@ -115,7 +115,7 @@ describe 'event jobs' do
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has updated <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentUpdateEventJob.perform('test:123', @user.login)
     ContentUpdateEventJob.new('test:123', @user.user_key).run
@@ -137,7 +137,7 @@ describe 'event jobs' do
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has added a new version of <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentNewVersionEventJob.perform('test:123', @user.login)
     ContentNewVersionEventJob.new('test:123', @user.user_key).run
@@ -159,7 +159,7 @@ describe 'event jobs' do
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has restored a version \'content.0\' of <a href="/files/123">Hamlet</a>', timestamp: '1' }
     #ContentRestoredVersionEventJob.perform('test:123', @user.login, 'content.0')
     ContentRestoredVersionEventJob.new('test:123', @user.user_key, 'content.0').run
@@ -179,7 +179,7 @@ describe 'event jobs' do
     @user.profile_events.length.should == 0
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
-    Time.stub(:now => 1)
+    Time.stub(now: 1)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deleted file \'test:123\'', timestamp: '1' }
     #ContentDeleteEventJob.perform('test:123', @user.login)
     ContentDeleteEventJob.new('test:123', @user.user_key).run
@@ -199,7 +199,7 @@ describe 'event jobs' do
     @third_user.events.length.should == 0
     @gf.events.length.should == 0
     @now = Time.now
-    Time.stub(:now => @now)
+    Time.stub(now: @now)
     event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has updated <a href="/files/123">Hamlet</a>', timestamp: @now.to_i.to_s }
     #ContentUpdateEventJob.perform('test:123', @user.login)
     ContentUpdateEventJob.new('test:123', @user.user_key).run

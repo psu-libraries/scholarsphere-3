@@ -91,7 +91,6 @@ describe "Showing the Generic File" do
     end
 
     it "displays Zotero modal" do
-      #save_and_open_page
       click_link "Zotero"
       page.should have_css(".modal-header")
     end

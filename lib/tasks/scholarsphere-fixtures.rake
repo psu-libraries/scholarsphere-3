@@ -188,7 +188,7 @@ require 'active_fedora'
 namespace :scholarsphere do
 
   desc "Init Hydra configuration"
-  task :init => [:environment] do
+  task init: [:environment] do
     # We need to just start rails so that all the models are loaded
   end
 
@@ -197,7 +197,7 @@ namespace :scholarsphere do
     @fixtureDir = ENV["FIXTURE_DIR"] || 'scholarsphere'
 
     desc "Create ScholarSphere Hydra fixtures for generation and loading"
-    task :create => :environment do
+    task create: :environment do
 
       @id = ENV["FIXTURE_ID"] ||'scholarsphere1'
       @title = ENV["FIXTURE_TITLE"] || 'scholarsphere test'
@@ -259,7 +259,7 @@ namespace :scholarsphere do
     end
 
     desc "Refresh default ScholarSphere Hydra fixtures"
-    task :refresh => [:delete, :load]
+    task refresh: [:delete, :load]
 
     private
 

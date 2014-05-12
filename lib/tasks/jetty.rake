@@ -12,7 +12,7 @@ namespace :scholarsphere do
     desc "Copies the contents of solr_conf into the Solr development-core and test-core of Testing Server"
     task :config do
         FileList['solr_conf/lib/*'].each do |f|
-          cp_r("#{f}", 'jetty/solr/lib/contrib/', :verbose => true)
+          cp_r("#{f}", 'jetty/solr/lib/contrib/', verbose: true)
         end
     end
   end

@@ -57,14 +57,14 @@ $("a[rel=popover]").popover({ html: true });
 
 label.error { float: left; color: red; padding-left: .5em; vertical-align: top; }
 <% end %>
-<%= render :partial => 'page_title' %>
-<%= render :partial => 'breadcrumbs' %>
+<%= render partial: 'page_title' %>
+<%= render partial: 'breadcrumbs' %>
 
 <h1 class="lower">Edit <%= display_title(@generic_file) %></h1>
 
 <div class="row">
   <div class="span40">
-    <%= render :partial => 'media_display' %>
+    <%= render partial: 'media_display' %>
   </div>
   <div class="span2">&nbsp;</div>
   <div class="span68">
@@ -75,9 +75,9 @@ label.error { float: left; color: red; padding-left: .5em; vertical-align: top; 
       <li id="edit_permissions_link"><a href="#permissions_display" data-toggle="tab"><i class="icon-key"></i> Permissions</a></li>
     </ul>
     <div class="tab-content">
-      <%= render :partial => "descriptions", :locals => { :generic_file => @generic_file } %>
-      <%= render :partial => "permission", :locals => { :gf => @generic_file } %>
-      <%= render :partial => "versioning", :locals => { :generic_file => @generic_file } %>
+      <%= render partial: "descriptions", locals: { generic_file: @generic_file } %>
+      <%= render partial: "permission", locals: { gf: @generic_file } %>
+      <%= render partial: "versioning", locals: { generic_file: @generic_file } %>
     </div>
   </div> <!-- /.span68-->
 </div><!-- /.row -->

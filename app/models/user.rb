@@ -28,9 +28,9 @@ class User < ActiveRecord::Base
 
 
   Devise.add_module(:http_header_authenticatable,
-                    :strategy => true,
-                    :controller => :sessions,
-                    :model => 'devise/models/http_header_authenticatable')
+                    strategy: true,
+                    controller: :sessions,
+                    model: 'devise/models/http_header_authenticatable')
 
   devise :http_header_authenticatable
 

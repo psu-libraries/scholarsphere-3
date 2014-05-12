@@ -3,9 +3,9 @@ class MailboxerNamespacingCompatibility < ActiveRecord::Migration
   def self.up
 #    remove_index "receipts","notification_id"
 #    remove_index "notifications","conversation_id"
-    remove_foreign_key "receipts", :name => "receipts_on_notification_id_#{Rails.env}"
+    remove_foreign_key "receipts", name: "receipts_on_notification_id_#{Rails.env}"
     #Messages
-    remove_foreign_key "notifications", :name => "notifications_on_conversation_id_#{Rails.env}"
+    remove_foreign_key "notifications", name: "notifications_on_conversation_id_#{Rails.env}"
 
     rename_table :conversations, :mailboxer_conversations
     rename_table :notifications, :mailboxer_notifications

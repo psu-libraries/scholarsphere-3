@@ -1,7 +1,7 @@
 # Passenger.
 namespace :passenger do
   desc "install (or upgrade) passenger gem and apache module"
-  task :install, :roles => :web  do
+  task :install, roles: :web  do
     run <<-CMD.compact
     gem install passenger --no-ri --no-rdoc &&
     rbenv rehash &&
@@ -11,7 +11,7 @@ namespace :passenger do
   end
 
   desc "Update passenger conf file"
-  task :update_config, :roles => :web do
+  task :update_config, roles: :web do
     version = 'ERROR' # default
 
     # passenger (2.X.X, 1.X.X)
@@ -49,7 +49,7 @@ namespace :passenger do
   end
 
   desc "warm up passenger"
-  task :warmup, :roles => :web  do
+  task :warmup, roles: :web  do
     run "curl -s -k -o /dev/null --head https://$(hostname -f)"
   end
 end

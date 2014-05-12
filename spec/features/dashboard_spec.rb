@@ -31,7 +31,6 @@ module Dashboard
       @gf1.save!
     end
 
-
     describe 'visit dashboard' do
 
       it "should visit dashboard" do

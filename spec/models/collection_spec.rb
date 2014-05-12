@@ -17,7 +17,7 @@ require 'spec_helper'
 describe Collection do
   before(:all) do
     @user = FactoryGirl.find_or_create(:user)
-    @collection = Collection.create(:title => "test collection")
+    @collection = Collection.create(title: "test collection")
     @collection.apply_depositor_metadata(@user.user_key)
   end
   after(:all) do

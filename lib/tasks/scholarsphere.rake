@@ -21,7 +21,7 @@ include Blacklight::SolrHelper
 
 namespace :scholarsphere do
   desc "Restore missing user accounts"
-  task :restore_users => :environment do
+  task restore_users: :environment do
     # Query Solr for unique depositors
     terms_url = "#{ActiveFedora.solr_config[:url]}/terms?terms.fl=depositor_tesim&terms.sort=index&terms.limit=5000&wt=json&omitHeader=true"
     # Parse JSON response (looks like {"terms":{"depositor_tesim":["mjg36",3]}})
@@ -40,7 +40,7 @@ namespace :scholarsphere do
   end
 
   desc "Report users quota in SS"
-  task :quota_report => :environment do
+  task quota_report: :environment do
     caution_sz = 3000000000   # 3GB
     warning_sz = 5000000000   # 5GB
     problem_sz = 10000000000  # 10GB
@@ -48,7 +48,7 @@ namespace :scholarsphere do
     users = {}
     User.all.each do |u|
       # for each user query get list of documents
-      user_files = GenericFile.find( :depositor => u.login )
+      user_files = GenericFile.find( depositor: u.login )
       # sum the size of the users docs
       sz = 0
       user_files.each do |f|
@@ -78,7 +78,7 @@ namespace :scholarsphere do
   end
 
   desc "(Re-)Generate the secret token"
-  task :generate_secret => :environment do
+  task generate_secret: :environment do
     include ActiveSupport
     File.open("#{Rails.root}/config/initializers/secret_token.rb", 'w') do |f|
       f.puts "#{Rails.application.class.parent_name}::Application.config.secret_key_base = '#{SecureRandom.hex(64)}'"
@@ -87,7 +87,7 @@ namespace :scholarsphere do
 
   def blacklight_config
     @config ||= CatalogController.blacklight_config
-    @config.default_solr_params = {:qt=>"search", :rows=>100, :fl=>'id'}
+    @config.default_solr_params = {qt:"search", rows:100, fl:'id'}
     return @config
   end
 
@@ -95,9 +95,9 @@ namespace :scholarsphere do
   end
 
   desc "Characterize all files"
-  task :characterize => :environment do
+  task characterize: :environment do
     # grab the first increment of document ids from solr
-    resp = query_solr(:q=>"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_ssim:*GenericFile*" )
+    resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_ssim:*GenericFile*" )
     #get the totalNumber and the size of the current response
     totalNum =  resp["response"]["numFound"]
     idList = resp["response"]["docs"]
@@ -106,7 +106,7 @@ namespace :scholarsphere do
     #loop through each page appending the ids to the original list
     while idList.length < totalNum
        page += 1
-       resp = query_solr(:q=>"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_ssim:*GenericFile*", :page=>page)
+       resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_ssim:*GenericFile*", page:page)
        idList = idList + resp["response"]["docs"]
        totalNum =  resp["response"]["numFound"]
     end
@@ -116,7 +116,7 @@ namespace :scholarsphere do
   end
 
   desc "Re-solrize all objects"
-  task :resolrize => :environment do
+  task resolrize: :environment do
     Sufia.queue.push(ResolrizeJob.new)
   end
 
@@ -128,7 +128,7 @@ namespace :scholarsphere do
 
   namespace :export do
     desc "Dump metadata as RDF/XML for e.g. Summon integration"
-    task :rdfxml => :environment do
+    task rdfxml: :environment do
       raise "rake scholarsphere:export:rdfxml output=FILE" unless ENV['output']
       export_file = ENV['output']
       triples = RDF::Repository.new
@@ -151,57 +151,57 @@ namespace :scholarsphere do
 
   namespace :harvest do
     desc "Harvest LC subjects"
-    task :lc_subjects => :environment do |cmd, args|
+    task lc_subjects: :environment do |cmd, args|
       vocabs = ["/tmp/subjects-skos.nt"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end
 
     desc "Harvest DBpedia titles"
-    task :dbpedia_titles => :environment do |cmd, args|
+    task dbpedia_titles: :environment do |cmd, args|
       vocabs = ["/tmp/labels_en.nt"]
-      LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs, :predicate => RDF::RDFS.label)
+      LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs, predicate: RDF::RDFS.label)
     end
 
     desc "Harvest DBpedia categories"
-    task :dbpedia_categories => :environment do |cmd, args|
+    task dbpedia_categories: :environment do |cmd, args|
       vocabs = ["/tmp/category_labels_en.nt"]
-      LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs, :predicate => RDF::RDFS.label)
+      LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs, predicate: RDF::RDFS.label)
     end
 
     desc "Harvest LC MARC geographic areas"
-    task :lc_geographic => :environment do |cmd, args|
+    task lc_geographic: :environment do |cmd, args|
       vocabs = ["/tmp/vocabularygeographicAreas.nt"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end
 
     desc "Harvest Geonames cities"
-    task :geonames_cities => :environment do |cmd, args|
+    task geonames_cities: :environment do |cmd, args|
       vocabs = ["/tmp/cities1000.txt"]
-      LocalAuthority.harvest_tsv(cmd.to_s.split(":").last, vocabs, :prefix => 'http://sws.geonames.org/')
+      LocalAuthority.harvest_tsv(cmd.to_s.split(":").last, vocabs, prefix: 'http://sws.geonames.org/')
     end
 
     desc "Harvest Lexvo languages"
-    task :lexvo_languages => :environment do |cmd, args|
+    task lexvo_languages: :environment do |cmd, args|
       vocabs = ["/tmp/lexvo_2012-03-04.rdf"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs,
-                                 :format => 'rdfxml',
-                                 :predicate => RDF::URI("http://www.w3.org/2008/05/skos#prefLabel"))
+                                 format: 'rdfxml',
+                                 predicate: RDF::URI("http://www.w3.org/2008/05/skos#prefLabel"))
     end
 
     desc "Harvest LC genres"
-    task :lc_genres => :environment do |cmd, args|
+    task lc_genres: :environment do |cmd, args|
       vocabs = ["/tmp/authoritiesgenreForms.nt"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end
 
     desc "Harvest LC name authorities"
-    task :lc_names => :environment do |cmd, args|
+    task lc_names: :environment do |cmd, args|
       vocabs = ["/tmp/authoritiesnames.nt.skos"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end
 
     desc "Harvest LC thesaurus of graphic materials"
-    task :lc_graphics => :environment do |cmd, args|
+    task lc_graphics: :environment do |cmd, args|
       vocabs = ["/tmp/vocabularygraphicMaterials.nt"]
       LocalAuthority.harvest_rdf(cmd.to_s.split(":").last, vocabs)
     end

@@ -31,7 +31,7 @@ class CatalogController < ApplicationController
   layout :search_layout
 
   # These before_filters apply the hydra access controls
-  before_filter :enforce_show_permissions, :only=>:show
+  before_filter :enforce_show_permissions, only: :show
   # This applies appropriate access controls to all solr queries
   CatalogController.solr_search_params_logic += [:add_access_controls_to_solr_params]
 
@@ -59,9 +59,9 @@ class CatalogController < ApplicationController
       notice = flash[:notice] if flash[:notice] == flash_notice
       unless notice
         flash[:notice] = flash_notice
-        redirect_to root_path, :status => 500
+        redirect_to root_path, status: 500
       else
-        render :template => "public/500.html", :layout => false, :status => 500
+        render template: "public/500.html", layout: false, status: 500
       end
     end
   end
@@ -69,8 +69,8 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
-      :qt => "search",
-      :rows => 10
+      qt: "search",
+      rows: 10
     }
 
     # specify which field to use in the tag cloud on the homepage
@@ -87,16 +87,16 @@ class CatalogController < ApplicationController
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
-    config.add_facet_field Solrizer.solr_name("desc_metadata__resource_type", :facetable), :label => "Resource Type", :limit => 5
-    config.add_facet_field Solrizer.solr_name("collection", :facetable), :label => "Collection",  :helper_method => :collection_helper_method,  :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__creator", :facetable), :label => "Creator", :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__tag", :facetable), :label => "Keyword", :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__subject", :facetable), :label => "Subject", :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__language", :facetable), :label => "Language", :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__based_near", :facetable), :label => "Location", :limit => 5
-    config.add_facet_field Solrizer.solr_name("desc_metadata__publisher", :facetable), :label => "Publisher", :limit => 5
-    config.add_facet_field Solrizer.solr_name("file_format", :facetable), :label => "File Format", :limit => 5
-    config.add_facet_field Solrizer.solr_name("active_fedora_model", :stored_sortable), :label => "Object Type", :helper_method => :titleize
+    config.add_facet_field Solrizer.solr_name("desc_metadata__resource_type", :facetable), label: "Resource Type", limit: 5
+    config.add_facet_field Solrizer.solr_name("collection", :facetable), label: "Collection",  helper_method: :collection_helper_method,  limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__creator", :facetable), label: "Creator", limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__tag", :facetable), label: "Keyword", limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__subject", :facetable), label: "Subject", limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__language", :facetable), label: "Language", limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__based_near", :facetable), label: "Location", limit: 5
+    config.add_facet_field Solrizer.solr_name("desc_metadata__publisher", :facetable), label: "Publisher", limit: 5
+    config.add_facet_field Solrizer.solr_name("file_format", :facetable), label: "File Format", limit: 5
+    config.add_facet_field Solrizer.solr_name("active_fedora_model", :stored_sortable), label: "Object Type", helper_method: :titleize
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -105,42 +105,42 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string), :label => "Title"
-    config.add_index_field Solrizer.solr_name("desc_metadata__description", :stored_searchable, type: :string), :label => "Description"
-    config.add_index_field Solrizer.solr_name("desc_metadata__tag", :stored_searchable, type: :string), :label => "Keyword"
-    config.add_index_field Solrizer.solr_name("desc_metadata__subject", :stored_searchable, type: :string), :label => "Subject"
-    config.add_index_field Solrizer.solr_name("desc_metadata__creator", :stored_searchable, type: :string), :label => "Creator"
-    config.add_index_field Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string), :label => "Contributor"
-    config.add_index_field Solrizer.solr_name("desc_metadata__publisher", :stored_searchable, type: :string), :label => "Publisher"
-    config.add_index_field Solrizer.solr_name("desc_metadata__based_near", :stored_searchable, type: :string), :label => "Location"
-    config.add_index_field Solrizer.solr_name("desc_metadata__language", :stored_searchable, type: :string), :label => "Language"
-    config.add_index_field Solrizer.solr_name("desc_metadata__date_uploaded", :stored_searchable, type: :string), :label => "Date Uploaded"
-    config.add_index_field Solrizer.solr_name("desc_metadata__date_modified", :stored_searchable, type: :string), :label => "Date Modified"
-    config.add_index_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), :label => "Date Created"
-    config.add_index_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), :label => "Rights"
-    config.add_index_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), :label => "Resource Type"
-    config.add_index_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), :label => "File Format"
-    config.add_index_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), :label => "Identifier"
+    config.add_index_field Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string), label: "Title"
+    config.add_index_field Solrizer.solr_name("desc_metadata__description", :stored_searchable, type: :string), label: "Description"
+    config.add_index_field Solrizer.solr_name("desc_metadata__tag", :stored_searchable, type: :string), label: "Keyword"
+    config.add_index_field Solrizer.solr_name("desc_metadata__subject", :stored_searchable, type: :string), label: "Subject"
+    config.add_index_field Solrizer.solr_name("desc_metadata__creator", :stored_searchable, type: :string), label: "Creator"
+    config.add_index_field Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string), label: "Contributor"
+    config.add_index_field Solrizer.solr_name("desc_metadata__publisher", :stored_searchable, type: :string), label: "Publisher"
+    config.add_index_field Solrizer.solr_name("desc_metadata__based_near", :stored_searchable, type: :string), label: "Location"
+    config.add_index_field Solrizer.solr_name("desc_metadata__language", :stored_searchable, type: :string), label: "Language"
+    config.add_index_field Solrizer.solr_name("desc_metadata__date_uploaded", :stored_searchable, type: :string), label: "Date Uploaded"
+    config.add_index_field Solrizer.solr_name("desc_metadata__date_modified", :stored_searchable, type: :string), label: "Date Modified"
+    config.add_index_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), label: "Date Created"
+    config.add_index_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), label: "Rights"
+    config.add_index_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), label: "Resource Type"
+    config.add_index_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), label: "File Format"
+    config.add_index_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string), :label => "Title"
-    config.add_show_field Solrizer.solr_name("desc_metadata__description", :stored_searchable, type: :string), :label => "Description"
-    config.add_show_field Solrizer.solr_name("desc_metadata__tag", :stored_searchable, type: :string), :label => "Keyword"
-    config.add_show_field Solrizer.solr_name("desc_metadata__subject", :stored_searchable, type: :string), :label => "Subject"
-    config.add_show_field Solrizer.solr_name("desc_metadata__creator", :stored_searchable, type: :string), :label => "Creator"
-    config.add_show_field Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string), :label => "Contributor"
-    config.add_show_field Solrizer.solr_name("desc_metadata__publisher", :stored_searchable, type: :string), :label => "Publisher"
-    config.add_show_field Solrizer.solr_name("desc_metadata__based_near", :stored_searchable, type: :string), :label => "Location"
-    config.add_show_field Solrizer.solr_name("desc_metadata__language", :stored_searchable, type: :string), :label => "Language"
-    config.add_show_field Solrizer.solr_name("desc_metadata__date_uploaded", :stored_searchable, type: :string), :label => "Date Uploaded"
-    config.add_show_field Solrizer.solr_name("desc_metadata__date_modified", :stored_searchable, type: :string), :label => "Date Modified"
-    config.add_show_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), :label => "Date Created"
-    config.add_show_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), :label => "Rights"
-    config.add_show_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), :label => "Resource Type"
-    config.add_show_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), :label => "File Format"
-    config.add_show_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), :label => "Identifier"
-    config.add_show_field Solrizer.solr_name("depositor", :stored_searchable, type: :string), :label => "Depositor"
+    config.add_show_field Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string), label: "Title"
+    config.add_show_field Solrizer.solr_name("desc_metadata__description", :stored_searchable, type: :string), label: "Description"
+    config.add_show_field Solrizer.solr_name("desc_metadata__tag", :stored_searchable, type: :string), label: "Keyword"
+    config.add_show_field Solrizer.solr_name("desc_metadata__subject", :stored_searchable, type: :string), label: "Subject"
+    config.add_show_field Solrizer.solr_name("desc_metadata__creator", :stored_searchable, type: :string), label: "Creator"
+    config.add_show_field Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string), label: "Contributor"
+    config.add_show_field Solrizer.solr_name("desc_metadata__publisher", :stored_searchable, type: :string), label: "Publisher"
+    config.add_show_field Solrizer.solr_name("desc_metadata__based_near", :stored_searchable, type: :string), label: "Location"
+    config.add_show_field Solrizer.solr_name("desc_metadata__language", :stored_searchable, type: :string), label: "Language"
+    config.add_show_field Solrizer.solr_name("desc_metadata__date_uploaded", :stored_searchable, type: :string), label: "Date Uploaded"
+    config.add_show_field Solrizer.solr_name("desc_metadata__date_modified", :stored_searchable, type: :string), label: "Date Modified"
+    config.add_show_field Solrizer.solr_name("desc_metadata__date_created", :stored_searchable, type: :string), label: "Date Created"
+    config.add_show_field Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string), label: "Rights"
+    config.add_show_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), label: "Resource Type"
+    config.add_show_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), label: "File Format"
+    config.add_show_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
+    config.add_show_field Solrizer.solr_name("depositor", :stored_searchable, type: :string), label: "Depositor"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -159,12 +159,12 @@ class CatalogController < ApplicationController
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
-    config.add_search_field('all_fields', :label => 'All Fields', :include_in_advanced_search => false) do |field|
+    config.add_search_field('all_fields', label: 'All Fields', include_in_advanced_search: false) do |field|
       all_names = config.show_fields.values.map{|val| val.field}.join(" ")
       title_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)
       field.solr_parameters = {
-        :qf => "#{all_names} id noid_tsi all_text_timv",
-        :pf => "#{title_name}"
+        qf: "#{all_names} id noid_tsi all_text_timv",
+        pf: "#{title_name}"
       }
     end
 
@@ -183,8 +183,8 @@ class CatalogController < ApplicationController
       # See: http://wiki.apache.org/solr/LocalParams
       solr_name = Solrizer.solr_name("desc_metadata__contributor", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -192,8 +192,8 @@ class CatalogController < ApplicationController
       field.solr_parameters = { :"spellcheck.dictionary" => "creator" }
       solr_name = Solrizer.solr_name("desc_metadata__creator", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -203,8 +203,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -215,8 +215,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__description", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -226,8 +226,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__publisher", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -237,8 +237,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__created", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -248,8 +248,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__subject", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -259,8 +259,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__language", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -270,8 +270,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -282,8 +282,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__format", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -294,8 +294,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__id", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -306,8 +306,8 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__based_near", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -317,24 +317,24 @@ class CatalogController < ApplicationController
       }
       solr_name = Solrizer.solr_name("desc_metadata__tag", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
     config.add_search_field('depositor') do |field|
       solr_name = Solrizer.solr_name("depositor", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
     config.add_search_field('rights') do |field|
       solr_name = Solrizer.solr_name("desc_metadata__rights", :stored_searchable, type: :string)
       field.solr_local_parameters = {
-        :qf => solr_name,
-        :pf => solr_name
+        qf: solr_name,
+        pf: solr_name
       }
     end
 
@@ -343,11 +343,11 @@ class CatalogController < ApplicationController
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
     # label is key, solr field is value
-    config.add_sort_field "score desc, #{uploaded_field} desc", :label => "relevance \u25BC"
-    config.add_sort_field "#{uploaded_field} desc", :label => "date uploaded \u25BC"
-    config.add_sort_field "#{uploaded_field} asc", :label => "date uploaded \u25B2"
-    config.add_sort_field "#{modified_field} desc", :label => "date modified \u25BC"
-    config.add_sort_field "#{modified_field} asc", :label => "date modified \u25B2"
+    config.add_sort_field "score desc, #{uploaded_field} desc", label: "relevance \u25BC"
+    config.add_sort_field "#{uploaded_field} desc", label: "date uploaded \u25BC"
+    config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
+    config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
+    config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
@@ -367,6 +367,6 @@ class CatalogController < ApplicationController
   end
 
   def sort_field
-    "#{Solrizer.solr_name('system_create', :stored_sortable, :type => :date)} desc"
+    "#{Solrizer.solr_name('system_create', :stored_sortable, type: :date)} desc"
   end
 end

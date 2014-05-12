@@ -1,6 +1,6 @@
-      <%= form_for @user, :url => sufia.profile_path(URI.escape(@user.to_s, '@.')), :html => {:multipart => true, :class => 'form-horizontal' } do |f| %>
+      <%= form_for @user, url: sufia.profile_path(URI.escape(@user.to_s, '@.')), html: {multipart: true, class: 'form-horizontal' } do |f| %>
         <div class="control-group">
-          <%= f.label :avatar, '<i class="icon-camera-retro"></i> Change picture'.html_safe, :class => "control-label" %>
+          <%= f.label :avatar, '<i class="icon-camera-retro"></i> Change picture'.html_safe, class: "control-label" %>
           <div class="controls">
             <% if @user.avatar? %>
               <%= image_tag @user.avatar.url(:thumb) %>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="control-group">
-          <%= f.label :delete_avatar, '<i class="icon-remove"></i> Delete picture'.html_safe, :class => 'control-label' %>
+          <%= f.label :delete_avatar, '<i class="icon-remove"></i> Delete picture'.html_safe, class: 'control-label' %>
           <div class="controls">
             <label class="checkbox">
               <%= check_box_tag 'delete_avatar' %> Yes
@@ -21,7 +21,7 @@
         </div>
 
         <div class="control-group">
-          <%= f.label :update_directory, '<i class="icon-refresh"></i> Refresh directory info'.html_safe, :class => 'control-label' %>
+          <%= f.label :update_directory, '<i class="icon-refresh"></i> Refresh directory info'.html_safe, class: 'control-label' %>
           <div class="controls">
             <label class="checkbox">
               <%= check_box_tag 'update_directory' %> Yes
@@ -31,37 +31,37 @@
         </div>
 
         <div class="control-group">
-          <%= f.label :twitter_handle, '<i class="icon-twitter"></i> Twitter Handle'.html_safe, :class => 'control-label' %>
+          <%= f.label :twitter_handle, '<i class="icon-twitter"></i> Twitter Handle'.html_safe, class: 'control-label' %>
           <div class="controls">
-             <%= f.text_field :twitter_handle, :class =>"input-medium" %>
+             <%= f.text_field :twitter_handle, class:"input-medium" %>
           </div>
         </div>
 
         <div class="control-group">
-          <%= f.label :facebook_handle, '<i class="icon-facebook"></i> Facebook Handle'.html_safe, :class => 'control-label' %>
+          <%= f.label :facebook_handle, '<i class="icon-facebook"></i> Facebook Handle'.html_safe, class: 'control-label' %>
           <div class="controls">
-             <%= f.text_field :facebook_handle, :class =>"input-medium" %>
+             <%= f.text_field :facebook_handle, class:"input-medium" %>
           </div>
         </div>
 
         <div class="control-group">
-          <%= f.label :linkedin_handle, '<i class="icon-linkedin"></i> LinkedIn Profile'.html_safe, :class => 'control-label' %>
+          <%= f.label :linkedin_handle, '<i class="icon-linkedin"></i> LinkedIn Profile'.html_safe, class: 'control-label' %>
           <div class="controls">
-             <%= f.text_field :linkedin_handle, :class =>"input-medium" %>
+             <%= f.text_field :linkedin_handle, class:"input-medium" %>
           </div>
         </div>
 
     <!--
         <div class="control-group">
-          <%# f.label :googleplus_handle, '<i class="icon-google-plus"></i> Google+ Handle'.html_safe, :class => 'control-label' %>
+          <%# f.label :googleplus_handle, '<i class="icon-google-plus"></i> Google+ Handle'.html_safe, class: 'control-label' %>
           <div class="controls">
-             <%# f.text_field :googleplus_handle, :class =>"input-medium" %>
+             <%# f.text_field :googleplus_handle, class:"input-medium" %>
           </div>
         </div>
         -->
 
         <div class="form-actions">
-          <%= f.button '<i class="icon-save"></i> Save Profile'.html_safe, :type => 'submit', :class => "btn-primary btn-large" %>
+          <%= f.button '<i class="icon-save"></i> Save Profile'.html_safe, type: 'submit', class: "btn-primary btn-large" %>
         </div>
       <% end %>
 

@@ -6,9 +6,9 @@
   <% vals =  f.object[key] %>
   <% if render_req && f.object.required?(key) %>
     <% tmp = '<span class="error">*</span>' + field_label(key) %>
-    <%= f.label key, tmp.html_safe, :class=>"control-label"  %>
+    <%= f.label key, tmp.html_safe, class:"control-label"  %>
   <% else %>
-    <%= f.label key, field_label(key), :class=>"control-label"%>
+    <%= f.label key, field_label(key), class:"control-label"%>
   <% end %>
 
   <% vals.to_ary.each_with_index do |v, index| %>

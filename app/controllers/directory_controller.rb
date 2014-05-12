@@ -17,7 +17,7 @@ class DirectoryController < ApplicationController
 
   # returns true if the user exists and false otherwise
   def user
-    render :json => User.directory_attributes(params[:uid])
+    render json: User.directory_attributes(params[:uid])
   end
 
   def user_attribute
@@ -26,11 +26,11 @@ class DirectoryController < ApplicationController
     else
       res = User.directory_attributes(params[:uid], params[:attribute])
     end
-    render :json => res
+    render json: res
   end
 
   def user_groups
-    render :json => User.groups(params[:uid])
+    render json: User.groups(params[:uid])
   end
 
   def group

@@ -6,7 +6,7 @@ describe "User Profile" do
   before do
     # More than 10 times, because the pagination threshold is 10
     12.times do |t|
-      conn.add  :id => "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user_name
+      conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user_name
     end
     conn.commit
   end

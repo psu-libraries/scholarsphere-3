@@ -3,9 +3,9 @@
     <% docs.each_with_index do |document,counter| %>
             <% case document.hydra_model %>
             <% when "GenericFile" %>
-              <%= render :partial => 'catalog/_index_partials/list_files', :locals => {:document => document, :counter => counter} %>
+              <%= render partial: 'catalog/_index_partials/list_files', locals: {document: document, counter: counter} %>
             <% when "Collection" %>
-              <%= render :partial => 'catalog/_index_partials/list_collections', :locals => {:document => document, :counter => counter} %>
+              <%= render partial: 'catalog/_index_partials/list_collections', locals: {document: document, counter: counter} %>
             <% end %>
     <% end %>
   </ol>

@@ -43,4 +43,3 @@ module Devise
 end
 
 Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHeaderAuthenticatable)
-

@@ -30,24 +30,24 @@ limitations under the License.
         class="post-35 page type-page status-publish hentry fpost post-number-1"
         id="post-35">
 
-            <%= form_for(@landing_page, :url => landing_page_path, :html => {:class => 'landing-form'}) do |f| %>
-              <%= f.text_field :contact_method, :class => 'hide' %>
+            <%= form_for(@landing_page, url: landing_page_path, html: {class: 'landing-form'}) do |f| %>
+              <%= f.text_field :contact_method, class: 'hide' %>
 
               <div class="landing-control">
-                <%= f.label :first_name, 'First Name', :class=>"element-invisible" %>
-                <%= f.text_field :first_name, :class=>"name", :required => true, placeholder:"first name *", size:20 %>
-                <%= f.label :last_name, 'Last Name', :class=>"element-invisible" %>
-                <%= f.text_field :last_name, :class=>"name", placeholder:"last name", size:20 %>
+                <%= f.label :first_name, 'First Name', class:"element-invisible" %>
+                <%= f.text_field :first_name, class:"name", required: true, placeholder:"first name *", size:20 %>
+                <%= f.label :last_name, 'Last Name', class:"element-invisible" %>
+                <%= f.text_field :last_name, class:"name", placeholder:"last name", size:20 %>
               </div>
 
               <div class="landing-control">
-                <%= f.label :email, 'Email', :class=>"element-invisible" %>
-                <%= f.text_field :email, :class=>"email", :value => em, :required => true, placeholder:'email *', size:20 %>
+                <%= f.label :email, 'Email', class:"element-invisible" %>
+                <%= f.text_field :email, class:"email", value: em, required: true, placeholder:'email *', size:20 %>
               </div>
 
 
               <div class="contact-submit">
-                <%= f.submit :value => "Request More Information", :class => "pushbutton-wide"  %>
+                <%= f.submit value: "Request More Information", class: "pushbutton-wide"  %>
               </div>
             <% end %>
         </article>

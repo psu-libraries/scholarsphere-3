@@ -1,11 +1,11 @@
    <%- noid = recent_document.noid %>
    <tr>
       <% if display_thumbs %>
-          <td class="span10"><%= link_to_profile recent_document.depositor("no depositor value") %><%= link_to image_tag("/assets/folder.png", {:width=>45}), collections.collection_path(noid) %> </td>
+          <td class="span10"><%= link_to_profile recent_document.depositor("no depositor value") %><%= link_to image_tag("/assets/folder.png", {width:45}), collections.collection_path(noid) %> </td>
       <% end %>
       <td>
         <h3>
-          <%= link_to truncate(recent_document.title, :length => 28, :separator => ' '), collections.collection_path(noid), :title => recent_document.title_or_label  %>
+          <%= link_to truncate(recent_document.title, length: 28, separator: ' '), collections.collection_path(noid), title: recent_document.title_or_label  %>
 
           <% if display_access %>
               <% if recent_document.registered? %>
@@ -18,8 +18,8 @@
           <% end %>
         </h3>
         <p>
-          <%= link_to truncate(recent_document.description, :length=>25),
-                      collections.collection_path(noid), :title => recent_document.description %><br />
+          <%= link_to truncate(recent_document.description, length:25),
+                      collections.collection_path(noid), title: recent_document.description %><br />
         </p>
       </td>
 

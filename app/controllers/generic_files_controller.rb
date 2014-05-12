@@ -3,7 +3,7 @@ class GenericFilesController < ApplicationController
   include Sufia::FilesControllerBehavior
   include Behaviors::PermissionsNotificationBehavior
 
-  around_action :notify_users_of_permission_changes, :only=> [:destroy,:create,:update]
+  around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
 
   def notify_users_of_permission_changes
     previous_permissions = @generic_file.permissions unless @generic_file.nil?

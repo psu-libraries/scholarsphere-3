@@ -74,9 +74,9 @@ describe 'collection', describe_options do
       attach_file("fileselect", test_file_path)
       page.first('.start').click
       page.should have_content('Apply Metadata')
-      fill_in('Title 1', :with => 'MY Tite for World')
-      fill_in('Keyword', :with => 'proxy')
-      fill_in('Creator', :with => 'me')
+      fill_in('Title 1', with: 'MY Tite for World')
+      fill_in('Keyword', with: 'proxy')
+      fill_in('Creator', with: 'me')
       click_on('upload_submit')
       first('i.glyphicon-plus').click
       node = first('dl.expanded-details')

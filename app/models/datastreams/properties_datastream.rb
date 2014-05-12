@@ -15,17 +15,17 @@
 # properties datastream: catch-all for info that didn't have another home.  Particularly depositor.
 class PropertiesDatastream < ActiveFedora::OmDatastream
   set_terminology do |t|
-    t.root(:path=>"fields" ) 
+    t.root(path:"fields" )
     # This is where we put the user id of the object depositor -- impacts permissions/access controls
-    t.depositor :index_as=>[:stored_searchable]
+    t.depositor index_as:[:stored_searchable]
     # This is where we put the relative path of the file if submitted as a folder
     t.relative_path
-    t.import_url path: 'importUrl', :index_as=>:symbol
+    t.import_url path: 'importUrl', index_as: :symbol
 
-    t.proxy_depositor path: 'proxyDepositor', :index_as=>:symbol
+    t.proxy_depositor path: 'proxyDepositor', index_as: :symbol
 
     # This value is set when a user indicates they are depositing this for someone else
-    t.on_behalf_of path: 'onBehalfOf', :index_as=>:symbol
+    t.on_behalf_of path: 'onBehalfOf', index_as: :symbol
   end
 
   def self.xml_template

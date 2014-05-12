@@ -7,10 +7,10 @@ class TransfersController < ApplicationController
   # TODO we should make this a module in Sufia
   rescue_from CanCan::AccessDenied do |exception|
     if current_user and current_user.persisted?
-      redirect_to root_url, :alert => exception.message
+      redirect_to root_url, alert: exception.message
     else
       session["user_return_to"] = request.url
-      redirect_to new_user_session_url, :alert => exception.message
+      redirect_to new_user_session_url, alert: exception.message
     end
   end
 
@@ -23,7 +23,7 @@ class TransfersController < ApplicationController
     if @proxy_deposit_request.save
       redirect_to transfers_path, notice: "Transfer request created"
     else
-      redirect_to root_url, :alert => @proxy_deposit_request.errors.full_messages.to_sentence
+      redirect_to root_url, alert: @proxy_deposit_request.errors.full_messages.to_sentence
     end
   end
 
@@ -58,7 +58,7 @@ class TransfersController < ApplicationController
     raise Hydra::AccessDenied unless GenericFile.load_instance_from_solr(@pid).depositor == current_user.user_key
     @proxy_deposit_request.pid = @pid
   rescue
-    redirect_to root_url, :alert => 'You are not authorized to transfer this file'
+    redirect_to root_url, alert: 'You are not authorized to transfer this file'
   end
   
   def load_proxy_deposit_request

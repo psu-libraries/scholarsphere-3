@@ -77,13 +77,13 @@
                 <button class="btn btn-small dropdown-toggle accept" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></button>
                 <ul class="dropdown-menu">
                   <li>
-                    <%= link_to 'Allow depositor to retain edit access', accept_transfer_path(req), method: :put, :class=> 'accept-retain', :title => 'Accept the file and allow the original depositor to retain access to edit the file and metadat'  %>
+                    <%= link_to 'Allow depositor to retain edit access', accept_transfer_path(req), method: :put, class: 'accept-retain', title: 'Accept the file and allow the original depositor to retain access to edit the file and metadat'  %>
                   </li>
                   <li>
-                    <%= link_to 'Remove depositor access', accept_transfer_path(req, reset: true), method: :put, :class=> 'accept-reset', :title => 'Accept the file remove access from the original depositor.' %>
+                    <%= link_to 'Remove depositor access', accept_transfer_path(req, reset: true), method: :put, class: 'accept-reset', title: 'Accept the file remove access from the original depositor.' %>
                   </li>
                   <li>
-                    <%= link_to 'Authorize depositor as proxy', accept_transfer_path(req, sticky: true), method: :put, :class=> 'accept-stick', :title => 'Accept the file and allow the original depositor to retain access and authorize the original depositor as a proxy to deposit file on your behalf.' %>
+                    <%= link_to 'Authorize depositor as proxy', accept_transfer_path(req, sticky: true), method: :put, class: 'accept-stick', title: 'Accept the file and allow the original depositor to retain access and authorize the original depositor as a proxy to deposit file on your behalf.' %>
                   </li>
                 </ul>
               </div>

@@ -50,7 +50,7 @@ describe MailboxController do
       get :index
       messages =  assigns[:messages].sort
       messages.last.last_message.body.should == 'message 2'
-      delete :destroy, :id=> rec.conversation.id
+      delete :destroy, id: rec.conversation.id
       response.should redirect_to(@routes.url_helpers.notifications_path)
       @user.mailbox.inbox.count.should ==1
     end
@@ -58,7 +58,7 @@ describe MailboxController do
       @curator = FactoryGirl.find_or_create(:curator)
       rec = @another_user.send_message(@curator, 'message 3', 'subject 3')
       @curator.mailbox.inbox.count.should == 1
-      delete :destroy, :id=> rec.conversation.id
+      delete :destroy, id: rec.conversation.id
       response.should redirect_to(@routes.url_helpers.notifications_path)
       @curator.mailbox.inbox.count.should ==1
       rec.delete

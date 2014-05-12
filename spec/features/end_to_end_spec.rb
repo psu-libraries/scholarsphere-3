@@ -39,10 +39,10 @@ describe 'end to end behavior', describe_options do
       attach_file("fileselect", test_file_path)
       page.first('.start').click
       page.should have_content('Apply Metadata')
-      fill_in('Title 1', :with => 'MY Tite for World')
+      fill_in('Title 1', with: 'MY Tite for World')
       first('i.glyphicon-question-sign').click
-      fill_in('Keyword', :with => 'test')
-      fill_in('Creator', :with => 'me')
+      fill_in('Keyword', with: 'test')
+      fill_in('Creator', with: 'me')
       click_on('upload_submit')
       page.should have_content('Dashboard')
       page.should have_content('MY Tite for World')

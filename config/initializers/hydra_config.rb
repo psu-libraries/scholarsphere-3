@@ -15,11 +15,11 @@ if Hydra.respond_to?(:configure)
     indexer = Solrizer::Descriptor.new(:string, :stored, :indexed, :multivalued)
 
     config[:permissions] = {
-      :discover => {:group =>ActiveFedora::SolrService.solr_name('discover_access_group', indexer), :individual=>ActiveFedora::SolrService.solr_name('discover_access_person', indexer)},
-      :read => {:group =>ActiveFedora::SolrService.solr_name('read_access_group', indexer), :individual=>ActiveFedora::SolrService.solr_name('read_access_person', indexer)},
-      :edit => {:group =>ActiveFedora::SolrService.solr_name('edit_access_group', indexer), :individual=>ActiveFedora::SolrService.solr_name('edit_access_person', indexer)},
-      :owner => ActiveFedora::SolrService.solr_name('depositor', Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)),
-      :embargo_release_date => ActiveFedora::SolrService.solr_name("embargo_release_date", Solrizer::Descriptor.new(:date, :stored, :indexed))
+      discover: {group:ActiveFedora::SolrService.solr_name('discover_access_group', indexer), individual:ActiveFedora::SolrService.solr_name('discover_access_person', indexer)},
+      read: {group:ActiveFedora::SolrService.solr_name('read_access_group', indexer), individual:ActiveFedora::SolrService.solr_name('read_access_person', indexer)},
+      edit: {group:ActiveFedora::SolrService.solr_name('edit_access_group', indexer), individual:ActiveFedora::SolrService.solr_name('edit_access_person', indexer)},
+      owner: ActiveFedora::SolrService.solr_name('depositor', Solrizer::Descriptor.new(:text_en, :stored, :indexed, :multivalued)),
+      embargo_release_date: ActiveFedora::SolrService.solr_name("embargo_release_date", Solrizer::Descriptor.new(:date, :stored, :indexed))
     }
 
     # specify the user model

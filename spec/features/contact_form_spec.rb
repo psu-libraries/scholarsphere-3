@@ -9,10 +9,10 @@ describe "Sending an email via the contact form" do
   it "should send mail" do
     ContactForm.any_instance.stub(:deliver).and_return(true)
     ActionMailer::Base.should_receive(:mail).with(
-      :from=> Sufia::Engine.config.contact_form_delivery_from,
-      :to=> "archivist1@example.com",
-      :subject=> "ScholarSphere Contact Form - My Subject is Cool",
-      :body=> Sufia::Engine.config.contact_form_delivery_body
+      from: Sufia::Engine.config.contact_form_delivery_from,
+      to: "archivist1@example.com",
+      subject: "ScholarSphere Contact Form - My Subject is Cool",
+      body: Sufia::Engine.config.contact_form_delivery_body
     ).and_return true
     visit '/'
     click_link "Contact"
