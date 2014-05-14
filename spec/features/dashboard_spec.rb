@@ -26,7 +26,7 @@ module Dashboard
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata(user_key)
       @collection.save!
-      @gf1 =  GenericFile.new title: 'file title', resource_type: 'Video'
+      @gf1 =  GenericFile.new title: 'file title', resource_type: 'Video', depositor:user_key
       @gf1.apply_depositor_metadata(user_key)
       @gf1.save!
     end
@@ -34,43 +34,43 @@ module Dashboard
     describe 'visit dashboard' do
 
       it "should visit dashboard" do
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_content('My Dashboard')
         page.should have_content(@gf1.title.first)
+        click_link "Collections"
         page.should have_content(@collection.title)
         page.should have_content(@collection.description)
       end
 
       it "shows image thumbnail" do
         allow_any_instance_of(SolrDocument).to receive(:image?).and_return(true)
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(@gf1.noid, {datastream_id: 'thumbnail'})}']")
       end
       it "shows pdf thumbnail" do
         allow_any_instance_of(SolrDocument).to receive(:pdf?).and_return(true)
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(@gf1.noid, {datastream_id: 'thumbnail'})}']")
       end
       it "shows video thumbnail" do
         allow_any_instance_of(SolrDocument).to receive(:video?).and_return(true)
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(@gf1.noid, {datastream_id: 'thumbnail'})}']")
       end
       it "shows audio thumbnail" do
         allow_any_instance_of(SolrDocument).to receive(:audio?).and_return(true)
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_css("img[src*='/assets/audio.png']")
       end
       it "shows default thumbnail" do
-        go_to_dashboard
+        go_to_dashboard_files
         page.should have_css("img[src*='/assets/default.png']")
       end
     end
 
-    def go_to_dashboard
+    def go_to_dashboard_files
       login_as (user.user_key)
-      visit ('/')
-      click_link('my dashboard')
+      super
     end
   end
 end

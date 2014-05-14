@@ -19,8 +19,7 @@ feature "Creating ownership change requests" do
     end
 
     scenario "then I should be able to transfer it" do
-      visit '/'
-      click_link "dashboard"
+      go_to_dashboard_files
       click_link "Transfer Ownership of File"
 
       fill_in "User", with: another_user.user_key

@@ -9,25 +9,9 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projecthydra-labs/browse-everything.git
-  revision: 4a5be547a865c9fed1e463274db761f0ac272272
-  branch: scss
-  specs:
-    browse-everything (0.4.3)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client
-      google_drive
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
-
-GIT
-  remote: git://github.com/psu-stewardship/sufia.git
-  revision: e8b0624cc62dde2f0e6f38b539c5760d51491e60
-  branch: scss
+  remote: git://github.com/projecthydra/sufia.git
+  revision: f1fdea901c7cef7bc41e6a28da5ad82e5cc7bbb2
+  branch: master
   specs:
     sufia (4.0.0.beta2)
       blacklight (~> 5.0)
@@ -38,6 +22,7 @@ GIT
       daemons (= 1.1.9)
       font-awesome-sass-rails (~> 3.0)
       hydra-batch-edit (>= 1.1.1, < 2.0.0)
+      hydra-collections (~> 2.0.2)
       hydra-editor
       mail_form
       rails_autolink (~> 1.1.0)
@@ -75,7 +60,7 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    active-fedora (7.0.2)
+    active-fedora (7.0.3)
       activesupport (>= 3.0.0)
       deprecation
       linkeddata
@@ -138,6 +123,16 @@ GEM
       sass (~> 3.2)
     bootstrap_form (2.1.1)
     bootstrap_forms (4.0.1)
+    browse-everything (0.4.3)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client
+      google_drive
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
     builder (3.1.4)
     cancancan (1.8.0)
     capistrano (2.15.5)
@@ -266,7 +261,7 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (2.0.1)
+    hydra-collections (2.0.2)
       blacklight
       hydra-head (~> 7.0.1)
     hydra-core (7.0.2)
@@ -346,7 +341,7 @@ GEM
     mimemagic (0.2.1)
     mini_magick (3.7.0)
       subexec (~> 0.2.1)
-    mini_portile (0.5.3)
+    mini_portile (0.6.0)
     minitest (4.7.5)
     mono_logger (1.1.0)
     multi_json (1.10.0)
@@ -367,8 +362,8 @@ GEM
     newrelic_rpm (3.7.0.177)
     noid (0.6.6)
       backports
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
     nom-xml (0.5.1)
       activesupport
       i18n
@@ -610,7 +605,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  browse-everything!
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)
   capistrano-notification (= 0.1.1)
@@ -625,7 +619,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections (= 2.0.1)
+  hydra-collections (= 2.0.2)
   hydra-derivatives (= 0.0.7)
   hydra-editor (= 0.1.1)
   hydra-ldap (= 0.1.0)

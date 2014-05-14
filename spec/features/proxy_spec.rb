@@ -78,6 +78,8 @@ describe 'collection', describe_options do
       fill_in('Keyword', with: 'proxy')
       fill_in('Creator', with: 'me')
       click_on('upload_submit')
+      #TODO this should automatically be forwarded back to the dashboard files listing instead of the dashboard
+      click_link "Files"
       first('i.glyphicon-plus').click
       node = first('dl.expanded-details')
       node.text.should include('Depositor:jilluser')

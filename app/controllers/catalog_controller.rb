@@ -140,7 +140,7 @@ class CatalogController < ApplicationController
     config.add_show_field Solrizer.solr_name("desc_metadata__resource_type", :stored_searchable, type: :string), label: "Resource Type"
     config.add_show_field Solrizer.solr_name("file_format", :stored_searchable, type: :string), label: "File Format"
     config.add_show_field Solrizer.solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
-    config.add_show_field Solrizer.solr_name("depositor", :stored_searchable, type: :string), label: "Depositor"
+    config.add_show_field Solrizer.solr_name("depositor", :stored_searchable), label: "Depositor"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -323,7 +323,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('depositor') do |field|
-      solr_name = Solrizer.solr_name("depositor", :stored_searchable, type: :string)
+      solr_name = Solrizer.solr_name("depositor", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
         pf: solr_name
@@ -359,7 +359,7 @@ class CatalogController < ApplicationController
   protected
 
   def depositor_field
-    Solrizer.solr_name('depositor', :stored_searchable, type: :string)
+    Solrizer.solr_name('depositor', :stored_searchable)
   end
 
   def read_group_field

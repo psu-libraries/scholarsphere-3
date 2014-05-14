@@ -44,6 +44,7 @@ describe 'end to end behavior', describe_options do
       fill_in('Keyword', with: 'test')
       fill_in('Creator', with: 'me')
       click_on('upload_submit')
+      go_to_dashboard_files
       page.should have_content('Dashboard')
       page.should have_content('MY Tite for World')
       within('#facets') do
@@ -70,13 +71,19 @@ describe 'end to end behavior', describe_options do
       wait_on_page('Edit MY Tite for World').should be_true
       first('i.glyphicon-question-sign').click
       # TODO: more test for edit?
-      click_link('Dashboard')
+      go_to_dashboard_files
+      count = 0
       within('#documents') do
         count = all('button.dropdown-toggle').count
-        1.upto(count) do
+      end
+      1.upto(count) do
+        within('#documents') do
+          puts "count #{count}"
           first('button.dropdown-toggle').click
           click_link('Delete File')
         end
+        #TODO this should automatically be forwarded back to the dashboard files listing instead of the dashboard
+        click_link "Files"
       end
       # TODO: should we verify the deletes worked? feels like this
       #       test ends abruptly.

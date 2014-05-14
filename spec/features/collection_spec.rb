@@ -54,13 +54,13 @@ describe 'collection', describe_options do
 
     it "should create and empty collection from the dashboard", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       create_collection(title1, description1)
     end
 
     it "should create collection from the dashboard and include files", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       first('input#check_all').click
       create_collection(title2, description2)
     end
@@ -76,7 +76,7 @@ describe 'collection', describe_options do
 
     it "should delete a collection", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within('#document_'+@collection.noid) do
         first('button.dropdown-toggle').click
@@ -98,7 +98,7 @@ describe 'collection', describe_options do
 
     it "should show a collection with a listing of Descriptive Metadata and catalog-style search results", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within('#document_'+@collection.noid) do
         click_link("collection title")
@@ -115,7 +115,7 @@ describe 'collection', describe_options do
 
     it "should hide collection descriptive metadata when searching a collection", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within("#document_#{@collection.noid}") do
         click_link("collection title")
@@ -149,7 +149,7 @@ describe 'collection', describe_options do
 
     it "should edit and update collection metadata" do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within("#document_#{@collection.noid}") do
         find('button.dropdown-toggle').click
@@ -163,10 +163,8 @@ describe 'collection', describe_options do
       fill_in('Title', with: new_title)
       fill_in('Description', with: new_description)
       fill_in('Creator', with: creators.first)
-      within('.span68') do
-        within('.form-actions') do
-          click_button('Update Collection')
-        end
+      within('.form-actions') do
+        click_button('Update Collection')
       end
       page.should_not have_content(@collection.title)
       page.should_not have_content(@collection.description)
@@ -177,7 +175,7 @@ describe 'collection', describe_options do
 
     it "should remove a file from a collection", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within("#document_#{@collection.noid}") do
         first('button.dropdown-toggle').click
@@ -199,7 +197,7 @@ describe 'collection', describe_options do
 
     it "should remove all files from a collection", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within('#document_'+@collection.noid) do
         first('button.dropdown-toggle').click
@@ -229,7 +227,7 @@ describe 'collection', describe_options do
 
     it "should show a collection with a listing of Descriptive Metadata and catalog-style search results", js: true do
       login_js
-      go_to_dashboard
+      go_to_dashboard_collections
       page.should have_content(@collection.title)
       within('#document_'+@collection.noid) do
         click_link("collection title")

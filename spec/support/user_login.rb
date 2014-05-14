@@ -58,4 +58,18 @@ module UserLogin
     # causes selenium to wait until text appears on the page
     page.should have_content('My Dashboard')
   end
+
+  def go_to_dashboard_files
+    go_to_dashboard
+    click_link('Files')
+    # causes selenium to wait until text appears on the page
+    page.should have_content('My Dashboard')
+  end
+
+  def go_to_dashboard_collections
+    go_to_dashboard
+    click_link('Collections')
+    # causes selenium to wait until text appears on the page
+    page.should have_content('My Dashboard')
+  end
 end
