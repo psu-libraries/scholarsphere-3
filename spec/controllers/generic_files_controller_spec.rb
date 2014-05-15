@@ -224,7 +224,8 @@ describe GenericFilesController do
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
-      post :update, id:@generic_file.pid, filedata:file, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, filedata:file, Filename:"The world"
 
       posted_file = GenericFile.find(@generic_file.pid)
       version1 = posted_file.content.latest_version
@@ -234,7 +235,6 @@ describe GenericFilesController do
       archivist = FactoryGirl.find_or_create(:archivist)
       controller.stub(:current_user).and_return(archivist)
       sign_in archivist
-
       ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
 
       s2 = double('two')

@@ -266,7 +266,6 @@ describe GenericFile do
         @f.delete
       end
       it "should keep the thumbnail at its original size" do
-        @f.create_thumbnail
         @f.content.changed?.should be_false
       end
     end

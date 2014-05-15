@@ -39,6 +39,8 @@ FactoryGirl.define do
     login 'curator1'
     title "Curator"
     ldap_available true
+    group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+    groups_last_update Time.now
   end
 
   factory :random_user, class: User do |u|

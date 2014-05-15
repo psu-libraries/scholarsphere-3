@@ -80,6 +80,10 @@ describe "Showing the Generic File" do
       check_page(@gf1.rights.first)
     end
 
+    it "displays a link for feature" do
+      page.should have_link "Feature"
+    end
+
     it "displays a link for all the linkable items" do
       page.should have_link 'http://example.org/TheDescriptionLink/'
       page.should have_link @gf1.related_url.first
@@ -122,6 +126,20 @@ describe "Showing the Generic File" do
       page.should have_css("img[src*='/assets/default.png']")
     end
 
+    context "private file" do
+      before do
+        @gf1.read_groups = []
+        @gf1.save!
+      end
+      after do
+        @gf1.read_groups = ['public']
+        @gf1.save!
+      end
+      it "does not display a link for feature" do
+        page.should have_no_link "Feature"
+      end
+
+    end
   end
 
   def check_page(link_name)

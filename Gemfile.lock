@@ -10,7 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: f1fdea901c7cef7bc41e6a28da5ad82e5cc7bbb2
+  revision: e3ff7171bb72e996ae514bececb095480cbaa506
+  ref: e3ff7171bb72
   branch: master
   specs:
     sufia (4.0.0.beta2)
@@ -37,7 +38,7 @@ GIT
       acts_as_follower (>= 0.1.1, < 0.3)
       carrierwave (~> 0.9.0)
       google-api-client (~> 0.7.1)
-      hydra-derivatives (~> 0.0.5)
+      hydra-derivatives (~> 0.1)
       hydra-head (~> 7.0.1)
       legato (~> 0.3.0)
       mailboxer (~> 0.12.0.rc1)
@@ -212,7 +213,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
     ffi (1.9.3)
-    font-awesome-rails (4.0.3.2)
+    font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     font-awesome-sass-rails (3.0.2.2)
       railties (>= 3.1.1)
@@ -269,7 +270,7 @@ GEM
       hydra-access-controls (= 7.0.2)
       jettywrapper (>= 1.4.1)
       rails (>= 3.2.3, < 5)
-    hydra-derivatives (0.0.7)
+    hydra-derivatives (0.1.0)
       active-fedora
       activesupport (>= 3.2.13, < 5.0)
       hydra-file_characterization
@@ -620,7 +621,7 @@ DEPENDENCIES
   fuubar
   hydra-batch-edit (= 1.1.1)
   hydra-collections (= 2.0.2)
-  hydra-derivatives (= 0.0.7)
+  hydra-derivatives (= 0.1.0)
   hydra-editor (= 0.1.1)
   hydra-ldap (= 0.1.0)
   jettywrapper
