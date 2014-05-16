@@ -39,6 +39,22 @@ describe "Visting the home page" do
     end
   end
 
+  context "when there are featured works" do
+    before do
+      @gf1 =  GenericFile.new.tap do |f|
+        f.title = 'featured title 1'
+        f.apply_depositor_metadata(@user.login)
+        f.save
+      end
+      FeaturedWork.create!(generic_file_id:@gf1.id)
+    end
+
+    it "should show featured work" do
+      visit '/'
+      page.should have_content "#{@gf1.title[0]}"
+    end
+  end
+
   context "when there are only a lot of groups" do
     before {
       add_groups_to_user(100)
@@ -62,4 +78,6 @@ describe "Visting the home page" do
     @user.update_attribute(:groups_last_update, Time.now)
     @user.save!
   end
+
+
 end
