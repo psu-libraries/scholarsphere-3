@@ -23,9 +23,6 @@ namespace :passenger do
 
     passenger_config =<<-EOF
         # This is created by capistrano. Refer to passenger:update_config
-        LoadModule passenger_module #{rbenv_path}/versions/#{rbenv_ruby_version}/lib/ruby/gems/2.0.0/gems/passenger-#{version}/buildout/apache2/mod_passenger.so
-        PassengerRoot #{rbenv_path}/versions/#{rbenv_ruby_version}/lib/ruby/gems/2.0.0/gems/passenger-#{version}
-        PassengerDefaultRuby #{rbenv_path}/versions/#{rbenv_ruby_version}/bin/ruby
 
         PassengerSpawnMethod smart
         PassengerPoolIdleTime 1000
@@ -40,6 +37,7 @@ namespace :passenger do
         EOF
 
         put passenger_config, "/opt/heracles/deploy/.passenger.tmp"
+        run ("passenger-install-apache2-module --snippet >>  /opt/heracles/deploy/.passenger.tmp")
         run <<-CMD.compact
         mkdir -p #{shared_path}/passenger &&
         sudo /bin/mv /opt/heracles/deploy/.passenger.tmp /etc/httpd/conf.d/passenger.conf &&
