@@ -31,7 +31,7 @@ describe 'collection', describe_options do
     end
 
     after (:all) do
-      @user2.destroy
+      User.destroy_all
     end
 
     it "should create proxy" do
@@ -54,11 +54,17 @@ describe 'collection', describe_options do
 
     before (:all) do
       @user1 = FactoryGirl.find_or_create(:user)
-      User.any_instance.stub(:can_make_deposits_for).and_return([@user1])
+      @user2 = FactoryGirl.find_or_create(:archivist)
+      @user2.ldap_available = true
+      @user2.ldap_last_update = Time.now
+      @user2.save
+      @rights = ProxyDepositRights.create!(grantor: @user1, grantee:@user2)
     end
 
     after (:all) do
       @user1.destroy
+      @user2.destroy
+      @rights.destroy
     end
 
     it "should allow for on behalf deposit" do
@@ -66,7 +72,7 @@ describe 'collection', describe_options do
       visit '/'
       first('a.dropdown-toggle').click
       click_link('upload')
-      wait_on_page('I have read', time=5)
+      page.should have_content('I have read')
       check("terms_of_service")
       select('jilluser', from: 'on_behalf_of')
       test_file_path = Rails.root.join('spec/fixtures/world.png').to_s
@@ -78,11 +84,14 @@ describe 'collection', describe_options do
       fill_in('Keyword', with: 'proxy')
       fill_in('Creator', with: 'me')
       click_on('upload_submit')
+      click_link "Shared"
       #TODO this should automatically be forwarded back to the dashboard files listing instead of the dashboard
-      click_link "Files"
-      first('i.glyphicon-plus').click
+      page.should have_content "MY Tite for World"
+
+      # TODO this should open the item detail instead of closing it.
+      #first('i.glyphicon-plus').click
       node = first('dl.expanded-details')
-      node.text.should include('Depositor:jilluser')
+      node.text.should include('Depositor:Jill Z. User')
     end
   end
 end

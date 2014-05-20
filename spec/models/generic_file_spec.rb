@@ -272,6 +272,7 @@ describe GenericFile do
   end
   describe "audit" do
     before do
+      ChecksumAuditLog.destroy_all
       f = GenericFile.new
       f.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
       f.apply_depositor_metadata('mjg36')

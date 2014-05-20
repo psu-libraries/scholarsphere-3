@@ -15,6 +15,10 @@ module UserLogin
 
     @@remote_user = "jilluser"
 
+    def self.remote_user=(user)
+      @@remote_user = user
+    end
+
     # Called if the user doesn't already have a rails session cookie
     def valid?
       true
@@ -33,9 +37,7 @@ module UserLogin
   end
 
   def login_js (remote_user = 'jilluser')
-    FakeHeaderAuthenticatableStrategy.class_eval do
-      @@remote_user = remote_user
-    end
+    FakeHeaderAuthenticatableStrategy.remote_user = remote_user
     spoof_http_auth
   end
 
