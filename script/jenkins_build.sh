@@ -42,8 +42,8 @@ INSTALLED_RUBY_VERSION=`rbenv version | awk '{print $1}'`
 #echo $RUBY_VERSION
 #echo $INSTALLED_RUBY_VERSION
 
-
-INSTALLED_RUBY_VERSION=1
+# Uncomment line below for testing only
+#INSTALLED_RUBY_VERSION=1
 if [ "${RUBY_VERSION}" != "${INSTALLED_RUBY_VERSION}" ]; then
     cd $HHOME/.rbenv/plugins/ruby-build
     git pull
@@ -51,32 +51,28 @@ if [ "${RUBY_VERSION}" != "${INSTALLED_RUBY_VERSION}" ]; then
     rbenv_environment
     rbenv install $RUBY_VERSION --skip-existing
 #    rbenv install $RUBY_VERSION --force
-    rbenv shell 2.0.0-p353
+    rbenv shell $RUBY_VERSION
     rbenv rehash
 
     #source ${HHOME}/.bash_profile
 
     cd $HHOME
     gem install bundler
-    sudo /sbin/service httpd stop    
+    sudo /sbin/service httpd stop
     gem install passenger --no-ri --no-rdoc
     rbenv rehash
     passenger-install-apache2-module --auto
     PASSENGER_VERSION=`$HHOME/.rbenv/versions/$RUBY_VERSION/bin/passenger-config --version`
 
-cat > /opt/heracles/.passenger.tmp <<EOL
-LoadModule passenger_module $HHOME/.rbenv/versions/$RUBY_VERSION/lib/ruby/gems/2.0.0/gems/passenger-$PASSENGER_VERSION/buildout/apache2/mod_passenger.so
-PassengerRoot $HHOME/.rbenv/versions/$RUBY_VERSION/lib/ruby/gems/2.0.0/gems/passenger-$PASSENGER_VERSION
-PassengerDefaultRuby $HHOME/versions/$RUBY_VERSION/bin/ruby
-EOL
-
+passenger-install-apache2-module --snippet >  /opt/heracles/passenger.tmp
+echo "Passenger.conf listed here:"
+cat /opt/heracles/passenger.tmp
 sudo /bin/mv /opt/heracles/.passenger.tmp /etc/httpd/conf.d/passenger.conf
 fi
-
 # Initialize rbenv if there was not a new version of ruby to install
 rbenv_environment
 rbenv rehash
-rbenv shell 2.0.0-p353
+rbenv shell $RUBY_VERSION
 
 cd ${WORKSPACE}
 
@@ -105,3 +101,4 @@ echo "=-=-=-=-= $0 finished $retval"
 exit $retval
 #
 # end
+
