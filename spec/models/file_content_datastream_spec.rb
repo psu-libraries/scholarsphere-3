@@ -23,13 +23,12 @@ describe FileContentDatastream do
   end
   describe "version control" do
     before(:all) do
-      GenericFile.any_instance.stub(:terms_of_service).and_return('1')
-      f = GenericFile.new
-      f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
-      f.should_receive(:characterize_if_changed).and_yield
-      f.apply_depositor_metadata('mjg36')
-      f.save
-      @file = GenericFile.find(f.pid)
+       file = GenericFile.new.tap do |f|
+        f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
+        f.apply_depositor_metadata('mjg36')
+        f.save
+      end
+      @file = GenericFile.find(file.pid)
     end
     after(:all) do
       @file.delete
@@ -52,7 +51,6 @@ describe FileContentDatastream do
     describe "add a version" do
       before(:all) do
         @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
-        @file.should_receive(:characterize_if_changed).and_yield
         @file.save
       end
       it "should return two versions" do

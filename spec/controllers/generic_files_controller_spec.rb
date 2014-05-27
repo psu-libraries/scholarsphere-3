@@ -110,7 +110,6 @@ describe GenericFilesController do
     end
     it "should call virus check" do
       GenericFile.any_instance.stub(:to_solr).and_return({ id: "foo:123" })
-      Sufia::GenericFile::Actions.should_receive(:virus_check).at_least(:once)
       file = fixture_file_upload('/world.png','image/png')
       s1 = double('one')
       ContentDepositEventJob.should_receive(:new).with('test:123','jilluser').and_return(s1)
@@ -119,15 +118,6 @@ describe GenericFilesController do
       CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
       xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
-    end
-
-    it "failing virus check should create flash" do
-      file = fixture_file_upload('/world.png','image/png')
-      Sufia::GenericFile::Actions.should_receive(:virus_check).with(file.path).and_raise(Sufia::VirusFoundError.new('A virus was found'))
-
-      xhr :post, :create, files:[file], Filename:"The world", batch_id: "sample:batch_id", permission:{"group"=>{"public"=>"read"} }, terms_of_service:"1"
-      flash[:error].should include('A virus was found')
-
     end
 
     it "should error out of create and save after on continuos rsolr error" do
@@ -177,7 +167,7 @@ describe GenericFilesController do
     end
     it "should spawn a content delete event job" do
       s2 = double('two')
-      ContentDeleteEventJob.should_receive(:new).with(@generic_file.noid, @user.login).and_return(s2)
+      ContentDeleteEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
       delete :destroy, id:@generic_file.pid
     end
@@ -219,56 +209,78 @@ describe GenericFilesController do
       @user.delete
     end
 
-    it "should record what user added a new version" do
-      @user = FactoryGirl.find_or_create(:user)
-      sign_in @user
+    context "existing version" do
+      let (:archivist) { FactoryGirl.find_or_create(:archivist)}
+      let (:user) {FactoryGirl.find_or_create(:user)}
 
-      file = fixture_file_upload('/world.png','image/png')
-      post :update, id:@generic_file.pid, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
-      post :update, id:@generic_file.pid, filedata:file, Filename:"The world"
+      before do
+        @generic_file.permissions = {user: {archivist.login =>'edit'}}
+        @user = user
+        actor = Sufia::GenericFile::Actor.new(@generic_file, @user)
+        file = fixture_file_upload('/world.png','image/png')
+        actor.create_content(file, file.original_filename, 'content')
+      end
+      after do
+        archivist.destroy
+        user.destroy
+      end
 
-      posted_file = GenericFile.find(@generic_file.pid)
-      version1 = posted_file.content.latest_version
-      posted_file.content.version_committer(version1).should == @user.login
+      it "should record what user added a new version" do
 
-      # other user uploads new version
-      archivist = FactoryGirl.find_or_create(:archivist)
-      controller.stub(:current_user).and_return(archivist)
-      sign_in archivist
-      ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
+        version1 = @generic_file.content.latest_version
+        @generic_file.content.version_committer(version1).should == @user.login
 
-      s2 = double('two')
-      ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, archivist.login).and_return(s2)
-      Sufia.queue.should_receive(:push).with(s2).once
-      s3 = double('three')
-      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
-      Sufia.queue.should_receive(:push).with(s3).once
-      file = fixture_file_upload('/image.jp2','image/jp2')
-      post :update, id:@generic_file.pid, filedata:file, Filename:"The new world", generic_file:{tag:[''] }
-      edited_file = GenericFile.find(@generic_file.pid)
-      version2 = edited_file.content.latest_version
-      version2.versionID.should_not == version1.versionID
-      edited_file.content.version_committer(version2).should == archivist.login
+        # other user uploads new version
+        archivist = FactoryGirl.find_or_create(:archivist)
+        sign_in archivist
+        ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, archivist.login).never
 
-      # original user restores his or her version
-      controller.stub(:current_user).and_return(@user)
-      sign_in @user
-      ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).never
+        s2 = double('two')
+        ContentNewVersionEventJob.should_receive(:new).with(@generic_file.pid, archivist.login).and_return(s2)
+        Sufia.queue.should_receive(:push).with(s2).once
+        s3 = double('three')
+        CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
+        Sufia.queue.should_receive(:push).with(s3).once
+        file = fixture_file_upload('/image.jp2','image/jp2')
+        post :update, id:@generic_file.pid, filedata:file, Filename:"The new world", generic_file:{tag:[''] }
+        edited_file = GenericFile.find(@generic_file.pid)
+        version2 = edited_file.content.latest_version
+        version2.versionID.should_not == version1.versionID
+        edited_file.content.version_committer(version2).should == archivist.login
+      end
 
-      s2 = double('two')
-      ContentRestoredVersionEventJob.should_receive(:new).with(@generic_file.pid, @user.login, 'content.0').and_return(s2)
-      Sufia.queue.should_receive(:push).with(s2).once
-      s3 = double('three')
-      CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
-      Sufia.queue.should_receive(:push).with(s3)
-      post :update, id:@generic_file.pid, revision:'content.0', generic_file:{tag:['']}
+      context "version of a another user" do
 
-      restored_file = GenericFile.find(@generic_file.pid)
-      version3 = restored_file.content.latest_version
-      version3.versionID.should_not == version2.versionID
-      version3.versionID.should_not == version1.versionID
-      restored_file.content.version_committer(version3).should == @user.login
-      @user.delete
+        before do
+          actor = Sufia::GenericFile::Actor.new(@generic_file, archivist)
+          file = fixture_file_upload('/image.jp2','image/jp2')
+          actor.create_content(file, file.original_filename, 'content')
+        end
+        after do
+          archivist.destroy
+        end
+        it "should record what user reverts a version" do
+          version2 = @generic_file.content.latest_version
+
+          # user restores his or her original version
+          sign_in user
+          ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, user.login).never
+
+          s2 = double('two')
+          ContentRestoredVersionEventJob.should_receive(:new).with(@generic_file.pid, user.login, 'content.0').and_return(s2)
+          Sufia.queue.should_receive(:push).with(s2).once
+          s3 = double('three')
+          CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s3)
+          Sufia.queue.should_receive(:push).with(s3)
+          post :update, id:@generic_file.pid, revision:'content.0', generic_file:{tag:['']}
+
+          restored_file = GenericFile.find(@generic_file.pid)
+          version3 = restored_file.content.latest_version
+          version3.versionID.should_not == version2.versionID
+          restored_file.content.version_committer(version3).should == user.login
+        end
+      end
+
     end
 
     it "should add a new groups and users" do
@@ -317,7 +329,6 @@ describe GenericFilesController do
       f.add_file_datastream(File.new(Rails.root +  'spec/fixtures/world.png'))
       # grant public read access explicitly
       f.read_groups = ['public']
-      f.should_receive(:characterize_if_changed).and_yield
       f.save!
       @file = f
     end

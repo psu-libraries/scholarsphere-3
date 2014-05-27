@@ -180,7 +180,7 @@ describe 'event jobs' do
     @another_user.events.length.should == 0
     @third_user.events.length.should == 0
     Time.stub(now: 1)
-    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deleted file \'test:123\'', timestamp: '1' }
+    event = {action: 'User <a href="/users/jilluser">Jill Z. User</a> has deleted file \'123\'', timestamp: '1' }
     #ContentDeleteEventJob.perform('test:123', @user.login)
     ContentDeleteEventJob.new('test:123', @user.user_key).run
     @user.profile_events.length.should == 1

@@ -150,8 +150,6 @@ describe GenericFile do
     describe "that have been saved" do
       before(:each) do
         @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
-        Sufia.queue.should_receive(:push).once.and_return(true)
-        #Resque.should_receive(:enqueue).once.and_return(true)
       end
       after(:each) do
         unless @file.inner_object.class == ActiveFedora::UnsavedDigitalObject
@@ -276,7 +274,6 @@ describe GenericFile do
       f = GenericFile.new
       f.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
       f.apply_depositor_metadata('mjg36')
-      f.stub(:characterize_if_changed).and_yield # don't run characterization
       f.save!
       @f = f.reload
     end
@@ -325,8 +322,6 @@ describe GenericFile do
     end
     it "should schedule a characterization job" do
       @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
-      Sufia.queue.should_receive(:push).once.and_return(true)
-      #Resque.should_receive(:enqueue).once
       @file.save
     end
   end
@@ -409,7 +404,6 @@ describe GenericFile do
   end
   describe "noid integration" do
     before(:all) do
-      GenericFile.any_instance.should_receive(:characterize_if_changed).and_yield
       @new_file = GenericFile.new(pid: 'ns:123')
       @new_file.apply_depositor_metadata('mjg36')
       @new_file.save
@@ -438,13 +432,9 @@ describe GenericFile do
       doc.root.xpath('//ns:imageWidth/text()', {'ns'=>'http://hul.harvard.edu/ois/xml/ns/fits/fits_output'}).inner_text.should == '50'
     end
     it "should not be triggered unless the content ds is changed" do
-      Sufia.queue.should_receive(:push).once.and_return(true)
-      #Resque.should_receive(:enqueue).once
       @file.content.content = "hey"
       @file.save
       @file.related_url = 'http://example.com'
-      Sufia.queue.should_receive(:push).never
-      #Resque.should_receive(:enqueue).never
       @file.save
       @file.delete
     end
@@ -455,8 +445,9 @@ describe GenericFile do
         myfile.label = 'label123'
         myfile.thumbnail.size.nil?.should be_true
         myfile.apply_depositor_metadata('mjg36')
-        myfile.save
-        @myfile = GenericFile.find(myfile.pid)
+        myfile.characterize
+        #myfile.save
+        @myfile = myfile
       end
       after(:all) do
         unless @myfile.inner_object.kind_of? ActiveFedora::UnsavedDigitalObject
@@ -482,9 +473,6 @@ describe GenericFile do
       it "should NOT append metadata from the characterization" do
         @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
         @myfile.filename[0].should == @myfile.label
-      end
-      it "should include thumbnail generation in characterization job" do
-        @myfile.thumbnail.size.nil?.should be_false
       end
       it "should NOT append each term only once" do
         @myfile.append_metadata

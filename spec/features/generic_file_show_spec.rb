@@ -77,7 +77,7 @@ describe "Showing the Generic File" do
     end
 
     it "displays a link for rights" do
-      check_page(@gf1.rights.first)
+      check_page(Sufia.config.cc_licenses_reverse[@gf1.rights.first])
     end
 
     it "displays a link for feature" do

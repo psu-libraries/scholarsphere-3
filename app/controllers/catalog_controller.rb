@@ -28,7 +28,6 @@ class CatalogController < ApplicationController
   include BlacklightAdvancedSearch::ParseBasicQ
   include Sufia::Catalog
 
-  layout :search_layout
 
   # These before_filters apply the hydra access controls
   before_filter :enforce_show_permissions, only: :show
