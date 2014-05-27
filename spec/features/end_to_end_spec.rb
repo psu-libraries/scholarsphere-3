@@ -44,7 +44,7 @@ describe 'end to end behavior', describe_options do
       fill_in('Keyword', with: 'test')
       fill_in('Creator', with: 'me')
       click_on('upload_submit')
-      go_to_dashboard_files
+      URI(current_url).path.should == Sufia::Engine.routes.url_helpers.dashboard_files_path
       page.should have_content('Dashboard')
       page.should have_content('MY Tite for World')
       within('#facets') do
@@ -68,7 +68,8 @@ describe 'end to end behavior', describe_options do
         first('button.dropdown-toggle').click
         click_link('Edit File')
       end
-      wait_on_page('Edit MY Tite for World').should be_true
+      #save_and_open_page
+      page.should have_content('Edit MY Tite for World')
       first('i.glyphicon-question-sign').click
       # TODO: more test for edit?
       go_to_dashboard_files
@@ -82,11 +83,11 @@ describe 'end to end behavior', describe_options do
           first('button.dropdown-toggle').click
           click_link('Delete File')
         end
-        #TODO this should automatically be forwarded back to the dashboard files listing instead of the dashboard
-        click_link "Files"
+        URI(current_url).path.should == Sufia::Engine.routes.url_helpers.dashboard_files_path
       end
-      # TODO: should we verify the deletes worked? feels like this
-      #       test ends abruptly.
+      within('#documents') do
+        all('button.dropdown-toggle').count.should == 0
+      end
     end
   end
 end
