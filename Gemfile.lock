@@ -10,10 +10,10 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 13d3d10f0732cfab9566abd27cabaaabaf118888
-  ref: 13d3d10f0732cfab9566abd27cabaaabaf118888
+  revision: 7040f7f0167e29aa32eb42e86014cb02ddab5032
+  ref: 7040f7f0167e29aa32eb42e86014cb02ddab5032
   specs:
-    sufia (4.0.0.beta3)
+    sufia (4.0.0.beta4)
       blacklight (~> 5.0)
       blacklight-gallery
       blacklight_advanced_search (~> 5.0)
@@ -27,11 +27,11 @@ GIT
       mail_form
       rails_autolink (~> 1.1.0)
       sass-rails
-      sufia-models (= 4.0.0.beta3)
+      sufia-models (= 4.0.0.beta4)
       tinymce-rails (~> 4.0.19)
       tinymce-rails-imageupload (~> 4.0.16.beta)
       yaml_db (= 0.2.3)
-    sufia-models (4.0.0.beta3)
+    sufia-models (4.0.0.beta4)
       activerecord-import
       activeresource (~> 4.0.0)
       acts_as_follower (>= 0.1.1, < 0.3)
@@ -134,7 +134,7 @@ GEM
       sass-rails
       skydrive
     builder (3.1.4)
-    cancancan (1.8.0)
+    cancancan (1.8.1)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -152,7 +152,7 @@ GEM
     capistrano-rbenv (1.0.5)
       capistrano (< 3)
       capistrano-platform-resources (>= 0.1.3)
-    capybara (2.2.0)
+    capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -176,13 +176,13 @@ GEM
     coffee-script-source (1.7.0)
     columnize (0.8.9)
     daemons (1.1.9)
-    database_cleaner (1.2.0)
-    debugger (1.6.6)
+    database_cleaner (1.3.0)
+    debugger (1.6.8)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.2)
+      debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.4)
+    debugger-ruby_core_source (1.3.5)
     deprecation (0.1.0)
       activesupport
     devise (3.2.2)
@@ -201,7 +201,7 @@ GEM
     equivalent-xml (0.4.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
-    execjs (2.0.2)
+    execjs (2.1.0)
     extlib (0.9.16)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
@@ -343,7 +343,7 @@ GEM
     mini_portile (0.6.0)
     minitest (4.7.5)
     mono_logger (1.1.0)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.14)
@@ -355,7 +355,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.0)
+    net-ssh (2.9.1)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     newrelic_rpm (3.7.0.177)
@@ -414,7 +414,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (1.1.4)
     raindrops (0.13.0)
-    rake (10.3.1)
+    rake (10.3.2)
     rdf (1.1.3)
     rdf-aggregate-repo (1.1.0)
       rdf (>= 1.1)
@@ -476,8 +476,9 @@ GEM
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.6)
-    rspec-rails (2.14.0)
+    rspec-rails (2.14.2)
       actionpack (>= 3.0)
+      activemodel (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec-core (~> 2.14.0)
@@ -488,7 +489,7 @@ GEM
       json
       multipart-post
       oauth2
-    ruby-progressbar (1.5.0)
+    ruby-progressbar (1.5.1)
     rubydora (1.7.4)
       activemodel
       activesupport
@@ -562,9 +563,9 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     tilt (1.4.1)
-    tinymce-rails (4.0.26)
+    tinymce-rails (4.0.28)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)

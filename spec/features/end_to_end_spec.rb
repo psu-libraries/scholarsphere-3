@@ -39,14 +39,13 @@ describe 'end to end behavior', describe_options do
       attach_file("fileselect", test_file_path)
       page.first('.start').click
       page.should have_content('Apply Metadata')
-      fill_in('Title 1', with: 'MY Tite for World')
-      first('i.glyphicon-question-sign').click
-      fill_in('Keyword', with: 'test')
-      fill_in('Creator', with: 'me')
+      fill_in('generic_file_title', with: 'MY Title for the World')
+      fill_in('generic_file_tag', with: 'test')
+      fill_in('generic_file_creator', with: 'me')
       click_on('upload_submit')
       URI(current_url).path.should == Sufia::Engine.routes.url_helpers.dashboard_files_path
-      page.should have_content('Dashboard')
-      page.should have_content('MY Tite for World')
+      page.should have_content('Browse By')
+      page.should have_content('MY Title for the World')
       within('#facets') do
         # I call CSS/DOM shenanigans; I can't access 'Creator' link
         # directly and instead must find by CSS selector, validate it
@@ -63,13 +62,12 @@ describe 'end to end behavior', describe_options do
       within('.alert-warning') do
         page.should have_content(file_format)
       end
-      page.should have_content('MY Tite for World')
+      page.should have_content('MY Title for the World')
       within('#documents') do
         first('button.dropdown-toggle').click
         click_link('Edit File')
       end
-      #save_and_open_page
-      page.should have_content('Edit MY Tite for World')
+      page.should have_content('Edit MY Title for the World')
       first('i.glyphicon-question-sign').click
       # TODO: more test for edit?
       go_to_dashboard_files
@@ -79,7 +77,6 @@ describe 'end to end behavior', describe_options do
       end
       1.upto(count) do
         within('#documents') do
-          puts "count #{count}"
           first('button.dropdown-toggle').click
           click_link('Delete File')
         end
