@@ -66,7 +66,7 @@ describe 'batch editing', describe_options do
       page.should have_css("div.batch-toggle[style*='display: block;']")
       click_button('Delete Selected')
       go_to_dashboard_files
-      page.should have_content('My Dashboard')
+      page.should have_content('Browse By')
       page.should_not have_content(@gf1.title.first)
       page.should_not have_content(@gf2.title.first)
     end

@@ -65,7 +65,6 @@ describe BatchController do
         post :update, id:@batch.pid, "generic_file"=>{"read_groups_string"=>"", "read_users_string"=>"archivist1, archivist2", "tag"=>[""]}
         file = GenericFile.find(@file.pid)
         file.read_users.should == ['archivist1', 'archivist2']
-
         response.should redirect_to Sufia::Engine.routes.url_helpers.dashboard_files_path
       end
       it "should set the groups with read access" do
