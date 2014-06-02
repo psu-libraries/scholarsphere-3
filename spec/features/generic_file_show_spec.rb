@@ -99,6 +99,22 @@ describe "Showing the Generic File" do
       page.should have_css(".modal-header")
     end
 
+    context "private file" do
+      before do
+        @gf1.read_groups = []
+        @gf1.save!
+      end
+      after do
+        @gf1.read_groups = ['public']
+        @gf1.save!
+      end
+      it "does not display a link for feature" do
+        save_and_open_page
+        page.should have_no_link "Feature"
+      end
+
+    end
+
   end
   context "thumbnail display" do
     it "shows image thumbnail" do
@@ -126,20 +142,6 @@ describe "Showing the Generic File" do
       page.should have_css("img[src*='/assets/default.png']")
     end
 
-    context "private file" do
-      before do
-        @gf1.read_groups = []
-        @gf1.save!
-      end
-      after do
-        @gf1.read_groups = ['public']
-        @gf1.save!
-      end
-      it "does not display a link for feature" do
-        page.should have_no_link "Feature"
-      end
-
-    end
   end
 
   def check_page(link_name)
