@@ -103,13 +103,13 @@ describe "Showing the Generic File" do
       before do
         @gf1.read_groups = []
         @gf1.save!
+        visit(current_path)
       end
       after do
         @gf1.read_groups = ['public']
         @gf1.save!
       end
       it "does not display a link for feature" do
-        save_and_open_page
         page.should have_no_link "Feature"
       end
 
