@@ -4,7 +4,7 @@ module Dashboard
 
   describe_options = {type: :feature}
 
-  describe 'view_dashboard', describe_options do
+  describe "The dashboard", describe_options do
     before(:each) do
       Warden.test_mode!
       @old_resque_inline_value = Resque.inline
@@ -31,15 +31,23 @@ module Dashboard
       @gf1.save!
     end
 
-    describe 'visit dashboard' do
+    context "files page" do
 
-      it "should visit dashboard" do
+      it "should show files" do
         go_to_dashboard_files
         page.should have_content("Limit your search")
         page.should have_content(@gf1.title.first)
-        click_link "Collections"
+      end
+
+      it "should show collections" do
+        go_to_dashboard_collections
         page.should have_content(@collection.title)
         page.should have_content(@collection.description)
+      end
+
+      it "should show shares and highlights" do
+        go_to_dashboard_shares
+        go_to_dashboard_highlights
       end
 
       it "shows image thumbnail" do

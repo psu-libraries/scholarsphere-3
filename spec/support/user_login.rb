@@ -64,14 +64,24 @@ module UserLogin
   def go_to_dashboard_files
     go_to_dashboard
     click_link('View Files')
-    # causes selenium to wait until text appears on the page
     page.should have_content('Files')
   end
 
   def go_to_dashboard_collections
     go_to_dashboard_files
     click_link('Collections')
-    # causes selenium to wait until text appears on the page
     page.should have_content('Collections')
+  end
+
+  def go_to_dashboard_shares
+    go_to_dashboard_files
+    click_link('Shared with Me')
+    page.should have_content('Shared with Me')
+  end
+
+  def go_to_dashboard_highlights
+    go_to_dashboard_files
+    click_link('Highlighted')
+    page.should have_content('Highlighted')
   end
 end

@@ -44,5 +44,16 @@ describe "User Trophy" do
       page.status_code.should == 200
       page.should have_content @gf1.title.first
     end
+
+    it "should be able to view highlighted files from the dashboard" do
+      go_to_dashboard_highlights
+      page.should have_content @gf1.title.first
+      within("#facets") do
+        click_link("Resource Type")
+        page.should have_content("Video")
+      end
+      first('i.glyphicon-plus').click
+      click_link('curator1')
+    end
   end
 end
