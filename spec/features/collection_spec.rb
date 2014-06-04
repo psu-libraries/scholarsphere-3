@@ -83,7 +83,6 @@ describe 'collection', describe_options do
         first(".itemtrash").click
       end
       page.should_not have_content(@collection.title)
-      page.should have_content("Browse By")
     end
   end
 

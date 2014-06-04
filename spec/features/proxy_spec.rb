@@ -80,18 +80,14 @@ describe 'collection', describe_options do
       attach_file("fileselect", test_file_path)
       page.first('.start').click
       page.should have_content('Apply Metadata')
-      fill_in('Title 1', with: 'MY Tite for World')
-      fill_in('Keyword', with: 'proxy')
-      fill_in('Creator', with: 'me')
+      fill_in('generic_file_title', with: 'MY Title for the World')
+      fill_in('generic_file_tag', with: 'test')
+      fill_in('generic_file_creator', with: 'me')
       click_on('upload_submit')
-      click_link "Shared"
-      #TODO this should automatically be forwarded back to the dashboard files listing instead of the dashboard
-      page.should have_content "MY Tite for World"
-
-      # TODO this should open the item detail instead of closing it.
-      #first('i.glyphicon-plus').click
-      node = first('dl.expanded-details')
-      node.text.should include('Depositor:Jill Z. User')
+      click_link "Shared with Me"
+      page.should have_content "MY Title for the World"
+      first('i.glyphicon-plus').click
+      click_link('Jill Z. User')
     end
   end
 end

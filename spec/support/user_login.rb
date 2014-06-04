@@ -65,13 +65,13 @@ module UserLogin
     go_to_dashboard
     click_link('View Files')
     # causes selenium to wait until text appears on the page
-    page.should have_content('Browse By')
+    page.should have_content('Files')
   end
 
   def go_to_dashboard_collections
     go_to_dashboard_files
     click_link('Collections')
     # causes selenium to wait until text appears on the page
-    page.should have_content('Browse By')
+    page.should have_content('Collections')
   end
 end

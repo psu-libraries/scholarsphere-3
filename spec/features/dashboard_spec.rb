@@ -35,7 +35,7 @@ module Dashboard
 
       it "should visit dashboard" do
         go_to_dashboard_files
-        page.should have_content('Browse By')
+        page.should have_content("Limit your search")
         page.should have_content(@gf1.title.first)
         click_link "Collections"
         page.should have_content(@collection.title)

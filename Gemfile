@@ -5,7 +5,7 @@ gem 'rails', '4.0.5'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '65cef888b981bbf6af4f9936136f294a733a4cb9'
+gem 'sufia', github: 'projecthydra/sufia', branch: 'my_controllers'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.1.1'
 gem 'hydra-collections', '2.0.2'
@@ -36,7 +36,7 @@ group :development, :test do
   gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
-  gem 'rspec-rails', '>= 2.11.0'
+  gem 'rspec-rails', '~> 2.99'
   gem 'capybara', '~> 2.0'
   gem 'jettywrapper'
   gem 'factory_girl_rails', '~> 4.1.0'
@@ -46,7 +46,9 @@ group :development, :test do
 end
 
 group :development do
-  gem 'debugger'
+  gem 'byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'unicorn-rails'
   gem 'capistrano', '2.15.5'
   gem 'capistrano-rbenv', '1.0.5'

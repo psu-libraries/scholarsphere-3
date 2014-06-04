@@ -61,23 +61,16 @@ describe 'end to end behavior', describe_options do
       page.should have_content('Save')
       click_on('upload_submit')
       URI(current_url).path.should == Sufia::Engine.routes.url_helpers.dashboard_files_path
-      page.should have_content('Browse By')
+      page.should have_content("Limit your search")
       page.should have_content('MY Title for the World')
+      
       within('#facets') do
-        # I call CSS/DOM shenanigans; I can't access 'Creator' link
-        # directly and instead must find by CSS selector, validate it
-        all('a.accordion-toggle').each do |elem|
-          elem.click if elem.text == 'File Format'
-        end
-        within ('#collapse_File_Format_db') do
-          click_on(file_format)
-        end
-      end
-      page.should have_content('X png (Portable Network Graphics)')
-      page.should have_no_content("Your files are being processed by ScholarSphere in the background.")
-      page.should have_content(file_format)
-      within('.alert-warning') do
+        click_link("File Format")
         page.should have_content(file_format)
+      end
+      
+      within('.alert-success') do
+        page.should have_content("Your files are being processed by ScholarSphere in the background.")
       end
       page.should have_content('MY Title for the World')
       within('#documents') do

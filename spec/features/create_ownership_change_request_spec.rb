@@ -19,6 +19,7 @@ feature "Creating ownership change requests" do
     end
 
     scenario "then I should be able to transfer it" do
+      pending "Transfer of ownership features need be added to the new dashboard"
       go_to_dashboard_files
       click_link "Transfer Ownership of File"
 
