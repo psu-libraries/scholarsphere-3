@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "Notifications page" do
+describe "Notifications page", {type: :feature} do
 
   before do
-    sign_in :user_with_fixtures
+    login_as :user_with_fixtures
   end
 
   it "should list notifications with date, subject and message" do

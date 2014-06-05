@@ -1,31 +1,57 @@
-require 'spec_helper'
+require_relative './feature_spec_helper'
 
-describe "Sending an email via the contact form" do
+describe 'Contact form:' do
+  let(:email_address) { 'kurt@example.com' }
+  let(:email_subject) { 'Help with file upload' }
 
   before do
-    sign_in :user_with_fixtures
+    visit '/contact'
+    page.should have_content 'Contact Form'
+    select 'Making changes to my content', from: 'contact_form_category'
+    fill_in 'contact_form_name', with: 'Kurt Baker'
+    fill_in 'contact_form_email', with: email_address
+    fill_in 'contact_form_subject', with: email_subject
+    fill_in 'contact_form_message', with: 'Please help me to upload a file.'
+    click_button 'Send'
   end
 
-  it "should send mail" do
-    ContactForm.any_instance.stub(:deliver).and_return(true)
-    ActionMailer::Base.should_receive(:mail).with(
-      from: Sufia::Engine.config.contact_form_delivery_from,
-      to: "archivist1@example.com",
-      subject: "ScholarSphere Contact Form - My Subject is Cool",
-      body: Sufia::Engine.config.contact_form_delivery_body
-    ).and_return true
-    visit '/'
-    click_link "Contact"
-    page.should have_content "Contact Form"
-    fill_in "contact_form_name", with: "Test McPherson" 
-    fill_in "contact_form_email", with: "archivist1@example.com"
-    fill_in "contact_form_message", with: "I am contacting you regarding ScholarSphere."
-    fill_in "contact_form_subject", with: "My Subject is Cool"
-    select "Depositing content", from: "contact_form_category"
-    click_button "Send"
-    page.should have_content "Thank you"
-    # this step allows the delivery to go back to normal
-    ContactForm.any_instance.unstub(:deliver)
+  let(:sent_messages) { ActionMailer::Base.deliveries }
+  let(:thank_you_message) {
+    sent_messages.detect do |message|
+      message.to == [email_address]
+    end
+  }
+  let(:admin_message) {
+    sent_messages.detect do |message|
+      message.from == ['scholarsphere-service-support@dlt.psu.edu']
+    end
+  }
+
+  it 'Sends a thank you message' do
+    thank_you_message.subject.should == "ScholarSphere Contact Form - #{email_subject}"
   end
 
+  it 'Sends a "Scholarsphere Form" message to the admin' do
+    admin_message.subject.should == "Contact Form:#{email_subject}"
+  end
+
+  let(:plaintext_message) {
+    admin_message.body.parts.find do |p|
+      p.content_type.match /plain/
+    end
+  }
+
+  it 'Produces a plaintext section for Redmine' do
+    plaintext_message.should have_content "Email: #{email_address}"
+  end
+
+  let(:html_message) {
+    admin_message.body.parts.find do |p|
+      p.content_type.match /html/
+    end
+  }
+
+  it 'Produces an HTML section for humans' do
+    html_message.should have_content email_address
+  end
 end

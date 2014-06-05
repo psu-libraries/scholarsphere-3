@@ -326,9 +326,6 @@ describe GenericFile do
     end
   end
   describe "related_files" do
-    before(:all) do
-      @batch_id = "foobar:100"
-    end
     before(:each) do
       @f1 = GenericFile.new(pid: "foobar:1")
       @f2 = GenericFile.new(pid: "foobar:2")
@@ -336,11 +333,6 @@ describe GenericFile do
       @f1.apply_depositor_metadata('mjg36')
       @f2.apply_depositor_metadata('mjg36')
       @f3.apply_depositor_metadata('mjg36')
-    end
-    after(:each) do
-      @f1.delete if @f1.persisted?
-      @f2.delete if @f2.persisted?
-      @f3.delete if @f3.persisted?
     end
     it "should never return a file in its own related_files method" do
       @f1.add_relationship("isPartOf", "info:fedora/#{@batch_id}")
@@ -403,13 +395,10 @@ describe GenericFile do
     end
   end
   describe "noid integration" do
-    before(:all) do
+    before(:each) do
       @new_file = GenericFile.new(pid: 'ns:123')
       @new_file.apply_depositor_metadata('mjg36')
       @new_file.save
-    end
-    after(:all) do
-      @new_file.delete
     end
     it "should support the noid method" do
       @new_file.should respond_to(:noid)
@@ -439,7 +428,7 @@ describe GenericFile do
       @file.delete
     end
     describe "after job runs" do
-      before(:all) do
+      before(:each) do
         myfile = GenericFile.new
         myfile.add_file_datastream(File.new(Rails.root + 'spec/fixtures/scholarsphere/scholarsphere_test4.pdf'), dsid:'content')
         myfile.label = 'label123'
@@ -449,7 +438,7 @@ describe GenericFile do
         #myfile.save
         @myfile = myfile
       end
-      after(:all) do
+      after(:each) do
         unless @myfile.inner_object.kind_of? ActiveFedora::UnsavedDigitalObject
           begin
             @myfile.delete

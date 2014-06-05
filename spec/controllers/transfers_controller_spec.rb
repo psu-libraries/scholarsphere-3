@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe TransfersController do
-  after(:all) do
-    GenericFile.destroy_all
-  end
   describe "with a signed in user" do
     let(:another_user) { FactoryGirl.create(:random_user) }
     let(:user) { FactoryGirl.create(:random_user) }

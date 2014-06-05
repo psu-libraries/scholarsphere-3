@@ -15,14 +15,10 @@
 require 'spec_helper'
 
 describe Collection do
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @collection = Collection.create(title: "test collection")
     @collection.apply_depositor_metadata(@user.user_key)
-  end
-  after(:all) do
-    @user.delete
-    @collection.delete
   end
   it "should have open visibility" do
     @collection.save

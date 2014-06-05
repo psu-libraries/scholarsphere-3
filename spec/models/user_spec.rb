@@ -15,13 +15,9 @@
 require 'spec_helper'
 
 describe User do
-  before(:all) do
-    @user = FactoryGirl.find_or_create(:user)
+  before(:each) do
+    @user = FactoryGirl.find_or_create(:jill)
     @another_user = FactoryGirl.find_or_create(:archivist)
-  end
-  after(:all) do
-    @user.delete
-    @another_user.delete
   end
   it "should have a login" do
     @user.login.should == "jilluser"
@@ -50,7 +46,7 @@ describe User do
     @another_user.follow_count.should == 0
   end
   describe "follow/unfollow" do
-    before(:all) do
+    before(:each) do
       @user = FactoryGirl.find_or_create(:user)
       @another_user = FactoryGirl.find_or_create(:archivist)
       @user.follow(@another_user)

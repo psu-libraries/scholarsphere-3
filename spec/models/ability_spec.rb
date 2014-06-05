@@ -2,12 +2,6 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe Ability do
-  before(:all) do
-    User.all.each(&:destroy)
-  end
-  after(:all) do
-    GenericFile.destroy_all
-  end
   describe "a user" do
     let(:sender) { FactoryGirl.create(:test_user_1) }
     let(:user) { FactoryGirl.create(:user) }

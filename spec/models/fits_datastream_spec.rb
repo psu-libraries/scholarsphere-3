@@ -15,15 +15,12 @@
 require 'spec_helper'
 
 describe FitsDatastream do
-  before(:all) do
+  before(:each) do
     @file = GenericFile.new.tap do |f|
       f.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
       f.characterize
       f.save
     end
-  end
-  after(:all) do
-    @file.destroy if @file.persisted?
   end
   it "should have a format label" do
     @file.format_label.should == ["Portable Network Graphics"]

@@ -16,13 +16,9 @@ require 'spec_helper'
 
 describe DirectoryController do
   routes { Sufia::Engine.routes }
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @another_user = FactoryGirl.find_or_create(:archivist)
-  end
-  after(:all) do
-    @user.delete
-    @another_user.delete
   end
   describe "#user" do
     it "should get an existing user" do

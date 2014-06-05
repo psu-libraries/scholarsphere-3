@@ -6,18 +6,6 @@ describe_options = { type: :feature }
 describe_options[:js] = true if ENV['JS']
 
 describe 'unified search', describe_options do
-  before(:all) do
-    @old_resque_inline_value = Resque.inline
-    Resque.inline = true
-  end
-
-  after(:all) do
-    Resque.inline = @old_resque_inline_value
-    User.destroy_all
-    Batch.destroy_all
-    GenericFile.destroy_all
-    Collection.destroy_all
-  end
 
   describe 'all files' do
     let(:subject_value) { 'fffzzz' }
@@ -54,7 +42,6 @@ describe 'unified search', describe_options do
     end
     context "anonymous user" do
       it "only searches all" do
-        unspoof_http_auth  #make sure we are not logged in by another test
         visit '/'
         expect(page).to have_content("All")
         expect(page).to have_css("a[data-search-label*=All]", visible:false)
@@ -92,7 +79,6 @@ describe 'unified search', describe_options do
         expect(page).to have_content(@gf2.title.first)
         expect(page).to have_content(@gf3.title.first)
         expect(page).to have_content(@collection.title)
-        unspoof_http_auth
       end
     end
     it "searches My Files" do
@@ -110,7 +96,6 @@ describe 'unified search', describe_options do
       expect(page).to have_content(@gf2.title.first)
       expect(page).to_not have_content(@gf3.title.first)
       expect(page).to_not have_content(@collection.title)
-      unspoof_http_auth
     end
     it "searches My Collections" do
       login_js
@@ -127,7 +112,6 @@ describe 'unified search', describe_options do
       expect(page).to_not have_content(@gf1.title.first)
       expect(page).to_not have_content(@gf2.title.first)
       expect(page).to_not have_content(@gf3.title.first)
-      unspoof_http_auth
     end
   end
 end

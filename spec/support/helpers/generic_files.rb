@@ -9,7 +9,7 @@ module GenericFilesHelper
     fill_in 'generic_file_creator', with: filename + '_creator'
     select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
     click_on 'upload_submit'
-    page.should have_content 'My Dashboard'
+    page.should have_css '#documents'
     page.should have_content filename
   end
 
@@ -34,7 +34,7 @@ module GenericFilesHelper
   end
 
   def find_file_by_title title
-    GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>title).first
+    GenericFile.where(Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)=>title).first
   end
 end
 

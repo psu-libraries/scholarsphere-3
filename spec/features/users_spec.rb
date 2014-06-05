@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe "User Profile" do
-  let(:user_name) {"curator1"}
+  let(:admin_user) { create :administrator }
+
+  let(:user_name) {admin_user.login}
   let(:conn) { ActiveFedora::SolrService.instance.conn }
   before do
     # More than 10 times, because the pagination threshold is 10
@@ -18,12 +20,10 @@ describe "User Profile" do
   end
 
   before do
-    # TODO: This really shouldn't be necessary
-    unspoof_http_auth
-    sign_in :curator
+    sign_in_as admin_user
 
     visit "/"
-    click_link "curator1"
+    click_link admin_user.display_name
   end
 
   it "should be displayed" do
@@ -31,27 +31,43 @@ describe "User Profile" do
     page.should have_content "Deposited Files 12"
   end
 
-  it "should be editable" do
+  it "should be editable", js:false do
     click_link "Edit Your Profile"
     fill_in 'user_twitter_handle', with: 'curatorOfData'
     click_button 'Save Profile'
+    click_link 'Profile'
     page.should have_content "Your profile has been updated"
+    pending "Tabs on profile do not work so we can not get to the profile tab.  Remove pending once this is closed: https://github.com/projecthydra/sufia/issues/514"
     page.should have_content "curatorOfData"
   end
 
   it "should display all users" do
     click_link "View Users"
-    page.should have_xpath("//td/a[@href='/users/curator1']")
+    page.should have_xpath("//td/a[@href='/users/#{admin_user.login}']")
   end
 
   it "should allow searching through all users" do
     @archivist = FactoryGirl.find_or_create(:archivist)
     click_link "View Users"
-    page.should have_xpath("//td/a[@href='/users/curator1']")
+    page.should have_xpath("//td/a[@href='/users/#{admin_user.login}']")
     page.should have_xpath("//td/a[@href='/users/archivist1']")
     fill_in 'user_search', with: 'archivist1'
     click_button "user_submit"
-    page.should_not have_xpath("//td/a[@href='/users/curator1']")
+    page.should_not have_xpath("//td/a[@href='/users/#{admin_user.login}']")
     page.should have_xpath("//td/a[@href='/users/archivist1']")
+  end
+
+  context "User with trophies" do
+    let(:file1) {create_file admin_user, {title: 'file title'}}
+    let!(:trophy) {Trophy.create! user_id: admin_user.id, generic_file_id: file1.noid}
+
+    it "allows to view profile with trophies" do
+      #revisiting the page to show the new trophy
+      click_link admin_user.display_name
+
+      page.should have_css '.active a', text:"Contributions"
+      page.should have_content file1.title.first
+    end
+
   end
 end

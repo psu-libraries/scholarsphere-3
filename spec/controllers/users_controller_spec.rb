@@ -22,12 +22,6 @@ describe UsersController do
     sign_in @user
     User.any_instance.stub(:groups).and_return([])
   end
-  after(:all) do
-    @user = FactoryGirl.find(:user) rescue
-    @user.delete if @user
-    @another_user = FactoryGirl.find(:archivist) rescue
-    @another_user.delete if @user
-  end
   describe "#show" do
     it "show the user profile if user exists" do
       get :show, id: @user.login

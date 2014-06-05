@@ -15,7 +15,7 @@
 require 'spec_helper'
 
 describe Batch do
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @file = GenericFile.new
     @file.apply_depositor_metadata('mjg36')
@@ -23,11 +23,6 @@ describe Batch do
     @batch = Batch.create(title: "test collection",
                           creator: @user.login,
                           part: @file.pid)
-  end
-  after(:all) do
-    @user.delete
-    @file.delete
-    @batch.delete
   end
   it "should have rightsMetadata" do
     @batch.rightsMetadata.should be_instance_of Hydra::Datastream::RightsMetadata

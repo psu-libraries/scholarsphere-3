@@ -1,18 +1,23 @@
-require 'spec_helper'
+require_relative './feature_spec_helper'
 
-include Warden::Test::Helpers
-
-describe_options = {type: :feature}
-
-describe "login" do
-  it "should redirect to central login page" do
-    visit "/login"
-    URI.unescape(current_url).should == Sufia::Engine.config.login_url
+describe 'Site authentication' do
+  context 'When I am not signed in' do
+    describe 'And I click Login from the home page' do
+      specify 'I should be redirected to the appropriate central login page' do
+        visit '/'
+        click_on 'Login'
+        current_url.should == centralized_login_url
+      end
+    end
+    describe 'And I attempt to visit a restricted page on the site' do
+      specify 'The restricted path should be included in my redirected url' do
+        visit '/dashboard'
+        current_url.should == centralized_login_url + 'dashboard'
+      end
+    end
   end
-end
-describe "when user was redirected from protected url", describe_options do
-  it "should pass previous location through to central login page" do
-    visit "/dashboard"
-    URI.unescape(current_url).should == Sufia::Engine.config.login_url.chomp("/") + "/dashboard"
+
+  def centralized_login_url
+    Sufia::Engine.config.login_url
   end
 end

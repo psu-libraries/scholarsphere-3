@@ -18,7 +18,7 @@ describe GenericFilesController do
   before do
     Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
     Hydra::LDAP.stub(:does_user_exist?).and_return(true)
-    @user = FactoryGirl.find_or_create(:user)
+    @user = FactoryGirl.find_or_create(:jill)
     sign_in @user
     User.any_instance.stub(:groups).and_return([])
   end
@@ -151,7 +151,7 @@ describe GenericFilesController do
 
   describe "destroy" do
     before(:each) do
-      @user = FactoryGirl.find_or_create(:user)
+      @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
       @generic_file = GenericFile.new
       @generic_file.apply_depositor_metadata(@user.login)
@@ -188,7 +188,7 @@ describe GenericFilesController do
       s2 = double('two')
       ContentUpdateEventJob.should_receive(:new).with(@generic_file.pid, @user.login).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      @user = FactoryGirl.find_or_create(:user)
+      @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
       post :update, id:@generic_file.pid, generic_file:{title:'new_title', tag:[''], permissions:{new_user_name:{'archivist1'=>'edit'}}}
       @user.delete
@@ -201,7 +201,7 @@ describe GenericFilesController do
       s2 = double('two')
       CharacterizeJob.should_receive(:new).with(@generic_file.pid).and_return(s2)
       Sufia.queue.should_receive(:push).with(s2).once
-      @user = FactoryGirl.find_or_create(:user)
+      @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
 
       file = fixture_file_upload('/world.png','image/png')
@@ -211,7 +211,7 @@ describe GenericFilesController do
 
     context "existing version" do
       let (:archivist) { FactoryGirl.find_or_create(:archivist)}
-      let (:user) {FactoryGirl.find_or_create(:user)}
+      let (:user) {FactoryGirl.find_or_create(:jill)}
 
       before do
         @generic_file.permissions = {user: {archivist.login =>'edit'}}
@@ -314,7 +314,7 @@ describe GenericFilesController do
 
       GenericFile.stub(:save).and_return({})
       ClamAV.any_instance.should_receive(:scanfile).and_return(0)
-      @user = FactoryGirl.find_or_create(:user)
+      @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
       file = fixture_file_upload('/world.png','image/png')
       post :update, id:@generic_file.pid, filedata:file, Filename:"The world", generic_file:{tag:[''],  permissions:{new_user_name:{'archivist1'=>'edit'}}}
@@ -322,7 +322,7 @@ describe GenericFilesController do
   end
 
   describe "a file owned by someone else" do
-    before(:all) do
+    before(:each) do
       f = GenericFile.new(pid: 'scholarsphere:test5')
       f.apply_depositor_metadata('archivist1')
       f.set_title_and_label('world.png')
@@ -331,9 +331,6 @@ describe GenericFilesController do
       f.read_groups = ['public']
       f.save!
       @file = f
-    end
-    after(:all) do
-      GenericFile.find('scholarsphere:test5').delete
     end
     describe "edit" do
       it "should give me a flash error" do
@@ -359,12 +356,9 @@ describe GenericFilesController do
         response.should_not be_success
       end
       describe "failing audit" do
-        before(:all) do
+        before(:each) do
           ActiveFedora::RelsExtDatastream.any_instance.stub(:dsChecksumValid).and_return(false)
           @archivist = FactoryGirl.find_or_create(:archivist)
-        end
-        after(:all) do
-          @archivist.delete
         end
         it "should display failing audits" do
           sign_out @user

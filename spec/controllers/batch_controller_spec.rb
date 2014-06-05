@@ -19,7 +19,7 @@ describe BatchController do
   before do
     Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
     Hydra::LDAP.stub(:does_user_exist?).and_return(true)
-    @user = FactoryGirl.find_or_create(:user)
+    @user = FactoryGirl.find_or_create(:jill)
     sign_in @user
     User.any_instance.stub(:groups).and_return([])
   end

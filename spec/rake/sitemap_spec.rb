@@ -47,7 +47,7 @@ describe "sitemap:generate" do
     end
   end
 
-  before(:all) do
+  before(:each) do
     (1..15).each do |n|
       u = User.create(login: "user#{n}", email: "user#{n}@example.org")
       @file_noids = []
@@ -64,14 +64,6 @@ describe "sitemap:generate" do
         c.save
         @collection_noids << c.noid
       end
-    end
-  end
-
-  after(:all) do
-    GenericFile.destroy_all
-    Collection.destroy_all
-    (1..15).each do |n|
-      User.find_by(login: "user#{n}").destroy
     end
   end
 

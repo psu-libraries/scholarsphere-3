@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe "User Statistics" do
-  let(:user_name) {"curator1"}
+  let!(:current_user) { create :user }
+  let(:user_name) {current_user.login}
   let(:conn) { ActiveFedora::SolrService.instance.conn }
+
   before do
     # More than 10 times, because the pagination threshold is 10
     12.times do |t|
@@ -18,23 +20,27 @@ describe "User Statistics" do
   end
 
   before do
-    # TODO: This really shouldn't be necessary
-    unspoof_http_auth
-    sign_in :curator
+    sign_in_as current_user
     visit "/dashboard"
+    page.should have_content "Your Statistics"
   end
 
   it "should include the number of files deposited into Sufia" do
-    page.should have_content "Your Statistics"
-    page.should have_content "12 Files you've deposited into Sufia"
+    within('tr', text:"Files you've deposited into Sufia") do
+      expect(page).to have_selector('td span.label', text:"12")
+    end
   end
 
   it "should include the number of people who are following the user" do
-    page.should have_content "0 People you follow"
+    within('tr', text:"People you follow") do
+      expect(page).to have_selector('td span.label', text:"0")
+    end
   end
 
   it "should include the number of people whom the user is following" do
-    page.should have_content "0 People who are following you"
+    within('tr', text:"People who are following you") do
+      expect(page).to have_selector('td span.label', text:"0")
+    end
   end
 
 end

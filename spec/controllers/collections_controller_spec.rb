@@ -24,12 +24,6 @@ describe CollectionsController do
     User.any_instance.stub(:groups).and_return([])
   end
 
-  after (:all) do
-    Collection.destroy_all
-    GenericFile.destroy_all
-    User.destroy_all
-  end
-
   describe '#new' do
     it 'should assign @collection' do
       get :new

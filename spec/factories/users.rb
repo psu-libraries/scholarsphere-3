@@ -21,6 +21,15 @@ FactoryGirl.define do
       ldap_available false
       ldap_last_update nil
     end
-  end
+
+    factory :administrator, class: User do |u|
+      login 'administrator1'
+      display_name 'Administrator 1'
+      title 'Administrator'
+      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+      groups_last_update Time.now
+    end
+
+    end
 
 end

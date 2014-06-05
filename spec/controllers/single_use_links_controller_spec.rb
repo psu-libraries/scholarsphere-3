@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SingleUseLinksController do
   routes { Sufia::Engine.routes }
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @file = GenericFile.new
     @file.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
@@ -12,11 +12,6 @@ describe SingleUseLinksController do
     @file2.add_file(File.open(fixture_path + '/world.png'), 'content', 'world.png')
     @file2.apply_depositor_metadata('mjg36')
     @file2.save
-  end
-  after(:all) do
-    @file.delete
-    @file2.delete
-    SingleUseLink.delete_all
   end
   before do
     controller.stub(:has_access?).and_return(true)

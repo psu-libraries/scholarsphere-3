@@ -15,6 +15,7 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
   include Hydra::Collections::Collectible
+  include Blacklight::SolrHelper
 
   has_file_datastream "full_text", versionable: false
 

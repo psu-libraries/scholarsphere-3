@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
 
-describe_options = { type: :feature }
-describe_options[:js] = true if ENV['JS']
-describe 'catalog searching', describe_options do
+describe 'catalog searching' do
+
+  let(:user) { FactoryGirl.find_or_create(:jill) }
 
 
-  before :all do
+  before :each do
     @gf1 =  GenericFile.new.tap do |f|
       f.title = 'title 1'
       f.tag = ["tag1", "tag2"]
@@ -28,14 +27,8 @@ describe 'catalog searching', describe_options do
     end
   end
 
-  after(:all) do
-    User.destroy_all
-    GenericFile.destroy_all
-    Collection.destroy_all
-  end
-
   before do
-    login_js
+    sign_in_as user
     visit '/'
   end
 

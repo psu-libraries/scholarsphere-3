@@ -12,7 +12,7 @@ describe 'Transferring file ownership:' do
 
   before do
     sign_in_as original_owner
-    upload_generic_file 'world.png'
+    upload_generic_file 'little_file.txt'
   end
 
   describe 'When I request a file transfer:' do
@@ -39,7 +39,7 @@ describe 'Transferring file ownership:' do
       context 'If the new owner accepts it' do
         before do
           new_owner.proxy_deposit_requests.last.transfer!
-          find('.dropdown-toggle.btn.btn-default').click
+          user_utility_toggle.click
           click_link 'transfer requests'
         end
         specify 'I should see it was accepted' do
@@ -66,12 +66,11 @@ describe 'Transferring file ownership:' do
       transfer_ownership_of_file file, new_owner
       # Become the new_owner so we can manage transfers sent to us
       sign_in_as new_owner
-      # Remove the session cookie for the original_owner
-      # to ensure we visit pages that belong to the new_owner
-      page.driver.browser.remove_cookie '_scholarsphere_secure_session'
       visit '/dashboard'
       user_utility_toggle.click
-      click_link 'transfer requests'
+      within '#user_utility_links' do
+        click_link 'transfer requests'
+      end
       page.should have_content 'Transfer of Ownership'
     end
     specify 'I should receive a notification' do

@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe ProxyDepositRequest do
-  after(:all) do
-    GenericFile.destroy_all
-  end
   let (:sender) { FactoryGirl.find_or_create(:user) }
   let (:receiver) { FactoryGirl.find_or_create(:test_user_1) }
   let (:receiver2) { FactoryGirl.find_or_create(:test_user_2) }

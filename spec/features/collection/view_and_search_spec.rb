@@ -4,8 +4,8 @@ include Selectors::Dashboard
 
 describe 'Collection viewing and searching:' do
 
-  let(:current_user) { create :user }
-  let(:filenames) { %w{world.png small_file.txt} }
+  let!(:current_user) { create :user }
+  let(:filenames) { %w{world.png little_file.txt} }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -20,12 +20,12 @@ describe 'Collection viewing and searching:' do
     click_button 'Add to Collection'
     db_create_populated_collection_button.click
     create_collection title, creator, description
-    visit '/dashboard'
+    visit '/dashboard/collections'
     db_item_title(collection).click
   end
 
   let(:file_1) { find_file_by_title "world.png" }
-  let(:file_2) { find_file_by_title "small_file.txt" }
+  let(:file_2) { find_file_by_title "little_file.txt" }
 
   describe 'When viewing a collection' do
     specify "I should see the collection's metadata" do

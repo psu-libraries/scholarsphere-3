@@ -22,16 +22,13 @@ describe FileContentDatastream do
     @subject.stub(dsVersionID:'content.7')
   end
   describe "version control" do
-    before(:all) do
+    before(:each) do
        file = GenericFile.new.tap do |f|
         f.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
         f.apply_depositor_metadata('mjg36')
         f.save
       end
       @file = GenericFile.find(file.pid)
-    end
-    after(:all) do
-      @file.delete
     end
     it "should have a list of versions with one entry" do
       @file.content.versions.count == 1
@@ -49,7 +46,7 @@ describe FileContentDatastream do
       @file.content.get_version("foobar").should be_nil
     end
     describe "add a version" do
-      before(:all) do
+      before(:each) do
         @file.add_file_datastream(File.new(Rails.root + 'spec/fixtures/world.png'), dsid:'content')
         @file.save
       end

@@ -15,9 +15,6 @@
 require 'spec_helper'
 
 describe CatalogController do
-  before(:all) do
-    GenericFile.all.each(&:destroy)
-  end
   before do
     GenericFile.any_instance.stub(:characterize_if_changed).and_yield
     @user = FactoryGirl.find_or_create(:user)
@@ -28,7 +25,7 @@ describe CatalogController do
     @user.delete
   end
   describe "#index" do
-    before (:all) do
+    before(:each) do
       @gf1 =  GenericFile.new(title:'Test Document PDF', filename:'test.pdf', read_groups:['public'])
       @gf1.apply_depositor_metadata('mjg36')
       @gf1.save
@@ -44,11 +41,6 @@ describe CatalogController do
       @gf3.full_text.content = "full_textfull_text"
       @gf3.apply_depositor_metadata('mjg36')
       @gf3.save
-    end
-    after (:all) do
-      @gf1.delete
-      @gf2.delete
-      @gf3.delete
     end
     describe "term search" do
       it "should find pdf files" do

@@ -1,80 +1,44 @@
-require 'spec_helper'
+require_relative 'feature_spec_helper'
 
-include Warden::Test::Helpers
-
-describe_options = { type: :feature }
-describe_options[:js] = true if ENV['JS']
-
-describe 'collection', describe_options do
-  before(:all) do
-    @old_resque_inline_value = Resque.inline
-    Resque.inline = true
-  end
-
-  after(:all) do
-    Resque.inline = @old_resque_inline_value
-    User.destroy_all
-    Batch.destroy_all
-    GenericFile.destroy_all
-    Collection.destroy_all
-  end
+describe 'proxy' do
 
   let(:title1) {"Test Collection 1"}
   let(:description1) {"Description for collection 1 we are testing."}
   let(:title2) {"Test Collection 2"}
   let(:description2) {"Description for collection 2 we are testing."}
+  let!(:current_user) { create :user }
+  let!(:second_user) { create :user }
 
   describe 'create a proxy' do
 
-    before (:all) do
-      @user2 = FactoryGirl.find_or_create(:archivist)
-    end
-
-    after (:all) do
-      User.destroy_all
-    end
-
     it "should create proxy" do
-      login_js
+      sign_in_as current_user
       visit '/'
       first('a.dropdown-toggle').click
       click_link('edit profile')
       first("td.depositor-name").should be_nil
       first('a.select2-choice').click
-      find(".select2-input").set  @user2.user_key
-      wait_on_page(@user2.name, time=5)
+      find(".select2-input").set  second_user.user_key
+      page.should have_css "div.select2-result-label"
       first("div.select2-result-label").click
-      wait_on_page(@user2.name, time=5)
-      first("td.depositor-name").should_not be_nil
-      first("td.depositor-name").text.should == @user2.name
+      page.should have_css "table#authorizedProxies td.depositor-name", text: "#{second_user.display_name} (#{second_user.user_key})"
     end
   end
 
   describe 'use a proxy' do
 
-    before (:all) do
-      @user1 = FactoryGirl.find_or_create(:user)
-      @user2 = FactoryGirl.find_or_create(:archivist)
-      @user2.ldap_available = true
-      @user2.ldap_last_update = Time.now
-      @user2.save
-      @rights = ProxyDepositRights.create!(grantor: @user1, grantee:@user2)
-    end
-
-    after (:all) do
-      @user1.destroy
-      @user2.destroy
-      @rights.destroy
+    before (:each) do
+      @rights = ProxyDepositRights.create!(grantor: second_user, grantee: current_user)
     end
 
     it "should allow for on behalf deposit" do
-      login_js('archivist1')
+      sign_in_as current_user
       visit '/'
       first('a.dropdown-toggle').click
       click_link('upload')
       page.should have_content('I have read')
       check("terms_of_service")
-      select('jilluser', from: 'on_behalf_of')
+      select(second_user.login, from: 'on_behalf_of')
       test_file_path = Rails.root.join('spec/fixtures/world.png').to_s
       page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileselect");})
       attach_file("fileselect", test_file_path)
@@ -87,7 +51,7 @@ describe 'collection', describe_options do
       click_link "Shared with Me"
       page.should have_content "MY Title for the World"
       first('i.glyphicon-plus').click
-      click_link('Jill Z. User')
+      click_link(second_user.display_name)
     end
   end
 end

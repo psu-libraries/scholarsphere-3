@@ -55,7 +55,7 @@ describe My::FilesController do
       end
     end
     describe "term search" do
-      before (:all) do
+      before (:each) do
         @user = FactoryGirl.find_or_create(:archivist)
         @gf1 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag', 
                          based_near:"based_nearbased_near", language:"languagelanguage", 
@@ -65,9 +65,6 @@ describe My::FilesController do
         @gf1.format_label = "format_labelformat_label"
         @gf1.apply_depositor_metadata(@user.login)
         @gf1.save
-      end
-      after (:all) do
-        @gf1.delete
       end
       it "should find a file by title" do
         xhr :get, :index, q:"titletitle"

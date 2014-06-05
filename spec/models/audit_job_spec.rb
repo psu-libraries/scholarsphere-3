@@ -15,19 +15,13 @@
 require 'spec_helper'
 
 describe AuditJob do
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @inbox = @user.mailbox.inbox
     @file = GenericFile.new
     @file.apply_depositor_metadata(@user.login)
     @file.save
     @ds = @file.datastreams.first
-  end
-  after(:all) do
-    # clear any existing messages
-    @inbox.each(&:delete)
-    @user.delete
-    @file.delete
   end
   describe "passing audit" do
     it "should not send passing mail" do

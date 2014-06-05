@@ -5,27 +5,26 @@ include Selectors::EditCollections
 
 describe 'Collection editing:' do
 
-  let(:current_user) { create :user }
-  let(:filenames) { %w{world.png small_file.txt scholarsphere_test5.txt} }
+  let!(:current_user) { create :user }
+  #TODO why can this not be small_file.txt??
+  #let(:filenames) { %w{world.png little_file.txt scholarsphere_test5.txt} }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
-  let(:file_1) { find_file_by_title "world.png" }
-  let(:file_2) { find_file_by_title "small_file.txt" }
-  let(:file_3) { find_file_by_title "scholarsphere_test5.txt" }
+  let!(:file_1) { create_file current_user, {title:'world.png'} }
+  let!(:file_2) { create_file current_user, {title:'little_file.txt'} }
+  let!(:file_3) { create_file current_user, {title:'scholarsphere_test5.txt'} }
   let(:collection) { Collection.first }
 
   before do
     sign_in_as current_user
-    filenames.each do |filename|
-      upload_generic_file filename
-    end
+    go_to_dashboard_files
     db_file_checkbox(file_1).click
     db_file_checkbox(file_2).click
     click_button 'Add to Collection'
     db_create_populated_collection_button.click
     create_collection title, creator, description
-    visit '/dashboard'
+    visit '/dashboard/files'
   end
 
   describe 'When adding a file to a collection' do
@@ -49,6 +48,7 @@ describe 'Collection editing:' do
     let(:updated_creators) { ['Dorje Trollo', 'Vajrayogini'] }
 
     before do
+      visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
       page.should have_field 'collection_title', with: title
@@ -71,6 +71,7 @@ describe 'Collection editing:' do
 
   describe 'When removing a file from a collection' do
     before do
+      visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
       page.should have_content file_1.title.first
@@ -89,6 +90,7 @@ describe 'Collection editing:' do
 
   describe 'When removing all files from a collection' do
     before do
+      visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
       page.should have_content file_1.title.first

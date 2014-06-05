@@ -15,7 +15,7 @@
 require 'spec_helper'
 
 describe LocalAuthority do
-  before(:all) do
+  before(:each) do
     @tsv = [Rails.root + 'spec/fixtures/cities15000.tsv']
     @nt = [Rails.root + 'spec/fixtures/genreForms.nt']
     @rdfxml = [Rails.root + 'spec/fixtures/lexvo.rdf']
@@ -51,7 +51,7 @@ describe LocalAuthority do
     LocalAuthorityEntry.count.should == 149
   end
   describe "when vocabs are harvested" do
-    before(:all) do
+    before(:each) do
       class MyTestRdfDatastream; end
       LocalAuthority.harvest_rdf("genres", @nt)
       LocalAuthority.harvest_tsv("geo", @tsv, prefix: 'http://sws.geonames.org/')
@@ -59,7 +59,7 @@ describe LocalAuthority do
       @num_auths = LocalAuthority.count
       @num_entries = LocalAuthorityEntry.count
     end
-    after(:all) do
+    after(:each) do
       DomainTerm.destroy_all
       LocalAuthority.destroy_all
       LocalAuthorityEntry.destroy_all
@@ -80,7 +80,7 @@ describe LocalAuthority do
       DomainTerm.count.should == 1
     end
     describe "when vocabs are registered" do
-      before(:all) do
+      before(:each) do
         LocalAuthority.harvest_rdf("genres", @nt)
         LocalAuthority.harvest_tsv("geo", @tsv, prefix: 'http://sws.geonames.org/')
         class TestRdfDatastream; end
@@ -88,7 +88,7 @@ describe LocalAuthority do
         LocalAuthority.register_vocabulary(MyTestRdfDatastream, "genre", "genres")
         DomainTerm.count.should == 2
       end
-      after(:all) do
+      after(:each) do
         DomainTerm.destroy_all
         LocalAuthority.destroy_all
         LocalAuthorityEntry.destroy_all

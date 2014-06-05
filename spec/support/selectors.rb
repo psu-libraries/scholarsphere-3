@@ -37,7 +37,7 @@ module Selectors
     end
 
     def db_collection_radio_button collection
-      within '.collection-list-box' do
+      within '#collection-list-container' do
         find "input[id*='#{collection.noid}']"
       end
     end
@@ -47,7 +47,7 @@ module Selectors
     end
 
     def db_create_populated_collection_button
-      within '.collection-list-box' do
+      within '#collection-list-container' do
         first '#hydra-collection-add'
       end
     end
@@ -66,7 +66,7 @@ module Selectors
   module EditCollections
 
     def ec_update_submit
-      within '.span68' do
+      within '.col-xs-12.col-sm-8' do
         within '.form-actions' do
           find_button 'Update Collection'
         end

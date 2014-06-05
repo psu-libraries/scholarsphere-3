@@ -4,7 +4,7 @@ include Selectors::Dashboard
 
 describe 'Collection creation and deletion:' do
 
-  let(:current_user) { create :user }
+  let!(:current_user) { create :user }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -54,14 +54,14 @@ describe 'Collection creation and deletion:' do
       visit '/dashboard'
       db_create_empty_collection_button.click
       create_collection title, creator, description
-      visit '/dashboard'
+      visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Delete Collection'
     end
 
     specify 'I should no longer see it on my dashboard' do
       page.should have_content 'Collection was successfully deleted'
-      page.should have_content 'Dashboard'
+      page.should have_css '#documents'
       page.should_not have_content title
     end
   end

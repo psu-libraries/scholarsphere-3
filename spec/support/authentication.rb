@@ -26,6 +26,10 @@ module StubbedAuthenticationHelper
   # Call this method in your "before" block to be signed in as the given user
   # (pass in the entire user object, not just a username).
   def sign_in_as user
+    # Remove the session cookie for the original_owner
+    # to ensure we visit pages that belong to the new_owner
+    page.driver.browser.remove_cookie '_scholarsphere_secure_session'
+
     StubbedAuthenticationStrategy.user = user
     Warden::Strategies.add :http_header_authenticatable,
                            StubbedAuthenticationStrategy

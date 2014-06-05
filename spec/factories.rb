@@ -13,7 +13,7 @@
 # limitations under the License.
 
 FactoryGirl.define do
-  factory :user, class: User do |u|
+  factory :jill, class: User do |u|
     login 'jilluser'
     display_name 'Jill Z. User'
     title "User"

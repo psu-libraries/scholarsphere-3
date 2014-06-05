@@ -6,14 +6,14 @@ include Selectors::Dashboard
 
 describe 'Dashboard:' do
 
-  let(:current_user) { create :user }
+  let!(:current_user) { create :user }
 
   before do
     sign_in_as current_user
-    upload_generic_file 'world.png'
+    upload_generic_file 'little_file.txt'
   end
 
-  let(:file) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"world.png").first }
+  let(:file) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"little_file.txt").first }
   let(:filename) { file.filename.first }
 
   describe 'For a file in my list:' do
@@ -42,10 +42,24 @@ describe 'Dashboard:' do
       before do
         db_item_actions_toggle(file).click
         click_link 'Highlight File on Profile'
+        db_item_actions_toggle(file).click
+        page.should have_content "Unhighlight File"
+        db_item_actions_toggle(file).trigger('click')
       end
       specify 'It is highlighted on my profile' do
         visit "/users/#{current_user.login}"
+        page.should have_css '.active a', text:"Contributions"
         within '#contributions' do
+          page.should have_link "#{file.filename.first}"
+        end
+      end
+
+      specify 'It is displayed on my highlights' do
+        within '#content-wrapper .nav.nav-tabs' do
+          click_link "Highlighted"
+        end
+        page.should have_css '.active a', text:"Highlighted"
+        within '#documents' do
           page.should have_link "#{file.filename.first}"
         end
       end
@@ -67,12 +81,12 @@ describe 'Dashboard:' do
   describe 'When I have more than 10 files:' do
     before do
       create_files(current_user, 10)
-      visit '/dashboard'
+      visit '/dashboard/files'
     end
 
     describe 'Pagination:' do
       specify 'The files should be listed on multiple pages' do
-        page.should have_css('.pager')
+        page.should have_css('.pagination')
       end
       context 'Increasing Show per page beyond my current number of files' do
         before do
@@ -90,8 +104,7 @@ describe 'Dashboard:' do
     describe 'Search:' do
       context 'When I search by partial title' do
         before do
-          fill_in 'Search My Dashboard', with: 'title'
-          find_button('dashboard_submit').click
+          search_my_files_by_term( 'title')
           page.should have_content 'You searched for: title'
         end
         it 'Does not display any results' do
@@ -101,8 +114,7 @@ describe 'Dashboard:' do
 
       context 'When I search by title using exact words' do
         before do
-          fill_in 'Search My Dashboard', with: file.title.first
-          find_button('dashboard_submit').click
+          search_my_files_by_term( file.title.first )
           page.should have_content "You searched for: #{file.title.first}"
         end
         it 'Displays the correct results' do
@@ -112,9 +124,8 @@ describe 'Dashboard:' do
 
       context 'When I search by Resource Type' do
         before do
-          fill_in 'Search My Dashboard', with: 'png'
-          find_button('dashboard_submit').click
-          page.should have_content 'You searched for: png'
+          search_my_files_by_term( file.title )
+          page.should have_content "You searched for: #{file.title}"
         end
         it 'Displays the correct results' do
           page_should_only_list file
@@ -123,8 +134,7 @@ describe 'Dashboard:' do
 
       context 'When I search by Keywords' do
         before do
-          fill_in 'Search My Dashboard', with: file.tag
-          find_button('dashboard_submit').click
+          search_my_files_by_term( file.tag )
           page.should have_content "You searched for: #{file.tag}"
         end
         it 'Displays the correct results' do
@@ -134,8 +144,7 @@ describe 'Dashboard:' do
 
       context 'When I search by Creator' do
         before do
-          fill_in 'Search My Dashboard', with: file.creator
-          find_button('dashboard_submit').click
+          search_my_files_by_term( file.creator )
           page.should have_content "You searched for: #{file.creator}"
         end
         it 'Displays the correct results' do
@@ -147,18 +156,23 @@ describe 'Dashboard:' do
     describe 'Facets:' do
       # Still need to test Collection
       {
-        'Resource_Type' => 'Video (10)',
+        'Resource Type' => 'Video (10)',
         'Creator'       => 'Creator1 (10)',
         'Keyword'       => 'Keyword1 (10)',
         'Subject'       => 'Subject1 (10)',
         'Language'      => 'Language1 (10)',
         'Location'      => 'Location1 (10)',
         'Publisher'     => 'Publisher1 (10)',
-        'File_Format'   => 'plain () (10)'
+        'File Format'   => 'plain () (10)'
       }.each do |facet, value|
         specify "Displays the correct totals for #{facet}" do
-          db_facet_category_toggle("#collapse_#{facet}_db").click
-          check_facet_category "#collapse_#{facet}_db", value
+          within("#facets") do
+            click_link(facet)
+            page.should have_content(value)
+          end
+
+          #db_facet_category_toggle("#collapse_#{facet}_db").click
+          #check_facet_category "#collapse_#{facet}_db", value
         end
       end 
     end
@@ -168,7 +182,26 @@ describe 'Dashboard:' do
     specify 'Items are sorted correctly'
   end
 
+  describe 'Collections:' do
+    specify 'Collections are displayed in the Collections list'
+    specify 'Collections are not displayed in the File list'
+  end
+
+  describe 'Shared:' do
+    specify 'Shares are displayed in the Shared list'
+    specify 'Shares are not displayed in the File list'
+  end
+
+  def search_my_files_by_term( term)
+    page.should have_content("My Files")
+    within('#masthead_controls') do
+      fill_in('search-field-header', with: term)
+      click_button("Go")
+    end
+  end
+
   def page_should_only_list file
+    expect(page).to have_selector('li.active', text:"Files")
     page.should have_content file.title.first
     GenericFile.all.each do |gf|
       page.should_not have_content gf.title.first unless gf.title.first == file.title.first
