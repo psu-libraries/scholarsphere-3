@@ -21,12 +21,12 @@ describe StaticController do
     it "renders page" do
       get "mendeley"
       response.should be_success
-      response.should render_template "layouts/sufia-two-column"
+      response.should render_template "layouts/sufia-one-column"
     end
     it "renders no layout with javascript" do
       get "mendeley" ,{format:"js"}
       response.should be_success
-      response.should_not render_template "layouts/sufia-two-column"
+      response.should_not render_template "layouts/sufia-one-column"
     end
   end
 
@@ -35,12 +35,12 @@ describe StaticController do
     it "renders page" do
       get "zotero"
       response.should be_success
-      response.should render_template "layouts/sufia-two-column"
+      response.should render_template "layouts/sufia-one-column"
     end
     it "renders no layout with javascript" do
       get "zotero" ,{format:"js"}
       response.should be_success
-      response.should_not render_template "layouts/sufia-two-column"
+      response.should_not render_template "layouts/sufia-one-column"
     end
   end
 end

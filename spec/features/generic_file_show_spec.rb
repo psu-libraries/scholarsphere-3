@@ -34,11 +34,13 @@ describe "Showing the Generic File" do
     sign_in :curator
     @user = User.where(login: @user_name).first
     visit "/"
+    click_link "Recently Uploaded"
   end
 
   context "User with generic files" do
     before do
       click_link @gf1.title.first
+      page.should have_content("Descriptions")
     end
 
     it "loads the page" do
@@ -89,6 +91,7 @@ describe "Showing the Generic File" do
     end
 
     it "displays Zotero modal" do
+      #save_and_open_page
       click_link "Zotero"
       page.should have_css(".modal-header")
     end
