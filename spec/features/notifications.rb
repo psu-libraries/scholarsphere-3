@@ -8,6 +8,15 @@ describe "Notifications page" do
 
   it "should list notifications with date, subject and message" do
     visit "/notifications"
+    validate_user_notifications
+  end
+
+  it "should list the most recent notifications in the user's dashboard" do
+    go_to_dashboard
+    validate_user_notifications
+  end
+
+  def validate_user_notifications
     page.should have_content "User Notifications"
     page.find(:xpath, '//thead/tr').should have_content "Date"
     page.find(:xpath, '//thead/tr').should have_content "Subject"
