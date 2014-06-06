@@ -165,6 +165,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (0.3.19)
+      capybara (>= 1.0, < 3)
+      launchy
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -515,7 +518,7 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    select2-rails (3.4.2)
+    select2-rails (3.4.8)
       sass-rails
       thor (~> 0.14)
     shout-bot (0.0.7)
@@ -621,6 +624,7 @@ DEPENDENCIES
   capistrano-notification (= 0.1.1)
   capistrano-rbenv (= 1.0.5)
   capybara (~> 2.0)
+  capybara-screenshot
   clamav (= 0.4.1)
   coffee-rails (= 4.0.1)
   database_cleaner
@@ -647,7 +651,7 @@ DEPENDENCIES
   rspec-rails (~> 2.99)
   sass (= 3.2.18)
   sass-rails (~> 4.0.2)
-  select2-rails (= 3.4.2)
+  select2-rails (= 3.4.8)
   sitemap (= 0.3.3)
   sqlite3
   sufia!

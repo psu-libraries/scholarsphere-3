@@ -5,9 +5,12 @@ en:
   hello: "Hello world"
 
   sufia:
-   product_name:       "ScholarSphere"
-   errors:
+    product_name: "ScholarSphere"
+    errors:
       header: "There were errors that prevented this %{model} from being saved:"
+    dashboard:
+      proxy_activity: "Proxy Activity"
+      transfer_of_ownership: "Transfer of Ownership"
 
 
   hydra:

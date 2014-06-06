@@ -9,7 +9,8 @@
 
     function addContributor(name, id) {
       data = {name: name, id: id}
-      row = tmpl("tmpl-proxy-row", data);
+      row = rowTemplate(data);
+      debugger
       $('#authorizedProxies tbody', $container).append(row);
 
       if (settings.afterAdd) {
@@ -18,7 +19,7 @@
 
       $.ajax({
         type: "POST",
-        url: 'depositors',
+        url: '/users/'+id+'/depositors',
         dataType: 'json',
         data: {grantee_id: id},
         success: function (data) { }
@@ -39,6 +40,11 @@
       return false;
     }
 
+    function rowTemplate (data) {
+      return '<tr><td class="depositor-name">'+ data.name + '</td>' +
+        '<td class="remove-proxy-button" data-id="' + data.id + '"><i class="glyphicon glyphicon-remove"></i></td></tr>'
+    }
+
     $("#user").userSearch();
     $("#user").on("change", function() {
       // Remove the choice from the select2 widget and put it in the table.
@@ -52,6 +58,8 @@
     });
 
   };
+
+
 })( jQuery );  
 
 

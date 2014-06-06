@@ -112,6 +112,11 @@ li .be-actions{
     vertical-align: bottom;
 }
 
+.proxy-search
+{
+  border-right: 1px solid #bbbbbb;
+}
+
 th.sm .dropdown-toggle {
     visibility: hidden;
 }

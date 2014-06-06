@@ -5,6 +5,8 @@ include Selectors::Dashboard
 describe 'The Dashboard' do
 
   let!(:current_user) { create :user }
+  let!(:second_user) { create(:user, display_name: "First Proxy") }
+  let!(:third_user) { create(:user, display_name: "Second Proxy") }
 
   before do
     sign_in_as current_user
@@ -32,6 +34,44 @@ describe 'The Dashboard' do
   it "lists any recent notificaitons" do
     page.should have_content "User Notifications"
     page.should have_content "User has no notifications"
+  end
+
+  describe 'proxy portal' do
+
+    it "allows user to authorize a proxy" do
+      create_proxy_using_partial second_user
+      page.should have_css "table#authorizedProxies td.depositor-name", text: proxy_display_name(second_user)
+    end
+
+    context "with multiple current proxies" do
+
+      before do
+        create_proxy_using_partial(second_user, third_user)
+        ProxyDepositRights.create!(grantor: current_user, grantee: second_user)
+      end
+
+      it "should list each proxy if both are authorized" do
+        within("#authorizedProxies") do
+          page.should have_content(proxy_display_name(second_user))
+          page.should have_content(proxy_display_name(third_user))
+        end
+        go_to_dashboard
+        within("#authorizedProxies") do
+          page.should have_content(second_user.display_name)
+          page.should_not have_content(third_user.display_name)
+        end
+      end
+
+      it "should remove a proxy" do
+        go_to_dashboard
+        find(".remove-proxy-button").click
+        within("#authorizedProxies") do
+          page.should_not have_content(second_user.display_name)
+        end
+      end
+
+    end
+
   end
 
 end

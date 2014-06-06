@@ -1,12 +1,10 @@
 table#authorizedProxies {
-  width: 65%;
-  margin: 20px auto;
-  background-color: white;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-  td.remove-button {
-    width: 10%;
-  }
-  a.remove-proxy-button:hover i {
-    color: red;
+  a.remove-proxy-button {
+    i {
+      color: darken(red, 30%);
+    }
+    &:hover i {
+      color: red;
+    }
   }
 }

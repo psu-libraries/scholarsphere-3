@@ -2,10 +2,6 @@ require_relative 'feature_spec_helper'
 
 describe 'proxy' do
 
-  let(:title1) {"Test Collection 1"}
-  let(:description1) {"Description for collection 1 we are testing."}
-  let(:title2) {"Test Collection 2"}
-  let(:description2) {"Description for collection 2 we are testing."}
   let!(:current_user) { create :user }
   let!(:second_user) { create :user }
 
@@ -17,10 +13,7 @@ describe 'proxy' do
       first('a.dropdown-toggle').click
       click_link('edit profile')
       first("td.depositor-name").should be_nil
-      first('a.select2-choice').click
-      find(".select2-input").set  second_user.user_key
-      page.should have_css "div.select2-result-label"
-      first("div.select2-result-label").click
+      create_proxy_using_partial second_user
       page.should have_css "table#authorizedProxies td.depositor-name", text: "#{second_user.display_name} (#{second_user.user_key})"
     end
   end
