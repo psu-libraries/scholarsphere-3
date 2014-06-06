@@ -35,6 +35,16 @@ notification.irc do |irc|
   irc.message { "[#{irc.user}] #{local_user} deployed #{application} to #{stage}" }
 end
 
+namespace :apache do
+  [:stop, :start, :restart, :reload].each do |action|
+    desc "#{action.to_s.capitalize} Apache"
+    task action, :roles => :web do
+      invoke_command "sudo service httpd #{action.to_s}", :via => run_method
+    end
+  end
+end
+
+
 # override default restart task for apache passenger
 namespace :deploy do
   task :start do ; end
