@@ -1,10 +1,8 @@
-# This file is a Work in Progress
-
-require_relative './feature_spec_helper'
+require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard:' do
+describe 'Dashboard Files' do
 
   let!(:current_user) { create :user }
 
@@ -16,7 +14,7 @@ describe 'Dashboard:' do
   let(:file) { GenericFile.find(Solrizer.solr_name("desc_metadata__title")=>"little_file.txt").first }
   let(:filename) { file.filename.first }
 
-  describe 'For a file in my list:' do
+  context 'with one file:' do
 
     specify 'Clicking the Visibility link loads the edit permissions page' do
       # The link is not visible in poltergeist unless we resize
@@ -28,9 +26,16 @@ describe 'Dashboard:' do
       page.should have_content 'Share With'
     end
 
-    pending 'Clicking + displays additional metadata about that file'
-      # This is currently backwards: metadata is displayed by default
-      # and clicking '+' hides the metadata.
+    specify 'Additional metadata about the file is hidden' do
+      page.should_not have_content "plain (Plain text)JPG"
+      page.should_not have_content "little_file.txt_creator"
+    end
+
+    specify 'Clicking + displays additional metadata about that file' do
+      first('i.glyphicon-plus').click
+      page.should have_content "plain (Plain text)JPG"
+      page.should have_content "little_file.txt_creator"
+    end
 
     specify 'Clicking Edit File goes directly to the metadata edit page' do
       db_item_actions_toggle(file).click
@@ -78,7 +83,7 @@ describe 'Dashboard:' do
     end
   end
 
-  describe 'When I have more than 10 files:' do
+  context 'with more than 10 files:' do
     before do
       create_files(current_user, 10)
       visit '/dashboard/files'
@@ -154,7 +159,6 @@ describe 'Dashboard:' do
     end
 
     describe 'Facets:' do
-      # Still need to test Collection
       {
         'Resource Type' => 'Video (10)',
         'Creator'       => 'Creator1 (10)',
@@ -170,31 +174,25 @@ describe 'Dashboard:' do
             click_link(facet)
             page.should have_content(value)
           end
-
-          #db_facet_category_toggle("#collapse_#{facet}_db").click
-          #check_facet_category "#collapse_#{facet}_db", value
         end
-      end 
+      end
+    end
+
+    describe 'Sorting:' do
+      specify 'Items are sorted correctly' do
+        find('#sort').find(:xpath, 'option[4]').select_option
+        click_button("Refresh")
+        page.should_not have_content(GenericFile.all.last.title.first)
+        find('#sort').find(:xpath, 'option[5]').select_option
+        click_button("Refresh")
+        page.should have_content(GenericFile.all.last.title.first)
+      end
     end
   end
 
-  describe 'Sorting:' do
-    specify 'Items are sorted correctly'
-  end
-
-  describe 'Collections:' do
-    specify 'Collections are displayed in the Collections list'
-    specify 'Collections are not displayed in the File list'
-  end
-
-  describe 'Shared:' do
-    specify 'Shares are displayed in the Shared list'
-    specify 'Shares are not displayed in the File list'
-  end
-
   def search_my_files_by_term( term)
-    page.should have_content("My Files")
-    within('#masthead_controls') do
+    within('#search-form-header') do
+      page.should have_content("My Files")
       fill_in('search-field-header', with: term)
       click_button("Go")
     end
@@ -228,7 +226,6 @@ describe 'Dashboard:' do
         f.title = "title_#{x}"
         f.apply_depositor_metadata(user.login)
         f.resource_type = 'Video'
-        #Collection
         f.creator = 'Creator1'
         f.tag = 'Keyword1'
         f.subject = 'Subject1'
