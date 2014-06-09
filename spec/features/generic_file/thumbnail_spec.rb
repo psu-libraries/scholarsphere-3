@@ -2,14 +2,12 @@ require_relative '../feature_spec_helper'
 
 describe 'Generic File Thumbnail Creation:' do
   let!(:current_user) { create :user }
-  let(:generic_filename) { 'small_file.txt' }
+  let!(:file) { create_file current_user, {title:'little_file.txt'} }
 
   before do
     sign_in_as current_user
-    upload_generic_file generic_filename
+    go_to_dashboard_files
   end
-
-  let(:file) { find_file_by_title "small_file.txt" }
 
   context 'When I upload an image' do
     before do
@@ -18,7 +16,7 @@ describe 'Generic File Thumbnail Creation:' do
     end
 
     specify "I can see the image thumbnail" do
-      page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -29,7 +27,7 @@ describe 'Generic File Thumbnail Creation:' do
     end
 
     specify "I can see the pdf thumbnail" do
-      page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -40,7 +38,7 @@ describe 'Generic File Thumbnail Creation:' do
     end
 
     specify "I can see the video thumbnail" do
-      page.should have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -51,7 +49,18 @@ describe 'Generic File Thumbnail Creation:' do
     end
 
     specify "I can see the audio thumbnail" do
-      page.should have_css("img[src*='/assets/audio.png']")
+      expect(page).to have_css("img[src*='/assets/audio.png']")
+    end
+  end
+
+  context 'When I upload an office document file' do
+    before do
+      allow_any_instance_of(SolrDocument).to receive(:mime_type).and_return('application/msword')
+      visit(current_path)
+    end
+
+    specify "I can see the audio thumbnail" do
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -61,7 +70,7 @@ describe 'Generic File Thumbnail Creation:' do
       visit(current_path)
     end
     specify "I can see the default thumbnail" do
-      page.should have_css("img[src*='/assets/default.png']")
+      expect(page).to have_css("img[src*='/assets/default.png']")
     end
   end
 
