@@ -63,11 +63,9 @@ describe DashboardController do
         response.should be_success
         response.should render_template('dashboard/index')
       end
-      it "should return a list of proxies" do
-        pending
-      end
       it "should return a list of transfers" do
-        pending
+        expect(assigns(:incoming)).to eq(ProxyDepositRequest.where(receiving_user_id: @user.id).reject &:deleted_file?)
+        expect(assigns(:outgoing)).to eq(ProxyDepositRequest.where(sending_user_id: @user.id))
       end
     end
   end
