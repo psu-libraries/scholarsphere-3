@@ -9,10 +9,6 @@ module ProxiesHelper
     end
   end
 
-  def proxy_display_name user
-    "#{user.display_name} (#{user.user_key})"
-  end
-
   RSpec.configure do |config|
     config.include ProxiesHelper
   end

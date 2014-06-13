@@ -14,7 +14,7 @@ describe 'proxy' do
       click_link('edit profile')
       first("td.depositor-name").should be_nil
       create_proxy_using_partial second_user
-      page.should have_css "table#authorizedProxies td.depositor-name", text: "#{second_user.display_name} (#{second_user.user_key})"
+      page.should have_css "table#authorizedProxies td.depositor-name", text: second_user.display_name
     end
   end
 

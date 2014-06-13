@@ -18,7 +18,7 @@ describe DepositorsController do
       it "should not add current user" do
         expect { post :create, user_id: user.user_key, grantee_id: user.user_key, format: 'json' }.to change{ ProxyDepositRights.count }.by(0)
         response.should be_success
-        response.body.should == "{}"
+        response.body.should be_blank
       end
 
     end

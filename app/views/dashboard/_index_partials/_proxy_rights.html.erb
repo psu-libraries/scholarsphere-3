@@ -2,7 +2,7 @@
 
   <div class="col-xs-6 proxy-search">
     <h3>Authorize Proxy</h3>
-    <%= hidden_field_tag :user %>
+    <%= hidden_field_tag :user, nil, data: { grantor: current_user.login } %>
   </div>
   
   <div class="col-xs-6">
@@ -10,7 +10,7 @@
     <table class="table table-condensed table-striped" id="authorizedProxies">
       <tbody>
         <% @user.can_receive_deposits_from.each do |depositor| %>
-          <tr><td><%= depositor.name %></td>
+          <tr><td class="depositor-name"><%= depositor.name %></td>
             <td><%=link_to(user_depositor_path(@user.user_key, depositor.user_key), method: :delete, class: "remove-proxy-button") do %>
               <i class="glyphicon glyphicon-remove"></i><% end %>
             </td></tr>

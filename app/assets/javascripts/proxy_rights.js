@@ -7,29 +7,28 @@
 
     var $container = this;
 
-    function addContributor(name, id) {
+    function addContributor(name, id, grantor) {
       data = {name: name, id: id}
-      row = rowTemplate(data);
-      debugger
-      $('#authorizedProxies tbody', $container).append(row);
-
-      if (settings.afterAdd) {
-        settings.afterAdd(this, cloneElem);
-      }
-
+      
       $.ajax({
         type: "POST",
-        url: '/users/'+id+'/depositors',
+        url: '/users/'+grantor+'/depositors',
         dataType: 'json',
         data: {grantee_id: id},
-        success: function (data) { }
+        success: function (data) {
+          if (data.name !== undefined) {
+            row = rowTemplate(data);
+            $('#authorizedProxies tbody', $container).append(row);
+            if (settings.afterAdd)
+              settings.afterAdd(this, cloneElem);
+          }
+        }
       })
-
       return false;
     }
 
-    function removeContributor () {
-      // remove the row
+    function removeContributor(event) {
+      event.preventDefault();
       $.ajax({
         url: $(this).closest('a').prop('href'),
         type: "post",
@@ -41,27 +40,28 @@
     }
 
     function rowTemplate (data) {
-      return '<tr><td class="depositor-name">'+ data.name + '</td>' +
-        '<td class="remove-proxy-button" data-id="' + data.id + '"><i class="glyphicon glyphicon-remove"></i></td></tr>'
+      return '<tr>'+
+                '<td class="depositor-name">'+data.name+'</td>'+
+                '<td><a class="remove-proxy-button" data-method="delete" href="'+data.delete_path+'" rel="nofollow">'+
+                  '<i class="glyphicon glyphicon-remove"></i></a>'+
+                '</td>'+
+              '</tr>'
     }
 
     $("#user").userSearch();
     $("#user").on("change", function() {
       // Remove the choice from the select2 widget and put it in the table.
       obj = $("#user").select2("data")
+      grantor = $('#user').data('grantor')
       $("#user").select2("val", '')
-      addContributor(obj.text, obj.id);
+      addContributor(obj.text, obj.id, grantor);
     });
 
-    return this.each(function() {        
-      $('.remove-proxy-button', this).click(removeContributor);
-    });
-
+    $('body').on('click', 'a.remove-proxy-button', removeContributor);
+  
   };
 
-
 })( jQuery );  
-
 
 $(function() {
   $('.proxy-rights').proxyRights();
