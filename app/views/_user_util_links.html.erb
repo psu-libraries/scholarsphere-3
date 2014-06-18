@@ -25,7 +25,7 @@ limitations under the License.
         <li><%= link_to raw('<i class="glyphicon glyphicon-transfer"></i> transfer requests'), transfers_path, id: 'transfer_nav_link'  %></li>
         <li><%= link_to raw('<i class="glyphicon glyphicon-cog"></i> edit profile'), sufia.edit_profile_path(current_user), id: 'upload_nav_link' %></li>
         <li class="divider"></li>
-        <li><%= link_to raw('<i class="glyphicon glyphicon-signout"></i> log out'), destroy_user_session_path, id: 'logout_nav_link' %></li>
+        <li><%= link_to raw('<i class="glyphicon glyphicon-log-out"></i> log out'), destroy_user_session_path, id: 'logout_nav_link' %></li>
       </ul>
     </div><!-- /.btn-group -->
 <% else %>
