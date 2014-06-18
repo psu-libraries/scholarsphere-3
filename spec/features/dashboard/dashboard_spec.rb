@@ -15,7 +15,7 @@ describe 'The Dashboard' do
 
   it "shows the user's statistics" do
     page.should have_content("Your Statistics")
-    page.should have_content("Files you've deposited into Sufia")
+    page.should have_content("Files you've deposited")
     page.should have_content("People you follow")
     page.should have_content("People who are following you")
   end

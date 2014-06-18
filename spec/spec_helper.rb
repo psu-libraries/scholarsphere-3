@@ -59,6 +59,8 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include Warden::Test::Helpers, type: :feature
   config.include UserLogin, type: :feature
+
+  config.infer_spec_type_from_file_location!
 end
 
 module FactoryGirl

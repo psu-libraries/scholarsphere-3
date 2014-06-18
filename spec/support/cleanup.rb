@@ -17,7 +17,8 @@ RSpec.configure do |config|
     ActiveFedora::Base.delete_all
 
     #solr cleanup TODO What is the right way to wipe solr
-    #ActiveFedora::Base.reindex_everything
+    Blacklight.solr.delete_by_query("*:*")
+    Blacklight.solr.commit
 
     #test email cleanup
     ActionMailer::Base.deliveries.clear
