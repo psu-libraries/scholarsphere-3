@@ -74,4 +74,16 @@ Sufia::Engine.configure do
   }
 
   config.analytics = true
+
+  # If browse-everything has been configured, load the configs.  Otherwise, set to nil.
+  begin
+    if defined? BrowseEverything
+      config.browse_everything = BrowseEverything.config
+    else
+      logger.warn "BrowseEverything is not installed"
+    end
+  rescue Errno::ENOENT
+    config.browse_everything = nil
+  end
+
 end

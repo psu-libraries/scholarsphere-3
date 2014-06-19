@@ -54,6 +54,7 @@ ScholarSphere::Application.routes.draw do
 
   get '/why-use-scholarsphere', to: redirect('/scholarsphere_student_flyer.pdf')
 
+  mount BrowseEverything::Engine => '/browse'
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'
   mount HydraEditor::Engine => '/'
