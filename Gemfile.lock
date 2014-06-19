@@ -127,7 +127,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
-    browse-everything (0.4.3)
+    browse-everything (0.4.4)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
