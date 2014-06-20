@@ -31,9 +31,24 @@ describe 'The Dashboard' do
     page.should have_content "User has no recent activity"
   end
 
-  it "lists any recent notificaitons" do
-    page.should have_content "User Notifications"
-    page.should have_content "User has no notifications"
+  describe 'notifications' do
+
+    before do
+      message = '<span class="batchid ui-helper-hidden">fake_batch_noid</span>You\'ve got mail.'
+      (1..6).each do |number|
+        User.batchuser().send_message(current_user, message, "Sample notification #{number.to_s}.")
+      end
+    end
+
+    it "lists recent notifications" do
+      go_to_dashboard
+      page.should have_content "User Notifications"
+      page.should have_content "Sample notification 3."
+      click_link("See all notifications")
+      page.should have_content "Sample notification 1."
+      page.should have_content "Sample notification 6."
+    end
+  
   end
 
   describe 'proxy portal' do

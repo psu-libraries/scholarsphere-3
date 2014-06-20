@@ -16,6 +16,14 @@ describe 'Dashboard Files' do
 
   context 'with one file:' do
 
+    specify 'tab title and buttons' do
+      page.should have_content("My Files")
+      within('.col-xs-12.col-sm-3') do
+        page.should have_content("Upload")
+        page.should have_content("Create Collection")
+      end
+    end
+
     specify 'Clicking the Visibility link loads the edit permissions page' do
       # The link is not visible in poltergeist unless we resize
       # the page (1440w x 1200h). Somehow using .trigger gets around
@@ -60,10 +68,7 @@ describe 'Dashboard Files' do
       end
 
       specify 'It is displayed on my highlights' do
-        within '#content-wrapper .nav.nav-tabs' do
-          click_link "Highlighted"
-        end
-        page.should have_css '.active a', text:"Highlighted"
+        go_to_dashboard_highlights
         within '#documents' do
           page.should have_link "#{file.filename.first}"
         end

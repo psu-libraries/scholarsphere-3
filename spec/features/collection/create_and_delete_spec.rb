@@ -15,7 +15,7 @@ describe 'Collection creation and deletion:' do
 
   describe 'When creating an empty collection' do
     before do
-      visit '/dashboard'
+      go_to_dashboard
       db_create_empty_collection_button.click
       create_collection title, creator, description
     end

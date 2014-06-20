@@ -67,7 +67,7 @@ module Selectors
 
     def ec_update_submit
       within '.col-xs-12.col-sm-8' do
-        within '.form-actions' do
+        within '.primary-actions' do
           find_button 'Update Collection'
         end
       end

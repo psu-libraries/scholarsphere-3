@@ -8,25 +8,25 @@ module Locations
   def go_to_dashboard_files
     go_to_dashboard
     click_link('View Files')
-    expect(page).to have_selector('li.active', text:"Files")
+    expect(page).to have_selector('li.active', text:"My Files")
   end
 
   def go_to_dashboard_collections
     go_to_dashboard_files
-    click_link('Collections')
-    page.should have_content('Collections')
+    click_link('My Collections')
+    page.should have_content('My Collections')
   end
 
   def go_to_dashboard_shares
     go_to_dashboard_files
-    click_link('Shared with Me')
-    page.should have_content('Shared with Me')
+    click_link('Files Shared with Me')
+    page.should have_content('Files Shared with Me')
   end
 
   def go_to_dashboard_highlights
     go_to_dashboard_files
-    click_link('Highlighted')
-    page.should have_content('Highlighted')
+    click_link('My Highlights')
+    page.should have_content('My Highlights')
   end
 
 end

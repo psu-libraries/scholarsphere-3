@@ -5,7 +5,7 @@ gem 'rails', '4.0.5'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '69a1c9b42c92db0fe3e4fc33b2870f6ec3d8b78c'
+gem 'sufia', github: 'projecthydra/sufia', ref: '3a26d7a0a0d427b560b2237c5e8f321111825d3d'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.3.0'
 gem 'hydra-collections', '2.0.2'
@@ -31,6 +31,7 @@ gem 'sass', '3.2.18'
 gem 'sass-rails', '~> 4.0.2'
 gem 'coffee-rails', '4.0.1'
 gem 'uglifier', '2.3.2'
+gem 'blankslate', '2.1.2.4'
 
 group :development, :test do
   gem 'fuubar'
