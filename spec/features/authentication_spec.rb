@@ -12,7 +12,13 @@ describe 'Site authentication' do
     describe 'And I attempt to visit a restricted page on the site' do
       specify 'The restricted path should be included in my redirected url' do
         visit '/dashboard'
-        current_url.should == centralized_login_url + 'dashboard'
+        current_url.should == centralized_login_url
+      end
+    end
+    describe 'And I try to upload a file' do
+      specify 'It should take me back to the upload page after I have logged in' do
+        visit '/files/new'
+        current_url.should == centralized_login_url.gsub(/dashboard/,"files/new")
       end
     end
   end

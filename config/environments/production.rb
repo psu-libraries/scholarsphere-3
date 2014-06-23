@@ -16,7 +16,7 @@ Sufia::Engine.configure do
   config.contact_email = 'scholarsphere-service-support@dlt.psu.edu, ul-dlt-applications@lists.psu.edu'
   config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"
   config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Rails.application.get_vhost_by_host[1]}"
-  config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.get_vhost_by_host[0]}&#{Rails.application.get_vhost_by_host[1]}"
+  config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.get_vhost_by_host[0]}&#{Rails.application.get_vhost_by_host[1]}dashboard"
 end
 
 ScholarSphere::Application.configure do
