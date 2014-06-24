@@ -57,3 +57,8 @@ group :development do
   gem 'capistrano-ext', '1.2.1'
   gem 'capistrano-notification', '0.1.1'
 end
+
+group :test do
+  gem 'vcr'
+  gem 'webmock'
+end

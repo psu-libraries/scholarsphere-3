@@ -22,6 +22,12 @@ RSpec.configure do |config|
 
     #test email cleanup
     ActionMailer::Base.deliveries.clear
+
+    #clear redis
+    $redis.keys('events:*').each { |key| $redis.del key }
+    $redis.keys('User:*').each { |key| $redis.del key }
+    $redis.keys('GenericFile:*').each { |key| $redis.del key }
+
   end
 
   config.before :each do
