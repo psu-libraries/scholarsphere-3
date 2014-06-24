@@ -2,16 +2,18 @@ require_relative './feature_spec_helper'
 
 describe 'Visting the home page:' do
 
-  before :each do
+  let!(:current_user) { create :user }
+  let!(:gf1) { create_file current_user, {title:'doc 1', tag:["tagX", "tagY"]} }
+  let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
 
-    @blk = ContentBlock.find_or_create_by( name: "marketing_text").tap do |market|
+  before :each do
+    @blk = ContentBlock.find_or_create_by(name: "marketing_text").tap do |market|
       market.value = "Share. Manage. Preserve."
       market.save
     end
   end
 
-    context 'when logged in' do
-    let!(:current_user) { create :user }
+  context 'when logged in' do
 
     before do
       sign_in_as current_user
@@ -49,6 +51,20 @@ describe 'Visting the home page:' do
       end
       specify 'I can see that I am logged in' do
         page.should have_content current_user.display_name
+      end
+    end
+
+    context 'and tag cloud is shown' do
+      specify 'tags are listed' do
+        visit '/'
+        page.should have_content 'tagXtagYtagZ'
+      end
+
+      specify 'clicking on a tag goes to the right URL' do
+        visit '/'
+        target_url = URI.encode('/catalog?f[desc_metadata__tag_sim][]=tagY','[]')
+        click_link('tagY')
+        current_url.end_with? target_url
       end
     end
   end
