@@ -67,6 +67,23 @@ describe 'Visting the home page:' do
         current_url.end_with? target_url
       end
     end
+
+    context 'with a mobile device' do
+
+      before do
+        #require 'byebug'; byebug
+        page.driver.browser.resize(400,600)
+        visit "/"
+      end
+
+      specify 'then I should not see my name' do
+        save_and_open_page
+        within('#user_utility_links') do
+          page.should_not have_content(current_user.name)
+        end
+      end
+
+    end
   end
 
   def add_groups_to_current_user number_of_groups
