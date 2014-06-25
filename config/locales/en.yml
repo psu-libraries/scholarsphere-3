@@ -11,6 +11,8 @@ en:
     dashboard:
       proxy_activity: "Proxy Activity"
       transfer_of_ownership: "Transfer of Ownership"
+    field_label:
+      description: "Description"
 
 
   hydra:

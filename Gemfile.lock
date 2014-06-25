@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 3a26d7a0a0d427b560b2237c5e8f321111825d3d
-  ref: 3a26d7a0a0d427b560b2237c5e8f321111825d3d
+  revision: 1038d7de35bf8335ace75d0006351ff8af642c4c
+  ref: 1038d7de35bf8335ace75d0006351ff8af642c4c
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.0)
@@ -127,7 +127,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
-    browse-everything (0.4.4)
+    browse-everything (0.4.5)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
@@ -141,7 +141,7 @@ GEM
     byebug (3.1.2)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
-    cancancan (1.8.2)
+    cancancan (1.8.4)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -258,22 +258,23 @@ GEM
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    hydra-access-controls (7.0.2)
+    hydra-access-controls (7.1.0)
       active-fedora (~> 7.0.0)
       activesupport
       blacklight (~> 5.3)
       cancancan
       deprecation
+      om (~> 3.0, >= 3.0.7)
       sass-rails
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (2.0.2)
+    hydra-collections (2.0.3)
       blacklight
-      hydra-head (~> 7.0.1)
-    hydra-core (7.0.2)
+      hydra-head (~> 7.0)
+    hydra-core (7.1.0)
       block_helpers
-      hydra-access-controls (= 7.0.2)
+      hydra-access-controls (= 7.1.0)
       jettywrapper (>= 1.4.1)
       rails (>= 3.2.3, < 5)
     hydra-derivatives (0.1.0)
@@ -289,9 +290,9 @@ GEM
       rails (>= 3.2.13, < 5.0)
     hydra-file_characterization (0.3.1)
       activesupport (>= 3.0.0)
-    hydra-head (7.0.2)
-      hydra-access-controls (= 7.0.2)
-      hydra-core (= 7.0.2)
+    hydra-head (7.1.0)
+      hydra-access-controls (= 7.1.0)
+      hydra-core (= 7.1.0)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
@@ -458,9 +459,9 @@ GEM
       rdf (~> 1.1, >= 1.1.4)
     rdf-xsd (1.1.1)
       rdf (~> 1.1)
-    redis (3.0.7)
-    redis-namespace (1.4.1)
-      redis (~> 3.0.4)
+    redis (3.1.0)
+    redis-namespace (1.5.0)
+      redis (~> 3.0, >= 3.0.4)
     ref (1.0.5)
     resque (1.25.2)
       mono_logger (~> 1.0)
@@ -634,7 +635,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections (= 2.0.2)
+  hydra-collections (= 2.0.3)
   hydra-derivatives (= 0.1.0)
   hydra-editor (= 0.3.0)
   hydra-ldap (= 0.1.0)
