@@ -3,8 +3,6 @@ require_relative './feature_spec_helper'
 describe 'Visting the home page:' do
 
   let!(:current_user) { create :user }
-  let!(:gf1) { create_file current_user, {title:'doc 1', tag:["tagX", "tagY"]} }
-  let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
 
   before :each do
     @blk = ContentBlock.find_or_create_by(name: "marketing_text").tap do |market|
@@ -55,6 +53,8 @@ describe 'Visting the home page:' do
     end
 
     context 'and tag cloud is shown' do
+      let!(:gf1) { create_file current_user, {title:'doc 1', tag:["tagX", "tagY"]} }
+      let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
       specify 'tags are listed' do
         visit '/'
         page.should have_content 'tagXtagYtagZ'
