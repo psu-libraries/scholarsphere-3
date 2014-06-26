@@ -64,7 +64,7 @@ describe 'Visting the home page:' do
         visit '/'
         target_url = URI.encode('/catalog?f[desc_metadata__tag_sim][]=tagY','[]')
         click_link('tagY')
-        current_url.end_with? target_url
+        expect(current_url).to end_with(target_url)
       end
     end
 
