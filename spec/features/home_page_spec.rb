@@ -71,13 +71,11 @@ describe 'Visting the home page:' do
     context 'with a mobile device' do
 
       before do
-        #require 'byebug'; byebug
         page.driver.browser.resize(400,600)
         visit "/"
       end
 
       specify 'then I should not see my name' do
-        save_and_open_page
         within('#user_utility_links') do
           page.should_not have_content(current_user.name)
         end
