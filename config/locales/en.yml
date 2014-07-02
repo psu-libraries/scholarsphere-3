@@ -11,6 +11,7 @@ en:
     dashboard:
       proxy_activity: "Proxy Activity"
       transfer_of_ownership: "Transfer of Ownership"
+      my_collections: "My Collections"
     field_label:
       description: "Description"
 
