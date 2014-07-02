@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="portal" id="activity">
+    <h3><%= t("sufia.dashboard.user_activity") %></h3>
+    <%= render_recent_activity %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="portal" id="notifications">
+    <h3><%= t("sufia.dashboard.user_notifications") %></h3>
+    <%= render_recent_notifications %>
+    <%= link_to_additional_notifications %>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="portal" id="proxy_management">
+    <%= render partial: 'dashboard/_index_partials/proxy_rights' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="portal" id="transfers">
+    <h3><%= t("sufia.dashboard.transfer_of_ownership") %></h3>
+    <%= render partial: 'dashboard/_index_partials/transfers' %>
+  </div>
+</div>
+
