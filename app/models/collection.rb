@@ -12,11 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 class Collection < ActiveFedora::Base
-  include Hydra::Collection
-  include Sufia::ModelMethods
-  include Sufia::Noid
-  include Sufia::GenericFile::Permissions
-  include Sufia::GenericFile::WebForm # provides initialize_fields method
+  include Sufia::Collection
 
   before_save :update_permissions
   validates :title, presence: true
