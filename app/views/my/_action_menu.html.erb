@@ -1,7 +1,7 @@
 <div class="btn-group">
-  <button class="btn btn-small" href="#"><i class="icon-wrench"></i> Select an action</button>
-  <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></button>
-  <ul class="dropdown-menu">
+  <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">Select an action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right">
     <li>
       <%= link_to raw('<i class="glyphicon glyphicon-link over"></i> Single-Use Link to File'), '#', class: "copypaste itemicon itemcode", title: "Single-Use Link to File", id: "copy_link_#{noid}" %>
     </li>

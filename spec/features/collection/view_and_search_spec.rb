@@ -34,6 +34,8 @@ describe 'Collection viewing and searching:' do
       page.should have_content creator
       page.should have_content file_1.title.first
       page.should have_content file_2.title.first
+      page.should have_content "Total Items 2"
+      page.should have_content "Size 4.13 KB"
     end
   end
 

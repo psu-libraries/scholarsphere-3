@@ -43,7 +43,7 @@ describe 'proxy' do
       click_on('upload_submit')
       click_link "Shared with Me"
       page.should have_content "MY Title for the World"
-      first('i.glyphicon-plus').click
+      first('i.glyphicon-chevron-right').click
       click_link(second_user.display_name)
     end
   end

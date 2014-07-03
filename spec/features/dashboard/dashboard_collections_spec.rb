@@ -27,7 +27,7 @@ describe 'Dashboard Collections:' do
   end
 
   specify 'toggle displays additional information' do
-    first('i.glyphicon-plus').click
+    first('i.glyphicon-chevron-right').click
     page.should have_content("Personal collection of great things")
     page.should have_content(current_user)
   end
@@ -40,7 +40,9 @@ describe 'Dashboard Collections:' do
   specify "toggle addtitional actions" do
     page.should_not have_content("Edit Collection")
     page.should_not have_content("Delete Collection")
-    first('span.glyphicon-chevron-down').click
+    within('#documents') do
+      first('.dropdown-toggle').click
+    end
     page.should have_content("Edit Collection")
     page.should have_content("Delete Collection")
   end

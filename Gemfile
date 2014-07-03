@@ -5,7 +5,7 @@ gem 'rails', '4.0.5'
 gem 'mysql2', '0.3.14'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '0fe9e93ead0f055a500eb2f91574d838f0565368'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'bda22974297af6cf6701ae87d02291f1ebcfe4ff'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.3.0'
 gem 'hydra-collections', '2.0.3'
@@ -34,6 +34,7 @@ gem 'uglifier', '2.3.2'
 gem 'blankslate', '2.1.2.4'
 
 group :development, :test do
+  gem 'byebug'
   gem 'fuubar'
   gem 'sqlite3'
   gem 'poltergeist'
@@ -48,7 +49,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'unicorn-rails'

@@ -40,7 +40,7 @@ describe 'Dashboard Files' do
     end
 
     specify 'Clicking + displays additional metadata about that file' do
-      first('i.glyphicon-plus').click
+      first('i.glyphicon-chevron-right').click
       page.should have_content "plain (Plain text)JPG"
       page.should have_content "little_file.txt_creator"
     end

@@ -95,7 +95,7 @@ describe 'unified search', describe_options do
       expect(page).to have_content(@gf1.title.first)
       expect(page).to have_content(@gf2.title.first)
       expect(page).to_not have_content(@gf3.title.first)
-      expect(page).to_not have_content(@collection.title)
+      expect(page).to_not have_css('#src_copy_link'+@collection.noid)
     end
     it "searches My Collections" do
       login_js

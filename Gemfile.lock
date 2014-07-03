@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 0fe9e93ead0f055a500eb2f91574d838f0565368
-  ref: 0fe9e93ead0f055a500eb2f91574d838f0565368
+  revision: bda22974297af6cf6701ae87d02291f1ebcfe4ff
+  ref: bda22974297af6cf6701ae87d02291f1ebcfe4ff
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.0)
@@ -211,7 +211,7 @@ GEM
     equivalent-xml (0.4.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
-    execjs (2.2.0)
+    execjs (2.2.1)
     extlib (0.9.16)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
