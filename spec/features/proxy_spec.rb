@@ -9,9 +9,9 @@ describe 'proxy' do
 
     it "should create proxy" do
       sign_in_as current_user
-      visit '/'
-      first('a.dropdown-toggle').click
-      click_link('edit profile')
+      visit "/"
+      go_to_user_profile
+      click_link "Edit Your Profile"
       first("td.depositor-name").should be_nil
       create_proxy_using_partial second_user
       page.should have_css "table#authorizedProxies td.depositor-name", text: second_user.display_name

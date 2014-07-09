@@ -150,6 +150,10 @@ describe 'Dashboard Files' do
         it 'Displays the correct results' do
           page_should_only_list file
         end
+        it 'allows me to remove constraints' do
+          find('span.glyphicon-remove').click
+          page.should_not have_content "You searched for:"
+        end
       end
 
       context 'When I search by Creator' do

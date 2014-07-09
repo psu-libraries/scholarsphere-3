@@ -37,6 +37,10 @@ describe 'Collection viewing and searching:' do
       page.should have_content "Total Items 2"
       page.should have_content "Size 4.13 KB"
     end
+    specify "I should see the collection name when viewing the file" do
+      go_to_dashboard_files
+      page.should have_content "Is part of: #{title}"
+    end
   end
 
   describe 'When searching within a collection' do

@@ -1,6 +1,7 @@
 namespace :jetty do
   desc "Apply all configs to Testing Server (relies on hydra:jetty:config tasks unless you override it)"
   task :config do
+    Rake::Task['sufia:jetty:download_jars'].invoke
     Rake::Task["hydra:jetty:config"].invoke
     Rake::Task["scholarsphere:jetty:config"].invoke
   end

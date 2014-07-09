@@ -428,24 +428,16 @@ describe GenericFile do
       @file.delete
     end
     describe "after job runs" do
-      before(:each) do
-        myfile = GenericFile.new
-        myfile.add_file_datastream(File.new(Rails.root + 'spec/fixtures/scholarsphere/scholarsphere_test4.pdf'), dsid:'content')
-        myfile.label = 'label123'
-        myfile.thumbnail.size.nil?.should be_true
-        myfile.apply_depositor_metadata('mjg36')
-        myfile.characterize
-        #myfile.save
-        @myfile = myfile
+      # File.new(Rails.root + 'spec/fixtures/scholarsphere/scholarsphere_test4.pdf')
+      before(:all) do
+        @myfile = GenericFile.new
+        @myfile.add_file(File.open(fixture_path + '/scholarsphere/scholarsphere_test4.pdf', 'rb').read, 'content', 'sufia_test4.pdf')
+        @myfile.label = 'label123'
+        @myfile.apply_depositor_metadata('mjg36')
+        @myfile.characterize
       end
-      after(:each) do
-        unless @myfile.inner_object.kind_of? ActiveFedora::UnsavedDigitalObject
-          begin
-            @myfile.delete
-          rescue ActiveFedora::ObjectNotFoundError
-            # do nothing
-          end
-        end
+      after(:all) do
+        @myfile.destroy
       end
       it "should return expected results after a save" do
         @myfile.file_size.should == ['218882']

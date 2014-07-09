@@ -33,6 +33,7 @@ class GenericFile < ActiveFedora::Base
     ProxyDepositRequest.create!(pid: pid, receiving_user: target, sending_user: deposit_user)
   end
 
+  # TODO: This differs slightly from Sufia's #characterize. Why? Still relevant?
   def characterize
     metadata = self.content.extract_metadata
     self.characterization.ng_xml = metadata unless metadata.blank?
@@ -40,15 +41,6 @@ class GenericFile < ActiveFedora::Base
     self.filename = self.label
     extract_content
     save unless self.new_record?
-  end
-
-  def per_version(&block)
-    self.datastreams.each do |dsid, ds|
-      next if ds == full_text
-      ds.versions.each do |ver|
-        block.call(ver)
-      end
-    end
   end
 
   def create_pdf_thumbnail
@@ -90,19 +82,6 @@ class GenericFile < ActiveFedora::Base
 
     self.thumbnail.content = File.open(output_file, 'rb').read
     self.thumbnail.mimeType = 'image/png'
-  end
-
-  def extract_content
-    begin
-      url = blacklight_solr_config[:url] ? Blacklight.solr_config[:url] : Blacklight.solr_config["url"] ? Blacklight.solr_config["url"] : Blacklight.solr_config[:fulltext] ? Blacklight.solr_config[:fulltext]["url"] : Blacklight.solr_config[:default]["url"]
-      uri = URI(url+'/update/extract?extractOnly=true&wt=ruby&extractFormat=text')
-      req = Net::HTTP.new(uri.host, uri.port)
-      resp = req.post(uri.to_s, self.content.content, {'Content-type'=>self.mime_type+';charset=utf-8', "Content-Length"=>"#{self.content.content.size}" })
-      extracted_text = eval(resp.body)[""].rstrip
-      full_text.content = extracted_text if extracted_text.present?
-    rescue Exception => e
-      logger.warn ("Resued exception while extracting content for #{self.pid}: #{e.inspect} ")
-    end
   end
 
   # Unstemmed, searchable, stored

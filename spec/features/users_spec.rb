@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative 'feature_spec_helper'
 
 describe "User Profile" do
   let(:admin_user) { create :administrator }
@@ -7,7 +8,6 @@ describe "User Profile" do
 
   before do
     sign_in_as admin_user
-
     visit "/"
   end
 
@@ -19,7 +19,7 @@ describe "User Profile" do
         conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user_name
       end
       conn.commit
-      click_link admin_user.display_name
+      go_to_user_profile
     end
     after do
       12.times do |t|
@@ -36,7 +36,7 @@ describe "User Profile" do
 
   context "any user" do
     before do
-      click_link admin_user.display_name
+      go_to_user_profile
     end
 
     it "should be editable", js:false do
@@ -45,7 +45,6 @@ describe "User Profile" do
       click_button 'Save Profile'
       click_link 'Profile'
       expect(page).to have_content "Your profile has been updated"
-      pending "Tabs on profile do not work so we can not get to the profile tab.  Remove pending once this is closed: https://github.com/projecthydra/sufia/issues/514"
       expect(page).to have_content "curatorOfData"
     end
 
@@ -74,11 +73,9 @@ describe "User Profile" do
     context "User with trophies" do
       let(:file1) {create_file admin_user, {title: 'file title'}}
       let!(:trophy) {Trophy.create! user_id: admin_user.id, generic_file_id: file1.noid}
-
+      
       it "allows to view profile with trophies" do
-        #revisiting the page to show the new trophy
-        click_link admin_user.display_name
-
+        go_to_user_profile
         expect(page).to have_css '.active a', text:"Contributions"
         expect(page).to have_content file1.title.first
       end
@@ -91,9 +88,7 @@ describe "User Profile" do
       before do
         u2.can_make_deposits_for << admin_user
         u2.save!
-
-        #revisiting the page to show the new proxy
-        click_link admin_user.display_name
+        go_to_user_profile
       end
       
       it "allows clicking on proxy tab" do
@@ -108,9 +103,7 @@ describe "User Profile" do
       let (:event) {admin_user.create_event(event_text, Time.now.to_i)}
       before do
         admin_user.log_profile_event(event)
-
-        #revisiting the page to show the new proxy
-        click_link admin_user.display_name
+        go_to_user_profile
       end
 
       it "allows clicking on activity tab" do
