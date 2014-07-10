@@ -33,9 +33,9 @@ describe 'proxy' do
       check("terms_of_service")
       select(second_user.login, from: 'on_behalf_of')
       test_file_path = Rails.root.join('spec/fixtures/world.png').to_s
-      page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileselect");})
+      page.execute_script(%Q{$("input[type=file]").first().css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").first().attr('id',"fileselect");})
       attach_file("fileselect", test_file_path)
-      page.first('.start').click
+      click_button("main_upload_start")
       page.should have_content('Apply Metadata')
       fill_in('generic_file_title', with: 'MY Title for the World')
       fill_in('generic_file_tag', with: 'test')

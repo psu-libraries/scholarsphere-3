@@ -14,10 +14,11 @@
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
 
 	<!--these fields are hard coded in places in hydra-head -->
-	<field name="active_fedora_model_ssi" type="string" stored="true" indexed="true" multiValued="false"/>
+	<field name="active_fedora_model_s" type="string" stored="true" indexed="true"/>
 	<field name="object_profile_display" type="string" stored="true" indexed="true"/>
-	<field name="has_model_ssim" type="string" stored="true" indexed="true" multiValued="true"/>
+	<field name="has_model_s" type="string" stored="true" indexed="true"/>
 	<field name="is_governed_by_s" type="string" stored="true" indexed="true"/>
+      
 	
 	<!--
 	These are hard coded in places in hydra-head, but we hope to fix that.
@@ -172,6 +173,7 @@
 
     <!-- you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
     <field name="all_text_timv" type="text" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
+
   </fields>
 
   <!-- START hydra deprecated items -->
@@ -194,11 +196,7 @@
 <!--  
   <copyField source="pub_date" dest="pub_date_sort"/>
 -->
-    <!-- uncomment the following to ignore any fields that don't already match an existing
-         field name or dynamic field, rather than reporting them as an error.
-         alternately, change the type="ignored" to some other type e.g. "text" if you want
-         unknown fields indexed and/or stored by default -->
-    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
+
   <!-- spellcheck fields -->
   <!-- default spell check;  should match fields for default request handler -->
   <!-- it won't work with a copy of a copy field -->

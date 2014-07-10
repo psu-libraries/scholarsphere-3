@@ -3,9 +3,9 @@
   <!-- NOTE: various comments and unused configuration possibilities have been purged
      from this file.  Please refer to http://wiki.apache.org/solr/SolrConfigXml,
      as well as the default solrconfig file included with Solr -->
-  
+
   <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
-  
+
   <luceneMatchVersion>LUCENE_40</luceneMatchVersion>
 
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
@@ -13,6 +13,7 @@
   <!-- solr lib dirs -->
   <lib dir="../lib/contrib/analysis-extras/lib" />
   <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
+  <!-- for full-text indexing -->
   <lib dir="../lib/contrib/extraction/lib" regex=".*\.jar" />
 
   <dataDir>${solr.data.dir:}</dataDir>
@@ -31,7 +32,7 @@
        <float name="tie">0.01</float>
        <!-- this qf and pf are used by default, if not otherwise specified by
             client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc 
+            "keywords" search. See the author_qf/author_pf, title_qf, etc
             below, which the default blacklight_config will specify for
             those searches. You may also be interested in:
             http://wiki.apache.org/solr/LocalParams
@@ -58,9 +59,9 @@
        </str>
        <str name="subject_pf">
        </str>
-       
+
        <str name="fl">
-         *, 
+         *,
          score
        </str>
 
@@ -69,7 +70,7 @@
        <str name="facet.limit">10</str>
        <str name="facet.field">active_fedora_model_ssi</str>
        <str name="facet.field">object_type_si</str>
-       
+
        <str name="spellcheck">true</str>
        <str name="spellcheck.dictionary">default</str>
        <str name="spellcheck.onlyMorePopular">true</str>
@@ -95,8 +96,8 @@
         discover_access_group_ssim,discover_access_person_ssim,
         read_access_group_ssim,read_access_person_ssim,
         edit_access_group_ssim,edit_access_person_ssim,
-        depositor_tesim,
-        embargo_release_date_dtsi,
+        depositor_ti,
+        embargo_release_date_dtsi
         inheritable_access_ssim,
         inheritable_discover_access_group_ssim,inheritable_discover_access_person_ssim,
         inheritable_read_access_group_ssim,inheritable_read_access_person_ssim,
@@ -106,9 +107,9 @@
     </lst>
   </requestHandler>
 
-  <requestHandler name="/update/extract"                   startup="lazy"                  class="org.apache.solr.handler.extraction.ExtractingRequestHandler" >
+<requestHandler name="/update/extract" startup="lazy" class="org.apache.solr.handler.extraction.ExtractingRequestHandler" >
     <lst name="defaults">
-      <!-- All the main content goes into "text"... if you need to return           the extracted text or do highlighting, use a stored field. -->
+      <!-- All the main content goes into "text"... if you need to return the extracted text or do highlighting, use a stored field. -->
       <str name="fmap.content">text</str>
       <str name="lowernames">true</str>
       <str name="uprefix">ignored_</str>
@@ -118,7 +119,7 @@
       <str name="fmap.div">ignored_</str>
     </lst>
  </requestHandler>
- 
+
   <requestHandler name="standard" class="solr.SearchHandler">
      <lst name="defaults">
        <str name="echoParams">explicit</str>
@@ -135,7 +136,6 @@
       <str name="q">{!raw f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
     </lst>
   </requestHandler>
-
 
   <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
     <str name="queryAnalyzerFieldType">textSpell</str>
@@ -161,16 +161,16 @@
     </arr>
   </requestHandler>
 
-  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" /> 
-  
+  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
+
   <requestDispatcher handleSelect="true" >
     <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048" />
   </requestDispatcher>
-  
+
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
   <requestHandler name="/update" class="solr.UpdateRequestHandler"  />
   <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />
-  
+
   <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
     <lst name="invariants">
       <str name="q">solrpingquery</str>
@@ -179,10 +179,10 @@
       <str name="echoParams">all</str>
     </lst>
   </requestHandler>
-  
-  <!-- config for the admin interface --> 
+
+  <!-- config for the admin interface -->
   <admin>
     <defaultQuery>search</defaultQuery>
   </admin>
-  
+
 </config>

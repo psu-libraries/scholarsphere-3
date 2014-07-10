@@ -43,4 +43,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean if  Capybara.current_driver == :rack_test
   end
 
+  config.after(:each) do
+    sleep 0.1
+    Capybara.reset_sessions!
+    sleep 0.1
+    page.driver.reset!
+    sleep 0.1
+  end
+
 end

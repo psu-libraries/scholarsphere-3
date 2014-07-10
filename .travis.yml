@@ -7,6 +7,10 @@ env:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - JS=true
     - CONTINUOUS_INTEGRATION=true
+  matrix:
+    - TEST_SUITE=mainfeature
+    - TEST_SUITE=subfeature
+    - TEST_SUITE=unit
 before_install:
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install libclamav-dev clamav-freshclam
@@ -22,8 +26,10 @@ before_script:
   - travis_retry bundle exec rails g hydra:jetty
 services:
   - redis-server
+matrix:
+  fast_finish: true
 script:
-  - "bundle exec rake scholarsphere:ci"
+  - "bundle exec rake scholarsphere:travis:$TEST_SUITE"
 notifications:
   email:
     recipients:
