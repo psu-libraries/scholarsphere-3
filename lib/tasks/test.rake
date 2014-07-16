@@ -32,6 +32,7 @@ namespace :scholarsphere do
 
     desc "Run a set of tasks to prepare for testing"
     task prep: :environment do
+      Rake::Task["jetty:clean"].invoke
       Rake::Task["jetty:config"].invoke
       Rake::Task["db:migrate"].invoke
       Rake::Task["scholarsphere:fits_conf"].invoke

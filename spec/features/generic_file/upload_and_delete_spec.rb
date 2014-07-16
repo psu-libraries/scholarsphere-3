@@ -23,6 +23,7 @@ describe 'Generic File uploading and deletion:' do
       end
 
       specify 'I can view the help modals' do
+        pending "Needs Hector's fix"
         page.should have_css('#rightsModal.modal[aria-hidden*="true"]', visible: false)
         click_link('License Descriptions')
         sleep(1) #TODO this should be something better than a sleep
@@ -31,6 +32,7 @@ describe 'Generic File uploading and deletion:' do
         sleep(1) #TODO this should be something better than a sleep
         page.should_not have_content('ScholarSph7ere License Descriptions')
         page.should have_css('#rightsModal', visible: false)
+        save_and_open_page
         click_link("What's this")
         sleep(1) #TODO this should be something better than a sleep
         page.should have_content('ScholarSphere Permissions')

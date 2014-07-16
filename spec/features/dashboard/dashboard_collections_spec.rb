@@ -20,6 +20,7 @@ describe 'Dashboard Collections:' do
       page.should have_content("Upload")
       page.should have_content("Create Collection")
     end
+    page.should_not have_selector(".batch-toggle")
   end
 
   specify 'collections are displayed in the Collections list' do

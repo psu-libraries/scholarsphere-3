@@ -105,3 +105,4 @@ public/sitemap.xml
 mini_magick*.png
 
 bin/
+jetty

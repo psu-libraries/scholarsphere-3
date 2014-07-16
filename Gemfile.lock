@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 6c9b299583e13681a8ba97087d287e535d84d39b
-  ref: 6c9b299583e13681a8ba97087d287e535d84d39b
+  revision: 4fcbabcd1feee4f69c97af36cf297ff5f38fbcc0
+  ref: 4fcbabcd1feee4f69c97af36cf297ff5f38fbcc0
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -166,7 +166,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (0.3.19)
+    capybara-screenshot (0.3.20)
       capybara (>= 1.0, < 3)
       launchy
     carrierwave (0.9.0)
@@ -182,10 +182,10 @@ GEM
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
+    coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
+    coffee-script-source (1.7.1)
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -348,7 +348,7 @@ GEM
       carrierwave (>= 0.5.8)
       foreigner (>= 0.9.1)
       rails (>= 3.2.0)
-    mediashelf-loggable (0.4.9)
+    mediashelf-loggable (0.4.10)
     mime-types (1.25.1)
     mimemagic (0.2.1)
     mini_magick (3.7.0)
@@ -477,7 +477,7 @@ GEM
       rake
       resque (~> 1.20)
       trollop (~> 1.16)
-    rest-client (1.7.1)
+    rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (1.4.1)
@@ -591,7 +591,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     trollop (1.16.2)
-    tzinfo (0.3.39)
+    tzinfo (0.3.40)
     uber (0.0.7)
     uglifier (2.3.2)
       execjs (>= 0.3.0)
