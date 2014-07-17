@@ -22,25 +22,32 @@ describe 'Generic File uploading and deletion:' do
         page.should have_content 'Apply Metadata'
       end
 
-      specify 'I can view the help modals' do
-        pending "Needs Hector's fix"
-        page.should have_css('#rightsModal.modal[aria-hidden*="true"]', visible: false)
-        click_link('License Descriptions')
-        sleep(1) #TODO this should be something better than a sleep
-        page.should have_content('ScholarSphere License Descriptions')
+      specify 'I can view help for rights, visibility, and share with' do
+        # If these tests start to randomly fail please consider re-adding
+        # the calls to sleep and save_and_open that I removed because they
+        # slowed down the execution of the tests. - Hector 7/7/2014
+
+        # Rights (i.e. License Descriptions) is a modal form
+        # with a close button.
+        expect(page).to have_css('#rightsModal', visible: false)
+        find('#generic_file_rightsModal_help_modal').click()
+        expect(page).to have_css('#rightsModal', visible: true)
         click_on('Close')
-        sleep(1) #TODO this should be something better than a sleep
-        page.should_not have_content('ScholarSph7ere License Descriptions')
-        page.should have_css('#rightsModal', visible: false)
-        save_and_open_page
-        click_link("What's this")
-        sleep(1) #TODO this should be something better than a sleep
-        page.should have_content('ScholarSphere Permissions')
-        click_on('Close')
-        sleep(1) #TODO this should be something better than a sleep
-        page.should_not have_content('ScholarSphere Permissions')
-        page.should have_css('#myModal', visible: false)
-        page.should have_css('#myModal.modal[aria-hidden*="true"]', visible: false)
+        expect(page).to have_css('#rightsModal', visible: false)
+
+        # Visibility is a tooltip. Click on it once to show it,
+        # click again to hide it.
+        find('#generic_file_visibility_help').click()
+        expect(page).to have_css('h3.popover-title', text: 'Visibility')
+        find('#generic_file_visibility_help').click()
+        expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+
+        # Share With is a tooltip. Click on it once to show it,
+        # click again to hide it.
+        find('#generic_file_share_with_help').click()
+        expect(page).to have_css('h3.popover-title', text: 'Share with')
+        find('#generic_file_share_with_help').click()
+        expect(page).to_not have_css('h3.popover-title', text: 'Share with')
       end
 
     end
