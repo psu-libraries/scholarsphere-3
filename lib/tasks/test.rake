@@ -2,7 +2,6 @@ namespace :scholarsphere do
   if defined?(RSpec)
     # Only load these files in testing environments
     require 'rspec/core/rake_task'
-    require 'jettywrapper'
 
     desc "Run specs"
     RSpec::Core::RakeTask.new(:rspec) do |t|

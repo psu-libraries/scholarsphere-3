@@ -51,7 +51,7 @@
       <td><%= req.sender_comment %></td>
     </tr>
     <% else %>
-      <% logger.error "A proxy request has no sender: #{req.inspect}" %>
+      <% Rails.logger.error "A proxy request has no sender: #{req.inspect}" %>
     <% end %>
   <% end %>
   </tbody> 

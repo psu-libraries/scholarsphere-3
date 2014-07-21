@@ -93,14 +93,14 @@ class User < ActiveRecord::Base
       Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
     end rescue false
     if Hydra::LDAP.connection.get_operation_result.code == 0
-      logger.debug "exist = #{exist}"
+      Rails.logger.debug "exist = #{exist}"
       attrs = {}
       attrs[:ldap_available] = exist
       attrs[:ldap_last_update] = Time.now
       update_attributes(attrs)
       # TODO: Should we retry here if the code is 51-53???
     else
-      logger.warn "LDAP error checking exists for #{login}, reason (code: #{Hydra::LDAP.connection.get_operation_result.code}): #{Hydra::LDAP.connection.get_operation_result.message}"
+      Rails.logger.warn "LDAP error checking exists for #{login}, reason (code: #{Hydra::LDAP.connection.get_operation_result.code}): #{Hydra::LDAP.connection.get_operation_result.message}"
       return false
     end
     return exist
@@ -120,14 +120,14 @@ class User < ActiveRecord::Base
 
     if Hydra::LDAP.connection.get_operation_result.code == 0
       list.sort!
-      logger.debug "$#{login}$ groups = #{list}"
+      Rails.logger.debug "$#{login}$ groups = #{list}"
       attrs = {}
       attrs[:group_list] = list.join(";?;")
       attrs[:groups_last_update] = Time.now
       update_attributes(attrs)
       # TODO: Should we retry here if the code is 51-53???
     else
-      logger.warn "Error getting groups for #{login} reason: #{Hydra::LDAP.connection.get_operation_result.message}"
+      Rails.logger.warn "Error getting groups for #{login} reason: #{Hydra::LDAP.connection.get_operation_result.message}"
       return []
     end
     return list
@@ -145,13 +145,13 @@ class User < ActiveRecord::Base
   def populate_attributes
     #update exist cache
     exist = ldap_exist!
-    logger.warn "No ldapentry exists for #{login}" unless exist
+    Rails.logger.warn "No ldapentry exists for #{login}" unless exist
     return unless exist
 
     begin
       entry = directory_attributes.first
     rescue
-      logger.warn "Error getting directory entry: #{Hydra::LDAP.connection.get_operation_result.message}"
+      Rails.logger.warn "Error getting directory entry: #{Hydra::LDAP.connection.get_operation_result.message}"
       return
     end
 

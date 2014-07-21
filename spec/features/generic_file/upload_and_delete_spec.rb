@@ -30,23 +30,23 @@ describe 'Generic File uploading and deletion:' do
         # Rights (i.e. License Descriptions) is a modal form
         # with a close button.
         expect(page).to have_css('#rightsModal', visible: false)
-        find('#generic_file_rightsModal_help_modal').click()
+        find('#generic_file_rightsModal_help_modal').trigger('click')
         expect(page).to have_css('#rightsModal', visible: true)
         click_on('Close')
         expect(page).to have_css('#rightsModal', visible: false)
 
         # Visibility is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_visibility_help').click()
+        find('#generic_file_visibility_help').trigger('click')
         expect(page).to have_css('h3.popover-title', text: 'Visibility')
-        find('#generic_file_visibility_help').click()
+        find('#generic_file_visibility_help').trigger('click')
         expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
 
         # Share With is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_share_with_help').click()
+        find('#generic_file_share_with_help').trigger('click')
         expect(page).to have_css('h3.popover-title', text: 'Share with')
-        find('#generic_file_share_with_help').click()
+        find('#generic_file_share_with_help').trigger('click')
         expect(page).to_not have_css('h3.popover-title', text: 'Share with')
       end
 

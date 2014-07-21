@@ -24,9 +24,9 @@ class Ability
   end
 
   def editor_abilities
-    logger.warn "#### \n \n Groups #{user_groups} \n\n"
+    Rails.logger.warn "#### \n \n Groups #{user_groups} \n\n"
     if user_groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
-      logger.warn "\n\ngot to editor abilities\n\n"
+      Rails.logger.warn "\n\ngot to editor abilities\n\n"
       can :create, TinymceAsset
       can :update, ContentBlock
     end

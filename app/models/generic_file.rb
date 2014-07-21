@@ -57,11 +57,10 @@ class GenericFile < ActiveFedora::Base
          thumb = first.scale scale
          thumb.crop!(0, 0, 338, 493)
          self.thumbnail.content = thumb.to_blob { self.format = "PNG" }
-         #logger.debug "Has the content changed before saving? #{self.content.changed?}"
          stat = self.save
          break
        rescue => e
-         logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
+         Rails.logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
          sleep 1
        end
      end
