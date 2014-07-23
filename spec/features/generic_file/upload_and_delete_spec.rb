@@ -27,14 +27,6 @@ describe 'Generic File uploading and deletion:' do
         # the calls to sleep and save_and_open that I removed because they
         # slowed down the execution of the tests. - Hector 7/7/2014
 
-        # Rights (i.e. License Descriptions) is a modal form
-        # with a close button.
-        expect(page).to have_css('#rightsModal', visible: false)
-        find('#generic_file_rightsModal_help_modal').trigger('click')
-        expect(page).to have_css('#rightsModal', visible: true)
-        click_on('Close')
-        expect(page).to have_css('#rightsModal', visible: false)
-
         # Visibility is a tooltip. Click on it once to show it,
         # click again to hide it.
         find('#generic_file_visibility_help').trigger('click')
@@ -48,6 +40,17 @@ describe 'Generic File uploading and deletion:' do
         expect(page).to have_css('h3.popover-title', text: 'Share with')
         find('#generic_file_share_with_help').trigger('click')
         expect(page).to_not have_css('h3.popover-title', text: 'Share with')
+
+        # Rights (i.e. License Descriptions) is a modal form
+        # with a close button.
+        expect(page).to_not have_css('#rightsModal')
+        find('#generic_file_rightsModal_help_modal').click()
+        expect(page).to have_css('#rightsModal')
+        expect(page).to have_content('Creative Commons licenses can take the following combinations')
+        click_on('Close')
+        # sleep(1) # Might need to add this again if this fails in Jenkins
+        expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
+        page.should_not have_selector(:css, '#rightsModal')
       end
 
     end
