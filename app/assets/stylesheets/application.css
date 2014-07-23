@@ -10,7 +10,6 @@
  *
  *= require_self
  *= require batch_edit
- *= require dashboard
  *= require editor
  *= require generic_file_show
  *= require generic_files

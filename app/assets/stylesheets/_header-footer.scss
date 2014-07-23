@@ -1,0 +1,95 @@
+#masthead {
+  background: $dark-blue;
+
+  #user_utility_links {
+    margin-top: 1em;
+  }
+}
+
+#masthead_controls {
+  background-color: $basic-black;
+  border-top: 2px solid $medium-blue;
+  border-bottom: 2px solid $medium-blue;
+  #search-submit-header {
+    border-top: 1px solid $middle-gray;
+    border-bottom: 1px solid $middle-gray;
+  }
+  .navbar {
+    background-color: $basic-black;
+
+    li {
+      border-right: 2px solid $medium-blue;
+    }
+    li:first-child {
+      border-left: 2px solid $medium-blue;
+    }
+    a:link, a:visited {
+      background-color: $medium-blue-bright;
+    }
+    a:hover {
+      background-color: $highlight-yellow;
+      color: $basic-black;
+    }
+  }
+}
+
+#shield img {
+  float: left;
+  margin-top: 15px;
+}
+
+.logo a:link, .logo a:visited {
+  color: $classic-white;
+  display: block;
+  font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
+  font-size: 2em;
+  font-weight: 300;
+  text-decoration: none;
+  padding-top: .5em;
+}
+
+.logoBold {
+  font-weight: 500;
+}
+
+#footer {
+  background: $dark-blue;
+  a:link, a:visited {
+    color: $classic-white;
+  }
+}
+
+div.footer-logo span.logo {
+  float: left;
+  margin-top: -.95em;
+}
+
+span.version {
+  padding: .5em;
+
+  a:link, a:visited {
+    text-decoration: underline;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+span.version + p {
+  clear: both;
+}
+
+div.footer-text {
+  a:link, a:visited {
+    text-decoration: underline;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  ul {
+    padding-left: 0;
+  }
+  li {
+    display: inline;
+  }
+}
