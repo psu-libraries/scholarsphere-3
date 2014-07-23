@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 93dd6262453e93000da9609fc4df72ce8c74a901
-  ref: 93dd6262453e93000da9609fc4df72ce8c74a901
+  revision: 8acaafe1bfa30923088c3641357ca66a5797e7cf
+  ref: 8acaafe1bfa30923088c3641357ca66a5797e7cf
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -321,7 +321,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
-    legato (0.3.1)
+    legato (0.3.2)
       multi_json
     libv8 (3.16.14.3)
     linkeddata (1.1.1)

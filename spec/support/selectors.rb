@@ -66,7 +66,7 @@ module Selectors
   module EditCollections
 
     def ec_update_submit
-      within '.col-xs-12.col-sm-8' do
+      within '.col-xs-12.col-sm-10' do
         within '.primary-actions' do
           find_button 'Update Collection'
         end
