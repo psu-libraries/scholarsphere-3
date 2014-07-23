@@ -105,7 +105,7 @@ after "rbenv:setup", "passenger:install"
 after "deploy:restart", "passenger:warmup"
 
 # Keep the last X number of releases.
-set :keep_releases, 5
-#after "passenger:warmup", "deploy:cleanup"
+set :keep_releases, 7
+after "passenger:warmup", "deploy:cleanup"
 
 # end
