@@ -48,7 +48,7 @@ describe 'Generic File uploading and deletion:' do
         expect(page).to have_css('#rightsModal')
         expect(page).to have_content('Creative Commons licenses can take the following combinations')
         click_on('Close')
-        # sleep(1) # Might need to add this again if this fails in Jenkins
+        sleep(1) # Might need to add this again if this fails in Jenkins
         expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
         page.should_not have_selector(:css, '#rightsModal')
       end

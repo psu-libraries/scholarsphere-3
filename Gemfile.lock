@@ -9,9 +9,18 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/projecthydra-labs/hydra-collections.git
+  revision: edf29d8bf229c6977d30658f478e0bd8006ab9ce
+  ref: edf29d8bf229c6977d30658f478e0bd8006ab9ce
+  specs:
+    hydra-collections (2.0.3)
+      blacklight
+      hydra-head (~> 7.0)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 8acaafe1bfa30923088c3641357ca66a5797e7cf
-  ref: 8acaafe1bfa30923088c3641357ca66a5797e7cf
+  revision: 59e20814cfe0bac8f8bd4f90eda26332e35c900a
+  ref: 59e20814cfe0bac8f8bd4f90eda26332e35c900a
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -171,8 +180,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (0.3.20)
+    capybara-screenshot (0.3.21)
       capybara (>= 1.0, < 3)
+      colorize
       launchy
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
@@ -191,6 +201,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
+    colorize (0.7.3)
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -277,9 +288,6 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (2.0.3)
-      blacklight
-      hydra-head (~> 7.0)
     hydra-core (7.2.0)
       block_helpers
       hydra-access-controls (= 7.2.0)
@@ -491,9 +499,9 @@ GEM
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (2.99.1)
-    rspec-expectations (2.99.1)
+    rspec-expectations (2.99.2)
       diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.99.1)
+    rspec-mocks (2.99.2)
     rspec-rails (2.99.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -644,7 +652,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections (= 2.0.3)
+  hydra-collections!
   hydra-derivatives (= 0.1.1)
   hydra-editor (= 0.3.0)
   hydra-ldap (= 0.1.0)
