@@ -10,7 +10,7 @@ describe 'catalog searching' do
   let!(:collection) do
     Collection.new.tap do|col|
       col.apply_depositor_metadata(user.user_key)
-      col.title = "collection title"
+      col.title = ["collection title"]
       col.tag = ["tag3","tag4"]
       col.save!
     end

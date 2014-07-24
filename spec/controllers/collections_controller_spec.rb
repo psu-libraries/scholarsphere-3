@@ -134,7 +134,7 @@ describe CollectionsController do
       @asset4.apply_depositor_metadata(@user.user_key)
       @asset4.save
       @collection = Collection.new
-      @collection.title = "My collection"
+      @collection.title = ["My collection"]
       @collection.description = "My incredibly detailed description of the collection"
       @collection.apply_depositor_metadata(@user.user_key)
       @collection.members = [@asset1,@asset2,@asset3]
@@ -165,8 +165,8 @@ describe CollectionsController do
   describe "#edit" do
     before do
       @collection = Collection.new
-      @collection.title = "My collection"
-      @collection.description = "My incredibly detailed description of the collection"
+      @collection.title = ["My collection"]
+      @collection.description = ["My incredibly detailed description of the collection"]
       @collection.apply_depositor_metadata(@user.user_key)
       @collection.save
     end

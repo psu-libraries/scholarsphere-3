@@ -103,7 +103,7 @@ describe BatchController do
     describe "when user does not have edit permissions on a file" do
       it "should not modify the object" do
         file = GenericFile.find(@file2.pid)
-        file.title = "Original Title"
+        file.title = ["Original Title"]
         file.read_groups.should == []
         file.save
         post :update, id:@batch.pid, "generic_file"=>{"read_groups_string"=>"group1, group2", "read_users_string"=>"", "tag"=>[""]}, "title"=>{@file2.pid=>"Title Wont Change"}

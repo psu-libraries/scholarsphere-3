@@ -9,31 +9,16 @@ describe 'unified search', describe_options do
 
   describe 'all files' do
     let(:subject_value) { 'fffzzz' }
+    let(:user) { create :jill }
+    let(:other_user) { create :archivist }
 
     before(:each) do
-      @gf1 =  GenericFile.new.tap do |f|
-        f.title = 'title 1 abc'
-        f.apply_depositor_metadata('jilluser')
-        f.tag = subject_value
-        f.read_groups = ['public']
-        f.save
-      end
-      @gf2 =  GenericFile.new.tap do |f|
-        f.title = 'title 2 abc'
-        f.tag = subject_value
-        f.apply_depositor_metadata('jilluser')
-        f.save
-      end
-      @gf3 =  GenericFile.new.tap do |f|
-        f.title = 'title 3 abc'
-        f.apply_depositor_metadata('otheruser')
-        f.tag = subject_value
-        f.read_groups = ['public']
-        f.save
-      end
+      @gf1 = create_file user, { title: 'title 1 abc', tag: [subject_value] }
+      @gf2 = create_file user, { title: 'title 2 abc', tag: [subject_value], read_groups: ['private'] }
+      @gf3 = create_file other_user, { title: 'title 3 abc', tag: [subject_value] }
       @collection =  Collection.new.tap do |f|
         f.title = 'collection title abc'
-        f.apply_depositor_metadata('jilluser')
+        f.apply_depositor_metadata(user.login)
         f.description = subject_value
         f.read_groups = ['public']
         f.members = [@gf1, @gf2]
