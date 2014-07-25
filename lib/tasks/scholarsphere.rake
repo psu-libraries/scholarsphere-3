@@ -20,6 +20,12 @@ include ActionView::Helpers::NumberHelper
 include Blacklight::SolrHelper
 
 namespace :scholarsphere do
+
+  # adding a logger since it got removed from our gemset
+  def logger
+    Rails.logger
+  end
+
   desc "Restore missing user accounts"
   task restore_users: :environment do
     # Query Solr for unique depositors
