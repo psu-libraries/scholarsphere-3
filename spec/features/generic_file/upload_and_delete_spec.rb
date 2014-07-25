@@ -118,6 +118,11 @@ describe 'Generic File uploading and deletion:' do
       specify 'I can upload a file successfully' do
         page.should have_css '#documents'
         page.should have_content filename
+        click_link "dashboard_link"
+        page.should have_css "table#activity"
+        within ("table#activity") do
+          page.should have_content filename
+        end
       end
 
       specify 'I can delete an uploaded file' do
