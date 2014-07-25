@@ -20,7 +20,7 @@ describe "User Statistics" do
     end
     it "should include the number of files deposited" do
       within('tr', text:"Files you've deposited") do
-        expect(page).to have_selector('td span.label', text:"12")
+        expect(page).to have_selector('td span.badge', text:"12")
       end
     end
   end
@@ -32,13 +32,13 @@ describe "User Statistics" do
     end
     it "should include the number of people who are following the user" do
       within('tr', text:"People you follow") do
-        expect(page).to have_selector('td span.label', text:"0")
+        expect(page).to have_selector('td span.badge', text:"0")
       end
     end
 
     it "should include the number of people whom the user is following" do
       within('tr', text:"People who are following you") do
-        expect(page).to have_selector('td span.label', text:"0")
+        expect(page).to have_selector('td span.badge', text:"0")
       end
     end
 
