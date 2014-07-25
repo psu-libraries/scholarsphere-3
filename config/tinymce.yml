@@ -1,7 +1,7 @@
 menubar: false
-toolbar1: bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | cut copy paste |  bullist numlist
-toolbar2: styleselect formatselect fontselect fontsizeselect
-toolbar3: table | hr removeformat | subscript superscript | link uploadimage | outdent indent blockquote | undo redo | forecolor backcolor
+toolbar1: fontselect | fontsizeselect | alignleft aligncenter alignright alignjustify | cut copy paste
+toolbar2: bold italic underline strikethrough | bullist numlist | hr removeformat | subscript superscript | link uploadimage | table
+toolbar3: styleselect | formatselect |  outdent indent | blockquote | undo redo  | forecolor backcolor
 
 #toolbar1: styleselect | bold italic | undo redo | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent
 #toolbar2: table | fullscreen | uploadimage
@@ -10,4 +10,5 @@ plugins:
   - fullscreen
   - uploadimage
   - link
+  - textcolor
 uploadimage_default_img_class: "tinymce-img"
