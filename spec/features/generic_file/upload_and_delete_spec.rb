@@ -51,12 +51,22 @@ describe 'Generic File uploading and deletion:' do
         # with a close button.
         expect(page).to_not have_css('#rightsModal')
         find('#generic_file_rightsModal_help_modal').click()
+        modal = find('#rightsModal')
+        expect(modal[:style]).to match(/display: block/)
         expect(page).to have_css('#rightsModal')
         expect(page).to have_content('Creative Commons licenses can take the following combinations')
         click_on('Close')
-        sleep(1) # Might need to add this again if this fails in Jenkins
-        expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
-        page.should_not have_selector(:css, '#rightsModal')
+
+        expect(page).to have_no_css('#rightsModal')
+
+        # The following tests might work in your local environment
+        # but randomly fail in Travis/Jenkins
+        #
+        # modal_closed = find('#rightsModal', visible: false)
+        # expect(modal_closed[:style]).to match(/display: none/)
+        #
+        # expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
+        # page.should_not have_selector(:css, '#rightsModal')
       end
 
     end
