@@ -6,8 +6,8 @@ describe 'Generic File uploading and deletion:' do
 
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
-    let(:filename) { 'world.png' }
-    let(:file) { find_file_by_title "world.png" }
+    let(:filename) { 'little_file.txt' }
+    let(:file) { find_file_by_title "little_file.txt" }
 
     before do
       sign_in_as current_user
@@ -18,7 +18,9 @@ describe 'Generic File uploading and deletion:' do
         visit new_generic_file_path
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
+        redirect_url = find("#redirect-loc", visible:false).text
         click_button 'main_upload_start'
+        wait_for_page redirect_url
         page.should have_content 'Apply Metadata'
       end
 
@@ -56,8 +58,6 @@ describe 'Generic File uploading and deletion:' do
         expect(page).to have_css('#rightsModal')
         expect(page).to have_content('Creative Commons licenses can take the following combinations')
         click_on('Close')
-
-        expect(page).to have_no_css('#rightsModal')
 
         # The following tests might work in your local environment
         # but randomly fail in Travis/Jenkins

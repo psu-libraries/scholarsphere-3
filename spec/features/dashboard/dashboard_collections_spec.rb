@@ -10,7 +10,7 @@ describe 'Dashboard Collections:' do
     sign_in_as current_user
     go_to_dashboard
     click_link("Create Collection")
-    create_collection("My collection", current_user, "Personal collection of great things")
+    create_collection ["My collection"], current_user, ["Personal collection of great things"]
     go_to_dashboard_collections
   end
 

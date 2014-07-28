@@ -26,18 +26,18 @@ describe CatalogController do
   end
   describe "#index" do
     before(:each) do
-      @gf1 =  GenericFile.new(title:'Test Document PDF', filename:'test.pdf', read_groups:['public'])
+      @gf1 =  GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups:['public'])
       @gf1.apply_depositor_metadata('mjg36')
       @gf1.save
-      @gf2 =  GenericFile.new(title:'Test 2 Document', filename:'test2.doc', contributor:'Contrib2', read_groups:['public'])
+      @gf2 =  GenericFile.new(title: ['Test 2 Document'], filename: ['test2.doc'], contributor: ['Contrib2'], read_groups:['public'])
       @gf2.apply_depositor_metadata('mjg36')
       @gf2.save
-      @gf3 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag',
-                       based_near:"based_nearbased_near", language:"languagelanguage",
-                       creator:"creatorcreator", contributor:"contributorcontributor", publisher: "publisherpublisher",
-                       subject:"subjectsubject", resource_type:"resource_typeresource_type")
-      @gf3.description = "descriptiondescription"
-      @gf3.format_label = "format_labelformat_label"
+      @gf3 =  GenericFile.new(title: ['titletitle'], filename: ['filename.filename'], read_groups:['public'], tag: ['tagtag'],
+                       based_near: ["based_nearbased_near"], language: ["languagelanguage"],
+                       creator: ["creatorcreator"], contributor: ["contributorcontributor"], publisher: ["publisherpublisher"],
+                       subject: ["subjectsubject"], resource_type: ["resource_typeresource_type"])
+      @gf3.description = ["descriptiondescription"]
+      @gf3.format_label = ["format_labelformat_label"]
       @gf3.full_text.content = "full_textfull_text"
       @gf3.apply_depositor_metadata('mjg36')
       @gf3.save

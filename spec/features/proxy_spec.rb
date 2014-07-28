@@ -32,10 +32,12 @@ describe 'proxy' do
       page.should have_content('I have read')
       check("terms_of_service")
       select(second_user.login, from: 'on_behalf_of')
-      test_file_path = Rails.root.join('spec/fixtures/world.png').to_s
+      test_file_path = Rails.root.join('spec/fixtures/little_file.txt').to_s
       page.execute_script(%Q{$("input[type=file]").first().css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").first().attr('id',"fileselect");})
       attach_file("fileselect", test_file_path)
+      redirect_url = find("#redirect-loc", visible:false).text
       click_button("main_upload_start")
+      wait_for_page redirect_url
       page.should have_content('Apply Metadata')
       fill_in('generic_file_title', with: 'MY Title for the World')
       fill_in('generic_file_tag', with: 'test')

@@ -17,7 +17,7 @@ describe 'Collection creation and deletion:' do
     before do
       go_to_dashboard
       db_create_empty_collection_button.click
-      create_collection title, creator, description
+      create_collection [title], creator, [description]
     end
 
     specify 'I should see the new collection page' do
@@ -31,12 +31,13 @@ describe 'Collection creation and deletion:' do
   describe 'When creating a collection with files' do
     before do
       filenames.each do |filename|
-        upload_generic_file filename
+        create_file current_user, { title: [filename], creator: "#{filename}_creator" }
       end
+      go_to_dashboard_files
       check 'check_all'
       click_button 'Add to Collection'
       db_create_populated_collection_button.click
-      create_collection title, creator, description
+      create_collection [title], creator, [description]
     end
 
     specify 'I should see the collection page with the files' do
@@ -53,7 +54,7 @@ describe 'Collection creation and deletion:' do
     before do
       visit '/dashboard'
       db_create_empty_collection_button.click
-      create_collection title, creator, description
+      create_collection [title], creator, [description]
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Delete Collection'

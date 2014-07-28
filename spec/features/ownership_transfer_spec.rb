@@ -9,14 +9,15 @@ describe 'Transferring file ownership:' do
 
   let(:original_owner) { create :user, display_name: 'Original Owner' }
   let(:new_owner) { create :user, display_name: 'New Owner' }
+  let!(:file) { create_file original_owner, { title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" } }
 
   before do
     sign_in_as original_owner
-    upload_generic_file 'little_file.txt'
+    go_to_dashboard_files
   end
 
+
   describe 'When I request a file transfer:' do
-    let (:file) { GenericFile.last }
 
     context 'For a file I do not own' do
       specify 'The transfer option is not available' do
@@ -60,7 +61,6 @@ describe 'Transferring file ownership:' do
   end
 
   describe 'When someone requests a file transfer to me' do
-    let (:file) { GenericFile.last }
     before do
       # As the original_owner, transfer a file to the new_owner
       transfer_ownership_of_file file, new_owner

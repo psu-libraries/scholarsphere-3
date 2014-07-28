@@ -14,12 +14,13 @@ describe 'Collection viewing and searching:' do
   before do
     sign_in_as current_user
     filenames.each do |filename|
-      upload_generic_file filename
+      create_file current_user, { title: [filename], creator: "#{filename}_creator" }
     end
+    go_to_dashboard_files
     check 'check_all'
     click_button 'Add to Collection'
     db_create_populated_collection_button.click
-    create_collection title, creator, description
+    create_collection title, creator, [description]
     visit '/dashboard/collections'
     db_item_title(collection).click
   end
@@ -35,7 +36,7 @@ describe 'Collection viewing and searching:' do
       page.should have_content file_1.title.first
       page.should have_content file_2.title.first
       page.should have_content "Total Items 2"
-      page.should have_content "Size 4.13 KB"
+      page.should have_content "Size 0 Bytes"
     end
     specify "I should see the collection name when viewing the file" do
       go_to_dashboard_files

@@ -59,7 +59,7 @@ describe GenericFilesController do
       # This is confirming that the correct file was attached
       saved_file.label.should == 'world.png'
       saved_file.content.checksum.should == 'f794b23c0c6fe1083d0ca8b58261a078cd968967'
-      saved_file.content.dsChecksumValid.should be_true
+      saved_file.content.dsChecksumValid.should be_truthy
 
       # Confirming that date_uploaded and date_modified were set
       saved_file.date_uploaded.should_not be nil
@@ -144,7 +144,7 @@ describe GenericFilesController do
       response.should be_success
       lambda { JSON.parse(response.body) }.should_not raise_error
       audit_results = JSON.parse(response.body).collect { |result| result["pass"] }
-      audit_results.reduce(true) { |sum, value| sum && value }.should be_true
+      audit_results.reduce(true) { |sum, value| sum && value }.should be_truthy
     end
   end
 
@@ -189,7 +189,7 @@ describe GenericFilesController do
       Sufia.queue.should_receive(:push).with(s2).once
       @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
-      post :update, id:@generic_file.pid, generic_file:{title:'new_title', tag:[''], permissions:{new_user_name:{'archivist1'=>'edit'}}}
+      post :update, id:@generic_file.pid, generic_file:{title: ['new_title'], tag:[''], permissions:{new_user_name:{'archivist1'=>'edit'}}}
       @user.delete
     end
 

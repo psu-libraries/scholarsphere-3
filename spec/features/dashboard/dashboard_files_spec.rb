@@ -123,17 +123,12 @@ describe 'Dashboard Files' do
     describe 'Pagination:' do
       specify 'The files should be listed on multiple pages' do
         page.should have_css('.pagination')
-      end
-      context 'Increasing Show per page beyond my current number of files' do
-        before do
-          # current_user should only have 11 files
-          GenericFile.count.should == 11
-          select('20', :from => 'per_page')
-          find_button('Refresh').click
-        end
-        specify 'lists all the files on one page' do
-          page.should_not have_css('.pager')
-        end
+
+        #Increasing Show per page beyond my current number of files and I should not see a page
+        GenericFile.count.should == 11
+        select('20', :from => 'per_page')
+        find_button('Refresh').click
+        page.should_not have_css('.pager')
       end
     end
 
@@ -206,8 +201,12 @@ describe 'Dashboard Files' do
           'File Format'   => 'plain () (10)'
         }.each do |facet, value|
           within("#facets") do
+            #open facet
             click_link(facet)
-            page.should have_content(value)
+            page.should have_content(value, wait: Capybara.default_wait_time*2)
+
+            # for some reason the page needs to settle before we can click the next link in the list
+            sleep(1.second)
           end
         end
       end

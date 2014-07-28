@@ -1,9 +1,18 @@
 module GenericFilesHelper
+
+  def wait_for_page (redirect_url)
+    Timeout.timeout(Capybara.default_wait_time*4) do
+      loop until current_path == redirect_url
+    end
+  end
+
   def upload_generic_file filename
     visit new_generic_file_path
     check 'terms_of_service'
     attach_file 'files[]', test_file_path(filename)
+    redirect_url = find("#redirect-loc", visible:false).text
     click_button 'main_upload_start'
+    wait_for_page redirect_url
     page.should have_content 'Apply Metadata'
     fill_in 'generic_file_tag', with: filename + '_tag'
     fill_in 'generic_file_creator', with: filename + '_creator'

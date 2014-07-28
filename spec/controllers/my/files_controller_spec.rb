@@ -57,12 +57,12 @@ describe My::FilesController do
     describe "term search" do
       before (:each) do
         @user = FactoryGirl.find_or_create(:archivist)
-        @gf1 =  GenericFile.new(title: 'titletitle', filename:'filename.filename', read_groups:['public'], tag: 'tagtag', 
-                         based_near:"based_nearbased_near", language:"languagelanguage", 
-                         creator:"creatorcreator", contributor:"contributorcontributor", publisher: "publisherpublisher",
-                         subject:"subjectsubject", resource_type:"resource_typeresource_type", resource_type:"resource_typeresource_type")
-        @gf1.description = "descriptiondescription"
-        @gf1.format_label = "format_labelformat_label"
+        @gf1 =  GenericFile.new(title: ['titletitle'], filename: ['filename.filename'], read_groups:['public'], tag: 'tagtag',
+                         based_near: ["based_nearbased_near"], language: ["languagelanguage"],
+                         creator: ["creatorcreator"], contributor: ["contributorcontributor"], publisher: ["publisherpublisher"],
+                         subject: ["subjectsubject"], resource_type: ["resource_typeresource_type"], resource_type: ["resource_typeresource_type"])
+        @gf1.description = ["descriptiondescription"]
+        @gf1.format_label = ["format_labelformat_label"]
         @gf1.apply_depositor_metadata(@user.login)
         @gf1.save
       end
