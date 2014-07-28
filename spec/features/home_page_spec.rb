@@ -57,7 +57,7 @@ describe 'Visting the home page:' do
       let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
       specify 'tags are listed' do
         visit '/'
-        page.should have_content 'tagXtagYtagZ'
+        page.should have_content 'tagX tagY tagZ'
       end
 
       specify 'clicking on a tag goes to the right URL' do
