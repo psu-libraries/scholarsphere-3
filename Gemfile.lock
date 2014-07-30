@@ -19,8 +19,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: c1c7488db7a1210e48d13b53e829a108f941141d
-  ref: c1c7488db7a1210e48d13b53e829a108f941141d
+  revision: 0b21ef691e8778aaae5701648466d08dc7e5ce7b
+  ref: 0b21ef691e8778aaae5701648466d08dc7e5ce7b
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -141,7 +141,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
-    browse-everything (0.5.0)
+    browse-everything (0.5.1)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
@@ -437,7 +437,7 @@ GEM
     rainbow (1.1.4)
     raindrops (0.13.0)
     rake (10.3.2)
-    rdf (1.1.4.2)
+    rdf (1.1.4.3)
     rdf-aggregate-repo (1.1.0)
       rdf (>= 1.1)
     rdf-isomorphic (1.1.0)
