@@ -16,6 +16,8 @@ before_install:
   - travis_retry sudo apt-get install libclamav-dev clamav-freshclam
   - sudo bash -c 'echo Eicar-Test-Signature:0:0:58354f2150254041505b345c505a58353428505e2937434329377d2445494341522d5354414e444152442d414e544956495255532d544553542d46494c452124482b482a > /var/lib/clamav/test.ndb'
   - export PATH="$PATH:$(pwd)/fits"
+services:
+  - redis-server
 before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/redis.yml.sample config/redis.yml"
@@ -24,8 +26,7 @@ before_script:
   - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
   - travis_retry bundle exec rails g hydra:jetty
-services:
-  - redis-server
+  - redis-cli info
 matrix:
   fast_finish: true
 script:
