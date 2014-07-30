@@ -8,7 +8,7 @@ module PermissionHelper
       className = "label-success"
     else
       value = "Private"
-      className = "label-important"
+      className = "label-danger"
     end
     if can? :edit, document
       path = sufia.edit_generic_file_path(document.noid, tab:"permissions")
