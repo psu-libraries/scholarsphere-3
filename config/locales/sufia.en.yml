@@ -1,5 +1,6 @@
 en:
   sufia:
+    institution_name: "Penn State"
     bread_crumb:
       file_list: "Files"
       collections_list: "Collections"
