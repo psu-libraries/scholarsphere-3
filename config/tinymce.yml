@@ -1,6 +1,6 @@
 menubar: false
-toolbar1: fontselect | fontsizeselect | alignleft aligncenter alignright alignjustify | cut copy paste
-toolbar2: bold italic underline strikethrough | bullist numlist | hr removeformat | subscript superscript | link uploadimage | table
+toolbar1: alignleft aligncenter alignright alignjustify | cut copy paste
+toolbar2: bold italic underline strikethrough | bullist numlist | hr removeformat | subscript superscript | link uploadimage
 toolbar3: styleselect | formatselect |  outdent indent | blockquote | undo redo  | forecolor backcolor
 
 #toolbar1: styleselect | bold italic | undo redo | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent
