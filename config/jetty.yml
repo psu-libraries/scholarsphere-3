@@ -3,4 +3,4 @@ default:
   java_opts:
     - "-XX:MaxPermSize=256m" 
     - "-Xmx2g"
-  startup_wait: 60
+  startup_wait: 90
