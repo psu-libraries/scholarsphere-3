@@ -16,7 +16,7 @@ describe 'Dashboard Collections:' do
 
   specify 'tab title and buttons' do
     page.should have_content("My Collections")
-    within('.col-xs-12.col-sm-3') do
+    within('#sidebar') do
       page.should have_content("Upload")
       page.should have_content("Create Collection")
     end
