@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/hydra-collections.git
-  revision: edf29d8bf229c6977d30658f478e0bd8006ab9ce
-  ref: edf29d8bf229c6977d30658f478e0bd8006ab9ce
+  revision: e87e7a62591f43b8035780c2d6cb1bd1853c8524
+  ref: e87e7a62591f43b8035780c2d6cb1bd1853c8524
   specs:
     hydra-collections (2.0.3)
       blacklight
@@ -19,8 +19,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 0b21ef691e8778aaae5701648466d08dc7e5ce7b
-  ref: 0b21ef691e8778aaae5701648466d08dc7e5ce7b
+  revision: 0adc913e71923ce9d6a6f2db0da407d5f7243632
+  ref: 0adc913e71923ce9d6a6f2db0da407d5f7243632
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -141,7 +141,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
-    browse-everything (0.5.1)
+    browse-everything (0.5.2)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails

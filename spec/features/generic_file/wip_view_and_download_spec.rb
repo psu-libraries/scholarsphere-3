@@ -93,6 +93,12 @@ describe 'Generic File viewing and downloading:' do
       specify 'I can not feature' do
         page.should_not have_link "Feature"
       end
+
+      specify 'I should see the visibility link' do
+        within(".visibility") do
+          page.should have_content("Open Access")
+        end
+      end
     end
 
     context "administrator user" do
