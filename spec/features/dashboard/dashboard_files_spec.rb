@@ -20,7 +20,7 @@ describe 'Dashboard Files' do
     specify 'interactions are wired correctly' do
       #tab title and buttons
       page.should have_content("My Files")
-      within('.col-xs-12.col-sm-3') do
+      within('#sidebar') do
         page.should have_content("Upload")
         page.should have_content("Create Collection")
       end

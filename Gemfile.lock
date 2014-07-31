@@ -437,7 +437,7 @@ GEM
     rainbow (1.1.4)
     raindrops (0.13.0)
     rake (10.3.2)
-    rdf (1.1.4.2)
+    rdf (1.1.4.3)
     rdf-aggregate-repo (1.1.0)
       rdf (>= 1.1)
     rdf-isomorphic (1.1.0)
