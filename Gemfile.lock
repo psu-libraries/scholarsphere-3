@@ -19,8 +19,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 0adc913e71923ce9d6a6f2db0da407d5f7243632
-  ref: 0adc913e71923ce9d6a6f2db0da407d5f7243632
+  revision: 8ea3e9c1377c660ca0aa18884cf28f11a559b304
+  ref: 8ea3e9c1377c660ca0aa18884cf28f11a559b304
   specs:
     sufia (4.0.0.rc1)
       blacklight (~> 5.5)
@@ -636,6 +636,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blankslate (= 2.1.2.4)
+  browse-everything (= 0.5.2)
   byebug
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)
