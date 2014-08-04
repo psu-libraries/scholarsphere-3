@@ -25,7 +25,6 @@ limitations under the License.
 //= require transfers
 //= require hydra/batch_select
 //= require hydra_collections
-//= require dashboard_actions
 //= require proxy_rights
 
 function modal_collection_list(action, event){
