@@ -276,7 +276,7 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (2.0.5)
+    hydra-collections (2.0.4)
       blacklight
       hydra-head (~> 7.0)
     hydra-core (7.2.0)
@@ -643,7 +643,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections (= 2.0.5)
+  hydra-collections (= 2.0.4)
   hydra-derivatives (= 0.1.1)
   hydra-editor (= 0.4.0)
   hydra-ldap (= 0.1.0)
