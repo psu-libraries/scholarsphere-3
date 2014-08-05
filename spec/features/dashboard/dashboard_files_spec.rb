@@ -28,6 +28,9 @@ describe 'Dashboard Files' do
       expect(page).not_to have_content "Edit Access"
       expect(page).not_to have_content "little_file.txt_creator"
 
+      # A return controller is specified
+      expect(page).to have_css("input#return_controller", visible: false)
+
       # Clicking + displays additional metadata about that file
       within("#documents") do
         first('i.glyphicon-chevron-right').click
@@ -204,6 +207,7 @@ describe 'Dashboard Files' do
         expect(page).to have_content(file.title.first)
       end
     end
+
   end
 
   context "Many files (more than max_batch, which is currently set to 80)" do
