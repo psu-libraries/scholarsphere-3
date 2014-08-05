@@ -31,8 +31,8 @@ describe 'users/show.html.erb' do
   describe "when the user doesn't have a title" do
     it "should have the vitals" do
       render
-      rendered.should match /<i class="icon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
-      rendered.should_not match /<i class="icon-briefcase"><\/i>/
+      rendered.should match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
+      rendered.should_not match /<i class="glyphicon glyphicon-briefcase"><\/i>/
     end
   end
 
@@ -42,8 +42,8 @@ describe 'users/show.html.erb' do
     end
     it "should have the vitals" do
       render
-      rendered.should match /<i class="icon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
-      rendered.should match /<i class="icon-briefcase"><\/i> Mrs/
+      rendered.should match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
+      rendered.should match /<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/
     end
   end
 end

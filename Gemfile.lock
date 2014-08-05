@@ -9,6 +9,22 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/projecthydra-labs/browse-everything.git
+  revision: 2b7cee5476920c14a3c33dcca975e2ef60c381d1
+  ref: 2b7cee547
+  specs:
+    browse-everything (0.6.1)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client
+      google_drive
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 2b08d02da6339c661e34147100b5845da1db95d3
   ref: 2b08d02da6339c661e34147100b5845da1db95d3
@@ -132,16 +148,6 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
-    browse-everything (0.5.2)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client
-      google_drive
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
     builder (3.1.4)
     byebug (3.2.0)
       columnize (~> 0.8)
@@ -627,7 +633,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blankslate (= 2.1.2.4)
-  browse-everything (= 0.5.2)
+  browse-everything!
   byebug
   capistrano (= 2.15.5)
   capistrano-ext (= 1.2.1)

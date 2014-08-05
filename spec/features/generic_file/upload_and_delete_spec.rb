@@ -90,8 +90,8 @@ describe 'Generic File uploading and deletion:' do
           click_link "Cloud Providers"
           expect(page).to have_content "Browse cloud files"
           click_on "Browse cloud files"
-          expect(page).to have_content "Drop Box"
-          click_on("Drop Box")
+          expect(page).to have_css '#provider-select'
+          select 'Drop Box', from: 'provider-select'
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")
           expect(page).to have_content "Writer FAQ.txt"

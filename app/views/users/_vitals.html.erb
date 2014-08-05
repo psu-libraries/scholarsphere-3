@@ -1,7 +1,7 @@
-        <i class="icon-time"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
-        <i class="icon-folder-open"></i> Deposited Files
+        <i class="glyphicon glyphicon-time"></i> Joined on <%= @user.created_at.to_date.strftime("%b %d, %Y") %> <br />
+        <i class="glyphicon glyphicon-folder-open"></i> Deposited Files
         <%= link_to_field('depositor', @user.to_s, number_of_deposits(@user)) %> <br />
-        <i class="icon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
+        <i class="glyphicon glyphicon-envelope"></i> <%= mail_to @user.email, @user.email %> <br />
         <% if @user.title %>
-          <i class="icon-briefcase"></i> <%= @user.title.titleize %> <br />
+          <i class="glyphicon glyphicon-briefcase"></i> <%= @user.title.titleize %> <br />
         <% end %>
