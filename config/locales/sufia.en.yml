@@ -6,3 +6,12 @@ en:
       collections_list: "Collections"
     directory:
       suffix: "@psu.edu"
+    search:
+      form:
+        q:
+          label:          "Search ScholarSphere"
+          placeholder:    "Enter search terms"
+        option:
+          all:
+            label_short:  "All"
+            label_long:   "All of ScholarSphere"
