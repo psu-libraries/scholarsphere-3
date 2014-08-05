@@ -6,8 +6,9 @@ describe 'Generic File uploading and deletion:' do
 
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
-    let(:filename) { 'little_file.txt' }
-    let(:file) { find_file_by_title "little_file.txt" }
+    let(:filename)      { 'little_file.txt' }
+    let(:batch)         { ['little_file.txt', 'little_file.txt'] }
+    let(:file)          { find_file_by_title "little_file.txt" }
 
     before do
       sign_in_as current_user
@@ -110,27 +111,35 @@ describe 'Generic File uploading and deletion:' do
         end
       end
     end
-    context 'user does not need help' do
-      before do
-        upload_generic_file filename
-      end
 
-      specify 'I can upload a file successfully' do
-        page.should have_css '#documents'
-        page.should have_content filename
-        click_link "dashboard_link"
-        page.should have_css "table#activity"
-        within ("table#activity") do
+    context 'user does not need help' do
+
+      context 'with a single file' do
+        before do
+          upload_generic_file filename
+        end
+        specify 'uploading, deleting and notifications' do
+          page.should have_css '#documents'
           page.should have_content filename
+          click_link "dashboard_link"
+          page.should have_css "table#activity"
+          within ("table#activity") do
+            page.should have_content filename
+          end
+          within ("#notifications") do
+            page.should have_content "Batch upload complete"
+            page.should have_content "less than a minute ago"
+            page.should have_content filename
+            page.should have_content "has been saved."
+          end
+          go_to_dashboard_files
+          page.should have_content file.title.first
+          db_item_actions_toggle(file).click
+          click_link 'Delete File'
+          page.should_not have_content file.title.first
         end
       end
 
-      specify 'I can delete an uploaded file' do
-        page.should have_content file.title.first
-        db_item_actions_toggle(file).click
-        click_link 'Delete File'
-        page.should_not have_content file.title.first
-    end
     end
   end
 
