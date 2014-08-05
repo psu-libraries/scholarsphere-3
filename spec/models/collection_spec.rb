@@ -22,10 +22,6 @@ describe Collection do
   end
   it "should have open visibility" do
     @collection.save
-    (@collection.datastreams["rightsMetadata"].permissions({group:"public"})).should == "read"
-  end
-  it "should not allow a collection to be saved without a title" do
-     @collection.title = nil
-     expect{@collection.save!}.to raise_error(ActiveFedora::RecordInvalid)
+    expect(@collection.datastreams["rightsMetadata"].permissions({group:"public"})).to eq "read"
   end
 end
