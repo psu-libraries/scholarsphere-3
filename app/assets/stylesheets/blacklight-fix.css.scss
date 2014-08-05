@@ -1,0 +1,23 @@
+// this is a temporary fix for Blacklight pull request #960:
+// https://github.com/projectblacklight/blacklight/pull/960
+// It might be a while before that gets into Blacklight so we're fixing it here.
+// This can be removed once the blacklight version is updated to a version that includes
+// that pull request.
+@mixin hyphens-auto {
+  // breaks long words apart so they don't cause the containing div to
+  // be too big
+  // from http://kenneth.io/blog/2012/03/04/word-wrapping-hypernation-using-css/
+  -ms-word-break: break-all;
+  word-break: break-all;
+
+  // Non standard for webkit
+  word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+.facet-label {
+  @include hyphens-auto;
+}

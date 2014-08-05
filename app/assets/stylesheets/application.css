@@ -20,4 +20,5 @@
  *= require sufia_overrides
  *= require video-js
  *= require blacklight_gallery/default
+ *= require blacklight-fix
  */
