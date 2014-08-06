@@ -14,6 +14,15 @@ describe 'Generic File uploading and deletion:' do
       sign_in_as current_user
     end
 
+    context 'the user agreement' do
+      before do
+        new_generic_file_path
+      end
+      it "should not show Sufia's user agreement" do
+        expect(page).to_not have_content("Sufia's Deposit Agreement")
+      end
+    end
+
     context 'user needs help' do
       before do
         visit new_generic_file_path

@@ -35,8 +35,10 @@ describe 'unified search', describe_options do
         expect(page).to_not have_css("a[data-search-label*='My Highlights']", visible:false)
         expect(page).to_not have_css("a[data-search-label*='My Shares']", visible:false)
         within('#masthead_controls') do
+          click_button("All")
+          expect(page).to have_content("All of ScholarSphere")
           fill_in('search-field-header', with: subject_value)
-          click_button("Go")
+          find("#search-submit-header").trigger("click")
         end
         expect(page).to have_content('Search Results')
         expect(page).to have_content(@gf1.title.first)

@@ -1,6 +1,8 @@
 en:
   sufia:
     institution_name: "Penn State"
+    deposit_agreement:  "the deposit agreement"
+    upload_tooltip:     "Please accept the deposit agreement before you upload."
     bread_crumb:
       file_list: "Files"
       collections_list: "Collections"
