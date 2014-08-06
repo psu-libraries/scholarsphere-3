@@ -9,20 +9,11 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projecthydra-labs/hydra-collections.git
-  revision: e87e7a62591f43b8035780c2d6cb1bd1853c8524
-  ref: e87e7a62591f43b8035780c2d6cb1bd1853c8524
-  specs:
-    hydra-collections (2.0.3)
-      blacklight
-      hydra-head (~> 7.0)
-
-GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 1dc9f6d01f9611c14f05484eb42e1f1cceecc907
-  ref: 1dc9f6d01f9611c14f05484eb42e1f1cceecc907
+  revision: 031504d243eea627cbec9f0bc2cf8e9b967bc24a
+  ref: 031504d243eea627cbec9f0bc2cf8e9b967bc24a
   specs:
-    sufia (4.0.0.rc1)
+    sufia (4.0.0.rc2)
       blacklight (~> 5.5)
       blacklight-gallery
       blacklight_advanced_search (~> 5.0)
@@ -30,18 +21,18 @@ GIT
       bootstrap_form (~> 2.1)
       browse-everything (~> 0.4)
       daemons (~> 1.1)
-      font-awesome-sass-rails (~> 3.0)
+      font-awesome-rails
       hydra-batch-edit (>= 1.1.1, < 2.0.0)
       hydra-collections (~> 2.0)
       hydra-editor (~> 0.3)
       mail_form
       rails_autolink (~> 1.1)
       sass-rails
-      sufia-models (= 4.0.0.rc1)
+      sufia-models (= 4.0.0.rc2)
       tinymce-rails (~> 4.0.19)
       tinymce-rails-imageupload (~> 4.0.16.beta)
       yaml_db (~> 0.2)
-    sufia-models (4.0.0.rc1)
+    sufia-models (4.0.0.rc2)
       activerecord-import (~> 0.5)
       activeresource (~> 4.0)
       acts_as_follower (>= 0.1.1, < 0.3)
@@ -152,7 +143,7 @@ GEM
       sass-rails
       skydrive
     builder (3.1.4)
-    byebug (3.1.2)
+    byebug (3.2.0)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
     cancancan (1.9.1)
@@ -240,9 +231,6 @@ GEM
     ffi (1.9.3)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
-    font-awesome-sass-rails (3.0.2.2)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
     fuubar (1.3.3)
@@ -288,6 +276,9 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
+    hydra-collections (2.0.5)
+      blacklight
+      hydra-head (~> 7.0)
     hydra-core (7.2.0)
       block_helpers
       hydra-access-controls (= 7.2.0)
@@ -374,7 +365,7 @@ GEM
     nest (1.1.1)
       redis
     net-http-persistent (1.9)
-    net-ldap (0.6.1)
+    net-ldap (0.7.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -652,7 +643,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1.0)
   fuubar
   hydra-batch-edit (= 1.1.1)
-  hydra-collections!
+  hydra-collections (= 2.0.5)
   hydra-derivatives (= 0.1.1)
   hydra-editor (= 0.4.0)
   hydra-ldap (= 0.1.0)
