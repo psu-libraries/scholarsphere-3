@@ -125,6 +125,13 @@ describe 'Dashboard Files' do
       visit '/dashboard/files'
     end
 
+    after do
+      10.times do |t|
+        conn.delete_by_id "199#{t}"
+      end
+      conn.commit
+    end
+
     describe 'Pagination:' do
       specify 'The files should be listed on multiple pages' do
         expect(page).to have_css('.pagination')
@@ -214,6 +221,13 @@ describe 'Dashboard Files' do
     before do
       create_files(current_user, 90)
       visit '/dashboard/files'
+    end
+
+    after do
+      90.times do |t|
+        conn.delete_by_id "199#{t}"
+      end
+      conn.commit
     end
 
     it "allows pagination and sorting to be toggeled" do

@@ -152,6 +152,68 @@ http_interactions:
   recorded_at: Fri, 20 Sep 2013 15:38:55 GMT
 - request:
     method: get
+    uri: https://api.dropbox.com/1/metadata/auto/?file_limit=25000&include_deleted=false&list=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept: ! '*/*'
+      User-Agent: OfficialDropboxRubySDK/1.6.1
+      Authorization: Bearer FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321
+      Connection: close
+      Host: api.dropbox.com
+  response:
+    status:
+      code: '200'
+      message: OK
+    headers:
+      Server: nginx
+      Date: Fri, 20 Sep 2013 15:38:48 GMT
+      Content-Type: text/javascript
+      Transfer-Encoding: chunked
+      Connection: close
+      set-cookie: ! 'gvc=MjMzNzg4MzEzNTQ2Mzk1MzQ0NjcxNzY2ODI2MDkzODUzNzI5NTYw; expires=Wed,
+        19 Sep 2018 15:38:48
+
+        GMT; Path=/; httponly'
+      x-server-response-time: '50'
+      x-dropbox-request-id: da19c8c6ca44a67e6c2db3f0254058d1
+      pragma: no-cache
+      cache-control: no-cache
+      x-dropbox-http-protocol: None
+      x-frame-options: SAMEORIGIN
+      X-RequestId: 057f2caf7291c8f9684a0626480afb30
+    body:
+      encoding: UTF-8
+      string: ! '{ "hash": "60657d5728ee9c36971c0c8269a1c5e8", "thumb_exists": false, "bytes":
+        0, "path": "/", "is_dir": true, "size": "0 bytes", "root": "dropbox", "contents":
+        [ { "revision": 8743, "rev": "222700cbb190", "thumb_exists": false, "bytes": 0,
+        "modified": "Sun, 09 Dec 2012 20:30:45 +0000", "path": "/Apps", "is_dir": true,
+        "icon": "folder", "root": "dropbox", "size": "0 bytes" }, { "revision": 6944, "rev":
+        "1b2000cbb190", "thumb_exists": false, "bytes": 0, "modified": "Sun, 25 Mar 2012
+        00:36:39 +0000", "path": "/Books", "is_dir": true, "icon": "folder", "root": "dropbox",
+        "size": "0 bytes" }, { "revision": 14, "rev": "e00cbb190", "thumb_exists": false,
+        "bytes": 0, "modified": "Mon, 28 Jun 2010 16:53:48 +0000", "path": "/Documents",
+        "is_dir": true, "icon": "folder", "root": "dropbox", "size": "0 bytes" }, { "revision":
+        9, "rev": "900cbb190", "thumb_exists": false, "bytes": 127748, "modified": "Mon,
+        28 Jun 2010 16:49:18 +0000", "client_mtime": "Mon, 28 Jun 2010 16:49:19 +0000",
+        "path": "/Getting Started.pdf", "is_dir": false, "icon": "page_white_acrobat", "root":
+        "dropbox", "mime_type": "application/pdf", "size": "124.8 KB" }, { "revision": 1975,
+        "rev": "7b700cbb190", "thumb_exists": false, "bytes": 208218, "modified": "Mon,
+        28 Jun 2010 17:28:47 +0000", "client_mtime": "Mon, 28 Jun 2010 17:28:47 +0000",
+        "path": "/iPad intro.pdf", "is_dir": false, "icon": "page_white_acrobat", "root":
+        "dropbox", "mime_type": "application/pdf", "size": "203.3 KB" }, { "revision": 1973,
+        "rev": "7b500cbb190", "thumb_exists": false, "bytes": 315187, "modified": "Mon,
+        28 Jun 2010 17:27:11 +0000", "client_mtime": "Mon, 28 Jun 2010 17:27:11 +0000",
+        "path": "/iPhone intro.pdf", "is_dir": false, "icon": "page_white_acrobat", "root":
+        "dropbox", "mime_type": "application/pdf", "size": "307.8 KB" }, { "revision": 2636,
+        "rev": "a4c00cbb190", "thumb_exists": false, "bytes": 0, "modified": "Thu, 23 Sep
+        2010 06:30:15 +0000", "path": "/Writer", "is_dir": true, "icon": "folder", "root":
+        "dropbox", "size": "0 bytes" } ], "icon": "folder" }'
+    http_version: '1.1'
+  recorded_at: Fri, 20 Sep 2013 15:38:48 GMT
+- request:
+    method: get
     uri: https://api.dropbox.com/1/media/auto/Writer/Writer%20FAQ.txt?
     body:
       encoding: UTF-8
