@@ -6,6 +6,9 @@ module ProxiesHelper
       find(".select2-input").set  user.user_key
       page.should have_css "div.select2-result-label"
       first("div.select2-result-label").click
+      within("#authorizedProxies") do
+        page.should have_content(user.display_name)
+      end
     end
   end
 

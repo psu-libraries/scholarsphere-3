@@ -33,11 +33,6 @@ describe 'The Dashboard' do
 
   describe 'proxy portal' do
 
-    it "allows user to authorize a proxy" do
-      create_proxy_using_partial second_user
-      page.should have_css "table#authorizedProxies td.depositor-name", text: second_user.display_name
-    end
-
     context "with multiple current proxies" do
 
       before do
@@ -54,10 +49,8 @@ describe 'The Dashboard' do
           page.should have_content(second_user.display_name)
           page.should have_content(third_user.display_name)
         end
-      end
 
-      it "should remove a proxy" do
-        go_to_dashboard
+        #should remove a proxy
         first(".remove-proxy-button").click
         go_to_dashboard
         within("#authorizedProxies") do
