@@ -24,9 +24,13 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
 
     #clear redis
-    $redis.keys('events:*').each { |key| $redis.del key }
-    $redis.keys('User:*').each { |key| $redis.del key }
-    $redis.keys('GenericFile:*').each { |key| $redis.del key }
+    begin
+      $redis.keys('events:*').each { |key| $redis.del key }
+      $redis.keys('User:*').each { |key| $redis.del key }
+      $redis.keys('GenericFile:*').each { |key| $redis.del key }
+    rescue => e
+      Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
+    end  
 
   end
 
