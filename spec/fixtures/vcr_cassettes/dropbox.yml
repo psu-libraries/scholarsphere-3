@@ -38,6 +38,58 @@ http_interactions:
   recorded_at: Fri, 20 Sep 2013 15:38:46 GMT
 - request:
     method: get
+    uri: https://api.dropbox.com/1/metadata/auto/Writer?file_limit=25000&include_deleted=false&list=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept: ! '*/*'
+      User-Agent: OfficialDropboxRubySDK/1.6.1
+      Authorization: Bearer FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321
+      Connection: close
+      Host: api.dropbox.com
+  response:
+    status:
+      code: '200'
+      message: OK
+    headers:
+      Server: nginx
+      Date: Fri, 20 Sep 2013 15:38:55 GMT
+      Content-Type: text/javascript
+      Transfer-Encoding: chunked
+      Connection: close
+      set-cookie: ! 'gvc=Njg4MTEzOTAzNjIxMzA3Mzg0Nzk4ODMwMjc3ODE5Mjk1OTIyMjY%3D; expires=Wed,
+        19 Sep 2018 15:38:55
+
+        GMT; Path=/; httponly'
+      x-server-response-time: '64'
+      x-dropbox-request-id: 349e4a2b10c59d22f4e686ddbd608b69
+      pragma: no-cache
+      cache-control: no-cache
+      x-dropbox-http-protocol: None
+      x-frame-options: SAMEORIGIN
+      X-RequestId: 83bc363934d5a5457cbcbd0fab8b4cfb
+    body:
+      encoding: UTF-8
+      string: ! '{ "hash": "c4a067b0bfef9feefca072bb14d9be93", "revision": 2636, "rev": "a4c00cbb190",
+        "thumb_exists": false, "bytes": 0, "modified": "Thu, 23 Sep 2010 06:30:15 +0000",
+        "path": "/Writer", "is_dir": true, "icon": "folder", "root": "dropbox", "contents":
+        [ { "revision": 4011, "rev": "fab00cbb190", "thumb_exists": false, "bytes": 11642,
+        "modified": "Sat, 09 Apr 2011 18:54:55 +0000", "client_mtime": "Sat, 09 Apr 2011
+        18:54:55 +0000", "path": "/Writer/About Writer.txt", "is_dir": false, "icon": "page_white_text",
+        "root": "dropbox", "mime_type": "text/plain", "size": "11.4 KB" }, { "revision":
+        2754, "rev": "ac200cbb190", "thumb_exists": false, "bytes": 988, "modified": "Thu,
+        14 Oct 2010 08:32:20 +0000", "client_mtime": "Thu, 14 Oct 2010 08:32:20 +0000",
+        "path": "/Writer/Markdown Test.txt", "is_dir": false, "icon": "page_white_text",
+        "root": "dropbox", "mime_type": "text/plain", "size": "988 bytes" }, { "revision":
+        4009, "rev": "fa900cbb190", "thumb_exists": false, "bytes": 20904, "modified": "Sat,
+        09 Apr 2011 18:54:54 +0000", "client_mtime": "Sat, 09 Apr 2011 18:54:54 +0000",
+        "path": "/Writer/Writer FAQ.txt", "is_dir": false, "icon": "page_white_text", "root":
+        "dropbox", "mime_type": "text/plain", "size": "20.4 KB" } ], "size": "0 bytes" }'
+    http_version: '1.1'
+  recorded_at: Fri, 20 Sep 2013 15:38:55 GMT
+- request:
+    method: get
     uri: https://api.dropbox.com/1/metadata/auto/?file_limit=25000&include_deleted=false&list=true
     body:
       encoding: UTF-8
@@ -98,58 +150,6 @@ http_interactions:
         "dropbox", "size": "0 bytes" } ], "icon": "folder" }'
     http_version: '1.1'
   recorded_at: Fri, 20 Sep 2013 15:38:48 GMT
-- request:
-    method: get
-    uri: https://api.dropbox.com/1/metadata/auto/Writer?file_limit=25000&include_deleted=false&list=true
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      Accept: ! '*/*'
-      User-Agent: OfficialDropboxRubySDK/1.6.1
-      Authorization: Bearer FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321
-      Connection: close
-      Host: api.dropbox.com
-  response:
-    status:
-      code: '200'
-      message: OK
-    headers:
-      Server: nginx
-      Date: Fri, 20 Sep 2013 15:38:55 GMT
-      Content-Type: text/javascript
-      Transfer-Encoding: chunked
-      Connection: close
-      set-cookie: ! 'gvc=Njg4MTEzOTAzNjIxMzA3Mzg0Nzk4ODMwMjc3ODE5Mjk1OTIyMjY%3D; expires=Wed,
-        19 Sep 2018 15:38:55
-
-        GMT; Path=/; httponly'
-      x-server-response-time: '64'
-      x-dropbox-request-id: 349e4a2b10c59d22f4e686ddbd608b69
-      pragma: no-cache
-      cache-control: no-cache
-      x-dropbox-http-protocol: None
-      x-frame-options: SAMEORIGIN
-      X-RequestId: 83bc363934d5a5457cbcbd0fab8b4cfb
-    body:
-      encoding: UTF-8
-      string: ! '{ "hash": "c4a067b0bfef9feefca072bb14d9be93", "revision": 2636, "rev": "a4c00cbb190",
-        "thumb_exists": false, "bytes": 0, "modified": "Thu, 23 Sep 2010 06:30:15 +0000",
-        "path": "/Writer", "is_dir": true, "icon": "folder", "root": "dropbox", "contents":
-        [ { "revision": 4011, "rev": "fab00cbb190", "thumb_exists": false, "bytes": 11642,
-        "modified": "Sat, 09 Apr 2011 18:54:55 +0000", "client_mtime": "Sat, 09 Apr 2011
-        18:54:55 +0000", "path": "/Writer/About Writer.txt", "is_dir": false, "icon": "page_white_text",
-        "root": "dropbox", "mime_type": "text/plain", "size": "11.4 KB" }, { "revision":
-        2754, "rev": "ac200cbb190", "thumb_exists": false, "bytes": 988, "modified": "Thu,
-        14 Oct 2010 08:32:20 +0000", "client_mtime": "Thu, 14 Oct 2010 08:32:20 +0000",
-        "path": "/Writer/Markdown Test.txt", "is_dir": false, "icon": "page_white_text",
-        "root": "dropbox", "mime_type": "text/plain", "size": "988 bytes" }, { "revision":
-        4009, "rev": "fa900cbb190", "thumb_exists": false, "bytes": 20904, "modified": "Sat,
-        09 Apr 2011 18:54:54 +0000", "client_mtime": "Sat, 09 Apr 2011 18:54:54 +0000",
-        "path": "/Writer/Writer FAQ.txt", "is_dir": false, "icon": "page_white_text", "root":
-        "dropbox", "mime_type": "text/plain", "size": "20.4 KB" } ], "size": "0 bytes" }'
-    http_version: '1.1'
-  recorded_at: Fri, 20 Sep 2013 15:38:55 GMT
 - request:
     method: get
     uri: https://api.dropbox.com/1/metadata/auto/?file_limit=25000&include_deleted=false&list=true

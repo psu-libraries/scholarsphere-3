@@ -92,6 +92,7 @@ describe 'Generic File uploading and deletion:' do
           click_on "Browse cloud files"
           expect(page).to have_css '#provider-select'
           select 'Drop Box', from: 'provider-select'
+          sleep 10
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")
           expect(page).to have_content "Writer FAQ.txt"
