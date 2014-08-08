@@ -7,18 +7,16 @@
     <%= render partial: 'dashboard/_index_partials/proxy_rights' %>
   </div>
 </div>
-  <div class="col-xs-12 col-sm-offset-1 col-sm-6 well">
-      <h3><i class="glyphicon glyphicon-user"></i> Directory Info (LDAP) <i class="icon-external-link"></i> <%= link_to 'Edit Directory Info', 'http://www.psu.edu/directory/#update', class: 'btn btn-mini btn-primary' %></h3>
-      <dl id="user_info">
-      <%= render partial: 'user_info', locals: {user: @user} %>
-      </dl>
-      <hr />
-
-      <h3><i class="fa fa-group"></i> User Managed Groups Info (UMG) <i class="icon-external-link"></i> <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', class: 'btn btn-mini btn-primary' %> </h3>
-      <% if @groups %>
-        <% @groups.each do |g| %>
-          <i class="glyphicon glyphicon-pushpin"></i> <%= g %><br />
-        <% end %>
-      <% end %>
-  </div> <!-- /span -->
-
+<div class="col-xs-12 col-sm-offset-1 col-sm-6 well">
+  <h3><i class="glyphicon glyphicon-user"></i> Directory Info (LDAP) <i class="icon-external-link"></i> <%= link_to 'Edit Directory Info', 'http://www.psu.edu/directory/#update', class: 'btn btn-mini btn-primary' %></h3>
+  <dl id="user_info">
+  <%= render partial: 'user_info', locals: {user: @user} %>
+  </dl>
+  <hr />
+  <h3><i class="fa fa-group"></i> User Managed Groups Info (UMG) <i class="icon-external-link"></i> <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', class: 'btn btn-mini btn-primary' %> </h3>
+  <% if @groups %>
+    <% @groups.each do |g| %>
+      <i class="glyphicon glyphicon-pushpin"></i> <%= g %><br />
+    <% end %>
+  <% end %>
+</div>
