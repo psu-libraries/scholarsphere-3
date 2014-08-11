@@ -530,8 +530,7 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    select2-rails (3.4.8)
-      sass-rails
+    select2-rails (3.5.9)
       thor (~> 0.14)
     shout-bot (0.0.7)
       addressable
@@ -667,7 +666,7 @@ DEPENDENCIES
   rspec-rails (~> 2.99)
   sass (= 3.2.18)
   sass-rails (~> 4.0.2)
-  select2-rails (= 3.4.8)
+  select2-rails (= 3.5.9)
   sitemap (= 0.3.3)
   sqlite3
   sufia!
