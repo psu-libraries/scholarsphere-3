@@ -76,8 +76,8 @@ class CatalogController < ApplicationController
     config.tag_cloud_field_name = Solrizer.solr_name('desc_metadata__tag', :facetable)
 
     # solr field configuration for search results/index views
-    config.index.title_field = Solrizer.solr_name("desc_metadata__title", :displayable)
-    config.index.display_type_field = "id"
+    config.index.title_field = solr_name("desc_metadata__title", :stored_searchable)
+    config.index.display_type_field = solr_name("has_model", :symbol)
     config.index.thumbnail_method = :sufia_thumbnail_tag
 
     # solr field configuration for document/show views
