@@ -38,6 +38,8 @@ en:
     search:
       facets:
         count: ' (%{number})'
+        sr:
+          label: 'Filter your results by'
 
   scholarsphere:
     notifications:
