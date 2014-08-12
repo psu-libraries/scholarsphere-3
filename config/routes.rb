@@ -61,6 +61,8 @@ ScholarSphere::Application.routes.draw do
 
   root to: "homepage#index"
 
+  get ':action' => 'static#:action', constraints: { action: /error_help/ }, as: :static
+
   # Downloads controller route
   # resources :downloads, only: "show"
 
