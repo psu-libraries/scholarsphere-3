@@ -26,8 +26,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 2b08d02da6339c661e34147100b5845da1db95d3
-  ref: 2b08d02da6339c661e34147100b5845da1db95d3
+  revision: 5a96e8e2863a03844119a1c75e4a65c967401be4
+  ref: 5a96e8e2863a03844119a1c75e4a65c967401be4
   specs:
     sufia (4.0.0.rc2)
       blacklight (~> 5.5)
