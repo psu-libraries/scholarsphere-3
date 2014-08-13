@@ -1,12 +1,12 @@
 <div class="clearfix proxy-rights">
 
   <div class="col-xs-6 proxy-search">
-    <h3>Authorize Proxy</h3>
+    <h3 class="panel-title">Authorize Proxy</h3>
     <%= hidden_field_tag :user, nil, data: { grantor: current_user.login } %>
   </div>
-  
+
   <div class="col-xs-6">
-    <h3>Current Proxies</h3>
+    <h3 class="panel-title">Current Proxies</h3>
     <table class="table table-condensed table-striped" id="authorizedProxies">
       <tbody>
         <% @user.can_receive_deposits_from.each do |depositor| %>
