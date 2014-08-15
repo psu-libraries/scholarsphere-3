@@ -45,6 +45,8 @@ describe 'unified search', describe_options do
         expect(page).to have_content(@gf3.title.first)
         expect(page).to have_content(@collection.title)
         expect(page).to_not have_content(@gf2.title.first)
+        click_link(@gf1.title.first)
+        expect(page).to have_link("Back to search results")
       end
     end
     context "known user" do
@@ -66,6 +68,8 @@ describe 'unified search', describe_options do
         expect(page).to have_content(@gf2.title.first)
         expect(page).to have_content(@gf3.title.first)
         expect(page).to have_content(@collection.title)
+        click_link(@gf1.title.first)
+        expect(page).to have_link("Back to search results")
       end
     end
     it "searches My Files" do

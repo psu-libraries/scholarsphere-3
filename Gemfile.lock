@@ -26,8 +26,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 6309b3a308f4f54358c86a52f0a080bc204aa9a4
-  ref: 6309b3a308f4f54358c86a52f0a080bc204aa9a4
+  revision: 331d765efb7dc7e61deaa534c7548367620d0d09
+  ref: 331d765efb7dc7e61deaa534c7548367620d0d09
   specs:
     sufia (4.0.0.rc2)
       blacklight (~> 5.5)
@@ -35,6 +35,7 @@ GIT
       blacklight_advanced_search (~> 5.0)
       bootstrap-sass (< 3.2)
       bootstrap_form (~> 2.1)
+      breadcrumbs_on_rails (~> 2.3.0)
       browse-everything (~> 0.4)
       daemons (~> 1.1)
       font-awesome-rails
@@ -148,6 +149,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap_form (2.1.1)
+    breadcrumbs_on_rails (2.3.0)
     builder (3.1.4)
     byebug (3.2.0)
       columnize (~> 0.8)

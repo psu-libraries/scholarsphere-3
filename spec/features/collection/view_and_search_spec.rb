@@ -42,6 +42,10 @@ describe 'Collection viewing and searching:' do
       go_to_dashboard_files
       page.should have_content "Is part of: #{title}"
     end
+    specify "I should see the breadcrumb trail" do
+      page.should have_link("My Dashboard")
+      page.should have_link("My Collections")
+    end
   end
 
   describe 'When searching within a collection' do

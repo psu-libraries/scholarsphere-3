@@ -99,6 +99,11 @@ describe 'Generic File viewing and downloading:' do
           page.should have_content("Open Access")
         end
       end
+
+      specify 'I should see the breadcrumb trail' do
+        page.should have_link("My Dashboard")
+        page.should have_link("My Files")
+      end
     end
 
     context "administrator user" do
