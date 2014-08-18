@@ -2,11 +2,14 @@ require_relative './feature_spec_helper'
 
 describe "Featured works on the home page" do
   let!(:admin_user) { create :administrator }
+  let!(:jill_user) { create :jill }
   let!(:file) { create_file admin_user, {title:'file title'} }
   let!(:featured_work) { FeaturedWork.create!(generic_file_id: file.noid) }
 
   let!(:file2) { create_file admin_user, {title:'another_title_bites_the_dust'} }
   let!(:featured_work2) { FeaturedWork.create!(generic_file_id: file2.noid) }
+
+  let!(:private_file) { create_file jill_user, {title:'private_document', read_groups:['private']} }
 
   before do
     sign_in_as admin_user
@@ -20,10 +23,11 @@ describe "Featured works on the home page" do
     end
   end
 
-  it "appears as a recently uploaded file" do
+  it "only public documents appear as recently uploaded files" do
     click_link "Recently Uploaded"
     within("#recently_uploaded") do
-      page.should have_content(file.title[0])
+      expect(page).to have_content(file.title[0])
+      expect(page).to have_no_content(private_file.title[0])
     end
   end
 
