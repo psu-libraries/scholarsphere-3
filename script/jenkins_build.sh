@@ -37,13 +37,15 @@ fi
 rbenv_environment
 
 INSTALLED_RUBY_VERSION=`rbenv version | awk '{print $1}'`
-
+echo "Installed Ruby Version: " $INSTALLED_RUBY_VERSION
+echo "Requested Ruby Version: " $RUBY_VERSION
 #$ Get newer version of ruby and ruby build
 #echo $RUBY_VERSION
 #echo $INSTALLED_RUBY_VERSION
 
 # Uncomment line below for testing only
 #INSTALLED_RUBY_VERSION=1
+
 if [ "${RUBY_VERSION}" != "${INSTALLED_RUBY_VERSION}" ]; then
     cd $HHOME/.rbenv/plugins/ruby-build
     git pull
@@ -67,8 +69,11 @@ if [ "${RUBY_VERSION}" != "${INSTALLED_RUBY_VERSION}" ]; then
 passenger-install-apache2-module --snippet >  /opt/heracles/passenger.tmp
 echo "Passenger.conf listed here:"
 cat /opt/heracles/passenger.tmp
-sudo /bin/mv /opt/heracles/.passenger.tmp /etc/httpd/conf.d/passenger.conf
+sudo /bin/mv /opt/heracles/passenger.tmp /etc/httpd/conf.d/passenger.conf
+else
+echo "Ruby version is the same no upgrade needed"
 fi
+
 # Initialize rbenv if there was not a new version of ruby to install
 rbenv_environment
 rbenv rehash
@@ -101,4 +106,5 @@ echo "=-=-=-=-= $0 finished $retval"
 exit $retval
 #
 # end
+
 
