@@ -20,6 +20,7 @@ describe 'Dashboard Files' do
     specify 'interactions are wired correctly' do
       #tab title and buttons
       expect(page).to have_content("My Files")
+      expect(page).to have_selector("h1.sr-only", text: "Files listing")
       within('#sidebar') do
         expect(page).to have_content("Upload")
         expect(page).to have_content("Create Collection")
