@@ -26,6 +26,7 @@ describe 'Generic File uploading and deletion:' do
     context 'user needs help' do
       before do
         visit new_generic_file_path
+        expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
         redirect_url = find("#redirect-loc", visible:false).text
