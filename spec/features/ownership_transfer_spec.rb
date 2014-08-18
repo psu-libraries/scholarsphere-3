@@ -91,6 +91,7 @@ describe 'Transferring file ownership:' do
   def transfer_ownership_of_file (file, new_owner)
     db_item_actions_toggle(file).click
     click_link 'Transfer Ownership of File'
+    page.should have_content "Select a user to transfer #{file.title.first} to, add optional comments and then press transfer."
     new_owner_dropdown.click
     new_owner_search_field.set new_owner.user_key
     new_owner_search_result.click

@@ -26,8 +26,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 331d765efb7dc7e61deaa534c7548367620d0d09
-  ref: 331d765efb7dc7e61deaa534c7548367620d0d09
+  revision: 4bd69a83ec92108b72c2d493ed5c795b85dbd785
+  ref: 4bd69a83ec92108b72c2d493ed5c795b85dbd785
   specs:
     sufia (4.0.0.rc2)
       blacklight (~> 5.5)
@@ -355,7 +355,7 @@ GEM
     mail_form (1.5.0)
       actionmailer (>= 3.2, < 5)
       activemodel (>= 3.2, < 5)
-    mailboxer (0.12.1)
+    mailboxer (0.12.2)
       carrierwave (>= 0.5.8)
       foreigner (>= 0.9.1)
       rails (>= 3.2.0)
