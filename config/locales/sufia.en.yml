@@ -17,3 +17,5 @@ en:
           all:
             label_short:  "All"
             label_long:   "All of ScholarSphere"
+    dashboard:
+      transfer_files_link: "Select files to transfer"
