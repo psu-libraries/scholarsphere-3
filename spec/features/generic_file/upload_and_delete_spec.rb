@@ -39,8 +39,10 @@ describe 'Generic File uploading and deletion:' do
 
         #I am adding can click on more metadata here so we do not need to add a separate test for it
         expect(page).not_to have_css("#generic_file_publisher")
-        click_on 'Add More Description Types'
+        click_on 'Show Additional Fields'
         expect(page).to have_css("#generic_file_publisher")
+        click_on 'Hide Additional Fields'
+        expect(page).to_not have_css("#generic_file_publisher")
 
         # If these tests start to randomly fail please consider re-adding
         # the calls to sleep and save_and_open that I removed because they

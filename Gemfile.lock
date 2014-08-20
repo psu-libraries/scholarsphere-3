@@ -26,8 +26,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 56ae9d2eb01aa85130d7a9a464101df6f050075b
-  ref: 56ae9d2eb01aa85130d7a9a464101df6f050075b
+  revision: 075ed3b9f57eb9e935bc76db3e6cdfacb8c8defb
+  ref: 075ed3b9f57eb9e935bc76db3e6cdfacb8c8defb
   specs:
     sufia (4.0.0.rc2)
       blacklight (~> 5.5)
@@ -129,7 +129,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    blacklight (5.5.2)
+    blacklight (5.5.3)
       bootstrap-sass (~> 3.0)
       deprecation
       kaminari (~> 0.13)
@@ -154,7 +154,7 @@ GEM
     byebug (3.2.0)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
-    cancancan (1.9.1)
+    cancancan (1.9.2)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -578,7 +578,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.9)
-    stomp (1.3.2)
+    stomp (1.3.3)
     subexec (0.2.3)
     sxp (0.1.5)
     therubyracer (0.12.0)
@@ -596,7 +596,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     trollop (1.16.2)
-    tzinfo (0.3.40)
+    tzinfo (0.3.41)
     uber (0.0.8)
     uglifier (2.3.2)
       execjs (>= 0.3.0)
@@ -608,7 +608,7 @@ GEM
     unicorn-rails (2.1.1)
       rack
       unicorn
-    uuidtools (2.1.4)
+    uuidtools (2.1.5)
     validatable (1.6.7)
     vcr (2.9.2)
     vegas (0.1.11)
