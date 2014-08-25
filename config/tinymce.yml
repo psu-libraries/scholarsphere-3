@@ -1,6 +1,6 @@
 menubar: false
 toolbar1: alignleft aligncenter alignright alignjustify | cut copy paste
-toolbar2: bold italic underline strikethrough | bullist numlist | hr removeformat | subscript superscript | link uploadimage
+toolbar2: bold italic underline strikethrough | bullist numlist | hr removeformat | subscript superscript | anchor link uploadimage
 toolbar3: styleselect | formatselect |  outdent indent | blockquote | undo redo  | forecolor backcolor
 
 #toolbar1: styleselect | bold italic | undo redo | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent
@@ -11,4 +11,5 @@ plugins:
   - uploadimage
   - link
   - textcolor
+  - anchor
 uploadimage_default_img_class: "tinymce-img"
