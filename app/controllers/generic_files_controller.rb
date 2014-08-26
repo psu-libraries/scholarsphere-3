@@ -4,6 +4,7 @@ class GenericFilesController < ApplicationController
   include Behaviors::PermissionsNotificationBehavior
 
   around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
+  skip_before_action :has_access?, only: [:stats]
 
   def notify_users_of_permission_changes
     previous_permissions = @generic_file.permissions unless @generic_file.nil?
