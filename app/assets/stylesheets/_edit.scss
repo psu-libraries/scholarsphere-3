@@ -1,0 +1,15 @@
+//this override is inplace because there is an unwanted scrollx, scrolly on the fileheight element
+// on the batch edit screen
+.scrollx.scrolly.fileHeight {
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.input-large, .form-group select {
+  width: 70%;
+}
+
+.batch-group input, .batch-group select {
+  width: 70%;
+
+}
