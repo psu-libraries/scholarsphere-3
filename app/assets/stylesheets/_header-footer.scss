@@ -21,6 +21,13 @@
   }
 }
 
+#masthead_controls .navbar-default .navbar-nav > .active > a,
+#masthead_controls .navbar-default .navbar-nav > .active > a:hover,
+#masthead_controls .navbar-default .navbar-nav > .active > a:focus {
+  background-color: $basic-black;
+  color: $classic-white;
+}
+
 #masthead_controls {
   border-top: 1px solid $blue-medium;
   border-bottom: 1px solid $blue-medium;
