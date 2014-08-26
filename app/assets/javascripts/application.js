@@ -9,6 +9,7 @@
 //= require hydra/batch_select
 //= require hydra_collections
 //= require proxy_rights
+//= require sufia/single_use_link
 
 function modal_collection_list(action, event){
   if(action == 'open'){
