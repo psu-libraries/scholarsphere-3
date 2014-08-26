@@ -69,10 +69,6 @@ div.heading-tile .glyphicon {
   margin-bottom: 20px;
 }
 
-#proxy_management .panel-title {
-  color: $basic-black;
-}
-
 .batch-info, #documents {
   background-color: $classic-white;
 }
@@ -91,4 +87,11 @@ div.heading-tile .glyphicon {
 
 .transfer_link {
   margin-top: 8px;
+}
+
+// making sure the tables that stillexist in the system do not overflow thier bounds
+table
+{
+  table-layout:fixed;
+  word-wrap:break-word
 }
