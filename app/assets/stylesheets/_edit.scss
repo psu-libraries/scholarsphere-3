@@ -13,3 +13,28 @@
   width: 70%;
 
 }
+
+// The permission display css below is just to make the permission display look ok without reworking the
+// --- Can be removed when permission display is reworked in sufia -----
+#permissions_display.tab-pane {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: whitesmoke;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+
+#permissions_display .well {
+  border: none;
+}
+
+#new-user:before, #new-group:before, #new-user:after, #new-group:after {
+  content: " ";
+  display: table;
+}
+
+#permissions_save {
+  margin-left: 15px;
+}
+// --- stop here on permission rework -----
