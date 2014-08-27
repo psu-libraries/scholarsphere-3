@@ -1,0 +1,16 @@
+<div>
+  <span class="label featured title">Title:</span>
+  <%= link_to truncate(featured.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(featured), title: featured.title_or_label  %>
+</div>
+<div> 
+  <span class="label featured">Depositor:</span>
+  <%= link_to_profile featured.depositor("no depositor value") %>
+</div>
+<div>
+  <span class="label featured">Resource Type:</span>
+  <%= link_to_facet_list(featured.resource_type, 'desc_metadata__resource_type', 'no resource specified') %>
+</div>
+<div> 
+  <span class="label featured">Keywords:</span>
+  <%= link_to_facet_list(featured.tags, 'desc_metadata__tag', 'no keywords specified') %>
+</div>
