@@ -4,7 +4,7 @@ describe 'static/help.html.erb' do
 
   it "should show the static page" do
     render
-    expect(rendered).to match /Service Inquiries and Requests/
+    expect(rendered).to match /Frequently Asked Questions/
 
   end
 end
