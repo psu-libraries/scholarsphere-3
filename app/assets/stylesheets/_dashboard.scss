@@ -91,17 +91,17 @@ div.heading-tile .glyphicon {
 }
 
 // making sure the tables that stillexist in the system do not overflow thier bounds
-#notifications table {
+#notifications_table {
   table-layout:fixed;
   column-width: auto;
   word-wrap:break-word
 }
-#notifications table th:nth-child(1){
+#notifications_table th:nth-child(1){
   width: 10%
 }
-#notifications table th:nth-child(2){
+#notifications_table th:nth-child(2){
   width: 20%
 }
-#notifications table th:nth-child(3){
+#notifications_table th:nth-child(3){
   width: 60%
 }
