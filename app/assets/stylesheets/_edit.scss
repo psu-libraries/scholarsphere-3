@@ -38,3 +38,8 @@
   margin-left: 15px;
 }
 // --- stop here on permission rework -----
+
+// Do not display the additional rights button as we are only allowing one choice for rights at this time
+#additional_rights_submit{
+  display: none;
+}
