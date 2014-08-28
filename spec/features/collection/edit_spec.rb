@@ -32,7 +32,7 @@ describe 'Collection editing:' do
       db_file_checkbox(file_3).click
       click_button 'Add to Collection'
       db_collection_radio_button(collection).click
-      click_button 'Update Collection'
+      click_button 'Add to Collection'
     end
 
     specify 'I should see the new file in the collection' do
