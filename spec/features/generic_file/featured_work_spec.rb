@@ -7,7 +7,7 @@ describe "Showing the Generic File" do
   before do
     sign_in_as current_user
     visit "/"
-    click_link "Recently Uploaded"
+    click_link "Recent Additions"
     page.should have_content(gf.title.first)
     click_link gf.title.first
     page.should have_content("Descriptions")

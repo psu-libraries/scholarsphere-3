@@ -19,3 +19,5 @@ en:
             label_long:   "All of ScholarSphere"
     dashboard:
       transfer_files_link: "Select files to transfer"
+    homepage:
+      recently_uploaded:    'Recent Additions'

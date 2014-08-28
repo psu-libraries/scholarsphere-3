@@ -24,7 +24,7 @@ describe "Featured works on the home page" do
   end
 
   it "only public documents appear as recently uploaded files" do
-    click_link "Recently Uploaded"
+    click_link "Recent Additions"
     within("#recently_uploaded") do
       expect(page).to have_content(file.title[0])
       expect(page).to have_no_content(private_file.title[0])
