@@ -32,7 +32,9 @@ describe 'Collection editing:' do
       db_file_checkbox(file_3).click
       click_button 'Add to Collection'
       db_collection_radio_button(collection).click
-      click_button 'Add to Collection'
+      within("#collection-list-container .modal-footer") do
+        click_button 'Add to Collection'
+      end
     end
 
     specify 'I should see the new file in the collection' do
