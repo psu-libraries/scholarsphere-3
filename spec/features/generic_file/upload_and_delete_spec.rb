@@ -107,8 +107,8 @@ describe 'Generic File uploading and deletion:' do
           sleep 10
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")
-          expect(page).to have_content "Writer FAQ.txt"
-          click_on("Markdown Test.txt")
+          expect(page).to have_content "Markdown Test.txt"
+          find("a", :text => "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"
           click_on("Submit")
           expect(page).to have_content "Submit 1 selected files"

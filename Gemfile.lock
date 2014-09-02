@@ -10,10 +10,10 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/browse-everything.git
-  revision: 2b7cee5476920c14a3c33dcca975e2ef60c381d1
-  ref: 2b7cee547
+  revision: 879e70e0bd5d2dca6b6e74646d07e9649177ad33
+  ref: 879e70e0bd5d2d
   specs:
-    browse-everything (0.6.1)
+    browse-everything (0.6.3)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
