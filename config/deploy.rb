@@ -70,7 +70,7 @@ namespace :deploy do
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/ga-privatekey.p12 #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/browse_everything_providers.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/secret_token.rb #{release_path}/config/initializers/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/sufia-secret.rb #{release_path}/config/initializers/
+    ln -sf /dlt/#{application}/config_#{stage}/#{application}/sufia-secret.rb #{release_path}/config/initializers/ &&
     ln -sf /dlt/#{application}/upload_#{stage}/uploads #{release_path}/public/
     CMD
   end
