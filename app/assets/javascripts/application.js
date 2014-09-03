@@ -10,6 +10,7 @@
 //= require hydra_collections
 //= require proxy_rights
 //= require sufia/single_use_link
+//= require edit_ajax
 
 function modal_collection_list(action, event){
   if(action == 'open'){
