@@ -1,29 +1,32 @@
-    <tr>
-      <% if display_thumbs %>
-        <td class="col-sm-2">
-          <%= link_to sufia.generic_file_path(recent_document) do %>
-            <%= render_thumbnail_tag recent_document, { width: "100%" } %>
+<li class="recent-item">
+  <div class="main row">
+
+    <% if display_thumbs %>
+      <div class="col-sm-3">
+        <%= link_to sufia.generic_file_path(recent_document) do %>
+          <%= render_thumbnail_tag recent_document, { width: "100%" } %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="col-sm-9">
+      <dl>
+        <dt class="sr-only">Title:</dt>
+        <dd><%= link_to truncate(recent_document.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(recent_document.noid), title: recent_document.title_or_label, class: 'title'  %>
+          <% if display_access %>
+              <% if recent_document.registered? %>
+                  <span class="label label-info" title="<%=t('sufia.institution_name') %>"><%=t('sufia.institution_name') %></span>
+              <% elsif recent_document.public? %>
+                  <span class="label label-success">Open Access</span>
+              <% else %>
+                  <span class="label label-danger">Private</span>
+              <% end %>
           <% end %>
-        </td>
-      <% end %>
-      <td>
-        <dl>
-          <dt class="sr-only">Title:</dt>
-          <dd><%= link_to truncate(recent_document.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(recent_document.noid), title: recent_document.title_or_label, class: 'title'  %>
-            <% if display_access %>
-                <% if recent_document.registered? %>
-                    <span class="label label-info" title="<%=t('sufia.institution_name') %>"><%=t('sufia.institution_name') %></span>
-                <% elsif recent_document.public? %>
-                    <span class="label label-success">Open Access</span>
-                <% else %>
-                    <span class="label label-danger">Private</span>
-                <% end %>
-            <% end %>
-          </dd>
-          <dt>Depositor:</dt>
-          <dd><%= link_to_profile recent_document.depositor("no depositor value") %></dd>
-          <dt>Keywords:</dt>
-          <dd><%= link_to_facet_list(recent_document.tags, 'desc_metadata__tag', 'no keywords specified').html_safe %></dd>
-        </dl>
-      </td>
-    </tr>
+        </dd>
+        <dt>Depositor:</dt>
+        <dd><%= link_to_profile recent_document.depositor("no depositor value") %></dd>
+        <dt>Keywords:</dt>
+        <dd><%= link_to_facet_list(recent_document.tags, 'desc_metadata__tag', 'no keywords specified').html_safe %></dd>
+      </dl>
+    </div>
+  </div>
+</li>
