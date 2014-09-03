@@ -25,6 +25,65 @@
   }
 }
 
+.photo_credit {
+  a:link, a:visited {
+    background-color: $blue-medium;
+    color: $classic-white;
+    padding: .25em;
+  }
+}
+
+#home_content {
+  padding: 0;
+  .tab-content {
+    border-left: 1px solid $gray-light;
+    border-right: 1px solid $gray-light;
+    border-bottom: 1px solid $gray-light;
+    margin-top: 0;
+    h2 {
+      margin-top: 0;
+      padding: .25em;
+    }
+  }
+}
+
+#homeTabs {
+  margin-top: 1.5em;
+}
+
+#recent_docs {
+  dt {
+    float: left;
+    padding-right: .5em;
+  }
+  .title  {
+    font-size: 1.5em;
+  }
+}
+
+.home_column {
+  background-color: $gray-lighter;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.home_panel {
+  background-color: $classic-white;
+  border-bottom: 8px solid $gray-lighter;
+  padding: 8px;
+  h2 {
+    border-bottom: 2px solid $vermilion;
+    background-color: $gray-dark;
+    color: $classic-white;
+    margin: -8px -8px 8px -8px;
+    padding: .25em;
+  }
+  .tag-toggle-list {
+    float: right;
+    margin: -3.60em .5em 0 0;
+  }
+}
+
 @media only screen and (min-width: 320px) {
   #home_header {
     background-image: image-url('site_images/home-page-graphic-320.jpg');
@@ -58,6 +117,19 @@
       width: 60%;
     }
   }
+  #home_content {
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+  .home_panel .tag-toggle-list {
+    font-size: .85em;
+    padding: 3px 6px;
+    margin: -3.50em .5em 0 0;
+  }
+  .photo_credit {
+    text-align: center;
+  }
 }
 
 @media only screen and (min-width: 480px) {
@@ -72,12 +144,12 @@
   }
   .home_marketing_text {
     margin: 0;
-    padding: 0;
+    padding: 1em 0 0 0;
     h1 {
-      font-size: 2em;
+      font-size: 1.75em;
     }
     p {
-      font-size: 1.35em;
+      font-size: 1.25em;
     }
   }
   .home_call_action {
@@ -106,11 +178,17 @@
     min-height: 14.375em;
   }
   .home_marketing_text {
+    padding: 2em 0 0 0;
     h1 {
-      font-size: 2em;
+      font-size: 1.75em;
+      margin-top: 1em;
+      margin-left: 1em;
+      margin-right: 1em;
     }
     p {
-      font-size: 1.35em;
+      font-size: 1.5em;
+      margin-left: 1.5em;
+      margin-right: 1em;
     }
   }
   .home_call_action {
@@ -119,12 +197,19 @@
   .home_share_work {
     .btn-lg {
       font-size: 1.25em;
+      letter-spacing: normal;
     }
     p {
       width: 60%;
     }
   }
+  .photo_credit {
+    position: relative;
+    top: 6em;
+    text-align: right;
+  }
 }
+
 
 @media only screen and (min-width: 992px) {
   #home_header {
@@ -134,14 +219,20 @@
     background-size: cover;
     border-top: 8px solid #E1E1E1;
     border-bottom: 8px solid #E1E1E1;
-    min-height: 18.625em;
+    min-height: 16em;
   }
   .home_marketing_text {
     h1 {
-      font-size: 2.5em;
+      font-size: 2.25em;
+      margin-top: 1em;
+      margin-left: 1em;
+      margin-right: 2em;
     }
     p {
-      font-size: 1.65em;
+      display: block;
+      font-size: 1.5em;
+      margin-left: 1.85em;
+      margin-right: 1em;
     }
   }
   .home_call_action {
@@ -153,6 +244,18 @@
       font-weight: 300;
       letter-spacing: .1em;
     }
+  }
+  .photo_credit {
+    position: relative;
+    top: 8em;
+  }
+  #home_content h2 {
+    font-size: 1.85em;
+  }
+  .home_panel .tag-toggle-list {
+    font-size: 1em;
+    padding: 3px 6px;
+    margin: -3.15em .5em 0 0;
   }
 }
 
@@ -170,8 +273,4 @@
   .home_call_action {
     margin-top: 1.15em;
   }
-}
-
-.recent.label, .featured.label{
-  color: #000000;
 }
