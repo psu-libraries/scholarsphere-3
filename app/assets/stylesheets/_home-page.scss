@@ -36,10 +36,7 @@
 #home_content {
   padding: 0;
   .tab-content {
-    border-left: 1px solid $gray-light;
-    border-right: 1px solid $gray-light;
-    border-bottom: 1px solid $gray-light;
-    margin-top: 0;
+    margin-top: 1em;
     h2 {
       margin-top: 0;
       padding: .25em;
@@ -48,7 +45,30 @@
 }
 
 #homeTabs {
-  margin-top: 1.5em;
+  margin: 0 -15px 0 -15px;
+  padding: .5em 0 0 .5em;
+  background-color: $gray-dark;
+  border-bottom: 2px solid $vermilion;
+}
+
+#home_content .nav-tabs > li {
+  margin-bottom: -2px;
+  a {
+    padding: 7px 12px;
+  }
+  a:link {
+    color: $classic-white;
+  }
+  a:hover {
+    color: $gray-dark;
+  }
+}
+
+#home_content .nav-tabs > li.active > a,
+#home_content .nav-tabs > li.active > a:hover {
+  border: 1px solid $vermilion;
+  border-bottom: 2px solid $classic-white;
+  color: $gray-dark;
 }
 
 #recent_docs, #featured_works {
@@ -200,7 +220,7 @@
     h1 {
       font-size: 1.75em;
       margin-top: 1em;
-      margin-left: 1em;
+      margin-left: 1.5em;
       margin-right: 1em;
     }
     p {
@@ -242,8 +262,8 @@
   .home_marketing_text {
     h1 {
       font-size: 2.25em;
-      margin-top: 1em;
-      margin-left: 1em;
+      margin-top: 0;
+      margin-left: 1.25em;
       margin-right: 2em;
     }
     p {
