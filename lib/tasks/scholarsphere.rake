@@ -237,4 +237,37 @@ namespace :scholarsphere do
 
     end
   end
+
+  desc "Generate missing thumbnails"
+  task "generate_missing_thumbnails" => :environment do
+
+    # TODO: This solr query is picking up "batch" and "collectio" objects. 
+    #        Not sure why? Are they "GenericFiles" ?
+    namespace = ScholarSphere::Application.config.id_namespace
+    query = "{!lucene}id:#{namespace}\\:* has_model_s:*GenericFile*" 
+    puts "Querying solr..."
+    solr = query_solr(q:query)
+
+    docs = solr['response']['docs']
+    puts "found #{docs.length} GenericFiles"
+    docs.each do |doc|
+
+      # TODO: Fetch each document and figure out if we need to generate a thumbnail for it.
+      #       We could use gf.datastreams['thumbnail'].content == nil but that will be 
+      #       incredibly inneficient since it will load EVERY document to figure out 
+      #       which ones we really need to process. 
+      # 
+      #       Instead, we should tweak the Solr query to only load GenericFiles without a 
+      #       thumbnail.
+
+      puts "processing #{doc[:id]}"
+      Sufia.queue.push(CreateDerivativesJob.new doc[:id])
+    end
+
+    # doc_ids = ["scholarsphere:xg94hp54d", "scholarsphere:q237hr963"]
+    # doc_ids.each do |id|
+    #   Sufia.queue.push(CreateDerivativesJob.new id)
+    # end
+  end
+
 end
