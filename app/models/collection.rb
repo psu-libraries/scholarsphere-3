@@ -7,11 +7,11 @@ class Collection < ActiveFedora::Base
   has_metadata name: "properties", type: PropertiesDatastream
 
   def terms_for_display
-    [:title, :creator, :description, :date_modified, :date_uploaded]
+    [:creator, :date_modified, :date_uploaded]
   end
   
   def terms_for_editing
-    terms_for_display - [:date_modified, :date_uploaded]
+    [:title, :description] + terms_for_display - [:date_modified, :date_uploaded]
   end
   
   # Test to see if the given field is required
