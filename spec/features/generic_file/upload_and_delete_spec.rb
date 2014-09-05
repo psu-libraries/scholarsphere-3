@@ -114,6 +114,8 @@ describe 'Generic File uploading and deletion:' do
           expect(page).to have_content "Submit 1 selected files"
           check 'terms_of_service'
           click_on("Submit 1 selected files")
+          uri = URI.parse(current_url)
+          batch = uri.path.split("/")[2]
           page.should have_content 'Apply Metadata'
           fill_in 'generic_file_tag', with: 'dropbox_tag'
           fill_in 'generic_file_creator', with: 'dropbox_creator'
@@ -121,6 +123,10 @@ describe 'Generic File uploading and deletion:' do
           click_on 'upload_submit'
           page.should have_css '#documents'
           page.should have_content "Markdown+Test.txt"
+          click_on "notify_link"
+          page.should have_content "The file (Markdown+Test.txt) was successfully imported"
+          page.should have_content "Markdown+Test.txt has been saved"
+          page.should have_css "span#ss-#{batch}"
         end
       end
     end
