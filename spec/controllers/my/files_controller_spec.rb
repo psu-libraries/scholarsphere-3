@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-include Sufia::Messages
 
 describe My::FilesController do
   routes { Sufia::Engine.routes }
@@ -44,6 +43,8 @@ describe My::FilesController do
       User.any_instance.stub(:groups).and_return([])
     end
     describe "#index" do
+      include Sufia::Messages
+
       let (:batch_noid) {"batch_noid"}
       let (:batch) {double}
 
