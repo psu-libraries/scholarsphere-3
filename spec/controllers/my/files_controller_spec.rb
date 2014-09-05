@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Sufia::Messages
+
 describe My::FilesController do
   routes { Sufia::Engine.routes }
   before do
@@ -7,42 +9,47 @@ describe My::FilesController do
   end
   # This doesn't really belong here, but it works for now
   describe "authenticate!" do
+    let (:user) {FactoryGirl.find_or_create(:archivist)}
     before(:each) do
-      @user = FactoryGirl.find_or_create(:archivist)
-      request.stub(:headers).and_return('REMOTE_USER' => @user.login)
+      request.stub(:headers).and_return('REMOTE_USER' => user.login)
       @strategy = Devise::Strategies::HttpHeaderAuthenticatable.new(nil)
       @strategy.stub(request: request)
     end
     after(:each) do
-      @user.delete
+      user.delete
     end
     it "should populate LDAP attrs if user is new" do
-      User.stub(:find_by_login).with(@user.login).and_return(nil)
-      User.should_receive(:create).with(login: @user.login, email:@user.login).once.and_return(@user)
+      User.stub(:find_by_login).with(user.login).and_return(nil)
+      User.should_receive(:create).with(login: user.login, email:user.login).once.and_return(user)
       User.any_instance.should_receive(:populate_attributes).once
       @strategy.should be_valid
       @strategy.authenticate!.should == :success
-      sign_in @user
+      sign_in user
       get :index
     end
     it "should not populate LDAP attrs if user is not new" do
-      User.stub(:find_by_login).with(@user.login).and_return(@user)
-      User.should_receive(:create).with(login: @user.login).never
+      User.stub(:find_by_login).with(user.login).and_return(user)
+      User.should_receive(:create).with(login: user.login).never
       User.any_instance.should_receive(:populate_attributes).never
       @strategy.should be_valid
       @strategy.authenticate!.should == :success
-      sign_in @user
+      sign_in user
       get :index
     end
   end
   describe "logged in user" do
+    let (:user) {FactoryGirl.find_or_create(:archivist)}
     before (:each) do
-      @user = FactoryGirl.find_or_create(:archivist)
-      sign_in @user
+      sign_in user
       User.any_instance.stub(:groups).and_return([])
     end
     describe "#index" do
+      let (:batch_noid) {"batch_noid"}
+      let (:batch) {double}
+
       before (:each) do
+        allow(batch).to receive(:noid).and_return(batch_noid)
+        User.batchuser().send_message(user, single_success(batch_noid, batch), success_subject, sanitize_text = false)
         xhr :get, :index
       end
       it "should be a success" do
@@ -50,20 +57,23 @@ describe My::FilesController do
         response.should render_template('my/index')
       end
       it "should return an array of documents I can edit" do
-        @user_results = ActiveFedora::SolrService.instance.conn.get "select", params:{fq:["edit_access_group_ssim:public OR edit_access_person_ssim:#{@user.user_key}"]}
+        @user_results = ActiveFedora::SolrService.instance.conn.get "select", params:{fq:["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"]}
         assigns(:document_list).count.should eql(@user_results["response"]["numFound"])
+      end
+      it "returns batches" do
+        expect(assigns(:batches).count).to eq(1)
+        expect(assigns(:batches).first).to eq("ss-"+batch_noid)
       end
     end
     describe "term search" do
       before (:each) do
-        @user = FactoryGirl.find_or_create(:archivist)
         @gf1 =  GenericFile.new(title: ['titletitle'], filename: ['filename.filename'], read_groups:['public'], tag: 'tagtag',
                          based_near: ["based_nearbased_near"], language: ["languagelanguage"],
                          creator: ["creatorcreator"], contributor: ["contributorcontributor"], publisher: ["publisherpublisher"],
                          subject: ["subjectsubject"], resource_type: ["resource_typeresource_type"], resource_type: ["resource_typeresource_type"])
         @gf1.description = ["descriptiondescription"]
         @gf1.format_label = ["format_labelformat_label"]
-        @gf1.apply_depositor_metadata(@user.login)
+        @gf1.apply_depositor_metadata(user.login)
         @gf1.save
       end
       it "should find a file by title" do

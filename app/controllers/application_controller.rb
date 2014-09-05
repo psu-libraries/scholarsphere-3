@@ -84,6 +84,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def notifications_number
+    @notify_number = 0
+    @batches = []
+    return if action_name == "index" && controller_name == "mailbox"
+    if user_signed_in?
+      @notify_number = current_user.mailbox.inbox(unread: true).count
+      @batches = current_user.mailbox.inbox.map { |msg| msg.last_message.body[/<span id="(.*)"><a href=(.*)/,1] }.select{ |val| !val.blank? }
+    end
+  end
+
  protected
   def user_logged_in?
     user_signed_in? and ( valid_user?(request.headers) || Rails.env.test?)
