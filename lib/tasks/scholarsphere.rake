@@ -257,7 +257,7 @@ namespace :scholarsphere do
     total_processed = errors = page = 0
     while total_processed < total_docs
       page += 1
-      solr = query_solr(q: "*", page: page)
+      solr = query_solr(q: "*", page: page) unless page == 1
       total_docs = solr["response"]["numFound"]
       docs = solr["response"]["docs"]
       docs.each do |doc|
@@ -266,7 +266,7 @@ namespace :scholarsphere do
           Sufia.queue.push(CreateDerivativesJob.new id)
         rescue Exception => e  
           errors += 1
-          logger.error "#{e.message}\r\n#{e.backtrace.inspect}"  
+          logger.error "Error processing document: #{id}\r\n#{e.message}\r\n#{e.backtrace.inspect}"  
         end
       end
       total_processed += docs.length
