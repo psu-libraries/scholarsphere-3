@@ -237,4 +237,43 @@ namespace :scholarsphere do
 
     end
   end
+
+  def solr_generic_files_only solr_parameters, user_parameters
+    solr_parameters[:fq] ||= []
+    solr_parameters[:fq] += [
+      ActiveFedora::SolrService.construct_query_for_rel(has_model: ::GenericFile.to_class_uri)
+    ]
+  end
+
+  desc "Generate thumbnails for ALL documents"
+  task "generate_thumbnails" => :environment do
+
+    logger.info "Querying solr..."
+    self.solr_search_params_logic += [:solr_generic_files_only]
+    solr = query_solr(q:"*")
+    total_docs = solr["response"]["numFound"]
+    logger.info "Total documents to process: #{total_docs}"
+    
+    total_processed = errors = page = 0
+    while total_processed < total_docs
+      page += 1
+      solr = query_solr(q: "*", page: page)
+      total_docs = solr["response"]["numFound"]
+      docs = solr["response"]["docs"]
+      docs.each do |doc|
+        begin
+          id = doc[:id]
+          Sufia.queue.push(CreateDerivativesJob.new id)
+        rescue Exception => e  
+          errors += 1
+          logger.error "#{e.message}\r\n#{e.backtrace.inspect}"  
+        end
+      end
+      total_processed += docs.length
+      logger.info "Total documents queued: #{total_processed}"
+    end
+    logger.error("Total errors: #{errors}") if errors > 0
+
+  end
+
 end
