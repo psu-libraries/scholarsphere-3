@@ -19,5 +19,6 @@ en:
             label_long:   "All of ScholarSphere"
     dashboard:
       transfer_files_link: "Select files to transfer"
+      user_activity: "User Activity (last 24 hours)"
     homepage:
       recently_uploaded:    'Recent Additions'
