@@ -105,3 +105,8 @@ div.heading-tile .glyphicon {
 #notifications_table th:nth-child(3){
   width: 60%
 }
+
+#activity .panel-body{
+  overflow: scroll;
+  max-height: 20em;
+}
