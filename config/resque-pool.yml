@@ -1,5 +1,6 @@
 characterize: 1
 batch_update: 3
+derivatives: 1
 resolrize: 1
 audit: 5
 event: 10
