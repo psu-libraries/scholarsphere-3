@@ -276,4 +276,38 @@ namespace :scholarsphere do
 
   end
 
+  # Start date must be in format 'yyyy/MM/dd'
+  desc "Prints to stdout a list of failed jobs in resque"
+  task "get_failed_jobs", [:start_date] => :environment do |cmd, args|
+
+    start_date = args[:start_date] || Date.today.to_s.gsub('-', '/')
+    puts "Getting failed jobs from: #{start_date}"
+    Resque::Failure.each do |i, job| 
+      job_failed_at = job["failed_at"]
+      if job_failed_at >= start_date
+        payload = job["payload"]
+        job_args64 = payload["args"]
+        job_args = Base64.decode64(job_args64[0])
+        prefix_at = job_args.index("scholarsphere:") 
+        sufix_at = job_args.index(":", prefix_at + 14)
+        puts job_args[prefix_at, sufix_at-prefix_at]
+      end
+    end
+
+  end
+
+  desc "Create derivatives for the document PIDs indicated in a file"
+  task "generate_thumbnail", [:file_name] => :environment do |cmd, args|
+    file_name = args[:file_name]
+    abort "Must provide a file name to read the PIDs" if file_name == nil
+    puts "Processing file #{file_name}"
+    File.readlines(file_name).each do |line|
+      pid = line.chomp
+      unless pid.empty?
+        Sufia.queue.push(CreateDerivativesJob.new pid)
+        puts "Queued document #{pid}"
+      end
+    end
+  end  
+
 end
