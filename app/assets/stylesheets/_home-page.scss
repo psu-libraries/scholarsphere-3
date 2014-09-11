@@ -4,6 +4,7 @@
   color: $basic-black;
   h1, h2, h3, h4, h5, h6, p {
     background-color: $classic-white;
+    border-radius:4px;
   }
   h1 {
     padding: .25em .5em;
@@ -17,6 +18,7 @@
 
 .home_share_work {
   background-color: $classic-white;
+  border-radius:4px;
   .btn-primary {
     background-color: $teal;
   }
