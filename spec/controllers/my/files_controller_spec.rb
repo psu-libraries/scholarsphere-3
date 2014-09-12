@@ -46,11 +46,13 @@ describe My::FilesController do
       include Sufia::Messages
 
       let (:batch_noid) {"batch_noid"}
+      let (:batch_noid2) {"batch_noid2"}
       let (:batch) {double}
 
       before (:each) do
         allow(batch).to receive(:noid).and_return(batch_noid)
         User.batchuser().send_message(user, single_success(batch_noid, batch), success_subject, sanitize_text = false)
+        User.batchuser().send_message(user, multiple_success(batch_noid2, [batch]), success_subject, sanitize_text = false)
         xhr :get, :index
       end
       it "should be a success" do
@@ -62,8 +64,9 @@ describe My::FilesController do
         assigns(:document_list).count.should eql(@user_results["response"]["numFound"])
       end
       it "returns batches" do
-        expect(assigns(:batches).count).to eq(1)
+        expect(assigns(:batches).count).to eq(2)
         expect(assigns(:batches).first).to eq("ss-"+batch_noid)
+        expect(assigns(:batches)[1]).to eq("ss-"+batch_noid2)
       end
     end
     describe "term search" do
