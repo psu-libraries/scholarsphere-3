@@ -65,8 +65,8 @@ describe My::FilesController do
       end
       it "returns batches" do
         expect(assigns(:batches).count).to eq(2)
-        expect(assigns(:batches).first).to eq("ss-"+batch_noid)
-        expect(assigns(:batches)[1]).to eq("ss-"+batch_noid2)
+        expect(assigns(:batches)).to include("ss-"+batch_noid)
+        expect(assigns(:batches)).to include("ss-"+batch_noid2)
       end
     end
     describe "term search" do
