@@ -13,6 +13,7 @@ function getSingleUse(id) {
 
 Blacklight.onLoad(function() {
     ZeroClipboard.setDefaults({ moviePath: "<%= asset_path 'ZeroClipboard.swf' %>" });
+    var noFlash = false;
     $.each($(".copypaste"), function(idx, item) {
         var clip = new ZeroClipboard();
         clip.on("dataRequested", function(client, args) {
@@ -22,15 +23,20 @@ Blacklight.onLoad(function() {
             alert("A single use link to " + args.text + " was copied to your clipboard.")
         })
         clip.on("noflash", function(client, args) {
-            $(item).bind('click', function(e) {
-                alert("Your single-use link (please copy): " + getSingleUse(item.id));
-            } );
+            noFlash = true;
         })
         clip.on("wrongflash", function(client, args) {
-            $(item).bind('click', function(e) {
-                alert("Your single-use link (please copy): " + getSingleUse(item.id));
-            } );
+            noFlash = true;
         })
+        if (noFlash) return false;
         clip.glue($("#" + this.id))
-    })
+    });
+    if (noFlash) {
+      $.each($(".copypaste"), function(idx, item) {
+        $(item).click( function(e) {
+          alert("Your single-use link (please copy): " + getSingleUse(item.id));
+        } );
+      });
+
+    }
 });
