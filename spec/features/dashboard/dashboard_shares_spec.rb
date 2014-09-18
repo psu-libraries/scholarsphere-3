@@ -16,6 +16,7 @@ describe 'Dashboard Shares' do
     within('#sidebar') do
       page.should have_content("Upload")
       page.should have_content("Create Collection")
+      page.should_not have_selector(".batch-toggle input[value='Delete Selected']")
     end
   end
 
