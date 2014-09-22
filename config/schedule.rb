@@ -9,5 +9,8 @@ every :day, at: "12:20am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_audit_repository.sh"
 end
 
+every 60.minutes do
+command "#{path}/config/cronjobs/temp_file_clean.bash"
+end
 
 # Learn more: http://github.com/javan/whenever
