@@ -17,10 +17,11 @@ Hydra::Derivatives::Video.class_eval do
 
 end
 Hydra::Derivatives::ShellBasedProcessor::ClassMethods.class_eval do
+  include  ActionView::Helpers::DateHelper
+
   alias_method :old_execute, :execute
   def execute(command)
-    puts "got to override"
-    timeout = 5*60 # 5 minutes
+    timeout = 6*60 # 6 minutes
     wait_thr = nil
     begin
       status = Timeout::timeout(timeout) do
@@ -34,8 +35,8 @@ Hydra::Derivatives::ShellBasedProcessor::ClassMethods.class_eval do
       end
     rescue Timeout::Error => ex
       pid = wait_thr[:pid]
-      Process.kill("KILL", pid)
-      raise "Unable to execute command \"#{command}\"\nThe command took longer than #{timeout} to execute"
+      Process.kill("TERM", pid)
+      raise "Unable to execute command \"#{command}\"\nThe command took longer than #{time_ago_in_words(timeout.seconds.from_now)} to execute"
     end
   end
 end
