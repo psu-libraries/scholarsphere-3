@@ -90,7 +90,20 @@ namespace :deploy do
     CMD
   end
 end
+
+# Re-generate sitemap.xml
+namespace :deploy do
+  desc "Re-generate sitemap.xml"
+  task :sitemapxml, roles: :web  do
+    run <<-CMD.compact
+    cd -- #{latest_release} &&
+    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} sitemap:generate
+    CMD
+  end
+end
+
 after "deploy:migrate", "deploy:resolrize"
+after "deploy:resolrize", "deploy:sitemapxml"
 
 # Restart resque-pool.
 namespace :deploy do
