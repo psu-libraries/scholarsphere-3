@@ -97,7 +97,7 @@ namespace :deploy do
   task :sitemapxml, roles: :web  do
     run <<-CMD.compact
     cd -- #{latest_release} &&
-    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} sitemap:generate
+    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} sitemap:generate sitemap:ping
     CMD
   end
 end
