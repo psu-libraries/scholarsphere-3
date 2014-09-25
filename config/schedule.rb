@@ -13,7 +13,7 @@ every :day, at: "1:00 am" do
   command "#{path}/config/cronjobs/compare_solr.bash"
 end
 
-every 60.minutes do
+every 60.minutes, roles: [:app] do
   command "#{path}/config/cronjobs/temp_file_clean.bash"
 end
 
