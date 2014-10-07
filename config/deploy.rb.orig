@@ -6,8 +6,7 @@ set :application, 'scholarsphere'
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
 
 # default branch is :master
-#ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
+ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # default user and deployment location
 set :user, "deploy"
@@ -63,19 +62,19 @@ set :keep_releases, 7
 
 # Apache namespace to control apache
 namespace :apache do
- [:stop, :start, :restart, :reload].each do |action|
- desc "#{action.to_s.capitalize} Apache"
-  task action do
-   on roles(:web) do
-    execute "sudo service httpd #{action.to_s}"
-   end
+  [:stop, :start, :restart, :reload].each do |action|
+    desc "#{action.to_s.capitalize} Apache"
+    task action do
+     on roles(:web) do
+      execute "sudo service httpd #{action.to_s}"
+     end
+    end
   end
- end
 end
 
 namespace :deploy do
   
-  # Link the appropriate configuration files based on application, stage, and release path
+  # link the appropriate configuration files based on application, stage, and release path
   desc "Link shared files"
   task :symlink_shared do
   on roles(:web) do
@@ -94,62 +93,60 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
     end
   end
-  after 'deploy:symlink:shared', :symlink_shared 
+<<<<<<< HEAD
 
-  # Resolarize objects
+  desc "remove resque on the main server"
+  task :remove_resque, roles: :solr do
+    run <<-CMD.compact
+    rm #{release_path}/config/resque-pool.yml
+    CMD
+  end
+
+end
+before "deploy:finalize_update", "deploy:symlink_shared", "deploy:remove_resque"
+
+# Always run migrations.
+after "deploy:update_code", "deploy:migrate"
+=======
+  after :updating, :symlink_shared #execute sym file linking after code is updating
+>>>>>>> Upgrading Capistrano v2.0 to 3.0
+
+  # resolarize objects
   desc "Re-solrize objects"
   task :resolrize do
-   on roles(:solr) do
-    within release_path do
-     with rails_env: fetch(:rails_env) do
-      execute :rake, "#{fetch(:application)}:resolrize"
-     end
-   end
-  end
- end
- after :migrate, :resolrize
-
-
- # Re-generate sitemap.xml
- desc "Re-generate sitemap.xml"
- task :sitemapxml do
-  on roles(:web)  do
-   within release_path do
-    with rails_env: fetch(:rails_env) do
-     execute :rake, "sitemap:generate sitemap:ping" 
-    end
-   end
-  end
- end
- after :resolrize, :sitemapxml
-  
- # Restart resque-pool.
- desc "Restart resque-pool"
- task :resquepoolrestart do
-  on roles(:app) do
-    execute :sudo,  "/sbin/service resque_pool restart"
-  end
- end
- before :restart, :resquepoolrestart
-
- # Removes resque on the main server
- desc "Remove resque on the main server"
- task :remove_resque do
   on roles(:solr) do
-   within release_path do
-    execute "rm #{fetch(:release_path)}/config/resque-pool.yml"
+    execute "cd -- #{fetch(:release_path)} && RAILS_ENV=#{fetch(:rails_env).to_s.shellescape} bundle exec rake #{fetch(:application)}:resolrize" 
    end
   end
- end
- after :symlink_shared, :remove_resque
+  after "deploy:migrate", "deploy:resolrize"
 
- # Restart the application
- desc 'Restart application'
- task :restart do
-  on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
+  # Restart resque-pool.
+  desc "Restart resque-pool"
+  task :resquepoolrestart do
+   on roles(:app) do
+     execute "sudo /sbin/service resque_pool restart"
+   end
   end
- end
- #after :publishing, :restart 
- after :restart, "passenger:warmup" 
+  before "deploy:restart", "deploy:resquepoolrestart"
+
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      #execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+  after "deploy:publishing", "deploy:restart"
+  
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end      
+    end
+  end
+  #after "deploy:restart", "passenger:warmup"
 end
