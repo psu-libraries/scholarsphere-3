@@ -21,6 +21,8 @@ class ImportUrlJob < ActiveFedoraPidBasedJob
       else
         job_user.send_message(user, generic_file.errors.full_messages.join(', '), 'File Import Error')
       end
+      f.close
+      f.unlink
     end
   end
 
