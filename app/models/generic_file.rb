@@ -146,4 +146,17 @@ class GenericFile < ActiveFedora::Base
     super
   end
 
+
+  # Get the files with a sibling relationship (belongs_to :batch)
+  # The batch id is minted when visiting the upload screen and attached
+  # to each file when it is done uploading.  The Batch object is not created
+  # until all objects are done uploading and the user is redirected to
+  # BatchController#edit.  Therefore, we must handle the case where
+  # self.batch_id is set but self.batch returns nil.
+  def related_files
+    return [] if batch.nil?
+    ids = batch.generic_file_ids.reject { |sibling| sibling == id }
+    ids.map {|id| GenericFile.load_instance_from_solr id}
+  end
+
 end
