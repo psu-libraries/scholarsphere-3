@@ -138,4 +138,12 @@ class GenericFile < ActiveFedora::Base
   def public?
     read_groups.include?('public')
   end
+
+  def characterize
+    if !content.nil? && content.content.size > 2**30
+      return false
+    end
+    super
+  end
+
 end
