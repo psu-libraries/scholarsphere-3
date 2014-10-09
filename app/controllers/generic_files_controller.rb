@@ -5,6 +5,15 @@ class GenericFilesController < ApplicationController
 
   around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
   skip_before_action :has_access?, only: [:stats]
+  skip_load_resource(only: [:show])
+  before_filter :load_resource_from_solr, only: [:show]
+
+  def load_resource_from_solr
+    puts "got here #{params}"
+    puts "GenericFile on load = #{@genericFile}"
+    @generic_file = GenericFile.load_instance_from_solr(params[:id])
+    @generic_file
+  end
 
   def notify_users_of_permission_changes
     previous_permissions = @generic_file.permissions unless @generic_file.nil?

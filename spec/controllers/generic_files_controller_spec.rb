@@ -46,14 +46,14 @@ describe GenericFilesController do
     end
   end
   context "public user" do
+    let (:gf) { GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups:['public']).tap do |gf|
+      gf.apply_depositor_metadata("mjg36")
+      gf.save!
+    end
+    }
+    routes { Sufia::Engine.routes }
     describe "#stats" do
-      routes { Sufia::Engine.routes }
 
-      let (:gf) { GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups:['public']).tap do |gf|
-                  gf.apply_depositor_metadata("mjg36")
-                  gf.save!
-                end
-              }
       before do
         mock_query = double('query')
         allow(mock_query).to receive(:for_path).and_return([
@@ -76,6 +76,14 @@ describe GenericFilesController do
       it "doesn't call has access on stats" do
         expect(GenericFilesController).not_to receive(:has_access?)
         get :stats, id: gf.noid
+      end
+    end
+    describe "#show" do
+      it "creates loads from solr" do
+        CanCan::ControllerResource.any_instance.should_not receive(:load_and_authorize_resource)
+        get :show, id: gf.noid
+        response.should_not redirect_to(action: 'show')
+        expect(assigns[:generic_file].inner_object.class).to eq ActiveFedora::SolrDigitalObject
       end
     end
   end
