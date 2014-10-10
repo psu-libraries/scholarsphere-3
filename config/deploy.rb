@@ -74,8 +74,16 @@ namespace :deploy do
     ln -sf /dlt/#{application}/upload_#{stage}/uploads #{release_path}/public/
     CMD
   end
+
+  desc "remove resque on the main server"
+  task :remove_resque, roles: :solr do
+    run <<-CMD.compact
+    rm #{release_path}/config/resque-pool.yml
+    CMD
+  end
+
 end
-before "deploy:finalize_update", "deploy:symlink_shared"
+before "deploy:finalize_update", "deploy:symlink_shared", "deploy:remove_resque"
 
 # Always run migrations.
 after "deploy:update_code", "deploy:migrate"
