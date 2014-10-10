@@ -15,9 +15,10 @@ namespace :scholarsphere do
         gfs = []
         body.gsub(/<a href=["']\/files\/([0-9a-zA-Z]{9})/) {|match| gfs << "scholarsphere:#{$1}"}
         gfs.each do |id|
+          next if batch.generic_file_ids.include? id
           f = GenericFile.find(id) rescue next
           f.update_index
-          batch.generic_files << f unless  batch.generic_files.include? f
+          batch.generic_file_ids << id
         end
         batch.save
       end

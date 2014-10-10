@@ -9,8 +9,6 @@ class GenericFilesController < ApplicationController
   before_filter :load_resource_from_solr, only: [:show]
 
   def load_resource_from_solr
-    puts "got here #{params}"
-    puts "GenericFile on load = #{@genericFile}"
     @generic_file = GenericFile.load_instance_from_solr(params[:id])
     @generic_file
   end
