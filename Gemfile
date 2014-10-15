@@ -5,13 +5,15 @@ gem 'rails', '4.1.5'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-gem 'sufia', '~> 4.0.0'
+#gem 'sufia', '~> 4.0.0'
+gem 'sufia', github:'projecthydra/sufia', ref: "6161766a4239cf8cd6d0e261425f3d07288983eb"
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.4.0'
 gem 'hydra-collections', '2.0.5'
 gem 'hydra-derivatives', '0.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: '879e70e0bd5d2d'
+gem 'active-fedora', path:"../active_fedora"
 
 # Other components
 gem 'clamav'

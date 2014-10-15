@@ -17,4 +17,5 @@ RSpec.configure do |config|
 
   # Alias for shared examples
   config.alias_it_should_behave_like_to :we_can, 'We can'
+  config.infer_spec_type_from_file_location!
 end

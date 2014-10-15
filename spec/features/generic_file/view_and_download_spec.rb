@@ -31,47 +31,59 @@ describe 'Generic File viewing and downloading:' do
 
     context 'When viewing a file' do
 
-      specify "I can see the file's page" do
+      specify "I see all the correct information" do
+        # "I can see the file's page" do
         page.status_code.should == 200
         page.should have_content file_1.title.first
-      end
 
-      specify 'I can see the link for creator and it filters correctly' do
+        # 'I can not feature' do
+        page.should_not have_link "Feature"
+
+        # 'I should see the visibility link' do
+        within(".visibility-link span") do
+          page.should have_content("Open Access")
+        end
+
+        # 'I should see the breadcrumb trail' do
+        page.should have_link("My Dashboard")
+        page.should have_link("My Files")
+
+        # 'I can see the link for all the linkable items' do
+        page.should have_link 'http://example.org/TheDescriptionLink/'
+        page.should have_link file_1.related_url.first
+
+        # 'I can see the link for creator and it filters correctly' do
         test_link file_1.creator.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for contributor and it filters correctly' do
+        # 'I can see the link for contributor and it filters correctly' do
         test_link file_1.contributor.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for publisher and it filters correctly' do
+        # 'I can see the link for publisher and it filters correctly' do
         test_link file_1.publisher.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for subject and it filters correctly' do
+        # 'I can see the link for subject and it filters correctly' do
         test_link file_1.subject.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for language and it filters correctly' do
+        # 'I can see the link for language and it filters correctly' do
         test_link file_1.language.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for based_near and it filters correctly' do
+        # 'I can see the link for based_near and it filters correctly' do
         test_link file_1.based_near.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for a tag and it filters correctly' do
+        # 'I can see the link for a tag and it filters correctly' do
         test_link file_1.tag.first
-      end
+        visit "/files/#{file_1.noid}"
 
-      specify 'I can see the link for rights and it filters correctly' do
+        # 'I can see the link for rights and it filters correctly' do
         test_link Sufia.config.cc_licenses_reverse[file_1.rights.first]
       end
 
-      specify 'I can see the link for all the linkable items' do
-        page.should have_link 'http://example.org/TheDescriptionLink/'
-        page.should have_link file_1.related_url.first
-      end
 
       specify 'I can download an Endnote version of the file' do
         click_link 'EndNote'
@@ -90,20 +102,6 @@ describe 'Generic File viewing and downloading:' do
         page.should have_css('.modal-header')
       end
 
-      specify 'I can not feature' do
-        page.should_not have_link "Feature"
-      end
-
-      specify 'I should see the visibility link' do
-        within(".visibility") do
-          page.should have_content("Open Access")
-        end
-      end
-
-      specify 'I should see the breadcrumb trail' do
-        page.should have_link("My Dashboard")
-        page.should have_link("My Files")
-      end
     end
 
     context "administrator user" do
