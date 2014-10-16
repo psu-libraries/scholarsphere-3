@@ -512,7 +512,7 @@ GEM
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
       rspec-mocks (~> 2.99.0)
-    ruby-box (1.14.0)
+    ruby-box (1.15.0)
       addressable
       json
       multipart-post
