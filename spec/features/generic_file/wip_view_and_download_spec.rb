@@ -95,7 +95,7 @@ describe 'Generic File viewing and downloading:' do
       end
 
       specify 'I should see the visibility link' do
-        within(".visibility") do
+        within(".visibility-link span") do
           page.should have_content("Open Access")
         end
       end
