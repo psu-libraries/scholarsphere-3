@@ -19,6 +19,7 @@ require 'capistrano/rbenv' #rbenv setup
 require 'capistrano/rails' #rails (includes bundler, rails/assets and rails/migrations)
 require 'whenever/capistrano' #whenever 
 require 'capistrano/passenger' #passenger
+require 'capistrano-resque'  #resque
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 # tasks included: passenger, checksum
