@@ -6,7 +6,7 @@ gem 'mysql2', '0.3.16'
 
 # Hydra community components
 #gem 'sufia', '~> 4.0.0'
-gem 'sufia', github:'projecthydra/sufia', ref: "6161766a4239cf8cd6d0e261425f3d07288983eb"
+gem 'sufia', github:'projecthydra/sufia', ref: "62eea2125300a"
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.4.0'
 gem 'hydra-collections', '2.0.5'
