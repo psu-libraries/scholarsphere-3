@@ -159,4 +159,30 @@ class GenericFile < ActiveFedora::Base
     ids.map {|id| GenericFile.load_instance_from_solr id}
   end
 
+  def audit(force = false)
+    logs = []
+    self.per_version do |ver|
+      logs << audit_each(ver, force)
+    end
+    logs
+  end
+
+  def audit_each(version, force = false)
+    latest_audit = logs(version.dsid).first
+    unless force
+      return latest_audit unless ::GenericFile.needs_audit?(version, latest_audit)
+    end
+    #  Resque.enqueue(AuditJob, version.pid, version.dsid, version.versionID)
+    Sufia.queue.push(AuditJob.new(version.pid, version.dsid, version.versionID))
+
+    # run the find just incase the job has finished already
+    latest_audit = logs(version.dsid).first
+    latest_audit = ChecksumAuditLog.new(pass: NO_RUNS, pid: version.pid, dsid: version.dsid, version: version.versionID) unless latest_audit
+    latest_audit
+  end
+
+  def self.audit(version, force = false)
+    self.find(version.pid).audit_each(version,force)
+  end
+
 end
