@@ -13,7 +13,6 @@ gem 'hydra-collections', '2.0.5'
 gem 'hydra-derivatives', '0.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: '879e70e0bd5d2d'
-gem 'active-fedora', path:"../active_fedora"
 
 # Other components
 gem 'clamav'
