@@ -3,7 +3,8 @@
 # Stops and then starts resque-pool in either production or development environment 
 # script/restart_resque.sh [production|development] 
 
-RESQUE_POOL_PIDFILE="$(pwd)/tmp/pids/resque-pool.pid"
+#RESQUE_POOL_PIDFILE="$(pwd)/tmp/pids/resque-pool.pid"
+RESQUE_POOL_PIDFILE="$(pwd)/scholarsphere/shared/pids/resque-pool.pid"
 HOSTNAME=$(hostname -s)
 ENVIRONMENT=$1
 function anywait {
@@ -34,4 +35,4 @@ banner "killing resque-pool"
     kill -2 $PID && anywait $PID
 }
 banner "starting resque-pool"
-bundle exec resque-pool --daemon --environment $ENVIRONMENT start
+bundle exec resque-pool --daemon --environment $ENVIRONMENT --pidfile $RESQUE_POOL_PIDFILE start

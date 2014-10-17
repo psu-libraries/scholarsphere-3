@@ -10,7 +10,8 @@ LC_ALL=en_US.UTF-8
 HHOME="/opt/heracles"
 JENKINS_HOME="/opt/heracles/jenkins"
 WORKSPACE="${JENKINS_HOME}/jobs/scholarsphere-ci/workspace"
-RESQUE_POOL_PIDFILE="${WORKSPACE}/tmp/pids/resque-pool.pid"
+RESQUE_POOL_PIDFILE="${WORKSPACE}/shared/pids/resque-pool.pid"
+#RESQUE_POOL_PIDFILE="${WORKSPACE}/tmp/pids/resque-pool.pid"
 RUBY_VERSION=`cat $WORKSPACE/.ruby-version`
 
 function rbenv_environment {
@@ -87,8 +88,8 @@ bundle install
 echo "=-=-=-=-= $0 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config"
 cp -f ${HHOME}/config/{database,fedora,solr,hydra-ldap,devise}.yml ${WORKSPACE}/config
 
-echo "=-=-=-=-= $0 resque-pool --daemon --environment test start"
-bundle exec resque-pool --daemon --environment test start
+echo "=-=-=-=-= $0 resque-pool --daemon --environment test --pidfile $RESQUE_POOL_PIDFILE start"
+bundle exec resque-pool --daemon --environment test --pidfile $RESQUE_POOL_PIDFILE start
 
 echo "=-=-=-=-= $0 bundle exec rake --trace scholarsphere:generate_secret"
 bundle exec rake --trace scholarsphere:generate_secret
