@@ -7,7 +7,7 @@ set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
 
 # default branch is :master
 #ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "develop"
 
 # default user and deployment location
 set :user, "deploy"
