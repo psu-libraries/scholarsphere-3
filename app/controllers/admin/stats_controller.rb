@@ -22,22 +22,12 @@ class Admin::StatsController < ApplicationController
     # Change to hash where keys = logins and values = counts
     @active_users = Hash[*depositor_tuples]
 
-    # Query Solr for totals by visibility (read_access_group)
-    visibility_key = Solrizer.solr_name('read_access_group', :symbol)
-    visibility_url = "#{ActiveFedora.solr_config[:url]}/terms?terms.fl=#{visibility_key}&terms.sort=index&terms.limit=-1&wt=json&omitHeader=true"
-    visibility_json = open(visibility_url).read
-    visibility_tuples = JSON.parse(visibility_json)['terms'][visibility_key] rescue []
-    # Change to hash where keys = logins and values = counts
-    visibility_hash = Hash[*visibility_tuples]
-    # Drop all groups except for registered (Penn State) and public (Open Access)
-    visibility_hash.select! { |k, v| ['registered', 'public'].include? k }
-
     # Count of documents by permissions
     ActiveFedora::SolrService.instance.conn.commit("expungeDeletes"=>true)
     @files_count = {}
     @files_count[:total] = GenericFile.count
-    @files_count[:psu] = visibility_hash['registered'].to_i
-    @files_count[:public] = visibility_hash['public'].to_i
+    @files_count[:public] = GenericFile.where(Solrizer.solr_name('read_access_group', :symbol) => 'public').count
+    @files_count[:psu] = GenericFile.where(Solrizer.solr_name('read_access_group', :symbol) =>'registered').count
     @files_count[:private] = @files_count[:total] - (@files_count[:psu] + @files_count[:public])
 
     # Query Solr for top 5 depositors

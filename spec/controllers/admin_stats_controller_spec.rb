@@ -57,5 +57,45 @@ describe Admin::StatsController do
         assigns[:files_count][:total].should == original_files_count - 1
       end
     end
+
+    describe "counts" do
+      let!(:gf) { GenericFile.new.tap do |f|
+                  f.apply_depositor_metadata(@user1.user_key)
+                  f.save
+                end }
+      let!(:gf2) { GenericFile.new.tap do |f|
+        f.apply_depositor_metadata(@user1.user_key)
+        f.read_groups= ['public']
+        f.save
+      end }
+      let!(:gf3) { GenericFile.new.tap do |f|
+        f.apply_depositor_metadata(@user1.user_key)
+        f.read_groups= ['registered']
+        f.save
+      end }
+
+      # create a collection to add other items into the repository that should not get counted
+      #  DO NOT REMOVE
+      let!(:col) { Collection.new.tap do |c|
+                  c.title = "test"
+                  c.apply_depositor_metadata(@user1.user_key)
+                  c.save
+                end }
+      after do
+        gf.destroy
+        gf2.destroy
+        gf3.destroy
+        col.destroy
+      end
+
+      it "counts file correctly" do
+        get :index
+        assigns[:files_count][:total].should == 3
+        assigns[:files_count][:public].should == 1
+        assigns[:files_count][:psu].should == 1
+        assigns[:files_count][:private].should == 1
+      end
+    end
+
   end
 end

@@ -5,7 +5,7 @@ gem 'rails', '4.1.5'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-gem 'sufia', '~> 4.0.0'
+gem 'sufia', '~> 4.0.1'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.4.0'
 gem 'hydra-collections', '2.0.5'
@@ -50,10 +50,13 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano', '2.15.5'
-  gem 'capistrano-ext', '1.2.1'
-  gem 'capistrano-notification', '0.1.1'
-  gem 'capistrano-rbenv', '1.0.5'
+  gem 'capistrano', '~> 3.0', require: false
+  gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'capistrano-rbenv', '~> 2.0', require: false
+  gem 'capistrano-passenger'
+  gem 'capistrano-resque', '~> 0.2.1', require: false
+  gem 'passenger'
   gem 'unicorn-rails'
 end
 

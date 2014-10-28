@@ -22,3 +22,7 @@ en:
       user_activity: "User Activity (last 24 hours)"
     homepage:
       recently_uploaded:    'Recent Additions'
+    collection:
+      select_form:
+        update: "Add to Collection"
+        create_new: "Create New Collection"

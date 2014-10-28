@@ -1,120 +1,155 @@
-# Example Usage:
-#   deploy to staging: cap staging deploy
-#   deploy a specific branch to qa: cap -s branch=cappy qa deploy
-#   deploy a specific revision to staging: cap -s revision=c9800f1 staging deploy
-#   deploy a specific tag to production: cap -s tag=my_tag production deploy
-#   keep only the last 3 releases on staging: cap -s keep_releases=3 staging deploy:cleanup
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-require 'bundler/capistrano'
-require 'capistrano-rbenv'
-require 'capistrano/ext/multistage'
-require 'whenever/capistrano'
-require 'capistrano-notification'
+# application and repo settings
+set :application, 'scholarsphere'
+set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
 
-set :application, "scholarsphere"
-set :whenever_command, "bundle exec whenever"
+# default branch is :master
+#ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "develop"
 
-set :scm, :git
-set :deploy_via, :remote_cache
-set :repository,  "https://github.com/psu-stewardship/#{application}.git"
-
-set :deploy_to, "/opt/heracles/deploy/#{application}"
+# default user and deployment location
 set :user, "deploy"
-ssh_options[:forward_agent] = true
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")]
+set :deploy_to, "/opt/heracles/deploy/#{fetch(:application)}"
 set :use_sudo, false
-default_run_options[:pty] = true
 
-set :rbenv_ruby_version, File.read(File.join(File.dirname(__FILE__), '..', '.ruby-version')).chomp
-set :rbenv_setup_shell, false
+# ssh key settings
+set :ssh_options, {
+    keys: [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")],
+    forward_agent: true,
+    #auth_methods: %w(password)
+    #keys: %w(/home/rlisowski/.ssh/id_rsa),  
+}
 
-notification.irc do |irc|
-  irc.user    'cappy'
-  irc.host    'chat.freenode.net'
-  irc.channel '#scholarsphere'
-  irc.message { "[#{irc.user}] #{local_user} deployed #{application} to #{stage}" }
-end
+# rbenv settings
+set :rbenv_type, :user # or :system, depends on your rbenv setup
+set :rbenv_ruby, File.read(File.join(File.dirname(__FILE__), '..', '.ruby-version')).chomp # read from file above
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec" # rbenv settings
+set :rbenv_map_bins, %w{rake gem bundle ruby rails} # map the following bins
+set :rbenv_roles, :all # default value
 
+# rails settings, NOTE: Task is wired into event stack
+set :rails_env, 'production'
+
+# whenever settings, NOTE: Task is wired into event stack
+set :whenever_identifier, -> {"#{fetch(:application)}_#{fetch(:stage)}"}
+
+# git for source control
+set :scm, :git
+
+# Default value for :format is :pretty
+set :format, :pretty
+
+# Default value for :log_level is :debug
+set :log_level, :debug
+
+# Default value for :pty is false
+set :pty, true
+
+# Default value for :linked_files is []
+#set :linked_files, %w{config/database.yml}
+
+# Default value for linked_dirs is []
+# set :linked_dirs, %w{log}
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5, setting to 7
+set :keep_releases, 7
+
+
+# Apache namespace to control apache
 namespace :apache do
-  [:stop, :start, :restart, :reload].each do |action|
-    desc "#{action.to_s.capitalize} Apache"
-    task action, :roles => :web do
-      invoke_command "sudo service httpd #{action.to_s}", :via => run_method
-    end
+ [:stop, :start, :restart, :reload].each do |action|
+ desc "#{action.to_s.capitalize} Apache"
+  task action do
+   on roles(:web) do
+    execute "sudo service httpd #{action.to_s}"
+   end
   end
+ end
 end
 
-
-# override default restart task for apache passenger
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, roles: :app, except: { no_release: true } do
-    run "touch #{current_path}/tmp/restart.txt"
-  end
-end
-
-# insert new task to symlink shared files
-namespace :deploy do
+  
+  # Link the appropriate configuration files based on application, stage, and release path
   desc "Link shared files"
   task :symlink_shared do
-    run <<-CMD.compact
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/database.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/devise.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/fedora.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/hydra-ldap.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/newrelic.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/redis.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/solr.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/analytics.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/ga-privatekey.p12 #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/browse_everything_providers.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/secret_token.rb #{release_path}/config/initializers/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/sufia-secret.rb #{release_path}/config/initializers/ &&
-    ln -sf /dlt/#{application}/upload_#{stage}/uploads #{release_path}/public/
-    CMD
+  on roles(:web) do
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/database.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/devise.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/hydra-ldap.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/newrelic.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/redis.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/solr.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/analytics.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/ga-privatekey.p12 #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/browse_everything_providers.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/secret_token.rb #{fetch(:release_path)}/config/initializers/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/sufia-secret.rb #{fetch(:release_path)}/config/initializers/"
+    execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
+    end
   end
+  after 'deploy:symlink:shared', :symlink_shared 
 
-  desc "remove resque on the main server"
-  task :remove_resque, roles: :solr do
-    run <<-CMD.compact
-    rm #{release_path}/config/resque-pool.yml
-    CMD
-  end
-
-end
-before "deploy:finalize_update", "deploy:symlink_shared", "deploy:remove_resque"
-
-# Always run migrations.
-after "deploy:update_code", "deploy:migrate"
-
-# Resolrize.
-namespace :deploy do
+  # Resolarize objects
   desc "Re-solrize objects"
-  task :resolrize, roles: :solr do
-    run <<-CMD.compact
-    cd -- #{latest_release} &&
-    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize
-    CMD
+  task :resolrize do
+   on roles(:solr) do
+    within release_path do
+     with rails_env: fetch(:rails_env) do
+      execute :rake, "#{fetch(:application)}:resolrize"
+     end
+   end
   end
-end
-after "deploy:migrate", "deploy:resolrize"
+ end
+ after :migrate, :resolrize
 
-# Restart resque-pool.
-namespace :deploy do
-  desc "restart resque-pool"
-  task :resquepoolrestart do
-    run "sudo /sbin/service resque_pool restart"
+
+ # Re-generate sitemap.xml
+ desc "Re-generate sitemap.xml"
+ task :sitemapxml do
+  on roles(:web)  do
+   within release_path do
+    with rails_env: fetch(:rails_env) do
+     execute :rake, "sitemap:generate sitemap:ping" 
+    end
+   end
   end
+ end
+ after :resolrize, :sitemapxml
+  
+ # Restart resque-pool.
+ desc "Restart resque-pool"
+ task :resquepoolrestart do
+  on roles(:app) do
+    execute :sudo,  "/sbin/service resque_pool restart"
+  end
+ end
+ before :restart, :resquepoolrestart
+
+ # Removes resque on the main server
+ desc "Remove resque on the main server"
+ task :remove_resque do
+  on roles(:solr) do
+   within release_path do
+    execute "rm #{fetch(:release_path)}/config/resque-pool.yml"
+   end
+  end
+ end
+ after :symlink_shared, :remove_resque
+
+ # Restart the application
+ desc 'Restart application'
+ task :restart do
+  on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
+  end
+ end
+ #after :publishing, :restart 
+ after :restart, "passenger:warmup" 
 end
-before "deploy:restart", "deploy:resquepoolrestart"
-
-# config/deploy/_passenger.rb hooks.
-after "rbenv:setup", "passenger:install"
-after "deploy:restart", "passenger:warmup"
-
-# Keep the last X number of releases.
-set :keep_releases, 7
-after "passenger:warmup", "deploy:cleanup"
-
-# end
