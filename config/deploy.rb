@@ -37,6 +37,7 @@ set :whenever_identifier, -> {"#{fetch(:application)}_#{fetch(:stage)}"}
 
 # git for source control
 set :scm, :git
+set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 # Default value for :format is :pretty
 set :format, :pretty
@@ -142,14 +143,5 @@ namespace :deploy do
   end
  end
  after :symlink_shared, :remove_resque
-
- # Restart the application
- desc 'Restart application'
- task :restart do
-  on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-  end
- end
- #after :publishing, :restart 
  after :restart, "passenger:warmup" 
 end

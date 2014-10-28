@@ -20,6 +20,9 @@ require 'capistrano/rails' #rails (includes bundler, rails/assets and rails/migr
 require 'whenever/capistrano' #whenever 
 require 'capistrano/passenger' #passenger
 require 'capistrano-resque'  #resque
+require 'capistrano/git' #git
+require './lib/capistrano/submodule_strategy' #custom submodule strategy
+require 'capistrano/rbenv_install' #rbenv install plugin
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 # tasks included: passenger, checksum
