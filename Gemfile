@@ -56,6 +56,7 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.0', require: false
   gem 'capistrano-passenger'
   gem 'capistrano-resque', '~> 0.2.1', require: false
+  gem 'capistrano-rbenv-install'
   gem 'passenger'
   gem 'unicorn-rails'
 end
