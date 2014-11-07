@@ -110,13 +110,13 @@ namespace :deploy do
  after :migrate, :resolrize
 
 
- # Re-generate sitemap.xml
- desc "Re-generate sitemap.xml"
+ # Queue sitemap.xml to be regenerated
+ desc "Queue sitemap.xml to be generated"
  task :sitemapxml do
   on roles(:web)  do
    within release_path do
     with rails_env: fetch(:rails_env) do
-     execute :rake, "sitemap:generate sitemap:ping" 
+     execute :rake, "#{fetch(:application)}:sitemap_queue_generate" 
     end
    end
   end

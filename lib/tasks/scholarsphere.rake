@@ -356,4 +356,9 @@ namespace :scholarsphere do
     end
   end    
 
+  desc "Queues a job to (re)generate the sitemap.xml"
+  task "sitemap_queue_generate" => :environment do 
+    Sufia.queue.push(SitemapRegenerateJob.new)
+  end    
+
 end
