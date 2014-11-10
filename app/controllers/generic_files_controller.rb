@@ -7,6 +7,7 @@ class GenericFilesController < ApplicationController
   skip_before_action :has_access?, only: [:stats]
   skip_load_resource(only: [:show])
   before_filter :load_resource_from_solr, only: [:show]
+  authorize_resource only: [:show]
 
   def load_resource_from_solr
     @generic_file = GenericFile.load_instance_from_solr(params[:id])

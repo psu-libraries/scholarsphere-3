@@ -122,10 +122,10 @@ describe 'Generic File uploading and deletion:' do
           select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
           click_on 'upload_submit'
           page.should have_css '#documents'
-          page.should have_content "Markdown+Test.txt"
+          page.should have_content "Markdown Test.txt"
           click_on "notify_link"
-          page.should have_content "The file (Markdown+Test.txt) was successfully imported"
-          page.should have_content "Markdown+Test.txt has been saved"
+          page.should have_content "The file (Markdown Test.txt) was successfully imported"
+          page.should have_content "Markdown Test.txt has been saved"
           page.should have_css "span#ss-#{batch}"
         end
       end
