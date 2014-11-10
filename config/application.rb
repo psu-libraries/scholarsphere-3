@@ -97,7 +97,7 @@ module ScholarSphere
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
     config.analytic_start_date = DateTime.new(2014,9,10)
-    config.max_upload_file_size = 2*1024*1024*1024 #2GB
+    config.max_upload_file_size = 1.9*1024*1024*1024 #1.9GB
   end
 end
 
