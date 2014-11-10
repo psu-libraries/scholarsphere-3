@@ -9,7 +9,7 @@ every :day, at: "12:20am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_audit_repository.sh"
 end
 
-every :day, at: "1:00 am" do
+every :day, at: "1:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/compare_solr.bash"
 end
 

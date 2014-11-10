@@ -34,6 +34,7 @@ set :rails_env, 'production'
 
 # whenever settings, NOTE: Task is wired into event stack
 set :whenever_identifier, -> {"#{fetch(:application)}_#{fetch(:stage)}"}
+set :whenever_roles, [:app, :job]
 
 # git for source control
 set :scm, :git
