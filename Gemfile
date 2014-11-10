@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
