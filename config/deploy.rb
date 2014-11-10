@@ -93,6 +93,7 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/secret_token.rb #{fetch(:release_path)}/config/initializers/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/sufia-secret.rb #{fetch(:release_path)}/config/initializers/"
     execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
+    execute "ln -sf /dlt/#{fetch(:application)}/#{fetch(:stage)}/public/sitemap.xml #{fetch(:release_path)}/public/sitemap.xml"
     end
   end
   after 'deploy:symlink:shared', :symlink_shared 
@@ -114,7 +115,7 @@ namespace :deploy do
  # Queue sitemap.xml to be regenerated
  desc "Queue sitemap.xml to be generated"
  task :sitemapxml do
-  on roles(:web)  do
+  on roles(:job)  do
    within release_path do
     with rails_env: fetch(:rails_env) do
      execute :rake, "#{fetch(:application)}:sitemap_queue_generate" 
