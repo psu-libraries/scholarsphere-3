@@ -117,6 +117,7 @@ describe 'Generic File uploading and deletion:' do
           uri = URI.parse(current_url)
           batch = uri.path.split("/")[2]
           page.should have_content 'Apply Metadata'
+          expect(page).not_to have_css("div.alert-danger")
           fill_in 'generic_file_tag', with: 'dropbox_tag'
           fill_in 'generic_file_creator', with: 'dropbox_creator'
           select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'

@@ -25,7 +25,7 @@ module Sufia::FilesController
             create_file_from_url(file_info["url"], file_info["file_name"])
           end
         end
-        flash[:error] = "#{error_files.join ", "} #{error_files.size > 1 ? "are" : "is" } larger than the maximum file size allowed by the system ( > #{ number_to_human_size(ScholarSphere::Application.config.max_upload_file_size)}) and will being ignored. "
+        flash[:error] = "#{error_files.join ", "} #{error_files.size > 1 ? "are" : "is" } larger than the maximum file size allowed by the system ( > #{ number_to_human_size(ScholarSphere::Application.config.max_upload_file_size)}) and will being ignored. " if error_files.size > 0
         if valid_count > 0
           redirect_to self.class.upload_complete_path( params[:batch_id])
         else
