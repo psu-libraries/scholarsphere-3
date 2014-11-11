@@ -1,0 +1,40 @@
+<% @page_title = "#{@collection.title} - #{application_name}" %>
+
+<%= render_breadcrumbs builder: Sufia::BootstrapBreadcrumbsBuilder %>
+
+  <div itemscope itemtype="http://schema.org/CollectionPage" class="row">
+    <div class="col-sm-10 pull-right">
+      <header>
+        <h1><%= @collection.title %></h1>
+        <p class="collection_description"><%=iconify_auto_link(@collection.description)%></p>
+      </header>
+      <% unless has_collection_search_parameters? %>
+      <%= render partial: 'collections/show_descriptions', locals: { generic_file: @collection } %>
+      <% end %>
+    </div>
+    <div class="col-sm-2">
+      <%= render partial: 'collections/media_display', locals: { generic_file: @collection } %>
+      <% unless has_collection_search_parameters? %>
+      <%= render partial: 'collections/show_actions' %>
+      <% end %>
+    </div>
+  </div>
+
+<%= render 'sort_and_per_page' %>
+
+<% if has_collection_search_parameters? %>
+    <% header_title = "Search Results within this Collection" %>
+<% else %>
+    <% header_title = "Items in this Collection" %>
+<% end %>
+
+<div>
+  <!-- Use CSS class h2 rather than HTML h2 tag to allow header and search box to align vertically -->
+  <span class="h2"><%= header_title %></span>
+  <%= render partial: 'search_form'%>
+</div>
+
+<% @user ||= current_user %>
+<%= render_document_index @member_docs %>
+
+<%= render partial: 'paginate' %>
