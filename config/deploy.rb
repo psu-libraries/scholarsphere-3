@@ -111,6 +111,14 @@ namespace :deploy do
  end
  after :migrate, :resolrize
 
+ # Restart resque-pool.
+ desc "Restart resque-pool"
+ task :resquepoolrestart do
+  on roles(:app) do
+    execute :sudo,  "/sbin/service resque_pool restart"
+  end
+ end
+ before :restart, :resquepoolrestart
 
  # Queue sitemap.xml to be regenerated
  desc "Queue sitemap.xml to be generated"
@@ -123,16 +131,7 @@ namespace :deploy do
    end
   end
  end
- after :resolrize, :sitemapxml
-  
- # Restart resque-pool.
- desc "Restart resque-pool"
- task :resquepoolrestart do
-  on roles(:app) do
-    execute :sudo,  "/sbin/service resque_pool restart"
-  end
- end
- before :restart, :resquepoolrestart
+ after :resquepoolrestart, :sitemapxml
 
  # Removes resque on the main server
  desc "Remove resque on the main server"
