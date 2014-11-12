@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 server 'ss1qa.dlt.psu.edu', user: 'deploy', roles: %w{web app solr db}, primary: true
-server 'ss2qa.dlt.psu.edu', user: 'deploy', roles: %w{web app}
+server 'ss2qa.dlt.psu.edu', user: 'deploy', roles: %w{web app job}
 #server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 

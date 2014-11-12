@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
@@ -11,7 +11,7 @@ gem 'hydra-editor', '0.4.0'
 gem 'hydra-collections', '2.0.5'
 gem 'hydra-derivatives', '0.1.1'
 gem 'hydra-ldap', '0.1.0'
-gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: '879e70e0bd5d2d'
+gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
 
 # Other components
 gem 'clamav'

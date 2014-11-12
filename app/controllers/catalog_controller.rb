@@ -338,6 +338,8 @@ class CatalogController < ApplicationController
     config.spell_max = 5
 
     config.http_method = :post
+
+    config.view.delete(:slideshow)
   end
 
   protected

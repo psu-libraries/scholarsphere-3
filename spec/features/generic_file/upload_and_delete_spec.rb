@@ -117,15 +117,16 @@ describe 'Generic File uploading and deletion:' do
           uri = URI.parse(current_url)
           batch = uri.path.split("/")[2]
           page.should have_content 'Apply Metadata'
+          expect(page).not_to have_css("div.alert-danger")
           fill_in 'generic_file_tag', with: 'dropbox_tag'
           fill_in 'generic_file_creator', with: 'dropbox_creator'
           select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
           click_on 'upload_submit'
           page.should have_css '#documents'
-          page.should have_content "Markdown+Test.txt"
+          page.should have_content "Markdown Test.txt"
           click_on "notify_link"
-          page.should have_content "The file (Markdown+Test.txt) was successfully imported"
-          page.should have_content "Markdown+Test.txt has been saved"
+          page.should have_content "The file (Markdown Test.txt) was successfully imported"
+          page.should have_content "Markdown Test.txt has been saved"
           page.should have_css "span#ss-#{batch}"
         end
       end

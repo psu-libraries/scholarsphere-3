@@ -34,6 +34,7 @@ set :rails_env, 'production'
 
 # whenever settings, NOTE: Task is wired into event stack
 set :whenever_identifier, -> {"#{fetch(:application)}_#{fetch(:stage)}"}
+set :whenever_roles, [:app, :job]
 
 # git for source control
 set :scm, :git
@@ -93,6 +94,7 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/secret_token.rb #{fetch(:release_path)}/config/initializers/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/sufia-secret.rb #{fetch(:release_path)}/config/initializers/"
     execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
+    execute "ln -sf /dlt/#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml #{fetch(:release_path)}/public/sitemap.xml"
     end
   end
   after 'deploy:symlink:shared', :symlink_shared 
@@ -110,20 +112,6 @@ namespace :deploy do
  end
  after :migrate, :resolrize
 
-
- # Queue sitemap.xml to be regenerated
- desc "Queue sitemap.xml to be generated"
- task :sitemapxml do
-  on roles(:web)  do
-   within release_path do
-    with rails_env: fetch(:rails_env) do
-     execute :rake, "#{fetch(:application)}:sitemap_queue_generate" 
-    end
-   end
-  end
- end
- after :resolrize, :sitemapxml
-  
  # Restart resque-pool.
  desc "Restart resque-pool"
  task :resquepoolrestart do
@@ -132,6 +120,19 @@ namespace :deploy do
   end
  end
  before :restart, :resquepoolrestart
+
+ # Queue sitemap.xml to be regenerated
+ desc "Queue sitemap.xml to be generated"
+ task :sitemapxml do
+  on roles(:job)  do
+   within release_path do
+    with rails_env: fetch(:rails_env) do
+     execute :rake, "#{fetch(:application)}:sitemap_queue_generate" 
+    end
+   end
+  end
+ end
+ after :resquepoolrestart, :sitemapxml
 
  # Removes resque on the main server
  desc "Remove resque on the main server"
@@ -143,5 +144,14 @@ namespace :deploy do
   end
  end
  after :symlink_shared, :remove_resque
+
+ # Restart the application
+ desc 'Restart application'
+ task :restart do
+  on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
+  end
+ end
+ #after :publishing, :restart 
  after :restart, "passenger:warmup" 
 end
