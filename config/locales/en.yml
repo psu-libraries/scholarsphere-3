@@ -9,15 +9,11 @@ en:
     errors:
       header: "There were errors that prevented this %{model} from being saved:"
     dashboard:
-      proxy_activity: "Proxy Activity"
-      transfer_of_ownership: "Transfer of Ownership"
       my_collections: "My Collections"
     field_label:
       description: "Description"
 
-
   hydra:
-
     metadata_help:
      resource_type: "Pre-defined categories to describe the type of file content being uploaded, such as \"article\" or \"dataset.\"  More than one type may be selected."
      title: "A name for the file to aid in identifying it. Defaults to the file name, though a more descriptive title is encouraged. <em>This is a required field</em>."

@@ -21,9 +21,9 @@ Infrastructural components
 
  * Ruby 2.0 (we use RVM and rbenv to manage our Rubies)
  * Fedora (if you don't have access to an instance, use the built-in
-   hydra-jetty submodule)
+   hydra-jetty)
  * Solr (if you don't have access to an instance, use the built-in
-   hydra-jetty submodule)
+   hydra-jetty)
  * A relational database (SQLite and MySQL have been tested)
  * Redis (for activity streams and background jobs)
 
@@ -82,7 +82,7 @@ Migrate relational database
 To use the built-in Fedora and Solr instances, get the bundled hydra-jetty, configure it, & fire it up
 
     rake jetty:clean
-    rake jetty:config
+    rake sufia:jetty:config
     rake jetty:start
 
 Start the resque-pool workers (needed for characterization, audit,

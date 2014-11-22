@@ -14,7 +14,6 @@
  *= require generic_file_show
  *= require generic_files
  *= require jquery-ui
- *= require proxy_rights
  *= require select2
  *= require sufia
  *= require sufia_overrides

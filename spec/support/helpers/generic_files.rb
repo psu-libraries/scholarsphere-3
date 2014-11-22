@@ -1,5 +1,4 @@
 module GenericFilesHelper
-
   def wait_for_page (redirect_url)
     Timeout.timeout(Capybara.default_wait_time*4) do
       loop until current_path == redirect_url
@@ -7,7 +6,7 @@ module GenericFilesHelper
   end
 
   def upload_generic_file filename
-    visit new_generic_file_path
+    visit Sufia::Engine.routes.url_helpers.new_generic_file_path
     check 'terms_of_service'
     attach_file 'files[]', test_file_path(filename)
     redirect_url = find("#redirect-loc", visible:false).text

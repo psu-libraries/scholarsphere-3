@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-# Connects this user object to Sufia behaviors. 
- include Sufia::User
-# Connects this user object to Hydra behaviors. 
- include Hydra::User
-# Connects this user object to Blacklights Bookmarks. 
- include Blacklight::User
+  # Connects this user object to Sufia behaviors.
+  include Sufia::User
+  # Connects this user object to Hydra behaviors.
+  include Hydra::User
+  # Connects this user object to Blacklights Bookmarks.
+  include Blacklight::User
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
   # Workaround to retry LDAP calls a number of times
@@ -12,23 +12,12 @@ class User < ActiveRecord::Base
 
   self.include_root_in_json = false
 
-
   Devise.add_module(:http_header_authenticatable,
                     strategy: true,
                     controller: :sessions,
                     model: 'devise/models/http_header_authenticatable')
 
   devise :http_header_authenticatable
-
-  # Setup accessible (or protected) attributes for your model
-  has_many :proxy_deposit_requests, foreign_key: 'receiving_user_id'
-
-  has_many :deposit_rights_given, foreign_key: 'grantor_id', class_name: 'ProxyDepositRights', dependent: :destroy
-  has_many :can_receive_deposits_from, through: :deposit_rights_given, source: :grantee
-
-  has_many :deposit_rights_received, foreign_key: 'grantee_id', class_name: 'ProxyDepositRights', dependent: :destroy
-  has_many :can_make_deposits_for, through: :deposit_rights_received, source: :grantor
-
 
   #put in to remove deprication warnings since the parent class overrides our login with it's own
   def login
@@ -47,7 +36,6 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
-
 
   def self.batchuser
     User.find_by_user_key(batchuser_key) || User.create!(Devise.authentication_keys.first => batchuser_key)

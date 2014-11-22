@@ -12,15 +12,15 @@ describe 'proxy' do
       visit "/"
       go_to_user_profile
       click_link "Edit Your Profile"
-      first("td.depositor-name").should be_nil
+      expect(first("td.depositor-name")).to be_nil
       create_proxy_using_partial second_user
-      page.should have_css "table#authorizedProxies td.depositor-name", text: second_user.display_name
+      expect(page).to have_css("table#authorizedProxies td.depositor-name", text: second_user.display_name)
     end
   end
 
   describe 'use a proxy' do
 
-    before (:each) do
+    before(:each) do
       @rights = ProxyDepositRights.create!(grantor: second_user, grantee: current_user)
     end
 
