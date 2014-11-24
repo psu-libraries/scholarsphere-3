@@ -3,12 +3,11 @@ require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:' do
-
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
-    let(:filename)      { 'little_file.txt' }
-    let(:batch)         { ['little_file.txt', 'little_file.txt'] }
-    let(:file)          { find_file_by_title "little_file.txt" }
+    let(:filename) { 'little_file.txt' }
+    let(:batch) { ['little_file.txt', 'little_file.txt'] }
+    let(:file) { find_file_by_title "little_file.txt" }
 
     before do
       sign_in_as current_user
@@ -16,7 +15,7 @@ describe 'Generic File uploading and deletion:' do
 
     context 'the user agreement' do
       before do
-        new_generic_file_path
+        Sufia::Engine.routes.url_helpers.new_generic_file_path
       end
       it "should not show Sufia's user agreement" do
         expect(page).to_not have_content("Sufia's Deposit Agreement")
@@ -25,7 +24,7 @@ describe 'Generic File uploading and deletion:' do
 
     context 'user needs help' do
       before do
-        visit new_generic_file_path
+        visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
@@ -89,7 +88,7 @@ describe 'Generic File uploading and deletion:' do
         allow(Sufia.config).to receive(:browse_everything) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
-        visit new_generic_file_path
+        visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         WebMock.enable!
       end
 
@@ -171,7 +170,7 @@ describe 'Generic File uploading and deletion:' do
     end
 
     specify 'I cannot access the upload page' do
-      visit new_generic_file_path
+      visit Sufia::Engine.routes.url_helpers.new_generic_file_path
       page.should have_content 'Unauthorized'
       page.should_not have_content 'Upload'
     end

@@ -4,11 +4,8 @@
 //= require sufia
 //= require batch_edit
 //= require scholarsphere_fileupload
-//= require user_search
-//= require transfers
 //= require hydra/batch_select
 //= require hydra_collections
-//= require proxy_rights
 //= require sufia/single_use_link
 //= require edit_ajax
 
@@ -22,4 +19,3 @@ function modal_collection_list(action, event){
 
   event.preventDefault();
 }
-

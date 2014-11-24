@@ -67,22 +67,4 @@ describe User do
       User.directory_attributes('mjg36', ['cn']).first['cn'].should == ['MICHAEL JOSEPH GIARLO']
     end
   end
-
-  describe "proxy_deposit_rights" do
-    before do
-      @u1 = FactoryGirl.create :random_user
-      @u2 = FactoryGirl.create :random_user
-      subject.can_receive_deposits_from << @u1
-      subject.can_make_deposits_for << @u2
-      subject.save!
-    end
-    it "can_receive_deposits_from" do
-      subject.can_receive_deposits_from.should == [@u1]
-      @u1.can_make_deposits_for.should == [subject]
-    end
-    it "can_make_deposits_for" do
-      subject.can_make_deposits_for.should == [@u2]
-      @u2.can_receive_deposits_from.should == [subject]
-    end
-  end
 end

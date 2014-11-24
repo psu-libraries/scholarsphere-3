@@ -1,36 +1,11 @@
 require 'spec_helper'
 
 describe GenericFile do
-  
+
   let(:user) { FactoryGirl.create :random_user }
   before(:each) do
     @file = GenericFile.new
     @file.apply_depositor_metadata(user.user_key)
-  end
-  
-  describe "created for someone (proxy)" do
-    before do
-      @transfer_to = FactoryGirl.create :random_user
-    end
-    after do
-      @file.destroy
-    end
-    it "should transfer the request" do
-      @file.on_behalf_of = @transfer_to.user_key
-      stub_job = double('change depositor job')
-      ContentDepositorChangeEventJob.should_receive(:new).and_return(stub_job)
-      Sufia.queue.should_receive(:push).with(stub_job).once.and_return(true)
-      @file.save!
-    end
-  end
-
-  describe "delegations" do
-    it "should include proxies" do
-      @file.should respond_to(:relative_path)
-      @file.should respond_to(:depositor)
-      @file.proxy_depositor = "sally@example.com"
-      @file.proxy_depositor.should == 'sally@example.com'
-    end
   end
 
   it 'should export as endnote' do
@@ -92,4 +67,3 @@ describe GenericFile do
   end
 
 end
-

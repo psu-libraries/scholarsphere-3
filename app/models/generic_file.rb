@@ -3,87 +3,10 @@ class GenericFile < ActiveFedora::Base
   include Hydra::Collections::Collectible
   include Blacklight::SolrHelper
 
-  #has_file_datastream "full_text", versionable: false
-
-  has_attributes :proxy_depositor, :on_behalf_of, datastream: :properties, multiple: false
-
-  after_create :create_transfer_request
-
-  def create_transfer_request
-    Sufia.queue.push(ContentDepositorChangeEventJob.new(pid, on_behalf_of)) if on_behalf_of.present?
-  end
-
-  def request_transfer_to(target)
-    raise ArgumentError, "Must provide a target" unless target
-    deposit_user = User.find_by_user_key(depositor)
-    ProxyDepositRequest.create!(pid: pid, receiving_user: target, sending_user: deposit_user)
-  end
-
-  # TODO: This differs slightly from Sufia's #characterize. Why? Still relevant?
-  #def characterize
-  #  metadata = self.content.extract_metadata
-  #  self.characterization.ng_xml = metadata unless metadata.blank?
-  #  self.append_metadata
-  #  self.filename = self.label
-  #  extract_content
-  #  save unless self.new_record?
-  #end
-  #
-  #def create_pdf_thumbnail
-  #   retryCnt = 0
-  #   stat = false;
-  #   for retryCnt in 1..3
-  #     begin
-  #       pdf = Magick::ImageList.new
-  #       pdf.from_blob(content.content)
-  #       first = pdf.to_a[0]
-  #       first.format = "PNG"
-  #       scale = 338.0/first.page.width
-  #       scale = 0.40 if scale < 0.40
-  #       thumb = first.scale scale
-  #       thumb.crop!(0, 0, 338, 493)
-  #       self.thumbnail.content = thumb.to_blob { self.format = "PNG" }
-  #       stat = self.save
-  #       break
-  #     rescue => e
-  #       Rails.logger.warn "Rescued an error #{e.inspect} retry count = #{retryCnt}"
-  #       sleep 1
-  #     end
-  #   end
-  #   return stat
-  # end
-  #
-  #def create_video_thumbnail
-  #  return unless Sufia.config.enable_ffmpeg
-  #
-  #  output_file = Dir::Tmpname.create(['sufia', ".png"], Sufia.config.temp_file_base){}
-  #  content.to_tempfile do |f|
-  #    # we could use something like this in order to find a frame in the middle.
-  #    #ffprobe -show_files video.avi 2> /dev/null | grep duration | cut -d= -f2 53.399999
-  #    command = "#{Sufia.config.ffmpeg_path} -i \"#{f.path}\" -loglevel quiet -vf \"scale=338:-1\"  -r  1  -t  1 -vframes 1 #{output_file}"
-  #    system(command)
-  #    raise "Unable to execute command \"#{command}\"" unless $?.success?
-  #  end
-  #
-  #  self.thumbnail.content = File.open(output_file, 'rb').read
-  #  self.thumbnail.mimeType = 'image/png'
-  #end
-
   # Unstemmed, searchable, stored
   def self.noid_indexer
     @noid_indexer ||= Solrizer::Descriptor.new(:text, :indexed, :stored)
   end
-
-  #def to_solr(solr_doc={}, opts={})
-  #  super(solr_doc, opts)
-  #  solr_doc[Solrizer.solr_name('label')] = self.label
-  #  solr_doc[Solrizer.solr_name('noid', Sufia::GenericFile.noid_indexer)] = noid
-  #  solr_doc[Solrizer.solr_name('file_format')] = file_format
-  #  solr_doc[Solrizer.solr_name('file_format', :facetable)] = file_format
-  #  solr_doc["all_text_timv"] = full_text.content
-  #  solr_doc = index_collection_pids(solr_doc)
-  #  return solr_doc
-  #end
 
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?
@@ -146,7 +69,6 @@ class GenericFile < ActiveFedora::Base
     super
   end
 
-
   # Get the files with a sibling relationship (belongs_to :batch)
   # The batch id is minted when visiting the upload screen and attached
   # to each file when it is done uploading.  The Batch object is not created
@@ -184,5 +106,4 @@ class GenericFile < ActiveFedora::Base
   def self.audit(version, force = false)
     self.find(version.pid).audit_each(version,force)
   end
-
 end

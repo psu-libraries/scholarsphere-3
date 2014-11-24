@@ -4,7 +4,6 @@
 # https://github.com/psu-stewardship/scholarsphere/wiki/Cleaning-up-hydra-jetty
 
 bundle exec rake jetty:stop
-(cd jetty && git clean -df && git checkout .)
-bundle exec rake jetty:config
+bundle exec rake jetty:clean
+bundle exec rake sufia:jetty:config
 bundle exec rake jetty:start
-
