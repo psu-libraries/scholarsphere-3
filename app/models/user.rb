@@ -158,11 +158,4 @@ class User < ActiveRecord::Base
     return attrs
   end
 
-  def self.current
-    Thread.current[:user]
-  end
-
-  def self.current=(user)
-    Thread.current[:user] = user
-  end
 end

@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
 
   ## Force the session to be restarted on every request.  The ensures that when the REMOTE_USER header is not set, the user will be logged out.
   before_filter :clear_session_user
-  before_filter :set_current_user
   before_filter :filter_notify
   before_filter :notifications_number
 
@@ -53,10 +52,6 @@ class ApplicationController < ActionController::Base
     search = session[:search].dup if session[:search]
     request.env['warden'].logout unless user_logged_in?
     session[:search] = search
-  end
-
-  def set_current_user
-    User.current = current_user
   end
 
   def render_404(exception)
