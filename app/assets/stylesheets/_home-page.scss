@@ -222,11 +222,11 @@
     h1 {
       font-size: 1.75em;
       margin-top: 1em;
-      margin-left: 1.5em;
+      margin-left: 1em;
       margin-right: 1em;
     }
     p {
-      font-size: 1.5em;
+      font-size: 1.15em;
       margin-left: 1.5em;
       margin-right: 1em;
     }
@@ -263,9 +263,9 @@
   }
   .home_marketing_text {
     h1 {
-      font-size: 2.25em;
+      font-size: 2em;
       margin-top: 0;
-      margin-left: 1.25em;
+      margin-left: 1.35em;
       margin-right: 2em;
     }
     p {
@@ -296,6 +296,17 @@
     font-size: 1em;
     padding: 3px 6px;
     margin: -3.15em .5em 0 0;
+  }
+}
+
+@media only screen and (min-width: 1080px){
+  .home_marketing_text {
+    h1 {
+      font-size: 2.25em;
+      margin-top: 0;
+      margin-left: 1.25em;
+      margin-right: 2em;
+    }
   }
 }
 
