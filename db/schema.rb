@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428172016) do
+ActiveRecord::Schema.define(version: 20140428172018) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -69,6 +69,26 @@ ActiveRecord::Schema.define(version: 20140428172016) do
 
   add_index "featured_works", ["generic_file_id"], name: "index_featured_works_on_generic_file_id", using: :btree
   add_index "featured_works", ["order"], name: "index_featured_works_on_order", using: :btree
+
+  create_table "file_download_stats", force: true do |t|
+    t.datetime "date"
+    t.integer  "downloads"
+    t.string   "file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "file_download_stats", ["file_id"], name: "index_file_download_stats_on_file_id", using: :btree
+
+  create_table "file_view_stats", force: true do |t|
+    t.datetime "date"
+    t.integer  "views"
+    t.string   "file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "file_view_stats", ["file_id"], name: "index_file_view_stats_on_file_id", using: :btree
 
   create_table "follows", force: true do |t|
     t.integer  "followable_id",                   null: false
@@ -190,8 +210,8 @@ ActiveRecord::Schema.define(version: 20140428172016) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2014-05-12 17:29:21'
-    t.datetime "updated_at", default: '2014-05-12 17:29:21'
+    t.datetime "created_at", default: '2014-08-15 15:21:46'
+    t.datetime "updated_at", default: '2014-08-15 15:21:46'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
