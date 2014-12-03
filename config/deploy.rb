@@ -95,6 +95,7 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/sufia-secret.rb #{fetch(:release_path)}/config/initializers/"
     execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
     execute "ln -sf /dlt/#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml #{fetch(:release_path)}/public/sitemap.xml"
+    execute "ln -sf /dlt/#{fetch(:application)}/shared_#{fetch(:stage)}/public/system #{fetch(:release_path)}/public/"
     end
   end
   after 'deploy:symlink:shared', :symlink_shared 
