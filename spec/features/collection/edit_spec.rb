@@ -3,7 +3,7 @@ require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 include Selectors::EditCollections
 
-describe 'Collection editing:' do
+describe 'Collection editing:', :type => :feature do
 
   let!(:current_user) { create :user }
   #TODO why can this not be small_file.txt??
@@ -38,8 +38,8 @@ describe 'Collection editing:' do
     end
 
     specify 'I should see the new file in the collection' do
-      page.should have_content 'Collection was successfully updated.'
-      page.should have_content file_3.title.first
+      expect(page).to have_content 'Collection was successfully updated.'
+      expect(page).to have_content file_3.title.first
     end
   end
 
@@ -53,8 +53,8 @@ describe 'Collection editing:' do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
-      page.should have_field 'collection_title', with: title
-      page.should have_field 'collection_description',
+      expect(page).to have_field 'collection_title', with: title
+      expect(page).to have_field 'collection_description',
           with: description
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
@@ -63,11 +63,11 @@ describe 'Collection editing:' do
     end
 
     specify 'I should see the new metadata values' do
-      page.should_not have_content title
-      page.should_not have_content description
-      page.should have_content updated_title
-      page.should have_content updated_description
-      page.should have_content updated_creators.first
+      expect(page).not_to have_content title
+      expect(page).not_to have_content description
+      expect(page).to have_content updated_title
+      expect(page).to have_content updated_description
+      expect(page).to have_content updated_creators.first
     end
   end
 
@@ -76,17 +76,17 @@ describe 'Collection editing:' do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
-      page.should have_content file_1.title.first
-      page.should have_content file_2.title.first
+      expect(page).to have_content file_1.title.first
+      expect(page).to have_content file_2.title.first
       db_item_actions_toggle(file_1).click
       click_button 'Remove from Collection'
     end
 
     specify 'I should no longer see the file listed as a member' do
-      page.should have_content title
-      page.should have_content description
-      page.should_not have_content file_1.title.first
-      page.should have_content file_2.title.first
+      expect(page).to have_content title
+      expect(page).to have_content description
+      expect(page).not_to have_content file_1.title.first
+      expect(page).to have_content file_2.title.first
     end
   end
 
@@ -95,17 +95,17 @@ describe 'Collection editing:' do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
-      page.should have_content file_1.title.first
-      page.should have_content file_2.title.first
+      expect(page).to have_content file_1.title.first
+      expect(page).to have_content file_2.title.first
       check 'check_all'
       click_button 'Remove From Collection'
     end
 
     specify 'I should see that the collection is empty' do
-      page.should have_content title
-      page.should have_content description
-      page.should_not have_content file_1.title.first
-      page.should_not have_content file_2.title.first
+      expect(page).to have_content title
+      expect(page).to have_content description
+      expect(page).not_to have_content file_1.title.first
+      expect(page).not_to have_content file_2.title.first
     end
   end
 end

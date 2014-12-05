@@ -4,7 +4,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Generic File viewing and downloading:' do
+describe 'Generic File viewing and downloading:', :type => :feature do
 
   let(:current_user) { create :user }
   let!(:file_1) { create_file current_user, { title: 'File 1' } }
@@ -25,7 +25,7 @@ describe 'Generic File viewing and downloading:' do
     before do
       sign_in_as current_user
       visit '/dashboard/files'
-      page.should have_css '.active a', text:"Files"
+      expect(page).to have_css '.active a', text:"Files"
       db_item_title(file_1).click
     end
 
@@ -33,24 +33,24 @@ describe 'Generic File viewing and downloading:' do
 
       specify "I see all the correct information" do
         # "I can see the file's page" do
-        page.status_code.should == 200
-        page.should have_content file_1.title.first
+        expect(page.status_code).to eq(200)
+        expect(page).to have_content file_1.title.first
 
         # 'I can not feature' do
-        page.should_not have_link "Feature"
+        expect(page).not_to have_link "Feature"
 
         # 'I should see the visibility link' do
         within(".visibility-link span") do
-          page.should have_content("Open Access")
+          expect(page).to have_content("Open Access")
         end
 
         # 'I should see the breadcrumb trail' do
-        page.should have_link("My Dashboard")
-        page.should have_link("My Files")
+        expect(page).to have_link("My Dashboard")
+        expect(page).to have_link("My Files")
 
         # 'I can see the link for all the linkable items' do
-        page.should have_link 'http://example.org/TheDescriptionLink/'
-        page.should have_link file_1.related_url.first
+        expect(page).to have_link 'http://example.org/TheDescriptionLink/'
+        expect(page).to have_link file_1.related_url.first
 
         # 'I can see the link for creator and it filters correctly' do
         test_link file_1.creator.first
@@ -87,19 +87,19 @@ describe 'Generic File viewing and downloading:' do
 
       specify 'I can download an Endnote version of the file' do
         click_link 'EndNote'
-        page.response_headers['Content-Type'].should == 'application/x-endnote-refer; charset=utf-8'
+        expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer; charset=utf-8')
       end
 
       specify 'I can see the Mendeley modal' do
-        pending 'This does not appear to be functioning properly'
+        skip 'This does not appear to be functioning properly'
         click_link 'Mendeley'
-        page.should have_css('.modal-header')
+        expect(page).to have_css('.modal-header')
       end
 
       specify 'I can see the Zotero modal' do
-        pending 'This does not appear to be functioning properly'
+        skip 'This does not appear to be functioning properly'
         click_link 'Zotero'
-        page.should have_css('.modal-header')
+        expect(page).to have_css('.modal-header')
       end
 
     end
@@ -121,7 +121,7 @@ describe 'Generic File viewing and downloading:' do
         end
 
         specify 'I can feature' do
-          page.should have_link "Feature"
+          expect(page).to have_link "Feature"
         end
       end
 
@@ -131,7 +131,7 @@ describe 'Generic File viewing and downloading:' do
         end
 
         specify 'I can not feature' do
-          page.should_not have_link "Feature"
+          expect(page).not_to have_link "Feature"
         end
       end
     end
@@ -143,10 +143,10 @@ describe 'Generic File viewing and downloading:' do
   end
 
   def test_link link_name
-    page.should have_link link_name
+    expect(page).to have_link link_name
     click_on link_name
-    page.should have_content file_1.title.first
-    page.should_not have_content file_2.title.first
+    expect(page).to have_content file_1.title.first
+    expect(page).not_to have_content file_2.title.first
   end
 
 end

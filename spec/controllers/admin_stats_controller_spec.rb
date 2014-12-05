@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Admin::StatsController do
+describe Admin::StatsController, :type => :controller do
   before do
     @user1 = FactoryGirl.find_or_create(:user)
-    @user1.stub(:groups).and_return(['umg/up.dlt.scholarsphere-admin-viewers'])
+    allow(@user1).to receive(:groups).and_return(['umg/up.dlt.scholarsphere-admin-viewers'])
     @user2 = FactoryGirl.find_or_create(:archivist)
-    @user2.stub(:groups).and_return(['umg/up.dlt.some-other-group'])
+    allow(@user2).to receive(:groups).and_return(['umg/up.dlt.some-other-group'])
   end
 
   after do
@@ -19,23 +19,23 @@ describe Admin::StatsController do
     it 'allows an authorized user to view the page' do
       sign_in @user1
       get :index
-      response.should be_success
-      response.body.should include('Statistics for ScholarSphere')
-      response.body.should include('Total ScholarSphere Users')
+      expect(response).to be_success
+      expect(response.body).to include('Statistics for ScholarSphere')
+      expect(response.body).to include('Total ScholarSphere Users')
     end
 
     describe "querying user_stats" do
       it "defaults to latest 5 users" do
         sign_in @user1
         get :index
-        assigns[:recent_users].should == User.order('created_at DESC').limit(5).select('display_name, login, created_at, department')
+        expect(assigns[:recent_users]).to eq(User.order('created_at DESC').limit(5).select('display_name, login, created_at, department'))
       end
       it "allows queries against user_stats" do
         sign_in @user1
-        User.should_receive(:where).with('id' => @user1.id).once.and_return([@user1])
-        User.should_receive(:where).with('created_at >= ?',  1.days.ago.strftime("%Y-%m-%d")).and_return([@user2])
+        expect(User).to receive(:where).with('id' => @user1.id).once.and_return([@user1])
+        expect(User).to receive(:where).with('created_at >= ?',  1.days.ago.strftime("%Y-%m-%d")).and_return([@user2])
         get :index, users_stats: {start_date:1.days.ago.strftime("%Y-%m-%d")}
-        assigns[:recent_users].should == [@user2]
+        expect(assigns[:recent_users]).to eq([@user2])
       end
     end
 
@@ -54,7 +54,7 @@ describe Admin::StatsController do
         ActiveFedora::SolrService.instance.conn.delete_by_id(@poltergeist.pid) # send delete message to solr without sending commit message
         sign_in @user1
         get :index
-        assigns[:files_count][:total].should == original_files_count - 1
+        expect(assigns[:files_count][:total]).to eq(original_files_count - 1)
       end
     end
 
@@ -90,10 +90,10 @@ describe Admin::StatsController do
 
       it "counts file correctly" do
         get :index
-        assigns[:files_count][:total].should == 3
-        assigns[:files_count][:public].should == 1
-        assigns[:files_count][:psu].should == 1
-        assigns[:files_count][:private].should == 1
+        expect(assigns[:files_count][:total]).to eq(3)
+        expect(assigns[:files_count][:public]).to eq(1)
+        expect(assigns[:files_count][:psu]).to eq(1)
+        expect(assigns[:files_count][:private]).to eq(1)
       end
     end
 

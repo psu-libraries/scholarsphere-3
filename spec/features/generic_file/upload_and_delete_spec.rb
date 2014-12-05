@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Generic File uploading and deletion:' do
+describe 'Generic File uploading and deletion:', :type => :feature do
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
     let(:filename) { 'little_file.txt' }
@@ -31,7 +31,7 @@ describe 'Generic File uploading and deletion:' do
         redirect_url = find("#redirect-loc", visible:false).text
         click_button 'main_upload_start'
         wait_for_page redirect_url
-        page.should have_content 'Apply Metadata'
+        expect(page).to have_content 'Apply Metadata'
       end
 
       specify 'I can view help for rights, visibility, and share with' do
@@ -115,18 +115,18 @@ describe 'Generic File uploading and deletion:' do
           click_on("Submit 1 selected files")
           uri = URI.parse(current_url)
           batch = uri.path.split("/")[2]
-          page.should have_content 'Apply Metadata'
+          expect(page).to have_content 'Apply Metadata'
           expect(page).not_to have_css("div.alert-danger")
           fill_in 'generic_file_tag', with: 'dropbox_tag'
           fill_in 'generic_file_creator', with: 'dropbox_creator'
           select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
           click_on 'upload_submit'
-          page.should have_css '#documents'
-          page.should have_content "Markdown Test.txt"
+          expect(page).to have_css '#documents'
+          expect(page).to have_content "Markdown Test.txt"
           click_on "notify_link"
-          page.should have_content "The file (Markdown Test.txt) was successfully imported"
-          page.should have_content "Markdown Test.txt has been saved"
-          page.should have_css "span#ss-#{batch}"
+          expect(page).to have_content "The file (Markdown Test.txt) was successfully imported"
+          expect(page).to have_content "Markdown Test.txt has been saved"
+          expect(page).to have_css "span#ss-#{batch}"
         end
       end
     end
@@ -138,24 +138,24 @@ describe 'Generic File uploading and deletion:' do
           upload_generic_file filename
         end
         specify 'uploading, deleting and notifications' do
-          page.should have_css '#documents'
-          page.should have_content filename
+          expect(page).to have_css '#documents'
+          expect(page).to have_content filename
           click_link "dashboard_link"
-          page.should have_css "table#activity"
+          expect(page).to have_css "table#activity"
           within ("table#activity") do
-            page.should have_content filename
+            expect(page).to have_content filename
           end
           within ("#notifications") do
-            page.should have_content "Batch upload complete"
-            page.should have_content "less than a minute ago"
-            page.should have_content filename
-            page.should have_content "has been saved."
+            expect(page).to have_content "Batch upload complete"
+            expect(page).to have_content "less than a minute ago"
+            expect(page).to have_content filename
+            expect(page).to have_content "has been saved."
           end
           go_to_dashboard_files
-          page.should have_content file.title.first
+          expect(page).to have_content file.title.first
           db_item_actions_toggle(file).click
           click_link 'Delete File'
-          page.should_not have_content file.title.first
+          expect(page).not_to have_content file.title.first
         end
       end
 
@@ -171,8 +171,8 @@ describe 'Generic File uploading and deletion:' do
 
     specify 'I cannot access the upload page' do
       visit Sufia::Engine.routes.url_helpers.new_generic_file_path
-      page.should have_content 'Unauthorized'
-      page.should_not have_content 'Upload'
+      expect(page).to have_content 'Unauthorized'
+      expect(page).not_to have_content 'Upload'
     end
   end
 end

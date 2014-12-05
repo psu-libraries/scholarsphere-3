@@ -1,12 +1,12 @@
 require_relative './feature_spec_helper'
 
-describe 'Contact form:' do
+describe 'Contact form:', :type => :feature do
   let(:email_address) { 'kurt@example.com' }
   let(:email_subject) { 'Help with file upload' }
 
   before do
     visit '/contact'
-    page.should have_content 'Contact Form'
+    expect(page).to have_content 'Contact Form'
     select 'Making changes to my content', from: 'contact_form_category'
     fill_in 'contact_form_name', with: 'Kurt Baker'
     fill_in 'contact_form_email', with: email_address
@@ -28,11 +28,11 @@ describe 'Contact form:' do
   }
 
   it 'Sends a thank you message' do
-    thank_you_message.subject.should == "ScholarSphere Contact Form - #{email_subject}"
+    expect(thank_you_message.subject).to eq("ScholarSphere Contact Form - #{email_subject}")
   end
 
   it 'Sends a "Scholarsphere Form" message to the admin' do
-    admin_message.subject.should == "Contact Form:#{email_subject}"
+    expect(admin_message.subject).to eq("Contact Form:#{email_subject}")
   end
 
   let(:plaintext_message) {
@@ -42,7 +42,7 @@ describe 'Contact form:' do
   }
 
   it 'Produces a plaintext section for Redmine' do
-    plaintext_message.should have_content "Email: #{email_address}"
+    expect(plaintext_message).to have_content "Email: #{email_address}"
   end
 
   let(:html_message) {
@@ -52,6 +52,6 @@ describe 'Contact form:' do
   }
 
   it 'Produces an HTML section for humans' do
-    html_message.should have_content email_address
+    expect(html_message).to have_content email_address
   end
 end

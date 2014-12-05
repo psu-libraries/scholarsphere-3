@@ -4,8 +4,8 @@
 # does not allow us to confirm any updates.
 require_relative './feature_spec_helper'
 
-describe 'Batch management of generic files' do
-  pending "These test are causing issues on Travis"
+describe 'Batch management of generic files', :type => :feature do
+  skip "These test are causing issues on Travis"
 
 #  let!(:current_user) { create :user }
 #  let!(:file_1) { create_file current_user, {title:'world.png'} }

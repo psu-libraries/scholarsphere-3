@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DirectoryController do
+describe DirectoryController, :type => :controller do
   routes { Sufia::Engine.routes }
   before(:each) do
     @user = FactoryGirl.find_or_create(:user)
@@ -8,12 +8,12 @@ describe DirectoryController do
   end
   describe "#user" do
     it "should get an existing user" do
-      User.stub(:directory_attributes).and_return('{"attr":"abc"}')
+      allow(User).to receive(:directory_attributes).and_return('{"attr":"abc"}')
       get :user, uid:@user.id
-      response.should be_success
-      lambda { JSON.parse(response.body) }.should_not raise_error
+      expect(response).to be_success
+      expect { JSON.parse(response.body) }.not_to raise_error
       results = JSON.parse(response.body)
-      results["attr"].should == "abc"
+      expect(results["attr"]).to eq("abc")
     end
   end
 end

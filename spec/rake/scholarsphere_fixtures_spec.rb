@@ -65,12 +65,12 @@ describe "scholarsphere:fixtures" do
         @rake['scholarsphere:fixtures:load'].invoke
         @rake['scholarsphere:fixtures:delete'].invoke
       end
-      Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.txt")).length.should == 1
-      Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.foxml.erb")).length.should == 1
-      Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.descMeta.txt")).length.should == 1
-      Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.foxml.xml")).length.should == 1
-      o.should include "Loaded 'scholarsphere:rspecTestFixture'"
-      o.should include "Deleted 'scholarsphere:rspecTestFixture'"
+      expect(Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.txt")).length).to eq(1)
+      expect(Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.foxml.erb")).length).to eq(1)
+      expect(Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.descMeta.txt")).length).to eq(1)
+      expect(Dir.glob(Rails.root.join(File.expand_path("spec/fixtures/scholarsphere"), "scholarsphere_rspecTestFixture.foxml.xml")).length).to eq(1)
+      expect(o).to include "Loaded 'scholarsphere:rspecTestFixture'"
+      expect(o).to include "Deleted 'scholarsphere:rspecTestFixture'"
     end
   end
 end

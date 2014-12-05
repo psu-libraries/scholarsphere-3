@@ -5,7 +5,7 @@ include Warden::Test::Helpers
 describe_options = { type: :feature }
 describe_options[:js] = true if ENV['JS']
 
-describe 'unified search', describe_options do
+describe 'unified search', describe_options, :type => :feature do
 
   describe 'all files' do
     let(:subject_value) { 'fffzzz' }

@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Collections:' do
+describe 'Dashboard Collections:', :type => :feature do
 
   let!(:current_user) { create :user }
 
@@ -15,51 +15,51 @@ describe 'Dashboard Collections:' do
   end
 
   specify 'tab title and buttons' do
-    page.should have_content("My Collections")
+    expect(page).to have_content("My Collections")
     within('#sidebar') do
-      page.should have_content("Upload")
-      page.should have_content("Create Collection")
+      expect(page).to have_content("Upload")
+      expect(page).to have_content("Create Collection")
     end
-    page.should_not have_selector(".batch-toggle input[value='Delete Selected']")
+    expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
 
   specify 'collections are displayed in the Collections list' do
-    page.should have_content "My collection"
+    expect(page).to have_content "My collection"
   end
 
   specify 'toggle displays additional information' do
     first('i.glyphicon-chevron-right').click
-    page.should have_content("Personal collection of great things")
-    page.should have_content(current_user)
+    expect(page).to have_content("Personal collection of great things")
+    expect(page).to have_content(current_user)
   end
 
   specify 'additional information is hidden' do
-    page.should_not have_content("Personal collection of great things")
-    page.should_not have_content(current_user)
+    expect(page).not_to have_content("Personal collection of great things")
+    expect(page).not_to have_content(current_user)
   end
   
   specify "toggle addtitional actions" do
-    page.should_not have_content("Edit Collection")
-    page.should_not have_content("Delete Collection")
+    expect(page).not_to have_content("Edit Collection")
+    expect(page).not_to have_content("Delete Collection")
     within('#documents') do
       first('.dropdown-toggle').click
     end
-    page.should have_content("Edit Collection")
-    page.should have_content("Delete Collection")
+    expect(page).to have_content("Edit Collection")
+    expect(page).to have_content("Delete Collection")
   end
 
   specify 'collections are not displayed in the File list' do
     go_to_dashboard_files
-    page.should_not have_content "My collection"
+    expect(page).not_to have_content "My collection"
   end
 
   describe 'facets,' do
     specify "displays the correct totals for each facet" do
       within("#facets") do
         click_link('Object Type')
-        page.should have_content('Collection (1)')
+        expect(page).to have_content('Collection (1)')
         click_link('Creator')
-        page.should have_content("#{current_user} (1)")
+        expect(page).to have_content("#{current_user} (1)")
       end
     end
   end

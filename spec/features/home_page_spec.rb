@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe 'Visting the home page:' do
+describe 'Visting the home page:', :type => :feature do
 
   let!(:current_user) { create :user }
 
@@ -22,7 +22,7 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'Share. Manage. Preserve.'
+        expect(page).to have_content 'Share. Manage. Preserve.'
       end
     end
 
@@ -32,10 +32,10 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'Share. Manage. Preserve.'
+        expect(page).to have_content 'Share. Manage. Preserve.'
       end
       specify 'I can see that I am logged in' do
-        page.should have_content current_user.display_name
+        expect(page).to have_content current_user.display_name
       end
     end
 
@@ -45,10 +45,10 @@ describe 'Visting the home page:' do
         visit '/'
       end
       specify 'I can see the home page' do
-        page.should have_content 'Share. Manage. Preserve.'
+        expect(page).to have_content 'Share. Manage. Preserve.'
       end
       specify 'I can see that I am logged in' do
-        page.should have_content current_user.display_name
+        expect(page).to have_content current_user.display_name
       end
     end
 
@@ -57,7 +57,7 @@ describe 'Visting the home page:' do
       let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
       specify 'tags are listed' do
         visit '/'
-        page.should have_content 'tagX tagY tagZ'
+        expect(page).to have_content 'tagX tagY tagZ'
       end
 
       specify 'clicking on a tag goes to the right URL' do
@@ -77,7 +77,7 @@ describe 'Visting the home page:' do
 
       specify 'then I should not see my name' do
         within('#user_utility_links') do
-          page.should_not have_content(current_user.name)
+          expect(page).not_to have_content(current_user.name)
         end
       end
 

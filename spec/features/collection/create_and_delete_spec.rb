@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Collection creation and deletion:' do
+describe 'Collection creation and deletion:', :type => :feature do
 
   let!(:current_user) { create :user }
   let(:title) { 'Test Collection Title' }
@@ -21,7 +21,7 @@ describe 'Collection creation and deletion:' do
     end
 
     specify 'I should see the new collection page' do
-      page.should have_content 'Collection was successfully created.'
+      expect(page).to have_content 'Collection was successfully created.'
     end
   end
 
@@ -41,9 +41,9 @@ describe 'Collection creation and deletion:' do
     end
 
     specify 'I should see the collection page with the files' do
-      page.should have_content 'Collection was successfully created.'
+      expect(page).to have_content 'Collection was successfully created.'
       files.each do |file|
-        page.should have_content file.title.first
+        expect(page).to have_content file.title.first
       end
     end
   end
@@ -61,9 +61,9 @@ describe 'Collection creation and deletion:' do
     end
 
     specify 'I should no longer see it on my dashboard' do
-      page.should have_content 'Collection was successfully deleted'
-      page.should have_css '#documents'
-      page.should_not have_content title
+      expect(page).to have_content 'Collection was successfully deleted'
+      expect(page).to have_css '#documents'
+      expect(page).not_to have_content title
     end
   end
 end

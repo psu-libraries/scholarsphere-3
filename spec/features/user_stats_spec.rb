@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "User Statistics" do
+describe "User Statistics", :type => :feature do
   let!(:current_user) { create :administrator }
   let(:user_name) {current_user.login}
 

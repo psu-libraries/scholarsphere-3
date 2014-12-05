@@ -1,7 +1,7 @@
 require_relative './feature_spec_helper'
 
 
-describe 'catalog searching' do
+describe 'catalog searching', :type => :feature do
 
   let(:user) { create :jill }
   let!(:gf1) { create_file user, {title:'title 1', tag:["tag1", "tag2"]} }

@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Files' do
+describe 'Dashboard Files', :type => :feature do
 
   let!(:current_user) { create :user }
 
@@ -112,9 +112,9 @@ describe 'Dashboard Files' do
     #end
 
     describe 'The Single-Use Link:' do
-      pending 'Places the link on the clipboard'
-      pending 'The first visit displays the file data'
-      pending 'Subsequent visits fail to load the page'
+      skip 'Places the link on the clipboard'
+      skip 'The first visit displays the file data'
+      skip 'Subsequent visits fail to load the page'
     end
   end
 
@@ -138,7 +138,7 @@ describe 'Dashboard Files' do
         expect(page).to have_css('.pagination')
 
         #Increasing Show per page beyond my current number of files and I should not see a page
-        GenericFile.count.should == 11
+        expect(GenericFile.count).to eq(11)
         select('20', :from => 'per_page')
         find_button('Refresh').click
         expect(page).not_to have_css('.pager')

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'static/help.html.erb' do
+describe 'static/help.html.erb', :type => :view do
 
   it "should show the static page" do
     render

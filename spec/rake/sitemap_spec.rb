@@ -63,7 +63,7 @@ describe "sitemap:generate" do
     it 'should include public generic files and users' do
       run_generate
       filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")
-      expect(Dir.glob(filename)).to have(1).entry
+      expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)
       output = f.read
       (1..15).each do |n|

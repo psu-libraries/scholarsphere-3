@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Collection viewing and searching:' do
+describe 'Collection viewing and searching:', :type => :feature do
 
   let!(:current_user) { create :user }
   let(:filenames) { %w{world.png little_file.txt} }
@@ -32,21 +32,21 @@ describe 'Collection viewing and searching:' do
 
     describe 'When viewing a collection' do
       specify "I should see the collection's metadata" do
-        page.should have_content title
-        page.should have_content description
-        page.should have_content creator
-        page.should have_content file_1.title.first
-        page.should have_content file_2.title.first
-        page.should have_content "Total Items 2"
-        page.should have_content "Size 0 Bytes"
+        expect(page).to have_content title
+        expect(page).to have_content description
+        expect(page).to have_content creator
+        expect(page).to have_content file_1.title.first
+        expect(page).to have_content file_2.title.first
+        expect(page).to have_content "Total Items 2"
+        expect(page).to have_content "Size 0 Bytes"
       end
       specify "I should see the collection name when viewing the file" do
         go_to_dashboard_files
-        page.should have_content "Is part of: #{title}"
+        expect(page).to have_content "Is part of: #{title}"
       end
       specify "I should see the breadcrumb trail" do
-        page.should have_link("My Dashboard")
-        page.should have_link("My Collections")
+        expect(page).to have_link("My Dashboard")
+        expect(page).to have_link("My Collections")
       end
     end
 
@@ -56,15 +56,15 @@ describe 'Collection viewing and searching:' do
         click_button 'collection_submit'
       end
       specify 'I should see the correct results' do
-        page.should have_content title
-        page.should have_content description
+        expect(page).to have_content title
+        expect(page).to have_content description
 
         # Should have search results / contents listing
-        page.should have_content file_1.title.first
-        page.should_not have_content file_2.title.first
+        expect(page).to have_content file_1.title.first
+        expect(page).not_to have_content file_2.title.first
 
         # Should not have Collection Descriptive metadata table
-        page.should_not have_content creator
+        expect(page).not_to have_content creator
       end
     end
   end

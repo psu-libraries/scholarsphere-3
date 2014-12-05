@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe "Featured works on the home page" do
+describe "Featured works on the home page", :type => :feature do
   let!(:admin_user) { create :administrator }
   let!(:jill_user) { create :jill }
   let!(:file) { create_file admin_user, {title:'file title'} }
@@ -17,9 +17,9 @@ describe "Featured works on the home page" do
   end
 
   it "appears as a featured work", js:true do
-    page.should have_content "Featured Works"
+    expect(page).to have_content "Featured Works"
     within("#featured_container") do
-      page.should have_content(file.title[0])
+      expect(page).to have_content(file.title[0])
     end
   end
 

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe LandingPagesController do
+describe LandingPagesController, :type => :controller do
 
 end

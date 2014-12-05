@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GenericFile do
+describe GenericFile, :type => :model do
 
   let(:user) { FactoryGirl.create :random_user }
   before(:each) do
@@ -10,7 +10,7 @@ describe GenericFile do
 
   it 'should export as endnote' do
     @file.stub(pid: 'stubbed_pid')
-    @file.export_as_endnote.should == "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/stubbed_pid\n%~ ScholarSphere\n%W Penn State University"
+    expect(@file.export_as_endnote).to eq("%0 GenericFile\n%R http://scholarsphere.psu.edu/files/stubbed_pid\n%~ ScholarSphere\n%W Penn State University")
   end
 
   describe "create_thumbnail" do
@@ -26,7 +26,7 @@ describe GenericFile do
         @f.delete
       end
       it "should keep the thumbnail at its original size" do
-        @f.content.changed?.should be_false
+        expect(@f.content.changed?).to be_falsey
       end
     end
   end
@@ -55,13 +55,13 @@ describe GenericFile do
         @myfile.destroy
       end
       it "should NOT append metadata from the characterization" do
-        @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
-        @myfile.filename[0].should == @myfile.label
+        expect(@myfile.title).not_to include("Microsoft Word - sample.pdf.docx")
+        expect(@myfile.filename[0]).to eq(@myfile.label)
       end
       it "should NOT append each term only once" do
         @myfile.append_metadata
-        @myfile.format_label.should == ["Portable Document Format"]
-        @myfile.title.should_not include("Microsoft Word - sample.pdf.docx")
+        expect(@myfile.format_label).to eq(["Portable Document Format"])
+        expect(@myfile.title).not_to include("Microsoft Word - sample.pdf.docx")
       end
     end
   end

@@ -17,19 +17,19 @@ describe Behaviors::HttpHeaderAuthenticatableBehavior do
     describe "when REMOTE_USER present" do
       let(:headers) {{"REMOTE_USER"=>"abc123"} }
       it "is valid" do
-        subject.valid_user?(headers).should == true
+        expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when HTTP_REMOTE_USER present" do
       let(:headers) { {"HTTP_REMOTE_USER"=>"abc123"} }
       it "is valid" do
-        subject.valid_user?(headers).should == true
+        expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when REMOTE_USER not present" do
       let(:headers) {{} }
       it "is not valid" do
-        subject.valid_user?(headers).should == false
+        expect(subject.valid_user?(headers)).to eq(false)
       end
     end
 
@@ -46,20 +46,20 @@ describe Behaviors::HttpHeaderAuthenticatableBehavior do
     describe "when REMOTE_USER present" do
       let(:headers) { {"REMOTE_USER"=>"abc123"} }
       it "is valid" do
-        subject.valid_user?(headers).should == true
+        expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when HTTP_REMOTE_USER present" do
       let(:headers) { {"HTTP_REMOTE_USER"=>"abc123"} }
       it "is not valid" do
-        subject.valid_user?(headers).should == false
+        expect(subject.valid_user?(headers)).to eq(false)
       end
     end
 
     describe "when REMOTE_USER not present" do
       let(:headers) {{} }
       it "is not valid" do
-        subject.valid_user?(headers).should == false
+        expect(subject.valid_user?(headers)).to eq(false)
       end
     end
   end

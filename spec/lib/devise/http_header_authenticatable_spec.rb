@@ -7,11 +7,11 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
     before do
       # I do this in before block or right before test executes
       @request = double(:request)
-      @request.should_receive(:headers).and_return(headers)
-      subject.should_receive(:request).and_return(@request)
+      expect(@request).to receive(:headers).and_return(headers)
+      expect(subject).to receive(:request).and_return(@request)
     end
     it "is valid" do
-      subject.valid?.should == true
+      expect(subject.valid?).to eq(true)
     end
   end
 
@@ -20,11 +20,11 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
     before do
       # I do this in before block or right before test executes
       @request = double(:request)
-      @request.should_receive(:headers).and_return(headers)
-      subject.should_receive(:request).and_return(@request)
+      expect(@request).to receive(:headers).and_return(headers)
+      expect(subject).to receive(:request).and_return(@request)
     end
     it "is valid" do
-      subject.valid?.should == false
+      expect(subject.valid?).to eq(false)
     end
   end
 

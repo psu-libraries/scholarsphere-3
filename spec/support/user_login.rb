@@ -7,7 +7,7 @@ module UserLogin
         headers: { 'REMOTE_USER' => login })
     end
     user = User.find_or_create_by(login: login)
-    User.find_by_login(login).should_not be_nil
+    expect(User.find_by_login(login)).not_to be_nil
     Capybara.current_driver = driver_name
   end
 
@@ -51,7 +51,7 @@ module UserLogin
   end
 
   def wait_on_page(text, time=5)
-    page.should have_content(text)
+    expect(page).to have_content(text)
   end
 
 end

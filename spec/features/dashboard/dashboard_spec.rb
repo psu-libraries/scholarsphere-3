@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'The Dashboard' do
+describe 'The Dashboard', :type => :feature do
 
   let!(:current_user) { create :user }
   let!(:second_user) { create(:user, display_name: "First Proxy") }
@@ -14,21 +14,21 @@ describe 'The Dashboard' do
   end
 
   it "shows the user's statistics" do
-    page.should have_content("Your Statistics")
-    page.should have_content("Files you've deposited")
-    page.should have_content("People you follow")
-    page.should have_content("People who are following you")
+    expect(page).to have_content("Your Statistics")
+    expect(page).to have_content("Files you've deposited")
+    expect(page).to have_content("People you follow")
+    expect(page).to have_content("People who are following you")
   end
 
   it "displays information about the user" do
-    page.should have_content "Joe Example"
-    page.should have_link "View Profile"
-    page.should have_link "Edit Profile"
+    expect(page).to have_content "Joe Example"
+    expect(page).to have_link "View Profile"
+    expect(page).to have_link "Edit Profile"
   end
 
   it "shows recent activity" do
-    page.should have_content "User Activity"
-    page.should have_content "User has no recent activity"
+    expect(page).to have_content "User Activity"
+    expect(page).to have_content "User has no recent activity"
   end
 
   describe 'proxy portal' do
@@ -41,21 +41,21 @@ describe 'The Dashboard' do
 
       it "should list each proxy if both are authorized" do
         within("#authorizedProxies") do
-          page.should have_content(second_user.display_name)
-          page.should have_content(third_user.display_name)
+          expect(page).to have_content(second_user.display_name)
+          expect(page).to have_content(third_user.display_name)
         end
         go_to_dashboard
         within("#authorizedProxies") do
-          page.should have_content(second_user.display_name)
-          page.should have_content(third_user.display_name)
+          expect(page).to have_content(second_user.display_name)
+          expect(page).to have_content(third_user.display_name)
         end
 
         #should remove a proxy
         first(".remove-proxy-button").click
         go_to_dashboard
         within("#authorizedProxies") do
-          page.should_not have_content(second_user.display_name)
-          page.should have_content(third_user.display_name)
+          expect(page).not_to have_content(second_user.display_name)
+          expect(page).to have_content(third_user.display_name)
         end
       end
 

@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Shares' do
+describe 'Dashboard Shares', :type => :feature do
 
   let!(:current_user) { create :user }
 
@@ -12,11 +12,11 @@ describe 'Dashboard Shares' do
   end
 
   specify 'tab title and buttons' do
-    page.should have_content("Files Shared with Me")
+    expect(page).to have_content("Files Shared with Me")
     within('#sidebar') do
-      page.should have_content("Upload")
-      page.should have_content("Create Collection")
-      page.should_not have_selector(".batch-toggle input[value='Delete Selected']")
+      expect(page).to have_content("Upload")
+      expect(page).to have_content("Create Collection")
+      expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
     end
   end
 

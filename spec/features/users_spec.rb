@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative 'feature_spec_helper'
 
-describe "User Profile" do
+describe "User Profile", :type => :feature do
   let(:admin_user) { create :administrator }
 
   let(:user_name) { admin_user.login }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Collection do
+describe Collection, :type => :model do
   before(:each) do
     @user = FactoryGirl.find_or_create(:user)
     @collection = Collection.create(title: "test collection")

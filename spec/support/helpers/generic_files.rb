@@ -12,13 +12,13 @@ module GenericFilesHelper
     redirect_url = find("#redirect-loc", visible:false).text
     click_button 'main_upload_start'
     wait_for_page redirect_url
-    page.should have_content 'Apply Metadata'
+    expect(page).to have_content 'Apply Metadata'
     fill_in 'generic_file_tag', with: filename + '_tag'
     fill_in 'generic_file_creator', with: filename + '_creator'
     select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
     click_on 'upload_submit'
-    page.should have_css '#documents'
-    page.should have_content filename
+    expect(page).to have_css '#documents'
+    expect(page).to have_content filename
   end
 
   def create_file (user, options={})

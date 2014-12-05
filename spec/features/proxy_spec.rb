@@ -1,6 +1,6 @@
 require_relative 'feature_spec_helper'
 
-describe 'proxy' do
+describe 'proxy', :type => :feature do
 
   let!(:current_user) { create :user }
   let!(:second_user) { create :user }
@@ -29,7 +29,7 @@ describe 'proxy' do
       visit '/'
       first('a.dropdown-toggle').click
       click_link('upload')
-      page.should have_content('I have read')
+      expect(page).to have_content('I have read')
       check("terms_of_service")
       select(second_user.login, from: 'on_behalf_of')
       test_file_path = Rails.root.join('spec/fixtures/little_file.txt').to_s
@@ -38,13 +38,13 @@ describe 'proxy' do
       redirect_url = find("#redirect-loc", visible:false).text
       click_button("main_upload_start")
       wait_for_page redirect_url
-      page.should have_content('Apply Metadata')
+      expect(page).to have_content('Apply Metadata')
       fill_in('generic_file_title', with: 'MY Title for the World')
       fill_in('generic_file_tag', with: 'test')
       fill_in('generic_file_creator', with: 'me')
       click_on('upload_submit')
       click_link "Shared with Me"
-      page.should have_content "MY Title for the World"
+      expect(page).to have_content "MY Title for the World"
       first('i.glyphicon-chevron-right').click
       click_link(second_user.display_name)
     end

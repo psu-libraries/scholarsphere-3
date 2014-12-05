@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe GenericFilesController do
+describe GenericFilesController, :type => :controller do
   routes { Sufia::Engine.routes }
   context "signed in user" do
     before do
-      Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
-      Hydra::LDAP.stub(:does_user_exist?).and_return(true)
+      allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+      allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(true)
       @user = FactoryGirl.find_or_create(:jill)
       sign_in @user
-      User.any_instance.stub(:groups).and_return([])
+      allow_any_instance_of(User).to receive(:groups).and_return([])
     end
 
     describe "#create" do
       before do
         @file_count = GenericFile.count
         @mock = GenericFile.new({pid: 'test:123'})
-        GenericFile.stub(:new).and_return(@mock)
+        allow(GenericFile).to receive(:new).and_return(@mock)
       end
 
       after do
@@ -27,14 +27,14 @@ describe GenericFilesController do
       end
 
       it "should call virus check" do
-        GenericFile.any_instance.stub(:to_solr).and_return({ id: "foo:123" })
+        allow_any_instance_of(GenericFile).to receive(:to_solr).and_return({ id: "foo:123" })
         file = fixture_file_upload('/world.png','image/png')
         s1 = double('one')
-        ContentDepositEventJob.should_receive(:new).with('test:123','jilluser').and_return(s1)
-        Sufia.queue.should_receive(:push).with(s1).once
+        expect(ContentDepositEventJob).to receive(:new).with('test:123','jilluser').and_return(s1)
+        expect(Sufia.queue).to receive(:push).with(s1).once
         s2 = double('two')
-        CharacterizeJob.should_receive(:new).with('test:123').and_return(s2)
-        Sufia.queue.should_receive(:push).with(s2).once
+        expect(CharacterizeJob).to receive(:new).with('test:123').and_return(s2)
+        expect(Sufia.queue).to receive(:push).with(s2).once
         xhr :post, :create, files: [file], Filename: "The world", batch_id: "sample:batch_id", permission: {"group"=>{"public"=>"read"} }, terms_of_service: "1"
       end
     end
@@ -76,9 +76,9 @@ describe GenericFilesController do
 
     describe "#show" do
       it "creates loads from solr" do
-        CanCan::ControllerResource.any_instance.should_not receive(:load_and_authorize_resource)
+        expect(CanCan::ControllerResource.any_instance).not_to receive(:load_and_authorize_resource)
         get :show, id: gf.noid
-        response.should_not redirect_to(action: 'show')
+        expect(response).not_to redirect_to(action: 'show')
         expect(assigns[:generic_file].inner_object.class).to eq ActiveFedora::SolrDigitalObject
       end
     end

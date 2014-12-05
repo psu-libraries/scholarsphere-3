@@ -44,7 +44,8 @@ group :development, :test do
   gem 'jettywrapper'
   gem 'launchy'
   gem 'poltergeist'
-  gem 'rspec-rails', '~> 2.99'
+  gem 'rspec-activemodel-mocks'
+  gem 'rspec-rails'
   gem 'sqlite3'
 end
 
