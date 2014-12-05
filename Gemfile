@@ -5,14 +5,13 @@ gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '9fa6e7e85'
-#gem 'sufia', '4.3.1'
+gem 'sufia', github: 'projecthydra/sufia', branch: 'fedora-4/master'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.4.0'
-gem 'hydra-collections', '2.0.5'
-gem 'hydra-derivatives', '0.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
+gem 'hydra-derivatives', github: 'projecthydra-labs/hydra-derivatives', branch: 'master'
+gem 'hydra-collections', github: 'projecthydra-labs/hydra-collections', branch: 'master'
 
 # Other components
 gem 'clamav'
@@ -32,7 +31,6 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
-gem 'bootstrap-sass'
 
 group :development, :test do
   gem 'byebug', require: false
