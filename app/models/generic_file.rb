@@ -106,4 +106,10 @@ class GenericFile < ActiveFedora::Base
   def self.audit(version, force = false)
     self.find(version.pid).audit_each(version,force)
   end
+
+  def permissions=(params)
+    params[:new_user_name].each { |user, access| User.from_url_component(user) } if params[:new_user_name].present?
+    super(params)
+  end
+
 end

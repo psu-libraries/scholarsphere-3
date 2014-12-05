@@ -5,6 +5,7 @@ include Selectors::Dashboard
 describe 'Generic File uploading and deletion:', :type => :feature do
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
+    let(:other_user) { create :user }
     let(:filename) { 'little_file.txt' }
     let(:batch) { ['little_file.txt', 'little_file.txt'] }
     let(:file) { find_file_by_title "little_file.txt" }
@@ -35,6 +36,15 @@ describe 'Generic File uploading and deletion:', :type => :feature do
       end
 
       specify 'I can view help for rights, visibility, and share with' do
+        #I can add additional rights
+        expect(User).to receive(:query_ldap_by_name_or_id).and_return([{id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})"}])
+        find('.select2-container').click
+        find('#select2-drop .select2-input').set other_user.user_key
+        find('#select2-drop .select2-result-selectable').click
+        find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
+        click_on "add_new_user_skel"
+        expect(page).to have_css("label.control-label", text: other_user.user_key)
+
 
         #I am adding can click on more metadata here so we do not need to add a separate test for it
         expect(page).not_to have_css("#generic_file_publisher")

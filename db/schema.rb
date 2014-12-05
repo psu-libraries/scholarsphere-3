@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428172020) do
+ActiveRecord::Schema.define(version: 20141205164301) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -214,8 +214,8 @@ ActiveRecord::Schema.define(version: 20140428172020) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2014-12-10 16:16:54'
-    t.datetime "updated_at", default: '2014-12-10 16:16:54'
+    t.datetime "created_at", default: '2014-12-10 16:14:48'
+    t.datetime "updated_at", default: '2014-12-10 16:14:48'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 20140428172020) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "login",                  default: "", null: false
+    t.string   "login",                  default: "",    null: false
     t.string   "display_name"
     t.string   "address"
     t.string   "admin_area"
@@ -285,6 +285,8 @@ ActiveRecord::Schema.define(version: 20140428172020) do
     t.string   "googleplus_handle"
     t.string   "linkedin_handle"
     t.string   "orcid"
+    t.boolean  "system_created",         default: false
+    t.boolean  "logged_in",              default: true
   end
 
   add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
@@ -301,8 +303,8 @@ ActiveRecord::Schema.define(version: 20140428172020) do
 
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", name: "mb_opt_outs_on_conversations_id", column: "conversation_id"
 
-  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_test", column: "conversation_id"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_development", column: "conversation_id"
 
-  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_test", column: "notification_id"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_development", column: "notification_id"
 
 end

@@ -89,6 +89,7 @@ describe 'Transferring file ownership:', :type => :feature do
   end
 
   def transfer_ownership_of_file (file, new_owner)
+    User.should_receive(:query_ldap_by_name_or_id).and_return([{id: new_owner.user_key, text: "#{new_owner.display_name} (#{new_owner.user_key})"}])
     db_item_actions_toggle(file).click
     click_link 'Transfer Ownership of File'
     expect(page).to have_content "Select a user to transfer #{file.title.first} to, add optional comments and then press transfer."

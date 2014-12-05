@@ -67,4 +67,25 @@ describe User, :type => :model do
       expect(User.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
     end
   end
+
+  describe "#query_ldap_by_name_or_id" do
+    let(:name_part) {"cam"}
+    let(:filter) {Net::LDAP::Filter.construct("(& (| (uid=#{name_part}* ) (givenname=#{name_part}*) (sn=#{name_part}*)) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))")}
+    let(:results) {[Net::LDAP::Entry.new("uid=cac6094,dc=psu,dc=edu").tap {|e| e[:uid]=["cac6094"]; e[:displayname]=["CAMILO CAPURRO"]},
+                    Net::LDAP::Entry.new("uid=csl5210,dc=psu,dc=edu").tap {|e| e[:uid]=["csl5210"]; e[:displayname]=["CAMERON SIERRA LANGSJOEN"]},
+                    Net::LDAP::Entry.new("uid=cnt5046,dc=psu,dc=edu").tap {|e| e[:uid]=["cnt5046"]; e[:displayname]=["CAMILLE NAKIA TINDAL"]}
+                  ]}
+    let(:attrs) { ["uid", "displayname"]}
+
+    before do
+      Hydra::LDAP.should_receive(:get_user).with(filter, attrs).and_return(results)
+      Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+    end
+    it "should return a list or people" do
+      expect(User.query_ldap_by_name_or_id("cam")).to eq([{id:"cac6094", text:"CAMILO CAPURRO (cac6094)"},
+                                                     {id:"csl5210", text:"CAMERON SIERRA LANGSJOEN (csl5210)"},
+                                                     {id:"cnt5046", text:"CAMILLE NAKIA TINDAL (cnt5046)"}
+                                                    ])
+    end
+  end
 end

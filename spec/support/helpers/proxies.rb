@@ -1,6 +1,8 @@
 module ProxiesHelper
   def create_proxy_using_partial(*users)
     users.each do |user|
+      User.should_receive(:query_ldap_by_name_or_id).and_return([{id: user.user_key, text: "#{user.display_name} (#{user.user_key})"}])
+
       first('a.select2-choice').click
       find(".select2-input").set(user.user_key)
       expect(page).to have_css('div.select2-result-label')

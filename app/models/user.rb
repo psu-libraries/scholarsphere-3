@@ -118,6 +118,22 @@ class User < ActiveRecord::Base
     return groups
   end
 
+  def self.query_ldap_by_name_or_id(id_or_name_part)
+    person_filter = "(| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))"
+    filter = Net::LDAP::Filter.construct("(& (| (uid=#{id_or_name_part}* ) (givenname=#{id_or_name_part}*) (sn=#{id_or_name_part}*)) #{person_filter})")
+    users = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+        Hydra::LDAP.get_user(filter,['uid','displayname'])
+    end rescue []
+    # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
+    if (users == nil) &&   (Hydra::LDAP.connection.get_operation_result[:message]=="Size Limit Exceeded")
+      filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
+      users = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+        Hydra::LDAP.get_user(filter2,['uid','displayname'])
+      end rescue []
+    end
+    return users.map {|u| {id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})"} }
+  end
+
   def populate_attributes
     #update exist cache
     exist = ldap_exist!
@@ -158,6 +174,15 @@ class User < ActiveRecord::Base
       Hydra::LDAP.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
     end rescue []
     return attrs
+  end
+
+  def self.from_url_component(component)
+    user = super(component)
+    if user.nil?
+      user = User.create(login: component, email: component, system_created: true, logged_in: false)
+      user.populate_attributes
+    end
+    return user
   end
 
 end
