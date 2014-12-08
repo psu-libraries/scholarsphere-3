@@ -4,8 +4,6 @@ class Collection < ActiveFedora::Base
   before_save :update_permissions
   validates :title, presence: true
 
-  has_metadata name: "properties", type: PropertiesDatastream
-
   def terms_for_display
     [:creator, :date_modified, :date_uploaded]
   end
