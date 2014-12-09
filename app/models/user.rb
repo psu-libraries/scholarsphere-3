@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   # Connects this user object to Sufia behaviors.
   include Sufia::User
+  # Cache file views & downloads stats for each user
+  include Sufia::UserUsageStats
   # Connects this user object to Hydra behaviors.
   include Hydra::User
   # Connects this user object to Blacklights Bookmarks.

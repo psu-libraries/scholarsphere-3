@@ -30,7 +30,8 @@ module ScholarSphere
 
     def google_analytics_id
       vhost = get_vhost_by_host[0]
-      config.ga_host_map[vhost]
+      ga_id = config.ga_host_map[vhost]
+      ga_id ||= Rails.application.secrets.google_analytics_tracking_id
     end
 
     config.scholarsphere_version = "v2.0"
@@ -96,7 +97,6 @@ module ScholarSphere
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
-    config.analytic_start_date = DateTime.new(2014,9,10)
     config.max_upload_file_size = 1.9*1024*1024*1024 #1.9GB
   end
 end

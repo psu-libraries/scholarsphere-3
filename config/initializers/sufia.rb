@@ -1,7 +1,6 @@
 
 Sufia::Engine.configure do
   config.application_name = "ScholarSphere"
-  config.google_analytics_id = Rails.application.google_analytics_id
   config.enable_contact_form_delivery = true
   config.contact_form_delivery_body = <<-EOM
     Greetings,
@@ -74,6 +73,10 @@ Sufia::Engine.configure do
   }
 
   config.analytics = true
+  config.google_analytics_id = Rails.application.google_analytics_id
+
+  # Specify a date you wish to start collecting Google Analytic statistics for.
+  config.analytic_start_date = DateTime.new(2014, 9, 10)
 
   # If browse-everything has been configured, load the configs.  Otherwise, set to nil.
   begin
