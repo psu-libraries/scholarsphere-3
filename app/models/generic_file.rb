@@ -3,11 +3,6 @@ class GenericFile < ActiveFedora::Base
   include Hydra::Collections::Collectible
   include Blacklight::SolrHelper
 
-  # Unstemmed, searchable, stored
-  def self.noid_indexer
-    @noid_indexer ||= Solrizer::Descriptor.new(:text, :indexed, :stored)
-  end
-
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?
     return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
