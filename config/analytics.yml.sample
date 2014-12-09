@@ -1,0 +1,7 @@
+# To integrate your app with Google Analytics, add your API key information.
+analytics:
+  app_name: Scholarsphere
+  app_version: 2.1
+  privkey_path: /Users/me/keys/something-privatekey.p12
+  privkey_secret: some_secret
+  client_email: example@developer.gserviceaccount.com
