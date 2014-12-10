@@ -13,7 +13,9 @@ namespace :scholarsphere do
         id = "scholarsphere:#{id.split("?").first}"
         stat = FileDownloadStat.where(date: date, file_id: id).first
         if stat.blank?
-          FileDownloadStat.create(date: date, downloads: count, file_id: id)
+          file = GenericFile.find(id)
+          user = User.where(login:file.depositor).first
+          FileDownloadStat.create(date: date, downloads: count, file_id: id, user_id: user.id)
         elsif (stat.downloads < count)
           puts "Updating count"
           stat.downloads = count
