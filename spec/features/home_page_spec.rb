@@ -62,7 +62,7 @@ describe 'Visting the home page:', :type => :feature do
 
       specify 'clicking on a tag goes to the right URL' do
         visit '/'
-        target_url = URI.encode('/catalog?f[desc_metadata__tag_sim][]=tagY','[]')
+        target_url = URI.encode('/catalog?f[tag_sim][]=tagY','[]')
         click_link('tagY')
         expect(current_url).to end_with(target_url)
       end

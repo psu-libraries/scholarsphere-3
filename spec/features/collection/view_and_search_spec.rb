@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Collection viewing and searching:', :type => :feature do
+describe 'Collection viewing and searching:', type: :feature do
 
   let!(:current_user) { create :user }
   let(:filenames) { %w{world.png little_file.txt} }
@@ -71,21 +71,26 @@ describe 'Collection viewing and searching:', :type => :feature do
 
   describe 'unkown user' do
     let(:gf_title) {'Test Document PDF'}
-    let(:gf) { GenericFile.new(title: [gf_title], filename: ['test.pdf'], read_groups:['public']).tap do |gf|
-                  gf.apply_depositor_metadata(current_user.user_key)
-                  gf.save!
-                end
-              }
-    let(:collection) { Collection.new(title: [title]).tap do |col|
-                         col.apply_depositor_metadata(current_user.user_key)
-                         col.members << gf
-                         col.save!
-                       end }
-
+    let(:gf) do
+      GenericFile.new.tap do |gf|
+        gf.title = [gf_title]
+        gf.filename = ['test.pdf']
+        gf.read_groups = ['public']
+        gf.apply_depositor_metadata(current_user.user_key)
+        gf.save!
+      end
+    end
+    let(:collection) do
+      Collection.new.tap do |col|
+        col.title = title
+        col.apply_depositor_metadata(current_user.user_key)
+        col.members = [gf]
+        col.save!
+      end
+    end
     before do
       visit "/collections/#{collection.noid}"
     end
-
     specify "I should not get and error" do
       expect(page.status_code).to eql(200)
       expect(page).to have_content title
