@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'static/zotero.html.erb', :type => :view do
+describe 'static/zotero.html.erb', type: :view do
 
   it "should show the static page" do
     render
