@@ -25,7 +25,7 @@
         <dt>Depositor:</dt>
         <dd><%= link_to_profile recent_document.depositor("no depositor value") %></dd>
         <dt>Keywords:</dt>
-        <dd><%= link_to_facet_list(recent_document.tags, 'desc_metadata__tag', 'no keywords specified').html_safe %></dd>
+        <dd><%= link_to_facet_list(recent_document.tags, 'tag', 'no keywords specified').html_safe %></dd>
       </dl>
     </div>
   </div>

@@ -221,7 +221,7 @@ namespace :scholarsphere do
   desc "Convert Resource Type"
   task "master_thesis" => :environment do
     def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-      solr_parameters[:fq]="{!raw f=desc_metadata__resource_type_sim}Masters Thesis"
+      solr_parameters[:fq]="{!raw f=resource_type_sim}Masters Thesis"
     end
 
     resp = query_solr(q:"")

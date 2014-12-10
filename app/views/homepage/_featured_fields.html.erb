@@ -4,5 +4,5 @@
   <dt>Depositor:</dt>
   <dd><%= link_to_profile featured.depositor("no depositor value") %></dd>
   <dt>Keywords:</dt>
-  <dd><%= link_to_facet_list(featured.tags, 'desc_metadata__tag', 'no keywords specified').html_safe %></dd>
+  <dd><%= link_to_facet_list(featured.tags, 'tag', 'no keywords specified').html_safe %></dd>
 </dl>

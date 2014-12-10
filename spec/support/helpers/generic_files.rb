@@ -42,7 +42,7 @@ module GenericFilesHelper
   end
 
   def find_file_by_title title
-    GenericFile.where(Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)=>title).first
+    GenericFile.where(Solrizer.solr_name("title", :stored_searchable, type: :string)=>title).first
   end
 end
 
