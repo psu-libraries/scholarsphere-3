@@ -10,9 +10,9 @@
     </div>
     <% if on_my_files? %>
       <%= batch_delete %>
-    <% end %>
-    <%= button_tag "Add to Collection", class: 'btn btn-primary submits-batches submits-batches-add',
+      <%= button_tag "Add to Collection", class: 'btn btn-primary submits-batches submits-batches-add',
         data: { toggle: "modal", target: "#collection-list-container" } %>
+    <% end %>
   </div>
 
   <div class="sort-toggle">
