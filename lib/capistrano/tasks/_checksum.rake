@@ -1,7 +1,7 @@
 namespace :checksum do
   desc "run rake task to generate missing checksums"
   task :all do
-   on roles(:db)  do
+   on roles(:job)  do
     within release_path do
      execute :rake,"#{fetch(:application)}:checksum:all","RAILS_ENV=production"
     #execute "cd -- #{current_path}"
@@ -16,3 +16,4 @@ namespace :checksum do
   end
  end
 end
+
