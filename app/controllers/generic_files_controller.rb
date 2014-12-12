@@ -3,7 +3,8 @@ class GenericFilesController < ApplicationController
   include Sufia::FilesControllerBehavior
   include Behaviors::PermissionsNotificationBehavior
 
-  around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
+  # TODO: notify_users_of_permission_changes is causing problems (#9677)
+  #around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
   skip_before_action :has_access?, only: [:stats]
   
   # TODO: load and authorize resource are causing problems (#9678)
