@@ -27,10 +27,10 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/hydra-collections.git
-  revision: 9451aaab358eff096279b37284ededd4e11d27ce
+  revision: b607038bb90dc027561eb2ac47e713719f171e96
   branch: master
   specs:
-    hydra-collections (4.0.0.beta2)
+    hydra-collections (4.0.0.beta3)
       blacklight
       deprecation
       hydra-head (~> 9.0.0.beta1)
@@ -50,8 +50,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: f8f70f95317cd9818bd0512e330be442853da290
-  branch: fedora-4/master
+  revision: b7aeaf9e7bffe2206224575eeb5e8c58b7b06253
+  ref: b7aeaf9e7bffe2206224575eeb5e8c58b7b06253
   specs:
     sufia (5.0.0.beta1)
       blacklight (~> 5.5)
@@ -110,11 +110,11 @@ GEM
       activesupport (= 4.1.7)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active-fedora (9.0.0.beta6)
+    active-fedora (9.0.0.beta7)
       active-triples (~> 0.5.0)
       activesupport (>= 4.1.0)
       deprecation
-      ldp (~> 0.1.0)
+      ldp (~> 0.2.0)
       linkeddata
       nom-xml (>= 0.5.1)
       om (~> 3.1)
@@ -188,7 +188,7 @@ GEM
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
     cancancan (1.9.2)
-    capistrano (3.3.4)
+    capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
       rake (>= 10.0.0)
@@ -211,7 +211,7 @@ GEM
       capistrano
       resque
       resque-scheduler
-    capistrano-stats (1.1.0)
+    capistrano-stats (1.1.1)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -241,7 +241,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     colored (1.2)
-    colorize (0.7.3)
+    colorize (0.7.4)
     columnize (0.9.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -359,7 +359,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ldp (0.1.0)
+    ldp (0.2.0)
       faraday
       http_logger
       linkeddata (>= 1.1)
@@ -367,6 +367,7 @@ GEM
     legato (0.4.0)
       multi_json
     libv8 (3.16.14.7)
+    link_header (0.0.8)
     linkeddata (1.1.1)
       equivalent-xml (>= 0.4.0)
       json-ld (>= 1.1.1)
@@ -436,7 +437,7 @@ GEM
     orm_adapter (0.5.0)
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    passenger (4.0.53)
+    passenger (4.0.55)
       daemon_controller (>= 1.2.0)
       rack
       rake (>= 0.8.1)
@@ -472,7 +473,8 @@ GEM
     rainbow (2.0.0)
     raindrops (0.13.0)
     rake (10.4.2)
-    rdf (1.1.6)
+    rdf (1.1.7)
+      link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (1.1.0)
       rdf (>= 1.1)
     rdf-isomorphic (1.1.0)
@@ -510,7 +512,7 @@ GEM
       rdf (~> 1.1, >= 1.1.4)
     rdf-xsd (1.1.2)
       rdf (~> 1.1)
-    redis (3.1.0)
+    redis (3.2.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     ref (1.0.5)
@@ -584,7 +586,7 @@ GEM
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     sitemap (0.3.3)
-    skydrive (0.1.5)
+    skydrive (1.0.0)
       activesupport
       httmultiparty
       httparty (>= 0.11.0)
