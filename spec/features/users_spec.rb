@@ -25,19 +25,7 @@ describe "User Profile", :type => :feature do
       admin_user.log_profile_event(event)
       u2.can_make_deposits_for << admin_user
       u2.save!
-      # More than 10 times, because the pagination threshold is 10
-      12.times do |t|
-        conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user_name
-      end
-      conn.commit
       go_to_user_profile
-    end
-
-    after do
-      12.times do |t|
-        conn.delete_by_id "199#{t}"
-      end
-      conn.commit
     end
 
     it "allows interaction", js:false do
@@ -74,10 +62,12 @@ describe "User Profile", :type => :feature do
       # Edit profile
       click_link "Edit Your Profile"
       fill_in 'user_twitter_handle', with: 'curatorOfData'
+      fill_in 'user_orcid', with: '0000-0000-0000-0000'
       click_button 'Save Profile'
       click_link 'Profile'
       expect(page).to have_content "Your profile has been updated"
       expect(page).to have_content "curatorOfData"
+      expect(page).to have_content "0000-0000-0000-0000"
 
       # displays other users
       click_link "View Users"

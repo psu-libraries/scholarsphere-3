@@ -5,7 +5,7 @@ gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: 'bcf1b955f5759fba7ec561c5016fa186d651bca6'
+gem 'sufia', '4.3.0'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-editor', '0.4.0'
 gem 'hydra-collections', '2.0.5'
@@ -31,6 +31,7 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'bootstrap-sass'
 
 group :development, :test do
   gem 'byebug', require: false
