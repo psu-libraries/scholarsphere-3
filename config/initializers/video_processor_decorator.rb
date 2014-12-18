@@ -3,7 +3,7 @@ Hydra::Derivatives::Video.class_eval do
   def codecs(format)
     case format
       when 'mp4'
-        "-vcodec mpeg4 -acodec libvo_aacenc"
+        "-vcodec mpeg4 -acodec aac -strict -2"
       when 'webm'
         "-vcodec libvpx -acodec libvorbis"
       when "mkv"
