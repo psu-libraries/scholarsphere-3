@@ -26,6 +26,15 @@ GIT
       skydrive
 
 GIT
+  remote: git://github.com/projecthydra-labs/fedora-migrate.git
+  revision: 023854caaa086a506637fbf7b723480dc2afc6a1
+  ref: 023854caaa086a506637fbf7b723480dc2afc6a1
+  specs:
+    fedora-migrate (0.0.1)
+      hydra-head (~> 9.0.0.beta1)
+      rubydora (~> 1.8)
+
+GIT
   remote: git://github.com/projecthydra-labs/hydra-editor.git
   revision: 584304b5d83923e00b68e881f5f9d1f02466b675
   ref: 584304b5d83923e00b68e881f5f9d1f02466b675
@@ -262,6 +271,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
+    fastercsv (1.5.5)
     ffi (1.9.6)
     font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
@@ -288,6 +298,8 @@ GEM
     haml (4.0.6)
       tilt
     hike (1.2.3)
+    hooks (0.3.6)
+      uber (~> 0.0.4)
     htmlentities (4.3.3)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
@@ -405,6 +417,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    netrc (0.10.2)
     newrelic_rpm (3.9.9.275)
     noid (0.7.1)
     nokogiri (1.6.5)
@@ -528,6 +541,9 @@ GEM
       redis (~> 3.0)
       resque (~> 1.25)
       rufus-scheduler (~> 3.0)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     retriable (1.4.1)
     rsolr (1.0.10)
       builder (>= 2.1.2)
@@ -561,6 +577,16 @@ GEM
       multipart-post
       oauth2
     ruby-progressbar (1.7.1)
+    rubydora (1.8.1)
+      activemodel
+      activesupport
+      deprecation
+      equivalent-xml
+      fastercsv
+      hooks (~> 0.3.0)
+      mime-types
+      nokogiri
+      rest-client
     rufus-scheduler (3.0.9)
       tzinfo
     safe_yaml (1.0.4)
@@ -639,6 +665,7 @@ GEM
     trollop (1.16.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.12)
     uglifier (2.6.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -692,6 +719,7 @@ DEPENDENCIES
   devise (~> 3.2.2)
   equivalent-xml
   factory_girl_rails (~> 4.1.0)
+  fedora-migrate!
   fuubar
   hydra-batch-edit (= 1.1.1)
   hydra-derivatives (= 1.0.0.rc1)

@@ -2,6 +2,7 @@
 # per environment.
 config/database.yml
 config/fedora.yml
+config/fedora3.yml
 config/solr.yml
 config/hydra-ldap.yml
 config/redis.yml
