@@ -20,6 +20,7 @@ Sufia::Engine.configure do
   config.fits_to_desc_mapping= {}
   config.max_days_between_audits = 7
   config.enable_ffmpeg = true
+  config.ffmpeg_path =  Rails.application.ffmpeg_path
 
   config.cc_licenses = {
     'Attribution 3.0 United States' => 'http://creativecommons.org/licenses/by/3.0/us/',

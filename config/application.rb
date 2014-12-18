@@ -33,6 +33,12 @@ module ScholarSphere
       config.ga_host_map[vhost]
     end
 
+    def ffmpeg_path
+      vhost = get_vhost_by_host[0]
+      path = config.ffmpeg_path_map[vhost]
+      path ||= 'ffmpeg'
+    end
+
     config.scholarsphere_version = "v2.0"
     config.scholarsphere_release_date = "September 10, 2014"
     config.id_namespace = "scholarsphere"
@@ -46,6 +52,14 @@ module ScholarSphere
       'scholarsphere.psu.edu' => 'UA-33252017-2',
       'scholarsphere-qa.dlt.psu.edu' => 'UA-33252017-3',
       'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
+    }
+
+    # Map hostnames onto ffmpeg paths
+    config.ffmpeg_path_map = {
+        'scholarsphere.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-production',
+        'scholarsphere-qa.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-qa',
+        'scholarsphere-staging.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-staging',
+        'scholarsphere-demo.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-demo'
     }
 
     config.hosts_vhosts_map = {
