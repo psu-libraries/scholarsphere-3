@@ -67,10 +67,13 @@ module ScholarSphere
       'ss1demo' => 'https://scholarsphere-demo.dlt.psu.edu/',
       'ss1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss2qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
+      'ssjobs1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss2stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
+      'ssjobs1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss1prod' => 'https://scholarsphere.psu.edu/',
-      'ss2prod' => 'https://scholarsphere.psu.edu/'
+      'ss2prod' => 'https://scholarsphere.psu.edu/',
+      'ssjobs1prod' => 'https://scholarsphere.psu.edu/'
     }
 
     config.assets.enabled = true
