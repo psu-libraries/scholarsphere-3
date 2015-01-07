@@ -34,6 +34,12 @@ module ScholarSphere
       ga_id ||= Rails.application.secrets.google_analytics_tracking_id
     end
 
+    def ffmpeg_path
+      vhost = get_vhost_by_host[0]
+      path = config.ffmpeg_path_map[vhost]
+      path ||= 'ffmpeg'
+    end
+
     config.scholarsphere_version = "v2.0"
     config.scholarsphere_release_date = "September 10, 2014"
     config.id_namespace = "scholarsphere"
@@ -49,15 +55,26 @@ module ScholarSphere
       'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
     }
 
+    # Map hostnames onto ffmpeg paths
+    config.ffmpeg_path_map = {
+        'scholarsphere.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-production',
+        'scholarsphere-qa.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-qa',
+        'scholarsphere-staging.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-staging',
+        'scholarsphere-demo.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-demo'
+    }
+
     config.hosts_vhosts_map = {
       'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
       'ss1demo' => 'https://scholarsphere-demo.dlt.psu.edu/',
       'ss1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss2qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
+      'ssjobs1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
       'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss2stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
+      'ssjobs1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
       'ss1prod' => 'https://scholarsphere.psu.edu/',
-      'ss2prod' => 'https://scholarsphere.psu.edu/'
+      'ss2prod' => 'https://scholarsphere.psu.edu/',
+      'ssjobs1prod' => 'https://scholarsphere.psu.edu/'
     }
 
     config.assets.enabled = true

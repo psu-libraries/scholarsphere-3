@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+#lock '3.2.1'
 
 # application and repo settings
 set :application, 'scholarsphere'
@@ -29,6 +29,9 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 set :rbenv_map_bins, %w{rake gem bundle ruby rails} # map the following bins
 set :rbenv_roles, :all # default value
 
+#set passenger to just the web servers
+set :passenger_roles, :web
+
 # rails settings, NOTE: Task is wired into event stack
 set :rails_env, 'production'
 
@@ -38,7 +41,7 @@ set :whenever_roles, [:app, :job]
 
 # git for source control
 set :scm, :git
-set :git_strategy, Capistrano::Git::SubmoduleStrategy
+#set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 # Default value for :format is :pretty
 set :format, :pretty
@@ -80,7 +83,7 @@ namespace :deploy do
   # Link the appropriate configuration files based on application, stage, and release path
   desc "Link shared files"
   task :symlink_shared do
-  on roles(:web) do
+  on roles(:app) do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/database.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/devise.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora.yml #{fetch(:release_path)}/config/"
@@ -102,7 +105,7 @@ namespace :deploy do
   # Resolarize objects
   desc "Re-solrize objects"
   task :resolrize do
-   on roles(:solr) do
+   on roles(:job) do
     within release_path do
      with rails_env: fetch(:rails_env) do
       execute :rake, "#{fetch(:application)}:resolrize"
@@ -115,7 +118,7 @@ namespace :deploy do
  # Restart resque-pool.
  desc "Restart resque-pool"
  task :resquepoolrestart do
-  on roles(:app) do
+  on roles(:job) do
     execute :sudo,  "/sbin/service resque_pool restart"
   end
  end
@@ -134,24 +137,7 @@ namespace :deploy do
  end
  after :resquepoolrestart, :sitemapxml
 
- # Removes resque on the main server
- desc "Remove resque on the main server"
- task :remove_resque do
-  on roles(:solr) do
-   within release_path do
-    execute "rm #{fetch(:release_path)}/config/resque-pool.yml"
-   end
-  end
- end
- after :symlink_shared, :remove_resque
-
- # Restart the application
- desc 'Restart application'
- task :restart do
-  on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-  end
- end
- #after :publishing, :restart 
+ #after :publishing, :restart
  after :restart, "passenger:warmup" 
 end
+
