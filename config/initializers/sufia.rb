@@ -77,7 +77,7 @@ Sufia::Engine.configure do
   config.google_analytics_id = Rails.application.google_analytics_id
 
   # Specify a date you wish to start collecting Google Analytic statistics for.
-  config.analytic_start_date = DateTime.new(2014, 9, 10)
+  config.analytic_start_date = DateTime.new(2013, 3, 24)
 
   # If browse-everything has been configured, load the configs.  Otherwise, set to nil.
   begin
