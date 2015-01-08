@@ -5,7 +5,7 @@ describe My::FilesController, type: :controller do
   let(:user) {FactoryGirl.find_or_create(:archivist)}
   let(:strategy) do
     strategy = Devise::Strategies::HttpHeaderAuthenticatable.new(nil)
-    allow(strategy).to receive(request: request)
+    allow(strategy).to receive(:request) { request }
     strategy
   end
   before do
