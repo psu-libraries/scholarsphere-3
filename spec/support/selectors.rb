@@ -27,7 +27,7 @@ module Selectors
     def db_item_title item
       within "#document_#{item.noid}" do
         find "#src_copy_link#{item.noid}"
-      end 
+      end
     end
 
     def db_file_checkbox file

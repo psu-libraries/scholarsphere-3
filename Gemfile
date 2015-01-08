@@ -5,13 +5,12 @@ gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: 'b7aeaf9e7bffe2206224575eeb5e8c58b7b06253'
+# TODO: Point this back at a released version once this branch is merged
+gem 'sufia', github: 'projecthydra/sufia', branch: 'concernize_collections_controller'
 gem 'hydra-batch-edit', '1.1.1'
-gem 'hydra-editor', '0.4.0'
 gem 'hydra-ldap', '0.1.0'
+gem 'hydra-derivatives', '1.0.0.rc1'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
-gem 'hydra-derivatives', github: 'projecthydra-labs/hydra-derivatives', branch: 'master'
-gem 'hydra-collections', github: 'projecthydra-labs/hydra-collections', branch: 'master'
 
 # Other components
 gem 'clamav'

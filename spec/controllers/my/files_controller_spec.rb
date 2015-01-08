@@ -5,7 +5,7 @@ describe My::FilesController, type: :controller do
   let(:user) {FactoryGirl.find_or_create(:archivist)}
   let(:strategy) do
     strategy = Devise::Strategies::HttpHeaderAuthenticatable.new(nil)
-    strategy.stub(request: request)
+    allow(strategy).to receive(request: request)
     strategy
   end
   before do
@@ -47,7 +47,7 @@ describe My::FilesController, type: :controller do
       let(:batch_noid2) { "batch_noid2" }
       let(:batch)       { double }
       let(:user_results) do
-        ActiveFedora::SolrService.instance.conn.get "select", 
+        ActiveFedora::SolrService.instance.conn.get "select",
           params:{fq:["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"]}
       end
 

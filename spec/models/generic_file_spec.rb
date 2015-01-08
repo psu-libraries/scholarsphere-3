@@ -16,7 +16,7 @@ describe GenericFile, type: :model do
   describe "#create_thumbnail" do
     describe "with an image that doesn't get resized" do
       subject do
-        file.stub(mime_type:'image/png', width:['50'], height:['50'])  # Would get set by the characterization job
+        allow(file).to receive(mime_type:'image/png', width:['50'], height:['50'])  # Would get set by the characterization job
         file.add_file_datastream(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), dsid:'content')
         file.save
         return file
