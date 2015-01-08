@@ -16,6 +16,7 @@ gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd3
 gem 'clamav'
 gem 'coffee-rails'
 gem 'devise', '~> 3.2.2'
+gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
 gem 'nest'

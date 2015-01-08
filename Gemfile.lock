@@ -327,6 +327,9 @@ GEM
       net-ldap
       rails
     i18n (0.7.0)
+    jbuilder (2.2.6)
+      activesupport (>= 3.0.0, < 5)
+      multi_json (~> 1.2)
     jettywrapper (1.8.3)
       activesupport (>= 3.0.0)
       childprocess
@@ -687,6 +690,7 @@ DEPENDENCIES
   hydra-batch-edit (= 1.1.1)
   hydra-derivatives (= 1.0.0.rc1)
   hydra-ldap (= 0.1.0)
+  jbuilder (~> 2.0)
   jettywrapper
   jquery-rails
   kaminari!
