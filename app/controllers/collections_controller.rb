@@ -1,11 +1,11 @@
 class CollectionsController < ApplicationController
   include Sufia::CollectionsControllerBehavior
 
-  def presenter
-    ::CollectionPresenter.new(@collection)
+  def presenter_class
+    ::CollectionPresenter
   end
 
-  def initialize_fields_for_edit
-    @form = ::CollectionEditForm.new(@collection)
+  def form_class
+    ::CollectionEditForm
   end
 end
