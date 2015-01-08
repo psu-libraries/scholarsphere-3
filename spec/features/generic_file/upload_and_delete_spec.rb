@@ -59,25 +59,32 @@ describe 'Generic File uploading and deletion:', :type => :feature do
 
         # Visibility is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_visibility_help').trigger('click')
-        expect(page).to have_css('h3.popover-title', text: 'Visibility')
-        find('#generic_file_visibility_help').trigger('click')
-        expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+        within('#visibility_tooltip') do
+          find('.help-icon').trigger('click')
+          expect(page).to have_css('h3.popover-title', text: 'Visibility')
+          find('.help-icon').trigger('click')
+          expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+        end
 
         # Share With is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_share_with_help').trigger('click')
-        expect(page).to have_css('h3.popover-title', text: 'Share with')
-        find('#generic_file_share_with_help').trigger('click')
-        expect(page).to_not have_css('h3.popover-title', text: 'Share with')
+        within('#share_with_tooltip') do
+          find('.help-icon').trigger('click')
+          expect(page).to have_css('h3.popover-title', text: 'Share With')
+          find('.help-icon').trigger('click')
+          expect(page).to_not have_css('h3.popover-title', text: 'Share With')
+        end
 
         # Rights (i.e. License Descriptions) is a modal form
         # with a close button.
         expect(page).to_not have_css('#rightsModal')
-        find('#generic_file_rightsModal_help_modal').click()
+        within('#generic_file_rights_help_modal') do
+          find('.help-icon').click()
+        end
+        expect(page).to have_css('#rightsModal')
+        expect(page).to have_css('h2#rightsModallLabel', text: 'ScholarSphere License Descriptions')
         modal = find('#rightsModal')
         expect(modal[:style]).to match(/display: block/)
-        expect(page).to have_css('#rightsModal')
         expect(page).to have_content('Creative Commons licenses can take the following combinations')
         click_on('Close')
 
