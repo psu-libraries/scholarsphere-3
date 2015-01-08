@@ -5,8 +5,8 @@ gem 'rails', '4.1.7'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-# TODO: Point this back at a released version once this branch is merged
-gem 'sufia', github: 'projecthydra/sufia', branch: 'concernize_collections_controller'
+# TODO: Point this back at a released version once > 6.0.0.rc1 is available
+gem 'sufia', github: 'projecthydra/sufia', ref: '81d7d2b23292'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.0.0.rc1'

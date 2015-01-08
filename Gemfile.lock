@@ -27,8 +27,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 29db72b2a9edc671e9fd98310a127ee26a994e61
-  branch: concernize_collections_controller
+  revision: 81d7d2b23292fd30d29a3382ac59af1d750679ff
+  ref: 81d7d2b23292
   specs:
     sufia (6.0.0.rc1)
       blacklight (~> 5.5)
