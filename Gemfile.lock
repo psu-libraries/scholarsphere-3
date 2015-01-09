@@ -26,9 +26,9 @@ GIT
       skydrive
 
 GIT
-  remote: git://github.com/psu-stewardship/sufia.git
-  revision: 0e662c1602c40e18f61a9e9c527b7e1753be2246
-  ref: 0e662c1602c40e18f61a9e9c527b7e1753be2246
+  remote: git://github.com/projecthydra/sufia.git
+  revision: b3cddbfed937a881ee1c294337989402be340933
+  ref: b3cddbfed
   specs:
     sufia (4.3.1)
       blacklight (~> 5.5)
