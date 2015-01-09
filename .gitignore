@@ -109,3 +109,4 @@ mini_magick*.png
 
 bin/
 jetty
+.capistrano
