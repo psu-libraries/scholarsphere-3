@@ -11,6 +11,7 @@ gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.0.0.rc1'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
+gem 'hydra-editor', github: 'projecthydra-labs/hydra-editor', ref: '584304b5d83923e00b68e881f5f9d1f02466b675'
 
 # Other components
 gem 'clamav'
