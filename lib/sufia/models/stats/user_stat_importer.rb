@@ -16,11 +16,11 @@ module Sufia
         file_ids_for_user(user).each do |file_id|
           view_stats = FileViewStat.statistics(file_id, start_date, user.id)
           stats = tally_results(view_stats, :views, stats)
-          sleep(0.1) # adding sleep so we do not access GA to fast
+          sleep(0.3) # adding sleep so we do not access GA to fast
 
           dl_stats = FileDownloadStat.statistics(file_id, start_date, user.id)
           stats = tally_results(dl_stats, :downloads, stats)
-          sleep(0.1) # adding sleep so we do not access GA to fast
+          sleep(0.3) # adding sleep so we do not access GA to fast
         end
 
         create_or_update_user_stats(stats, user)
