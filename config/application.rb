@@ -41,7 +41,7 @@ module ScholarSphere
     end
 
     config.scholarsphere_version = "v2.1"
-    config.scholarsphere_release_date = "Januray 16, 2015"
+    config.scholarsphere_release_date = "January 16, 2015"
     config.id_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
