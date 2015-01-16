@@ -27,8 +27,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
-  revision: 023854caaa086a506637fbf7b723480dc2afc6a1
-  ref: 023854caaa086a506637fbf7b723480dc2afc6a1
+  revision: 5bd9ada4ac1d1cdb6d9b8d8de46d40fe57cd520e
+  ref: 5bd9ada4ac1d1cdb6d9b8d8de46d40fe57cd520e
   specs:
     fedora-migrate (0.0.1)
       hydra-head (~> 9.0.0.beta1)
@@ -665,7 +665,7 @@ GEM
     trollop (1.16.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uber (0.0.12)
+    uber (0.0.13)
     uglifier (2.6.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
