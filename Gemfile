@@ -1,17 +1,16 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.7'
+gem 'rails', '4.1.8'
 gem 'mysql2', '0.3.16'
 
 # Hydra community components
-# TODO: Point this back at a released version once > 6.0.0.rc1 is available
-gem 'sufia', github: 'projecthydra/sufia', ref: 'dc43377737'
+gem 'sufia', '6.0.0.rc2'
 gem 'hydra-batch-edit', '1.1.1'
 gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.0.0.rc1'
-gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
-gem 'hydra-editor', github: 'projecthydra-labs/hydra-editor', ref: '584304b5d83923e00b68e881f5f9d1f02466b675'
+gem 'browse-everything', '0.7.1'
+gem 'hydra-editor', '1.0.0.rc3'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '5bd9ada4ac1d1cdb6d9b8d8de46d40fe57cd520e'
 
 # Other components
