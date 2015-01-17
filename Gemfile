@@ -11,7 +11,7 @@ gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.0.0.rc1'
 gem 'browse-everything', '0.7.1'
 gem 'hydra-editor', '1.0.0.rc3'
-gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '5bd9ada4ac1d1cdb6d9b8d8de46d40fe57cd520e'
+gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: 'e1ea6bcc12c3b5a67f3ea23e63eb7c384211deec'
 
 # Other components
 gem 'clamav'
