@@ -1,3 +1,4 @@
+require 'hydra/derivatives'
 Hydra::Derivatives::Video.class_eval do
 
   def codecs(format)

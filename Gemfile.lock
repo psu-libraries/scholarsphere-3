@@ -11,7 +11,7 @@ GIT
 GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
   revision: e1ea6bcc12c3b5a67f3ea23e63eb7c384211deec
-  ref: e1ea6bcc12c3b5a67f3ea23e63eb7c384211deec
+  ref: e1ea6bc
   specs:
     fedora-migrate (0.0.1)
       hydra-head (~> 9.0.0.beta1)
@@ -20,7 +20,7 @@ GIT
 GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 17cc265991e696819353723c7a6fcb607ba7e024
-  ref: 17cc265991e696819353723c7a6fcb607ba7e024
+  ref: 17cc265
   specs:
     sufia (6.0.0.rc2)
       blacklight (~> 5.5)
@@ -64,17 +64,17 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
+    actionmailer (4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
       mail (~> 2.5, >= 2.5.4)
-    actionpack (4.1.8)
-      actionview (= 4.1.8)
-      activesupport (= 4.1.8)
+    actionpack (4.1.9)
+      actionview (= 4.1.9)
+      activesupport (= 4.1.9)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionview (4.1.8)
-      activesupport (= 4.1.8)
+    actionview (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
     active-fedora (9.0.0.rc3)
@@ -94,12 +94,12 @@ GEM
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    activemodel (4.1.8)
-      activesupport (= 4.1.8)
+    activemodel (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
-    activerecord (4.1.8)
-      activemodel (= 4.1.8)
-      activesupport (= 4.1.8)
+    activerecord (4.1.9)
+      activemodel (= 4.1.9)
+      activesupport (= 4.1.9)
       arel (~> 5.0.0)
     activerecord-import (0.7.0)
       activerecord (>= 3.0)
@@ -107,7 +107,7 @@ GEM
       activemodel (~> 4.0)
       activesupport (~> 4.0)
       rails-observers (~> 0.1.1)
-    activesupport (4.1.8)
+    activesupport (4.1.9)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -120,6 +120,8 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
+    autoprefixer-rails (5.0.0.1)
+      execjs
     bcrypt (3.1.9)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -145,8 +147,9 @@ GEM
     blankslate (3.1.3)
     block_helpers (0.3.3)
       activesupport (>= 2.0)
-    bootstrap-sass (3.3.1.0)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.3)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     breadcrumbs_on_rails (2.3.0)
     browse-everything (0.7.1)
       bootstrap-sass
@@ -229,10 +232,11 @@ GEM
     debugger-linecache (1.2.0)
     deprecation (0.1.0)
       activesupport
-    devise (3.2.4)
+    devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
+      responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
@@ -247,10 +251,10 @@ GEM
     erubis (2.7.0)
     execjs (2.2.2)
     extlib (0.9.16)
-    factory_girl (4.1.0)
+    factory_girl (4.5.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.1.0)
-      factory_girl (~> 4.1.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -397,7 +401,7 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
+    mysql2 (0.3.17)
     nest (1.1.2)
       redis
     net-http-persistent (2.9.4)
@@ -445,23 +449,23 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rails (4.1.8)
-      actionmailer (= 4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
-      activemodel (= 4.1.8)
-      activerecord (= 4.1.8)
-      activesupport (= 4.1.8)
+    rails (4.1.9)
+      actionmailer (= 4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
+      activemodel (= 4.1.9)
+      activerecord (= 4.1.9)
+      activesupport (= 4.1.9)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.1.8)
+      railties (= 4.1.9)
       sprockets-rails (~> 2.0)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
     rails_autolink (1.1.6)
       rails (> 3.1)
-    railties (4.1.8)
-      actionpack (= 4.1.8)
-      activesupport (= 4.1.8)
+    railties (4.1.9)
+      actionpack (= 4.1.9)
+      activesupport (= 4.1.9)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
@@ -514,6 +518,8 @@ GEM
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     ref (1.0.5)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
     resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -690,7 +696,6 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
-  browse-everything (= 0.7.1)
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
@@ -704,31 +709,27 @@ DEPENDENCIES
   clamav
   coffee-rails
   database_cleaner
-  devise (~> 3.2.2)
+  devise (~> 3.4)
   equivalent-xml
-  factory_girl_rails (~> 4.1.0)
+  factory_girl_rails (~> 4.1)
   fedora-migrate!
   fuubar
-  hydra-batch-edit (= 1.1.1)
-  hydra-derivatives (= 1.0.0.rc1)
-  hydra-editor (= 1.0.0.rc3)
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails
   kaminari!
   launchy
-  mysql2 (= 0.3.16)
+  mysql2 (~> 0.3.17)
   nest
   newrelic_rpm
   passenger
   poltergeist
-  rails (= 4.1.8)
+  rails (= 4.1.9)
   rainbow
   resque-pool
   rspec-activemodel-mocks
   rspec-rails
-  sass
   sass-rails (~> 4.0.3)
   select2-rails
   sitemap
