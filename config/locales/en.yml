@@ -6,6 +6,7 @@ en:
 
   sufia:
     product_name: "ScholarSphere"
+    product_twitter_handle: "@ScholarSphere"
     errors:
       header: "There were errors that prevented this %{model} from being saved:"
     dashboard:
