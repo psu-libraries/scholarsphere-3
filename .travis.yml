@@ -1,12 +1,11 @@
 language: ruby
 bundler_args: --without development
 rvm:
-  - "2.1.2"
+  - 2.1
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - JS=true
-    - CONTINUOUS_INTEGRATION=true
   matrix:
     - TEST_SUITE=mainfeature
     - TEST_SUITE=subfeature
