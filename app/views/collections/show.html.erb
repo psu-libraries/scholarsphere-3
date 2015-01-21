@@ -1,15 +1,15 @@
-<% @page_title = "#{@collection.title} - #{application_name}" %>
+<% @page_title = "#{@presenter.title} - #{application_name}" %>
 
 <%= render_breadcrumbs builder: Sufia::BootstrapBreadcrumbsBuilder %>
 
   <div itemscope itemtype="http://schema.org/CollectionPage" class="row">
     <div class="col-xs-9 pull-right">
       <header>
-        <h1><%= @collection.title %></h1>
-        <p class="collection_description"><%=iconify_auto_link(@collection.description)%></p>
+        <h1><%= @presenter.title %></h1>
+        <p class="collection_description"><%=iconify_auto_link(@presenter.description)%></p>
       </header>
       <% unless has_collection_search_parameters? %>
-      <%= render partial: 'collections/show_descriptions', locals: { generic_file: @collection } %>
+      <%= render 'collections/show_descriptions' %>
       <% end %>
     </div>
     <div class="col-xs-3">

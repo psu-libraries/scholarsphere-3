@@ -5,8 +5,8 @@ gem 'rails', '4.1.9'
 gem 'mysql2', '~> 0.3.17'
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '751b3ced'
-gem 'hydra-editor', github: 'projecthydra-labs/hydra-editor', ref: '08e7ae0714df0'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'c50c4cc'
+gem 'hydra-editor', github: 'projecthydra-labs/hydra-editor', ref: 'c9718ae'
 gem 'hydra-ldap', '0.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', branch: 'master'
 
