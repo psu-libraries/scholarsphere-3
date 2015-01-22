@@ -19,6 +19,20 @@ namespace :scholarsphere do
       ).migrate
     end
 
+
+    desc "Migrate proxy deposits" do
+      ProxyDepositRequest.all.each do |pd|
+        pd.pid = pd.pid.delete "#{ScholarSphere::Application.config.id_namespace}:"
+        pd.save
+      end
+    end
+
+    desc "Migrate audit logs" do
+      ChecksumAuditLog.all.each do |cs|
+        cs.pid = cs.pid.delete "#{ScholarSphere::Application.config.id_namespace}:"
+        cs.save
+      end
+    end
   end
 
 end
