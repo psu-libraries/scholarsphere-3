@@ -1,6 +1,12 @@
 class CollectionPresenter < Sufia::CollectionPresenter
-  include Hydra::Presenter
-  include ActionView::Helpers::NumberHelper
 
-  self.terms = [:title, :description, :creator, :date_modified, :date_uploaded]
+  self.terms = [:title, :description, :total_items, :size, :creator, :date_created, :date_modified]
+
+  def size
+    super
+  end
+
+  def total_items
+    super
+  end
 end

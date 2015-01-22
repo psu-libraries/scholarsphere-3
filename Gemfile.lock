@@ -19,9 +19,20 @@ GIT
       rubydora (~> 1.8)
 
 GIT
+  remote: git://github.com/projecthydra-labs/hydra-editor.git
+  revision: 08e7ae0714df0ac324faac159d9b705e630d1188
+  ref: 08e7ae0714df0
+  specs:
+    hydra-editor (1.0.0.rc3)
+      active-fedora (>= 9.0.0.rc2)
+      cancancan
+      rails (~> 4.1)
+      simple_form (~> 3.1.0)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 17cc265991e696819353723c7a6fcb607ba7e024
-  ref: 17cc265
+  revision: 9d35ac647215ad0740be682946965b2c13d05d31
+  ref: 9d35ac6472
   specs:
     sufia (6.0.0.rc2)
       blacklight (~> 5.5)
@@ -49,7 +60,7 @@ GIT
       acts_as_follower (>= 0.1.1, < 0.3)
       carrierwave (~> 0.9)
       google-api-client (~> 0.7)
-      hydra-collections (~> 4.0.0.rc2)
+      hydra-collections (~> 4.0.0.rc3)
       hydra-derivatives (~> 1.0.0.rc1)
       hydra-head (~> 9.0.0.rc3)
       legato (~> 0.3)
@@ -137,7 +148,7 @@ GEM
       nokogiri (~> 1.6)
       rails (>= 3.2.6, < 5)
       rsolr (~> 1.0.6)
-    blacklight-gallery (0.1.1)
+    blacklight-gallery (0.1.2)
       blacklight (~> 5.0)
       bootstrap-sass (~> 3.0)
       openseadragon (>= 0.0.9)
@@ -307,7 +318,7 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (4.0.0.rc2)
+    hydra-collections (4.0.0.rc3)
       blacklight
       deprecation
       hydra-head (~> 9.0.0.rc2)
@@ -323,11 +334,6 @@ GEM
       hydra-file_characterization
       mime-types
       mini_magick
-    hydra-editor (1.0.0.rc3)
-      active-fedora (>= 9.0.0.rc2)
-      cancancan
-      rails (~> 4.1)
-      simple_form (~> 3.1.0)
     hydra-file_characterization (0.3.1)
       activesupport (>= 3.0.0)
     hydra-head (9.0.0.rc3)
@@ -715,6 +721,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1)
   fedora-migrate!
   fuubar
+  hydra-editor!
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
