@@ -10,10 +10,11 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
-  revision: e1ea6bcc12c3b5a67f3ea23e63eb7c384211deec
-  ref: e1ea6bc
+  revision: 357c1f6a480d1c717002e3d1db9ec21d94a6ecbd
+  branch: master
   specs:
     fedora-migrate (0.0.1)
+      equivalent-xml
       hydra-head (~> 9.0.0.beta1)
       rubydora (~> 1.8)
 
