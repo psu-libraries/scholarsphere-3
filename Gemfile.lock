@@ -31,8 +31,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 9d35ac647215ad0740be682946965b2c13d05d31
-  ref: 9d35ac6472
+  revision: 751b3ced7595e063af84aae92b60cd9df113b11e
+  ref: 751b3ced
   specs:
     sufia (6.0.0.rc2)
       blacklight (~> 5.5)
@@ -272,7 +272,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
     ffi (1.9.6)
-    font-awesome-rails (4.2.0.0)
+    font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     foreigner (1.7.2)
       activerecord (>= 3.0.0)
