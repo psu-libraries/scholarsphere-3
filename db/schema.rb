@@ -214,8 +214,8 @@ ActiveRecord::Schema.define(version: 20141205164301) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2014-05-12 17:29:21'
-    t.datetime "updated_at", default: '2014-05-12 17:29:21'
+    t.datetime "created_at", default: '2014-05-05 13:31:56'
+    t.datetime "updated_at", default: '2014-05-05 13:31:56'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
