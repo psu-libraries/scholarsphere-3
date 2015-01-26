@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
-  revision: d072264ed98b7afd01fda4db9a0ab9ad67947abf
-  branch: master
+  revision: 75076ea6602f9505b508202eb42759d9949b5d66
+  ref: 75076ea6602f9505b508202eb42759d9949b5d66
   specs:
     fedora-migrate (0.0.1)
       equivalent-xml
@@ -132,7 +132,7 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (5.0.0.2)
+    autoprefixer-rails (5.0.0.3)
       execjs
       json
     bcrypt (3.1.9)

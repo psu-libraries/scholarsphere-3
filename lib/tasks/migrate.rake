@@ -5,7 +5,8 @@ namespace :scholarsphere do
   namespace :migrate do
     desc "Migrates all objects"
     task repository: :environment do
-      FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: {convert: "descMetadata", force: true})
+      migration_options = {convert: "descMetadata", force: true, application_creates_versions: true}
+      FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: migration_options )
       Rake::Task["scholarsphere:migrate:migrate_proxy_deposits"].invoke
       Rake::Task["scholarsphere:migrate:migrate_audit_logs"].invoke
     end
