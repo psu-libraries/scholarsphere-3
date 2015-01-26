@@ -114,7 +114,7 @@ module ScholarSphere
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
-    config.max_upload_file_size = 1.9*1024*1024*1024 #1.9GB
+    config.max_upload_file_size = 20*1024*1024*1024 #20GB
   end
 end
 

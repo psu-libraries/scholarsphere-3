@@ -30,6 +30,23 @@ GIT
       simple_form (~> 3.1.0)
 
 GIT
+  remote: git://github.com/projecthydra/active_fedora.git
+  revision: cc1ab1b4e572a9fd722c15c4751326dcc4250558
+  ref: cc1ab1b4e
+  specs:
+    active-fedora (9.0.0.rc3)
+      active-triples (~> 0.6.0)
+      activesupport (>= 4.1.0)
+      deprecation
+      ldp (~> 0.2.1)
+      linkeddata
+      nom-xml (>= 0.5.1)
+      om (~> 3.1)
+      rdf-ldp
+      rdf-rdfxml (~> 1.1.0)
+      rsolr (~> 1.0.10)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: c50c4cc184c492e6e2cb25c77a0e095dc856710f
   ref: c50c4cc
@@ -89,17 +106,6 @@ GEM
       activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active-fedora (9.0.0.rc3)
-      active-triples (~> 0.6.0)
-      activesupport (>= 4.1.0)
-      deprecation
-      ldp (~> 0.2.0)
-      linkeddata
-      nom-xml (>= 0.5.1)
-      om (~> 3.1)
-      rdf-ldp
-      rdf-rdfxml (~> 1.1.0)
-      rsolr (~> 1.0.10)
     active-triples (0.6.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -363,7 +369,7 @@ GEM
     kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ldp (0.2.1)
+    ldp (0.2.2)
       faraday
       http_logger
       linkeddata (>= 1.1)
@@ -702,6 +708,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora!
   better_errors
   binding_of_caller
   byebug
@@ -729,6 +736,7 @@ DEPENDENCIES
   jquery-rails
   kaminari!
   launchy
+  ldp (= 0.2.2)
   mysql2 (~> 0.3.17)
   nest
   newrelic_rpm
