@@ -76,8 +76,8 @@ describe User, type: :model do
     let(:attrs) { ["uid", "displayname"]}
 
     before do
-      Hydra::LDAP.should_receive(:get_user).with(filter, attrs).and_return(results)
-      Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+      expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
+      allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
     end
     it "should return a list or people" do
       expect(User.query_ldap_by_name_or_id("cam")).to eq([{id:"cac6094", text:"CAMILO CAPURRO (cac6094)"},
