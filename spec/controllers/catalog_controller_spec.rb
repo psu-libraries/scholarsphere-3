@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'byebug'
 
 describe CatalogController, type: :controller do
 
@@ -123,7 +122,6 @@ describe CatalogController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to eql(1)
-        #byebug
         expect(assigns(:document_list)[0].fetch(solr_field("file_format"))[0]).to eql('format_labelformat_label')
       end
       it "should find a file by description" do
