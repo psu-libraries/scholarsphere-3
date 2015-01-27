@@ -15,26 +15,48 @@
   margin-left: 0;
 }
 
-.add, .remove {
+ul.listing .add, ul.listing .remove {
   width: 6em;
   text-align: center;
 }
 
 .remove {
+  background-color: $red-orange;
+  border-color: $red-orange;
+  color: $classic-white;
+}
+.remove:hover, .remove:focus {
   background-color: $classic-white;
   border-color: $red-orange;
   color: $red-orange;
 }
-.remove:hover, .remove:focus {
-  background-color: $red-orange;
+.add {
+  background-color: $teal-light;
+  border-color: $teal-light;
   color: $classic-white;
 }
-.add {
+.add:hover, .add:focus {
   background-color: $classic-white;
   border-color: $teal-light;
   color: $teal-light;
 }
-.add:hover, .add:focus {
-  background-color: $teal-light;
+
+.upload {
+  background-color: $yellow-medium;
+  border-color: $highlight-yellow;
   color: $classic-white;
+}
+.upload:hover, .upload:focus {
+  background-color: $classic-white;
+  color: $yellow-medium;
+}
+
+.create-collection {
+  background-color: $teal-light;
+  border-color: $teal-light;
+  color: $classic-white;
+}
+.create-collection:hover, .create-collection:focus {
+  background-color: $classic-white;
+  color: $teal-light;
 }
