@@ -18,7 +18,7 @@ gem 'hydra-collections', github: 'projecthydra-labs/hydra-collections'
 gem 'ldp', '0.2.2'
 
 # Other components
-gem 'clamav'
+gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
 gem 'devise', '~> 3.4'
 gem 'jbuilder', '~> 2.0'

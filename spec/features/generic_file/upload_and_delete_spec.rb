@@ -39,6 +39,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         #I can add additional rights
         expect(User).to receive(:query_ldap_by_name_or_id).and_return([{id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})"}])
         find('.select2-container').click
+        sleep(1)
         find('#select2-drop .select2-input').set other_user.user_key
         find('#select2-drop .select2-result-selectable').click
         find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
