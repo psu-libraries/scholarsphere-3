@@ -6,3 +6,35 @@
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.1);
   transition-delay: 0s;
 }
+
+.multi_value .listing .input-group {
+  margin-bottom: .35em;
+}
+
+.input-group-btn:last-child > .btn {
+  margin-left: 0;
+}
+
+.add, .remove {
+  width: 6em;
+  text-align: center;
+}
+
+.remove {
+  background-color: $classic-white;
+  border-color: $red-orange;
+  color: $red-orange;
+}
+.remove:hover, .remove:focus {
+  background-color: $red-orange;
+  color: $classic-white;
+}
+.add {
+  background-color: $classic-white;
+  border-color: $teal-light;
+  color: $teal-light;
+}
+.add:hover, .add:focus {
+  background-color: $teal-light;
+  color: $classic-white;
+}
