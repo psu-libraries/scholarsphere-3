@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '4.1.9'
-gem 'mysql2', '~> 0.3.17'
+gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
 gem 'sufia', github: 'projecthydra/sufia', ref: 'c50c4cc'
@@ -32,17 +32,7 @@ gem 'whenever'
 gem 'yaml_db'
 
 group :development, :test do
-  gem 'byebug', require: false
-  gem 'capybara', '~> 2.0'
-  gem 'capybara-screenshot'
-  gem 'database_cleaner'
-  gem 'equivalent-xml'
-  gem 'factory_girl_rails', '~> 4.1'
-  gem 'fuubar'
   gem 'jettywrapper'
-  gem 'launchy'
-  gem 'poltergeist'
-  gem 'rspec-activemodel-mocks'
   gem 'rspec-rails'
   gem 'sqlite3'
 end
@@ -62,6 +52,19 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'equivalent-xml'
+  gem 'factory_girl_rails', '~> 4.1'
+  gem 'fuubar'
+  gem 'poltergeist'
   gem 'vcr'
   gem 'webmock'
+  gem 'capybara', '~> 2.0'
+  gem 'rspec-activemodel-mocks'
+end
+
+group :debug do
+  gem 'launchy'
+  gem 'capybara-screenshot'
+  gem 'byebug', require: false
 end
