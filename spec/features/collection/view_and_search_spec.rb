@@ -89,7 +89,7 @@ describe 'Collection viewing and searching:', type: :feature do
       end
     end
     before do
-      visit "/collections/#{collection.noid}"
+      visit "/collections/#{collection.id}"
     end
     specify "I should not get and error" do
       expect(page.status_code).to eql(200)

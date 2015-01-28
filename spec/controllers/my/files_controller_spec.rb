@@ -43,8 +43,8 @@ describe My::FilesController, type: :controller do
     describe "#index" do
       include Sufia::Messages
 
-      let(:batch_noid)  { "batch_noid" }
-      let(:batch_noid2) { "batch_noid2" }
+      let(:batch_id)  { "batch_id" }
+      let(:batch_id2) { "batch_id2" }
       let(:batch)       { double }
       let(:user_results) do
         ActiveFedora::SolrService.instance.conn.get "select",
@@ -52,9 +52,9 @@ describe My::FilesController, type: :controller do
       end
 
       before do
-        allow(batch).to receive(:noid).and_return(batch_noid)
-        User.batchuser().send_message(user, single_success(batch_noid, batch), success_subject, sanitize_text = false)
-        User.batchuser().send_message(user, multiple_success(batch_noid2, [batch]), success_subject, sanitize_text = false)
+        allow(batch).to receive(:id).and_return(batch_id)
+        User.batchuser().send_message(user, single_success(batch_id, batch), success_subject, sanitize_text = false)
+        User.batchuser().send_message(user, multiple_success(batch_id2, [batch]), success_subject, sanitize_text = false)
         xhr :get, :index
       end
       it "should be a success" do
@@ -66,8 +66,8 @@ describe My::FilesController, type: :controller do
       end
       it "returns batches" do
         expect(assigns(:batches).count).to eq(2)
-        expect(assigns(:batches)).to include("ss-"+batch_noid)
-        expect(assigns(:batches)).to include("ss-"+batch_noid2)
+        expect(assigns(:batches)).to include("ss-"+batch_id)
+        expect(assigns(:batches)).to include("ss-"+batch_id2)
       end
     end
     describe "term search" do
