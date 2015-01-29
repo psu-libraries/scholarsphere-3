@@ -89,7 +89,7 @@ namespace :scholarsphere do
   desc "Characterize all files"
   task characterize: :environment do
     # grab the first increment of document ids from solr
-    resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_s:*GenericFile*" )
+    resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.redis_namespace}\\:* has_model_s:*GenericFile*" )
     #get the totalNumber and the size of the current response
     totalNum =  resp["response"]["numFound"]
     idList = resp["response"]["docs"]
@@ -98,7 +98,7 @@ namespace :scholarsphere do
     #loop through each page appending the ids to the original list
     while idList.length < totalNum
        page += 1
-       resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_s:*GenericFile*", page:page)
+       resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.redis_namespace}\\:* has_model_s:*GenericFile*", page:page)
        idList = idList + resp["response"]["docs"]
        totalNum =  resp["response"]["numFound"]
     end

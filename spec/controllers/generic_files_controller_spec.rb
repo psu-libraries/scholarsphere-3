@@ -15,7 +15,7 @@ describe GenericFilesController, type: :controller do
       it "creates loads from solr" do
         skip "Don't know what this test is for"
         expect_any_instance_of(CanCan::ControllerResource).to receive(:load_and_authorize_resource)
-        get :show, id: gf.noid
+        get :show, id: gf.id
         expect(response).not_to redirect_to(action: 'show')
         expect(assigns[:generic_file].inner_object.class).to eq ActiveFedora::SolrDigitalObject
       end

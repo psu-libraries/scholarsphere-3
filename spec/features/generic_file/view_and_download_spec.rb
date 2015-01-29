@@ -54,31 +54,31 @@ describe 'Generic File viewing and downloading:', :type => :feature do
 
         # 'I can see the link for creator and it filters correctly' do
         test_link file_1.creator.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for contributor and it filters correctly' do
         test_link file_1.contributor.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for publisher and it filters correctly' do
         test_link file_1.publisher.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for subject and it filters correctly' do
         test_link file_1.subject.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for language and it filters correctly' do
         test_link file_1.language.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for based_near and it filters correctly' do
         test_link file_1.based_near.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for a tag and it filters correctly' do
         test_link file_1.tag.first
-        visit "/files/#{file_1.noid}"
+        visit "/files/#{file_1.id}"
 
         # 'I can see the link for rights and it filters correctly' do
         test_link Sufia.config.cc_licenses_reverse[file_1.rights.first]

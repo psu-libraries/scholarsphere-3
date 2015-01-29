@@ -10,7 +10,7 @@ FactoryGirl.define do
     login 'userwithfixtures'
     title "User"
     after(:create) do |user|
-      message = '<span class="batchid ui-helper-hidden">fake_batch_noid</span>You\'ve got mail.'
+      message = '<span class="batchid ui-helper-hidden">fake_batch_id</span>You\'ve got mail.'
       User.batchuser().send_message(user, message, "Sample notification.")
     end
   end

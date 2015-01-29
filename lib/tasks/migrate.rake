@@ -26,7 +26,7 @@ namespace :scholarsphere do
     desc "Migrate proxy deposits"
     task migrate_proxy_deposits: :environment do
       ProxyDepositRequest.all.each do |pd|
-        pd.pid = pd.pid.delete "#{ScholarSphere::Application.config.id_namespace}:"
+        pd.pid = pd.pid.delete "#{ScholarSphere::Application.config.redis_namespace}:"
         pd.save
       end
     end
@@ -34,7 +34,7 @@ namespace :scholarsphere do
     desc "Migrate audit logs"
     task migrate_audit_logs: :environment do
       ChecksumAuditLog.all.each do |cs|
-        cs.pid = cs.pid.delete "#{ScholarSphere::Application.config.id_namespace}:"
+        cs.pid = cs.pid.delete "#{ScholarSphere::Application.config.redis_namespace}:"
         cs.save
       end
     end

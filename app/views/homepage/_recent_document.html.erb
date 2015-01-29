@@ -11,7 +11,7 @@
     <div class="col-sm-9">
       <dl>
         <dt class="sr-only">Title:</dt>
-        <dd><%= link_to truncate(recent_document.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(recent_document.noid), title: recent_document.title_or_label, class: 'title'  %>
+        <dd><%= link_to truncate(recent_document.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(recent_document), title: recent_document.title_or_label, class: 'title'  %>
           <% if display_access %>
               <% if recent_document.registered? %>
                   <span class="label label-info" title="<%=t('sufia.institution_name') %>"><%=t('sufia.institution_name') %></span>

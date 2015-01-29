@@ -16,7 +16,7 @@ describe 'Generic File Thumbnail Creation:', :type => :feature do
     end
 
     specify "I can see the image thumbnail" do
-      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -27,7 +27,7 @@ describe 'Generic File Thumbnail Creation:', :type => :feature do
     end
 
     specify "I can see the pdf thumbnail" do
-      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -38,7 +38,7 @@ describe 'Generic File Thumbnail Creation:', :type => :feature do
     end
 
     specify "I can see the video thumbnail" do
-      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file, {datastream_id: 'thumbnail'})}']")
     end
   end
 
@@ -60,7 +60,7 @@ describe 'Generic File Thumbnail Creation:', :type => :feature do
     end
 
     specify "I can see the audio thumbnail" do
-      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file.noid, {datastream_id: 'thumbnail'})}']")
+      expect(page).to have_css("img[src*='#{Sufia::Engine.routes.url_helpers.download_path(file, {datastream_id: 'thumbnail'})}']")
     end
   end
 
