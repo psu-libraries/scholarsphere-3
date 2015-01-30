@@ -5,11 +5,16 @@ gem 'rails', '4.1.9'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '0cf6505b1f'
-gem 'hydra-editor', github: 'projecthydra-labs/hydra-editor', ref: 'c9718ae'
 gem 'hydra-ldap', '0.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '75076ea6602f9505b508202eb42759d9949b5d66'
-gem 'active-fedora', github: 'projecthydra/active_fedora', ref:'cc1ab1b4e'
+gem 'sufia',             github: 'projecthydra/sufia'
+gem 'hydra-editor',      github: 'projecthydra-labs/hydra-editor'
+gem 'hydra-head',        github: 'projecthydra/hydra-head'
+gem 'active-fedora',     github: 'projecthydra/active_fedora'
+gem 'hydra-derivatives', github: 'projecthydra-labs/hydra-derivatives'
+gem 'hydra-collections', github: 'projecthydra-labs/hydra-collections'
+
+
 gem 'ldp', '0.2.2'
 
 # Other components
