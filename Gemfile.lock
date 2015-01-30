@@ -19,9 +19,29 @@ GIT
       rubydora (~> 1.8)
 
 GIT
+  remote: git://github.com/projecthydra-labs/hydra-collections.git
+  revision: 453580bcdd76b0a7b6fee5bdad9e7c60452b54a4
+  specs:
+    hydra-collections (4.0.0.rc3)
+      blacklight
+      deprecation
+      hydra-head (~> 9.0.0.rc2)
+
+GIT
+  remote: git://github.com/projecthydra-labs/hydra-derivatives.git
+  revision: ca3ed675998149b8c56b394c9405c34a8fe2fc02
+  specs:
+    hydra-derivatives (1.0.0.rc1)
+      active-fedora (~> 9.0.0.beta3)
+      activesupport (>= 3.2.13, < 5.0)
+      deprecation
+      hydra-file_characterization
+      mime-types
+      mini_magick
+
+GIT
   remote: git://github.com/projecthydra-labs/hydra-editor.git
-  revision: c9718aedb6fc7fa952efe02df2519d839eaea8bb
-  ref: c9718ae
+  revision: ff57adf53d60894cc51c5f0f33711ed29f800a64
   specs:
     hydra-editor (1.0.0.rc4)
       active-fedora (>= 9.0.0.rc2)
@@ -31,8 +51,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/active_fedora.git
-  revision: cc1ab1b4e572a9fd722c15c4751326dcc4250558
-  ref: cc1ab1b4e
+  revision: fbd00d89a51095dc2fcb75aa3332d2cd4d57a5e5
   specs:
     active-fedora (9.0.0.rc3)
       active-triples (~> 0.6.0)
@@ -47,9 +66,29 @@ GIT
       rsolr (~> 1.0.10)
 
 GIT
+  remote: git://github.com/projecthydra/hydra-head.git
+  revision: 9395216452e40fa439bb7e80172c2dd49f4eff88
+  specs:
+    hydra-access-controls (9.0.0.rc3)
+      active-fedora (~> 9.0.0.rc2)
+      activesupport
+      blacklight (~> 5.3)
+      cancancan
+      deprecation
+      sass-rails
+    hydra-core (9.0.0.rc3)
+      block_helpers
+      hydra-access-controls (= 9.0.0.rc3)
+      jettywrapper (>= 2.0.0)
+      rails (>= 3.2.3, < 5)
+    hydra-head (9.0.0.rc3)
+      hydra-access-controls (= 9.0.0.rc3)
+      hydra-core (= 9.0.0.rc3)
+      rails (>= 3.2.6)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 0cf6505b1fec90eb8ac0fbbc2f14402fec620a0e
-  ref: 0cf6505b1f
+  revision: 18d39021b9942d7dd3438eab70ec4254052e7324
   specs:
     sufia (6.0.0.rc2)
       blacklight (~> 5.5)
@@ -138,7 +177,7 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (5.0.0.3)
+    autoprefixer-rails (5.1.0)
       execjs
       json
     bcrypt (3.1.9)
@@ -315,38 +354,11 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    hydra-access-controls (9.0.0.rc3)
-      active-fedora (~> 9.0.0.rc2)
-      activesupport
-      blacklight (~> 5.3)
-      cancancan
-      deprecation
-      sass-rails
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (4.0.0.rc3)
-      blacklight
-      deprecation
-      hydra-head (~> 9.0.0.rc2)
-    hydra-core (9.0.0.rc3)
-      block_helpers
-      hydra-access-controls (= 9.0.0.rc3)
-      jettywrapper (>= 2.0.0)
-      rails (>= 3.2.3, < 5)
-    hydra-derivatives (1.0.0.rc1)
-      active-fedora (~> 9.0.0.rc2)
-      activesupport (>= 3.2.13, < 5.0)
-      deprecation
-      hydra-file_characterization
-      mime-types
-      mini_magick
     hydra-file_characterization (0.3.1)
       activesupport (>= 3.0.0)
-    hydra-head (9.0.0.rc3)
-      hydra-access-controls (= 9.0.0.rc3)
-      hydra-core (= 9.0.0.rc3)
-      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -408,7 +420,7 @@ GEM
       rails (>= 3.2.0)
     mime-types (2.4.3)
     mimemagic (0.2.1)
-    mini_magick (4.0.2)
+    mini_magick (4.0.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
     mono_logger (1.1.0)
@@ -729,7 +741,10 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1)
   fedora-migrate!
   fuubar
+  hydra-collections!
+  hydra-derivatives!
   hydra-editor!
+  hydra-head!
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
