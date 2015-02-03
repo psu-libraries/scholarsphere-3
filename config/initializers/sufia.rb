@@ -91,5 +91,5 @@ Sufia::Engine.configure do
   end
 
 
-  config.temp_file_base ="/tmps"
+  config.temp_file_base ="/tmp"
 end
