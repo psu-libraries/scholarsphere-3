@@ -25,3 +25,8 @@ en:
       select_form:
         update: "Add to Collection"
         create_new: "Create New Collection"
+
+  simple_form:
+    labels:
+      collection:
+        description: "Description"

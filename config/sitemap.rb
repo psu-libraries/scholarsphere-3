@@ -6,9 +6,9 @@ Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu') do
   end
   read_group = Solrizer.solr_name('read_access_group', :symbol)
   GenericFile.where(read_group => 'public').each do |f|
-    literal Sufia::Engine.routes.url_helpers.generic_file_path(f.noid), priority: 1, change_frequency: 'weekly'
+    literal Sufia::Engine.routes.url_helpers.generic_file_path(f), priority: 1, change_frequency: 'weekly'
   end
   Collection.where(read_group => 'public').each do |c|
-    literal Hydra::Collections::Engine.routes.url_helpers.collection_path(c.noid), priority: 1, change_frequency: 'weekly'
+    literal Hydra::Collections::Engine.routes.url_helpers.collection_path(c), priority: 1, change_frequency: 'weekly'
   end
 end

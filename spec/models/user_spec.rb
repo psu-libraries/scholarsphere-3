@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-describe User, :type => :model do
-  before(:each) do
-    @user = FactoryGirl.find_or_create(:jill)
-    @another_user = FactoryGirl.find_or_create(:archivist)
-  end
+describe User, type: :model do
+
+  let(:user)        { FactoryGirl.find_or_create(:jill) }
+  let(:empty_user)  { User.new }
+
   it "should have a login" do
-    expect(@user.login).to eq("jilluser")
+    expect(user.login).to eq("jilluser")
   end
   it "should redefine to_param to make redis keys more recognizable" do
-    expect(@user.to_param).to eq(@user.login)
+    expect(user.to_param).to eq(user.login)
   end
   describe "#groups" do
     describe "valid user" do
       before do
-        filter = Net::LDAP::Filter.eq('uid', @user.login)
+        filter = Net::LDAP::Filter.eq('uid', user.login)
         expect(Hydra::LDAP).to receive(:groups_for_user).with(filter).and_return(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
         allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
       end
       it "should return a list" do
-        expect(@user.groups).to eq(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
+        expect(user.groups).to eq(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
       end
     end
     describe "empty user" do
@@ -28,20 +28,19 @@ describe User, :type => :model do
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).never
       end
       it "should return a list" do
-        u = User.new
-        expect(u.groups).to eq([])
+        expect(empty_user.groups).to eq([])
       end
     end
   end
   describe "#ldap_exist?" do
     describe "valid user" do
       before do
-        filter = Net::LDAP::Filter.eq('uid', @user.login)
+        filter = Net::LDAP::Filter.eq('uid', user.login)
         expect(Hydra::LDAP).to receive(:does_user_exist?).with(filter).and_return(true)
         allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
       end
       it "should return a list" do
-        expect(@user.ldap_exist?).to eq(true)
+        expect(user.ldap_exist?).to eq(true)
       end
     end
     describe "empty user" do
@@ -50,8 +49,7 @@ describe User, :type => :model do
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).never
       end
       it "should return a list" do
-        u = User.new
-        expect(u.ldap_exist?).to eq(false)
+        expect(empty_user.ldap_exist?).to eq(false)
       end
     end
   end
@@ -78,8 +76,8 @@ describe User, :type => :model do
     let(:attrs) { ["uid", "displayname"]}
 
     before do
-      Hydra::LDAP.should_receive(:get_user).with(filter, attrs).and_return(results)
-      Hydra::LDAP.connection.stub(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
+      expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
+      allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new({code:0, message:"Success"}))
     end
     it "should return a list or people" do
       expect(User.query_ldap_by_name_or_id("cam")).to eq([{id:"cac6094", text:"CAMILO CAPURRO (cac6094)"},

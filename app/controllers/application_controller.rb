@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
     rescue_from RSolr::Error::Http, with: :render_500
     rescue_from Blacklight::Exceptions::ECONNREFUSED, with: :render_500
     rescue_from Errno::ECONNREFUSED, with: :render_500
-    rescue_from Rubydora::FedoraInvalidRequest, with: :render_500
     rescue_from ActionDispatch::Cookies::CookieOverflow, with: :render_500
     rescue_from Redis::CannotConnectError, with: :render_500
     rescue_from AbstractController::ActionNotFound, with: :render_404
