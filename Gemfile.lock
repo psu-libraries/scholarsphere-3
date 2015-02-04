@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
-  revision: 609d8cab2692d9c1fc2eb1ff76e7fe3ea51522ce
-  ref: 609d8cab2692d9c1fc2eb1ff76e7fe3ea51522ce
+  revision: e461ae0c15606530371e8607ac236df6df9baa52
+  ref: e461ae0c15606530371e8607ac236df6df9baa52
   specs:
     fedora-migrate (0.0.1)
       hydra-head (~> 9.0)
