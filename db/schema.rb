@@ -163,6 +163,15 @@ ActiveRecord::Schema.define(version: 20141205164302) do
 
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
 
+  create_table "migrate_audits", force: true do |t|
+    t.string   "f3_pid"
+    t.string   "f3_model"
+    t.string   "f3_title"
+    t.string   "f4_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "proxy_deposit_requests", force: true do |t|
     t.string   "pid",                                   null: false
     t.integer  "sending_user_id",                       null: false

@@ -5,7 +5,7 @@ require 'rainbow'
 include ActionView::Helpers::NumberHelper
 include Blacklight::SolrHelper
 
-namespace :pre_migrate do
+namespace :premigrate do
 
   ALL_ROWS = 1_000_000
 
@@ -98,5 +98,34 @@ namespace :pre_migrate do
       end
     end
   end
+
+  # This task is mostly for testing purposes to make sure we get all IDs.
+  desc "Fetches PIDs for all objects in Fedora 3 for our namespace"
+  task get_pids: :environment do
+    credentials = ActiveFedora.fedora_config.credentials
+    namespace = ScholarSphere::Application.config.id_namespace
+    audit = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    puts audit.get_pids()
+  end
+
+  # This task is mostly for testing purposes to make sure we get all objects and their data.
+  desc "Fetched basic info (PID, model, title) for all objects in Fedora 3 in our namespace"
+  task get_info: :environment do
+    credentials = ActiveFedora.fedora_config.credentials
+    namespace = ScholarSphere::Application.config.id_namespace
+    audit = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    pids = audit.get_pids()
+    pids.each do |pid|
+      puts audit.get_info(pid)
+    end
+  end  
+
+  # Recreates data in migrate_audit SQL table with information about all Fedora 3 objects.
+  desc "Creates an audit for all Fedora 3 objects in our namespace"
+  task f3_audit: :environment do
+    credentials = ActiveFedora.fedora_config.credentials
+    namespace = ScholarSphere::Application.config.id_namespace
+    MigrateAudit.f3_audit(credentials[:url], credentials[:user], credentials[:password], namespace)
+  end  
 end
 
