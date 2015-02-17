@@ -6,6 +6,7 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
 gem 'hydra-ldap', '0.1.0'
+gem 'hydra-derivatives', github: 'projecthydra-labs/hydra-derivatives', ref: '3a8f94766a'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: 'e461ae0c15606530371e8607ac236df6df9baa52'
 gem 'sufia', github: 'projecthydra/sufia', ref: 'd231ad62'
 

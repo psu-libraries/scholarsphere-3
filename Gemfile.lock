@@ -19,6 +19,19 @@ GIT
       rubydora (~> 1.8)
 
 GIT
+  remote: git://github.com/projecthydra-labs/hydra-derivatives.git
+  revision: 3a8f94766ae50eaf8687dc54fcff2c50b04bf6cd
+  ref: 3a8f94766a
+  specs:
+    hydra-derivatives (1.0.0)
+      active-fedora (~> 9.0)
+      activesupport (~> 4.0)
+      deprecation (~> 0.1)
+      hydra-file_characterization (~> 0.3)
+      mime-types (~> 1)
+      mini_magick (>= 3.2, < 5)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: d231ad62aa452919f077a51baf0fe5f7071a69b3
   ref: d231ad62
@@ -313,13 +326,6 @@ GEM
       hydra-access-controls (= 9.0.1)
       jettywrapper (>= 2.0.0)
       rails (~> 4.0)
-    hydra-derivatives (1.0.0)
-      active-fedora (~> 9.0)
-      activesupport (~> 4.0)
-      deprecation (~> 0.1)
-      hydra-file_characterization (~> 0.3)
-      mime-types (~> 2.3)
-      mini_magick (>= 3.2, < 5)
     hydra-editor (1.0.0)
       active-fedora (>= 9.0.0)
       cancancan (~> 1.8)
@@ -390,9 +396,9 @@ GEM
       carrierwave (>= 0.5.8)
       foreigner (>= 0.9.1)
       rails (>= 3.2.0)
-    mime-types (2.4.3)
+    mime-types (1.25.1)
     mimemagic (0.2.1)
-    mini_magick (4.0.3)
+    mini_magick (4.1.0)
     mini_portile (0.6.2)
     minitest (5.5.1)
     mono_logger (1.1.0)
@@ -713,6 +719,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1)
   fedora-migrate!
   fuubar
+  hydra-derivatives!
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
