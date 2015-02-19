@@ -5,7 +5,7 @@ require 'rainbow'
 include ActionView::Helpers::NumberHelper
 include Blacklight::SolrHelper
 
-namespace :pre_migrate do
+namespace :premigrate do
 
   ALL_ROWS = 1_000_000
 
@@ -73,6 +73,11 @@ namespace :pre_migrate do
     missing_batches
   end
 
+  def fedora3_settings(file_name)
+    fedora3_settings = YAML.load_file(file_name)
+    fedora3_settings[Rails.env].symbolize_keys
+  end
+
   desc "Get a list of missing batches"
   task "list_missing_batches", [:verbose] => :environment do |cmd, args|
     verbose = args[:verbose] == "true"
@@ -98,5 +103,45 @@ namespace :pre_migrate do
       end
     end
   end
+
+  # This task is mostly for testing purposes to make sure we get all IDs.
+  desc "Fetches PIDs for all objects in Fedora 3 for our namespace"
+  task get_pids: :environment do
+    credentials = ActiveFedora.fedora_config.credentials
+    namespace = ScholarSphere::Application.config.id_namespace
+    audit = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    puts audit.get_pids()
+  end
+
+  # This task is mostly for testing purposes to make sure we get all objects and their data.
+  desc "Fetched basic info (PID, model, title) for all objects in Fedora 3 in our namespace"
+  task get_info: :environment do
+    credentials = ActiveFedora.fedora_config.credentials
+    namespace = ScholarSphere::Application.config.id_namespace
+    audit = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    pids = audit.get_pids()
+    pids.each do |pid|
+      puts audit.get_info(pid)
+    end
+  end  
+
+  # TODO: Need to figure out how to standardize the way I read fedora 3 vs fedora 4 
+  #       settings. This might be tricky depending on which codebase these tasks are
+  #       deployed (ScholarSphere with Fedora 3 or with Fedora 4)
+  #    
+  #       Right now the code assummes that tasks list_missing_batches, create_missing_batches, 
+  #       get_pids, get_info will be run in an Fedora 3 environment where as task f3_audit will 
+  #       be run in a Fedora 4 environment. 
+
+  # Recreates data in migrate_audit SQL table with information about all Fedora 3 objects.
+  desc "Creates an audit for all Fedora 3 objects in our namespace"
+  task "f3_audit", [:fedora3_yml] => :environment do |cmd, args|
+    file_name = args[:fedora3_yml]
+    abort("Must specify a Fedora 3 YAML file") if file_name.nil?
+    credentials = fedora3_settings(file_name)
+    namespace = ScholarSphere::Application.config.redis_namespace
+    logger.info "Auditing Fedora 3 at #{credentials[:url]}..."
+    MigrateAudit.f3_audit(credentials[:url], credentials[:user], credentials[:password], namespace)
+  end  
 end
 

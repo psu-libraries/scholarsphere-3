@@ -87,6 +87,7 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/database.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/devise.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora3.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/hydra-ldap.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/newrelic.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/redis.yml #{fetch(:release_path)}/config/"

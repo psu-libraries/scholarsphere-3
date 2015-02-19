@@ -1,10 +1,11 @@
+require 'active_fedora/cleaner'
 # The other tests rely on a clean database *before* each test. So we
 # clean up after ourselves here.
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:each) do
-    #active record cleanup
+    # ActiveRecord cleanup
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.start
@@ -13,17 +14,13 @@ RSpec.configure do |config|
       DatabaseCleaner.clean
     end
 
-    #fedora cleanup
-    ActiveFedora::Base.delete_all
+    # ActiveFeora cleanup (solr and fedora)
+    ActiveFedora::Cleaner.clean!
 
-    #solr cleanup TODO What is the right way to wipe solr
-    Blacklight.solr.delete_by_query("*:*")
-    Blacklight.solr.commit
-
-    #test email cleanup
+    # Delete test emails
     ActionMailer::Base.deliveries.clear
 
-    #clear redis
+    # Clear out Redis
     begin
       $redis.keys('events:*').each { |key| $redis.del key }
       $redis.keys('User:*').each { |key| $redis.del key }

@@ -3,11 +3,6 @@ class GenericFile < ActiveFedora::Base
   include Hydra::Collections::Collectible
   include Blacklight::SolrHelper
 
-  # Unstemmed, searchable, stored
-  def self.noid_indexer
-    @noid_indexer ||= Solrizer::Descriptor.new(:text, :indexed, :stored)
-  end
-
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?
     return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
@@ -79,37 +74,6 @@ class GenericFile < ActiveFedora::Base
     return [] if batch.nil?
     ids = batch.generic_file_ids.reject { |sibling| sibling == id }
     ids.map {|id| GenericFile.load_instance_from_solr id}
-  end
-
-  def audit(force = false)
-    logs = []
-    self.per_version do |ver|
-      logs << audit_each(ver, force)
-    end
-    logs
-  end
-
-  def audit_each(version, force = false)
-    latest_audit = logs(version.dsid).first
-    unless force
-      return latest_audit unless ::GenericFile.needs_audit?(version, latest_audit)
-    end
-    #  Resque.enqueue(AuditJob, version.pid, version.dsid, version.versionID)
-    Sufia.queue.push(AuditJob.new(version.pid, version.dsid, version.versionID))
-
-    # run the find just incase the job has finished already
-    latest_audit = logs(version.dsid).first
-    latest_audit = ChecksumAuditLog.new(pass: NO_RUNS, pid: version.pid, dsid: version.dsid, version: version.versionID) unless latest_audit
-    latest_audit
-  end
-
-  def self.audit(version, force = false)
-    self.find(version.pid).audit_each(version,force)
-  end
-
-  def permissions=(params)
-    params[:new_user_name].each { |user, access| User.from_url_component(user) } if params[:new_user_name].present?
-    super(params)
   end
 
 end

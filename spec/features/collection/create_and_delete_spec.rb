@@ -2,8 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Collection creation and deletion:', :type => :feature do
-
+describe 'Collection creation and deletion:', type: :feature do
   let!(:current_user) { create :user }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }

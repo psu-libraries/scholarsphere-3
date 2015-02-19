@@ -1,5 +1,4 @@
 require_relative '../feature_spec_helper'
-
 include Selectors::Dashboard
 
 describe 'Dashboard Files', :type => :feature do
@@ -257,20 +256,24 @@ describe 'Dashboard Files', :type => :feature do
   end
 
 
-  let (:title_field) {Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string)}
+  let (:title_field) {Solrizer.solr_name("title", :stored_searchable, type: :string)}
   let (:resp) {ActiveFedora::SolrService.instance.conn.get "select", params:{fl:['id',title_field]}}
   def page_should_only_list file
     expect(page).to have_selector('li.active', text:"Files")
     expect(page).to have_content file.title.first
     resp["response"]["docs"].each do |gf|
-      title = gf[title_field].first
-      expect(page).not_to have_content title  unless title == file.title.first
+      unless gf[title_field].nil?
+        title = gf[title_field].first
+        expect(page).not_to have_content title  unless title == file.title.first
+      end
     end
   end
 
   def page_should_not_list_any_files
-    resp["response"]["docs"].each do |gf|
-      expect(page).not_to have_content  gf[title_field].first
+    resp["response"]["docs"].each do |gf| 
+      unless gf[title_field].nil?
+        expect(page).not_to have_content  gf[title_field].first
+      end
     end
   end
 
@@ -284,16 +287,16 @@ describe 'Dashboard Files', :type => :feature do
 
   def create_files(user, number_of_files)
     number_of_files.times do |t|
-      conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim"=>"info:fedora/afmodel:GenericFile",
-                Solrizer.solr_name("desc_metadata__title", :stored_searchable, type: :string) => ["title_#{t}"],
+      conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim"=>["GenericFile"],
+                Solrizer.solr_name("title", :stored_searchable, type: :string) => ["title_#{t}"],
                 "depositor_ssim" => user.login, "edit_access_person_ssim" =>user.login,
-                Solrizer.solr_name("desc_metadata__resource_type", :facetable) => "Video",
-                Solrizer.solr_name("desc_metadata__creator", :facetable) => "Creator1",
-                Solrizer.solr_name("desc_metadata__tag", :facetable) =>  "Keyword1",
-                Solrizer.solr_name("desc_metadata__subject", :facetable) => "Subject1",
-                Solrizer.solr_name("desc_metadata__language", :facetable) => "Language1",
-                Solrizer.solr_name("desc_metadata__based_near", :facetable) => "Location1",
-                Solrizer.solr_name("desc_metadata__publisher", :facetable) => "Publisher1",
+                Solrizer.solr_name("resource_type", :facetable) => "Video",
+                Solrizer.solr_name("creator", :facetable) => "Creator1",
+                Solrizer.solr_name("tag", :facetable) =>  "Keyword1",
+                Solrizer.solr_name("subject", :facetable) => "Subject1",
+                Solrizer.solr_name("language", :facetable) => "Language1",
+                Solrizer.solr_name("based_near", :facetable) => "Location1",
+                Solrizer.solr_name("publisher", :facetable) => "Publisher1",
                 Solrizer.solr_name("file_format", :facetable) => "plain ()"
     end
     conn.commit

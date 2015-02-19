@@ -16,7 +16,7 @@ describe "User Profile", :type => :feature do
   context "any user" do
     let(:conn) { ActiveFedora::SolrService.instance.conn }
     let(:file1) {create_file admin_user, {title: 'file title'}}
-    let!(:trophy) {Trophy.create! user_id: admin_user.id, generic_file_id: file1.noid}
+    let!(:trophy) {Trophy.create! user_id: admin_user.id, generic_file_id: file1.id}
     let (:event_text) {"Text profile event"}
     let (:event) {admin_user.create_event(event_text, Time.now.to_i)}
     let (:u2) {FactoryGirl.create :random_user}

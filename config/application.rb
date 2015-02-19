@@ -42,7 +42,7 @@ module ScholarSphere
 
     config.scholarsphere_version = "v2.1"
     config.scholarsphere_release_date = "January 16, 2015"
-    config.id_namespace = "scholarsphere"
+    config.redis_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
     config.fits_message_length = 5
@@ -114,7 +114,7 @@ module ScholarSphere
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
-    config.max_upload_file_size = 1.9*1024*1024*1024 #1.9GB
+    config.max_upload_file_size = 20*1024*1024*1024 #20GB
   end
 end
 
