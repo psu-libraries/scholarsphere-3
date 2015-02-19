@@ -1,6 +1,6 @@
 class MigrateAudit < ActiveRecord::Base
 
-  # This method populates the migrateaudit table with data 
+  # This method populates the migrate_audit table with data 
   # from the Fedora 3 repo.
   def self.f3_audit(fedora_url, fedora_user, fedora_password, namespace)
     # destroy all existing audit records first
@@ -14,14 +14,16 @@ class MigrateAudit < ActiveRecord::Base
     end
   end
 
-  # This method makes sure each record in the migrateaudit table is
+  # This method makes sure each record in the migrate_audit table is
   # in the Fedora 4 repo and it has the same model as its Fedora 3
   # counterpart.
   def self.f4_audit(fedora_url, fedora_user, fedora_password)
+    # TODO: should we clear the fedora 4 data from the table first?
     f3_data = all
     audit = MigrateAuditFedora4.new(fedora_url, fedora_user, fedora_password)
     results = audit.audit(f3_data)
     results.each do |result|
+      # TODO: update the SQL records
       puts result
     end
   end
