@@ -1,6 +1,3 @@
-require "net/http"
-require "uri"
-
 class MigrateAuditFedora4
 
   def initialize(fedora_url, fedora_user, fedora_password)
