@@ -91,7 +91,7 @@ GEM
       activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active-fedora (9.0.1)
+    active-fedora (9.0.2)
       active-triples (~> 0.6.0)
       activesupport (>= 4.1.0)
       deprecation
@@ -359,7 +359,7 @@ GEM
     kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ldp (0.2.2)
+    ldp (0.2.3)
       faraday
       http_logger
       linkeddata (>= 1.1)
