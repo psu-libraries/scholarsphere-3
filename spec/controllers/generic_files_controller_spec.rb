@@ -22,4 +22,12 @@ describe GenericFilesController, type: :controller do
     end
   
   end
+
+  context "when the GenericFile doesn't exist" do
+    it "renders the 404 page" do
+      get :show, id: 'non-existent-id'
+      expect(response.status).to eq(404)
+    end
+  end
+  
 end
