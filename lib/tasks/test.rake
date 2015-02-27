@@ -1,3 +1,5 @@
+require 'webmock'
+
 namespace :scholarsphere do
   if defined?(RSpec)
     # Only load these files in testing environments
@@ -31,6 +33,7 @@ namespace :scholarsphere do
 
     desc "Run a set of tasks to prepare for testing"
     task prep: :environment do
+      WebMock.disable!
       Rake::Task["jetty:clean"].invoke
       Rake::Task["scholarsphere:jetty:config"].invoke
       Rake::Task["db:migrate"].invoke

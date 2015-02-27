@@ -24,7 +24,6 @@ before_script:
   - "cp config/solr.yml.sample config/solr.yml"
   - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
-  - travis_retry bundle exec rails g hydra:jetty
   - redis-cli info
 matrix:
   fast_finish: true
