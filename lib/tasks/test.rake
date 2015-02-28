@@ -1,5 +1,3 @@
-require 'webmock'
-
 namespace :scholarsphere do
   if defined?(RSpec)
     # Only load these files in testing environments

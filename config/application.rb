@@ -5,6 +5,9 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
+require 'webmock' unless Rails.env.production?
+
+WebMock.disable! if Rails.env.development?
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
