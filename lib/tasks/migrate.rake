@@ -1,12 +1,21 @@
 require 'fedora-migrate'
 
+module FedoraMigrate::Hooks
+  # Apply depositor metadata
+  def before_object_migration
+    xml = Nokogiri::XML(source.datastreams["properties"].content)
+    target.apply_depositor_metadata xml.xpath("//depositor").text
+  end
+end
+
 namespace :scholarsphere do
 
   namespace :migrate do
     desc "Migrates all objects"
     task repository: :environment do
       migration_options = {convert: "descMetadata", force: true, application_creates_versions: true}
-      FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: migration_options )
+      migrator = FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: migration_options )
+      FedoraMigrate.save_report(migrator.report)
       Rake::Task["scholarsphere:migrate:migrate_proxy_deposits"].invoke
       Rake::Task["scholarsphere:migrate:migrate_audit_logs"].invoke
     end
