@@ -29,7 +29,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
-        redirect_url = find("#redirect-loc", visible:false).text
+        redirect_url = find("#redirect-loc", visible:false).text(:all)
         click_button 'main_upload_start'
         wait_for_page redirect_url
         expect(page).to have_content 'Apply Metadata'
