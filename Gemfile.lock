@@ -164,7 +164,7 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
     breadcrumbs_on_rails (2.3.0)
-    browse-everything (0.8.0)
+    browse-everything (0.8.1)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
@@ -403,7 +403,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.5.1)
     mono_logger (1.1.0)
-    multi_json (1.10.1)
+    multi_json (1.11.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.18)

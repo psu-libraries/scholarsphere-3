@@ -101,7 +101,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
     end
     context 'cloud providers' do
       before do
-        allow(BrowseEverything).to receive(:config) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
+        allow(BrowseEverything).to receive(:config) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298", max_upload_file_size: 20*1024}} }
         allow(Sufia.config).to receive(:browse_everything) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
@@ -123,6 +123,8 @@ describe 'Generic File uploading and deletion:', :type => :feature do
           sleep 10
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")
+          expect(page).to have_content "Writer FAQ.txt"
+          expect(page).not_to have_css "a", text: "Writer FAQ.txt"
           expect(page).to have_content "Markdown Test.txt"
           find("a", :text => "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"
