@@ -59,7 +59,13 @@ namespace :premigrate do
     missing_batches = []
     batches_in_files.each do |id|
       unless all_batches.include? id
-        missing_batches.push(id)
+        if ActiveFedora::Base.exists?(pid: id)
+          # An object with this PID already exists 
+          # (it might exist as something other than a Batch)
+          logger.error "Skipping #{id} because it already exists!"
+        else
+          missing_batches.push(id)
+        end
       end
     end
     if verbose
