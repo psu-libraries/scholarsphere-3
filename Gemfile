@@ -11,7 +11,7 @@ gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '387b3968
 gem 'sufia', github: 'projecthydra/sufia', ref: '7eaeef5e197b14b401e01fc52d55b1125a787f94'
 
 # Other components
-gem 'clamav'
+gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
 gem 'devise', '~> 3.4'
 gem 'jbuilder', '~> 2.0'
