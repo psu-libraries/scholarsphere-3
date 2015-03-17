@@ -32,7 +32,10 @@ namespace :passenger do
    execute('echo "RailsAppSpawnerIdleTime 0" >>  /opt/heracles/deploy/.passenger.tmp')
    execute('echo "PassengerMaxRequests 5000" >>  /opt/heracles/deploy/.passenger.tmp')
    execute('echo "PassengerMinInstances 3" >>  /opt/heracles/deploy/.passenger.tmp')
-   execute('echo "PassengerTempDir /opt/heracles/deploy/passenger" >>  /opt/heracles/deploy/.passenger.tmp')
+   execute('echo "PassengerMaxPoolSize 8" >>  /opt/heracles/deploy/.passenger.tmp')
+   execute('echo "PassengerDataBufferDir /opt/heracles/deploy/passenger" >>  /opt/heracles/deploy/.passenger.tmp')
+   execute('echo "PassengerInstanceRegistryDir /opt/heracles/deploy/passenger" >>  /opt/heracles/deploy/.passenger.tmp')
+
    execute('echo "#PassengerLogLevel 3" >>  /opt/heracles/deploy/.passenger.tmp')
    execute('echo "#PassengerDebugLogFile /var/log/httpd/passenger_debug.log" >>  /opt/heracles/deploy/.passenger.tmp')
 
