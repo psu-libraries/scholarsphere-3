@@ -7,7 +7,7 @@ require 'parslet'
 require 'parsing_nesting/tree'
 
 class CatalogController < ApplicationController
-  include Blacklight::Catalog
+  include Hydra::Catalog
   # Extend Blacklight::Catalog with Hydra behaviors (primarily editing).
   include Hydra::Controller::ControllerBehavior
   include BlacklightAdvancedSearch::ParseBasicQ
@@ -50,6 +50,7 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
+    config.search_builder_class = Hydra::SearchBuilder
     #Show gallery view
     config.view.gallery.partials = [:index_header, :index]
     config.view.slideshow.partials = [:index]
