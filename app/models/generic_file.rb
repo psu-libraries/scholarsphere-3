@@ -1,7 +1,7 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
   include Hydra::Collections::Collectible
-  include Blacklight::SolrHelper
+  include Blacklight::SearchHelper
 
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?

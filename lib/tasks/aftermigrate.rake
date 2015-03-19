@@ -1,9 +1,7 @@
 require 'action_view'
-#require 'blacklight/solr_helper'
 require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
-#include Blacklight::SolrHelper
 
 namespace :aftermigrate do
 
