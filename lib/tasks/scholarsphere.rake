@@ -1,9 +1,9 @@
 require 'action_view'
-require 'blacklight/solr_helper'
+#require 'blacklight/solr_helper'
 require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
-include Blacklight::SolrHelper
+#include Blacklight::SolrHelper
 
 namespace :scholarsphere do
 
@@ -71,20 +71,20 @@ namespace :scholarsphere do
 
   desc "(Re-)Generate the secret token"
   task generate_secret: :environment do
-    include ActiveSupport
+    #include ActiveSupport
     File.open("#{Rails.root}/config/initializers/secret_token.rb", 'w') do |f|
       f.puts "#{Rails.application.class.parent_name}::Application.config.secret_key_base = '#{SecureRandom.hex(64)}'"
     end
   end
 
-  def blacklight_config
-    @config ||= CatalogController.blacklight_config
-    @config.default_solr_params = {qt:"search", rows:100, fl:'id'}
-    return @config
-  end
+  #def blacklight_config
+  #  @config ||= CatalogController.blacklight_config
+  #  @config.default_solr_params = {qt:"search", rows:100, fl:'id'}
+  #  return @config
+  #end
 
-  def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-  end
+  #def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
+  #end
 
   desc "Characterize all files"
   task characterize: :environment do
@@ -220,9 +220,9 @@ namespace :scholarsphere do
 
   desc "Convert Resource Type"
   task "master_thesis" => :environment do
-    def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-      solr_parameters[:fq]="{!raw f=resource_type_sim}Masters Thesis"
-    end
+    #def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
+    #  solr_parameters[:fq]="{!raw f=resource_type_sim}Masters Thesis"
+    #end
 
     resp = query_solr(q:"")
     docs = resp["response"]["docs"]
