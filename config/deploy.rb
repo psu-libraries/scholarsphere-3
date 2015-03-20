@@ -93,6 +93,7 @@ namespace :deploy do
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/redis.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/solr.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/analytics.yml #{fetch(:release_path)}/config/"
+    execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/blacklight.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/ga-privatekey.p12 #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/browse_everything_providers.yml #{fetch(:release_path)}/config/"
     execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/secret_token.rb #{fetch(:release_path)}/config/initializers/"
