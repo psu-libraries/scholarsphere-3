@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220191721) do
+ActiveRecord::Schema.define(version: 20150220191723) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20150220191721) do
   end
 
   create_table "checksum_audit_logs", force: true do |t|
-    t.string   "pid"
+    t.string   "generic_file_id"
     t.string   "dsid"
     t.string   "version"
     t.integer  "pass"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20150220191721) do
     t.datetime "updated_at"
   end
 
-  add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid", using: :btree
+  add_index "checksum_audit_logs", ["generic_file_id", "dsid"], name: "by_pid_and_dsid", using: :btree
 
   create_table "content_blocks", force: true do |t|
     t.string   "name"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20150220191721) do
   end
 
   create_table "proxy_deposit_requests", force: true do |t|
-    t.string   "pid",                                   null: false
+    t.string   "generic_file_id",                       null: false
     t.integer  "sending_user_id",                       null: false
     t.integer  "receiving_user_id",                     null: false
     t.datetime "fulfillment_date"
@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(version: 20150220191721) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2014-08-20 15:18:33'
-    t.datetime "updated_at", default: '2014-08-20 15:18:33'
+    t.datetime "created_at", default: '2015-03-27 14:58:41'
+    t.datetime "updated_at", default: '2015-03-27 14:58:42'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -313,8 +313,8 @@ ActiveRecord::Schema.define(version: 20150220191721) do
   Foreigner.load
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", name: "mb_opt_outs_on_conversations_id", column: "conversation_id"
 
-  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_development", column: "conversation_id"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_test", column: "conversation_id"
 
-  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_development", column: "notification_id"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_test", column: "notification_id"
 
 end

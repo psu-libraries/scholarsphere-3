@@ -6,9 +6,9 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
 gem 'hydra-ldap', '0.1.0'
-gem 'hydra-derivatives', github: 'projecthydra-labs/hydra-derivatives', ref: '3a8f94766a'
-gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '387b39686181fee6dc112ba0905f3dbffcc2810b'
-gem 'sufia', github: 'projecthydra/sufia', ref: '6b6f3c7ea5345c04bb04a9b8ceda2f327491be9e'
+gem 'hydra-derivatives', '1.1.0'
+gem 'fedora-migrate', '0.2.0'
+gem 'sufia', '6.0.0'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
@@ -16,7 +16,7 @@ gem 'coffee-rails'
 gem 'devise', '~> 3.4'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
-gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
+gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 gem 'nest'
 gem 'newrelic_rpm'
 gem 'rainbow'
