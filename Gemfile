@@ -29,6 +29,7 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'rack-maintenance'
 
 group :development, :test do
   gem 'jettywrapper'
