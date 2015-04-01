@@ -3,30 +3,8 @@ require "rake"
 
 describe "scholarsphere:fixtures" do
 
-  def loaded_files_excluding_current_rake_file
-    $".reject { |file| file.include? "lib/tasks/fixtures" }
-  end
-
-  # saves original $stdout in variable
-  # set $stdout as local instance of StringIO
-  # yields to code execution
-  # returns the local instance of StringIO
-  # resets $stdout to original value
-  def capture_stdout
-    out = StringIO.new
-    $stdout = out
-    yield
-    return out.string
-  ensure
-    $stdout = STDOUT
-  end
-
   def activefedora_path
     Gem.loaded_specs['active-fedora'].full_gem_path
-  end
-
-  def sufia_path
-    Gem.loaded_specs['sufia'].full_gem_path
   end
 
   def delete_fixture_files
@@ -41,16 +19,11 @@ describe "scholarsphere:fixtures" do
   end
 
   # set up the rake environment
-  before(:each) do
-    @rake = Rake::Application.new
-    Rake.application = @rake
-    Rake.application.rake_require("lib/tasks/scholarsphere-fixtures", ['.'], loaded_files_excluding_current_rake_file)
-    #Rake.application.rake_require("lib/tasks/fixtures", [sufia_path], loaded_files_excluding_current_rake_file)
-    Rake.application.rake_require("lib/tasks/active_fedora", [activefedora_path], loaded_files_excluding_current_rake_file)
-    Rake::Task.define_task(:environment)
+  before do
+    load_rake_environment ["lib/tasks/scholarsphere-fixtures.rake","#{activefedora_path}/lib/tasks/active_fedora.rake"]
   end
 
-  after(:each) do
+  after do
     delete_fixture_files
   end
 
