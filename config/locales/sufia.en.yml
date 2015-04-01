@@ -25,7 +25,8 @@ en:
       select_form:
         update: "Add to Collection"
         create_new: "Create New Collection"
-
+    upload:
+      cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
   simple_form:
     labels:
       collection:
