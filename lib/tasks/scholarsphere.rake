@@ -356,4 +356,11 @@ namespace :scholarsphere do
     Sufia.queue.push(SitemapRegenerateJob.new)
   end    
 
+  desc "list user's email"
+  task "list_users"  => :environment  do
+    users = User.all.map {|user| user.email}.reject {|email| email.blank?}
+    f = File.new("user_emails.txt",  "w")
+    f.write(users.join(", "))
+    f.close
+  end
 end

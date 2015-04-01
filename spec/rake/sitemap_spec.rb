@@ -3,35 +3,11 @@ require "rake"
 
 describe "sitemap:generate" do
 
-  def loaded_files_excluding_current_rake_file
-    $".reject { |file| file.include? "lib/tasks/sitemap" }
-  end
-
-  # saves original $stdout in variable
-  # set $stdout as local instance of StringIO
-  # yields to code execution
-  # returns the local instance of StringIO
-  # resets $stdout to original value
-  def capture_stdout
-    out = StringIO.new
-    $stdout = out
-    yield
-    return out.string
-  ensure
-    $stdout = STDOUT
-  end
-
   def sitemap_path
     Gem.loaded_specs['sitemap'].full_gem_path
   end
 
-  def run_generate
-    o = capture_stdout do
-      @rake['sitemap:generate'].invoke
-    end
-  end
-
-  before(:each) do
+  before do
     (1..15).each do |n|
       u = User.create(login: "user#{n}", email: "user#{n}@example.org")
       @file_ids = []
@@ -49,19 +25,14 @@ describe "sitemap:generate" do
         @collection_ids << c.id
       end
     end
-  end
 
-  # set up the rake environment
-  before(:each) do
-    @rake = Rake::Application.new
-    Rake.application = @rake
-    Rake.application.rake_require("lib/tasks/sitemap", [sitemap_path], loaded_files_excluding_current_rake_file)
-    Rake::Task.define_task(:environment)
+    # set up the rake environment
+    load_rake_environment ["#{sitemap_path}/lib/tasks/sitemap.rake"]
   end
 
   describe 'sitemap generation' do
     it 'should include public generic files and users' do
-      run_generate
+      run_task 'sitemap:generate'
       filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")
       expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)
