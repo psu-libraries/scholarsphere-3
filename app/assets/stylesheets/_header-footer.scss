@@ -110,3 +110,10 @@ div.footer-text {
     display: inline;
   }
 }
+
+#masthead div.warn {
+  background: $highlight-yellow;
+  h2 {
+    padding: 1em;
+  }
+}
