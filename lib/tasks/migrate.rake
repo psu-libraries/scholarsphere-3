@@ -16,8 +16,8 @@ namespace :scholarsphere do
       migration_options = {convert: "descMetadata", force: true, application_creates_versions: true}
       migrator = FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: migration_options )
       FedoraMigrate.save_report(migrator.report)
-      Rake::Task["scholarsphere:migrate:migrate_proxy_deposits"].invoke
-      Rake::Task["scholarsphere:migrate:migrate_audit_logs"].invoke
+      Rake::Task["sufia:migrate:proxy_deposits"].invoke
+      Rake::Task["sufia:migrate:audit_logs"].invoke
     end
   
 
@@ -32,21 +32,6 @@ namespace :scholarsphere do
     end
 
 
-    desc "Migrate proxy deposits"
-    task migrate_proxy_deposits: :environment do
-      ProxyDepositRequest.all.each do |pd|
-        pd.pid = pd.pid.delete "#{ScholarSphere::Application.config.redis_namespace}:"
-        pd.save
-      end
-    end
-
-    desc "Migrate audit logs"
-    task migrate_audit_logs: :environment do
-      ChecksumAuditLog.all.each do |cs|
-        cs.pid = cs.pid.delete "#{ScholarSphere::Application.config.redis_namespace}:"
-        cs.save
-      end
-    end
   end
 
 end
