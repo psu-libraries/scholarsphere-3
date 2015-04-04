@@ -402,6 +402,8 @@ GEM
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     rack (1.5.2)
+    rack-maintenance (2.0.0)
+      rack (>= 1.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -728,6 +730,7 @@ DEPENDENCIES
   newrelic_rpm
   passenger
   poltergeist
+  rack-maintenance
   rails (= 4.1.9)
   rainbow
   resque-pool

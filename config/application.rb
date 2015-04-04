@@ -118,6 +118,10 @@ module ScholarSphere
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
     config.max_upload_file_size = 20*1024*1024*1024 #20GB
+
+    # html maintenance response
+    config.middleware.use 'Rack::Maintenance',
+                          :file => Rails.root.join('public', 'maintenance.html')
   end
 end
 
