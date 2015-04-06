@@ -7,6 +7,14 @@ describe 'Dashboard Files', :type => :feature do
 
   let!(:file) { create_file current_user, { title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" } }
 
+  let(:jill) { create :jill }
+  let!(:other_collection) do
+    Collection.create(title: 'jill collection') do |col|
+    col.apply_depositor_metadata(jill.user_key)
+    col.read_groups= ['public']
+  end
+end
+
   before do
     sign_in_as current_user
     go_to_dashboard_files
@@ -213,6 +221,17 @@ describe 'Dashboard Files', :type => :feature do
         click_button("Refresh")
         expect(page).to have_content(file.title.first)
       end
+    end
+
+    context "with collection of other users" do
+
+      it "does not show other user's collection" do
+        first('input.batch_document_selector').click
+        click_button 'Add to Collection'
+        expect(page).to have_css('#collection-list-container')
+        expect(page).not_to have_content(other_collection.title)
+      end
+
     end
 
   end
