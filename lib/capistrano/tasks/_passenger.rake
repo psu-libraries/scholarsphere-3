@@ -5,7 +5,7 @@ namespace :passenger do
    on roles(:web)  do
     passenger_token = capture('cat /dlt/scholarsphere/config_global/passenger/passenger-enterprise-download-token')
     execute "RBENV_VERSION=#{fetch(:rbenv_ruby)}"
-    execute "RBENV_VERSION=#{fetch(:rbenv_ruby)} gem install --source https://download:#{passenger_token}@www.phusionpassenger.com/enterprise_gems/ passenger-enterprise-server --no-ri --no-rdoc"
+    execute "RBENV_VERSION=#{fetch(:rbenv_ruby)} gem install --source https://download:#{passenger_token}@www.phusionpassenger.com/enterprise_gems/ passenger-enterprise-server --no-ri --no-rdoc -v 4.0.58"
     execute "RBENV_VERSION=#{fetch(:rbenv_ruby)} rbenv rehash"
     execute "RBENV_VERSION=#{fetch(:rbenv_ruby)} passenger-install-apache2-module --auto"
     invoke "passenger:update_config"    
