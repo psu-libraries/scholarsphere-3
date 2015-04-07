@@ -185,4 +185,16 @@ class User < ActiveRecord::Base
     return user
   end
 
+  # This override can be removed as soon as the error handler
+  # for files not found has been added to Sufia. 
+  def trophy_files
+    trophies.map do |t|
+      begin
+        ::GenericFile.load_instance_from_solr(t.generic_file_id)
+      rescue ActiveFedora::ObjectNotFoundError
+        logger.error("Invalid trophy for user #{user_key} (generic file id: #{t.generic_file_id})")
+        nil
+      end
+    end.compact
+  end  
 end
