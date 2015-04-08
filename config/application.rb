@@ -122,6 +122,7 @@ module ScholarSphere
     # html maintenance response
     config.middleware.use 'Rack::Maintenance',
                           :file => Rails.root.join('public', 'maintenance.html')
+    config.ldap_unwilling_sleep = 2 # seconds
   end
 end
 
