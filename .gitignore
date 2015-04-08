@@ -112,3 +112,4 @@ bin/
 jetty
 .capistrano
 report.json
+migration_report

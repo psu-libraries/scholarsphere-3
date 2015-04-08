@@ -15,7 +15,6 @@ namespace :scholarsphere do
     task repository: :environment do
       migration_options = {convert: "descMetadata", force: true, application_creates_versions: true}
       migrator = FedoraMigrate.migrate_repository(namespace: "scholarsphere", options: migration_options )
-      FedoraMigrate.save_report(migrator.report)
       Rake::Task["sufia:migrate:proxy_deposits"].invoke
       Rake::Task["sufia:migrate:audit_logs"].invoke
     end

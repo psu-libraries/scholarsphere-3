@@ -7,6 +7,16 @@ GIT
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
 
+GIT
+  remote: git://github.com/projecthydra-labs/fedora-migrate.git
+  revision: 85dd700df3b3195bceea6b988ec70bb2b82bd282
+  ref: 85dd700df3b3195bceea6b988ec70bb2b82bd282
+  specs:
+    fedora-migrate (0.2.0)
+      hydra-head (~> 9.1)
+      rchardet
+      rubydora (~> 1.8)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -198,10 +208,6 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
-    fedora-migrate (0.2.0)
-      hydra-head (~> 9.0)
-      rchardet
-      rubydora (~> 1.8)
     ffi (1.9.8)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
@@ -698,6 +704,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (= 9.0.6)
   better_errors
   binding_of_caller
   byebug
@@ -716,7 +723,7 @@ DEPENDENCIES
   devise (~> 3.4)
   equivalent-xml
   factory_girl_rails (~> 4.1)
-  fedora-migrate (= 0.2.0)
+  fedora-migrate!
   fuubar
   hydra-derivatives (= 1.1.0)
   hydra-ldap (= 0.1.0)
