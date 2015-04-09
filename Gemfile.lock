@@ -366,6 +366,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
+    namae (0.9.3)
     nest (1.1.2)
       redis
     net-http-persistent (2.9.4)
@@ -733,6 +734,7 @@ DEPENDENCIES
   kaminari!
   launchy
   mysql2 (~> 0.3.17)
+  namae (= 0.9.3)
   nest
   newrelic_rpm
   passenger

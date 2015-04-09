@@ -31,6 +31,7 @@ gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
 gem 'rack-maintenance'
+gem 'namae', '0.9.3'
 
 group :development, :test do
   gem 'jettywrapper'
