@@ -52,6 +52,23 @@ describe User, type: :model do
         expect(empty_user.ldap_exist?).to eq(false)
       end
     end
+    describe "LDAP miss behaves" do
+      before do
+        ScholarSphere::Application.config.ldap_unwilling_sleep = 0.01
+        filter = Net::LDAP::Filter.eq('uid', user.login)
+        allow(Hydra::LDAP).to receive(:does_user_exist?).twice.with(filter).and_return(true)
+        # get unwilling the first run through
+        expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new({code:53, message:"Unwilling"}))
+        # get success the second run through which is two calls and one more in the main code
+        expect(Hydra::LDAP.connection).to receive(:get_operation_result).twice.and_return(OpenStruct.new({code:0, message:"sucess"}))
+      end
+    #
+      it "should return true after failing and sleeping once" do
+        expect(User).to receive(:sleep).with(0.01)
+        expect(user.ldap_exist?).to eq(true)
+      end
+    #
+    end
   end
 
   describe "#directory_attributes" do

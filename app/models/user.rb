@@ -1,3 +1,5 @@
+require 'scholarsphere/utils'
+
 class User < ActiveRecord::Base
   # Connects this user object to Sufia behaviors.
   include Sufia::User
@@ -10,7 +12,7 @@ class User < ActiveRecord::Base
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
   # Workaround to retry LDAP calls a number of times
-  include Sufia::Utils
+  include ScholarSphere::Utils
 
   self.include_root_in_json = false
 
@@ -66,7 +68,13 @@ class User < ActiveRecord::Base
   def ldap_exist!
     return false if self.login.blank?
     exist = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
+      begin
+        Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
+      # There is a weird error where the result is nil this retries until that error stops
+      rescue => e
+        logger.warn "rescued exception: #{e}"
+        sleep(ScholarSphere::Application.config.ldap_unwilling_sleep)
+      end
     end rescue false
     if Hydra::LDAP.connection.get_operation_result.code == 0
       Rails.logger.debug "exist = #{exist}"
@@ -129,7 +137,7 @@ class User < ActiveRecord::Base
       filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
       users = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
         Hydra::LDAP.get_user(filter2,['uid','displayname'])
-      end rescue []
+      end rescue  []
     end
     return users.map {|u| {id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})"} }
   end
@@ -196,5 +204,6 @@ class User < ActiveRecord::Base
         nil
       end
     end.compact
-  end  
+  end
+
 end
