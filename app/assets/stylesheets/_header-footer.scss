@@ -111,9 +111,12 @@ div.footer-text {
   }
 }
 
-#masthead div.warn {
-  background: $highlight-yellow;
+#masthead div.error {
+  background: $red-orange;
+  color: $classic-white;
   h2 {
-    padding: 1em;
+    padding: 5em;
+    padding-bottom: 100em;
+    font-size: 6em;
   }
 }

@@ -1,4 +1,9 @@
 <div id="masthead" class="container-fluid">
+  <% unless can? :update, FeaturedWork %>
+  <div class="row error">
+    <h2>ScholarSphere is being upgraded and will be back on by Monday April 13th at 7am. Please come back then!</h2>
+  </div>
+  <% end %>
   <div class="row">
     <div class="col-xs-6 col-sm-7">
       <%= render partial: '/logo' %>
@@ -7,8 +12,5 @@
         <%= render partial: '/user_util_links' %>
     </div><!-- /.col-xs-7 -->
   </div><!-- /.row -->
-  <div class="row warn">
-    <h2>ScholarSphere will be unavailable due to maintenance from Friday April 10th at 8pm until Monday April 13th at 7am.</h2>
-  </div>
 </div> <!-- /masthead -->
 
