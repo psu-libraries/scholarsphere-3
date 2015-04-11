@@ -1,8 +1,8 @@
 <dl>
   <dt class="sr-only">Title:</dt>
-  <dd><%= link_to truncate(featured.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(featured.noid), title: featured.title_or_label, class: 'title'  %></dd>
+  <dd><%= link_to truncate(featured.title_or_label, length: 28, separator: ' '), sufia.generic_file_path(featured), title: featured.title_or_label, class: 'title'  %></dd>
   <dt>Depositor:</dt>
   <dd><%= link_to_profile featured.depositor("no depositor value") %></dd>
   <dt>Keywords:</dt>
-  <dd><%= link_to_facet_list(featured.tags, 'desc_metadata__tag', 'no keywords specified').html_safe %></dd>
+  <dd><%= link_to_facet_list(featured.tags, 'tag', 'no keywords specified').html_safe %></dd>
 </dl>

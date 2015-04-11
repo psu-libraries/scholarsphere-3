@@ -1,30 +1,28 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.7'
-gem 'mysql2', '0.3.16'
+gem 'rails', '4.1.9'
+gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
-gem 'sufia', github: 'projecthydra/sufia', ref: '9fa6e7e85'
-#gem 'sufia', '4.3.1'
-gem 'hydra-batch-edit', '1.1.1'
-gem 'hydra-editor', '0.4.0'
-gem 'hydra-collections', '2.0.5'
-gem 'hydra-derivatives', '0.1.1'
 gem 'hydra-ldap', '0.1.0'
-gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'd380e4b8c91'
+gem 'hydra-derivatives', '1.1.0'
+gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
+gem 'sufia', '6.0.0'
+gem 'active-fedora', '9.0.6'
 
 # Other components
-gem 'clamav'
+gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
-gem 'devise', '~> 3.2.2'
+gem 'devise', '~> 3.4'
+gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
-gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype', ref: '384fcb5d11b6'
+gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 gem 'nest'
 gem 'newrelic_rpm'
 gem 'rainbow'
 gem 'resque-pool'
-gem 'sass'
+gem 'rsolr'
 gem 'sass-rails', '~> 4.0.3'
 gem 'select2-rails'
 gem 'sitemap'
@@ -32,20 +30,11 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
-gem 'bootstrap-sass'
+gem 'rack-maintenance'
+gem 'namae', '0.9.3'
 
 group :development, :test do
-  gem 'byebug', require: false
-  gem 'capybara', '~> 2.0'
-  gem 'capybara-screenshot'
-  gem 'database_cleaner'
-  gem 'equivalent-xml'
-  gem 'factory_girl_rails', '~> 4.1.0'
-  gem 'fuubar'
   gem 'jettywrapper'
-  gem 'launchy'
-  gem 'poltergeist'
-  gem 'rspec-activemodel-mocks'
   gem 'rspec-rails'
   gem 'sqlite3'
 end
@@ -65,6 +54,19 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'equivalent-xml'
+  gem 'factory_girl_rails', '~> 4.1'
+  gem 'fuubar'
+  gem 'poltergeist'
   gem 'vcr'
   gem 'webmock'
+  gem 'capybara', '~> 2.0'
+  gem 'rspec-activemodel-mocks'
+end
+
+group :debug do
+  gem 'launchy'
+  gem 'capybara-screenshot'
+  gem 'byebug', require: false
 end

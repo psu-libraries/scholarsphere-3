@@ -25,3 +25,12 @@ en:
       select_form:
         update: "Add to Collection"
         create_new: "Create New Collection"
+    upload:
+      cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
+  simple_form:
+    labels:
+      collection:
+        description: "Description"
+    metadata_help:
+      collection:
+        creator_html: "The person or group responsible for the collection. Usually this is the author of the collected content. Personal names should be entered with the last name first, e.g. &quot;Smith, John.&quot; &lt;em&gt;This is a required field&lt;/em&gt;."

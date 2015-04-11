@@ -29,7 +29,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
-        redirect_url = find("#redirect-loc", visible:false).text
+        redirect_url = find("#redirect-loc", visible:false).text(:all)
         click_button 'main_upload_start'
         wait_for_page redirect_url
         expect(page).to have_content 'Apply Metadata'
@@ -39,6 +39,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         #I can add additional rights
         expect(User).to receive(:query_ldap_by_name_or_id).and_return([{id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})"}])
         find('.select2-container').click
+        sleep(1)
         find('#select2-drop .select2-input').set other_user.user_key
         find('#select2-drop .select2-result-selectable').click
         find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
@@ -59,25 +60,32 @@ describe 'Generic File uploading and deletion:', :type => :feature do
 
         # Visibility is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_visibility_help').trigger('click')
-        expect(page).to have_css('h3.popover-title', text: 'Visibility')
-        find('#generic_file_visibility_help').trigger('click')
-        expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+        within('#visibility_tooltip') do
+          find('.help-icon').trigger('click')
+          expect(page).to have_css('h3.popover-title', text: 'Visibility')
+          find('.help-icon').trigger('click')
+          expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+        end
 
         # Share With is a tooltip. Click on it once to show it,
         # click again to hide it.
-        find('#generic_file_share_with_help').trigger('click')
-        expect(page).to have_css('h3.popover-title', text: 'Share with')
-        find('#generic_file_share_with_help').trigger('click')
-        expect(page).to_not have_css('h3.popover-title', text: 'Share with')
+        within('#share_with_tooltip') do
+          find('.help-icon').trigger('click')
+          expect(page).to have_css('h3.popover-title', text: 'Share With')
+          find('.help-icon').trigger('click')
+          expect(page).to_not have_css('h3.popover-title', text: 'Share With')
+        end
 
         # Rights (i.e. License Descriptions) is a modal form
         # with a close button.
         expect(page).to_not have_css('#rightsModal')
-        find('#generic_file_rightsModal_help_modal').click()
+        within('#generic_file_rights_help_modal') do
+          find('.help-icon').click()
+        end
+        expect(page).to have_css('#rightsModal')
+        expect(page).to have_css('h2#rightsModallLabel', text: 'ScholarSphere License Descriptions')
         modal = find('#rightsModal')
         expect(modal[:style]).to match(/display: block/)
-        expect(page).to have_css('#rightsModal')
         expect(page).to have_content('Creative Commons licenses can take the following combinations')
         click_on('Close')
 
@@ -94,7 +102,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
     end
     context 'cloud providers' do
       before do
-        allow(BrowseEverything).to receive(:config) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
+        allow(BrowseEverything).to receive(:config) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298", max_upload_file_size: 20*1024}} }
         allow(Sufia.config).to receive(:browse_everything) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
@@ -116,6 +124,8 @@ describe 'Generic File uploading and deletion:', :type => :feature do
           sleep 10
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")
+          expect(page).to have_content "Writer FAQ.txt"
+          expect(page).not_to have_css "a", text: "Writer FAQ.txt"
           expect(page).to have_content "Markdown Test.txt"
           find("a", :text => "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"

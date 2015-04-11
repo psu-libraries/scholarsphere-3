@@ -15,3 +15,4 @@ require 'support/helpers/locations'
 require 'support/helpers/proxies'
 require 'support/vcr'
 require 'support/clamav'
+require 'byebug' unless ENV['TRAVIS']

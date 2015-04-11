@@ -19,7 +19,7 @@ FactoryGirl.define do
     # upload files.
     factory :non_psu_user do
       ldap_available false
-      ldap_last_update nil
+      ldap_last_update { Time.zone.now }
     end
 
     factory :administrator, class: User do |u|

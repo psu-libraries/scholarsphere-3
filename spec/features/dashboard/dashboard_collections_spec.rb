@@ -6,6 +6,15 @@ describe 'Dashboard Collections:', :type => :feature do
 
   let!(:current_user) { create :user }
 
+  let(:jill) { create :jill }
+  let!(:collection) do
+    Collection.new.tap do|col|
+      col.apply_depositor_metadata(jill.user_key)
+      col.title = "jill collection"
+      col.save!
+    end
+  end
+
   before do
     sign_in_as current_user
     go_to_dashboard
@@ -25,6 +34,7 @@ describe 'Dashboard Collections:', :type => :feature do
 
   specify 'collections are displayed in the Collections list' do
     expect(page).to have_content "My collection"
+    expect(page).not_to have_content "jill collection"
   end
 
   specify 'toggle displays additional information' do
@@ -63,5 +73,4 @@ describe 'Dashboard Collections:', :type => :feature do
       end
     end
   end
-
 end

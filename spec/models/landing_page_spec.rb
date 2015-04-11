@@ -1,26 +1,39 @@
 require 'spec_helper'
 
-describe LandingPage, :type => :model do
+describe LandingPage, type: :model do
   let (:lp) { LandingPage.new }
 
-  it "should send to configured email" do
-    expect(lp.headers[:to]).to eq(ScholarSphere::Application.config.landing_email)
-    expect(lp.headers[:from]).to eq(ScholarSphere::Application.config.landing_from_email)
+  context "with a valid email" do
+    subject do
+      lp.email = "test@email.com"
+      lp.first_name = "test name"
+      return lp
+    end
+
+    it "should send to configured email" do
+      expect(subject.headers[:to]).to eq(ScholarSphere::Application.config.landing_email)
+      expect(subject.headers[:from]).to eq(ScholarSphere::Application.config.landing_from_email)
+    end
+
+    it "should include the name and email" do
+      expect(subject.headers[:subject]).to include(lp.email)
+      expect(subject.headers[:subject]).to include(lp.first_name)
+    end
   end
 
-  it "should include the name and email" do
-    lp.email = "test@email.com"
-    lp.first_name = "test name"
-    expect(lp.headers[:subject]).to include(lp.email)
-    expect(lp.headers[:subject]).to include(lp.first_name)
+  context "with an incomplete email" do
+    subject do
+      lp.email = "ashjasfjkhalf"
+      lp.valid?
+    end
+    it { is_expected.to be false }
   end
-
-  it "should validate email" do
-    lp.email = "ashjasfjkhalf"
-    expect(lp.valid?).to eq(false)
-
-    lp.email = "ashjasfjkhalf@email.com"
-    expect(lp.valid?).to eq(true)
+  context "with an correct email" do
+    subject do
+      lp.email = "ashjasfjkhalf@email.com"
+      lp.valid?
+    end
+    it { is_expected.to be true }
   end
 
 end

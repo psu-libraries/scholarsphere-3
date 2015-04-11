@@ -5,18 +5,16 @@ describe Sufia::IdService do
     expect(Sufia::IdService).to respond_to(:mint)
   end
   describe "mint" do
-    before(:all) do
-      @id = Sufia::IdService.mint
-    end
+    let!(:id) { Sufia::IdService.mint }
+    let!(:other_id) { Sufia::IdService.mint }
     it "should create a unique id" do
-      expect(@id).not_to be_empty
+      expect(id).not_to be_empty
     end
     it "should look like a ScholarSphere id" do
-      expect(@id).to match(/scholarsphere\:.{9}/)
+      expect(id).to match(/.{9}/)
     end
     it "should not mint the same id twice in a row" do
-      other_id = Sufia::IdService.mint
-      expect(other_id).not_to eq(@id)
+      expect(other_id).not_to eq(id)
     end
   end
 end

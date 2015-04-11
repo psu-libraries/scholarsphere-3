@@ -5,6 +5,9 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
+require 'webmock' unless Rails.env.production?
+
+WebMock.disable! if Rails.env.development?
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -40,9 +43,9 @@ module ScholarSphere
       path ||= 'ffmpeg'
     end
 
-    config.scholarsphere_version = "v2.1"
-    config.scholarsphere_release_date = "January 16, 2015"
-    config.id_namespace = "scholarsphere"
+    config.scholarsphere_version = "v2.2"
+    config.scholarsphere_release_date = "April 11, 2015"
+    config.redis_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
     config.fits_message_length = 5
@@ -114,7 +117,12 @@ module ScholarSphere
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
-    config.max_upload_file_size = 1.9*1024*1024*1024 #1.9GB
+    config.max_upload_file_size = 20*1024*1024*1024 #20GB
+
+    # html maintenance response
+    config.middleware.use 'Rack::Maintenance',
+                          :file => Rails.root.join('public', 'maintenance.html')
+    config.ldap_unwilling_sleep = 2 # seconds
   end
 end
 

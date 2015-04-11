@@ -1,9 +1,7 @@
 require 'action_view'
-require 'blacklight/solr_helper'
 require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
-include Blacklight::SolrHelper
 
 namespace :scholarsphere do
 
@@ -71,25 +69,18 @@ namespace :scholarsphere do
 
   desc "(Re-)Generate the secret token"
   task generate_secret: :environment do
-    include ActiveSupport
     File.open("#{Rails.root}/config/initializers/secret_token.rb", 'w') do |f|
       f.puts "#{Rails.application.class.parent_name}::Application.config.secret_key_base = '#{SecureRandom.hex(64)}'"
     end
   end
 
-  def blacklight_config
-    @config ||= CatalogController.blacklight_config
-    @config.default_solr_params = {qt:"search", rows:100, fl:'id'}
-    return @config
-  end
-
-  def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-  end
-
   desc "Characterize all files"
   task characterize: :environment do
     # grab the first increment of document ids from solr
-    resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_s:*GenericFile*" )
+
+   resp = ActiveFedora::SolrService.instance.conn.get "select",
+              params:{ fl:['id'], fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile"}
+    puts resp
     #get the totalNumber and the size of the current response
     totalNum =  resp["response"]["numFound"]
     idList = resp["response"]["docs"]
@@ -98,13 +89,15 @@ namespace :scholarsphere do
     #loop through each page appending the ids to the original list
     while idList.length < totalNum
        page += 1
-       resp = query_solr(q:"{!lucene q.op=AND df=text}id:#{ScholarSphere::Application.config.id_namespace}\\:* has_model_s:*GenericFile*", page:page)
+       resp = ActiveFedora::SolrService.instance.conn.get "select",
+                      params:{ fl:['id'], fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile",
+                      page:page}
        idList = idList + resp["response"]["docs"]
        totalNum =  resp["response"]["numFound"]
     end
 
     # for each document in the database call characterize
-    idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"])}
+    idList.each { |o|  Sufia.queue.push(CharacterizeJob.new o["id"])}
   end
 
   desc "Re-solrize all objects"
@@ -220,18 +213,19 @@ namespace :scholarsphere do
 
   desc "Convert Resource Type"
   task "master_thesis" => :environment do
-    def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-      solr_parameters[:fq]="{!raw f=desc_metadata__resource_type_sim}Masters Thesis"
-    end
+    #def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
+    #  solr_parameters[:fq]="{!raw f=resource_type_sim}Masters Thesis"
+    #end
 
-    resp = query_solr(q:"")
+    resp = ActiveFedora::SolrService.instance.conn.get "select",
+                      params:{ fl:['id'], q: "#{ Solrizer.solr_name("resource_type")}:\"Masters Thesis\"",
+                               fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile"}
     docs = resp["response"]["docs"]
     docs.each do |doc|
       gf = GenericFile.find(doc["id"])
       puts "File Found #{gf.title} #{gf.resource_type}"
       resources =  gf.resource_type
-      resources.map! {|type| type == "Masters Thesis" ? "Thesis" : type}
-      gf.resource_type = resources
+      gf.resource_type = resources.map {|type| type == "Masters Thesis" ? "Thesis" : type}
       puts "File Updated #{gf.title} #{gf.resource_type}"
       gf.save
 
@@ -248,21 +242,22 @@ namespace :scholarsphere do
   desc "Generate thumbnails for ALL documents"
   task "generate_thumbnails" => :environment do
 
-    logger.info "Querying solr..."
-    self.solr_search_params_logic += [:solr_generic_files_only]
-    solr = query_solr(q:"*")
+    solr = ActiveFedora::SolrService.instance.conn.get "select",
+                  params:{ fl:['id'], fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile"}
     total_docs = solr["response"]["numFound"]
     logger.info "Total documents to process: #{total_docs}"
     
     total_processed = errors = page = 0
     while total_processed < total_docs
       page += 1
-      solr = query_solr(q: "*", page: page) unless page == 1
+      solr = ActiveFedora::SolrService.instance.conn.get "select",
+                                  params:{ fl:['id'], fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile",
+                                  page: page}
       total_docs = solr["response"]["numFound"]
       docs = solr["response"]["docs"]
       docs.each do |doc|
         begin
-          id = doc[:id]
+          id = doc["id"]
           Sufia.queue.push(CreateDerivativesJob.new id)
         rescue Exception => e  
           errors += 1

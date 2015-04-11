@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205164301) do
+ActiveRecord::Schema.define(version: 20150220191723) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20141205164301) do
   end
 
   create_table "checksum_audit_logs", force: true do |t|
-    t.string   "pid"
+    t.string   "generic_file_id"
     t.string   "dsid"
     t.string   "version"
     t.integer  "pass"
@@ -33,16 +33,15 @@ ActiveRecord::Schema.define(version: 20141205164301) do
     t.datetime "updated_at"
   end
 
-  add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid", using: :btree
+  add_index "checksum_audit_logs", ["generic_file_id", "dsid"], name: "by_pid_and_dsid", using: :btree
 
   create_table "content_blocks", force: true do |t|
     t.string   "name"
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "external_key"
   end
-
-  add_index "content_blocks", ["name"], name: "index_content_blocks_on_name", unique: true, using: :btree
 
   create_table "domain_terms", force: true do |t|
     t.string "model"
@@ -166,8 +165,18 @@ ActiveRecord::Schema.define(version: 20141205164301) do
 
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
 
+  create_table "migrate_audits", force: true do |t|
+    t.string   "f3_pid"
+    t.string   "f3_model"
+    t.string   "f3_title"
+    t.string   "f4_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status"
+  end
+
   create_table "proxy_deposit_requests", force: true do |t|
-    t.string   "pid",                                   null: false
+    t.string   "generic_file_id",                       null: false
     t.integer  "sending_user_id",                       null: false
     t.integer  "receiving_user_id",                     null: false
     t.datetime "fulfillment_date"
@@ -214,8 +223,8 @@ ActiveRecord::Schema.define(version: 20141205164301) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2014-12-10 16:14:48'
-    t.datetime "updated_at", default: '2014-12-10 16:14:48'
+    t.datetime "created_at", default: '2015-03-27 14:58:41'
+    t.datetime "updated_at", default: '2015-03-27 14:58:42'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -301,10 +310,11 @@ ActiveRecord::Schema.define(version: 20141205164301) do
     t.datetime "updated_at"
   end
 
+  Foreigner.load
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", name: "mb_opt_outs_on_conversations_id", column: "conversation_id"
 
-  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_development", column: "conversation_id"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id_test", column: "conversation_id"
 
-  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_development", column: "notification_id"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "mailboxer_receipts_on_notification_id_test", column: "notification_id"
 
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController, :type => :controller do
+describe SessionsController, type: :controller do
   describe "routing" do
     it "should send /logout to sessions#destroy" do
       expect({ get: '/logout' }).to route_to(controller: 'sessions', action: 'destroy')

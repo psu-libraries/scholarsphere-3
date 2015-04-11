@@ -1,5 +1,5 @@
 #masthead {
-  background: $blue-dark;
+
   #shield img {
     float: left;
     margin-top: 15px;
@@ -18,42 +18,6 @@
   }
   #user_utility_links {
     margin-top: 1em;
-  }
-}
-
-#masthead_controls .navbar-default .navbar-nav > .active > a,
-#masthead_controls .navbar-default .navbar-nav > .active > a:hover,
-#masthead_controls .navbar-default .navbar-nav > .active > a:focus {
-  background-color: $blue-medium-bright;
-  color: $classic-white;
-}
-
-#masthead_controls {
-  border-top: 1px solid $blue-medium;
-  border-bottom: 1px solid $blue-medium;
-  background-color: $blue-medium-bright;
-  #search-submit-header {
-    background-color: $gray-dark;
-    border-top: 1px solid $gray-medium;
-    border-bottom: 1px solid $gray-medium;
-    :hover {
-      background-color: $gray-medium;
-    }
-  }
-  .navbar {
-    background-color: $blue-medium-bright;
-    li {
-      border-right: 2px solid $blue-medium;
-    }
-    li:first-child {
-      border-left: 2px solid $blue-medium;
-    }
-    a:link, a:visited {
-      background-color: $blue-medium-bright;
-    }
-    a:hover {
-      background-color: $basic-black;
-    }
   }
 }
 
@@ -103,7 +67,6 @@
 }
 
 #footer {
-  background: $blue-dark;
   a:link, a:visited {
     color: $classic-white;
   }
@@ -148,9 +111,12 @@ div.footer-text {
   }
 }
 
-#masthead div.warn {
-  background: $highlight-yellow;
+#masthead div.error {
+  background: $red-orange;
+  color: $classic-white;
   h2 {
-    padding: 1em;
+    padding: 5em;
+    padding-bottom: 100em;
+    font-size: 6em;
   }
 }

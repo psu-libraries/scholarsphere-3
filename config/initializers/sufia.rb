@@ -90,4 +90,6 @@ Sufia::Engine.configure do
     config.browse_everything = nil
   end
 
+
+  config.temp_file_base ="/tmp"
 end

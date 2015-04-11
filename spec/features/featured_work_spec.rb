@@ -4,10 +4,10 @@ describe "Featured works on the home page", :type => :feature do
   let!(:admin_user) { create :administrator }
   let!(:jill_user) { create :jill }
   let!(:file) { create_file admin_user, {title:'file title'} }
-  let!(:featured_work) { FeaturedWork.create!(generic_file_id: file.noid) }
+  let!(:featured_work) { FeaturedWork.create!(generic_file_id: file.id) }
 
   let!(:file2) { create_file admin_user, {title:'another_title_bites_the_dust'} }
-  let!(:featured_work2) { FeaturedWork.create!(generic_file_id: file2.noid) }
+  let!(:featured_work2) { FeaturedWork.create!(generic_file_id: file2.id) }
 
   let!(:private_file) { create_file jill_user, {title:'private_document', read_groups:['private']} }
 
@@ -33,7 +33,7 @@ describe "Featured works on the home page", :type => :feature do
 
   it 'allows the user to remove it as a featured work' do
     document = find('li.dd-item:nth-of-type(1)')
-    expect(document['data-id']).to eq(file.noid)
+    expect(document['data-id']).to eq(file.id)
 
     within('li.dd-item:nth-of-type(1)') do
       expect(page).to have_css '.glyphicon-remove'

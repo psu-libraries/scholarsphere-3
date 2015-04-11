@@ -1,11 +1,9 @@
 require 'action_view'
-require 'blacklight/solr_helper'
 require 'rainbow'
 
 include ActionView::Helpers::NumberHelper
-include Blacklight::SolrHelper
 
-namespace :pre_migrate do
+namespace :premigrate do
 
   ALL_ROWS = 1_000_000
 
@@ -79,6 +77,11 @@ namespace :pre_migrate do
     missing_batches
   end
 
+  def fedora3_settings(file_name)
+    fedora3_settings = YAML.load_file(file_name)
+    fedora3_settings[Rails.env].symbolize_keys
+  end
+
   desc "Get a list of missing batches"
   task "list_missing_batches", [:verbose] => :environment do |cmd, args|
     verbose = args[:verbose] == "true"
@@ -104,5 +107,47 @@ namespace :pre_migrate do
       end
     end
   end
+
+  # This task is mostly for testing purposes to make sure we get all PIDs from Fedora 3.
+  # To allow this task to be run from a version of the code that targets Fedora 3 
+  # or Fedora 4 we must pass the file where the Fedora 3 settings are stored.
+  desc "Fetches PIDs for all objects in Fedora 3 for our namespace"
+  task "get_pids", [:fedora3_yml] => :environment do |cmd, args|
+    file_name = args[:fedora3_yml]
+    abort("Must specify a Fedora 3 YAML file") if file_name.nil?
+    credentials = fedora3_settings(file_name)
+    namespace = "scholarsphere"
+    auditor = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    puts auditor.pids
+  end
+
+  # This task is mostly for testing purposes to make sure we get all objects and their data.
+  # To allow this task to be run from a version of the code that targets Fedora 3 
+  # or Fedora 4 we must pass the file where the Fedora 3 settings are stored.
+  desc "Fetched basic info (PID, model, title) for all objects in Fedora 3 in our namespace"
+  task "get_info", [:fedora3_yml] => :environment do |cmd, args|
+    file_name = args[:fedora3_yml]
+    abort("Must specify a Fedora 3 YAML file") if file_name.nil?
+    credentials = fedora3_settings(file_name)
+    namespace = "scholarsphere"
+    auditor = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    auditor.pids.each do |pid|
+      puts auditor.get_info(pid)
+    end
+  end  
+
+  # Recreates data in migrate_audit SQL table with information about all Fedora 3 objects.
+  # To allow this task to be run from a version of the code that targets Fedora 3 
+  # or Fedora 4 we must pass the file where the Fedora 3 settings are stored.
+  desc "Creates an audit for all Fedora 3 objects in our namespace"
+  task "f3_audit", [:fedora3_yml] => :environment do |cmd, args|
+    file_name = args[:fedora3_yml]
+    abort("Must specify a Fedora 3 YAML file") if file_name.nil?
+    credentials = fedora3_settings(file_name)
+    namespace = "scholarsphere"
+    logger.info "Auditing Fedora 3 at #{credentials[:url]}..."
+    auditor = MigrateAuditFedora3.new(credentials[:url], credentials[:user], credentials[:password], namespace)
+    MigrateAudit.f3_audit!(auditor)
+  end  
 end
 
