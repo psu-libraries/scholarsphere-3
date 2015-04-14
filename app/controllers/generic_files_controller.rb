@@ -4,9 +4,7 @@ class GenericFilesController < ApplicationController
   include Behaviors::PermissionsNotificationBehavior
 
   prepend_before_filter only: [:show, :edit] do  
-    handle_legacy_url_prefix do |new_id|
-      redirect_to sufia.generic_file_path(new_id), status: :moved_permanently
-    end
+    handle_legacy_url_prefix { |new_id| redirect_to sufia.generic_file_path(new_id), status: :moved_permanently }
   end 
 
   # TODO This is a temporary override of sufia to fix #101
