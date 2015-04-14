@@ -3,6 +3,12 @@ class GenericFilesController < ApplicationController
   include Sufia::FilesControllerBehavior
   include Behaviors::PermissionsNotificationBehavior
 
+  prepend_before_filter only: [:show, :edit] do  
+    handle_legacy_url_prefix do |new_id|
+      redirect_to sufia.generic_file_path(new_id), status: :moved_permanently
+    end
+  end 
+
   # TODO This is a temporary override of sufia to fix #101
   #      This can be removed once sufia has a solution and we upgrade or
   #      batches are no longer used when sufia migrates to PCDM

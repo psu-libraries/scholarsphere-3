@@ -63,6 +63,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def handle_legacy_url_prefix
+    legacy_prefix = "scholarsphere:".freeze
+    id = params[:id].to_s
+    if id.start_with?(legacy_prefix)
+      new_id = id[legacy_prefix.length..-1]
+      if block_given?
+        # block should execute something along the lines of
+        # redirect_to controller_name_path(new_id), status: :moved_permanently
+        yield new_id
+      end
+    end
+  end  
+
  protected
   def user_logged_in?
     user_signed_in? && ( valid_user?(request.headers) || Rails.env.test?)
