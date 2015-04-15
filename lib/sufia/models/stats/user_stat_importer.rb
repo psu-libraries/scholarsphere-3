@@ -15,13 +15,21 @@ module Sufia
 
         stats = {}
         file_ids_for_user(user).each do |file_id|
-          view_stats = FileViewStat.statistics(file_id, start_date, user.id)
-          stats = tally_results(view_stats, :views, stats)
-          sleep(1.0) # adding sleep so we do not access GA to fast
+          retry_count = 0
+          begin
+            view_stats = FileViewStat.statistics(file_id, start_date, user.id)
+            stats = tally_results(view_stats, :views, stats)
+            sleep(1.0) # adding sleep so we do not access GA to fast
 
-          dl_stats = FileDownloadStat.statistics(file_id, start_date, user.id)
-          stats = tally_results(dl_stats, :downloads, stats)
-          sleep(1.0) # adding sleep so we do not access GA to fast
+            dl_stats = FileDownloadStat.statistics(file_id, start_date, user.id)
+            stats = tally_results(dl_stats, :downloads, stats)
+            sleep(1.0) # adding sleep so we do not access GA to fast
+          rescue
+            sleep(1.0)
+            retry_count++
+            retry unless retry_count > 5
+          end
+
         end
 
         create_or_update_user_stats(stats, user)
