@@ -8,4 +8,13 @@ describe CollectionsController, type: :controller do
       expect(response.status).to eq(404)
     end
   end
+
+  context "when requesting a legacy URL" do
+    it "redirects to the proper URL" do
+      get :show, id: 'scholarsphere:123'
+      expect(response.status).to eq(301)
+      expect(response.location).to eq("http://test.host/collections/123")
+    end
+  end
+
 end
