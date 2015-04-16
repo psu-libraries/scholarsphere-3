@@ -2,31 +2,33 @@ namespace :scholarsphere do
 
   namespace :solr do
 
-    desc "Index a single object in solr specified by PID="
-    task index: :environment do
-      raise "Must specify a pid.  Ex:  PID='changeme:12" unless ENV['PID']
-      initialize_rubydora_connection
-      ActiveFedora::Base.find(ENV['PID']).update_index
+    desc "Index a single object in solr"
+    task :index, [:id] => :environment do |t, args|
+      raise "Please provide a id" if args[:id].nil?
+      ActiveFedora::Base.find(args[:id]).update_index
     end
 
     desc "Compares number of objects in Solr with those in Fedora"
     task compare: :environment do
-      q = Blacklight.solr.get "select", {q: "has_model_ssim:'info:fedora*'" }
-      solr = q["response"]["numFound"]
-      initialize_rubydora_connection
-      fedora = ActiveFedora::Base.fedora_connection[0].connection.search(nil).count
-      if fedora > solr
+      if number_of_objects_in_fedora > number_of_objects_in_solr
         raise "Fedora's #{fedora.to_s} objects exceeds Solr's #{solr}"
       else
         puts "Things appear to be OK"
       end
     end
-
+    
   end
 
-  # Loads Rubydora connection by using a fake, non-existent object
-  def initialize_rubydora_connection
-    ActiveFedora::Base.connection_for_pid("foo:1")
+  def number_of_objects_in_fedora
+    result = ActiveFedora.fedora.connection.get(Rails.env).body
+    triples = ::RDF::Reader.for(:ttl).new(result)
+    rdf = ::RDF::Graph.new << triples
+    rdf.query(predicate: ::Ldp.contains).count
+  end
+
+  def number_of_objects_in_solr
+    q = Blacklight.default_index.connection.get "select", {q: "has_model_ssim:'info:fedora*'" }
+    q["response"]["numFound"]
   end
 
 end
