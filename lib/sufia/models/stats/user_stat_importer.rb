@@ -24,10 +24,14 @@ module Sufia
             dl_stats = FileDownloadStat.statistics(file_id, start_date, user.id)
             stats = tally_results(dl_stats, :downloads, stats)
             sleep(1.0) # adding sleep so we do not access GA to fast
-          rescue
+          rescue Exception => e
             sleep(1.0)
-            retry_count++
-            retry unless retry_count > 5
+            retry_count += 1
+            if retry_count <= 5
+              retry
+            else
+              logger.warn "Retried error on #{user} for file #{file_id} too many times.  Continuing... \n#{e}"
+            end
           end
 
         end
