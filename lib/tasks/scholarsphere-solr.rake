@@ -39,6 +39,11 @@ namespace :scholarsphere do
       end
     end
 
+    desc "update the index on all GenericFiles"
+    task update_generic_file_index: :environment do
+      GenericFile.all.each(&:update_index)
+    end
+
   end
 
   # Loads Rubydora connection by using a fake, non-existent object
