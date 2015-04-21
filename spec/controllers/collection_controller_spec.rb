@@ -28,41 +28,16 @@ describe CollectionsController, type: :controller do
     let(:document_list) {[{ Solrizer.solr_name(:file_size, :symbol)=>["20"] }, { Solrizer.solr_name(:file_size, :symbol)=>["20"] } ]}
     before do
       allow(resp).to receive(:documents).and_return(document_list)
-      allow(controller).to receive(:query_documents).with({"facet.field"=>
-                                                                  ["resource_type_sim",
-                                                                   "collection_sim",
-                                                                   "creator_sim",
-                                                                   "tag_sim",
-                                                                   "subject_sim",
-                                                                   "language_sim",
-                                                                   "based_near_sim",
-                                                                   "publisher_sim",
-                                                                   "file_format_sim",
-                                                                   "active_fedora_model_ssi"],
+      allow(controller).to receive(:query_documents).with({"facet.field"=>[],
                                                                "facet.query"=>[],
                                                                "facet.pivot"=>[],
-                                                               "fq"=>
-                                                                    ["edit_access_group_ssim:public OR discover_access_group_ssim:public OR read_access_group_ssim:public",
-                                                                         "{!join from=hasCollectionMember_ssim to=id}id:#{collection.id}",
-                                                                         "edit_access_group_ssim:public OR discover_access_group_ssim:public OR read_access_group_ssim:public"],
-                                                              "hl.fl"=>[],
-                                                              "qt"=>"search",
-                                                              "rows"=>0,
-                                                              "facet"=>true,
-                                                              "f.resource_type_sim.facet.limit"=>6,
-                                                              "f.collection_sim.facet.limit"=>6,
-                                                              "f.creator_sim.facet.limit"=>6,
-                                                              "f.tag_sim.facet.limit"=>6,
-                                                              "f.subject_sim.facet.limit"=>6,
-                                                              "f.language_sim.facet.limit"=>6,
-                                                              "f.based_near_sim.facet.limit"=>6,
-                                                              "f.publisher_sim.facet.limit"=>6,
-                                                              "f.file_format_sim.facet.limit"=>6,
-                                                              "sort"=>"score desc, date_uploaded_dtsi desc",
-                                                              "fl"=>["file_size_ssim"]}).and_return(resp)
+                                                               "fq"=>["{!join from=hasCollectionMember_ssim to=id}id:#{collection.id}"],
+                                                               "hl.fl"=>[],
+                                                               "rows"=>0,
+                                                               "fl"=>["file_size_ssim"]}).and_return(resp)
     end
     it "set the presenter size correctly" do
-      get :show, id: collection.id
+      get :show, id: collection.id, per_page: 1, page: 2
       expect(assigns(:presenter).size).to eq "40 Bytes"
     end
   end

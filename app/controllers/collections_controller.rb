@@ -21,13 +21,17 @@ class CollectionsController < ApplicationController
     pres
   end
 
+  def collection_size_search_builder
+    @collection_size_search_builder ||= CollectionSizeSearchBuilder.new([:include_collection_ids, :add_paging_to_solr], self)
+  end
+
+
   def member_docs
-    rows = @response["response"]["numFound"]
-    save_max = blacklight_config.max_per_page # ignore the max since we are only getting one field
-    blacklight_config.max_per_page = rows
-    query = collection_member_search_builder.rows(rows).query({ fl:[file_size_field]})
+    rows = collection.member_ids.count
+    save_max = set_permissions_for_size_query(rows)
+    query = collection_size_search_builder.start(0).rows(rows).query({ fl:[file_size_field]})
     resp = query_documents(query)
-    blacklight_config.max_per_page = save_max # reset the max
+    reset_permissions_from_size_query(save_max)
     resp.documents
   end
 
@@ -38,4 +42,15 @@ class CollectionsController < ApplicationController
   def file_size_field
     Solrizer.solr_name(:file_size, :symbol)
   end
+
+  def set_permissions_for_size_query(rows)
+    save_max = blacklight_config.max_per_page # ignore the max since we are only getting one field
+    blacklight_config.max_per_page = rows
+    save_max
+  end
+
+  def reset_permissions_from_size_query(max)
+    blacklight_config.max_per_page = max # reset the max
+  end
+
 end
