@@ -19,14 +19,14 @@ class GenericFilesController < ApplicationController
   around_action :notify_users_of_permission_changes, only: [:destroy,:create,:update]
   skip_before_action :has_access?, only: [:stats]
   
-  # TODO: load and authorize resource are causing problems (#9678)
-  #skip_load_resource(only: [:show])
-  #before_filter :load_resource_from_solr, only: [:show]
-  #authorize_resource only: [:show]
-  #def load_resource_from_solr
-  #  @generic_file = ::GenericFile.load_instance_from_solr(params[:id])
-  #  @generic_file
-  #end
+  skip_load_resource(only: [:show])
+  before_filter :load_resource_from_solr, only: [:show]
+  authorize_resource only: [:show]
+
+  def load_resource_from_solr
+    @generic_file = GenericFile.load_instance_from_solr(params[:id])
+    @generic_file
+  end
 
   def notify_users_of_permission_changes
     previous_permissions = @generic_file.permissions.map(&:to_hash) unless @generic_file.nil?
@@ -37,4 +37,9 @@ class GenericFilesController < ApplicationController
       notify_users(permission_state, @generic_file)
     end
   end
+
+  def audit_service
+    ScholarsphereAuditService.new(@generic_file)
+  end
+
 end
