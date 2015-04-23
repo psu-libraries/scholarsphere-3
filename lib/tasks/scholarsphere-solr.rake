@@ -31,4 +31,17 @@ namespace :scholarsphere do
     q["response"]["numFound"]
   end
 
+  desc "update the index on all GenericFiles"
+  task update_generic_file_index: :environment do
+    GenericFile.all.each(&:update_index)
+  end
+
+  desc "update the index on all GenericFiles that are contained by collections"
+  task update_collection_generic_file_index: :environment do
+    Collection.all.each do |col|
+      puts "updating collection #{col.id}"
+      col.members.each(&:update_index) rescue puts "\n\n Error updating #{col.id}"
+    end
+  end
+
 end

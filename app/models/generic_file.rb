@@ -76,4 +76,13 @@ class GenericFile < ActiveFedora::Base
     ids.map {|id| GenericFile.load_instance_from_solr id}
   end
 
+  # add code to solrize the document size so we do not need to load the document
+  # in the collection show page for calculating the total size
+  def to_solr(solr_doc={})
+    super.tap do |doc|
+      doc[Solrizer.solr_name(:file_size, :symbol)] = self.content.size
+      doc[Solrizer.solr_name(:file_size, :symbol)] ||= 0
+    end
+  end
+
 end
