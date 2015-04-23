@@ -88,4 +88,46 @@ describe 'The Dashboard', :type => :feature do
     end
   end
 
+  context "with transfers" do
+    
+    let(:another_user) { create :jill }
+    
+    context "when incoming" do
+      let!(:incoming_file) do
+        GenericFile.new.tap do |f|
+          f.apply_depositor_metadata(another_user.user_key)
+          f.save!
+          f.request_transfer_to(current_user)
+        end
+      end
+      before { go_to_dashboard }
+      it "displays received files" do
+        within("#incoming-transfers") do
+          expect(page).to have_link another_user.name
+          expect(page).to have_content "less than a minute ago"
+          expect(page).to have_button "Accept"
+        end
+      end
+    end
+
+    context "when outgoing" do
+      let!(:outgoing_file) do
+        GenericFile.new.tap do |f|
+          f.apply_depositor_metadata(current_user.user_key)
+          f.save!
+          f.request_transfer_to(another_user)
+        end
+      end
+      before { go_to_dashboard }
+      it "displays files sent to another user" do
+        within("#outgoing-transfers") do
+          expect(page).to have_link another_user.name
+          expect(page).to have_content "less than a minute ago"
+          expect(page).to have_button "Cancel"
+        end
+      end      
+    end
+
+  end
+
 end
