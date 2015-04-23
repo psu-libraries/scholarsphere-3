@@ -75,7 +75,7 @@ describe 'unified search', describe_options, :type => :feature do
         expect(page).to have_content(@gf2.title.first)
         expect(page).to have_content(@gf3.title.first)
         expect(page).to have_content(@collection.title)
-        expect(page).to have_css("span.glyphicon.glyphicon-th")
+        expect(page).to have_css("img.collection-icon")
         click_link(@gf1.title.first)
         expect(page).to have_link("Back to search results")
       end
