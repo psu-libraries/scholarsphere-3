@@ -128,7 +128,7 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-passenger (0.0.4)
+    capistrano-passenger (0.0.5)
       capistrano (~> 3.0)
     capistrano-rails (1.1.2)
       capistrano (~> 3.1)
@@ -170,7 +170,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
-    colorize (0.7.5)
+    colorize (0.7.7)
     columnize (0.9.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)

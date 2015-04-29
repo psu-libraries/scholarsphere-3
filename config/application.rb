@@ -56,6 +56,7 @@ module ScholarSphere
       'scholarsphere.psu.edu' => 'UA-33252017-2',
       'scholarsphere-qa.dlt.psu.edu' => 'UA-33252017-3',
       'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
+      'scholarsphere-staging.dlt.psu.edu' => 'UA-33252017-5',
     }
 
     # Map hostnames onto ffmpeg paths
