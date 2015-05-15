@@ -65,6 +65,10 @@ set :pty, true
 # Default value for keep_releases is 5, setting to 7
 set :keep_releases, 7
 
+#capistrano-passenger gem values
+# Until Passenger allows sudoless restarts this needs to be in place as, we restrict sudo commands and the sudo command needed would have to change with every ruby version change because of the rbenv prefix.
+set :passenger_restart_command, "sudo service httpd restart"
+set :passenger_restart_options, -> {}
 
 # Apache namespace to control apache
 namespace :apache do
