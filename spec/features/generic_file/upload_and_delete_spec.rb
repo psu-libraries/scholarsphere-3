@@ -102,10 +102,10 @@ describe 'Generic File uploading and deletion:', :type => :feature do
     end
     context 'cloud providers' do
       before do
-        allow(BrowseEverything).to receive(:config) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298", max_upload_file_size: 20*1024}} }
-        allow(Sufia.config).to receive(:browse_everything) { {"drop_box"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
-        allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:authorized?) { true }
-        allow_any_instance_of(BrowseEverything::Driver::DropBox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
+        allow(BrowseEverything).to receive(:config) { {"dropbox"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298", max_upload_file_size: 20*1024}} }
+        allow(Sufia.config).to receive(:browse_everything) { {"dropbox"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         WebMock.enable!
       end
@@ -120,7 +120,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
           expect(page).to have_content "Browse cloud files"
           click_on "Browse cloud files"
           expect(page).to have_css '#provider-select'
-          select 'Drop Box', from: 'provider-select'
+          select 'Dropbox', from: 'provider-select'
           sleep 10
           expect(page).to have_content "Getting Started.pdf"
           click_on("Writer")

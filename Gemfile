@@ -8,8 +8,8 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
-gem 'sufia', '6.0.0'
-gem 'active-fedora', '9.0.6'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'eb714cb91f4ecd49dec67b0e9996dc3d4e918f1a'
+gem 'active-fedora'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'

@@ -7,7 +7,7 @@ sky_drive:
 box:
   :client_id: CLIENT_ID
   :client_secret: CLIENT_SECRET
-drop_box:
+dropbox:
   :app_key: CLIENT_ID
   :app_secret: CLIENT_SECRET
 google_drive:

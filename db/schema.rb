@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220191723) do
+ActiveRecord::Schema.define(version: 20150220191724) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(version: 20150220191723) do
     t.string   "label"
     t.string   "lowerLabel"
     t.string   "uri"
-    t.datetime "created_at", default: '2015-03-27 14:58:41'
-    t.datetime "updated_at", default: '2015-03-27 14:58:42'
+    t.datetime "created_at", default: '2015-04-01 12:56:18'
+    t.datetime "updated_at", default: '2015-04-01 12:56:18'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -296,6 +296,10 @@ ActiveRecord::Schema.define(version: 20150220191723) do
     t.string   "orcid"
     t.boolean  "system_created",         default: false
     t.boolean  "logged_in",              default: true
+    t.string   "arkivo_token"
+    t.string   "arkivo_subscription"
+    t.binary   "zotero_token"
+    t.string   "zotero_userid"
   end
 
   add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree

@@ -40,4 +40,13 @@ describe GenericFile, type: :model do
     end
   end
 
+  describe "noid instead of id" do
+    let(:file) { GenericFile.new() { |file| file.apply_depositor_metadata('dmc') }}
+
+    it "creates a noid on save" do
+      file.save
+      expect(file.id.length).to eq 9
+    end
+
+  end
 end
