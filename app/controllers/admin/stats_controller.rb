@@ -15,7 +15,7 @@ class Admin::StatsController < ApplicationController
 
     # Query Solr for top 5 depositors
     depositor_key = Solrizer.solr_name('depositor', :stored_searchable, type: :string)
-    top_depositors_url = "#{ActiveFedora.solr_config[:url]}/terms?terms.fl=#{depositor_key}&terms.sort=count&terms.limit=5&wt=json&omitHeader=true"
+    top_depositors_url = "#{ActiveFedora.solr_config[:url]}/terms?terms.fl=#{depositor_key}&terms.sort=count&terms.limit=#{top_depositors_count}&wt=json&omitHeader=true"
     # Parse JSON response (looks like {"terms":{"depositor_tesim":["mjg36",3]}})
     depositors_json = open(top_depositors_url).read
     depositor_tuples = JSON.parse(depositors_json)['terms'][depositor_key] rescue []
@@ -39,5 +39,11 @@ class Admin::StatsController < ApplicationController
     @top_formats = Hash[*format_tuples]
 
     render 'index'
+  end
+
+  private 
+  def top_depositors_count
+    count = params[:dep_count].to_i 
+    count.in?(5..20) ? count : 5
   end
 end

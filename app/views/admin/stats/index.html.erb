@@ -52,12 +52,15 @@
 
 
 <br/>
-<h4>Most Active Users</h4>
+<h4>Most Active Users (top <%= @active_users.count %>)</h4>
 <ul>
-   <% @active_users.each do |k, v| %>
-      <li>
-         <%= link_to_profile(k) %> <span class="count">(<%= v %>)</span>
-      </li>
-   <% end %>
+  <% @active_users.each do |k, v| %>
+    <li>
+      <%= link_to_profile(k) %> <span class="count">(<%= v %>)</span>
+    </li>
+  <% end %>
+  <% if !params[:dep_count] %> 
+    <p><%= link_to "View top 20", controller: "stats", dep_count: "20" %> </p>
+  <% end %>
 </ul>
 </div>
