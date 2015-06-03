@@ -10,11 +10,10 @@ namespace :scholarsphere do
 
     desc "Compares number of objects in Solr with those in Fedora"
     task compare: :environment do
-      if number_of_objects_in_fedora > number_of_objects_in_solr
-        raise "Fedora's #{fedora.to_s} objects exceeds Solr's #{solr}"
-      else
-        puts "Things appear to be OK"
-      end
+      fedora = number_of_objects_in_fedora
+      solr = number_of_objects_in_solr
+      raise "Fedora's #{fedora.to_s} objects exceeds Solr's #{solr}" if fedora > solr
+      puts "Things appear to be OK"
     end
     
   end
