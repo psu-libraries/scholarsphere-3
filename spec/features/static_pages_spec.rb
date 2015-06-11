@@ -72,9 +72,12 @@ describe 'Static pages:', :type => :feature do
   def verfiy_youtube_links path
     # Check all iframes containing youtube links for valid youtube ids
     visit path
+    srcs = []
     all('iframe[src*="youtube"]').each do |iframe|
-      youtube_id = iframe[:src].split('embed/').last.split('?').first
-      visit "https://gdata.youtube.com/feeds/api/videos/#{youtube_id}"
+      srcs << iframe[:src]
+    end
+    srcs.each do |url|
+      visit url
       expect(status_code).to be 200
     end
   end
