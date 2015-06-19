@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.9'
+gem 'rails', '4.1.11'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
@@ -17,7 +17,7 @@ gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
 gem 'devise', '~> 3.4'
 gem 'jbuilder', '~> 2.0'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 gem 'nest'
 gem 'newrelic_rpm'
