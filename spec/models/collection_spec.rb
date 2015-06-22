@@ -4,7 +4,7 @@ describe Collection do
   
   describe "#bytes" do
     context "with no attached files" do
-      subject { described_class.new.bytes }
+      subject { Collection.create(title: "My collection") { |c| c.apply_depositor_metadata("agw") }.bytes }
       it { is_expected.to eq 0 }
     end
 
@@ -20,8 +20,10 @@ describe Collection do
       end
       let(:mock_file) { double("content", size: "100")}
       before do
-        collection.members = [file, file2]
+        allow(mock_file).to receive(:changed?).and_return(false)
         allow_any_instance_of(GenericFile).to receive(:content).and_return(mock_file)
+        collection.members = [file, file2]
+        collection.save
       end
       subject { collection.bytes }
       it { is_expected.to eq 200 }

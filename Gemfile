@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.1.11'
+gem 'rails', '4.2.0'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
@@ -9,8 +9,9 @@ gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
 #gem 'sufia', '6.0.0'
-gem 'sufia', github: 'projecthydra/sufia', ref: '109b7a716b7b7284cbc444a461c95b1c2c097066'
+gem 'sufia', github: 'projecthydra/sufia', ref: '5ee26ca2f'
 gem 'active-fedora', '9.1.1'
+
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'

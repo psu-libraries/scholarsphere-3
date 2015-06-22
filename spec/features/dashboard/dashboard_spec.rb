@@ -76,10 +76,11 @@ describe 'The Dashboard', :type => :feature do
 
           #should remove a proxy
           first(".remove-proxy-button").click
+          sleep(1.second)
           go_to_dashboard
           within("#authorizedProxies") do
-            expect(page).not_to have_content(second_user.display_name)
             expect(page).to have_content(third_user.display_name)
+            expect(page).not_to have_content(second_user.display_name)
           end
         end
 
