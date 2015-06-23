@@ -3,13 +3,20 @@ class Ability
   include Sufia::Ability
 
   def featured_work_abilities
-    can [:create, :destroy, :update], FeaturedWork if user_groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    can [:create, :destroy, :update], FeaturedWork if admin_user?
   end
 
   def editor_abilities
-    if user_groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    if admin_user?
       can :create, TinymceAsset
-      can :update, ContentBlock
+      can [:create, :update], ContentBlock
     end
+    can :read, ContentBlock
   end
+
+  private
+
+    def admin_user?
+      user_groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    end
 end
