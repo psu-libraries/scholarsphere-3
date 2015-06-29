@@ -22,11 +22,11 @@ Sufia::Engine.configure do
   config.ffmpeg_path =  Rails.application.ffmpeg_path
 
   config.cc_licenses = {
+    'Attribution-NonCommercial-NoDerivs 3.0 United States' => 'http://creativecommons.org/licenses/by-nc-nd/3.0/us/',
     'Attribution 3.0 United States' => 'http://creativecommons.org/licenses/by/3.0/us/',
     'Attribution-ShareAlike 3.0 United States' => 'http://creativecommons.org/licenses/by-sa/3.0/us/',
     'Attribution-NonCommercial 3.0 United States' => 'http://creativecommons.org/licenses/by-nc/3.0/us/',
     'Attribution-NoDerivs 3.0 United States' => 'http://creativecommons.org/licenses/by-nd/3.0/us/',
-    'Attribution-NonCommercial-NoDerivs 3.0 United States' => 'http://creativecommons.org/licenses/by-nc-nd/3.0/us/',
     'Attribution-NonCommercial-ShareAlike 3.0 United States' => 'http://creativecommons.org/licenses/by-nc-sa/3.0/us/',
     'Public Domain Mark 1.0' => 'http://creativecommons.org/publicdomain/mark/1.0/',
     'CC0 1.0 Universal' => 'http://creativecommons.org/publicdomain/zero/1.0/',
