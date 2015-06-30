@@ -1,5 +1,7 @@
 require_relative './feature_spec_helper'
 
+$in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
+
 describe 'Static pages:', :type => :feature do
 
   shared_examples 'verify each static page' do |logged_in|
@@ -17,7 +19,7 @@ describe 'Static pages:', :type => :feature do
         unless logged_in
           # Verifying youtube links is done via visiting an external url.
           # We can only do so if we are not logged in as a user.
-          it 'has verified videos exist' do
+          it 'has verified videos exist', unless: $in_travis do
             verfiy_youtube_links path
           end
         end
