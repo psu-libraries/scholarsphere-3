@@ -67,15 +67,7 @@ class User < ActiveRecord::Base
 
   def ldap_exist!
     return false if self.login.blank?
-    exist = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      begin
-        Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
-      # There is a weird error where the result is nil this retries until that error stops
-      rescue => e
-        logger.warn "rescued exception: #{e}"
-        sleep(ScholarSphere::Application.config.ldap_unwilling_sleep)
-      end
-    end rescue false
+    exist = check_ldap_exist!
     if Hydra::LDAP.connection.get_operation_result.code == 0
       Rails.logger.debug "exist = #{exist}"
       attrs = {}
@@ -187,8 +179,12 @@ class User < ActiveRecord::Base
   def self.from_url_component(component)
     user = super(component)
     if user.nil?
-      user = User.create(login: component, email: component, system_created: true, logged_in: false)
-      user.populate_attributes
+      user = User.new(login: component, email: component, system_created: true, logged_in: false)
+      if user.check_ldap_exist!
+        user.populate_attributes
+      else
+        user = nil
+      end
     end
     return user
   end
@@ -204,6 +200,19 @@ class User < ActiveRecord::Base
         nil
       end
     end.compact
+  end
+
+  def check_ldap_exist!
+    return false if self.login.blank?
+    return retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+      begin
+        Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
+          # There is a weird error where the result is nil this retries until that error stops
+      rescue => e
+        logger.warn "rescued exception: #{e}"
+        sleep(ScholarSphere::Application.config.ldap_unwilling_sleep)
+      end
+    end rescue false
   end
 
 end

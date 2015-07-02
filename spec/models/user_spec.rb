@@ -103,4 +103,36 @@ describe User, type: :model do
                                                     ])
     end
   end
+
+  describe "#from_url_component" do
+    subject {User.from_url_component("cam")}
+
+    context "when user exists" do
+      before do
+        entry = Net::LDAP::Entry.new()
+        entry['dn'] = ["uid=mjg36,dc=psu,edu"]
+        entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
+        allow(Hydra::LDAP).to receive(:get_user).and_return([entry])
+        allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(true)
+      end
+
+      it "creates a user" do
+        expect(User.count).to eq 0
+        is_expected.to be_a_kind_of(User)
+        expect(User.count).to eq 1
+      end
+    end
+
+    context "user does not exists" do
+      before do
+        allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(false)
+      end
+
+      it "does not create a user" do
+        expect(User.count).to eq 0
+        is_expected.to_not be_a_kind_of(User)
+        expect(User.count).to eq 0
+      end
+    end
+  end
 end
