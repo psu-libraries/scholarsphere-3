@@ -10,6 +10,7 @@ gem 'hydra-derivatives', '1.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
 #gem 'sufia', '6.0.0'
 gem 'sufia', github: 'projecthydra/sufia', ref: '5ee26ca2f'
+gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'e7c83be25'
 gem 'active-fedora', '9.1.1'
 
 

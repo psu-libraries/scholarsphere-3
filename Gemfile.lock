@@ -8,6 +8,23 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/projecthydra-labs/browse-everything.git
+  revision: e7c83be25ebc6be96d6f06959a832377744873b5
+  ref: e7c83be25
+  specs:
+    browse-everything (0.8.2)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client
+      google_drive
+      httparty
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
+
+GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
   revision: 85dd700df3b3195bceea6b988ec70bb2b82bd282
   ref: 85dd700df3b3195bceea6b988ec70bb2b82bd282
@@ -167,17 +184,6 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
     breadcrumbs_on_rails (2.3.0)
-    browse-everything (0.8.2)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client
-      google_drive
-      httparty
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
     builder (3.2.2)
     byebug (4.0.3)
       columnize (= 0.9.0)
@@ -755,6 +761,7 @@ DEPENDENCIES
   active-fedora (= 9.1.1)
   better_errors
   binding_of_caller
+  browse-everything!
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
