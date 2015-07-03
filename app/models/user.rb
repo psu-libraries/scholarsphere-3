@@ -1,5 +1,3 @@
-require 'scholarsphere/utils'
-
 class User < ActiveRecord::Base
   # Connects this user object to Sufia behaviors.
   include Sufia::User
@@ -12,7 +10,7 @@ class User < ActiveRecord::Base
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
   # Workaround to retry LDAP calls a number of times
-  include ScholarSphere::Utils
+  include Sufia::Utils
 
   self.include_root_in_json = false
 
@@ -210,7 +208,7 @@ class User < ActiveRecord::Base
           # There is a weird error where the result is nil this retries until that error stops
       rescue => e
         logger.warn "rescued exception: #{e}"
-        sleep(ScholarSphere::Application.config.ldap_unwilling_sleep)
+        sleep(Sufia.config.retry_unless_sleep)
       end
     end rescue false
   end

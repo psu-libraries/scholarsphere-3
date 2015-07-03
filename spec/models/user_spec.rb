@@ -54,7 +54,7 @@ describe User, type: :model do
     end
     describe "LDAP miss behaves" do
       before do
-        ScholarSphere::Application.config.ldap_unwilling_sleep = 0.01
+        Sufia.config.retry_unless_sleep = 0.01
         filter = Net::LDAP::Filter.eq('uid', user.login)
         allow(Hydra::LDAP).to receive(:does_user_exist?).twice.with(filter).and_return(true)
         # get unwilling the first run through

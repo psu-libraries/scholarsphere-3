@@ -92,4 +92,6 @@ Sufia::Engine.configure do
 
 
   config.temp_file_base ="/tmp"
+
+  config.retry_unless_sleep = 2 # seconds
 end
