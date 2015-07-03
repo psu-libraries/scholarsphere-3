@@ -26,7 +26,8 @@ describe CollectionsController, type: :controller do
     end
     let(:resp) {[{ Solrizer.solr_name(:file_size, Sufia::GenericFileIndexingService::STORED_INTEGER)=>"20" }, { Solrizer.solr_name(:file_size, Sufia::GenericFileIndexingService::STORED_INTEGER)=>"20" } ]}
     before do
-      expect(ActiveFedora::SolrService).to receive(:query).and_return(resp)
+      allow(ActiveFedora::SolrService).to receive(:query).and_return(resp)
+      allow_any_instance_of(Collection).to receive(:members).and_return(["one","two"])
     end
     it "set the presenter size correctly" do
       get :show, id: collection.id, per_page: 1, page: 2

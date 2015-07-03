@@ -16,7 +16,7 @@ describe "Showing the Generic File", :type => :feature do
   it "allows a feature to be marked and deleted" do
     expect(page).to have_link "Feature"
     click_link "Feature"
-    expect(page).to have_content("Featured")
+    expect(page).to have_content("Unfeature")
     visit '/'
     within(".new_featured_work_list") do
       expect(page).to have_content(gf.title[0])
