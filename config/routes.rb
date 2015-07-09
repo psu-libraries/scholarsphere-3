@@ -21,10 +21,6 @@ ScholarSphere::Application.routes.draw do
     constraints ResqueAdmin do
       mount Resque::Server, at: 'queues'
     end
-    # Usage stats
-    constraints StatsAdmin do
-      get 'stats' => 'stats#index', as: :stats
-    end
   end
 
   get '/why-use-scholarsphere', to: redirect('/scholarsphere_student_flyer.pdf')
