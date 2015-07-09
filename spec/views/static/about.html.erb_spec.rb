@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe 'static/about.html.erb', type: :view do
+describe 'pages/show.html.erb', type: :view do
+  subject { rendered }
 
-  it "should show the static page" do
+  before do
+    allow(view).to receive(:can?).and_return(false)
+    assign(:page, ContentBlock.new(name: "about", value: "What is ScholarSphere?"))
     render
-    expect(rendered).to match /What is ScholarSphere?/
-
   end
+
+  it { is_expected.to match /What is ScholarSphere?/ }
+
 end
