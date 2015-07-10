@@ -19,7 +19,7 @@ namespace :scholarsphere do
   end
 
   def number_of_objects_in_fedora
-    result = ActiveFedora.fedora.connection.get(Rails.env).body
+    result = ActiveFedora.fedora.connection.get("").body
     triples = ::RDF::Reader.for(:ttl).new(result)
     rdf = ::RDF::Graph.new << triples
     rdf.query(predicate: ::Ldp.contains).count
