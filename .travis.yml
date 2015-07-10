@@ -4,6 +4,8 @@ bundler_args: --without development debug
 sudo: false
 rvm:
   - 2.2
+jdk:
+  - oraclejdk8
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
