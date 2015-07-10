@@ -1,0 +1,9 @@
+ul.creator_list li {
+    display: inline;
+    padding-right: 10px;
+    padding-left: 2px;
+}
+
+ul.creator_list {
+    padding-left: 0;
+}
