@@ -7,6 +7,7 @@
 //= require hydra/batch_select
 //= require hydra_collections
 //= require sufia/single_use_link
+//= require sufia/chevron
 //= require edit_ajax
 
 function modal_collection_list(action, event){
