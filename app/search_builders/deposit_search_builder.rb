@@ -6,6 +6,7 @@ class DepositSearchBuilder < Blacklight::Solr::SearchBuilder
   # @param solr_parameters the current solr parameters
   def include_depositor_facet(solr_parameters)
     solr_parameters[:"facet.field"].concat([Solrizer.solr_name("depositor", :symbol)])
+    solr_parameters[:"facet.limit"]=10000
     solr_parameters[:fq] = "has_model_ssim:GenericFile"
     solr_parameters[:rows] = 0
   end
