@@ -121,6 +121,15 @@
   }
 }
 
+div#announcement {
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  background-color: $vermilion;
+  border: 10px solid white;
+  padding-top: 10px;
+  border-radius: 15px;
+}
 @media only screen and (min-width: 320px) {
   #home_header {
     background-image: image-url('site_images/home-page-graphic-320.jpg');
