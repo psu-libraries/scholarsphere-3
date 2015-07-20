@@ -19,7 +19,13 @@ namespace :scholarsphere do
   end
 
   def number_of_objects_in_fedora
-    result = ActiveFedora.fedora.connection.get("").body
+    url = case Rails.env
+            when "test" then "test"
+            when "development" then "dev"
+            else ""
+          end
+
+    result = ActiveFedora.fedora.connection.get(url).body
     triples = ::RDF::Reader.for(:ttl).new(result)
     rdf = ::RDF::Graph.new << triples
     rdf.query(predicate: ::Ldp.contains).count
