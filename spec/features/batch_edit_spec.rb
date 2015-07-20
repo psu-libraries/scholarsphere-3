@@ -26,17 +26,9 @@ describe 'Batch management of generic files', :type => :feature do
         click_on 'batch-edit'
         assert page.has_content? 'Batch Edit Descriptions'
         expand_all_fields
-        fill_in_field 'contributor'
-        fill_in_field 'description'
-        fill_in_field 'tag'
-        fill_in_field 'publisher'
-        fill_in_field 'date_created'
-        fill_in_field 'subject'
-        fill_in_field 'language'
-        fill_in_field 'identifier'
-        fill_in_field 'based_near'
-        fill_in_field 'related_url'
-        sleep(1.second)
+        fill_in_fields ['contributor', 'description', 'tag', 'publisher',
+                        'date_created', 'subject', 'language', 'identifier',
+                        'based_near', 'related_url']
         file_1.reload
         file_2.reload
       end
@@ -131,6 +123,20 @@ describe 'Batch management of generic files', :type => :feature do
     end
   end
 
+  def fill_in_fields labels
+    labels.each do |label|
+      within "#form_#{label}" do
+        fill_in "generic_file_#{label}", with: "NEW #{label}"
+        click_button "#{label}_save"
+      end
+    end
+    labels.each do |label|
+      within "#form_#{label}" do
+        expect(page).to have_content 'Changes Saved'
+      end
+    end
+  end
+
   def expand label
     click_link label
   end
@@ -139,7 +145,7 @@ describe 'Batch management of generic files', :type => :feature do
     all(".accordion-toggle:not(.btn)").each do |link|
       id =  link["href"].gsub("#","")
       link.click
-      sleep(0.4.second)
+      sleep(0.05.second)
       expect(page).to have_css("div##{id}")
     end
   end
