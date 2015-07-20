@@ -34,9 +34,10 @@ describe "scholarsphere:solr" do
       subject { capture_stdout { Rake::Task["scholarsphere:solr:compare"].invoke } }
       it { is_expected.to start_with("Things appear to be OK") }
       context "when solr and fedora are out of sync" do
+        let!(:count) { ActiveFedora::Base.count }
         before { ActiveFedora::Cleaner.cleanout_solr }
         it "raises an error" do
-          expect { run_task "scholarsphere:solr:compare" }.to raise_error(RuntimeError, "Fedora's 2 objects exceeds Solr's 0")
+          expect { run_task "scholarsphere:solr:compare" }.to raise_error(RuntimeError, "Fedora's #{count} objects exceeds Solr's 0")
         end
       end
     end
