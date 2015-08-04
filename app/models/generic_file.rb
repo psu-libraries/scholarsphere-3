@@ -1,6 +1,11 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
 
+  def self.indexer
+    GenericFileIndexingService
+  end
+
+
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?
     return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
