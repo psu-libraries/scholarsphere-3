@@ -24,5 +24,23 @@ namespace :scholarsphere do
       end
     end
 
+    desc "Update date uploaded to be a date class instead of a string"
+    task update_upload_date: :environment do
+      totalNum =  GenericFile.all.count
+      resp = ActiveFedora::SolrService.instance.conn.get "select",
+                    params:{ fl:['id','date_uploaded_ssi'], fq: "#{ Solrizer.solr_name("has_model", :symbol)}:GenericFile", rows: totalNum}
+      idList = resp["response"]["docs"]
+
+      idList.each do |id_obj|
+        # date_uploaded_ssi only gets created when the date is stored as a string.  If it is properly stored as a date the field is date_uploaded_dtsi
+        unless (id_obj["date_uploaded_ssi"].blank?)
+          gf = GenericFile.find(id_obj["id"])
+          gf.date_uploaded = DateTime.parse(gf.date_uploaded)
+          gf.save
+        end
+      end
+    end
+
+
   end
 end

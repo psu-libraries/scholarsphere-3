@@ -79,4 +79,15 @@ class GenericFile < ActiveFedora::Base
     ids.map {|id| GenericFile.load_instance_from_solr id}
   end
 
+
+  def self.build_date_query(start_datetime, end_datetime)
+    start_date_str =  start_datetime.utc.strftime(date_format)
+    end_date_str = if end_datetime.blank?
+                     "*"
+                   else
+                     end_datetime.utc.strftime(date_format)
+                   end
+    "date_uploaded_dtsi:[#{start_date_str} TO #{end_date_str}]"
+  end
+
 end
