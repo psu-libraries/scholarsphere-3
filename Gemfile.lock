@@ -35,6 +35,28 @@ GIT
       rubydora (~> 1.8)
 
 GIT
+  remote: git://github.com/projecthydra/hydra-head.git
+  revision: 86e9db1a91f12bed4487b906697cb1eef0a0d500
+  ref: 86e9db1a91
+  specs:
+    hydra-access-controls (9.2.2)
+      active-fedora (~> 9.0)
+      activesupport (~> 4.0)
+      blacklight (~> 5.10)
+      cancancan (~> 1.8)
+      deprecation (~> 0.1)
+      sass-rails
+    hydra-core (9.2.2)
+      active-fedora (~> 9.1)
+      hydra-access-controls (= 9.2.2)
+      jettywrapper (>= 2.0.0)
+      rails (~> 4.0)
+    hydra-head (9.2.2)
+      hydra-access-controls (= 9.2.2)
+      hydra-core (= 9.2.2)
+      rails (>= 3.2.6)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 44f377d659b66fd672dde7138a3ab6853fe49128
   ref: 44f377d6
@@ -322,13 +344,6 @@ GEM
     httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    hydra-access-controls (9.1.4)
-      active-fedora (~> 9.0)
-      activesupport (~> 4.0)
-      blacklight (~> 5.10)
-      cancancan (~> 1.8)
-      deprecation (~> 0.1)
-      sass-rails
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
@@ -336,10 +351,6 @@ GEM
       blacklight (~> 5.10)
       deprecation (~> 0.1)
       hydra-head (~> 9.1)
-    hydra-core (9.1.4)
-      hydra-access-controls (= 9.1.4)
-      jettywrapper (>= 2.0.0)
-      rails (~> 4.0)
     hydra-derivatives (1.1.0)
       active-fedora (~> 9.0)
       activesupport (~> 4.0)
@@ -354,10 +365,6 @@ GEM
       simple_form (~> 3.1.0)
     hydra-file_characterization (0.3.1)
       activesupport (>= 3.0.0)
-    hydra-head (9.1.4)
-      hydra-access-controls (= 9.1.4)
-      hydra-core (= 9.1.4)
-      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -781,6 +788,7 @@ DEPENDENCIES
   fedora-migrate!
   fuubar
   hydra-derivatives (= 1.1.0)
+  hydra-head!
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
@@ -812,3 +820,6 @@ DEPENDENCIES
   webmock
   whenever
   yaml_db
+
+BUNDLED WITH
+   1.10.5
