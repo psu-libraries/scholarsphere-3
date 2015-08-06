@@ -60,13 +60,6 @@ class GenericFile < ActiveFedora::Base
     read_groups.include?('public')
   end
 
-  def characterize
-    if !content.nil? && content.content.size > 2**30
-      return false
-    end
-    super
-  end
-
   # Get the files with a sibling relationship (belongs_to :batch)
   # The batch id is minted when visiting the upload screen and attached
   # to each file when it is done uploading.  The Batch object is not created
