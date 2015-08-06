@@ -24,7 +24,7 @@ describe CollectionsController, type: :controller do
           c.apply_depositor_metadata("cam156")
       end
     end
-    let(:resp) {[{ Solrizer.solr_name(:file_size, Sufia::GenericFileIndexingService::STORED_INTEGER)=>"20" }, { Solrizer.solr_name(:file_size, Sufia::GenericFileIndexingService::STORED_INTEGER)=>"20" } ]}
+    let(:resp) {[{ Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL)=>"20" }, { Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL)=>"20" } ]}
     before do
       allow(ActiveFedora::SolrService).to receive(:query).and_return(resp)
       allow_any_instance_of(Collection).to receive(:members).and_return(["one","two"])

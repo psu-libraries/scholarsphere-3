@@ -1,6 +1,11 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
 
+  def self.indexer
+    GenericFileIndexingService
+  end
+
+
   def file_format
     return nil if self.mime_type.blank? and self.format_label.blank?
     return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
@@ -72,6 +77,17 @@ class GenericFile < ActiveFedora::Base
     return [] if batch.nil?
     ids = batch.generic_file_ids.reject { |sibling| sibling == id }
     ids.map {|id| GenericFile.load_instance_from_solr id}
+  end
+
+
+  def self.build_date_query(start_datetime, end_datetime)
+    start_date_str =  start_datetime.utc.strftime(date_format)
+    end_date_str = if end_datetime.blank?
+                     "*"
+                   else
+                     end_datetime.utc.strftime(date_format)
+                   end
+    "date_uploaded_dtsi:[#{start_date_str} TO #{end_date_str}]"
   end
 
 end
