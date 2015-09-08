@@ -56,53 +56,6 @@ GIT
       hydra-core (= 9.2.2)
       rails (>= 3.2.6)
 
-GIT
-  remote: git://github.com/projecthydra/sufia.git
-  revision: 44f377d659b66fd672dde7138a3ab6853fe49128
-  ref: 44f377d6
-  specs:
-    sufia (6.2.0)
-      blacklight (~> 5.12)
-      blacklight-gallery (~> 0.1)
-      blacklight_advanced_search (>= 5.1.4, < 6.0)
-      breadcrumbs_on_rails (~> 2.3.0)
-      browse-everything (~> 0.4)
-      daemons (~> 1.1)
-      devise (~> 3.0)
-      font-awesome-rails (~> 4.2)
-      hydra-batch-edit (~> 1.1)
-      hydra-editor (~> 1.0)
-      json-schema
-      mail_form (~> 1.5)
-      oauth
-      rails_autolink (~> 1.1)
-      railties (>= 4.2.0)
-      sass-rails
-      select2-rails (~> 3.5.9)
-      sufia-models (= 6.2.0)
-      tinymce-rails (~> 4.1)
-      tinymce-rails-imageupload (~> 4.0.16.beta)
-      yaml_db (~> 0.2)
-    sufia-models (6.2.0)
-      active-fedora (~> 9.1, >= 9.1.1)
-      active_fedora-noid (~> 0.1)
-      activerecord-import (~> 0.5)
-      activeresource (~> 4.0)
-      acts_as_follower (>= 0.1.1, < 0.3)
-      carrierwave (~> 0.9)
-      google-api-client (~> 0.7)
-      hydra-collections (>= 5.0.2, < 6.0)
-      hydra-derivatives (~> 1.0)
-      hydra-head (~> 9.0)
-      legato (~> 0.3)
-      mailboxer (~> 0.12)
-      mini_magick
-      nest (~> 1.1)
-      oauth2 (~> 0.9)
-      rails (~> 4.0)
-      resque (~> 1.23)
-      resque-pool (~> 0.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -142,7 +95,7 @@ GEM
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    active_fedora-noid (0.2.0)
+    active_fedora-noid (1.0.2)
       active-fedora (~> 9.0)
       noid (~> 0.7)
     activejob (4.2.2)
@@ -205,7 +158,7 @@ GEM
     bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
-    breadcrumbs_on_rails (2.3.0)
+    breadcrumbs_on_rails (2.3.1)
     builder (3.2.2)
     byebug (4.0.3)
       columnize (= 0.9.0)
@@ -347,7 +300,7 @@ GEM
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
-    hydra-collections (5.0.2)
+    hydra-collections (5.0.3)
       blacklight (~> 5.10)
       deprecation (~> 0.1)
       hydra-head (~> 9.1)
@@ -457,7 +410,7 @@ GEM
     net-ssh (2.9.2)
     netrc (0.10.3)
     newrelic_rpm (3.11.1.284)
-    noid (0.7.1)
+    noid (0.8.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     nom-xml (0.5.2)
@@ -479,7 +432,7 @@ GEM
     openseadragon (0.2.0)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
-    parslet (1.7.0)
+    parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
     passenger (5.0.5)
       rack
@@ -669,7 +622,7 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
-    simple_form (3.1.0)
+    simple_form (3.1.1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     sinatra (1.4.6)
@@ -712,6 +665,47 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     stomp (1.3.4)
+    sufia (6.3.0)
+      blacklight (~> 5.12)
+      blacklight-gallery (~> 0.1)
+      blacklight_advanced_search (>= 5.1.4, < 6.0)
+      breadcrumbs_on_rails (~> 2.3.0)
+      browse-everything (~> 0.4)
+      daemons (~> 1.1)
+      devise (~> 3.0)
+      font-awesome-rails (~> 4.2)
+      hydra-batch-edit (~> 1.1)
+      hydra-editor (~> 1.0)
+      json-schema
+      mail_form (~> 1.5)
+      oauth
+      rails_autolink (~> 1.1)
+      railties (>= 4.2.0)
+      sass-rails
+      select2-rails (~> 3.5.9)
+      sufia-models (= 6.3.0)
+      tinymce-rails (~> 4.1)
+      tinymce-rails-imageupload (~> 4.0.16.beta)
+      yaml_db (~> 0.2)
+    sufia-models (6.3.0)
+      active-fedora (~> 9.1, >= 9.1.1)
+      active_fedora-noid (~> 1.0)
+      activerecord-import (~> 0.5)
+      activeresource (~> 4.0)
+      acts_as_follower (>= 0.1.1, < 0.3)
+      carrierwave (~> 0.9)
+      google-api-client (~> 0.7)
+      hydra-collections (>= 5.0.2, < 6.0)
+      hydra-derivatives (~> 1.0)
+      hydra-head (~> 9.0)
+      legato (~> 0.3)
+      mailboxer (~> 0.12)
+      mini_magick
+      nest (~> 1.1)
+      oauth2 (~> 0.9)
+      rails (~> 4.0)
+      resque (~> 1.23)
+      resque-pool (~> 0.3)
     sxp (0.1.5)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -719,7 +713,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
-    tinymce-rails (4.1.6)
+    tinymce-rails (4.2.5)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)
@@ -812,7 +806,7 @@ DEPENDENCIES
   select2-rails
   sitemap
   sqlite3
-  sufia!
+  sufia (= 6.3.0)
   therubyracer
   uglifier
   unicorn-rails
