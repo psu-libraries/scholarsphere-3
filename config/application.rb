@@ -124,6 +124,9 @@ module ScholarSphere
     config.middleware.use 'Rack::Maintenance',
                           :file => Rails.root.join('public', 'maintenance.html')
     config.ldap_unwilling_sleep = 2 # seconds
+
+    # allow errors to be raised in callbacks
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
 

@@ -1,6 +1,6 @@
 module GenericFilesHelper
   def wait_for_page(redirect_url)
-    Timeout.timeout(Capybara.default_wait_time*5) do
+    Timeout.timeout(Capybara.default_max_wait_time*5) do
       loop until current_path == redirect_url
     end
   end

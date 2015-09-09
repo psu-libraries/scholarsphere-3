@@ -203,7 +203,7 @@ end
           within("#facets") do
             #open facet
             click_link(facet)
-            expect(page).to have_content(value, wait: Capybara.default_wait_time*2)
+            expect(page).to have_content(value, wait: Capybara.default_max_wait_time*2)
 
             # for some reason the page needs to settle before we can click the next link in the list
             sleep(1.second)

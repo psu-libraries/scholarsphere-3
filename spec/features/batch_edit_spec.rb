@@ -145,8 +145,12 @@ describe 'Batch management of generic files', :type => :feature do
     all(".accordion-toggle:not(.btn)").each do |link|
       id =  link["href"].gsub("#","")
       link.click
-      sleep(0.05.second)
+    end
+    sleep(0.05.second)
+    all(".accordion-toggle:not(.btn)").each do |link|
+      id =  link["href"].gsub("#","")
       expect(page).to have_css("div##{id}")
     end
+
   end
 end

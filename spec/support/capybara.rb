@@ -6,7 +6,7 @@ require 'capybara/rails'
 Capybara.default_selector = :css
 
 # Ajax can run a little slowly on some machines. Give it a chance.
-Capybara.default_wait_time = 15
+Capybara.default_max_wait_time = 15
 
 RSpec.configure do |config|
   # Provide support for #visit, #click_link, etc.

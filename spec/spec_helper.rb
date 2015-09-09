@@ -21,7 +21,7 @@ RSpec.configure do |config|
 
   # Make Capybara wait a bit longer so sluggish AJAX reqs can finish
   # on Travis
-  Capybara.default_wait_time = 15
+  Capybara.default_max_wait_time = 15
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
