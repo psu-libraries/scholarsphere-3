@@ -6,6 +6,6 @@ class ContactFormController < ApplicationController
        to: params[:contact_form][:email],
        subject: "ScholarSphere Contact Form - #{params[:contact_form][:subject]}",
        body: Sufia::Engine.config.contact_form_delivery_body
-     ).deliver
+     ).deliver_now
   end 
 end
