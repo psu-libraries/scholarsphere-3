@@ -52,6 +52,9 @@ describe 'Generic File viewing and downloading:', :type => :feature do
         expect(page).to have_link 'http://example.org/TheDescriptionLink/'
         expect(page).to have_link file_1.related_url.first
 
+        # 'I can download an Endnote version of the file'
+        endnote_link = find_link('EndNote')[:href]
+
         # get an array of all the links we are testing
         test_links = {}
 
@@ -83,25 +86,25 @@ describe 'Generic File viewing and downloading:', :type => :feature do
         test_links.each do |name, link|
           test_link name, link
         end
-      end
 
-
-      specify 'I can download an Endnote version of the file' do
-        click_link 'EndNote'
+        #test the end not page
+        visit endnote_link
         expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer; charset=utf-8')
+
       end
 
-      specify 'I can see the Mendeley modal' do
-        skip 'This does not appear to be functioning properly'
-        click_link 'Mendeley'
-        expect(page).to have_css('.modal-header')
-      end
 
-      specify 'I can see the Zotero modal' do
-        skip 'This does not appear to be functioning properly'
-        click_link 'Zotero'
-        expect(page).to have_css('.modal-header')
-      end
+      # specify 'I can see the Mendeley modal' do
+      #  skip 'This does not appear to be functioning properly'
+      #  click_link 'Mendeley'
+      #  expect(page).to have_css('.modal-header')
+      #end
+      #
+      #specify 'I can see the Zotero modal' do
+      #  skip 'This does not appear to be functioning properly'
+      #  click_link 'Zotero'
+      #  expect(page).to have_css('.modal-header')
+      #end
 
     end
 
