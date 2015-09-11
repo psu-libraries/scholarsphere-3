@@ -13,7 +13,6 @@ gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'e7
 gem 'active-fedora', '9.4.0'
 gem 'hydra-head', '9.2.2'
 
-
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'

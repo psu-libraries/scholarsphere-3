@@ -1,5 +1,9 @@
+Sufia.config do |config|
+  # Sufia can integrate with Zotero's Arkivo service for automatic deposit
+  # of Zotero-managed research items.
+  # Defaults to false.  See Sufia's README for more info
+  config.arkivo_api = true
 
-Sufia::Engine.configure do
   config.application_name = "ScholarSphere"
   config.enable_contact_form_delivery = true
   config.contact_form_delivery_body = <<-EOM
