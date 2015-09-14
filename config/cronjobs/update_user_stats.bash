@@ -24,7 +24,7 @@ RESULTS=`bundle exec rake sufia:stats:user_stats 2>&1`
 
 if [ $? -ne 0 ]; then
   SUBJECT="`hostname` user stats task"
-  MESSAGE="rake sufia:stats:user_stats exited with a non-zero status.  $RESULTS"
+  MESSAGE="rake scholarsphere:stats:user_stats exited with a non-zero status.  $RESULTS"
   echo $MESSAGE | mail -s "$SUBJECT" UL-DLT-HYDRA@LISTS.PSU.EDU
 fi
 
