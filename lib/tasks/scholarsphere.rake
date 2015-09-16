@@ -363,4 +363,13 @@ namespace :scholarsphere do
     f.write(users.join(", "))
     f.close
   end
+
+  desc "generate and mail the stats report for yesterday"
+  task "deliver_stats" => :environment do
+    StatsMailer.stats_mail(1.day.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
+  end
+  desc "generate and mail the stats report for the past week"
+  task "deliver_weekly_stats" => :environment do
+    StatsMailer.stats_mail(8.day.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
+  end
 end

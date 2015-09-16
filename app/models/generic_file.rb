@@ -83,4 +83,13 @@ class GenericFile < ActiveFedora::Base
     "date_uploaded_dtsi:[#{start_date_str} TO #{end_date_str}]"
   end
 
+  def url
+    "#{current_host}#{Sufia::Engine.routes.url_helpers.generic_file_path(self)}"
+  end
+
+  private
+    def current_host
+      Rails.application.get_vhost_by_host[1].chomp("/")
+    end
+
 end
