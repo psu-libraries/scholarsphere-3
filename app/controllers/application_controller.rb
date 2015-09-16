@@ -36,11 +36,13 @@ class ApplicationController < ActionController::Base
   #   * forcing the session to be restarted on every request
   #   * ensuring the user will be logged out if REMOTE_USER is not set
   #   * clearing the entire session including flash messages
-  def clear_session_user  
+  def clear_session_user
     return nil_request if request.nil?
     search = session[:search].dup if session[:search]
+    return_url = session[:user_return_to].dup if session[:user_return_to]
     request.env['warden'].logout unless user_logged_in?
     session[:search] = search
+    session[:user_return_to] = return_url
   end
 
   def render_404(exception)

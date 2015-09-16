@@ -24,5 +24,13 @@ describe SessionsController, type: :controller do
       get :new
       expect(response).to redirect_to Sufia::Engine.config.login_url
     end
+
+    context "when user_return_to is set" do
+      it "should not redirect to the central login page" do
+        session["user_return_to"] = "http://return_to_me"
+        get :new
+        expect(response.redirect_url).to include "http://return_to_me"
+      end
+    end
   end
 end
