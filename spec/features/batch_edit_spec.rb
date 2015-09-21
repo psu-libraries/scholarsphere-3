@@ -5,7 +5,6 @@
 require_relative './feature_spec_helper'
 
 describe 'Batch management of generic files', :type => :feature do
-  skip "These test are causing issues on Travis"
 
   let!(:current_user) { create :user }
   let!(:file_1) { create_file current_user, {title:'world.png'} }
@@ -144,6 +143,7 @@ describe 'Batch management of generic files', :type => :feature do
   def expand_all_fields
     all(".accordion-toggle:not(.btn).collapsed").each do |link|
       expand link.text
+      sleep(0.05)
     end
     #all(".accordion-toggle:not(.btn)").each do |link|
     #  id =  link["href"].gsub("#","")
