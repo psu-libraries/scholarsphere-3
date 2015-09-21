@@ -138,18 +138,14 @@ describe 'Batch management of generic files', :type => :feature do
 
   def expand label
     click_link label
+    sleep(0.1)
   end
 
   def expand_all_fields
     all(".accordion-toggle:not(.btn).collapsed").each do |link|
       expand link.text
-      sleep(0.05)
+      id =  link["href"].gsub("#","")
+      expect(page).to have_css("div##{id}")
     end
-    #all(".accordion-toggle:not(.btn)").each do |link|
-    #  id =  link["href"].gsub("#","")
-    #  puts "id = id"
-    #  expect(page).to have_css("div##{id}", wait: Capybara.default_max_wait_time*4)
-    #end
-
   end
 end
