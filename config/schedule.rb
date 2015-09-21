@@ -5,7 +5,7 @@ every :day, at: "12:00am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_generate_sitemap.sh"
 end
 
-every :day, at: "12:20am", roles: [:app] do   
+every :day, at: "12:20am", roles: [:job] do
   command "/dlt/scholarsphere/bin/whenever_audit_repository.sh"
 end
 
@@ -15,6 +15,10 @@ end
 
 every :day, at: "3:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/update_user_stats.bash"
+end
+
+every :day, at: "6:00 am", roles: [:job] do
+command "#{path}/config/cronjobs/send_daily_stats.bash"
 end
 
 every 60.minutes, roles: [:app] do
