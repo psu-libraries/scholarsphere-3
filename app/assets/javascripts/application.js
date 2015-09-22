@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require blacklight/blacklight
+//= require sufia/edit_metadata
 //= require sufia
 //= require batch_edit
 //= require scholarsphere_fileupload
@@ -8,7 +9,6 @@
 //= require hydra_collections
 //= require sufia/single_use_link
 //= require sufia/chevron
-//= require edit_ajax
 
 function modal_collection_list(action, event){
   if(action == 'open'){
@@ -20,3 +20,4 @@ function modal_collection_list(action, event){
 
   event.preventDefault();
 }
+
