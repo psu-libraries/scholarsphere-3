@@ -25,6 +25,15 @@ ScholarSphere::Application.routes.draw do
 
   get '/why-use-scholarsphere', to: redirect('/scholarsphere_student_flyer.pdf')
 
+  if defined?(Sufia::StatsAdmin)
+    namespace :admin do
+      constraints Sufia::StatsAdmin do
+        get 'stats/export' => 'stats#export', as: :stats_export
+      end
+    end
+  end
+
+
   mount BrowseEverything::Engine => '/browse'
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'

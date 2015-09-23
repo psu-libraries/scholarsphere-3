@@ -1,0 +1,11 @@
+<div class="stats">
+  <h1>Statistics for <%= application_name %>
+    <%= Sufia::VERSION %></h1>
+
+  <h2>Total <%= application_name %> Users:&nbsp; <%= @presenter.users_count %> </h2>
+  <%= render "admin/stats/export_link" %>
+  <hr/>
+  <%= render "admin/stats/stats_by_date" %>
+  <hr/>
+  <%= render "admin/stats/top_data" %>
+</div>

@@ -145,7 +145,7 @@ describe 'Batch management of generic files', :type => :feature do
     all(".accordion-toggle:not(.btn).collapsed").each do |link|
       expand link.text
       id =  link["href"].gsub("#","")
-      expect(page).to have_css("div##{id}")
+      expect(page).to have_css("div##{id}", wait: Capybara.default_max_wait_time*2)
     end
   end
 end

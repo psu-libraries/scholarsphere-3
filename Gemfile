@@ -8,7 +8,7 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 gem 'hydra-ldap', '0.1.0'
 gem 'hydra-derivatives', '1.1.0'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
-gem 'sufia', github: 'projecthydra/sufia', ref: 'f8387043b82641537ee830a7274c8c99582c74c3'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'fa0190067b'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'e7c83be25'
 gem 'active-fedora', '9.4.0'
 gem 'hydra-head', '9.2.2'

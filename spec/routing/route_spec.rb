@@ -23,4 +23,13 @@ describe 'Routes', :type => :routing do
       expect({ get: '/login' }).to route_to(controller: 'sessions', action: 'new')
     end
   end
+
+  describe 'Stats Export' do
+    before do
+      allow(Sufia::StatsAdmin).to receive(:matches?).and_return(true)
+    end
+    it "should route to export" do
+      expect({get: 'admin/stats/export'}).to route_to(controller: 'admin/stats', action: 'export')
+    end
+  end
 end
