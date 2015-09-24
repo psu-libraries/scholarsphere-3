@@ -7,8 +7,8 @@ describe SessionsController, type: :controller do
       expect(destroy_user_session_path).to eq('/logout')
     end
     it "should send /login to sessions#new" do
-      expect({ get: '/login' }).to route_to(controller: 'sessions', action: 'new')
-      expect(new_user_session_path).to eq('/login')
+      expect({ get: '/login_session' }).to route_to(controller: 'sessions', action: 'new')
+      expect(new_user_session_path).to eq('/login_session')
     end
   end
   describe "#destroy" do
