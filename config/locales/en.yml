@@ -43,3 +43,8 @@ en:
       permissions:
         subject: "Permission change notification"
         notification: "You can now %{access} file %{file}"
+  statistic:
+    report:
+      subject: "ScholarSphere - Statistic Report"
+      csv:
+        file_name: "scholarsphere-stats_%{date_str}.csv"
