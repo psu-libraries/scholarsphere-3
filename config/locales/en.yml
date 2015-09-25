@@ -30,7 +30,7 @@ en:
      language: " The language of the file content."
      publisher: "The person or group making the file available. Generally this is Penn State."
      rights: "Licensing and distribution information governing access to the file. Select from the provided drop-down list. <em>This is a required field</em>."
-
+     on_behalf_of_html: "A list of users who have given you permission to deposit on their behalf.  Users can specify the people who have rights to deposit on their behalf from their <a href='/dashboard#proxy_management'>dashboard</a>"
   blacklight:
     search:
       facets:
