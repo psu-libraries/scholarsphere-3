@@ -93,8 +93,7 @@ class ApplicationController < ActionController::Base
   def filtered_flash_messages
     [flash[:alert]].flatten.reject do |item|
       item == 'You need to sign in or sign up before continuing.' ||
-        item =~ /is not recognized by the 'identify' command/ ||
-        item == 'You are not authorized to access this page.'
+        item =~ /is not recognized by the 'identify' command/
     end
   end
 
