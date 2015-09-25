@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Generic File uploading and deletion:', :type => :feature do
+describe 'Generic File uploading and deletion:', type: :feature do
   context 'When logged in as a PSU user' do
     let!(:current_user) { create :user }
     let(:other_user) { create :user }
@@ -18,7 +18,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
       before do
         Sufia::Engine.routes.url_helpers.new_generic_file_path
       end
-      it "should not show Sufia's user agreement" do
+      it "does not show Sufia's user agreement" do
         expect(page).to_not have_content("Sufia's Deposit Agreement")
       end
     end
@@ -29,15 +29,15 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file 'files[]', test_file_path(filename)
-        redirect_url = find("#redirect-loc", visible:false).text(:all)
+        redirect_url = find("#redirect-loc", visible: false).text(:all)
         click_button 'main_upload_start'
         wait_for_page redirect_url
         expect(page).to have_content 'Apply Metadata'
       end
 
       specify 'I can view help for rights, visibility, and share with' do
-        #I can add additional rights
-        expect(User).to receive(:query_ldap_by_name_or_id).and_return([{id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})"}])
+        # I can add additional rights
+        expect(User).to receive(:query_ldap_by_name_or_id).and_return([{ id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})" }])
         find('.select2-container').click
         sleep(1)
         find('#select2-drop .select2-input').set other_user.user_key
@@ -46,8 +46,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         click_on "add_new_user_skel"
         expect(page).to have_css("label.control-label", text: other_user.user_key)
 
-
-        #I am adding can click on more metadata here so we do not need to add a separate test for it
+        # I am adding can click on more metadata here so we do not need to add a separate test for it
         expect(page).not_to have_css("#generic_file_publisher")
         click_on 'Show Additional Fields'
         expect(page).to have_css("#generic_file_publisher")
@@ -80,7 +79,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         # with a close button.
         expect(page).to_not have_css('#rightsModal')
         within('#generic_file_rights_help_modal') do
-          find('.help-icon').click()
+          find('.help-icon').click
         end
         expect(page).to have_css('#rightsModal')
         expect(page).to have_css('h2#rightsModallLabel', text: 'ScholarSphere License Descriptions')
@@ -98,12 +97,11 @@ describe 'Generic File uploading and deletion:', :type => :feature do
         # expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
         # page.should_not have_selector(:css, '#rightsModal')
       end
-
     end
     context 'cloud providers' do
       before do
-        allow(BrowseEverything).to receive(:config) { {"dropbox"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298", max_upload_file_size: 20*1024}} }
-        allow(Sufia.config).to receive(:browse_everything) { {"dropbox"=>{:app_key=>"fakekey189274942347", :app_secret=>"fakesecret489289472347298"}} }
+        allow(BrowseEverything).to receive(:config) { { "dropbox" => { app_key: "fakekey189274942347", app_secret: "fakesecret489289472347298", max_upload_file_size: 20 * 1024 } } }
+        allow(Sufia.config).to receive(:browse_everything) { { "dropbox" => { app_key: "fakekey189274942347", app_secret: "fakesecret489289472347298" } } }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
@@ -127,7 +125,7 @@ describe 'Generic File uploading and deletion:', :type => :feature do
           expect(page).to have_content "Writer FAQ.txt"
           expect(page).not_to have_css "a", text: "Writer FAQ.txt"
           expect(page).to have_content "Markdown Test.txt"
-          find("a", :text => "Markdown Test.txt").trigger("click")
+          find("a", text: "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"
           click_on("Submit")
           expect(page).to have_content "Submit 1 selected files"
@@ -152,7 +150,6 @@ describe 'Generic File uploading and deletion:', :type => :feature do
     end
 
     context 'user does not need help' do
-
       context 'with a single file' do
         before do
           upload_generic_file filename
@@ -178,7 +175,6 @@ describe 'Generic File uploading and deletion:', :type => :feature do
           expect(page).not_to have_content file.title.first
         end
       end
-
     end
   end
 

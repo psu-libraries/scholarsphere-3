@@ -2,7 +2,6 @@ require "spec_helper"
 require "rake"
 
 describe "scholarsphere:solr" do
-
   before do
     load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere-solr.rake"]
   end
@@ -23,7 +22,7 @@ describe "scholarsphere:solr" do
         f.save
       end
     end
-    
+
     describe "index" do
       let(:id) { GenericFile.all.first.id }
       subject { capture_stdout { Rake::Task["scholarsphere:solr:index"].invoke(id) } }
@@ -42,5 +41,4 @@ describe "scholarsphere:solr" do
       end
     end
   end
-
 end

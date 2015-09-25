@@ -22,7 +22,7 @@ describe Behaviors::PermissionsNotificationBehavior do
   describe "evaluate_permission_state" do
     let(:no_perm) { [] }
     let(:one_perm) { [{ name: "abd123", type: "person", access: "edit" }] }
-    let(:multi_perm) { [{ name: "zzz123", type: "person", access: "edit" },{ name: "def123", type: "person", access: "edit" }] }
+    let(:multi_perm) { [{ name: "zzz123", type: "person", access: "edit" }, { name: "def123", type: "person", access: "edit" }] }
 
     context "no permissions after" do
       it "has nothing added or removed for no permissions before" do
@@ -53,7 +53,7 @@ describe Behaviors::PermissionsNotificationBehavior do
         expect(state[:removed]).to eq []
       end
       it "has permissions added and removed for multiple permissions before" do
-        state = subject.evaluate(multi_perm,one_perm)
+        state = subject.evaluate(multi_perm, one_perm)
         expect(state[:added]).to eq one_perm
         expect(state[:removed]).to eq multi_perm
       end
@@ -77,8 +77,8 @@ describe Behaviors::PermissionsNotificationBehavior do
     end
   end
   describe "notify_users" do
-    let (:user)  { double('stubbed user') }
-    let (:batch_user)  { double('stubbed batch_user') }
+    let (:user) { double('stubbed user') }
+    let (:batch_user) { double('stubbed batch_user') }
     let (:message) { "You can now edit file title" }
     let (:message_subject) { "Permission change notification" }
     let (:generic_file) { double('stubbed file') }
@@ -86,7 +86,7 @@ describe Behaviors::PermissionsNotificationBehavior do
     before do
       allow(User).to receive(:find_by_user_key).and_return(user)
       allow(User).to receive(:batchuser).and_return(batch_user)
-      allow(subject).to receive(:params).and_return({ action: "update" })
+      allow(subject).to receive(:params).and_return(action: "update")
       allow(generic_file).to receive(:title).and_return("title")
     end
 
@@ -98,14 +98,14 @@ describe Behaviors::PermissionsNotificationBehavior do
       end
     end
     context "permissions added" do
-      let (:state){ { added: [{ name: "abd123", type: "person", access: "edit" }], removed: [] } }
+      let (:state) { { added: [{ name: "abd123", type: "person", access: "edit" }], removed: [] } }
       it "notifies one user added" do
         expect(batch_user).to receive(:send_message).with(user, message, message_subject)
         subject.notify(state, generic_file)
       end
     end
     context "permissions removed" do
-      let (:state){ { added: [ ], removed: [{ name: "abd123", type: "person", access: "edit" }] } }
+      let (:state) { { added: [], removed: [{ name: "abd123", type: "person", access: "edit" }] } }
       it "notifies no one" do
         expect(batch_user).not_to receive(:send_message)
         subject.notify(state, generic_file)

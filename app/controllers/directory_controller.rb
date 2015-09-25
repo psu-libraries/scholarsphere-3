@@ -1,5 +1,4 @@
 class DirectoryController < ApplicationController
-
   # returns true if the user exists and false otherwise
   def user
     render json: User.directory_attributes(params[:uid])

@@ -12,8 +12,8 @@ module SufiaHelper
     end
   end
 
-  def characterization_terms terms = Hash.new
-    FitsDatastream.terminology.terms.each_pair do |k, v|
+  def characterization_terms(terms = {})
+    FitsDatastream.terminology.terms.each_pair do |_k, v|
       next unless v.respond_to? :proxied_term
       term = v.proxied_term
       begin

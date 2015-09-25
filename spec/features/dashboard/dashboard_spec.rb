@@ -2,8 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'The Dashboard', :type => :feature do
-
+describe 'The Dashboard', type: :feature do
   let!(:current_user) { create :user }
 
   before do
@@ -15,7 +14,7 @@ describe 'The Dashboard', :type => :feature do
       f.apply_depositor_metadata(current_user.user_key)
       f.save
     end }
-    let!(:collection)   { Collection.new.tap do |c|
+    let!(:collection) { Collection.new.tap do |c|
       c.title = "test"
       c.apply_depositor_metadata(current_user.user_key)
       c.save
@@ -35,7 +34,6 @@ describe 'The Dashboard', :type => :feature do
   end
 
   context "without files and collections" do
-
     before do
       go_to_dashboard
     end
@@ -54,7 +52,6 @@ describe 'The Dashboard', :type => :feature do
     end
 
     describe 'proxy portal' do
-
       context "with multiple current proxies" do
         let!(:second_user) { create(:user, display_name: "First Proxy") }
         let!(:third_user) { create(:user, display_name: "Second Proxy") }
@@ -63,7 +60,7 @@ describe 'The Dashboard', :type => :feature do
           create_proxy_using_partial(second_user, third_user)
         end
 
-        it "should list each proxy if both are authorized" do
+        it "lists each proxy if both are authorized" do
           within("#authorizedProxies") do
             expect(page).to have_content(second_user.display_name)
             expect(page).to have_content(third_user.display_name)
@@ -74,7 +71,7 @@ describe 'The Dashboard', :type => :feature do
             expect(page).to have_content(third_user.display_name)
           end
 
-          #should remove a proxy
+          # should remove a proxy
           first(".remove-proxy-button").click
           sleep(1.second)
           go_to_dashboard
@@ -83,16 +80,13 @@ describe 'The Dashboard', :type => :feature do
             expect(page).not_to have_content(second_user.display_name)
           end
         end
-
       end
-
     end
   end
 
   context "with transfers" do
-    
     let(:another_user) { create :jill }
-    
+
     context "when incoming" do
       let!(:incoming_file) do
         GenericFile.new.tap do |f|
@@ -126,9 +120,7 @@ describe 'The Dashboard', :type => :feature do
           expect(page).to have_content "less than a minute ago"
           expect(page).to have_button "Cancel"
         end
-      end      
+      end
     end
-
   end
-
 end

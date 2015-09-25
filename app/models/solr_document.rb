@@ -12,15 +12,21 @@ class SolrDocument
 
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
-    collectionsIn = Array(self[Solrizer.solr_name(:collection)])
+    collections_in = Array(self[Solrizer.solr_name(:collection)])
     collections = []
-    collectionsIn.each {|pid| collections << Collection.load_instance_from_solr(pid) rescue {} }
-    return collections
+    collections_in.each do|pid|
+      begin
+        collections << Collection.load_instance_from_solr(pid)
+      rescue
+        logger.warn("Error loading Collection: #{pid} from solr")
+      end
+    end
+    collections
   end
 
   def creator
     return nil if self[Solrizer.solr_name(:creator)].blank?
-    "#{ ul_start_tags } #{ self[Solrizer.solr_name(:creator)].join(ul_join_tags) } #{ ul_end_tags }".html_safe
+    "#{ul_start_tags} #{self[Solrizer.solr_name(:creator)].join(ul_join_tags)} #{ul_end_tags}".html_safe
   end
 
   private
@@ -40,5 +46,4 @@ class SolrDocument
     def person_separator
       "<span class='glyphicon glyphicon-user'></span>"
     end
-
 end

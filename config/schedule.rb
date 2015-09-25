@@ -1,7 +1,7 @@
 # Use this file to easily define all of your cron jobs.
 set :output, "#{path}/log/wheneveroutput.log"
 
-every :day, at: "12:00am", roles: [:app] do   
+every :day, at: "12:00am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_generate_sitemap.sh"
 end
 
@@ -18,7 +18,7 @@ every :day, at: "3:00 am", roles: [:job] do
 end
 
 every :day, at: "6:00 am", roles: [:job] do
-command "#{path}/config/cronjobs/send_daily_stats.bash"
+  command "#{path}/config/cronjobs/send_daily_stats.bash"
 end
 
 every 60.minutes, roles: [:app] do

@@ -27,8 +27,7 @@ RSpec.configure do |config|
       $redis.keys('GenericFile:*').each { |key| $redis.del key }
     rescue => e
       Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
-    end  
-
+    end
   end
 
   config.before :each do
@@ -41,7 +40,7 @@ RSpec.configure do |config|
   end
 
   config.after do
-    DatabaseCleaner.clean if  Capybara.current_driver == :rack_test
+    DatabaseCleaner.clean if Capybara.current_driver == :rack_test
   end
 
   config.after(:each) do
@@ -51,5 +50,4 @@ RSpec.configure do |config|
     page.driver.reset!
     sleep 0.1
   end
-
 end

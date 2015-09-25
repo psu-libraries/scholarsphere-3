@@ -34,7 +34,6 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
-
   mount BrowseEverything::Engine => '/browse'
   mount Hydra::Collections::Engine => '/'
   mount Sufia::Engine => '/'

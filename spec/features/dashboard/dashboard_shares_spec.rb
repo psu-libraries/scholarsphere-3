@@ -2,8 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Shares', :type => :feature do
-
+describe 'Dashboard Shares', type: :feature do
   let!(:current_user) { create :user }
 
   before do
@@ -55,5 +54,4 @@ describe 'Dashboard Shares', :type => :feature do
       expect(page).to have_content(gf2.title[0])
     end
   end
-
 end

@@ -2,9 +2,8 @@ require "spec_helper"
 require "rake"
 
 describe "scholarsphere:list_users" do
-
   let!(:user_list) do
-    users= []
+    users = []
     (1..3).each do |n|
       users << User.create(login: "user#{n}", email: "user#{n}@example.org")
     end

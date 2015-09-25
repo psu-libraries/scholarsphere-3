@@ -1,7 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe 'Visting the home page:', :type => :feature do
-
+describe 'Visting the home page:', type: :feature do
   let!(:current_user) { create :user }
 
   before :each do
@@ -12,7 +11,6 @@ describe 'Visting the home page:', :type => :feature do
   end
 
   context 'when logged in' do
-
     before do
       sign_in_as current_user
     end
@@ -53,8 +51,8 @@ describe 'Visting the home page:', :type => :feature do
     end
 
     context 'and tag cloud is shown' do
-      let!(:gf1) { create_file current_user, {title:'doc 1', tag:["tagX", "tagY"]} }
-      let!(:gf2) { create_file current_user, {title:'doc 2', tag:["tagY", "tagZ"]} }
+      let!(:gf1) { create_file current_user, title: 'doc 1', tag: ["tagX", "tagY"] }
+      let!(:gf2) { create_file current_user, title: 'doc 2', tag: ["tagY", "tagZ"] }
       specify 'tags are listed' do
         visit '/'
         expect(page).to have_content 'tagX tagY tagZ'
@@ -62,16 +60,15 @@ describe 'Visting the home page:', :type => :feature do
 
       specify 'clicking on a tag goes to the right URL' do
         visit '/'
-        target_url = URI.encode('/catalog?f[tag_sim][]=tagY','[]')
+        target_url = URI.encode('/catalog?f[tag_sim][]=tagY', '[]')
         click_link('tagY')
         expect(current_url).to end_with(target_url)
       end
     end
 
     context 'with a mobile device' do
-
       before do
-        page.driver.browser.resize(400,600)
+        page.driver.browser.resize(400, 600)
         visit "/"
       end
 
@@ -80,11 +77,10 @@ describe 'Visting the home page:', :type => :feature do
           expect(page).not_to have_content(current_user.name)
         end
       end
-
     end
   end
 
-  def add_groups_to_current_user number_of_groups
+  def add_groups_to_current_user(number_of_groups)
     group_list_array = []
     (0..number_of_groups).each do |i|
       group_list_array << "umg/up.dlt.scholarsphere-admin.admin#{i}"
@@ -95,5 +91,4 @@ describe 'Visting the home page:', :type => :feature do
     current_user.update_attribute :groups_last_update, Time.now
     current_user.save!
   end
-
 end

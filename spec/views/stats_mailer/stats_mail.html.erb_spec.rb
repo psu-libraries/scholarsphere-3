@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'stats_mailer/stats_mail.html.erb', type: :view do
-
   let(:presenter) { StatsPresenter.new(start_datetime, end_datetime) }
 
   before do
@@ -21,7 +20,7 @@ describe 'stats_mailer/stats_mail.html.erb', type: :view do
       allow(presenter).to receive(:single_day?).and_return(true)
     end
 
-    it "should draw report" do
+    it "draws report" do
       render
       page = Capybara::Node::Simple.new(rendered)
       expect(page).to have_selector("h1")
@@ -43,7 +42,7 @@ describe 'stats_mailer/stats_mail.html.erb', type: :view do
       allow(presenter).to receive(:single_day?).and_return(false)
     end
 
-    it "should draw report" do
+    it "draws report" do
       render
       page = Capybara::Node::Simple.new(rendered)
       expect(page).to have_selector("h1")

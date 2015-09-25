@@ -20,14 +20,14 @@ describe CollectionsController, type: :controller do
   context "when requesting an existing collection" do
     let(:collection) do
       Collection.create(title: "My collection",
-          description: "My incredibly detailed description of the collection") do |c|
-          c.apply_depositor_metadata("cam156")
+                        description: "My incredibly detailed description of the collection") do |c|
+        c.apply_depositor_metadata("cam156")
       end
     end
-    let(:resp) {[{ Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL)=>"20" }, { Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL)=>"20" } ]}
+    let(:resp) { [{ Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL) => "20" }, { Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL) => "20" }] }
     before do
       allow(ActiveFedora::SolrService).to receive(:query).and_return(resp)
-      allow_any_instance_of(Collection).to receive(:members).and_return(["one","two"])
+      allow_any_instance_of(Collection).to receive(:members).and_return(["one", "two"])
     end
     it "set the presenter size correctly" do
       get :show, id: collection.id, per_page: 1, page: 2

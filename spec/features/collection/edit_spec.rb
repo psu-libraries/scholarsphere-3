@@ -3,17 +3,16 @@ require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 include Selectors::EditCollections
 
-describe 'Collection editing:', :type => :feature do
-
+describe 'Collection editing:', type: :feature do
   let!(:current_user) { create :user }
-  #TODO why can this not be small_file.txt??
-  #let(:filenames) { %w{world.png little_file.txt scholarsphere_test5.txt} }
+  # TODO: why can this not be small_file.txt??
+  # let(:filenames) { %w{world.png little_file.txt scholarsphere_test5.txt} }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
-  let!(:file_1) { create_file current_user, {title:'world.png'} }
-  let!(:file_2) { create_file current_user, {title:'little_file.txt'} }
-  let!(:file_3) { create_file current_user, {title:'scholarsphere_test5.txt'} }
+  let!(:file_1) { create_file current_user, title: 'world.png' }
+  let!(:file_2) { create_file current_user, title: 'little_file.txt' }
+  let!(:file_3) { create_file current_user, title: 'scholarsphere_test5.txt' }
   let(:collection) { Collection.first }
 
   before do
@@ -44,7 +43,6 @@ describe 'Collection editing:', :type => :feature do
   end
 
   describe "When editing a collection's metadata" do
-
     let(:updated_title) { 'Updated Title' }
     let(:updated_description) { 'Updtaed description text.' }
     let(:updated_creators) { ['Dorje Trollo', 'Vajrayogini'] }
@@ -55,7 +53,7 @@ describe 'Collection editing:', :type => :feature do
       click_link 'Edit Collection'
       expect(page).to have_field 'collection_title', with: title
       expect(page).to have_field 'collection_description',
-          with: description
+                                 with: description
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
       fill_in 'Creator', with: updated_creators.first

@@ -2,14 +2,13 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Highlights', :type => :feature do
-
+describe 'Dashboard Highlights', type: :feature do
   let!(:current_user) { create :user }
 
   before do
     sign_in_as current_user
     go_to_dashboard_highlights
-  end  
+  end
 
   specify 'tab title and buttons' do
     expect(page).to have_content("My Highlights")
@@ -19,5 +18,4 @@ describe 'Dashboard Highlights', :type => :feature do
     end
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
-
 end

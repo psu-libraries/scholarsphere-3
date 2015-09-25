@@ -3,8 +3,8 @@ module UserLogin
     driver_name = "rack_test_authenticated_header_#{login}".to_s
     Capybara.register_driver(driver_name) do |app|
       Capybara::RackTest::Driver.new(app,
-        respect_data_method: true,
-        headers: { 'REMOTE_USER' => login })
+                                     respect_data_method: true,
+                                     headers: { 'REMOTE_USER' => login })
     end
     user = User.find_or_create_by(login: login)
     expect(User.find_by_login(login)).not_to be_nil
@@ -12,7 +12,6 @@ module UserLogin
   end
 
   class FakeHeaderAuthenticatableStrategy < ::Devise::Strategies::Base
-
     @@remote_user = "jilluser"
 
     def self.remote_user=(user)
@@ -36,9 +35,9 @@ module UserLogin
     end
   end
 
-  def login_js (remote_user = 'jilluser')
-    user = User.where(login:remote_user).first
-    user ||= User.create(login:remote_user, display_name:remote_user, ldap_available: true)
+  def login_js(remote_user = 'jilluser')
+    user = User.where(login: remote_user).first
+    user ||= User.create(login: remote_user, display_name: remote_user, ldap_available: true)
     sign_in_as user
   end
 
@@ -50,8 +49,7 @@ module UserLogin
     Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHeaderAuthenticatable)
   end
 
-  def wait_on_page(text, time=5)
+  def wait_on_page(text, _time = 5)
     expect(page).to have_content(text)
   end
-
 end

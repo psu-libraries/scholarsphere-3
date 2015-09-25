@@ -7,22 +7,30 @@ if defined?(PhusionPassenger)
     if forked
       # Re-establish redis connection
       require 'redis'
-      config = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'redis.yml'))).result)[Rails.env].with_indifferent_access
+      config = YAML.load(ERB.new(IO.read(File.join(Rails.root, 'config', 'redis.yml'))).result)[Rails.env].with_indifferent_access
 
       # The important two lines
-      $redis.client.disconnect if $redis 
-      $redis = Redis.new(host: config[:host], port: config[:port], thread_safe: true) rescue nil
+      $redis.client.disconnect if $redis
+      $redis = begin
+                 Redis.new(host: config[:host], port: config[:port], thread_safe: true)
+               rescue
+                 nil
+               end
       Resque.redis.client.reconnect if Resque.redis
     end
   end
 else
-  config = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'redis.yml'))).result)[Rails.env].with_indifferent_access
-  $redis = Redis.new(host: config[:host], port: config[:port], thread_safe: true) rescue nil
+  config = YAML.load(ERB.new(IO.read(File.join(Rails.root, 'config', 'redis.yml'))).result)[Rails.env].with_indifferent_access
+  $redis = begin
+             Redis.new(host: config[:host], port: config[:port], thread_safe: true)
+           rescue
+             nil
+           end
 end
 
 class Logger
-  def format_message(severity, timestamp, progname, msg)
-    "#{timestamp} (#{$$}) #{msg}\n"
+  def format_message(_severity, timestamp, _progname, msg)
+    "#{timestamp} (#{$PROCESS_ID}) #{msg}\n"
   end
 end
 

@@ -3,9 +3,8 @@ require 'spec_helper'
 describe GenericFilesController, type: :controller do
   routes { Sufia::Engine.routes }
   context "public user" do
-    
     let(:gf) {
-      GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups:['public']).tap do |gf|
+      GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['public']).tap do |gf|
         gf.apply_depositor_metadata("mjg36")
         gf.save!
       end
@@ -18,7 +17,6 @@ describe GenericFilesController, type: :controller do
         expect(assigns[:generic_file].readonly?).to be_truthy # we get a read only object if it is loaded from solr
       end
     end
-  
   end
 
   context "when the GenericFile doesn't exist" do
@@ -30,7 +28,7 @@ describe GenericFilesController, type: :controller do
 
   context "when file is registered" do
     let(:gf) {
-      GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups:['registered']).tap do |gf|
+      GenericFile.new(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']).tap do |gf|
         gf.apply_depositor_metadata("mjg36")
         gf.save!
       end
@@ -40,7 +38,5 @@ describe GenericFilesController, type: :controller do
       expect(response.status).to eq(302)
       expect(session[:user_return_to]).to include(Sufia::Engine.routes.url_helpers.generic_file_path(gf))
     end
-
   end
-
 end

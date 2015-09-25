@@ -7,7 +7,7 @@ describe Admin::StatsController, type: :controller do
         allow(GenericFile).to receive(:find_by_date_created).and_return(file_list)
       end
       context "no files" do
-        let(:file_list) {[]}
+        let(:file_list) { [] }
         it "exports csv" do
           get :export, format: "csv"
           expect(response.status).to eq(200)
@@ -15,7 +15,7 @@ describe Admin::StatsController, type: :controller do
         end
       end
       context "with files" do
-        let(:file_list) { [GenericFile.new(id:"abc123",title: ["my file"])] }
+        let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"])] }
         it "exports csv" do
           get :export, format: "csv"
           expect(response.status).to eq(200)
@@ -26,14 +26,14 @@ describe Admin::StatsController, type: :controller do
 
       context "with dates" do
         let(:start_datetime_str) { start_datetime.to_s }
-        let(:end_datetime_str) {end_datetime.to_s}
+        let(:end_datetime_str) { end_datetime.to_s }
         let(:begining) { start_datetime.beginning_of_day.to_datetime }
         let(:ending) { end_datetime.end_of_day.to_datetime }
 
         context "with start date" do
-          let(:file_list) { [GenericFile.new(id:"abc123",title: ["my file"])] }
+          let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"])] }
           let(:start_datetime) { 2.days.ago }
-          let(:end_datetime) {1.days.ago.end_of_day}
+          let(:end_datetime) { 1.days.ago.end_of_day }
           it "defaults end date and pasess start date parameters" do
             expect(GenericFile).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", start_datetime: start_datetime_str
@@ -41,9 +41,9 @@ describe Admin::StatsController, type: :controller do
         end
 
         context "with end date" do
-          let(:file_list) { [GenericFile.new(id:"abc123",title: ["my file"])] }
+          let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"])] }
           let(:start_datetime) { 1.days.ago.beginning_of_day }
-          let(:end_datetime) {1.days.ago}
+          let(:end_datetime) { 1.days.ago }
           it "defaults start date and pasess end date parameters" do
             expect(GenericFile).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", end_datetime: end_datetime_str
@@ -51,9 +51,9 @@ describe Admin::StatsController, type: :controller do
         end
 
         context "with start and end date parameters" do
-          let(:file_list) { [GenericFile.new(id:"abc123",title: ["my file"])] }
+          let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"])] }
           let(:start_datetime) { 2.days.ago }
-          let(:end_datetime) {1.days.ago }
+          let(:end_datetime) { 1.days.ago }
           it "pasess start and end date" do
             expect(GenericFile).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", start_datetime: start_datetime_str, end_datetime: end_datetime_str
@@ -70,6 +70,4 @@ describe Admin::StatsController, type: :controller do
       end
     end
   end
-
-
 end

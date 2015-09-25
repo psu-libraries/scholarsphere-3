@@ -2,15 +2,14 @@ require_relative './feature_spec_helper'
 
 $in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
 
-describe 'Static pages:', :type => :feature do
-
+describe 'Static pages:', type: :feature do
   shared_examples 'verify each static page' do |logged_in|
     before { create :user } if logged_in
 
     [
-        '/about',
-        '/help',
-        '/contact'
+      '/about',
+      '/help',
+      '/contact'
     ].each do |path|
       describe "The '#{path}' page" do
         it 'has verified hyperlinks' do
@@ -35,10 +34,10 @@ describe 'Static pages:', :type => :feature do
     we_can 'verify each static page', true
   end
 
-  def verify_links path
+  def verify_links(path)
     visit path
-    links_on_page = Array.new
-    anchored_links = Array.new
+    links_on_page = []
+    anchored_links = []
 
     all('#content a').each do |page_link|
       unless ['delete', 'post', 'put'].include? page_link[:method]
@@ -47,8 +46,8 @@ describe 'Static pages:', :type => :feature do
       end
     end
 
-    unique_links = Array.new
-    unique_anchored_links = Array.new
+    unique_links = []
+    unique_anchored_links = []
     unique_links = links_on_page.uniq
     unique_anchored_links = anchored_links.uniq
 
@@ -71,7 +70,7 @@ describe 'Static pages:', :type => :feature do
     end
   end
 
-  def verfiy_youtube_links path
+  def verfiy_youtube_links(path)
     # Check all iframes containing youtube links for valid youtube ids
     visit path
     srcs = []

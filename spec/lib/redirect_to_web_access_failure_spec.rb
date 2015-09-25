@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe RedirectToWebAccessFailure do
-  def call_failure(env_params={})
+  def call_failure(env_params = {})
     env = {
       'REQUEST_URI' => 'http://test.host/',
       'HTTP_HOST' => 'test.host',
@@ -17,7 +17,7 @@ describe RedirectToWebAccessFailure do
     @request  = ActionDispatch::Request.new(env)
   end
   describe "when http_auth? is false" do
-    it "should not set flash" do
+    it "does not set flash" do
       call_failure
       expect(@response.first).to eq 302
       expect(@response.second['Location']).to eq 'https://webaccess.psu.edu/?cosign-localhost&https://localhost'

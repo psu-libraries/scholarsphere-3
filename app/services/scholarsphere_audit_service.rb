@@ -1,5 +1,4 @@
 class ScholarsphereAuditService < Sufia::GenericFileAuditService
-
   def audit_stat
     audit_results = ChecksumAuditLog.logs_for(generic_file.id, "content").collect { |result| result["pass"] }
 
@@ -14,5 +13,4 @@ class ScholarsphereAuditService < Sufia::GenericFileAuditService
       'Audits have not yet been run on this file.'
     end
   end
-
 end

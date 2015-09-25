@@ -1,8 +1,7 @@
 class CollectionsController < ApplicationController
-
   include Sufia::CollectionsControllerBehavior
 
-  prepend_before_filter only: [:show, :edit] do  
+  prepend_before_action only: [:show, :edit] do
     handle_legacy_url_prefix { |new_id| redirect_to collections.collection_path(new_id), status: :moved_permanently }
   end
 
@@ -16,6 +15,6 @@ class CollectionsController < ApplicationController
 
   def filter_docs_with_read_access!
     super
-    flash[:notice]= nil
+    flash[:notice] = nil
   end
 end

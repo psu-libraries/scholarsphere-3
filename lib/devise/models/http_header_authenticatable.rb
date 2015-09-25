@@ -7,9 +7,7 @@ module Devise
       def after_database_authentication
       end
 
-    protected
-
-
+      protected
     end
   end
 end

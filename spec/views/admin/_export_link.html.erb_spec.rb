@@ -10,5 +10,4 @@ describe "admin/stats/_export_link.html.erb" do
   it "creates and export link" do
     expect(rendered).to have_link("Export File Metadata", href: href)
   end
-
 end

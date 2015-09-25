@@ -1,6 +1,6 @@
 require_relative './feature_spec_helper'
 
-describe 'Contact form:', :type => :feature do
+describe 'Contact form:', type: :feature do
   let(:email_address) { 'kurt@example.com' }
   let(:email_subject) { 'Help with file upload' }
 

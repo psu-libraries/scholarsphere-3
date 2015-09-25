@@ -4,21 +4,19 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-#role :app, %w{deploy@example.com}
-#role :web, %w{deploy@example.com}
-#role :db,  %w{deploy@example.com}
-
+# role :app, %w{deploy@example.com}
+# role :web, %w{deploy@example.com}
+# role :db,  %w{deploy@example.com}
 
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
-server 'ss1prod.dlt.psu.edu', user: 'deploy', roles: %w{web app db}, primary: true
-server 'ss2prod.dlt.psu.edu', user: 'deploy', roles: %w{web app}
-server 'ssjobs1prod.dlt.psu.edu:1855', user: 'deploy', roles: %w{app job}
-#server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-
+server 'ss1prod.dlt.psu.edu', user: 'deploy', roles: %w(web app db), primary: true
+server 'ss2prod.dlt.psu.edu', user: 'deploy', roles: %w(web app)
+server 'ssjobs1prod.dlt.psu.edu:1855', user: 'deploy', roles: %w(app job)
+# server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options
 # ==================
@@ -45,4 +43,3 @@ server 'ssjobs1prod.dlt.psu.edu:1855', user: 'deploy', roles: %w{app job}
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-

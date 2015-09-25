@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Devise::Strategies::HttpHeaderAuthenticatable do
-  subject {Devise::Strategies::HttpHeaderAuthenticatable.new(nil)}
+  subject { described_class.new(nil) }
   describe "when REMOTE_USER present" do
-    let(:headers) {{"REMOTE_USER"=>"abc123"} }
+    let(:headers) { { "REMOTE_USER" => "abc123" } }
     before do
       # I do this in before block or right before test executes
       @request = double(:request)
@@ -16,7 +16,7 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
   end
 
   describe "when REMOTE_USER is not present" do
-    let(:headers) {{}}
+    let(:headers) { {} }
     before do
       # I do this in before block or right before test executes
       @request = double(:request)
@@ -27,5 +27,4 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
       expect(subject.valid?).to eq(false)
     end
   end
-
 end

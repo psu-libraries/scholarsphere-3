@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   include Sufia::UsersControllerBehavior
 
-  before_filter :get_linkedin_url, only: :show
+  before_action :get_linkedin_url, only: :show
 
   def get_linkedin_url
     @linkedInUrl = @user.linkedin_handle
-    @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'linkedin.com'
-    @linkedInUrl = "http://"+ @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'http'
+    @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? || @linkedInUrl.include?('linkedin.com')
+    @linkedInUrl = "http://" + @linkedInUrl unless @linkedInUrl.blank? || @linkedInUrl.include?('http')
   end
 
   def index
@@ -17,20 +17,18 @@ class UsersController < ApplicationController
 
     query_str = params[:uq]
     users = @ldap_cache[query_str]
-    if (users.blank?)
-       users = User.query_ldap_by_name_or_id(query_str)
-       @ldap_cache[query_str] =users
+    if users.blank?
+      users = User.query_ldap_by_name_or_id(query_str)
+      @ldap_cache[query_str] = users
     end
     respond_to do |format|
       format.json { render json: users.first(20).to_json }
     end
-
   end
 
   protected
 
-  def base_query
-    ["ldap_available = ? AND login not in ('testapp','tstem31')", true]
-  end
-
+    def base_query
+      ["ldap_available = ? AND login not in ('testapp','tstem31')", true]
+    end
 end

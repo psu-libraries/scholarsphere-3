@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe GenericFileListToCSVService do
-  let (:service) { GenericFileListToCSVService.new(file_list) }
-  let (:header) { "url,id,title,depositor,creator,visibility,resource_type,rights,file_format\n"}
+  let (:service) { described_class.new(file_list) }
+  let (:header) { "url,id,title,depositor,creator,visibility,resource_type,rights,file_format\n" }
 
   describe "#csv" do
     subject { service.csv }
@@ -24,7 +24,7 @@ describe GenericFileListToCSVService do
     end
 
     context "with multiple files" do
-      let(:file_list) { [GenericFile.new(id: 'abc123'), GenericFile.new(id: 'def456'), GenericFile.new(id: 'ghi789') ] }
+      let(:file_list) { [GenericFile.new(id: 'abc123'), GenericFile.new(id: 'def456'), GenericFile.new(id: 'ghi789')] }
       it { is_expected.to include('files/abc123,abc123') }
       it { is_expected.to include('files/def456,def456') }
       it { is_expected.to include('files/ghi789,ghi789') }

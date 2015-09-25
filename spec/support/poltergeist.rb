@@ -4,7 +4,7 @@ require 'capybara/poltergeist'
 
 # Register driver and tell it not to print javascript
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, js_errors: true, timeout: 90, :phantomjs_options => ['--ssl-protocol=ANY'])
+  Capybara::Poltergeist::Driver.new(app, js_errors: true, timeout: 90, phantomjs_options: ['--ssl-protocol=ANY'])
 end
 
 Capybara.default_driver = :poltergeist

@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'users/show.html.erb', type: :view do
-
   let(:join_date) { 5.days.ago }
-  
+
   before do
     allow(view).to receive(:signed_in?).and_return(true)
     allow(view).to receive(:current_user).and_return(stub_model(User, user_key: 'mjg'))
@@ -14,7 +13,7 @@ describe 'users/show.html.erb', type: :view do
     assign(:events, [])
   end
 
-  it "should draw 4 tabs" do
+  it "draws 4 tabs" do
     render
     page = Capybara::Node::Simple.new(rendered)
     expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#contributions']")
@@ -27,9 +26,8 @@ describe 'users/show.html.erb', type: :view do
     expect(page).to have_selector(".tab-content > div#activity_log.tab-pane")
   end
 
-
   describe "when the user doesn't have a title" do
-    it "should have the vitals" do
+    it "has the vitals" do
       render
       expect(rendered).to match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
       expect(rendered).not_to match /<i class="glyphicon glyphicon-briefcase"><\/i>/
@@ -40,7 +38,7 @@ describe 'users/show.html.erb', type: :view do
     before do
       assign(:user, stub_model(User, user_key: 'cam156', created_at: join_date, title: 'mrs'))
     end
-    it "should have the vitals" do
+    it "has the vitals" do
       render
       expect(rendered).to match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
       expect(rendered).to match /<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/
