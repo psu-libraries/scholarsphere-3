@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "Showing the Generic File", :type => :feature do
+describe "Showing the Generic File", type: :feature do
   let(:current_user) { create :administrator }
-  let!(:gf) { create_file current_user, {title: 'file title'} }
+  let!(:gf) { create_file current_user, title: 'file title' }
 
   before do
     sign_in_as current_user

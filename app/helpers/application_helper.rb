@@ -3,8 +3,8 @@ module ApplicationHelper
     !params[:cq].blank?
   end
 
-  def collection_helper_method  value
+  def collection_helper_method(value)
     c = Collection.load_instance_from_solr(value)
-    return c.title
+    c.title
   end
 end

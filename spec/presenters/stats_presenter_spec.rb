@@ -60,7 +60,7 @@ describe StatsPresenter, type: :model do
     let(:start_datetime) { DateTime.parse("2004-01-01T01:01:01") }
 
     it "calls SystemStats for data" do
-      expect(system_stats).to receive(:document_by_permission).and_return({ total: 100, public: 70, registered: 20, private: 10 })
+      expect(system_stats).to receive(:document_by_permission).and_return(total: 100, public: 70, registered: 20, private: 10)
       expect(presenter.total_uploads).to eq(100)
       expect(presenter.total_public_uploads).to eq(70)
       expect(presenter.total_registered_uploads).to eq(20)

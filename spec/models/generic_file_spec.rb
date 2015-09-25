@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe GenericFile, type: :model do
-
   let(:file) do
-    GenericFile.new(id: 'somepid') { |file| file.apply_depositor_metadata('dmc') }
+    described_class.new(id: 'somepid') { |file| file.apply_depositor_metadata('dmc') }
   end
 
-  it 'should export as endnote' do
+  it 'exports as endnote' do
     expect(file.export_as_endnote).to eq("%0 GenericFile\n%R http://scholarsphere.psu.edu/files/somepid\n%~ ScholarSphere\n%W Penn State University")
   end
 
@@ -21,7 +20,7 @@ describe GenericFile, type: :model do
       end
       subject { file }
 
-      it "should keep the thumbnail at its original size" do
+      it "keeps the thumbnail at its original size" do
         expect(subject.content).not_to be_changed
       end
     end
@@ -34,19 +33,18 @@ describe GenericFile, type: :model do
     end
     subject { file }
 
-    it "should NOT append metadata from the characterization" do
+    it "does NOT append metadata from the characterization" do
       expect(subject.title).not_to include "Microsoft Word - sample.pdf.docx"
       expect(subject.format_label).to eq ["Portable Document Format"]
     end
   end
 
   describe "noid instead of id" do
-    let(:file) { GenericFile.new() { |file| file.apply_depositor_metadata('dmc') }}
+    let(:file) { described_class.new { |file| file.apply_depositor_metadata('dmc') } }
 
     it "creates a noid on save" do
       file.save
       expect(file.id.length).to eq 9
     end
-
   end
 end

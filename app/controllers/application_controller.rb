@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_filter :clear_session_user
-  before_filter :filter_notify
-  before_filter :notifications_number
+  before_action :clear_session_user
+  before_action :filter_notify
+  before_action :notifications_number
 
   rescue_from ActiveFedora::ObjectNotFoundError, with: :render_404 unless Rails.env.development?
 
@@ -76,29 +76,30 @@ class ApplicationController < ActionController::Base
         yield new_id
       end
     end
-  end  
-
- protected
-  def user_logged_in?
-    user_signed_in? && ( valid_user?(request.headers) || Rails.env.test?)
   end
 
-  def has_access?
-    unless current_user && current_user.ldap_exist?
-      logger.error "User: `#{current_user.user_key}' does not exist in ldap"
-      render template: '/error/401', layout: "error", formats: [:html], status: 401
+  protected
+
+    def user_logged_in?
+      user_signed_in? && (valid_user?(request.headers) || Rails.env.test?)
     end
-  end
 
-  def filtered_flash_messages
-    [flash[:alert]].flatten.reject do |item|
-      item == 'You need to sign in or sign up before continuing.' ||
-        item =~ /is not recognized by the 'identify' command/
+    def has_access?
+      unless current_user && current_user.ldap_exist?
+        logger.error "User: `#{current_user.user_key}' does not exist in ldap"
+        render template: '/error/401', layout: "error", formats: [:html], status: 401
+      end
     end
-  end
 
-  def nil_request
-    logger.warn("Request is Nil, how weird!!!")
-    nil
-  end
+    def filtered_flash_messages
+      [flash[:alert]].flatten.reject do |item|
+        item == 'You need to sign in or sign up before continuing.' ||
+          item =~ /is not recognized by the 'identify' command/
+      end
+    end
+
+    def nil_request
+      logger.warn("Request is Nil, how weird!!!")
+      nil
+    end
 end

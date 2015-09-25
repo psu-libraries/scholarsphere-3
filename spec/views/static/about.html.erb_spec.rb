@@ -10,5 +10,4 @@ describe 'pages/show.html.erb', type: :view do
   end
 
   it { is_expected.to match /What is ScholarSphere?/ }
-
 end

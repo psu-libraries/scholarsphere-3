@@ -4,7 +4,7 @@ describe DirectoryController, type: :controller do
   routes { Sufia::Engine.routes }
   let(:user) { FactoryGirl.find_or_create(:user) }
   describe "#user" do
-    it "should get an existing user" do
+    it "gets an existing user" do
       allow(User).to receive(:directory_attributes).and_return('{"attr":"abc"}')
       get :user, uid: user.id
       expect(response).to be_success

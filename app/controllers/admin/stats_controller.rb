@@ -4,10 +4,9 @@ class Admin::StatsController < ApplicationController
   include Sufia::Admin::StatsBehavior
 
   def export
-
     respond_to do |format|
       format.html
-      format.csv { send_data csv(start_datetime, end_datetime), :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{file_name}" }
+      format.csv { send_data csv(start_datetime, end_datetime), type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=#{file_name}" }
     end
   end
 
@@ -18,7 +17,7 @@ class Admin::StatsController < ApplicationController
     end
 
     def file_name
-      "scholarsphere_stats_#{start_datetime.strftime("%Y%m%dT%H%M%S")}-#{end_datetime.strftime("%Y%m%dT%H%M%S")}.csv"
+      "scholarsphere_stats_#{start_datetime.strftime('%Y%m%dT%H%M%S')}-#{end_datetime.strftime('%Y%m%dT%H%M%S')}.csv"
     end
 
     def start_datetime

@@ -1,6 +1,5 @@
 class MigrateAudit < ActiveRecord::Base
-
-  # This method populates the migrate_audit table with data 
+  # This method populates the migrate_audit table with data
   # from the Fedora 3 repo.
   def self.f3_audit!(auditor)
     raise ArgumentError, "Auditor must respond to audit method" unless auditor.respond_to? :audit
@@ -21,15 +20,14 @@ class MigrateAudit < ActiveRecord::Base
     end
   end
 
-  private 
+  private
 
-  def self.clear_audit_data!
-    # destroy all existing audit records
-    all.each { |obj| obj.destroy! }
-  end
+    def self.clear_audit_data!
+      # destroy all existing audit records
+      all.find_each(&:destroy!)
+    end
 
-  def self.reset_audit_status
-    MigrateAudit.update_all(f4_id: nil, status: nil)
-  end
-
+    def self.reset_audit_status
+      MigrateAudit.update_all(f4_id: nil, status: nil)
+    end
 end

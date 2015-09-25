@@ -4,33 +4,31 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Generic File viewing and downloading:', :type => :feature do
-
+describe 'Generic File viewing and downloading:', type: :feature do
   let(:current_user) { create :user }
-  let!(:file_1) { create_file current_user, { title: 'File 1' } }
+  let!(:file_1) { create_file current_user, title: 'File 1' }
   let!(:file_2) do
     create_file current_user, { title: 'File 2',
-        creator: '',
-        contributor: '',
-        tag: '',
-        subject: '',
-        language: '',
-        based_near: '',
-        publisher: '',
-        rights: '',
-        read_groups: []}
+                                creator: '',
+                                contributor: '',
+                                tag: '',
+                                subject: '',
+                                language: '',
+                                based_near: '',
+                                publisher: '',
+                                rights: '',
+                                read_groups: [] }
   end
 
   context "generic user" do
     before do
       sign_in_as current_user
       visit '/dashboard/files'
-      expect(page).to have_css '.active a', text:"Files"
+      expect(page).to have_css '.active a', text: "Files"
       db_item_title(file_1).click
     end
 
     context 'When viewing a file' do
-
       specify "I see all the correct information" do
         # "I can see the file's page" do
         expect(page.status_code).to eq(200)
@@ -80,39 +78,35 @@ describe 'Generic File viewing and downloading:', :type => :feature do
         test_links = store_link file_1.tag.first, test_links
 
         # 'I can see the link for rights and it filters correctly' do
-        test_links= store_link Sufia.config.cc_licenses_reverse[file_1.rights.first], test_links
+        test_links = store_link Sufia.config.cc_licenses_reverse[file_1.rights.first], test_links
 
-        #loop through all links
+        # loop through all links
         test_links.each do |name, link|
           test_link name, link
         end
 
-        #test the end not page
+        # test the end not page
         visit endnote_link
         expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer; charset=utf-8')
-
       end
-
 
       # specify 'I can see the Mendeley modal' do
       #  skip 'This does not appear to be functioning properly'
       #  click_link 'Mendeley'
       #  expect(page).to have_css('.modal-header')
-      #end
+      # end
       #
-      #specify 'I can see the Zotero modal' do
+      # specify 'I can see the Zotero modal' do
       #  skip 'This does not appear to be functioning properly'
       #  click_link 'Zotero'
       #  expect(page).to have_css('.modal-header')
-      #end
-
+      # end
     end
 
     context "administrator user" do
-
       let(:admin_user) { create :administrator }
-      let!(:public_file) { create_file admin_user, { title: 'File 3' } }
-      let!(:private_file) { create_file admin_user, { title: 'File 4', read_groups: []}}
+      let!(:public_file) { create_file admin_user, title: 'File 3' }
+      let!(:private_file) { create_file admin_user, title: 'File 4', read_groups: [] }
 
       before do
         sign_in_as admin_user
@@ -139,23 +133,20 @@ describe 'Generic File viewing and downloading:', :type => :feature do
         end
       end
     end
-
   end
 
   context 'When downloading a file' do
-
   end
 
-  def store_link  link_name, test_links
+  def store_link(link_name, test_links)
     expect(page).to have_link link_name
     test_links[file_1.tag.first] = find_link(file_1.tag.first)[:href]
     test_links
   end
 
-  def test_link link_name, link_value
+  def test_link(_link_name, link_value)
     visit link_value
     expect(page).to have_content file_1.title.first
     expect(page).not_to have_content file_2.title.first
   end
-
 end

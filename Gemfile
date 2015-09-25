@@ -54,6 +54,8 @@ group :development do
   gem 'capistrano-rbenv-install'
   gem 'passenger'
   gem 'unicorn-rails'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
 end
 
 group :test do

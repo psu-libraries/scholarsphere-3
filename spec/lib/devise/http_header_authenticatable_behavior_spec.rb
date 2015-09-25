@@ -5,7 +5,7 @@ class AuthenticatableThing
 end
 
 describe Behaviors::HttpHeaderAuthenticatableBehavior do
-  subject {AuthenticatableThing.new}
+  subject { AuthenticatableThing.new }
   context "development mode" do
     before do
       @old_env = Rails.env
@@ -15,24 +15,23 @@ describe Behaviors::HttpHeaderAuthenticatableBehavior do
       Rails.env = @old_env
     end
     describe "when REMOTE_USER present" do
-      let(:headers) {{"REMOTE_USER"=>"abc123"} }
+      let(:headers) { { "REMOTE_USER" => "abc123" } }
       it "is valid" do
         expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when HTTP_REMOTE_USER present" do
-      let(:headers) { {"HTTP_REMOTE_USER"=>"abc123"} }
+      let(:headers) { { "HTTP_REMOTE_USER" => "abc123" } }
       it "is valid" do
         expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when REMOTE_USER not present" do
-      let(:headers) {{} }
+      let(:headers) { {} }
       it "is not valid" do
         expect(subject.valid_user?(headers)).to eq(false)
       end
     end
-
   end
   context "production mode" do
     before do
@@ -44,20 +43,20 @@ describe Behaviors::HttpHeaderAuthenticatableBehavior do
     end
 
     describe "when REMOTE_USER present" do
-      let(:headers) { {"REMOTE_USER"=>"abc123"} }
+      let(:headers) { { "REMOTE_USER" => "abc123" } }
       it "is valid" do
         expect(subject.valid_user?(headers)).to eq(true)
       end
     end
     describe "when HTTP_REMOTE_USER present" do
-      let(:headers) { {"HTTP_REMOTE_USER"=>"abc123"} }
+      let(:headers) { { "HTTP_REMOTE_USER" => "abc123" } }
       it "is not valid" do
         expect(subject.valid_user?(headers)).to eq(false)
       end
     end
 
     describe "when REMOTE_USER not present" do
-      let(:headers) {{} }
+      let(:headers) { {} }
       it "is not valid" do
         expect(subject.valid_user?(headers)).to eq(false)
       end

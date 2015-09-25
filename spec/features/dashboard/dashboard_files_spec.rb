@@ -1,19 +1,18 @@
 require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 
-describe 'Dashboard Files', :type => :feature do
-
+describe 'Dashboard Files', type: :feature do
   let!(:current_user) { create :user }
 
-  let!(:file) { create_file current_user, { title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" } }
+  let!(:file) { create_file current_user, title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" }
 
   let(:jill) { create :jill }
   let!(:other_collection) do
     Collection.create(title: 'jill collection') do |col|
-    col.apply_depositor_metadata(jill.user_key)
-    col.read_groups= ['public']
+      col.apply_depositor_metadata(jill.user_key)
+      col.read_groups = ['public']
+    end
   end
-end
 
   before do
     sign_in_as current_user
@@ -23,9 +22,8 @@ end
   let(:filename) { file.title.first }
 
   context 'with one file:' do
-
     specify 'interactions are wired correctly' do
-      #tab title and buttons
+      # tab title and buttons
       expect(page).to have_content("My Files")
       expect(page).to have_selector("h2.sr-only", text: "Files listing")
       within('#sidebar') do
@@ -67,23 +65,23 @@ end
       expect(page).to have_content "Transfer ownership of \"#{filename}\""
     end
 
-    #specify 'Clicking the Visibility link loads the edit permissions page' do
-    #end
+    # specify 'Clicking the Visibility link loads the edit permissions page' do
+    # end
 
-    #specify 'Additional metadata about the file is hidden' do
-    #end
+    # specify 'Additional metadata about the file is hidden' do
+    # end
 
-    #specify 'Clicking + displays additional metadata about that file' do
+    # specify 'Clicking + displays additional metadata about that file' do
     #  first('i.glyphicon-chevron-right').click
     #  expect(page).to have_content "plain (Plain text)JPG"
     #  expect(page).to have_content "little_file.txt_creator"
-    #end
+    # end
 
-    #specify 'Clicking Edit File goes directly to the metadata edit page' do
+    # specify 'Clicking Edit File goes directly to the metadata edit page' do
     #  db_item_actions_toggle(file).click
     #  click_link 'Edit File'
     #  expect(page).to have_content "Edit #{filename}"
-    #end
+    # end
 
     context 'When I highlight it' do
       before do
@@ -94,29 +92,29 @@ end
         db_item_actions_toggle(file).trigger('click')
       end
       specify 'It is highlighted' do
-        #It is highlighted on my profile
+        # It is highlighted on my profile
         visit "/users/#{current_user.login}"
-        expect(page).to have_css '.active a', text:"Contributions"
+        expect(page).to have_css '.active a', text: "Contributions"
         within '#contributions' do
           expect(page).to have_link "#{file.filename.first}"
         end
 
-        #It is displayed on my highlights
+        # It is displayed on my highlights
         go_to_dashboard_highlights
         within '#documents' do
           expect(page).to have_link "#{file.filename.first}"
         end
       end
 
-      #specify 'It is displayed on my highlights' do
-      #end
+      # specify 'It is displayed on my highlights' do
+      # end
     end
 
-    #specify 'Clicking Transfer Ownership of File loads the transfer ownership page' do
+    # specify 'Clicking Transfer Ownership of File loads the transfer ownership page' do
     #  db_item_actions_toggle(file).click
     #  click_link 'Transfer Ownership of File'
     #  expect(page).to have_content "Transfer ownership of \"#{filename}\""
-    #end
+    # end
 
     describe 'The Single-Use Link:' do
       skip 'Places the link on the clipboard'
@@ -144,9 +142,9 @@ end
       specify 'The files should be listed on multiple pages' do
         expect(page).to have_css('.pagination')
 
-        #Increasing Show per page beyond my current number of files and I should not see a page
+        # Increasing Show per page beyond my current number of files and I should not see a page
         expect(GenericFile.count).to eq(11)
-        select('20', :from => 'per_page')
+        select('20', from: 'per_page')
         find_button('Refresh').click
         expect(page).not_to have_css('.pager')
       end
@@ -155,23 +153,23 @@ end
     describe 'Search:' do
       it "shows the correct results" do
         # When I search by partial title it does not display any results
-        search_my_files_by_term( 'title')
+        search_my_files_by_term('title')
         expect(page).to have_content 'You searched for: title'
         page_should_not_list_any_files
 
         # When I search by title using exact words it displays the correct results
-        search_my_files_by_term( file.title.first )
+        search_my_files_by_term(file.title.first)
         expect(page).to have_content "You searched for: #{file.title.first}"
         page_should_only_list file
 
         # To Do resource type does not seem to be searchable
         ## When I search by Resource Type it displays the correct results
-        #search_my_files_by_term( file.resource_type )
-        #expect(page).to have_content "You searched for: #{file.resource_type}"
-        #page_should_only_list file
+        # search_my_files_by_term( file.resource_type )
+        # expect(page).to have_content "You searched for: #{file.resource_type}"
+        # page_should_only_list file
 
-        #When I search by Keywords it displays the correct results
-        search_my_files_by_term( file.tag.first )
+        # When I search by Keywords it displays the correct results
+        search_my_files_by_term(file.tag.first)
         expect(page).to have_content "You searched for: #{file.tag.first}"
         page_should_only_list file
 
@@ -180,11 +178,9 @@ end
         expect(page).not_to have_content "You searched for:"
 
         # When I search by Creator it displays the correct results
-        search_my_files_by_term( file.creator )
+        search_my_files_by_term(file.creator)
         expect(page).to have_content "You searched for: #{file.creator}"
         page_should_only_list file
-
-
       end
     end
 
@@ -201,9 +197,9 @@ end
           'File Format'   => 'plain () (10)'
         }.each do |facet, value|
           within("#facets") do
-            #open facet
+            # open facet
             click_link(facet)
-            expect(page).to have_content(value, wait: Capybara.default_max_wait_time*2)
+            expect(page).to have_content(value, wait: Capybara.default_max_wait_time * 2)
 
             # for some reason the page needs to settle before we can click the next link in the list
             sleep(1.second)
@@ -224,16 +220,13 @@ end
     end
 
     context "with collection of other users" do
-
       it "does not show other user's collection" do
         first('input.batch_document_selector').click
         click_button 'Add to Collection'
         expect(page).to have_css('#collection-list-container')
         expect(page).not_to have_content(other_collection.title)
       end
-
     end
-
   end
 
   context "Many files (more than max_batch, which is currently set to 80)" do
@@ -250,7 +243,7 @@ end
     end
 
     it "allows pagination and sorting to be toggeled" do
-      select('100', :from => 'per_page')
+      select('100', from: 'per_page')
       find_button('Refresh').click
       first('input.batch_document_selector').click
       within (".batch-info") do
@@ -262,41 +255,39 @@ end
         expect(page).to have_content "Sort By"
         expect(page).not_to have_content "Add to Collection"
       end
-
     end
   end
 
-    def search_my_files_by_term( term)
+  def search_my_files_by_term(term)
     within('#search-form-header') do
       expect(page).to have_content("My Files")
       fill_in('search-field-header', with: term)
       click_button("Go")
     end
-  end
+end
 
-
-  let (:title_field) {Solrizer.solr_name("title", :stored_searchable, type: :string)}
-  let (:resp) {ActiveFedora::SolrService.instance.conn.get "select", params:{fl:['id',title_field]}}
-  def page_should_only_list file
-    expect(page).to have_selector('li.active', text:"Files")
+  let (:title_field) { Solrizer.solr_name("title", :stored_searchable, type: :string) }
+  let (:resp) { ActiveFedora::SolrService.instance.conn.get "select", params: { fl: ['id', title_field] } }
+  def page_should_only_list(file)
+    expect(page).to have_selector('li.active', text: "Files")
     expect(page).to have_content file.title.first
     resp["response"]["docs"].each do |gf|
       unless gf[title_field].nil?
         title = gf[title_field].first
-        expect(page).not_to have_content title  unless title == file.title.first
+        expect(page).not_to have_content title unless title == file.title.first
       end
     end
   end
 
   def page_should_not_list_any_files
-    resp["response"]["docs"].each do |gf| 
+    resp["response"]["docs"].each do |gf|
       unless gf[title_field].nil?
-        expect(page).not_to have_content  gf[title_field].first
+        expect(page).not_to have_content gf[title_field].first
       end
     end
   end
 
-  def check_facet_category id, value
+  def check_facet_category(id, value)
     within id do
       within '.slide-list' do
         expect(page).to have_content value
@@ -306,17 +297,17 @@ end
 
   def create_files(user, number_of_files)
     number_of_files.times do |t|
-      conn.add  id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim"=>["GenericFile"],
-                Solrizer.solr_name("title", :stored_searchable, type: :string) => ["title_#{t}"],
-                "depositor_ssim" => user.login, "edit_access_person_ssim" =>user.login,
-                Solrizer.solr_name("resource_type", :facetable) => "Video",
-                Solrizer.solr_name("creator", :facetable) => "Creator1",
-                Solrizer.solr_name("tag", :facetable) =>  "Keyword1",
-                Solrizer.solr_name("subject", :facetable) => "Subject1",
-                Solrizer.solr_name("language", :facetable) => "Language1",
-                Solrizer.solr_name("based_near", :facetable) => "Location1",
-                Solrizer.solr_name("publisher", :facetable) => "Publisher1",
-                Solrizer.solr_name("file_format", :facetable) => "plain ()"
+      conn.add id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim" => ["GenericFile"],
+               Solrizer.solr_name("title", :stored_searchable, type: :string) => ["title_#{t}"],
+               "depositor_ssim" => user.login, "edit_access_person_ssim" => user.login,
+               Solrizer.solr_name("resource_type", :facetable) => "Video",
+               Solrizer.solr_name("creator", :facetable) => "Creator1",
+               Solrizer.solr_name("tag", :facetable) =>  "Keyword1",
+               Solrizer.solr_name("subject", :facetable) => "Subject1",
+               Solrizer.solr_name("language", :facetable) => "Language1",
+               Solrizer.solr_name("based_near", :facetable) => "Location1",
+               Solrizer.solr_name("publisher", :facetable) => "Publisher1",
+               Solrizer.solr_name("file_format", :facetable) => "plain ()"
     end
     conn.commit
   end

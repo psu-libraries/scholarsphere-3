@@ -4,12 +4,11 @@
 # does not allow us to confirm any updates.
 require_relative './feature_spec_helper'
 
-describe 'Batch management of generic files', :type => :feature do
-
+describe 'Batch management of generic files', type: :feature do
   let!(:current_user) { create :user }
-  let!(:file_1) { create_file current_user, {title:'world.png'} }
-  let!(:file_2) { create_file current_user, {title:'little_file.txt'} }
-##  let(:filenames) { %w{world.png little_file.txt} }
+  let!(:file_1) { create_file current_user, title: 'world.png' }
+  let!(:file_2) { create_file current_user, title: 'little_file.txt' }
+  ##  let(:filenames) { %w{world.png little_file.txt} }
 
   before do
     sign_in_as current_user
@@ -17,7 +16,6 @@ describe 'Batch management of generic files', :type => :feature do
   end
 
   describe 'Editing multiple files' do
-
     context 'Filling in each field on the batch edit form' do
       before do
         # visit the page and fill in all form fields
@@ -88,7 +86,7 @@ describe 'Batch management of generic files', :type => :feature do
       end
       it 'Fills in each field from the database' do
         expect(page).to have_css "input#generic_file_contributor[value*='NEW contributor']"
-        expect(page).to have_css "textarea#generic_file_description",'NEW description'
+        expect(page).to have_css "textarea#generic_file_description", 'NEW description'
         expect(page).to have_css "input#generic_file_tag[value*='NEW tag']"
         expect(page).to have_css "input#generic_file_publisher[value*='NEW publisher']"
         expect(page).to have_css "input#generic_file_date_created[value*='NEW date_created']"
@@ -114,7 +112,7 @@ describe 'Batch management of generic files', :type => :feature do
     end
   end
 
-  def fill_in_field label
+  def fill_in_field(label)
     within "#form_#{label}" do
       fill_in "generic_file_#{label}", with: "NEW #{label}"
       click_button "#{label}_save"
@@ -122,7 +120,7 @@ describe 'Batch management of generic files', :type => :feature do
     end
   end
 
-  def fill_in_fields labels
+  def fill_in_fields(labels)
     labels.each do |label|
       within "#form_#{label}" do
         fill_in "generic_file_#{label}", with: "NEW #{label}"
@@ -136,7 +134,7 @@ describe 'Batch management of generic files', :type => :feature do
     end
   end
 
-  def expand label
+  def expand(label)
     click_link label
     sleep(0.1)
   end
@@ -144,8 +142,8 @@ describe 'Batch management of generic files', :type => :feature do
   def expand_all_fields
     all(".accordion-toggle:not(.btn).collapsed").each do |link|
       expand link.text
-      id =  link["href"].gsub("#","")
-      expect(page).to have_css("div##{id}", wait: Capybara.default_max_wait_time*2)
+      id = link["href"].delete("#")
+      expect(page).to have_css("div##{id}", wait: Capybara.default_max_wait_time * 2)
     end
   end
 end

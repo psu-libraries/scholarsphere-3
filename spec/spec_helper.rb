@@ -18,7 +18,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-
   # Make Capybara wait a bit longer so sluggish AJAX reqs can finish
   # on Travis
   Capybara.default_max_wait_time = 15
@@ -43,7 +42,7 @@ RSpec.configure do |config|
 end
 
 module FactoryGirl
-  def self.find_or_create(handle, by=:login)
+  def self.find_or_create(handle, by = :login)
     tmpl = FactoryGirl.build(handle)
     tmpl.class.send("find_by_#{by}".to_sym, tmpl.send(by)) || FactoryGirl.create(handle)
   end

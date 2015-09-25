@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   devise :http_header_authenticatable
 
-  #put in to remove deprication warnings since the parent class overrides our login with it's own
+  # put in to remove deprication warnings since the parent class overrides our login with it's own
   def login
     self[:login]
   end
@@ -31,7 +31,9 @@ class User < ActiveRecord::Base
   end
 
   def name
-    return self.display_name.titleize || self.login rescue self.login
+    return display_name.titleize || login
+  rescue
+    login
   end
 
   # Redefine this for more intuitive keys in Redis
@@ -57,14 +59,14 @@ class User < ActiveRecord::Base
 
   def ldap_exist?
     return true if login == 'jcoyne' && Rails.env.development?
-    if (ldap_last_update.blank? || ((Time.now-ldap_last_update) > 24*60*60 ))
+    if ldap_last_update.blank? || ((Time.now - ldap_last_update) > 24 * 60 * 60)
       return ldap_exist!
     end
-    return ldap_available
+    ldap_available
   end
 
   def ldap_exist!
-    return false if self.login.blank?
+    return false if login.blank?
     exist = check_ldap_exist!
     if Hydra::LDAP.connection.get_operation_result.code == 0
       Rails.logger.debug "exist = #{exist}"
@@ -77,19 +79,19 @@ class User < ActiveRecord::Base
       Rails.logger.warn "LDAP error checking exists for #{login}, reason (code: #{Hydra::LDAP.connection.get_operation_result.code}): #{Hydra::LDAP.connection.get_operation_result.message}"
       return false
     end
-    return exist
+    exist
   end
 
   # Groups that user is a member of
   def groups
-    if (groups_last_update.blank? || ((Time.now-groups_last_update) > 24*60*60 ))
+    if groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
       return groups!
     end
-    return self.group_list.split(";?;")
+    group_list.split(";?;")
   end
 
   def groups!
-    return [] if self.login.blank?
+    return [] if login.blank?
     list = self.class.groups(login)
 
     if Hydra::LDAP.connection.get_operation_result.code == 0
@@ -104,36 +106,48 @@ class User < ActiveRecord::Base
       Rails.logger.warn "Error getting groups for #{login} reason: #{Hydra::LDAP.connection.get_operation_result.message}"
       return []
     end
-    return list
+    list
   end
 
   def self.groups(login)
-    groups = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      Hydra::LDAP.groups_for_user(Net::LDAP::Filter.eq('uid', login)) do |result|
-        result.first[:psmemberof].select{ |y| y.starts_with? 'cn=umg/' }.map{ |x| x.sub(/^cn=/, '').sub(/,dc=psu,dc=edu/, '') }
-      end rescue []
+    groups = retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+      begin
+        Hydra::LDAP.groups_for_user(Net::LDAP::Filter.eq('uid', login)) do |result|
+          result.first[:psmemberof].select { |y| y.starts_with? 'cn=umg/' }.map { |x| x.sub(/^cn=/, '').sub(/,dc=psu,dc=edu/, '') }
+        end
+      rescue
+        []
+      end
     end
-    return groups
+    groups
   end
 
   def self.query_ldap_by_name_or_id(id_or_name_part)
     person_filter = "(| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))"
     filter = Net::LDAP::Filter.construct("(& (| (uid=#{id_or_name_part}* ) (givenname=#{id_or_name_part}*) (sn=#{id_or_name_part}*)) #{person_filter})")
-    users = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-        Hydra::LDAP.get_user(filter,['uid','displayname'])
-    end rescue []
+    users = begin
+              retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+                Hydra::LDAP.get_user(filter, ['uid', 'displayname'])
+              end
+            rescue
+              []
+            end
     # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
-    if (users == nil) &&   (Hydra::LDAP.connection.get_operation_result[:message]=="Size Limit Exceeded")
+    if (users.nil?) && (Hydra::LDAP.connection.get_operation_result[:message] == "Size Limit Exceeded")
       filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
-      users = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-        Hydra::LDAP.get_user(filter2,['uid','displayname'])
-      end rescue  []
+      users = begin
+                retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+                  Hydra::LDAP.get_user(filter2, ['uid', 'displayname'])
+                end
+              rescue
+                []
+              end
     end
-    return users.map {|u| {id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})"} }
+    users.map { |u| { id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})" } }
   end
 
   def populate_attributes
-    #update exist cache
+    # update exist cache
     exist = ldap_exist!
     Rails.logger.warn "No ldapentry exists for #{login}" unless exist
     return unless exist
@@ -146,32 +160,36 @@ class User < ActiveRecord::Base
     end
 
     attrs = {}
-    attrs[:email] = entry[:mail].first rescue nil
-    attrs[:display_name] = entry[:displayname].first rescue nil
-    attrs[:address] = entry[:postaladdress].first.gsub('$', "\n") rescue nil
-    attrs[:admin_area] = entry[:psadminarea].first rescue nil
-    attrs[:department] = entry[:psdepartment].first rescue nil
-    attrs[:title] = entry[:title].first rescue nil
-    attrs[:office] = entry[:psofficelocation].first.gsub('$', "\n") rescue nil
-    attrs[:chat_id] = entry[:pschatname].first rescue nil
-    attrs[:website] = entry[:labeleduri].first.gsub('$', "\n") rescue nil
-    attrs[:affiliation] = entry[:edupersonprimaryaffiliation].first rescue nil
-    attrs[:telephone] = entry[:telephonenumber].first rescue nil
+    attrs[:email] = get_net_attribute(entry, :mail)
+    attrs[:display_name] = get_net_attribute(entry, :displayname)
+    attrs[:address] = get_net_attribute_with_new_lines(entry, :postaladdress)
+    attrs[:admin_area] = get_net_attribute(entry, :psadminarea)
+    attrs[:department] = get_net_attribute(entry, :psdepartment)
+    attrs[:title] =  get_net_attribute(entry, :title)
+    attrs[:office] = get_net_attribute_with_new_lines(entry, :psofficelocation)
+    attrs[:chat_id] = get_net_attribute(entry, :pschatname)
+    attrs[:website] = get_net_attribute_with_new_lines(entry, :labeleduri)
+    attrs[:affiliation] = get_net_attribute(entry, :edupersonprimaryaffiliation)
+    attrs[:telephone] = get_net_attribute(entry, :telephonenumber)
     update_attributes(attrs)
 
     # update the group cache also
     groups!
   end
 
-  def directory_attributes(attrs=[])
+  def directory_attributes(attrs = [])
     self.class.directory_attributes(login, attrs)
   end
 
-  def self.directory_attributes(login, attrs=[])
-    attrs = retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      Hydra::LDAP.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
-    end rescue []
-    return attrs
+  def self.directory_attributes(login, attrs = [])
+    attrs = begin
+              retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+                Hydra::LDAP.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
+              end
+            rescue
+              []
+            end
+    attrs
   end
 
   def self.from_url_component(component)
@@ -184,11 +202,11 @@ class User < ActiveRecord::Base
         user = nil
       end
     end
-    return user
+    user
   end
 
   # This override can be removed as soon as the error handler
-  # for files not found has been added to Sufia. 
+  # for files not found has been added to Sufia.
   def trophy_files
     trophies.map do |t|
       begin
@@ -201,16 +219,30 @@ class User < ActiveRecord::Base
   end
 
   def check_ldap_exist!
-    return false if self.login.blank?
-    return retry_unless(7.times, lambda { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
-      begin
-        Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
-          # There is a weird error where the result is nil this retries until that error stops
-      rescue => e
-        logger.warn "rescued exception: #{e}"
-        sleep(Sufia.config.retry_unless_sleep)
+    return false if login.blank?
+    begin
+      return retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+        begin
+          Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login))
+        # There is a weird error where the result is nil this retries until that error stops
+        rescue => e
+          logger.warn "rescued exception: #{e}"
+          sleep(Sufia.config.retry_unless_sleep)
+        end
       end
-    end rescue false
+    rescue
+      false
+    end
   end
 
+  private
+
+    def get_net_attribute(entry, attribute_name, blank_return = nil)
+      entry.attribute_names.include?(attribute_name) ? entry[attribute_name].first : blank_return
+    end
+
+    def get_net_attribute_with_new_lines(entry, attribute_name)
+      attribute = get_net_attribute(entry, attribute_name, "").tr('$', "\n")
+      attribute.blank? ? nil : attribute
+    end
 end

@@ -5,18 +5,17 @@ class GenericFile < ActiveFedora::Base
     GenericFileIndexingService
   end
 
-
   def file_format
-    return nil if self.mime_type.blank? and self.format_label.blank?
-    return self.mime_type.split('/')[1]+ " ("+self.format_label.join(", ")+")" unless self.mime_type.blank? or self.format_label.blank?
-    return self.mime_type.split('/')[1] unless self.mime_type.blank?
-    return self.format_label
+    return nil if mime_type.blank? && format_label.blank?
+    return mime_type.split('/')[1] + " (" + format_label.join(", ") + ")" unless mime_type.blank? || format_label.blank?
+    return mime_type.split('/')[1] unless mime_type.blank?
+    format_label
   end
 
   def export_as_endnote
     end_note_format = {
-      '%T' => [:title, lambda { |x| x.first }],
-      '%Q' => [:title, lambda { |x| x.to_ary.slice(1, -1) }],
+      '%T' => [:title, ->(x) { x.first }],
+      '%Q' => [:title, ->(x) { x.to_ary.slice(1, -1) }],
       '%A' => [:creator],
       '%C' => [:publication_place],
       '%D' => [:date_created],
@@ -32,7 +31,7 @@ class GenericFile < ActiveFedora::Base
       '%G' => [:language],
       '%[' => [:date_modified],
       '%9' => [:resource_type],
-      '%~' => ScholarSphere::Application::config.application_name,
+      '%~' => ScholarSphere::Application.config.application_name,
       '%W' => 'Penn State University'
     }
     text = []
@@ -41,15 +40,15 @@ class GenericFile < ActiveFedora::Base
       if mapping.is_a? String
         values = [mapping]
       else
-        values = self.send(mapping[0]) if self.respond_to? mapping[0]
+        values = send(mapping[0]) if self.respond_to? mapping[0]
         values = mapping[1].call(values) if mapping.length == 2
         values = [values] unless values.is_a? Array
       end
-      next if values.empty? or values.first.nil?
+      next if values.empty? || values.first.nil?
       spaced_values = values.join("; ")
       text << "#{endnote_key} #{spaced_values}"
     end
-    return text.join("\n")
+    text.join("\n")
   end
 
   def registered?
@@ -69,9 +68,8 @@ class GenericFile < ActiveFedora::Base
   def related_files
     return [] if batch.nil?
     ids = batch.generic_file_ids.reject { |sibling| sibling == id }
-    ids.map {|id| GenericFile.load_instance_from_solr id}
+    ids.map { |id| GenericFile.load_instance_from_solr id }
   end
-
 
   def self.build_date_query(start_datetime, end_datetime)
     start_date_str =  start_datetime.utc.strftime(date_format)
@@ -88,8 +86,8 @@ class GenericFile < ActiveFedora::Base
   end
 
   private
+
     def current_host
       Rails.application.get_vhost_by_host[1].chomp("/")
     end
-
 end

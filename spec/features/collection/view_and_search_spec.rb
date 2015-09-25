@@ -3,9 +3,8 @@ require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Collection viewing and searching:', type: :feature do
-
   let!(:current_user) { create :user }
-  let(:filenames) { %w{world.png little_file.txt} }
+  let(:filenames) { %w(world.png little_file.txt) }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -16,7 +15,7 @@ describe 'Collection viewing and searching:', type: :feature do
     before do
       sign_in_as current_user
       filenames.each do |filename|
-        create_file current_user, { title: [filename], creator: "#{filename}_creator" }
+        create_file current_user, title: [filename], creator: "#{filename}_creator"
       end
       go_to_dashboard_files
       check 'check_all'
@@ -70,7 +69,7 @@ describe 'Collection viewing and searching:', type: :feature do
   end
 
   describe 'unkown user' do
-    let(:gf_title) {'Test Document PDF'}
+    let(:gf_title) { 'Test Document PDF' }
     let(:gf) do
       GenericFile.new.tap do |gf|
         gf.title = [gf_title]

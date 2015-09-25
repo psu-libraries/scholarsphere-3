@@ -8,7 +8,6 @@ describe RoleMapper do
   after do
     @user.delete
   end
-  subject {::RoleMapper.roles(@user.login)}
-  it { is_expected.to eq(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])}
+  subject { ::RoleMapper.roles(@user.login) }
+  it { is_expected.to eq(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"]) }
 end
-

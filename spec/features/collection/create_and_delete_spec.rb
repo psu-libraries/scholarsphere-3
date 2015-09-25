@@ -24,13 +24,13 @@ describe 'Collection creation and deletion:', type: :feature do
     end
   end
 
-  let(:filenames) { %w{world.png small_file.txt} }
+  let(:filenames) { %w(world.png small_file.txt) }
   let(:files) { GenericFile.all }
 
   describe 'When creating a collection with files' do
     before do
       filenames.each do |filename|
-        create_file current_user, { title: [filename], creator: "#{filename}_creator" }
+        create_file current_user, title: [filename], creator: "#{filename}_creator"
       end
       go_to_dashboard_files
       check 'check_all'

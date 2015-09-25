@@ -56,15 +56,15 @@ module ScholarSphere
       'scholarsphere.psu.edu' => 'UA-33252017-2',
       'scholarsphere-qa.dlt.psu.edu' => 'UA-33252017-3',
       'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
-      'scholarsphere-staging.dlt.psu.edu' => 'UA-33252017-5',
+      'scholarsphere-staging.dlt.psu.edu' => 'UA-33252017-5'
     }
 
     # Map hostnames onto ffmpeg paths
     config.ffmpeg_path_map = {
-        'scholarsphere.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-production',
-        'scholarsphere-qa.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-qa',
-        'scholarsphere-staging.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-staging',
-        'scholarsphere-demo.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-demo'
+      'scholarsphere.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-production',
+      'scholarsphere-qa.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-qa',
+      'scholarsphere-staging.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-staging',
+      'scholarsphere-demo.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-demo'
     }
 
     config.hosts_vhosts_map = {
@@ -114,22 +114,21 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    #configure the landing page email
+    # configure the landing page email
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
     config.stats_email = 'ScholarSphere Stats2 <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
     config.stats_from_email = 'ScholarSphere Stats2 <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
 
-    config.max_upload_file_size = 20*1024*1024*1024 #20GB
+    config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 
     # html maintenance response
     config.middleware.use 'Rack::Maintenance',
-                          :file => Rails.root.join('public', 'maintenance.html')
+                          file: Rails.root.join('public', 'maintenance.html')
     config.ldap_unwilling_sleep = 2 # seconds
 
     # allow errors to be raised in callbacks
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
-

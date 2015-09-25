@@ -10,10 +10,10 @@ describe StatsMailer, type: :model do
   end
 
   it "creates report" do
-    delivered  = StatsMailer.stats_mail(1.day.ago, DateTime.now)
+    delivered = described_class.stats_mail(1.day.ago, DateTime.now)
     expect(delivered['from'].to_s).to eq(ScholarSphere::Application.config.stats_from_email)
     expect(delivered['to'].to_s).to eq(ScholarSphere::Application.config.stats_email)
-    expect(delivered.parts.count).to eq(2) #attachment & body
+    expect(delivered.parts.count).to eq(2) # attachment & body
     expect(delivered.parts[0].body).to include("Report for")
     expect(delivered.parts[0].attachment?).to be_falsey
     expect(delivered.parts[1].attachment?).to be_truthy

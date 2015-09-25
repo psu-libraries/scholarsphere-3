@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "catalog/_index_default.html.erb" do
-
   let(:document) { SolrDocument.new(id: '123', 'title_tesim' => 'Foo',
                                     'description_tesim' => 'The description') }
 
@@ -17,7 +16,7 @@ describe "catalog/_index_default.html.erb" do
   context "list view" do
     let(:view_type) { 'list' }
 
-    it "should only display fields listed in the initializer" do
+    it "only displays fields listed in the initializer" do
       expect(rendered).to have_content("Foo")
       expect(rendered).to have_content("The description")
     end
@@ -26,7 +25,7 @@ describe "catalog/_index_default.html.erb" do
   context "gallery view" do
     let(:view_type) { 'gallery' }
 
-    it "should only display fields listed in the initializer" do
+    it "only displays fields listed in the initializer" do
       expect(rendered).not_to have_content("Foo")
       expect(rendered).not_to have_content("The description")
     end

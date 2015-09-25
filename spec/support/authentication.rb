@@ -3,9 +3,8 @@
 # This authentication strategy will automatically succeed for the user that was
 # assigned to the `user` class variable.
 class StubbedAuthenticationStrategy < ::Devise::Strategies::Base
-
   # Use this method to set the user that should be authenticated.
-  def self.user= user
+  def self.user=(user)
     @@user = user
   end
 
@@ -18,14 +17,12 @@ class StubbedAuthenticationStrategy < ::Devise::Strategies::Base
   def valid?
     true
   end
-
 end
 
 module StubbedAuthenticationHelper
-
   # Call this method in your "before" block to be signed in as the given user
   # (pass in the entire user object, not just a username).
-  def sign_in_as user
+  def sign_in_as(user)
     # Remove the session cookie for the original_owner
     # to ensure we visit pages that belong to the new_owner
     page.driver.browser.remove_cookie '_scholarsphere_secure_session'
@@ -34,11 +31,9 @@ module StubbedAuthenticationHelper
     Warden::Strategies.add :http_header_authenticatable,
                            StubbedAuthenticationStrategy
   end
-
 end
 
 RSpec.configure do |config|
-
   config.after(:each) do
     Warden::Strategies.add :http_header_authenticatable,
                            Devise::Strategies::HttpHeaderAuthenticatable

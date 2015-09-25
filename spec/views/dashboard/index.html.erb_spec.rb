@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'dashboard/index.html.erb', type: :view do
-
   let(:join_date) { 5.days.ago }
 
   before do
@@ -16,12 +15,11 @@ describe 'dashboard/index.html.erb', type: :view do
     assign(:notifications, [])
   end
 
-  it "should draw transfers" do
+  it "draws transfers" do
     render
     page = Capybara::Node::Simple.new(rendered)
     expect(page).to have_selector("#transfers.panel .panel-body .row .col-xs-12.col-sm-3 a", text: 'Select files to transfer')
     expect(page).to have_content "You haven't transferred any files"
     expect(page).to have_content "You haven't received any file transfer requests"
   end
-
 end

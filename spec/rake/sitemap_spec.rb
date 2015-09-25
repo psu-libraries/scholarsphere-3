@@ -2,7 +2,6 @@ require "spec_helper"
 require "rake"
 
 describe "sitemap:generate" do
-
   def sitemap_path
     Gem.loaded_specs['sitemap'].full_gem_path
   end
@@ -31,7 +30,7 @@ describe "sitemap:generate" do
   end
 
   describe 'sitemap generation' do
-    it 'should include public generic files and users' do
+    it 'includes public generic files and users' do
       run_task 'sitemap:generate'
       filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")
       expect(Dir.glob(filename).entries.size).to eq(1)

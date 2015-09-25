@@ -1,10 +1,9 @@
 FactoryGirl.define do
-
   sequence :login, 1000 do |n|
     "user#{n}"
   end
 
-  factory :user do |u|
+  factory :user do |_u|
     login
     display_name 'Joe Example'
     title 'User'
@@ -22,14 +21,12 @@ FactoryGirl.define do
       ldap_last_update { Time.zone.now }
     end
 
-    factory :administrator, class: User do |u|
+    factory :administrator, class: User do |_u|
       login 'administrator1'
       display_name 'Administrator 1'
       title 'Administrator'
       group_list 'umg/up.dlt.scholarsphere-admin-viewers'
       groups_last_update Time.now
     end
-
-    end
-
+  end
 end

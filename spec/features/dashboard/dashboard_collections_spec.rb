@@ -2,8 +2,7 @@ require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Collections:', :type => :feature do
-
+describe 'Dashboard Collections:', type: :feature do
   let!(:current_user) { create :user }
 
   let(:jill) { create :jill }
@@ -47,7 +46,7 @@ describe 'Dashboard Collections:', :type => :feature do
     expect(page).not_to have_content("Personal collection of great things")
     expect(page).not_to have_content(current_user)
   end
-  
+
   specify "toggle addtitional actions" do
     expect(page).not_to have_content("Edit Collection")
     expect(page).not_to have_content("Delete Collection")

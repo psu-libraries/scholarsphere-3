@@ -1,6 +1,6 @@
 require_relative '../feature_spec_helper'
 
-describe 'Generic File Thumbnail Creation:', :type => :feature do
+describe 'Generic File Thumbnail Creation:', type: :feature do
   let!(:current_user) { create :user }
   let!(:file) { create_file current_user, title: 'little_file.txt' }
   let(:thumbnail_path) { Sufia::Engine.routes.url_helpers.download_path(file, file: 'thumbnail') }

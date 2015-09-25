@@ -19,7 +19,7 @@ class StatsPresenter
   end
 
   def date_str
-    if (single_day?)
+    if single_day?
       start_date.to_s
     else
       "#{start_date}_#{end_date}"

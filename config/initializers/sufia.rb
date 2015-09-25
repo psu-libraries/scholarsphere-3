@@ -16,10 +16,10 @@ Sufia::Engine.configure do
   EOM
   config.contact_form_delivery_from = 'do-not-reply@scholarsphere.psu.edu'
   config.fits_path = "fits.sh"
-  config.fits_to_desc_mapping= {}
+  config.fits_to_desc_mapping = {}
   config.max_days_between_audits = 7
   config.enable_ffmpeg = true
-  config.ffmpeg_path =  Rails.application.ffmpeg_path
+  config.ffmpeg_path = Rails.application.ffmpeg_path
 
   config.cc_licenses = {
     'Attribution-NonCommercial-NoDerivs 3.0 United States' => 'http://creativecommons.org/licenses/by-nc-nd/3.0/us/',
@@ -55,11 +55,11 @@ Sufia::Engine.configure do
     "Software or Program Code" => "Software or Program Code",
     "Thesis" => "Thesis",
     "Video" => "Video",
-    "Other" => "Other",
+    "Other" => "Other"
   }
 
   config.permission_levels = {
-    "Choose Access"=>"none",
+    "Choose Access" => "none",
     "View/Download" => "read",
     "Edit" => "edit"
   }
@@ -69,7 +69,7 @@ Sufia::Engine.configure do
   }
 
   config.public_permission_levels = {
-    "Choose Access"=>"none",
+    "Choose Access" => "none",
     "View/Download" => "read"
   }
 
@@ -90,8 +90,7 @@ Sufia::Engine.configure do
     config.browse_everything = nil
   end
 
-
-  config.temp_file_base ="/tmp"
+  config.temp_file_base = "/tmp"
 
   config.retry_unless_sleep = 2 # seconds
 end
