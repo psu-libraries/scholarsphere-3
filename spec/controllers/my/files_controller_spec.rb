@@ -46,6 +46,8 @@ describe My::FilesController, type: :controller do
       let(:batch_id)  { "batch_id" }
       let(:batch_id2) { "batch_id2" }
       let(:batch)       { double }
+      let!(:generic_file) { GenericFile.new(id:"mine123", title:["mine"]) {|f| f.apply_depositor_metadata(user.login); f.update_index}}
+      let!(:other_generic_file) { GenericFile.new(id:"other123", title:["other"]) {|f| f.apply_depositor_metadata("abc123"); f.update_index}}
       let(:user_results) do
         ActiveFedora::SolrService.instance.conn.get "select",
                                                     params: { fq: ["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"] }
@@ -57,12 +59,13 @@ describe My::FilesController, type: :controller do
         User.batchuser.send_message(user, multiple_success(batch_id2, [batch]), success_subject, sanitize_text = false)
         xhr :get, :index
       end
-      it "is a success" do
+      it "returns an array of documents I can edit" do
         expect(response).to be_success
         expect(response).to render_template('my/index')
-      end
-      it "returns an array of documents I can edit" do
         expect(assigns(:document_list).count).to eql(user_results["response"]["numFound"])
+        doc_ids = assigns(:document_list).map(&:id)
+        expect(doc_ids).to include(generic_file.id)
+        expect(doc_ids).not_to include(other_generic_file.id)
       end
       it "returns batches" do
         expect(assigns(:batches).count).to eq(2)
@@ -75,7 +78,7 @@ describe My::FilesController, type: :controller do
         Solrizer.solr_name(name, :stored_searchable, type: :string)
       end
       before do
-        GenericFile.create.tap do |f|
+        GenericFile.new(id: "abc123").tap do |f|
           f.title = ['titletitle']
           f.filename = ['filename.filename']
           f.read_groups = ['public']
@@ -91,7 +94,7 @@ describe My::FilesController, type: :controller do
           f.description = ["descriptiondescription"]
           f.format_label = ["format_labelformat_label"]
           f.apply_depositor_metadata(user.login)
-          f.save
+          f.update_index
         end
       end
       it "finds a file by title" do
