@@ -6,25 +6,30 @@ describe "sitemap:generate" do
     Gem.loaded_specs['sitemap'].full_gem_path
   end
 
-  before do
-    (1..15).each do |n|
-      u = User.create(login: "user#{n}", email: "user#{n}@example.org")
-      @file_ids = []
-      @collection_ids = []
-      GenericFile.new.tap do |f|
-        f.apply_depositor_metadata(u.user_key)
-        f.read_groups = ['public']
-        f.save
-        @file_ids << f.id
-      end
-      Collection.new.tap do |c|
-        c.title = "Collection Title"
-        c.apply_depositor_metadata(u.user_key)
-        c.save
-        @collection_ids << c.id
-      end
+  let!(:user) {
+    User.create(login: "user1", email: "user1@example.org")
+  }
+  let!(:file) {
+    GenericFile.new do |f|
+      f.apply_depositor_metadata(user.user_key)
+      f.read_groups = ['public']
+      f.save
     end
-
+  }
+  let!(:private_file) {
+    GenericFile.new do |f|
+      f.apply_depositor_metadata(user.user_key)
+      f.save
+    end
+  }
+  let!(:collection){
+    Collection.new do |c|
+      c.title = "Collection Title"
+      c.apply_depositor_metadata(user.user_key)
+      c.save
+    end
+  }
+  before do
     # set up the rake environment
     load_rake_environment ["#{sitemap_path}/lib/tasks/sitemap.rake"]
   end
@@ -36,15 +41,10 @@ describe "sitemap:generate" do
       expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)
       output = f.read
-      (1..15).each do |n|
-        expect(output).to include("/users/user#{n}")
-      end
-      @file_ids.each do |id|
-        expect(output).to include("/files/#{id}")
-      end
-      @collection_ids.each do |id|
-        expect(output).to include("/collections/#{id}")
-      end
+      expect(output).to include("/users/user1")
+      expect(output).to include("/files/#{file.id}")
+      expect(output).to include("/collections/#{collection.id}")
+      expect(output).not_to include("/files/#{private_file.id}")
     end
   end
 end
