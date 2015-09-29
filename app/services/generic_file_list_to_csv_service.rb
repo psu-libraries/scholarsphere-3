@@ -6,7 +6,7 @@ class GenericFileListToCSVService
   end
 
   def csv
-    csv_data = Sufia::GenericFileCSVService.new(generic_files[0], terms).csv_header
+    csv_data = Sufia::GenericFileCSVService.new(generic_files[0], terms).csv_header.titleize
     generic_files.each do |gf|
       csv_data.concat(Sufia::GenericFileCSVService.new(gf, terms).csv)
     end
@@ -14,6 +14,6 @@ class GenericFileListToCSVService
   end
 
   def terms
-    @terms ||= [:url].concat(Sufia::GenericFileCSVService.new(nil).terms)
+    @terms ||= [:url, :time_uploaded].concat(Sufia::GenericFileCSVService.new(nil).terms)
   end
 end

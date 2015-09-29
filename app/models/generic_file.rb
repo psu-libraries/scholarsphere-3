@@ -85,6 +85,9 @@ class GenericFile < ActiveFedora::Base
     "#{current_host}#{Sufia::Engine.routes.url_helpers.generic_file_path(self)}"
   end
 
+  def time_uploaded
+    date_uploaded.blank? ? "" : date_uploaded.strftime("%Y-%m-%d %H:%M:%S")
+  end
   private
 
     def current_host

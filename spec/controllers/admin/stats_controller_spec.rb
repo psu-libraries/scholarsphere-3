@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::StatsController, type: :controller do
   describe "#export" do
     context "when format is csv" do
+      let (:header) { "Url,Time Uploaded,Id,Title,Depositor,Creator,Visibility,Resource Type,Rights,File Format\n" }
       before do
         allow(GenericFile).to receive(:find_by_date_created).and_return(file_list)
       end
@@ -11,15 +12,15 @@ describe Admin::StatsController, type: :controller do
         it "exports csv" do
           get :export, format: "csv"
           expect(response.status).to eq(200)
-          expect(response.body).to eq("url,id,title,depositor,creator,visibility,resource_type,rights,file_format\n")
+          expect(response.body).to eq(header)
         end
       end
       context "with files" do
-        let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"])] }
+        let(:file_list) { [GenericFile.new(id: "abc123", title: ["my file"], date_uploaded: DateTime.now)] }
         it "exports csv" do
           get :export, format: "csv"
           expect(response.status).to eq(200)
-          expect(response.body).to include("url,id,title,depositor,creator,visibility,resource_type,rights,file_format\n")
+          expect(response.body).to include(header)
           expect(response.body).to include("abc123,my file")
         end
       end
