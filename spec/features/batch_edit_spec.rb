@@ -22,14 +22,12 @@ describe 'Batch management of generic files', type: :feature do
         check 'check_all'
         click_on 'batch-edit'
         assert page.has_content? 'Batch Edit Descriptions'
-        expand_all_fields
-        fill_in_fields ['contributor', 'description', 'tag', 'publisher',
-                        'date_created', 'subject', 'language', 'identifier',
-                        'based_near', 'related_url']
+        fill_in_fields ["Contributor", "Abstract or Summary", "Keyword", "Publisher", "Date Created", "Subject",
+                        "Location", "Language", "Identifier", "Related URL"]
         file_1.reload
         file_2.reload
       end
-      it 'Saves each field to the database' do
+      it 'Saves each field to the database', js: true do
         expect(file_1.contributor).to eq ['NEW contributor']
         expect(file_1.description).to eq ['NEW description']
         expect(file_1.tag).to eq ['NEW tag']
@@ -82,24 +80,33 @@ describe 'Batch management of generic files', type: :feature do
         check 'check_all'
         click_on 'batch-edit'
         assert page.has_content? 'Batch Edit Descriptions'
-        expand_all_fields
       end
-      it 'Fills in each field from the database' do
+      it 'Fills in each field from the database', js: true do
+        expand("Contributor")
         expect(page).to have_css "input#generic_file_contributor[value*='NEW contributor']"
+        expand("Abstract or Summary")
         expect(page).to have_css "textarea#generic_file_description", 'NEW description'
+        expand("Keyword")
         expect(page).to have_css "input#generic_file_tag[value*='NEW tag']"
+        expand("Publisher")
         expect(page).to have_css "input#generic_file_publisher[value*='NEW publisher']"
+        expand("Date Created")
         expect(page).to have_css "input#generic_file_date_created[value*='NEW date_created']"
+        expand("Subject")
         expect(page).to have_css "input#generic_file_subject[value*='NEW subject']"
+        expand("Language")
         expect(page).to have_css "input#generic_file_language[value*='NEW language']"
+        expand("Identifier")
         expect(page).to have_css "input#generic_file_identifier[value*='NEW identifier']"
+        expand("Location")
         expect(page).to have_css "input#generic_file_based_near[value*='NEW based_near']"
+        expand("Related URL")
         expect(page).to have_css "input#generic_file_related_url[value*='NEW related_url']"
       end
     end
   end
 
-  describe 'Deleting multiple files' do
+  describe 'Deleting multiple files', js: true do
     context 'Selecting all my files to delete' do
       before do
         visit '/dashboard/files'
@@ -112,38 +119,37 @@ describe 'Batch management of generic files', type: :feature do
     end
   end
 
-  def fill_in_field(label)
-    within "#form_#{label}" do
-      fill_in "generic_file_#{label}", with: "NEW #{label}"
-      click_button "#{label}_save"
-      expect(page).to have_content 'Changes Saved'
-    end
-  end
-
   def fill_in_fields(labels)
+    ids = []
     labels.each do |label|
-      within "#form_#{label}" do
-        fill_in "generic_file_#{label}", with: "NEW #{label}"
-        click_button "#{label}_save"
+      id = expand(label)
+      within "#form_#{id}" do
+        expect(page).to have_css("#generic_file_#{id}")
+        fill_in "generic_file_#{id}", with: "NEW #{id}"
+        click_button "#{id}_save"
       end
+      ids << id
     end
-    labels.each do |label|
-      within "#form_#{label}" do
-        expect(page).to have_content 'Changes Saved'
+    ids.each do |id|
+      within "#form_#{id}" do
+        sleep 0.1 until page.text.include?('Changes Saved')
+        expect(page).to have_content 'Changes Saved', wait: Capybara.default_max_wait_time * 4
       end
     end
   end
 
   def expand(label)
-    click_link label
-    sleep(0.1)
-  end
-
-  def expand_all_fields
-    all(".accordion-toggle:not(.btn).collapsed").each do |link|
-      expand link.text
-      id = link["href"].delete("#")
-      expect(page).to have_css("div##{id}", wait: Capybara.default_max_wait_time * 2)
+    # for what ever reason occasionally the expand will fail the first time through, so we wait a bit and try again
+    link = find(:link, label, {})
+    link.click
+    while link["class"].include? "collapsed"
+      sleep 0.1
+      link.click if link["class"].include? "collapsed"
     end
+    expect(page).to have_no_css("##{link['id']}.collapsed")
+
+    div_id = link["href"].delete("#")
+    expect(page).to have_css("div##{div_id}")
+    div_id.gsub("collapse_", "")
   end
 end
