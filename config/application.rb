@@ -43,8 +43,8 @@ module ScholarSphere
       path ||= 'ffmpeg'
     end
 
-    config.scholarsphere_version = "v2.3"
-    config.scholarsphere_release_date = "July 16, 2015"
+    config.scholarsphere_version = "v2.4"
+    config.scholarsphere_release_date = "October 8, 2015"
     config.redis_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
@@ -118,8 +118,14 @@ module ScholarSphere
     config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
-    config.stats_email = 'ScholarSphere Stats2 <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
-    config.stats_from_email = 'ScholarSphere Stats2 <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
+    def config.stats_email
+      if ScholarSphere::Application.get_vhost_by_host[0] == 'https://scholarsphere.psu.edu/'
+        'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
+      else
+        'ScholarSphere Stats <cam156@psu.edu>'
+      end
+    end
+    config.stats_from_email = 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
 
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 
