@@ -119,10 +119,11 @@ module ScholarSphere
     config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
 
     def config.stats_email
-      if ScholarSphere::Application.get_vhost_by_host[0] == 'https://scholarsphere.psu.edu/'
+      vhost = ScholarSphere::Application.get_vhost_by_host[0]
+      if vhost == 'scholarsphere.psu.edu'
         'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
       else
-        'ScholarSphere Stats <cam156@psu.edu>'
+        "ScholarSphere Stats #{ vhost } <cam156@psu.edu>"
       end
     end
     config.stats_from_email = 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
