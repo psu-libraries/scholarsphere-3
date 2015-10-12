@@ -18,7 +18,7 @@ describe GenericFileListToCSVService do
       it "can be parsed" do
         parsed = CSV.parse(subject)
         expect(parsed.count).to eq 2
-        expect(parsed[0]).to eq(["Url","Time Uploaded", "Id", "Title", "Depositor", "Creator", "Visibility", "Resource Type", "Rights", "File Format"])
+        expect(parsed[0]).to eq(["Url", "Time Uploaded", "Id", "Title", "Depositor", "Creator", "Visibility", "Resource Type", "Rights", "File Format"])
         expect(parsed[1]).to include("abc123")
       end
     end
@@ -31,7 +31,7 @@ describe GenericFileListToCSVService do
       it "can be parsed" do
         parsed = CSV.parse(subject)
         expect(parsed.count).to eq 4
-        expect(parsed[0]).to eq(["Url","Time Uploaded", "Id", "Title", "Depositor", "Creator", "Visibility", "Resource Type", "Rights", "File Format"])
+        expect(parsed[0]).to eq(["Url", "Time Uploaded", "Id", "Title", "Depositor", "Creator", "Visibility", "Resource Type", "Rights", "File Format"])
         expect(parsed[1]).to include("abc123")
         expect(parsed[2]).to include("def456")
         expect(parsed[3]).to include("ghi789")
