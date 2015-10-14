@@ -1,6 +1,9 @@
 <div class="stats">
+
   <h1>Statistics for <%= application_name %>
-    <%= Sufia::VERSION %></h1>
+    <%= ScholarSphere::Application::config.scholarsphere_version %></h1>
+
+  <h2><%= link_to "Google Analytics", " https://www.google.com/analytics/web/?hl=en#report/visitors-overview/a33252017w60487619p61852754/" %> </h2>
 
   <h2>Total <%= application_name %> Users:&nbsp; <%= @presenter.users_count %> </h2>
   <%= render "admin/stats/export_link" %>
