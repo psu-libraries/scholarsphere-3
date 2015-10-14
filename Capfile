@@ -18,7 +18,6 @@ require 'capistrano/deploy'
 require 'capistrano/rbenv' #rbenv setup
 require 'capistrano/rails' #rails (includes bundler, rails/assets and rails/migrations)
 require 'whenever/capistrano' #whenever 
-require 'capistrano/passenger' #passenger
 require 'capistrano-resque'  #resque
 require 'capistrano/git' #git
 require './lib/capistrano/submodule_strategy' #custom submodule strategy
