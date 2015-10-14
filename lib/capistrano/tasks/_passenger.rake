@@ -18,9 +18,7 @@ namespace :passenger do
     execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'    
  
 #invoke "passenger:warmup"
-   end
-  end
-  after "deploy:bundle", "passenger:install"
+#after "deploy:bundle", "passenger:install"
    end
   end
 
