@@ -142,7 +142,7 @@ namespace :deploy do
     end
   end
   after :resquepoolrestart, :sitemapxml
-
+  after :published, "passenger:install"
   # after :publishing, :restart
   after :restart, "passenger:warmup"
 end
