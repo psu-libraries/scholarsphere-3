@@ -14,6 +14,13 @@ class Ability
     can :read, ContentBlock
   end
 
+  def stats_abilities
+    super
+    if admin_user?
+      can :admin_stats, User
+    end
+  end
+
   private
 
     def admin_user?
