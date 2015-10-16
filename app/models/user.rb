@@ -146,6 +146,31 @@ class User < ActiveRecord::Base
     users.map { |u| { id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})" } }
   end
 
+  def self.query_ldap_by_name(given_name, surname)
+    first_names = []
+    first_names = given_name.split(/[\s.]+/) unless given_name.blank?
+    users = []
+    users = get_users("(givenname=#{first_names[0]}*) (givenname=*#{first_names[1]}*) (sn=#{surname})") if first_names.count >= 2
+    users = get_users("(givenname=#{first_names[0]}) (sn=#{surname})") if users.count == 0 && first_names.count > 0
+    users = get_users("(givenname=#{first_names[0]}*) (sn=#{surname})") if users.count == 0 && first_names.count > 0
+    users = get_users("(givenname=*#{first_names[0]}*) (sn=#{surname})") if users.count == 0 && first_names.count > 0
+    #users = get_users("(displayname=*#{first_names[0]}*) (displayname=*#{surname}*)") if users.count == 0
+    users.map { |u| { id: u[:uid].first, given_name: u[:givenname].first, surname: u[:sn].first, email: u[:mail].first, affiliation: u[:eduPersonPrimaryAffiliation] } }
+  end
+
+  def self.get_users(name_filter)
+    person_filter = "(| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))"
+    filter = Net::LDAP::Filter.construct("(& (& #{name_filter}) #{person_filter})")
+    users = begin
+      retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do
+        Hydra::LDAP.get_user(filter, ['uid', 'givenname', 'sn', 'mail', 'eduPersonPrimaryAffiliation'])
+      end
+    rescue
+      []
+    end
+
+  end
+
   def populate_attributes
     # update exist cache
     exist = ldap_exist!

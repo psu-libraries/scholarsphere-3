@@ -103,6 +103,25 @@ describe User, type: :model do
     end
   end
 
+  describe "#query_ldap_by_name" do
+    context "when known user" do
+      let(:first_name) { "Carolyn Ann" }
+      let(:last_name) { "Cole" }
+      let(:first_name_parts) { ["Carolyn", "Ann"] }
+      let(:filter) { Net::LDAP::Filter.construct("(& (& (givenname=#{first_name_parts[0]}*) (givenname=*#{first_name_parts[1]}*) (sn=#{last_name})) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))))") }
+      let(:attrs) {  ['uid', 'givenname', 'sn', 'mail', "eduPersonPrimaryAffiliation"] }
+
+      let(:results) { [Net::LDAP::Entry.new("uid=cam156,dc=psu,dc=edu").tap { |e| e[:uid] = ["cam156"]; e[:givenname] = ["CAROLYN A"]; e[:sn] = "COLE"; e[:mail] = ["cam156@psu.edu"] }] }
+      before do
+        expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
+        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
+      end
+      it "returns a list or people" do
+        expect(described_class.query_ldap_by_name(first_name, last_name)).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: [] }])
+      end
+    end
+  end
+
   describe "#from_url_component" do
     subject { described_class.from_url_component("cam") }
 
