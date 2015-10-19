@@ -5,7 +5,7 @@ module Sufia
       # the API e.g., if your installation of Arkivo runs on a host
       # with the 10.0.0.3 IP address, you could use:
       # request.remote_ip == '10.0.0.3'
-      false
+      Rails.env.development?
     end
   end
 end

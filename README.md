@@ -98,6 +98,18 @@ Browse to http://localhost:3000/ and you should see ScholarSphere!
 
 ## Usage Notes
 
+### Enabling Zotero integration
+
+To enable integration with Zotero ([more about that feature](https://github.com/projecthydra/sufia#zotero-integration)), here are the required steps:
+
+1. [Register an OAuth client for ScholarSphere with Zotero](https://www.zotero.org/oauth/apps). Note the client key and secret for later.
+1. [Install and start arkivo-sufia](https://github.com/inukshuk/arkivo-sufia#quickstart) in a server environment. Note the server hostname and IP address arkivo-sufia is running on for later.
+1. Create Arkivo tokens for all existing users in your application database via (assuming production environment) `RAILS_ENV=production rake sufia:user:tokens`
+1. Set environment variables for the Zotero OAuth client key and secret you generated in step 1 above, called `ZOTERO_CLIENT_KEY` and `ZOTERO_CLIENT_SECRET`. The `config/zotero.yml` file depends on these environment variables. (If you'd prefer not to manage these via env vars, you are also welcome to handle zotero.yml in a different way, e.g., the way we handle our other configs that are hidden from version control.) Make sure that these variables are available to the user running the ScholarSphere rails server.
+1. Copy `config/arkivo.yml.sample` to `config/arkivo.yml` and set it up with the hostname and IP address you noted in step 2 above. (This is how we handle most of our production configs already, so this just mirrors current practice.)
+1. Edit `config/initializers/arkivo_constraint.rb` to allow connections to the Arkivo API. If you're just testing, you can have the `matches?` method return `true` but do **not** do this in production! This effectively allows any client unauthenticated access to an API that permits adding, modifying, and removing content. In production, you can use the routing constraint to ensure that the API is accessible only to the specific IP address of the host running the Arkivo service. You can do that by having the `matches?` method return something like `request.remote_ip == '10.0.0.3'`. (If you're not comfortable having a back-end IP address stored in a file that is under version control, you can also make use of an environment variable here, e.g., `request.remote_ip == ENV['ARKIVO_HOST_IP']`, in which case you'll need to make sure the server environment has that variable set to the proper value.)
+1. Restart the Rails server and all background jobs, and you should now be able to OAuth to Zotero via the Edit Profile screen, at which point the magic should start happening.
+
 ### Auditing All Datastreams
 
 To audit the digital signatures of every version of every object in the
