@@ -11,7 +11,7 @@ gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700d
 gem 'sufia', github: 'projecthydra/sufia', ref: 'fa0190067b'
 gem 'browse-everything', github: 'projecthydra-labs/browse-everything', ref: 'e7c83be25'
 gem 'active-fedora', '9.4.0'
-gem 'hydra-head', '9.2.2'
+gem 'hydra-head', github: 'projecthydra/hydra-head', ref: '86e9db1a91'
 
 
 # Other components
