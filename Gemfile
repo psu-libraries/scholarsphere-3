@@ -38,6 +38,7 @@ gem 'namae', '0.9.3'
 group :development, :test do
   gem 'jettywrapper'
   gem 'rspec-rails'
+  gem 'rspec-its'
   gem 'sqlite3'
 end
 

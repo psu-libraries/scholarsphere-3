@@ -1,5 +1,6 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
+  include ShareNotify::Metadata
 
   def self.indexer
     GenericFileIndexingService
