@@ -94,6 +94,8 @@ Sufia.config do |config|
     config.browse_everything = nil
   end
 
+  config.share_notify = ShareNotify.config
+
   config.temp_file_base = "/tmp"
 
   config.retry_unless_sleep = 2 # seconds

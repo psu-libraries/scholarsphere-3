@@ -86,6 +86,7 @@ module ScholarSphere
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
+    config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
 
     config.i18n.enforce_available_locales = true
