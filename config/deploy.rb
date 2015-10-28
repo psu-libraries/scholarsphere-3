@@ -1,6 +1,6 @@
 # config valid only for Capistrano 3.1
 # lock '3.2.1'
-
+#http://capistranorb.com/documentation/getting-started/flow/
 # application and repo settings
 set :application, 'scholarsphere'
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
@@ -172,3 +172,15 @@ end
   # after :publishing, :restart
   after :restart, "passenger:warmup"
 end
+
+# Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions
+namespace :rbenv_custom_ruby_cleanup do
+  desc "Clean up old rbenv versions"
+  task :purge_old_versions do
+   on roles(:web) do
+    execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
+   end
+  end
+after "deploy:finishing","rbenv_custom_ruby_cleanup:purge_old_versions"
+end
+
