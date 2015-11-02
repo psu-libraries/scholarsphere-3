@@ -58,11 +58,15 @@ describe 'Visting the home page:', type: :feature do
         expect(page).to have_content 'tagX tagY tagZ'
       end
 
-      specify 'clicking on a tag goes to the right URL' do
-        visit '/'
-        target_url = URI.encode('/catalog?f[tag_sim][]=tagY', '[]')
-        click_link('tagY')
-        expect(current_url).to end_with(target_url)
+      describe "clicking on a tag" do
+        let(:url)         { '/catalog?f[tag_sim][]=tagY' }
+        let(:target_url)  { URI.encode(url, '[]') }
+        subject { current_url }
+        before do
+          visit '/'
+          click_link('tagY')
+        end
+        it { is_expected.to end_with(url) }
       end
     end
 
