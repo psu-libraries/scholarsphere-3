@@ -42,6 +42,14 @@ describe NameDisambiguationService do
     end
   end
 
+  context "when we have multiple results" do
+    let(:name) { "Jane Doe" }
+    it "finds the user" do
+      expect(User).to receive(:query_ldap_by_name).and_return([{:id=>"jjd1", :given_name=>"Jane", :surname=>"Doe", :email=>"jjd1@psu.edu", :affiliation=>["STAFF"]},{:id=>"jod1", :given_name=>"Jane Other", :surname=>"Doe", :email=>"jod1@psu.edu", :affiliation=>["STAFF"]}])
+      is_expected.to eq([])
+    end
+  end
+
   context "when the user has many titles" do
     let(:name) { "Nicole Seger, MSN, RN, CPN" }
     it "finds the user" do
@@ -96,7 +104,7 @@ describe NameDisambiguationService do
   end
 
   context "when the user has an email in thier name" do
-    context "when the email is not thier id" do
+    context "when the email is not their id" do
       let(:name) { "Barbara I. Dewey a bdewey@psu.edu" }
       it "does not find the user" do
         expect(User).to receive(:directory_attributes).with("bdewey", [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation]).and_return([])
@@ -104,11 +112,20 @@ describe NameDisambiguationService do
       end
     end
 
-    context "when the email is thier id" do
+    context "when the email is their id" do
       let(:name) { "sjs230@psu.edu" }
       it "finds the user" do
         expect(User).to receive(:directory_attributes).with("sjs230", [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation]).and_return([{ uid: ["sjs230"], givenname: ["SARAH J"], sn: ["STAGER"], mail: ["sjs230@psu.edu"], eduPersonPrimaryAffiliation: ["STAFF"] }])
         expect(subject.count).to eq(1)
+      end
+    end
+
+    context "when the email is their id" do
+      let(:name) { "sjs230@psu.edu, cam156@psu.edu" }
+      it "finds the user" do
+        expect(User).to receive(:directory_attributes).with("sjs230", [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation]).and_return([{ uid: ["sjs230"], givenname: ["SARAH J"], sn: ["STAGER"], mail: ["sjs230@psu.edu"], eduPersonPrimaryAffiliation: ["STAFF"] }])
+        expect(User).to receive(:directory_attributes).with("cam156", [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation]).and_return([{ uid: ["cam156"], givenname: ["CAROLYN A"], sn: ["cole"], mail: ["cam156@psu.edu"], eduPersonPrimaryAffiliation: ["STAFF"] }])
+        expect(subject.count).to eq(2)
       end
     end
   end

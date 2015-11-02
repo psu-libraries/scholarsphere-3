@@ -9,8 +9,9 @@ class NameDisambiguationService
 
   def disambiguate
     query_result = login_name(name) || email_in_name(name)
-    results << query_result unless query_result.blank?
-    multiple_names(name) if results.blank?
+    return  query_result unless query_result.blank?
+
+    multiple_names(name)
     results
   end
 
@@ -19,16 +20,20 @@ class NameDisambiguationService
     def login_name(id)
       attrs = User.directory_attributes(id, [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation])
       return nil if attrs.count < 1
-      results_hash(attrs.first)
+      [results_hash(attrs.first)]
     end
 
     # "thing" is an awful name - it's a placeholder to make this a pure function
     def email_in_name(thing)
       return unless thing.include?("@")
       parts = thing.split(" ")
-      email = parts.reject{|part| !part.include?("@")}[0]
-      id = email.split('@')[0]
-      login_name(id) || results_hash(mail: [email])
+      emails = parts.reject{|part| !part.include?("@")}
+      results = []
+      Array(emails).each do |email|
+        id = email.split('@')[0]
+        results << (login_name(id) || results_hash(mail: [email]))
+      end
+      results
     end
 
     def multiple_names(multi_name)
@@ -75,6 +80,7 @@ class NameDisambiguationService
       return nil if possible_users.count == 0
       if possible_users.count > 1
         puts "Returning #{possible_users.first} but got more than name for given name #{given} and family name #{name}"
+        return nil
       end
       possible_users.first
     end
