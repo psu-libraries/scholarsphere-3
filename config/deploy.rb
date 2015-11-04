@@ -1,12 +1,9 @@
-# config valid only for Capistrano 3.1
-# lock '3.2.1'
-#http://capistranorb.com/documentation/getting-started/flow/
+# config valid only for Capistrano 3.4
+lock '3.4.0'
+
 # application and repo settings
 set :application, 'scholarsphere'
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
-
-# default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "develop"
 
 # default user and deployment location
@@ -18,8 +15,6 @@ set :use_sudo, false
 set :ssh_options, {
   keys: [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")],
   forward_agent: true,
-  # auth_methods: %w(password)
-  # keys: %w(/home/rlisowski/.ssh/id_rsa),
 }
 
 # rbenv settings
@@ -39,28 +34,43 @@ set :rails_env, 'production'
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, [:app, :job]
 
-# git for source control
 set :scm, :git
-# set :git_strategy, Capistrano::Git::SubmoduleStrategy
-
-# Default value for :format is :pretty
 set :format, :pretty
-
-# Default value for :log_level is :debug
 set :log_level, :debug
-
-# Default value for :pty is false
 set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
+set :linked_files, fetch(:linked_files, []).push(
+  'config/database.yml',
+  'config/devise.yml',
+  'config/fedora.yml',
+  'config/fedora3.yml',
+  'config/hydra-ldap.yml',
+  'config/newrelic.yml',
+  'config/redis.yml',
+  'config/solr.yml',
+  'config/analytics.yml',
+  'config/share_notify.yml',
+  'config/blacklight.yml',
+  'config/ga-privatekey.p12',
+  'config/browse_everything_providers.yml',
+  'public/sitemap.xml',
+  'config/initializers/secret_token.rb',
+  'config/initializers/sufia-secret.rb'
+)
 
-# Default value for linked_dirs is []
-# set :linked_dirs, %w{log}
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, fetch(:linked_dirs, []).push(
+  'log',
+  'tmp/pids',
+  'tmp/cache',
+  'tmp/sockets',
+  'vendor/bundle',
+  'public/system',
+  'public/uploads'
+)
 
-# Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+# Default value for keep_releases is 5
+set :keep_releases, 7
 
 # Default value for keep_releases is 5, setting to 7
 set :keep_releases, 7
@@ -78,32 +88,8 @@ namespace :apache do
 end
 
 namespace :deploy do
-  # Link the appropriate configuration files based on application, stage, and release path
-  desc "Link shared files"
-  task :symlink_shared do
-    on roles(:app) do
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/database.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/devise.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/fedora3.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/hydra-ldap.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/newrelic.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/redis.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/solr.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/analytics.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/blacklight.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/ga-privatekey.p12 #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/browse_everything_providers.yml #{fetch(:release_path)}/config/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/secret_token.rb #{fetch(:release_path)}/config/initializers/"
-      execute "ln -sf /dlt/#{fetch(:application)}/config_#{fetch(:stage)}/#{fetch(:application)}/sufia-secret.rb #{fetch(:release_path)}/config/initializers/"
-      execute "ln -sf /dlt/#{fetch(:application)}/upload_#{fetch(:stage)}/uploads #{fetch(:release_path)}/public/"
-      execute "ln -sf /dlt/#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml #{fetch(:release_path)}/public/sitemap.xml"
-      execute "ln -sf /dlt/#{fetch(:application)}/shared_#{fetch(:stage)}/public/system #{fetch(:release_path)}/public/"
-    end
-  end
-  after 'deploy:symlink:shared', :symlink_shared
 
-  # Resolarize objects
+  # Resolrize objects
   desc "Re-solrize objects"
   task :resolrize do
     on roles(:job) do
@@ -137,35 +123,35 @@ namespace :deploy do
     end
   end
 
-# Passenger Capistrano Task
-# The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
-# as Ruby is updated on the system.  The PassengerDefaultRuby variable is set to system ruby by default from the Yum
-# install.  This will not work in our environment.
-# Passenger Install Task below defines the current ruby version
-# Adds it to temp file
-# then copies passenger configs to temp file.
-# Replaces all instances of PassengerRuby with proper version in temp file.
-# Replace passenger conf file with temp file.
+  # Passenger Capistrano Task
+  # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
+  # as Ruby is updated on the system.  The PassengerDefaultRuby variable is set to system ruby by default from the Yum
+  # install.  This will not work in our environment.
+  # Passenger Install Task below defines the current ruby version
+  # Adds it to temp file
+  # then copies passenger configs to temp file.
+  # Replaces all instances of PassengerRuby with proper version in temp file.
+  # Replace passenger conf file with temp file.
 
-namespace :passenger do
-  desc "Passenger Version Config Update"
-  task :config_update do
-   on roles(:web)  do
-    execute "mkdir --parents /opt/heracles/deploy/passenger"
-    execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
-    execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'    
+  namespace :passenger do
+    desc "Passenger Version Config Update"
+    task :config_update do
+     on roles(:web)  do
+      execute "mkdir --parents /opt/heracles/deploy/passenger"
+      execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
+      execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'    
+      end
+    end
+
+    desc "warm up passenger"
+    task :warmup do
+     on roles(:web) do
+     puts "do something"
+     #execute "curl -s -k --head https://$(hostname -f)"
+     # execute "curl -s -k -o /dev/null --head https://$(hostname -f)"
+     end
     end
   end
-
-  desc "warm up passenger"
-  task :warmup do
-   on roles(:web) do
-   puts "do something"
-   #execute "curl -s -k --head https://$(hostname -f)"
-   # execute "curl -s -k -o /dev/null --head https://$(hostname -f)"
-   end
-  end
-end
 
   after :resquepoolrestart, :sitemapxml
   after :published, "passenger:config_update"
@@ -181,6 +167,5 @@ namespace :rbenv_custom_ruby_cleanup do
     execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
    end
   end
-after "deploy:finishing","rbenv_custom_ruby_cleanup:purge_old_versions"
+  after "deploy:finishing","rbenv_custom_ruby_cleanup:purge_old_versions"
 end
-
