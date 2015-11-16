@@ -1,47 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema name="Hydra" version="1.5">
-  <!-- NOTE: various comments and unused configuration possibilities have been purged
-     from this file.  Please refer to http://wiki.apache.org/solr/SchemaXml,
-     as well as the default schema file included with Solr -->
-  
+<!--
+      Attention: If this file is changed please update the cooresponding file used by SAS VM's.
+-->
   <uniqueKey>id</uniqueKey>
   
   <fields>
-    <!-- If you remove this field, you must _also_ disable the update log in solrconfig.xml
-    or Solr won't start. _version_ and update log are required for SolrCloud
-    -->
+    <!-- _version_ and update log are required for SolrCloud -->
     <field name="_version_" type="long" indexed="true" stored="true"/>
-
     <field name="id" type="string" stored="true" indexed="true" multiValued="false" required="true"/>
     <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
-    
     <field name="lat" type="tdouble" stored="true" indexed="true" multiValued="false"/>
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
 
-	<!--these fields are hard coded in places in hydra-head -->
-	<field name="active_fedora_model_s" type="string" stored="true" indexed="true"/>
-	<field name="object_profile_display" type="string" stored="true" indexed="true"/>
-	<field name="has_model_s" type="string" stored="true" indexed="true"/>
-	<field name="is_governed_by_s" type="string" stored="true" indexed="true"/>
-      
-	
-	<!--
-	These are hard coded in places in hydra-head, but we hope to fix that.
-	
-	<field name="inheritable_discover_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="inheritable_read_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="inheritable_edit_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="inheritable_discover_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="inheritable_read_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="inheritable_edit_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="read_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="discover_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="edit_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="read_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="edit_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	<field name="discover_access_group_t" type="string" stored="true" indexed="true" multiValued="true"/>
-	-->	
-
+    <!--these fields are hard coded in places in hydra-head -->
+    <field name="active_fedora_model_s" type="string" stored="true" indexed="true"/>
+    <field name="object_profile_display" type="string" stored="true" indexed="true"/>
+    <field name="has_model_s" type="string" stored="true" indexed="true"/>
+    <field name="is_governed_by_s" type="string" stored="true" indexed="true"/>
 
     <!-- NOTE:  not all possible Solr field types are represented in the dynamic fields -->
 
@@ -179,94 +155,13 @@
     <!-- you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
     <field name="all_text_timv" type="text" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
 
+    <!-- alternative method for full-text indexing -->
+    <!-- <copyField source="*_tesim" dest="all_text_timv" maxChars="3000"/> -->
   </fields>
-
-  <!-- START hydra deprecated items -->
-  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-<!--  
-  <solrQueryParser defaultOperator="AND"/>
-
-  <copyField source="title_t" dest="title_unstem_search"/>
-  <copyField source="subtitle_t" dest="subtitle_unstem_search"/>
-  <copyField source="title_addl_t" dest="title_addl_unstem_search"/>
-  <copyField source="title_added_entry_t" dest="title_added_entry_unstem_search"/>
-  <copyField source="title_series_t" dest="title_series_unstem_search"/>
-  <copyField source="author_t" dest="author_unstem_search"/>
-  <copyField source="author_addl_t" dest="author_addl_unstem_search"/>
-  <copyField source="subject_t" dest="subject_unstem_search"/>
-  <copyField source="subject_addl_t" dest="subject_addl_unstem_search"/>
-  <copyField source="subject_topic_facet" dest="subject_topic_unstem_search"/>
--->
-  <!-- sort fields -->
-<!--  
-  <copyField source="pub_date" dest="pub_date_sort"/>
--->
-
-  <!-- spellcheck fields -->
-  <!-- default spell check;  should match fields for default request handler -->
-  <!-- it won't work with a copy of a copy field -->
-<!-- 
-  <copyField source="*_t" dest="spell"/>
-  <copyField source="*_facet" dest="spell"/>
--->
-  <!-- title spell check;  should match fields for title request handler -->
-<!-- 
-  <copyField source="title_t" dest="title_spell"/>
-  <copyField source="subtitle_t" dest="title_spell"/>
-  <copyField source="addl_titles_t" dest="title_spell"/>
-  <copyField source="title_added_entry_t" dest="title_spell"/>
-  <copyField source="title_series_t" dest="title_spell"/>
--->
-  <!-- author spell check; should match fields for author request handler -->
-<!-- 
-  <copyField source="author_t" dest="author_spell"/>
-  <copyField source="author_addl_t" dest="author_spell"/>
--->
-  <!-- subject spell check; should match fields for subject request handler -->
-<!-- 
-  <copyField source="subject_topic_facet" dest="subject_spell"/>
-  <copyField source="subject_t" dest="subject_spell"/>
-  <copyField source="subject_addl_t" dest="subject_spell"/>
--->
-  
-  <!-- OpenSearch query field should match request handler search fields -->
-<!--  
-  <copyField source="title_t" dest="opensearch_display"/>
-  <copyField source="subtitle_t" dest="opensearch_display"/>
-  <copyField source="addl_titles_t" dest="opensearch_display"/>
-  <copyField source="title_added_entry_t" dest="opensearch_display"/>
-  <copyField source="title_series_t" dest="opensearch_display"/>
-  <copyField source="author_t" dest="opensearch_display"/>
-  <copyField source="author_addl_t" dest="opensearch_display"/>
-  <copyField source="subject_topic_facet" dest="opensearch_display"/>
-  <copyField source="subject_t" dest="opensearch_display"/>
-  <copyField source="subject_addl_t" dest="opensearch_display"/>
--->
-
-  <!-- Above, multiple source fields are copied to the [text] field.
-      Another way to map multiple source fields to the same
-      destination field is to use the dynamic field syntax.
-      copyField also supports a maxChars to copy setting.  -->
-
-    <!-- <copyField source="*_t" dest="text" maxChars="3000"/> -->
-<!--  
-    <copyField source="*_s" dest="text"/>
-    <copyField source="*_t" dest="text"/>
-    <copyField source="*_facet" dest="text"/>
--->
-    <!-- copy name to alphaNameSort, a field designed for sorting by name -->
-    <!-- <copyField source="name" dest="alphaNameSort"/> -->
-
-    <!-- END hydra deprecated items -->
-
-  <!-- copy fields;  note that you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
-<!--
-  <copyField source="some_field" dest="all_text_timv" />
--->  
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
-    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>    
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>  
     <fieldType name="rand" class="solr.RandomSortField" omitNorms="true"/>
     
     <!-- Default numeric field types.  -->
@@ -282,8 +177,7 @@
     <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
     
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z
-         Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z
-      -->
+      Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z -->
     <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
     <!-- A Trie based date field for faster date range queries and date faceting. -->
     <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
@@ -294,12 +188,11 @@
       definition is created matching *___<typename>.  Alternately, if 
       subFieldSuffix is defined, that is used to create the subFields.
       Example: if subFieldType="double", then the coordinates would be
-        indexed in fields myloc_0___double,myloc_1___double.
+      indexed in fields myloc_0___double,myloc_1___double.
       Example: if subFieldSuffix="_d" then the coordinates would be indexed
-        in fields myloc_0_d,myloc_1_d
+      in fields myloc_0_d,myloc_1_d
       The subFields are an implementation detail of the fieldType, and end
-      users normally should not need to know about them.
-     -->
+      users normally should not need to know about them. -->
     <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
     
     <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
@@ -307,10 +200,8 @@
     
     <!-- An alternative geospatial field type new to Solr 4.  It supports multiValued and polygon shapes.
       For more information about this and other Spatial fields new to Solr 4, see:
-      http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4
-    -->
-    <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType"
-      geo="true" distErrPct="0.025" maxDistErr="0.000009" units="degrees" />
+      http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4 -->
+    <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" distErrPct="0.025" maxDistErr="0.000009" units="degrees" />
     
     <fieldType name="text" class="solr.TextField" omitNorms="false">
       <analyzer>
@@ -327,7 +218,7 @@
         <filter class="solr.TrimFilterFactory"/>
       </analyzer>
     </fieldType>
-        
+      
     <!-- single token analyzed text, for sorting.  Punctuation is significant. -->
     <fieldtype name="alphaSort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
       <analyzer>
@@ -345,13 +236,11 @@
         <filter class="solr.EnglishPossessiveFilterFactory"/>
         <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
         <filter class="solr.EnglishMinimalStemFilterFactory"/>
-        <!--
-        <filter class="solr.PorterStemFilterFactory"/>
-        -->
+        <!-- <filter class="solr.PorterStemFilterFactory"/> -->
         <filter class="solr.TrimFilterFactory"/>
       </analyzer>
     </fieldType>
-        
+      
     <!-- queries for paths match documents at that path, or in descendent paths -->
     <fieldType name="descendent_path" class="solr.TextField">
       <analyzer type="index">
@@ -371,7 +260,6 @@
         <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
       </analyzer>
     </fieldType>
-    
   </types>
   
 </schema>
