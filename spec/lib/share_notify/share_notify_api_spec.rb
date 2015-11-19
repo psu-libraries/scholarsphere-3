@@ -32,12 +32,22 @@ describe ShareNotify::API do
   end
 
   describe "#search" do
-    let(:query) { "something" }
-    subject { described_class.new.search(query) }
-    it "returns results" do
-      pending "Contacting OSF support about this..."
-      VCR.use_cassette('share_notify', record: :none) do
-        expect(subject.code).to eq(200)
+    context "with a nil query" do
+      subject { described_class.new.search(nil) }
+      it "returns no results" do
+        VCR.use_cassette('share_notify', record: :none) do
+          expect(subject.code).to eq(200)
+          expect(subject["results"]).to be_empty
+        end
+      end
+    end
+    context "with a result query" do
+      subject { described_class.new.search("asdf") }
+      it "returns no results" do
+        VCR.use_cassette('share_notify', record: :none) do
+          expect(subject.code).to eq(200)
+          expect(subject["count"]).to eq(2)
+        end
       end
     end
   end

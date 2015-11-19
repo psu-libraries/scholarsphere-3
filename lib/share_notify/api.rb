@@ -41,7 +41,7 @@ class ShareNotify::API
     end
 
     def api_search_point
-      "/api/v1/share/share/"
+      "/api/v1/share/search/"
     end
 
 end

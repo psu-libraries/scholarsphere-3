@@ -1,7 +1,8 @@
 module ShareNotify
 
-  autoload :API,      'share_notify/api'
-  autoload :Metadata, 'share_notify/metadata'
+  autoload :API,          'share_notify/api'
+  autoload :Metadata,     'share_notify/metadata'
+  autoload :PushDocument, 'share_notify/push_document'
   
   class << self
     def configure(value)

@@ -31,7 +31,6 @@ describe 'Generic File viewing and downloading:', type: :feature do
     context 'When viewing a file' do
       specify "I see all the correct information" do
         # "I can see the file's page" do
-        expect(page.status_code).to eq(200)
         expect(page).to have_content file_1.title.first
 
         # 'I can not feature' do
