@@ -44,7 +44,7 @@ en:
         subject: "Permission change notification"
         notification: "You can now %{access} file %{file}"
     upload:
-      retrictions_html: "<b>Upload restrictions:</b> Maximum Individual File Size 500 MB.  Maximum Total Upload Size is 1GB.  Maximum Files in one upload is 100"
+      restrictions_html: "<h3>Maximum Upload Restrictions</h3><ul><li>Individual File Size: 500 MB</li><li>Up to 100 files and totaling less than 1GB in size</li></ul><p><a href='/contact'>Need to upload a larger file? Contact us for support.</a></p>"
   statistic:
     report:
       subject: "ScholarSphere - Statistic Report"
