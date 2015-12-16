@@ -104,6 +104,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         allow(Sufia.config).to receive(:browse_everything) { { "dropbox" => { app_key: "fakekey189274942347", app_secret: "fakesecret489289472347298" } } }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
+        allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false)
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         WebMock.enable!
       end

@@ -12,7 +12,7 @@ module ShareNotify
     end
 
     def count
-      response.fetch("count", nil)
+      response.fetch("count", 0)
     end
 
     def docs

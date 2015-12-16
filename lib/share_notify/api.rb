@@ -21,17 +21,17 @@ class ShareNotify::API
 
   # @return [HTTParty::Response]
   def get
-    @response = self.class.get(api_data_point)
+    @response = with_timeout { self.class.get(api_data_point) }
   end
 
   # @return [HTTParty::Response]
   def post(body)
-    @response = self.class.post(api_data_point, body: body, headers: headers)
+    @response = with_timeout { self.class.post(api_data_point, body: body, headers: headers) }
   end
 
   # @return [HTTParty::Response]
   def search(query)
-    @response = self.class.get(api_search_point, query: { q: query })
+    @response = with_timeout { self.class.get(api_search_point, query: { q: query }) }
   end
 
   private
@@ -44,4 +44,7 @@ class ShareNotify::API
       "/api/v1/share/search/"
     end
 
+    def with_timeout(&block)
+      Timeout::timeout(5) { yield }
+    end
 end
