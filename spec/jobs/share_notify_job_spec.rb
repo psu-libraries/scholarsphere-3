@@ -19,10 +19,10 @@ describe ShareNotifyJob do
         end
       end
       
-      before { allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(200) }
+      before { allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(201) }
 
       it "sends a notification" do
-        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyEventJob))
+        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifySuccessEventJob))
         job.run
       end
 
@@ -43,9 +43,16 @@ describe ShareNotifyJob do
           f.save
         end
       end
-      before { allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(400) }
+      let(:error_message) do
+        "Posting file #{file.id} to SHARE Notify failed with 400. Response was {\"detail\"=>\"Invalid token.\"}"
+      end
+      before do
+        allow(ShareNotify).to receive(:config) { { "token" => "BAD_TOKEN" } }
+        allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(400)
+      end
       it "logs the error" do
-        expect(Rails.logger).to receive(:warn).once
+        expect(Rails.logger).to receive(:error).once.with(error_message)
+        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyFailureEventJob))
         job.run
       end
     end

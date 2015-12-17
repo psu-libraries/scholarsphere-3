@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShareNotifyEventJob do
+describe ShareNotifyFailureEventJob do
 
   let(:user) { FactoryGirl.find_or_create(:jill) }
 
