@@ -246,12 +246,12 @@ describe 'Dashboard Files', type: :feature do
       select('100', from: 'per_page')
       find_button('Refresh').click
       first('input.batch_document_selector').click
-      within (".batch-info") do
+      within(".batch-info") do
         expect(page).to have_content "Add to Collection"
         expect(page).not_to have_content "Sort By"
       end
       first('input.batch_document_selector').click
-      within (".batch-info") do
+      within(".batch-info") do
         expect(page).to have_content "Sort By"
         expect(page).not_to have_content "Add to Collection"
       end
@@ -264,10 +264,10 @@ describe 'Dashboard Files', type: :feature do
       fill_in('search-field-header', with: term)
       click_button("Go")
     end
-end
+  end
 
-  let (:title_field) { Solrizer.solr_name("title", :stored_searchable, type: :string) }
-  let (:resp) { ActiveFedora::SolrService.instance.conn.get "select", params: { fl: ['id', title_field] } }
+  let(:title_field) { Solrizer.solr_name("title", :stored_searchable, type: :string) }
+  let(:resp) { ActiveFedora::SolrService.instance.conn.get "select", params: { fl: ['id', title_field] } }
   def page_should_only_list(file)
     expect(page).to have_selector('li.active', text: "Files")
     expect(page).to have_content file.title.first

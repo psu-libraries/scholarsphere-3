@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe PublicFilteredList, type: :model do
-  let(:file_list) { [ GenericFile.new(title: ["private"]), GenericFile.new( title: ['public']) { |f| f.visibility = 'open' } ] }
+  let(:file_list) { [GenericFile.new(title: ["private"]), GenericFile.new(title: ['public']) { |f| f.visibility = 'open' }] }
 
-  subject {PublicFilteredList.new(file_list).filter}
+  subject { described_class.new(file_list).filter }
 
   it "keeps public files" do
     expect(subject.count).to eq(1)

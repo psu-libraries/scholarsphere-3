@@ -9,5 +9,5 @@ describe 'pages/show.html.erb', type: :view do
     render
   end
 
-  it { is_expected.to match /What is ScholarSphere?/ }
+  it { is_expected.to match(/What is ScholarSphere?/) }
 end

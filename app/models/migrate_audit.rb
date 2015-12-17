@@ -20,14 +20,12 @@ class MigrateAudit < ActiveRecord::Base
     end
   end
 
-  private
+  def self.clear_audit_data!
+    # destroy all existing audit records
+    all.find_each(&:destroy!)
+  end
 
-    def self.clear_audit_data!
-      # destroy all existing audit records
-      all.find_each(&:destroy!)
-    end
-
-    def self.reset_audit_status
-      MigrateAudit.update_all(f4_id: nil, status: nil)
-    end
+  def self.reset_audit_status
+    MigrateAudit.update_all(f4_id: nil, status: nil)
+  end
 end

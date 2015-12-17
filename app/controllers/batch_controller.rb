@@ -18,5 +18,4 @@ class BatchController < ApplicationController
         edit_form_class.model_attributes(params[:generic_file]),
         params[:visibility])
     end
-
 end

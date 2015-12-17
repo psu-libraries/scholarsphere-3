@@ -22,8 +22,8 @@ class GenericFileToShareJSONService
       end
     end
 
-    def email_for_name( name)
+    def email_for_name(name)
       value = NameDisambiguationService.new(name).disambiguate
-      return value.blank? ? "" : value[0][:email]
+      value.blank? ? "" : value[0][:email]
     end
 end

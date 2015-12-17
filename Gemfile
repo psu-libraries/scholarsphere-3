@@ -39,6 +39,8 @@ group :development, :test do
   gem 'jettywrapper'
   gem 'rspec-its'
   gem 'rspec-rails'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
   gem 'sqlite3'
 end
 
@@ -51,8 +53,6 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.0', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
-  gem 'rubocop'
-  gem 'rubocop-rspec'
   gem 'unicorn-rails'
 end
 

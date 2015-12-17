@@ -1,5 +1,4 @@
 class PublicFilteredList
-
   attr_reader :generic_files, :filters
 
   def initialize(generic_files)
@@ -8,7 +7,6 @@ class PublicFilteredList
   end
 
   def filter
-    @public_members ||= generic_files.reject{|gf| !gf.public?}
+    @public_members ||= generic_files.reject { |gf| !gf.public? }
   end
-
 end

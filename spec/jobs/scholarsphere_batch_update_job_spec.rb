@@ -46,5 +46,4 @@ describe ScholarsphereBatchUpdateJob do
       end
     end
   end
-
 end

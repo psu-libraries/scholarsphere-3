@@ -23,25 +23,18 @@ module Behaviors
 
       # Overriding Sufia::FilesControllerBehavior to catch permission state broadcasting.
       def notify_users(permission_state, generic_file)
-        # retrieve batch user
+        return unless params[:action] == "update"
         sender = User.batchuser
-
-        # check if file state is modified representing permissions could be updated
-        if params[:action] == "update"
-
-          # iterate through added permissions, check that type is user,
-          # locate and notify user of permissions change
-          permission_state[:added].each do |permission|
-            if permission[:type] == "person"
-              recipient = User.find_by_user_key(permission[:name])
-              sender.send_message(recipient,
-                                  t("scholarsphere.notifications.permissions.notification",
-                                    file: generic_file.title,
-                                    access: permission[:access]),
-                                  t("scholarsphere.notifications.permissions.subject")) unless recipient.nil?
-
-            end
-          end
+        # iterate through added permissions, check that type is user,
+        # locate and notify user of permissions change
+        permission_state[:added].each do |permission|
+          next unless permission[:type] == "person"
+          recipient = User.find_by_user_key(permission[:name])
+          sender.send_message(recipient,
+                              t("scholarsphere.notifications.permissions.notification",
+                                file: generic_file.title,
+                                access: permission[:access]),
+                              t("scholarsphere.notifications.permissions.subject")) unless recipient.nil?
         end
       end
   end

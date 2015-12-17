@@ -77,11 +77,11 @@ describe Behaviors::PermissionsNotificationBehavior do
     end
   end
   describe "notify_users" do
-    let (:user) { double('stubbed user') }
-    let (:batch_user) { double('stubbed batch_user') }
-    let (:message) { "You can now edit file title" }
-    let (:message_subject) { "Permission change notification" }
-    let (:generic_file) { double('stubbed file') }
+    let(:user) { double('stubbed user') }
+    let(:batch_user) { double('stubbed batch_user') }
+    let(:message) { "You can now edit file title" }
+    let(:message_subject) { "Permission change notification" }
+    let(:generic_file) { double('stubbed file') }
 
     before do
       allow(User).to receive(:find_by_user_key).and_return(user)
@@ -91,21 +91,21 @@ describe Behaviors::PermissionsNotificationBehavior do
     end
 
     context "permissions no change" do
-      let (:state) { { added: [], removed: [] } }
+      let(:state) { { added: [], removed: [] } }
       it "notifies no one" do
         expect(batch_user).not_to receive(:send_message)
         subject.notify(state, generic_file)
       end
     end
     context "permissions added" do
-      let (:state) { { added: [{ name: "abd123", type: "person", access: "edit" }], removed: [] } }
+      let(:state) { { added: [{ name: "abd123", type: "person", access: "edit" }], removed: [] } }
       it "notifies one user added" do
         expect(batch_user).to receive(:send_message).with(user, message, message_subject)
         subject.notify(state, generic_file)
       end
     end
     context "permissions removed" do
-      let (:state) { { added: [], removed: [{ name: "abd123", type: "person", access: "edit" }] } }
+      let(:state) { { added: [], removed: [{ name: "abd123", type: "person", access: "edit" }] } }
       it "notifies no one" do
         expect(batch_user).not_to receive(:send_message)
         subject.notify(state, generic_file)

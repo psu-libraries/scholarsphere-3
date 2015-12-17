@@ -89,6 +89,7 @@ class GenericFile < ActiveFedora::Base
   def time_uploaded
     date_uploaded.blank? ? "" : date_uploaded.strftime("%Y-%m-%d %H:%M:%S")
   end
+
   private
 
     def current_host
@@ -97,7 +98,7 @@ class GenericFile < ActiveFedora::Base
 
     def assign_id
       local_id = super
-      while id_gone(local_id) do
+      while id_gone(local_id)
         logger.warn("Assigning a new PID as the pid #{local_id} was already used and deleted")
         local_id = super
       end
@@ -109,5 +110,4 @@ class GenericFile < ActiveFedora::Base
     rescue ActiveFedora::ObjectNotFoundError
       false
     end
-
 end

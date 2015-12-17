@@ -34,13 +34,13 @@ module ScholarSphere
     def google_analytics_id
       vhost = get_vhost_by_host[0]
       ga_id = config.ga_host_map[vhost]
-      ga_id ||= Rails.application.secrets.google_analytics_tracking_id
+      ga_id || Rails.application.secrets.google_analytics_tracking_id
     end
 
     def ffmpeg_path
       vhost = get_vhost_by_host[0]
       path = config.ffmpeg_path_map[vhost]
-      path ||= 'ffmpeg'
+      path || 'ffmpeg'
     end
 
     config.scholarsphere_version = "v2.4"
@@ -124,7 +124,7 @@ module ScholarSphere
       if vhost == 'scholarsphere.psu.edu'
         'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
       else
-        "\"ScholarSphere Stats #{ vhost }\" <cam156@psu.edu>"
+        "\"ScholarSphere Stats #{vhost}\" <cam156@psu.edu>"
       end
     end
     config.stats_from_email = 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'

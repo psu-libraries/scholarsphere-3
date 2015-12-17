@@ -14,7 +14,7 @@ module My
     protected
 
       def search_action_url(*args)
-        sufia.dashboard_collections_url *args
+        sufia.dashboard_collections_url(*args)
       end
   end
 end

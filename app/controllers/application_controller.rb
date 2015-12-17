@@ -58,24 +58,21 @@ class ApplicationController < ActionController::Base
   # Remove bogus error messages and extraneous paperclip errors.
   # Return a nil messages if that was the only content.
   # If we show a transition page in the future we may want to display it then.
+  # If a block is given, it should execute something along the lines of
+  # redirect_to controller_name_path(new_id), status: :moved_permanently
   def filter_notify
-    if flash[:alert].present?
-      flash[:alert] = filtered_flash_messages
-      flash[:alert] = nil if flash[:alert].blank?
-    end
+    return unless flash[:alert].present?
+    flash[:alert] = filtered_flash_messages
+    flash[:alert] = nil if flash[:alert].blank?
   end
 
   def handle_legacy_url_prefix
     legacy_prefix = "scholarsphere:".freeze
     id = params[:id].to_s
-    if id.start_with?(legacy_prefix)
-      new_id = id[legacy_prefix.length..-1]
-      if block_given?
-        # block should execute something along the lines of
-        # redirect_to controller_name_path(new_id), status: :moved_permanently
-        yield new_id
-      end
-    end
+    return id unless id.start_with?(legacy_prefix)
+    new_id = id[legacy_prefix.length..-1]
+    yield new_id if block_given?
+    new_id
   end
 
   protected
@@ -85,10 +82,9 @@ class ApplicationController < ActionController::Base
     end
 
     def has_access?
-      unless current_user && current_user.ldap_exist?
-        logger.error "User: `#{current_user.user_key}' does not exist in ldap"
-        render template: '/error/401', layout: "error", formats: [:html], status: 401
-      end
+      return if current_user && current_user.ldap_exist?
+      logger.error "User: `#{current_user.user_key}' does not exist in ldap"
+      render template: '/error/401', layout: "error", formats: [:html], status: 401
     end
 
     def filtered_flash_messages

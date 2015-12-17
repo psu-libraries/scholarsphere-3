@@ -7,11 +7,11 @@ module ShareNotify::Metadata
   def share_notified?
     return if response.status != 200
     return false if response.count < 1
-    response.docs.first.doc_id == self.url
+    response.docs.first.doc_id == url
   end
 
   def call
-    api.search("shareProperties.docID:\"#{self.url}\"")
+    api.search("shareProperties.docID:\"#{url}\"")
   end
 
   private

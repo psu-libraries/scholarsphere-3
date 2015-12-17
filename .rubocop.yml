@@ -9,6 +9,7 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'script/**/*'
+    - 'vendor/**/*'
 
 Metrics/LineLength:
   Enabled: false
@@ -21,6 +22,26 @@ Metrics/MethodLength:
 
 Metrics/ClassLength:
   Exclude:
+    - 'app/models/user.rb'
+    - 'app/controllers/catalog_controller.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'spec/support/helpers/generic_files.rb'
+    - 'spec/features/static_pages_spec.rb'
+    - 'app/services/scholarsphere_audit_service.rb'
+    - 'app/models/user.rb'
+    - 'app/models/generic_file.rb'
+    - 'app/controllers/concerns/sufia/files_controller/browse_everything.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'spec/support/helpers/generic_files.rb'
+    - 'spec/features/static_pages_spec.rb'
+    - 'app/services/scholarsphere_audit_service.rb'
+    - 'app/models/user.rb'
+    - 'app/models/generic_file.rb'
+    - 'app/controllers/concerns/sufia/files_controller/browse_everything.rb'
 
 Style/BlockDelimiters:
   Exclude:
@@ -66,6 +87,49 @@ Style/SingleLineBlockParams:
 Style/SignalException:
   Enabled: false
 
+Style/ClassVars:
+  Exclude:
+    - 'spec/support/user_login.rb'
+    - 'spec/support/authentication.rb'
+
+Style/GlobalVars:
+  Exclude:
+    - 'spec/support/cleanup.rb'
+    - 'spec/features/static_pages_spec.rb'
+    - 'config/initializers/redis_config.rb'
+    - 'config/initializers/active_record_base_redis.rb'
+    - 'config/initializers/active_fedora_base_redis.rb'
+    - 'config/environment.rb'
+
+Style/VariableName:
+  Exclude:
+    - 'lib/share_notify/push_document.rb'
+
+Style/BracesAroundHashParameters:
+  Exclude:
+    - 'config/deploy.rb'
+
+Style/AccessorMethodName:
+  Exclude:
+    - 'config/application.rb'
+
+Style/UnlessElse:
+  Exclude:
+    - 'app/controllers/catalog_controller.rb'
+
+Style/PredicateName:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'config/compass.rb'
+    - 'app/services/scholarsphere_audit_service.rb'
+
+Lint/RescueException:
+  Exclude:
+    - 'app/controllers/landing_pages_controller.rb'
+
 Rails/Date:
   Enabled: false
 
@@ -86,3 +150,10 @@ RSpec/FilePath:
 
 RSpec/InstanceVariable:
   Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/views/**/*'
+    - 'spec/routing/**/*'
+    - 'spec/rake/**/*'
+    - 'spec/config/**/*'

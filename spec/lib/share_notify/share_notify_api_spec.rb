@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'support/vcr'
 
 describe ShareNotify::API do
-
   before do
     allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } }
     WebMock.enable!
@@ -51,5 +50,4 @@ describe ShareNotify::API do
       end
     end
   end
-
 end

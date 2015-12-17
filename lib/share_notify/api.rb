@@ -12,9 +12,9 @@ class ShareNotify::API
   base_uri ShareNotify.config.fetch("host", "https://staging.osf.io")
 
   # @param [String] token is optional but some actions will not be successful without it
-  def initialize(token=nil)
-    @headers = { 
-      "Authorization" => "Token #{ShareNotify.config.fetch("token", nil)}",
+  def initialize(_token = nil)
+    @headers = {
+      "Authorization" => "Token #{ShareNotify.config.fetch('token', nil)}",
       "Content-Type"  => "application/json"
     }
   end
@@ -44,7 +44,7 @@ class ShareNotify::API
       "/api/v1/share/search/"
     end
 
-    def with_timeout(&block)
-      Timeout::timeout(5) { yield }
+    def with_timeout(&_block)
+      Timeout.timeout(5) { yield }
     end
 end

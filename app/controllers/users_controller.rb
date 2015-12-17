@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
   include Sufia::UsersControllerBehavior
 
-  before_action :get_linkedin_url, only: :show
+  before_action :linkedin_url, only: :show
 
-  def get_linkedin_url
-    @linkedInUrl = @user.linkedin_handle
-    @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? || @linkedInUrl.include?('linkedin.com')
-    @linkedInUrl = "http://" + @linkedInUrl unless @linkedInUrl.blank? || @linkedInUrl.include?('http')
+  def linkedin_url
+    @linkedin_url ||= format_linkedin_url
   end
 
   def index
@@ -30,5 +28,12 @@ class UsersController < ApplicationController
 
     def base_query
       ["ldap_available = ? AND login not in ('testapp','tstem31')", true]
+    end
+
+    def format_linkedin_url
+      handle = @user.linkedin_handle
+      handle = "http://www.linkedin.com/in/" + handle unless handle.blank? || handle.include?('linkedin.com')
+      handle = "http://" + handle unless handle.blank? || handle.include?('http')
+      handle
     end
 end
