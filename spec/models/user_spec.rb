@@ -85,10 +85,22 @@ describe User, type: :model do
   describe "#query_ldap_by_name_or_id" do
     let(:name_part) { "cam" }
     let(:filter) { Net::LDAP::Filter.construct("(& (| (uid=#{name_part}* ) (givenname=#{name_part}*) (sn=#{name_part}*)) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))") }
-    let(:results) {[Net::LDAP::Entry.new("uid=cac6094,dc=psu,dc=edu").tap { |e| e[:uid] = ["cac6094"]; e[:displayname] = ["CAMILO CAPURRO"] },
-                    Net::LDAP::Entry.new("uid=csl5210,dc=psu,dc=edu").tap { |e| e[:uid] = ["csl5210"]; e[:displayname] = ["CAMERON SIERRA LANGSJOEN"] },
-                    Net::LDAP::Entry.new("uid=cnt5046,dc=psu,dc=edu").tap { |e| e[:uid] = ["cnt5046"]; e[:displayname] = ["CAMILLE NAKIA TINDAL"] }
-                   ]}
+    let(:results) do
+      [
+        Net::LDAP::Entry.new("uid=cac6094,dc=psu,dc=edu").tap do |e|
+          e[:uid] = ["cac6094"]
+          e[:displayname] = ["CAMILO CAPURRO"]
+        end,
+        Net::LDAP::Entry.new("uid=csl5210,dc=psu,dc=edu").tap do |e|
+          e[:uid] = ["csl5210"]
+          e[:displayname] = ["CAMERON SIERRA LANGSJOEN"]
+        end,
+        Net::LDAP::Entry.new("uid=cnt5046,dc=psu,dc=edu").tap do |e|
+          e[:uid] = ["cnt5046"]
+          e[:displayname] = ["CAMILLE NAKIA TINDAL"]
+        end
+      ]
+    end
     let(:attrs) { ["uid", "displayname"] }
 
     before do
@@ -111,7 +123,16 @@ describe User, type: :model do
       let(:filter) { Net::LDAP::Filter.construct("(& (& (givenname=#{first_name_parts[0]}*) (givenname=*#{first_name_parts[1]}*) (sn=#{last_name})) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))))") }
       let(:attrs) {  ['uid', 'givenname', 'sn', 'mail', "eduPersonPrimaryAffiliation"] }
 
-      let(:results) { [Net::LDAP::Entry.new("uid=cam156,dc=psu,dc=edu").tap { |e| e[:uid] = ["cam156"]; e[:givenname] = ["CAROLYN A"]; e[:sn] = "COLE"; e[:mail] = ["cam156@psu.edu"] }] }
+      let(:results) do
+        [
+          Net::LDAP::Entry.new("uid=cam156,dc=psu,dc=edu").tap do |e|
+            e[:uid] = ["cam156"]
+            e[:givenname] = ["CAROLYN A"]
+            e[:sn] = "COLE"
+            e[:mail] = ["cam156@psu.edu"]
+          end
+        ]
+      end
       before do
         expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
         allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))

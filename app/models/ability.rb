@@ -16,9 +16,7 @@ class Ability
 
   def stats_abilities
     super
-    if admin_user?
-      can :admin_stats, User
-    end
+    can :admin_stats, User if admin_user?
   end
 
   private

@@ -1,5 +1,4 @@
 class ShareNotifyJob < ActiveFedoraIdBasedJob
-
   def run
     return if object.share_notified? || unshareable?
     Sufia.queue.push(notification_job)
@@ -19,8 +18,8 @@ class ShareNotifyJob < ActiveFedoraIdBasedJob
 
     def response
       @response ||= ShareNotify::SearchResponse.new(
-                      share.post(GenericFileToShareJSONService.new(object).json)
-                    )
+        share.post(GenericFileToShareJSONService.new(object).json)
+      )
     end
 
     def notification_job

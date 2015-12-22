@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe BatchController, type: :controller do
   routes { Sufia::Engine.routes }
-  let (:subject) { described_class.new }
-  let (:current_user) { User.new(display_name: "ALBERT EDWARD MATYASOVSKY JR") }
-  let (:batch) { Batch.new }
+  let(:subject) { described_class.new }
+  let(:current_user) { User.new(display_name: "ALBERT EDWARD MATYASOVSKY JR") }
+  let(:batch) { Batch.new }
 
   describe "#edit_form" do
     before do

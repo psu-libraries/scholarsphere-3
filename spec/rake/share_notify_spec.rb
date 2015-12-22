@@ -2,7 +2,6 @@ require "spec_helper"
 require "rake"
 
 describe "share" do
-
   before { load_rake_environment ["#{Rails.root}/lib/tasks/share_notify.rake"] }
 
   describe "files" do

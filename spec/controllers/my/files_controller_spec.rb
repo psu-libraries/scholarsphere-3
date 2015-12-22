@@ -46,8 +46,18 @@ describe My::FilesController, type: :controller do
       let(:batch_id)  { "batch_id" }
       let(:batch_id2) { "batch_id2" }
       let(:batch)       { double }
-      let!(:generic_file) { GenericFile.new(id:"mine123", title:["mine"]) {|f| f.apply_depositor_metadata(user.login); f.update_index}}
-      let!(:other_generic_file) { GenericFile.new(id:"other123", title:["other"]) {|f| f.apply_depositor_metadata("abc123"); f.update_index}}
+      let!(:generic_file) do
+        GenericFile.new(id: "mine123", title: ["mine"]) do |f|
+          f.apply_depositor_metadata(user.login)
+          f.update_index
+        end
+      end
+      let!(:other_generic_file) do
+        GenericFile.new(id: "other123", title: ["other"]) do |f|
+          f.apply_depositor_metadata("abc123")
+          f.update_index
+        end
+      end
       let(:user_results) do
         ActiveFedora::SolrService.instance.conn.get "select",
                                                     params: { fq: ["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"] }
@@ -55,8 +65,8 @@ describe My::FilesController, type: :controller do
 
       before do
         allow(batch).to receive(:id).and_return(batch_id)
-        User.batchuser.send_message(user, single_success(batch_id, batch), success_subject, sanitize_text = false)
-        User.batchuser.send_message(user, multiple_success(batch_id2, [batch]), success_subject, sanitize_text = false)
+        User.batchuser.send_message(user, single_success(batch_id, batch), success_subject, false)
+        User.batchuser.send_message(user, multiple_success(batch_id2, [batch]), success_subject, false)
         xhr :get, :index
       end
       it "returns an array of documents I can edit" do

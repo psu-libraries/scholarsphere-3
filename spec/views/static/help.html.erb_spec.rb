@@ -12,8 +12,8 @@ describe 'static/help.html.erb', type: :view do
       render
     end
 
-    it { is_expected.to match /Frequently Asked Questions/ }
-    it { is_expected.not_to match /Edit/ }
+    it { is_expected.to match(/Frequently Asked Questions/) }
+    it { is_expected.not_to match(/Edit/) }
   end
 
   context "when the user can edit" do
@@ -22,7 +22,7 @@ describe 'static/help.html.erb', type: :view do
       render
     end
 
-    it { is_expected.to match /Frequently Asked Questions/ }
-    it { is_expected.to match /Edit/ }
+    it { is_expected.to match(/Frequently Asked Questions/) }
+    it { is_expected.to match(/Edit/) }
   end
 end

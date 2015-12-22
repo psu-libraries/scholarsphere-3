@@ -46,7 +46,6 @@ describe 'Static pages:', type: :feature do
       end
     end
 
-    unique_links = []
     unique_anchored_links = []
     unique_links = links_on_page.uniq
     unique_anchored_links = anchored_links.uniq

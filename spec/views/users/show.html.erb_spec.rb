@@ -29,8 +29,8 @@ describe 'users/show.html.erb', type: :view do
   describe "when the user doesn't have a title" do
     it "has the vitals" do
       render
-      expect(rendered).to match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
-      expect(rendered).not_to match /<i class="glyphicon glyphicon-briefcase"><\/i>/
+      expect(rendered).to match(/<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/)
+      expect(rendered).not_to match(/<i class="glyphicon glyphicon-briefcase"><\/i>/)
     end
   end
 
@@ -40,8 +40,8 @@ describe 'users/show.html.erb', type: :view do
     end
     it "has the vitals" do
       render
-      expect(rendered).to match /<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/
-      expect(rendered).to match /<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/
+      expect(rendered).to match(/<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/)
+      expect(rendered).to match(/<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/)
     end
   end
 end

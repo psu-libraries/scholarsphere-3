@@ -1,7 +1,6 @@
 # Encapsulates the response from the SHARE Search api
 module ShareNotify
   class SearchResponse
-    
     attr_reader :status, :response
 
     # @param [HTTParty::Response] response returned from ShareNotify::API

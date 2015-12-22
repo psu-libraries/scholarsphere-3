@@ -19,7 +19,7 @@ describe 'Routes', type: :routing do
     end
 
     it "routes to login" do
-      expect({ get: '/login' }).to route_to(controller: 'sessions', action: 'new')
+      expect(get: '/login').to route_to(controller: 'sessions', action: 'new')
     end
   end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "admin/stats/_export_link.html.erb" do
-  let (:href) { "/admin/stats/export" }
+  let(:href) { "/admin/stats/export" }
 
   before do
     render

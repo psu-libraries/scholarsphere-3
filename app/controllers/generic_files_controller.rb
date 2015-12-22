@@ -19,12 +19,11 @@ class GenericFilesController < ApplicationController
   skip_before_action :has_access?, only: [:stats]
 
   def notify_users_of_permission_changes
-    previous_permissions = @generic_file.permissions.map(&:to_hash) unless @generic_file.nil?
+    return if @generic_file.nil?
+    previous_permissions = @generic_file.permissions.map(&:to_hash)
     yield
-    unless @generic_file.nil?
-      current_permissions = @generic_file.permissions.map(&:to_hash)
-      permission_state = evaluate_permission_state(previous_permissions, current_permissions)
-      notify_users(permission_state, @generic_file)
-    end
+    current_permissions = @generic_file.permissions.map(&:to_hash)
+    permission_state = evaluate_permission_state(previous_permissions, current_permissions)
+    notify_users(permission_state, @generic_file)
   end
 end

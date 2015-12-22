@@ -2,6 +2,7 @@ namespace :scholarsphere do
   if defined?(RSpec)
     # Only load these files in testing environments
     require 'rspec/core/rake_task'
+    require 'rubocop/rake_task'
 
     desc "Run specs"
     RSpec::Core::RakeTask.new(:rspec) do |t|
@@ -37,7 +38,7 @@ namespace :scholarsphere do
       Rake::Task["db:migrate"].invoke
       Rake::Task["scholarsphere:fits_conf"].invoke
       Rake::Task["scholarsphere:generate_secret"].invoke
-    end
+    end  
 
     desc "Execute Continuous Integration build (docs, tests with coverage)"
     task ci: :environment do
@@ -62,13 +63,18 @@ namespace :scholarsphere do
         raise "test failures: #{error}" if error
       end
 
-      desc "Run feature tests on Travis"
+      desc "Run unit tests on Travis"
       task unit: :environment do
         Rake::Task["scholarsphere:prep"].invoke
         error = jetty_test('scholarsphere:unit')
         raise "test failures: #{error}" if error
       end
 
+      desc 'Run style checker'
+      RuboCop::RakeTask.new(:rubocop) do |task|
+        task.requires << 'rubocop-rspec'
+        task.fail_on_error = true
+      end 
     end
   end
 end

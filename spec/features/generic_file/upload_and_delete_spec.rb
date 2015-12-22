@@ -160,10 +160,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content filename
           click_link "dashboard_link"
           expect(page).to have_css "table#activity"
-          within ("table#activity") do
+          within("table#activity") do
             expect(page).to have_content filename
           end
-          within ("#notifications") do
+          within("#notifications") do
             expect(page).to have_content "Batch upload complete"
             expect(page).to have_content "less than a minute ago"
             expect(page).to have_content filename

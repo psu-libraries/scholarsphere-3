@@ -1,10 +1,9 @@
 module ShareNotify
   class PushDocument
-
     attr_reader :uris, :contributors, :providerUpdatedDateTime, :version
     attr_accessor :title
 
-    # @param [String] uri that identifies the resource 
+    # @param [String] uri that identifies the resource
     def initialize(uri)
       @uris = ShareUri.new(uri)
       @providerUpdatedDateTime = Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -48,6 +47,5 @@ module ShareNotify
         @providerUris = [uri]
       end
     end
-
   end
 end

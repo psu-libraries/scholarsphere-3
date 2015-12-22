@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe ShareNotify::PushDocument do
-
   let(:uri) { "http://foo" }
 
   describe "#new" do
     subject { described_class.new(uri) }
-    its(:contributors) { is_expected.to be_empty }    
+    its(:contributors) { is_expected.to be_empty }
     its(:updated) { is_expected.not_to be_nil }
     it { is_expected.not_to be_valid }
   end
@@ -46,7 +45,7 @@ describe ShareNotify::PushDocument do
       valid.version = "someID"
       valid
     end
-    its(:version) { is_expected.to eq({versionId: "someID"}) }
+    its(:version) { is_expected.to eq(versionId: "someID") }
   end
 
   describe "#to_share" do
@@ -63,5 +62,4 @@ describe ShareNotify::PushDocument do
     subject { JSON.parse(example.to_share.to_json) }
     it { is_expected.to eq(fixture) }
   end
-
 end

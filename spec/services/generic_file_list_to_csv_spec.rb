@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe GenericFileListToCSVService do
-  let (:service) { described_class.new(file_list) }
-  let (:header) { "Url,Time Uploaded,Id,Title,Depositor,Creator,Visibility,Resource Type,Rights,File Format\n" }
+  let(:service) { described_class.new(file_list) }
+  let(:header) { "Url,Time Uploaded,Id,Title,Depositor,Creator,Visibility,Resource Type,Rights,File Format\n" }
 
   describe "#csv" do
     subject { service.csv }

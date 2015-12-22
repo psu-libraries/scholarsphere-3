@@ -37,7 +37,7 @@ describe 'Contact form:', type: :feature do
 
   let(:plaintext_message) {
     admin_message.body.parts.find do |p|
-      p.content_type.match /plain/
+      p.content_type.match(/plain/)
     end
   }
 
@@ -47,7 +47,7 @@ describe 'Contact form:', type: :feature do
 
   let(:html_message) {
     admin_message.body.parts.find do |p|
-      p.content_type.match /html/
+      p.content_type.match(/html/)
     end
   }
 

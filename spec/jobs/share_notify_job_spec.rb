@@ -18,7 +18,7 @@ describe ShareNotifyJob do
           f.save
         end
       end
-      
+
       before { allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(201) }
 
       it "sends a notification" do
@@ -70,5 +70,4 @@ describe ShareNotifyJob do
     subject { job.run }
     it { is_expected.to be_nil }
   end
-
 end

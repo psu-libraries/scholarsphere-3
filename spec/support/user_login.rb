@@ -6,7 +6,6 @@ module UserLogin
                                      respect_data_method: true,
                                      headers: { 'REMOTE_USER' => login })
     end
-    user = User.find_or_create_by(login: login)
     expect(User.find_by_login(login)).not_to be_nil
     Capybara.current_driver = driver_name
   end
