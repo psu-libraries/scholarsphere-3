@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'support/vcr'
 
 describe ShareNotifyJob do
   let(:user) { FactoryGirl.find_or_create(:jill) }
@@ -43,17 +44,27 @@ describe ShareNotifyJob do
           f.save
         end
       end
+
       let(:error_message) do
         "Posting file #{file.id} to SHARE Notify failed with 400. Response was {\"detail\"=>\"Invalid token.\"}"
       end
+
       before do
         allow(ShareNotify).to receive(:config) { { "token" => "BAD_TOKEN" } }
         allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(400)
+        WebMock.enable!
       end
+
+      after do
+        WebMock.disable!
+      end
+
       it "logs the error" do
-        expect(Rails.logger).to receive(:error).once.with(error_message)
-        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyFailureEventJob))
-        job.run
+        VCR.use_cassette('share_notify_job', record: :none) do
+          expect(Rails.logger).to receive(:error).once.with(error_message)
+          expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyFailureEventJob))
+          job.run
+        end
       end
     end
   end
