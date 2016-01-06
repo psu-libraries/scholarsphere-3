@@ -448,7 +448,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.14.0.305)
     noid (0.8.0)
-    nokogiri (1.6.7)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     nom-xml (0.5.4)
       activesupport (>= 3.2.18)
@@ -821,4 +821,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
