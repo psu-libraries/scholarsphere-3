@@ -8,23 +8,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/projecthydra-labs/browse-everything.git
-  revision: e7c83be25ebc6be96d6f06959a832377744873b5
-  ref: e7c83be25
-  specs:
-    browse-everything (0.8.2)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client
-      google_drive
-      httparty
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
-
-GIT
   remote: git://github.com/projecthydra-labs/fedora-migrate.git
   revision: 85dd700df3b3195bceea6b988ec70bb2b82bd282
   ref: 85dd700df3b3195bceea6b988ec70bb2b82bd282
@@ -35,31 +18,9 @@ GIT
       rubydora (~> 1.8)
 
 GIT
-  remote: git://github.com/projecthydra/hydra-head.git
-  revision: 86e9db1a91f12bed4487b906697cb1eef0a0d500
-  ref: 86e9db1a91
-  specs:
-    hydra-access-controls (9.2.2)
-      active-fedora (~> 9.0)
-      activesupport (~> 4.0)
-      blacklight (~> 5.10)
-      cancancan (~> 1.8)
-      deprecation (~> 0.1)
-      sass-rails
-    hydra-core (9.2.2)
-      active-fedora (~> 9.1)
-      hydra-access-controls (= 9.2.2)
-      jettywrapper (>= 2.0.0)
-      rails (~> 4.0)
-    hydra-head (9.2.2)
-      hydra-access-controls (= 9.2.2)
-      hydra-core (= 9.2.2)
-      rails (>= 3.2.6)
-
-GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: fa0190067b76f825d2e017ceb1dca7fb95cbe250
-  ref: fa0190067b
+  revision: 74397e40043cc1a30aa4782eb9e82932cbbedef4
+  ref: 74397e40043cc1a30aa4782eb9e82932cbbedef4
   specs:
     sufia (6.3.0)
       blacklight (~> 5.12)
@@ -99,6 +60,7 @@ GIT
       mini_magick
       nest (~> 1.1)
       oauth2 (~> 0.9)
+      posix-spawn
       rails (~> 4.0)
       resque (~> 1.23)
       resque-pool (~> 0.3)
@@ -125,24 +87,24 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
-    active-fedora (9.4.0)
+    active-fedora (9.7.0)
       active-triples (~> 0.7.1)
       activesupport (>= 4.1.0)
       deprecation
-      ldp (~> 0.3.1)
+      ldp (~> 0.4.0)
       linkeddata
       nom-xml (>= 0.5.1)
       om (~> 3.1)
-      rdf-rdfxml (~> 1.1.0)
+      rdf-rdfxml (~> 1.1)
       rsolr (~> 1.0.10)
-    active-triples (0.7.1)
+    active-triples (0.7.2)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    active_fedora-noid (1.0.2)
-      active-fedora (~> 9.0)
+    active_fedora-noid (1.0.3)
+      active-fedora (~> 9.7)
       noid (~> 0.7)
     activejob (4.2.2)
       activesupport (= 4.2.2)
@@ -176,7 +138,7 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (6.0.2)
+    autoprefixer-rails (6.1.2)
       execjs
       json
     bcp47 (0.3.3)
@@ -188,7 +150,7 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    blacklight (5.14.0)
+    blacklight (5.15.0)
       bootstrap-sass (~> 3.2)
       deprecation
       kaminari (>= 0.15)
@@ -200,17 +162,28 @@ GEM
       bootstrap-sass (~> 3.0)
       openseadragon (>= 0.2.0)
       rails
-    blacklight_advanced_search (5.1.4)
-      blacklight (~> 5.10)
+    blacklight_advanced_search (5.2.0)
+      blacklight (~> 5.15)
       parslet
     blankslate (3.1.3)
-    bootstrap-sass (3.3.5.1)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.3.0)
+    bootstrap-sass (3.3.6)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     breadcrumbs_on_rails (2.3.1)
+    browse-everything (0.9.1)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client
+      google_drive
+      httparty
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
     builder (3.2.2)
     byebug (6.0.2)
-    cancancan (1.12.0)
+    cancancan (1.13.1)
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
@@ -218,9 +191,7 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-passenger (0.1.1)
-      capistrano (~> 3.0)
-    capistrano-rails (1.1.3)
+    capistrano-rails (1.1.5)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rbenv (2.0.3)
@@ -247,7 +218,7 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    childprocess (0.5.6)
+    childprocess (0.5.7)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     clamav (0.4.1)
@@ -261,10 +232,11 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     colorize (0.7.7)
+    concurrent-ruby (1.0.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.2.3)
-    database_cleaner (1.5.0)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     deprecation (0.2.2)
       activesupport
@@ -276,11 +248,11 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    domain_name (0.5.24)
+    domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
     dropbox-sdk (1.6.5)
       json
-    ebnf (0.3.9)
+    ebnf (1.0.0)
       rdf (~> 1.1)
       sxp (~> 0.1, >= 0.1.3)
     equivalent-xml (0.6.0)
@@ -293,11 +265,11 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faraday (0.9.1)
+    faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
     ffi (1.9.10)
-    font-awesome-rails (4.4.0.0)
+    font-awesome-rails (4.5.0.0)
       railties (>= 3.2, < 5.0)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
@@ -317,8 +289,8 @@ GEM
       multi_json (~> 1.10)
       retriable (~> 1.4)
       signet (~> 0.6)
-    google_drive (1.0.1)
-      google-api-client (>= 0.7.0)
+    google_drive (1.0.4)
+      google-api-client (>= 0.7.0, < 0.9)
       nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
       oauth (>= 0.3.6)
       oauth2 (>= 0.5.0)
@@ -331,6 +303,7 @@ GEM
       signet (~> 0.6)
     haml (4.0.7)
       tilt
+    hashdiff (0.2.2)
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.4)
@@ -341,9 +314,16 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_logger (0.5.1)
-    httparty (0.13.5)
+    httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    hydra-access-controls (9.3.0)
+      active-fedora (~> 9.0)
+      activesupport (~> 4.0)
+      blacklight (~> 5.10)
+      cancancan (~> 1.8)
+      deprecation (~> 0.1)
+      sass-rails
     hydra-batch-edit (1.1.1)
       blacklight
       hydra-collections
@@ -351,6 +331,11 @@ GEM
       blacklight (~> 5.10)
       deprecation (~> 0.1)
       hydra-head (~> 9.1)
+    hydra-core (9.3.0)
+      active-fedora (~> 9.1)
+      hydra-access-controls (= 9.3.0)
+      jettywrapper (>= 2.0.0)
+      rails (~> 4.0)
     hydra-derivatives (1.1.0)
       active-fedora (~> 9.0)
       activesupport (~> 4.0)
@@ -358,18 +343,22 @@ GEM
       hydra-file_characterization (~> 0.3)
       mime-types (~> 1)
       mini_magick (>= 3.2, < 5)
-    hydra-editor (1.0.4)
+    hydra-editor (1.1.0)
       active-fedora (>= 9.0.0)
       cancancan (~> 1.8)
       rails (~> 4.1)
       simple_form (~> 3.1.0)
-    hydra-file_characterization (0.3.2)
+    hydra-file_characterization (0.3.3)
       activesupport (>= 3.0.0)
+    hydra-head (9.3.0)
+      hydra-access-controls (= 9.3.0)
+      hydra-core (= 9.3.0)
+      rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
     i18n (0.7.0)
-    jbuilder (2.3.1)
+    jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jettywrapper (2.0.3)
@@ -382,44 +371,45 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    json-ld (1.1.9)
-      rdf (~> 1.1, >= 1.1.7)
+    json-ld (1.99.0)
+      multi_json (~> 1.11)
+      rdf (~> 1.99)
     json-schema (2.5.1)
       addressable (~> 2.3.7)
-    jwt (1.5.1)
+    jwt (1.5.2)
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ldp (0.3.1)
+    ldp (0.4.1)
       faraday
       http_logger
       linkeddata (>= 1.1)
       slop
-    legato (0.5.1)
+    legato (0.6.2)
       multi_json
-    libv8 (3.16.14.11)
+    libv8 (3.16.14.13)
     link_header (0.0.8)
-    linkeddata (1.1.11)
-      equivalent-xml (~> 0.5)
-      json-ld (~> 1.1, >= 1.1.8)
+    linkeddata (1.99.0)
+      equivalent-xml (~> 0.6)
+      json-ld (~> 1.99)
       nokogiri (~> 1.6)
-      rdf (~> 1.1, >= 1.1.11)
-      rdf-aggregate-repo (~> 1.1)
-      rdf-isomorphic (~> 1.1)
+      rdf (~> 1.99)
+      rdf-aggregate-repo (~> 1.99)
+      rdf-isomorphic (~> 1.99)
       rdf-json (~> 1.1, >= 1.1.2)
-      rdf-microdata (~> 2.0, >= 2.0.1)
-      rdf-n3 (~> 1.1, >= 1.1.3)
-      rdf-rdfa (~> 1.1, >= 1.1.6)
-      rdf-rdfxml (~> 1.1, >= 1.1.4)
-      rdf-reasoner (~> 0.2, >= 0.2.1)
-      rdf-tabular (~> 0.1, >= 0.1.2)
-      rdf-trig (~> 1.1, >= 1.1.4)
-      rdf-trix (~> 1.1)
-      rdf-turtle (~> 1.1, >= 1.1.6)
-      rdf-vocab (~> 0.8)
-      rdf-xsd (~> 1.1, >= 1.1.3)
-      sparql (~> 1.1, >= 1.1.5)
-      sparql-client (~> 1.1, >= 1.1.3)
+      rdf-microdata (~> 2.0, >= 2.0.2)
+      rdf-n3 (~> 1.99)
+      rdf-rdfa (~> 1.99)
+      rdf-rdfxml (~> 1.1, >= 1.1.5)
+      rdf-reasoner (~> 0.3)
+      rdf-tabular (~> 0.3)
+      rdf-trig (~> 1.99, >= 1.99.0.1)
+      rdf-trix (~> 1.99)
+      rdf-turtle (~> 1.99)
+      rdf-vocab (~> 0.8, >= 0.8.6)
+      rdf-xsd (~> 1.1, >= 1.1.5)
+      sparql (~> 1.99)
+      sparql-client (~> 1.99)
     little-plugger (1.1.4)
     logger (1.2.8)
     logging (2.0.0)
@@ -436,12 +426,12 @@ GEM
       carrierwave (>= 0.5.8)
       foreigner (>= 0.9.1)
       rails (>= 3.2.0)
-    memoist (0.12.0)
+    memoist (0.13.0)
     mime-types (1.25.1)
     mimemagic (0.3.0)
-    mini_magick (4.3.3)
-    mini_portile (0.6.2)
-    minitest (5.8.0)
+    mini_magick (4.3.6)
+    mini_portile2 (2.0.0)
+    minitest (5.8.3)
     mono_logger (1.1.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
@@ -451,16 +441,16 @@ GEM
     nest (1.1.2)
       redis
     net-http-persistent (2.9.4)
-    net-ldap (0.11)
+    net-ldap (0.12.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
-    netrc (0.10.3)
-    newrelic_rpm (3.13.0.299)
+    net-ssh (3.0.1)
+    netrc (0.11.0)
+    newrelic_rpm (3.14.0.305)
     noid (0.8.0)
-    nokogiri (1.6.6.4)
-      mini_portile (~> 0.6.0)
-    nom-xml (0.5.3)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
+    nom-xml (0.5.4)
       activesupport (>= 3.2.18)
       i18n
       nokogiri
@@ -476,24 +466,22 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
-    openseadragon (0.2.0)
+    openseadragon (0.2.1)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
-    parser (2.2.2.6)
+    parser (2.2.3.0)
       ast (>= 1.1, < 3.0)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
-    passenger (5.0.18)
-      rack
-      rake (>= 0.8.1)
-    poltergeist (1.6.0)
+    poltergeist (1.7.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
+    posix-spawn (0.3.11)
     powerpack (0.1.1)
     rack (1.6.4)
-    rack-maintenance (2.0.0)
+    rack-maintenance (2.0.1)
       rack (>= 1.0)
     rack-protection (1.5.3)
       rack
@@ -531,56 +519,57 @@ GEM
     raindrops (0.15.0)
     rake (10.4.2)
     rchardet (1.6.1)
-    rdf (1.1.15)
+    rdf (1.99.0)
       link_header (~> 0.0, >= 0.0.8)
-    rdf-aggregate-repo (1.1.0)
-      rdf (>= 1.1)
-    rdf-isomorphic (1.1.0)
-      rdf (>= 1.1)
-    rdf-json (1.1.2)
-      rdf (~> 1.1)
-    rdf-microdata (2.0.1)
+    rdf-aggregate-repo (1.99.0)
+      rdf (~> 1.99)
+    rdf-isomorphic (1.99.0)
+      rdf (~> 1.99)
+    rdf-json (1.99.0)
+      rdf (~> 1.99)
+    rdf-microdata (2.0.2)
       htmlentities (~> 4.3)
       nokogiri (~> 1.6)
       rdf (~> 1.1)
       rdf-xsd (~> 1.1)
-    rdf-n3 (1.1.3)
-      rdf (~> 1.1, >= 1.1.5)
-    rdf-rdfa (1.1.6)
+    rdf-n3 (1.99.0)
+      rdf (~> 1.99)
+    rdf-rdfa (1.99.0)
       haml (~> 4.0)
       htmlentities (~> 4.3)
-      rdf (~> 1.1, >= 1.1.6)
+      rdf (~> 1.99)
       rdf-aggregate-repo (~> 1.1)
       rdf-xsd (~> 1.1)
-    rdf-rdfxml (1.1.4)
+    rdf-rdfxml (1.99.0)
       htmlentities (~> 4.3)
-      rdf (~> 1.1, >= 1.1.6)
-      rdf-rdfa (~> 1.1, >= 1.1.4.1)
-      rdf-xsd (~> 1.1)
-    rdf-reasoner (0.2.2)
+      rdf (~> 1.99)
+      rdf-rdfa (~> 1.99)
+      rdf-xsd (~> 1.99)
+    rdf-reasoner (0.3.0)
       rdf (~> 1.1, >= 1.1.4.2)
       rdf-turtle (~> 1.1)
       rdf-vocab (~> 0.8)
       rdf-xsd (~> 1.1)
-    rdf-tabular (0.2.0)
+    rdf-tabular (0.3.0)
       addressable (~> 2.3)
       bcp47 (~> 0.3, >= 0.3.3)
       json-ld (~> 1.1)
       rdf (~> 1.1, >= 1.1.7)
+      rdf-vocab (~> 0.8)
       rdf-xsd (~> 1.1)
-    rdf-trig (1.1.4)
-      ebnf (~> 0.3, >= 0.3.7)
-      rdf (~> 1.1, >= 1.1.11)
-      rdf-turtle (~> 1.1, >= 1.1.6)
-    rdf-trix (1.1.0)
-      rdf (>= 1.1)
-    rdf-turtle (1.1.7)
-      ebnf (~> 0.3, >= 0.3.6)
+    rdf-trig (1.99.0.1)
+      ebnf (~> 1.0)
+      rdf (~> 1.99)
+      rdf-turtle (~> 1.99)
+    rdf-trix (1.99.0)
+      rdf (~> 1.1)
+    rdf-turtle (1.99.0)
+      ebnf (~> 1.0)
+      rdf (~> 1.99)
+    rdf-vocab (0.8.7.1)
       rdf (~> 1.1, >= 1.1.10)
-    rdf-vocab (0.8.4)
-      rdf (~> 1.1, >= 1.1.10)
-    rdf-xsd (1.1.4)
-      rdf (~> 1.1, >= 1.1.9)
+    rdf-xsd (1.99.0)
+      rdf (~> 1.99)
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -593,10 +582,9 @@ GEM
       redis-namespace (~> 1.3)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    resque-pool (0.5.0)
+    resque-pool (0.6.0)
       rake
       resque (~> 1.22)
-      trollop (~> 2.0)
     resque-scheduler (4.0.0)
       mono_logger (~> 1.0)
       redis (~> 3.0)
@@ -607,13 +595,13 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (1.4.1)
-    rsolr (1.0.12)
+    rsolr (1.0.13)
       builder (>= 2.1.2)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
       rspec-mocks (~> 3.3.0)
-    rspec-activemodel-mocks (1.0.1)
+    rspec-activemodel-mocks (1.0.2)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       rspec-mocks (>= 2.99, < 4.0)
@@ -622,6 +610,9 @@ GEM
     rspec-expectations (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
     rspec-mocks (3.3.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
@@ -658,9 +649,9 @@ GEM
       nokogiri
       rest-client
     rubyzip (1.1.7)
-    rufus-scheduler (3.1.4)
+    rufus-scheduler (3.1.7)
     safe_yaml (1.0.4)
-    sass (3.4.18)
+    sass (3.4.19)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
@@ -669,9 +660,8 @@ GEM
       tilt (>= 1.1, < 3)
     select2-rails (3.5.9.3)
       thor (~> 0.14)
-    signet (0.6.1)
+    signet (0.7.0)
       addressable (~> 2.3)
-      extlib (~> 0.9)
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
@@ -688,31 +678,32 @@ GEM
       httmultiparty
       httparty (>= 0.11.0)
       oauth2 (>= 0.9.2)
-    slop (4.2.0)
+    slop (4.2.1)
     solrizer (3.3.0)
       activesupport
       daemons
       nokogiri
       stomp
       xml-simple
-    sparql (1.1.8)
+    sparql (1.99.0)
       builder (~> 3.2)
-      ebnf (~> 0.3, >= 0.3.9)
-      rdf (~> 1.1, >= 1.1.13)
-      rdf-aggregate-repo (~> 1.1, >= 1.1.0)
+      ebnf (~> 1.0)
+      rdf (~> 1.99)
+      rdf-aggregate-repo (~> 1.99)
       rdf-xsd (~> 1.1)
       sparql-client (~> 1.1)
       sxp (~> 0.1)
-    sparql-client (1.1.6)
+    sparql-client (1.99.0)
       net-http-persistent (~> 2.9)
       rdf (~> 1.1)
-    sprockets (3.3.4)
-      rack (~> 1.0)
+    sprockets (3.5.1)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
     sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sqlite3 (1.3.10)
+    sqlite3 (1.3.11)
     sshkit (1.7.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -725,12 +716,11 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
-    tinymce-rails (4.2.5)
+    tinymce-rails (4.2.7)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)
       tinymce-rails (~> 4.0)
-    trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uber (0.0.15)
@@ -740,21 +730,22 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (4.9.0)
+    unicorn (5.0.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
     unicorn-rails (2.2.0)
       rack
       unicorn
-    vcr (2.9.3)
+    vcr (3.0.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.3)
       rack (>= 1.0)
-    webmock (1.21.0)
+    webmock (1.22.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -771,14 +762,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active-fedora (= 9.4.0)
   better_errors
   binding_of_caller
-  browse-everything!
+  browse-everything (= 0.9.1)
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
-  capistrano-passenger
   capistrano-rails (~> 1.1)
   capistrano-rbenv (~> 2.0)
   capistrano-rbenv-install
@@ -794,7 +783,7 @@ DEPENDENCIES
   fedora-migrate!
   fuubar
   hydra-derivatives (= 1.1.0)
-  hydra-head!
+  hydra-head (= 9.3.0)
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)
   jettywrapper
@@ -805,7 +794,6 @@ DEPENDENCIES
   namae (= 0.9.3)
   nest
   newrelic_rpm
-  passenger
   poltergeist
   rack-maintenance
   rails (= 4.2.2)
@@ -813,6 +801,7 @@ DEPENDENCIES
   resque-pool
   rsolr
   rspec-activemodel-mocks
+  rspec-its
   rspec-rails
   rubocop
   rubocop-rspec

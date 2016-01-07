@@ -1,7 +1,5 @@
 require 'jettywrapper'
-if ENV['MIGRATE']
-  Jettywrapper.url = "https://github.com/projecthydra/hydra-jetty/archive/fedora-4/migrate.zip"
-end
+Jettywrapper.hydra_jetty_version = "v8.5.0"
 
 namespace :scholarsphere do
   namespace :jetty do

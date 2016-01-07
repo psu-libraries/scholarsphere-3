@@ -11,6 +11,8 @@ config/newrelic.yml
 config/browse_everything_providers.yml
 config/secrets.yml
 config/analytics.yml
+config/arkivo.yml
+config/share_notify.yml
 
 # This file is generated automatically by: rake scholarsphere:generate_secret
 config/initializers/secret_token.rb

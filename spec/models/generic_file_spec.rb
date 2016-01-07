@@ -48,6 +48,20 @@ describe GenericFile, type: :model do
     end
   end
 
+  describe "#share_notify_id" do
+    let(:share_notify_id) { "a SHARE Notify id" }
+    subject { file }
+    context "when the file has been exported to SHARE Notify" do
+      before { file.share_notify_id = share_notify_id}
+      its(:share_notify_id) { is_expected.to eq(share_notify_id) }
+      it { is_expected.to be_share_notified }
+    end
+    context "when the file has not been exported to SHARE Notify" do
+      its(:share_notify_id) { is_expected.to be_nil }
+      it { is_expected.not_to be_share_notified }
+    end
+  end
+
   describe "rescues ldp gone" do
 
     let(:mint_service) { double}

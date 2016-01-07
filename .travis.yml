@@ -25,6 +25,7 @@ before_script:
   - "cp config/solr.yml.sample config/solr.yml"
   - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
+  - "cp config/share_notify.yml.sample config/share_notify.yml"
   - redis-cli info
 matrix:
   fast_finish: true
