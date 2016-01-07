@@ -47,27 +47,4 @@ describe GenericFile, type: :model do
       expect(file.id.length).to eq 9
     end
   end
-
-  describe "rescues ldp gone" do
-    let(:mint_service) { double }
-
-    before do
-      # create a file that is now gone
-      file = described_class.create { |f| f.apply_depositor_metadata('dmc') }
-      gone_id = file.id
-      file.destroy
-
-      # create an id that has not been used
-      @new_id = ActiveFedora::Noid::Service.new.mint
-
-      # use our funky minter that returns the gone ids and the new id later
-      allow_any_instance_of(described_class).to receive(:service).and_return(mint_service)
-      allow(mint_service).to receive(:mint).and_return(gone_id, gone_id, @new_id)
-    end
-
-    it "saves under a new id" do
-      file = described_class.create { |f| f.apply_depositor_metadata('dmc') }
-      expect(file.id).to eq @new_id
-    end
-  end
 end
