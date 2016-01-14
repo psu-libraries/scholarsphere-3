@@ -5,13 +5,15 @@ gem 'rails', '4.2.2'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
-#gem 'active-fedora', '9.4.0'
 gem 'browse-everything', '0.9.1'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
 gem 'hydra-derivatives', '1.1.0'
-gem 'hydra-head', '9.3.0'
+gem 'hydra-head', '~> 9.5.0'
 gem 'hydra-ldap', '0.1.0'
-gem 'sufia', github: 'projecthydra/sufia', ref: '74397e40043cc1a30aa4782eb9e82932cbbedef4'
+gem 'sufia', '~> 6.5.0'
+
+# sprockets-rails 3 is complaining about images not being precompiled. 
+gem 'sprockets-rails', '< 3.0.0'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
@@ -62,7 +64,7 @@ group :test do
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
   gem 'fuubar'
-  gem 'poltergeist'
+  gem 'poltergeist', '< 1.8.0'
   gem 'rspec-activemodel-mocks'
   gem 'vcr'
   gem 'webmock'
