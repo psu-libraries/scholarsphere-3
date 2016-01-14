@@ -8,16 +8,16 @@ describe 'Generic File viewing and downloading:', type: :feature do
   let(:current_user) { create :user }
   let!(:file_1) { create_file current_user, title: 'File 1' }
   let!(:file_2) do
-    create_file current_user, { title: 'File 2',
-                                creator: '',
-                                contributor: '',
-                                tag: '',
-                                subject: '',
-                                language: '',
-                                based_near: '',
-                                publisher: '',
-                                rights: '',
-                                read_groups: [] }
+    create_file(current_user, title: 'File 2',
+                              creator: '',
+                              contributor: '',
+                              tag: '',
+                              subject: '',
+                              language: '',
+                              based_near: '',
+                              publisher: '',
+                              rights: '',
+                              read_groups: [])
   end
 
   context "generic user" do
@@ -31,7 +31,6 @@ describe 'Generic File viewing and downloading:', type: :feature do
     context 'When viewing a file' do
       specify "I see all the correct information" do
         # "I can see the file's page" do
-        expect(page.status_code).to eq(200)
         expect(page).to have_content file_1.title.first
 
         # 'I can not feature' do

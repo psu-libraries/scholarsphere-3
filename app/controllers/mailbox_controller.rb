@@ -39,6 +39,16 @@ class MailboxController < ApplicationController
     end
 
     def empty_trash(user)
-      user.mailbox.trash.each { |conv| conv.messages.each { |notify| notify.receipts.each(&:delete); notify.delete }; conv.delete }
+      user.mailbox.trash.each do |conv|
+        delete_messages(conv)
+        conv.delete
+      end
+    end
+
+    def delete_messages(conv)
+      conv.messages.each do |notify|
+        notify.receipts.each(&:delete)
+        notify.delete
+      end
     end
 end

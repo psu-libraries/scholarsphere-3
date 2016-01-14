@@ -100,5 +100,4 @@ class BatchUpdateJob
     def denied
       @denied ||= []
     end
-
 end

@@ -14,7 +14,7 @@ set :use_sudo, false
 # ssh key settings
 set :ssh_options, {
   keys: [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")],
-  forward_agent: true,
+  forward_agent: true
 }
 
 # rbenv settings
@@ -88,7 +88,6 @@ namespace :apache do
 end
 
 namespace :deploy do
-
   # Resolrize objects
   desc "Re-solrize objects"
   task :resolrize do
@@ -136,20 +135,19 @@ namespace :deploy do
   namespace :passenger do
     desc "Passenger Version Config Update"
     task :config_update do
-     on roles(:web)  do
-      execute "mkdir --parents /opt/heracles/deploy/passenger"
-      execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
-      execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'    
+      on roles(:web) do
+        execute "mkdir --parents /opt/heracles/deploy/passenger"
+        execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
+        execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'
       end
     end
 
     desc "warm up passenger"
     task :warmup do
-     on roles(:web) do
-     puts "do something"
-     #execute "curl -s -k --head https://$(hostname -f)"
-     # execute "curl -s -k -o /dev/null --head https://$(hostname -f)"
-     end
+      on roles(:web) do
+        # execute "curl -s -k --head https://$(hostname -f)"
+        # execute "curl -s -k -o /dev/null --head https://$(hostname -f)"
+      end
     end
   end
 
@@ -163,9 +161,9 @@ end
 namespace :rbenv_custom_ruby_cleanup do
   desc "Clean up old rbenv versions"
   task :purge_old_versions do
-   on roles(:web) do
-    execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
-   end
+    on roles(:web) do
+      execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
+    end
   end
-  after "deploy:finishing","rbenv_custom_ruby_cleanup:purge_old_versions"
+  after "deploy:finishing", "rbenv_custom_ruby_cleanup:purge_old_versions"
 end

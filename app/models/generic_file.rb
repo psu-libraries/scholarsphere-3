@@ -89,25 +89,10 @@ class GenericFile < ActiveFedora::Base
   def time_uploaded
     date_uploaded.blank? ? "" : date_uploaded.strftime("%Y-%m-%d %H:%M:%S")
   end
+
   private
 
     def current_host
       Rails.application.get_vhost_by_host[1].chomp("/")
     end
-
-    def assign_id
-      local_id = super
-      while id_gone(local_id) do
-        logger.warn("Assigning a new PID as the pid #{local_id} was already used and deleted")
-        local_id = super
-      end
-      local_id
-    end
-
-    def id_gone(id)
-      self.class.send(:"gone?", id)
-    rescue ActiveFedora::ObjectNotFoundError
-      false
-    end
-
 end

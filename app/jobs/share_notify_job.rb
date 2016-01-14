@@ -1,18 +1,12 @@
 class ShareNotifyJob < ActiveFedoraIdBasedJob
-
   def run
     return if object.share_notified? || unshareable?
-    share.post(GenericFileToShareJSONService.new(object).json)
-    report_errors unless share.response.code == 201
-    update_file
-    Sufia.queue.push(ShareNotifyEventJob.new(generic_file.id, generic_file.depositor))
+    Sufia.queue.push(notification_job)
   end
 
   def unshareable?
-    ShareNotifyFilteredList.new(
-      ResourceFilteredList.new(
-        PublicFilteredList.new([object]).filter
-      ).filter
+    ResourceFilteredList.new(
+      PublicFilteredList.new([object]).filter
     ).filter.empty?
   end
 
@@ -22,15 +16,24 @@ class ShareNotifyJob < ActiveFedoraIdBasedJob
       @share ||= ShareNotify::API.new
     end
 
-    def report_errors
-      Rails.logger.warn(
-        "Posting #{share.response.request.raw_body} failed to send to SHARE Notify. Response was #{share.response}"
+    def response
+      @response ||= ShareNotify::SearchResponse.new(
+        share.post(GenericFileToShareJSONService.new(object).json)
       )
     end
 
-    def update_file
-      object.share_notify_id = share.response.to_hash["id"]
-      object.save
+    def notification_job
+      if response.status == 201
+        ShareNotifySuccessEventJob.new(generic_file.id, generic_file.depositor)
+      else
+        report_errors
+      end
     end
 
+    def report_errors
+      Rails.logger.error(
+        "Posting file #{object.id} to SHARE Notify failed with #{response.status}. Response was #{response.response}"
+      )
+      ShareNotifyFailureEventJob.new(generic_file.id, generic_file.depositor)
+    end
 end

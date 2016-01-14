@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://staging.osf.io/api/v1/share/data
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Authorization:
+      - Token BAD_TOKEN
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 401
+      message: UNAUTHORIZED
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Mon, 04 Jan 2016 19:15:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Vary:
+      - Accept, Cookie
+      X-Frame-Options:
+      - SAMEORIGIN
+      Www-Authenticate:
+      - Basic realm="api"
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Set-Cookie:
+      - NB_SRVID=srv25533; path=/
+    body:
+      encoding: UTF-8
+      string: '{"detail":"Invalid token."}'
+    http_version: 
+  recorded_at: Mon, 04 Jan 2016 19:15:44 GMT
+recorded_with: VCR 3.0.0

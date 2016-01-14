@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe LandingPage, type: :model do
-  let (:lp) { described_class.new }
+  let(:lp) { described_class.new }
 
   context "with a valid email" do
     subject do

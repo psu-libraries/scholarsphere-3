@@ -383,4 +383,14 @@ namespace :scholarsphere do
   task "deliver_weekly_stats" => :environment do
     StatsMailer.stats_mail(8.day.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
   end
+
+  desc "Mark a file as private"
+  task "make_private", [:file_id] => :environment do |_cmd, args|
+    file_id = args[:file_id]
+    abort "Must provide a file id to mark as private" if file_id.nil?
+    gf = GenericFile.find(file_id)
+    gf.read_groups = []
+    result = gf.save
+    puts "File #{file_id} marked as private: #{result}"
+  end
 end

@@ -1,44 +1,29 @@
 class GenericFileToShareJSONService
-  attr_reader :generic_file
+  attr_reader :generic_file, :document
 
   def initialize(generic_file)
     @generic_file = generic_file
-    @email_for_name = {}
+    @document = ShareNotify::PushDocument.new(generic_file.url)
   end
 
   def json
-    json_hash = {jsonData: {title: title, contributors: contributors, uris: url, providerUpdatedDateTime: providerUpdatedDateTime  } }
-    JSON.generate(json_hash)
+    document.title = generic_file.title.first
+    document.updated = generic_file.date_modified
+    add_contributors_to_document
+    return false unless document.valid?
+    document.to_share.to_json
   end
 
   private
-    def title
-      generic_file.title.first
-    end
 
-    def contributors
-      creators = []
+    def add_contributors_to_document
       generic_file.creator.each do |creator|
-        hash = {name: creator}
-        hash[:email] =  email_for_name(creator)
-        creators << hash
+        document.add_contributor(name: creator, email: email_for_name(creator))
       end
-      creators
     end
 
-    def providerUpdatedDateTime
-      value = generic_file.date_modified
-      value = generic_file.date_modified.strftime("%Y-%m-%dT%H:%M:%S.%3N%:z") if generic_file.date_modified.respond_to?(:strftime)
-      value
+    def email_for_name(name)
+      value = NameDisambiguationService.new(name).disambiguate
+      value.blank? ? "" : value[0][:email]
     end
-
-    def url
-      {canonicalUri: generic_file.url}
-    end
-
-    private
-      def email_for_name( name)
-        value = NameDisambiguationService.new(name).disambiguate
-        return value.blank? ? "" : value[0][:email]
-      end
 end

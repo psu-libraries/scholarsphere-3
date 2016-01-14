@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Tue, 27 Oct 2015 18:52:02 GMT
+      - Fri, 20 Nov 2015 17:27:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,162 +33,42 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Allow:
-      - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
+      - GET, POST, HEAD, OPTIONS
     body:
       encoding: ASCII-8BIT
-      string: '[{"id":36,"collectionDateTime":"2015-10-27T16:44:33.308944Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+      string: '{"count":111,"next":"https://staging.osf.io/api/v1/share/data/?page=2","previous":null,"results":[{"id":36,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":38,"collectionDateTime":"2015-10-27T16:53:51.555120Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":38,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":40,"collectionDateTime":"2015-10-27T17:09:12.475935Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":40,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":42,"collectionDateTime":"2015-10-27T17:13:58.452524Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":42,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":44,"collectionDateTime":"2015-10-27T17:36:09.397191Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":44,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":46,"collectionDateTime":"2015-10-27T18:24:08.820144Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":46,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":37,"collectionDateTime":"2015-10-27T16:44:56.324148Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":48,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":39,"collectionDateTime":"2015-10-27T16:54:46.910005Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":50,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":41,"collectionDateTime":"2015-10-27T17:11:42.837938Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":52,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
         u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
         u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":43,"collectionDateTime":"2015-10-27T17:34:23.406404Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":45,"collectionDateTime":"2015-10-27T18:09:24.712191Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":47,"collectionDateTime":"2015-10-27T18:45:26.148029Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":15,"collectionDateTime":"2015-10-08T15:21:19.495358Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":16,"collectionDateTime":"2015-10-09T11:34:10.792294Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":17,"collectionDateTime":"2015-10-26T19:58:20.925701Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":18,"collectionDateTime":"2015-10-27T15:21:15.399371Z","source":"scholarsphere","jsonData":"{u''publisher'':
-        {u''name'': u''Roger Ebert Inc'', u''email'': u''roger@example.com''}, u''description'':
-        u''This is a thing'', u''contributors'': [{u''name'': u''Roger Movies Ebert'',
-        u''sameAs'': [u''https://osf.io/thing''], u''familyName'': u''Ebert'', u''additionalName'':
-        u''Danger'', u''givenName'': u''Roger'', u''email'': u''rogerebert@example.com''},
-        {u''name'': u''Roger Madness Ebert''}], u''raw'': u''http://osf.io/raw/thisdocument/'',
-        u''title'': u''Interesting research'', u''languages'': [u''eng''], u''licenses'':
-        [{u''startDate'': u''2014-10-12'', u''endDate'': u''2014-11-12'', u''uri'':
-        u''http://www.mitlicense.com''}], u''sponsorships'': [{u''sponsor'': {u''sponsorName'':
-        u''Orange'', u''sponsorIdentifier'': u''http://example.com/orange''}, u''award'':
-        {u''awardIdentifier'': u''http://example.com'', u''awardName'': u''Participation''}}],
-        u''version'': {u''versionId'': u''someID''}, u''freeToRead'': {u''startDate'':
-        u''2014-09-12'', u''endDate'': u''2014-10-12''}, u''providerUpdatedDateTime'':
-        u''2014-12-12T00:00:00Z'', u''uris'': {u''canonicalUri'': u''http://example.com''}}"},{"id":19,"collectionDateTime":"2015-10-27T15:24:56.338578Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":20,"collectionDateTime":"2015-10-27T15:42:31.801389Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":21,"collectionDateTime":"2015-10-27T15:48:01.841524Z","source":"scholarsphere","jsonData":"{u''publisher'':
-        {u''name'': u''Roger Ebert Inc'', u''email'': u''roger@example.com''}, u''description'':
-        u''This is a thing'', u''contributors'': [{u''name'': u''Roger Movies Ebert'',
-        u''sameAs'': [u''https://osf.io/thing''], u''familyName'': u''Ebert'', u''additionalName'':
-        u''Danger'', u''givenName'': u''Roger'', u''email'': u''rogerebert@example.com''},
-        {u''name'': u''Roger Madness Ebert''}], u''raw'': u''http://osf.io/raw/thisdocument/'',
-        u''title'': u''Interesting research'', u''languages'': [u''eng''], u''licenses'':
-        [{u''startDate'': u''2014-10-12'', u''endDate'': u''2014-11-12'', u''uri'':
-        u''http://www.mitlicense.com''}], u''sponsorships'': [{u''sponsor'': {u''sponsorName'':
-        u''Orange'', u''sponsorIdentifier'': u''http://example.com/orange''}, u''award'':
-        {u''awardIdentifier'': u''http://example.com'', u''awardName'': u''Participation''}}],
-        u''version'': {u''versionId'': u''someID''}, u''freeToRead'': {u''startDate'':
-        u''2014-09-12'', u''endDate'': u''2014-10-12''}, u''providerUpdatedDateTime'':
-        u''2014-12-12T00:00:00Z'', u''uris'': {u''canonicalUri'': u''http://example.com''}}"},{"id":22,"collectionDateTime":"2015-10-27T16:19:08.719643Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":23,"collectionDateTime":"2015-10-27T16:20:46.093552Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":24,"collectionDateTime":"2015-10-27T16:27:33.240616Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":25,"collectionDateTime":"2015-10-27T16:27:49.241560Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":26,"collectionDateTime":"2015-10-27T16:29:22.353528Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":27,"collectionDateTime":"2015-10-27T16:31:07.513332Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":28,"collectionDateTime":"2015-10-27T16:31:41.944974Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":29,"collectionDateTime":"2015-10-27T16:33:21.116413Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":30,"collectionDateTime":"2015-10-27T16:34:05.813623Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":31,"collectionDateTime":"2015-10-27T16:36:06.113161Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":32,"collectionDateTime":"2015-10-27T16:36:25.364788Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":33,"collectionDateTime":"2015-10-27T16:37:10.176833Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":34,"collectionDateTime":"2015-10-27T16:37:45.164140Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"},{"id":35,"collectionDateTime":"2015-10-27T16:44:02.485114Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"}]'
+        u''title'': u''Set9 ShamR 1.tif''}\"","status":"created"},{"id":54,"updated":"2015-11-13T20:32:35.608984Z","docID":"http://url.com","source":"test","jsonData":"\"{u''providerUpdatedDateTime'':
+        u''2015-11-02T15:48:01.362+00:00'', u''uris'': {u''canonicalUri'': u''https://pooh.local/files/000000018''},
+        u''contributors'': [{u''name'': u''Frog, Kermit T.'', u''email'': u''kermit@muppets.org''}],
+        u''title'': u''Public Dissertation''}\"","status":"created"}]}'
     http_version: 
-  recorded_at: Tue, 27 Oct 2015 18:52:02 GMT
-- request:
-    method: get
-    uri: https://staging.osf.io/api/v1/share/share/?q=something
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers: {}
-  response:
-    status:
-      code: 404
-      message: NOT FOUND
-    headers:
-      Server:
-      - nginx/1.4.6 (Ubuntu)
-      Date:
-      - Tue, 27 Oct 2015 18:52:07 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '259'
-      Connection:
-      - keep-alive
-      X-Sentry-Id:
-      - None
-    body:
-      encoding: UTF-8
-      string: '{"code": 404, "referrer": null, "message_short": "Page not found",
-        "message_long": "The requested resource could not be found. If this should
-        not have occurred and the issue persists, please report it to <a href=\"mailto:support@osf.io\">support@osf.io</a>."}'
-    http_version: 
-  recorded_at: Tue, 27 Oct 2015 18:52:07 GMT
+  recorded_at: Fri, 20 Nov 2015 17:27:48 GMT
 - request:
     method: post
     uri: https://staging.osf.io/api/v1/share/data
@@ -197,17 +77,17 @@ http_interactions:
       string: |
         {
           "jsonData": {
-            "title": "Set9 ShamR 1.tif",
             "contributors": [
-              {
-                "name": "Santy, Lorraine C",
-                "email": "lcs13@psu.edu"
-              }
+              { "name": "Roger Movies Ebert", "email": "rogerebert@example.com" },
+              { "name": "Roger Madness Ebert"}
             ],
+            "providerUpdatedDateTime": "2014-12-12T00:00:00Z",
+            "title": "Interesting research",
+            "version": { "versionId": "someID" },
             "uris": {
-              "canonicalUri": "https://scholarsphere.psu.edu/files/x346f017s"
-            },
-            "providerUpdatedDateTime": "2015-07-30T20:15:08.528+00:00"
+              "canonicalUri": "http://example.com/document1",
+              "providerUris": [ "http://example.com/document1" ]
+            }
           }
         }
     headers:
@@ -223,7 +103,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Tue, 27 Oct 2015 19:05:29 GMT
+      - Fri, 20 Nov 2015 17:27:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -235,13 +115,91 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Allow:
-      - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
+      - GET, POST, HEAD, OPTIONS
     body:
       encoding: UTF-8
-      string: '{"id":52,"collectionDateTime":"2015-10-27T19:05:29.333303Z","source":"scholarsphere","jsonData":"{u''providerUpdatedDateTime'':
-        u''2015-07-30T20:15:08.528+00:00'', u''uris'': {u''canonicalUri'': u''https://scholarsphere.psu.edu/files/x346f017s''},
-        u''contributors'': [{u''name'': u''Santy, Lorraine C'', u''email'': u''lcs13@psu.edu''}],
-        u''title'': u''Set9 ShamR 1.tif''}"}'
+      string: '{"id":126,"updated":"2015-11-20T17:27:52.811190Z","docID":"http://example.com/document1","source":"scholarsphere","jsonData":"{u''contributors'':
+        [{u''name'': u''Roger Movies Ebert'', u''email'': u''rogerebert@example.com''},
+        {u''name'': u''Roger Madness Ebert''}], u''title'': u''Interesting research'',
+        ''shareProperties'': {''source'': u''scholarsphere'', ''docID'': u''http://example.com/document1''},
+        u''version'': {u''versionId'': u''someID''}, u''providerUpdatedDateTime'':
+        u''2014-12-12T00:00:00Z'', u''uris'': {u''canonicalUri'': u''http://example.com/document1'',
+        u''providerUris'': [u''http://example.com/document1'']}}","status":"updated"}'
     http_version: 
-  recorded_at: Tue, 27 Oct 2015 19:05:29 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Fri, 20 Nov 2015 17:27:52 GMT
+- request:
+    method: get
+    uri: https://staging.osf.io/api/v1/share/search/?q=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Fri, 20 Nov 2015 17:27:53 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '77'
+      Connection:
+      - keep-alive
+      X-Sentry-Id:
+      - None
+    body:
+      encoding: UTF-8
+      string: '{"count": 0, "time": 0.01, "results": [], "aggs": null, "aggregations": null}'
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 17:27:53 GMT
+- request:
+    method: get
+    uri: https://staging.osf.io/api/v1/share/search/?q=asdf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Fri, 20 Nov 2015 17:27:54 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1449'
+      Connection:
+      - keep-alive
+      X-Sentry-Id:
+      - None
+    body:
+      encoding: UTF-8
+      string: '{"count": 2, "time": 0.02, "results": [{"publisher": {"name": "Harvard
+        Dataverse"}, "contributors": [{"givenName": "Harry", "additionalName": "",
+        "name": "Rybacki, Harry", "familyName": "Rybacki"}], "title": "asdf", "shareProperties":
+        {"source": "datacite", "docID": "oai:oai.datacite.org:6759304"}, "otherProperties":
+        [{"name": "date", "properties": {"date": ["2015-09-22T00:00:00+00:00"]}},
+        {"name": "identifier", "properties": {"identifier": ["doi:10.7910/DVN/CN0E9O",
+        "oai:oai.datacite.org:6759304"]}}, {"name": "setSpec", "properties": {"setSpec":
+        ["CDL", "CDL.DATAVERS"]}}], "providerUpdatedDateTime": "2015-09-18T17:20:58+00:00",
+        "highlight": {}, "uris": {"canonicalUri": "http://dx.doi.org/10.7910/DVN/CN0E9O",
+        "objectUris": ["http://dx.doi.org/10.7910/DVN/CN0E9O"]}}, {"description":
+        "asdfasdf", "contributors": [{"givenName": "Harry", "additionalName": "",
+        "name": "Rybacki, Harry", "familyName": "Rybacki"}], "title": "asdf", "shareProperties":
+        {"source": "harvarddataverse", "filetype": "json", "docID": "doi:10.7910/DVN/CN0E9O"},
+        "otherProperties": [{"properties": {"serviceID": "doi:10.7910/DVN/CN0E9O"},
+        "name": "serviceID"}, {"properties": {"type": "dataset"}, "name": "type"}],
+        "providerUpdatedDateTime": "2015-09-18T17:20:47+00:00", "highlight": {}, "uris":
+        {"canonicalUri": "http://dx.doi.org/10.7910/DVN/CN0E9O", "objectUris": ["https://dataverse.harvard.edu/api/access/dsCardImage/77006"]}}], 
+        "aggs": null, "aggregations": null}'
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 17:27:54 GMT
+recorded_with: VCR 3.0.0

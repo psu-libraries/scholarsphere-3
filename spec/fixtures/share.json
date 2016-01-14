@@ -1,15 +1,15 @@
 {
   "jsonData": {
-    "title": "Set9 ShamR 1.tif",
     "contributors": [
-      {
-        "name": "Santy, Lorraine C",
-        "email": "lcs13@psu.edu"
-      }
+      { "name": "Roger Movies Ebert", "email": "rogerebert@example.com" },
+      { "name": "Roger Madness Ebert"}
     ],
+    "providerUpdatedDateTime": "2014-12-12T00:00:00Z",
+    "title": "Interesting research",
+    "version": { "versionId": "someID" },
     "uris": {
-      "canonicalUri": "https://scholarsphere.psu.edu/files/x346f017s"
-    },
-    "providerUpdatedDateTime": "2015-07-30T20:15:08.528+00:00"
+      "canonicalUri": "http://example.com/document1",
+      "providerUris": [ "http://example.com/document1" ]
+    }
   }
 }

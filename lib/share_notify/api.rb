@@ -12,26 +12,26 @@ class ShareNotify::API
   base_uri ShareNotify.config.fetch("host", "https://staging.osf.io")
 
   # @param [String] token is optional but some actions will not be successful without it
-  def initialize(token=nil)
-    @headers = { 
-      "Authorization" => "Token #{ShareNotify.config.fetch("token", nil)}",
+  def initialize(_token = nil)
+    @headers = {
+      "Authorization" => "Token #{ShareNotify.config.fetch('token', nil)}",
       "Content-Type"  => "application/json"
     }
   end
 
   # @return [HTTParty::Response]
   def get
-    @response = self.class.get(api_data_point)
+    @response = with_timeout { self.class.get(api_data_point) }
   end
 
   # @return [HTTParty::Response]
   def post(body)
-    @response = self.class.post(api_data_point, body: body, headers: headers)
+    @response = with_timeout { self.class.post(api_data_point, body: body, headers: headers) }
   end
 
   # @return [HTTParty::Response]
   def search(query)
-    @response = self.class.get(api_search_point, query: { q: query })
+    @response = with_timeout { self.class.get(api_search_point, query: { q: query }) }
   end
 
   private
@@ -41,7 +41,10 @@ class ShareNotify::API
     end
 
     def api_search_point
-      "/api/v1/share/share/"
+      "/api/v1/share/search/"
     end
 
+    def with_timeout(&_block)
+      Timeout.timeout(5) { yield }
+    end
 end

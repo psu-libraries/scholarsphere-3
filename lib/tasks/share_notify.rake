@@ -9,10 +9,8 @@ namespace :share do
   end 
 
   def shareable_files
-    ShareNotifyFilteredList.new(
-      ResourceFilteredList.new(
-        PublicFilteredList.new(GenericFile.all).filter
-      ).filter
+    ResourceFilteredList.new(
+      PublicFilteredList.new(GenericFile.all).filter
     ).filter
   end
 

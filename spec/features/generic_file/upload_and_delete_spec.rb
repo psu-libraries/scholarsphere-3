@@ -104,6 +104,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         allow(Sufia.config).to receive(:browse_everything) { { "dropbox" => { app_key: "fakekey189274942347", app_secret: "fakesecret489289472347298" } } }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
+        allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false)
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         WebMock.enable!
       end
@@ -159,10 +160,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content filename
           click_link "dashboard_link"
           expect(page).to have_css "table#activity"
-          within ("table#activity") do
+          within("table#activity") do
             expect(page).to have_content filename
           end
-          within ("#notifications") do
+          within("#notifications") do
             expect(page).to have_content "Batch upload complete"
             expect(page).to have_content "less than a minute ago"
             expect(page).to have_content filename

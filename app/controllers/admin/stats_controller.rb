@@ -23,15 +23,15 @@ class Admin::StatsController < ApplicationController
     def start_datetime
       return @start_datetime unless @start_datetime.blank?
       @start_datetime = DateTime.parse(params[:start_datetime]) unless params[:start_datetime].blank?
-      @start_datetime ||= 1.days.ago
+      @start_datetime ||= 1.day.ago
       @start_datetime = @start_datetime.beginning_of_day
     end
 
     def end_datetime
       return @end_datetime unless @end_datetime.blank?
       @end_datetime = DateTime.parse(params[:end_datetime]) unless params[:end_datetime].blank?
-      if (@end_datetime.blank?)
-        @end_datetime = 1.days.ago
+      if @end_datetime.blank?
+        @end_datetime = 1.day.ago
         @end_datetime = start_datetime if @end_datetime < start_datetime
       end
       @end_datetime = @end_datetime.end_of_day

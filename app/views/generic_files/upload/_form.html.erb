@@ -1,4 +1,4 @@
-<div class="alert restrictions"><%= t("scholarsphere.upload.retrictions_html") %></div>
+<div class="alert restrictions"><%= t("scholarsphere.upload.restrictions_html") %></div>
 <%= form_for(@generic_file, url: sufia.generic_files_path, html: { multipart: true, id: 'fileupload' }) do |f| %>
   <% unless current_user.can_make_deposits_for.empty? %>
     <div class="controls">

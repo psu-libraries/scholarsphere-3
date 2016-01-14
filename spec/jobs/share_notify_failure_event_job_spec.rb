@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe ShareNotifyEventJob do
-
+describe ShareNotifyFailureEventJob do
   let(:user) { FactoryGirl.find_or_create(:jill) }
 
   let(:file) do
@@ -20,5 +19,4 @@ describe ShareNotifyEventJob do
   it "sends an event to the file activity stream" do
     expect(file.events.length).to eq(1)
   end
-
 end
