@@ -3,7 +3,7 @@ cache: bundler
 bundler_args: --without development debug
 sudo: false
 rvm:
-  - 2.2
+  - 2.3.0
 jdk:
   - oraclejdk8
 env:
