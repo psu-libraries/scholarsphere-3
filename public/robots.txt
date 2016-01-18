@@ -1,3 +1,5 @@
 User-agent: *
 Disallow:
 Sitemap: http://scholarsphere.psu.edu/sitemap.xml
+User-agent: AhrefsBot
+Disallow: /
