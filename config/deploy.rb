@@ -55,6 +55,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/ga-privatekey.p12',
   'config/browse_everything_providers.yml',
   'public/sitemap.xml',
+  'public/robots.txt',
   'config/initializers/secret_token.rb',
   'config/initializers/sufia-secret.rb'
 )

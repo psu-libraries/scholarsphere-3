@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /*?file=thumbnail$
-Sitemap: http://scholarsphere.psu.edu/sitemap.xml
-User-agent: AhrefsBot
-Disallow: /
