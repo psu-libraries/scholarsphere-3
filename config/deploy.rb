@@ -35,7 +35,6 @@ set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, [:app, :job]
 
 set :scm, :git
-set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
@@ -89,7 +88,6 @@ namespace :apache do
 end
 
 namespace :deploy do
-  # Resolrize objects
   desc "Re-solrize objects"
   task :resolrize do
     on roles(:job) do
@@ -102,16 +100,14 @@ namespace :deploy do
   end
   after :migrate, :resolrize
 
-  # Restart resque-pool.
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
-      execute :sudo, "/sbin/service resque_pool restart"
+      execute "cd ~deploy/scholarsphere/current && ./script/restart_resque.sh production"
     end
   end
-  before :restart, :resquepoolrestart
+  after :published, :resquepoolrestart
 
-  # Queue sitemap.xml to be regenerated
   desc "Queue sitemap.xml to be generated"
   task :sitemapxml do
     on roles(:job) do
@@ -122,6 +118,7 @@ namespace :deploy do
       end
     end
   end
+  after :published, :sitemapxml
 
   # Passenger Capistrano Task
   # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
@@ -142,20 +139,8 @@ namespace :deploy do
         execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp &&     sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf &&  sudo /sbin/service httpd restart'
       end
     end
-
-    desc "warm up passenger"
-    task :warmup do
-      on roles(:web) do
-        # execute "curl -s -k --head https://$(hostname -f)"
-        # execute "curl -s -k -o /dev/null --head https://$(hostname -f)"
-      end
-    end
   end
-
-  after :resquepoolrestart, :sitemapxml
   after :published, "passenger:config_update"
-  # after :publishing, :restart
-  after :restart, "passenger:warmup"
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions

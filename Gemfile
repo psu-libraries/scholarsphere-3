@@ -47,6 +47,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'airbrussh', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano', '~> 3.0', require: false
