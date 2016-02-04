@@ -13,7 +13,7 @@ class ShareNotifyJob < ActiveFedoraIdBasedJob
   private
 
     def share
-      @share ||= ShareNotify::API.new
+      @share ||= ShareNotify::NotifyAPI.new
     end
 
     def response

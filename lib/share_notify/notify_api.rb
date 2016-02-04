@@ -1,7 +1,7 @@
 # Interact with the SHARE Notify API
 # @attr_reader [Hash] headers includes the authorization token needed to post data
 # @attr_reader [HTTParty::Response] response from the service
-class ShareNotify::API
+class ShareNotify::NotifyAPI
   include HTTParty
 
   # Uncomment this line if you want the api calls to be written to STDOUT

@@ -21,6 +21,6 @@ module ShareNotify::Metadata
     end
 
     def api
-      @api ||= ShareNotify::API.new
+      @api ||= ShareNotify::NotifyAPI.new
     end
 end

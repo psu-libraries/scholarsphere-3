@@ -6,7 +6,7 @@ describe ShareNotify::SearchResponse do
 
   after { WebMock.disable! }
 
-  let(:api) { ShareNotify::API.new }
+  let(:api) { ShareNotify::NotifyAPI.new }
 
   context "with a nil response" do
     subject { described_class.new(api.response) }

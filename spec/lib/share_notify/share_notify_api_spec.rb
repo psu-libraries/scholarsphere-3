@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'support/vcr'
 
-describe ShareNotify::API do
+describe ShareNotify::NotifyAPI do
   before do
     allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } }
     WebMock.enable!

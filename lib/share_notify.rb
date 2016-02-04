@@ -1,5 +1,5 @@
 module ShareNotify
-  autoload :API,          'share_notify/api'
+  autoload :NotifyAPI,    'share_notify/notify_api'
   autoload :Metadata,     'share_notify/metadata'
   autoload :PushDocument, 'share_notify/push_document'
 
