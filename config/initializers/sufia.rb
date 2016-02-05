@@ -3,7 +3,7 @@ Sufia.config do |config|
   # of Zotero-managed research items.
   # Defaults to false.  See Sufia's README for more info
   # ** Only set to true on qa for now **
-  config.arkivo_api = Rails.application.get_vhost_by_host[0] == "scholarsphere-qa.dlt.psu.edu"
+  config.arkivo_api = Rails.application.get_vhost_by_host[0] == "scholarsphere-qa.dlt.psu.edu" || Rails.env.development?
 
   config.application_name = "ScholarSphere"
   config.enable_contact_form_delivery = true
