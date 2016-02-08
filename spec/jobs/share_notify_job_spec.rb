@@ -14,6 +14,7 @@ describe ShareNotifyJob do
         GenericFile.create.tap do |f|
           f.title = ["The Difficulties of Being Green"]
           f.resource_type = ["Dissertation"]
+          f.creator = ["Frog, Kermit T."]
           f.visibility = "open"
           f.date_modified = DateTime.now
           f.apply_depositor_metadata(user)
@@ -21,14 +22,28 @@ describe ShareNotifyJob do
         end
       end
 
-      before { allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(201) }
+      context "when it has not been sent to SHARE Notify" do
+        before do
+          allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } }
+          allow_any_instance_of(GenericFileToShareJSONService)
+            .to receive(:email_for_name)
+            .and_return("kermit@muppets.org")
+          WebMock.enable!
+        end
 
-      it "sends a notification" do
-        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifySuccessEventJob))
-        job.run
+        after do
+          WebMock.disable!
+        end
+
+        it "sends a notification" do
+          VCR.use_cassette('share_notify_success_job', record: :none) do
+            expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifySuccessEventJob))
+            job.run
+          end
+        end
       end
 
-      context "that has already been sent to SHARE Notify" do
+      context "when it has already been sent to SHARE Notify" do
         before { allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(true) }
         subject { job.run }
         it { is_expected.to be_nil }
@@ -61,7 +76,7 @@ describe ShareNotifyJob do
       end
 
       it "logs the error" do
-        VCR.use_cassette('share_notify_job', record: :none) do
+        VCR.use_cassette('share_notify_failed_job', record: :none) do
           expect(Rails.logger).to receive(:error).once.with(error_message)
           expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyFailureEventJob))
           job.run

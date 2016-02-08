@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://staging.osf.io/api/v1/share/data
+    body:
+      encoding: UTF-8
+      string: '{"jsonData":{"uris":{"canonicalUri":"https://pooh/files/9019s247x","providerUris":["https://pooh/files/9019s247x"]},"providerUpdatedDateTime":"2016-02-08T20:20:38Z","contributors":[{"name":"Frog,
+        Kermit T.","email":"kermit@muppets.org"}],"title":"The Difficulties of Being
+        Green"}}'
+    headers:
+      Authorization:
+      - Token SECRET_TOKEN
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Mon, 08 Feb 2016 20:20:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept, Cookie
+      X-Frame-Options:
+      - SAMEORIGIN
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+    body:
+      encoding: UTF-8
+      string: '{"id":888,"updated":"2016-02-08T20:20:39.660440Z","docID":"https://pooh/files/9019s247x","source":"scholarsphere","jsonData":{"providerUpdatedDateTime":"2016-02-08T20:20:38Z","shareProperties":{"source":"scholarsphere","docID":"https://pooh/files/9019s247x"},"uris":{"canonicalUri":"https://pooh/files/9019s247x","providerUris":["https://pooh/files/9019s247x"]},"contributors":[{"name":"Frog,
+        Kermit T.","email":"kermit@muppets.org"}],"title":"The Difficulties of Being
+        Green"},"status":"created"}'
+    http_version: 
+  recorded_at: Mon, 08 Feb 2016 20:20:39 GMT
+recorded_with: VCR 3.0.1
