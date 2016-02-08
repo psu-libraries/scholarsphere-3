@@ -56,7 +56,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'public/sitemap.xml',
   'public/robots.txt',
   'config/initializers/secret_token.rb',
-  'config/initializers/sufia-secret.rb'
+  'config/initializers/sufia-secret.rb',
+  'config/initializers/arkivo_constraint.rb'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
