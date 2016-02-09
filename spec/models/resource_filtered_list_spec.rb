@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ResourceFilteredList, type: :model do
   let(:file_list) do
     [GenericFile.new(title: ["Dataset"], resource_type: ["Dataset"]),
-     GenericFile.new(title: ["Posters"], resource_type: ["Posters"]),
+     GenericFile.new(title: ["Poster"], resource_type: ["Poster"]),
      GenericFile.new(title: ["Thesis"], resource_type: ["Thesis"]),
      GenericFile.new(title: ["Dissertation"], resource_type: ["Dissertation"]),
      GenericFile.new(title: ["Report"], resource_type: ["Report"]),
@@ -17,7 +17,7 @@ describe ResourceFilteredList, type: :model do
     it "keeps default resource types" do
       expect(subject.count).to eq(4)
       expect(subject.map(&:title)).to include(['Dataset'])
-      expect(subject.map(&:title)).to include(['Posters'])
+      expect(subject.map(&:title)).to include(['Poster'])
       expect(subject.map(&:title)).to include(['Thesis'])
       expect(subject.map(&:title)).to include(['Dissertation'])
       expect(subject.map(&:title)).not_to include(['Report'])
@@ -32,7 +32,7 @@ describe ResourceFilteredList, type: :model do
       expect(subject.count).to eq(2)
       expect(subject.map(&:title)).to include(['Dataset'])
       expect(subject.map(&:title)).to include(['Report'])
-      expect(subject.map(&:title)).not_to include(['Posters'])
+      expect(subject.map(&:title)).not_to include(['Poster'])
       expect(subject.map(&:title)).not_to include(['Thesis'])
       expect(subject.map(&:title)).not_to include(['Dissertation'])
       expect(subject.map(&:title)).not_to include(['none'])
