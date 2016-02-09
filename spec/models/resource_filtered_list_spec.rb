@@ -15,12 +15,12 @@ describe ResourceFilteredList, type: :model do
     subject { described_class.new(file_list).filter }
 
     it "keeps default resource types" do
-      expect(subject.count).to eq(5)
+      expect(subject.count).to eq(4)
       expect(subject.map(&:title)).to include(['Dataset'])
       expect(subject.map(&:title)).to include(['Posters'])
       expect(subject.map(&:title)).to include(['Thesis'])
       expect(subject.map(&:title)).to include(['Dissertation'])
-      expect(subject.map(&:title)).to include(['Report'])
+      expect(subject.map(&:title)).not_to include(['Report'])
       expect(subject.map(&:title)).not_to include(['none'])
     end
   end
