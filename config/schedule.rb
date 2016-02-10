@@ -1,11 +1,14 @@
 # Use this file to easily define all of your cron jobs.
+#
+# NOTE: If you want the cronjob to run only on one machine, use :job for the roles
+#       otherwise, the :app role will run the cronjob on every server!
 set :output, "#{path}/log/wheneveroutput.log"
 
 every :day, at: "12:00am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_generate_sitemap.sh"
 end
 
-every :day, at: "7:00am", roles: [:app] do
+every :day, at: "7:00am", roles: [:job] do
   rake 'share:files'
 end
 

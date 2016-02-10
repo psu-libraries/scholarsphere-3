@@ -10,7 +10,7 @@ namespace :share do
 
   def shareable_files
     ResourceFilteredList.new(
-      PublicFilteredList.new(GenericFile.all).filter
+      PublicFilteredList.new(GenericFile.where(read_access_group_ssim: ["public"])).filter
     ).filter
   end
 

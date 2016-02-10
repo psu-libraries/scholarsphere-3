@@ -1,7 +1,7 @@
 class ResourceFilteredList
   attr_reader :generic_files, :resource_types
 
-  def initialize(generic_files, resource_types = ["Dataset", "Posters", "Thesis", "Dissertation", "Report"])
+  def initialize(generic_files, resource_types = ["Dataset", "Poster", "Thesis", "Dissertation"])
     @generic_files = generic_files
     @resource_types = resource_types
   end
