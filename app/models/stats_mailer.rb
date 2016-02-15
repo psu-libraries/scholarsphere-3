@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class StatsMailer < ActionMailer::Base
   def stats_mail(start_datetime, end_datetime)
     @presenter = StatsPresenter.new(start_datetime, end_datetime)

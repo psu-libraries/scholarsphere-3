@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This file causes capybara to use the phantomjs browser, which is fully
 # compatible with ajax
 require 'capybara/poltergeist'

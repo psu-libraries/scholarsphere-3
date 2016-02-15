@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ShareNotifyJob < ActiveFedoraIdBasedJob
   def run
     return if object.share_notified? || unshareable?

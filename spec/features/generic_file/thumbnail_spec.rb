@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../feature_spec_helper'
 
 describe 'Generic File Thumbnail Creation:', type: :feature do

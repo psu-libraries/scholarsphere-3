@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BatchController < ApplicationController
   include Sufia::BatchControllerBehavior
 

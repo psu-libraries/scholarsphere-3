@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-=
+# frozen_string_literal: true
 class Sufia::StatsAdmin
   def self.matches?(request)
     current_user = request.env['warden'].user

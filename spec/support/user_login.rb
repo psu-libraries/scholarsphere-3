@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module UserLogin
   def login_as(login)
     driver_name = "rack_test_authenticated_header_#{login}".to_s

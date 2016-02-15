@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
   include ShareNotify::Metadata
@@ -41,7 +42,7 @@ class GenericFile < ActiveFedora::Base
       if mapping.is_a? String
         values = [mapping]
       else
-        values = send(mapping[0]) if self.respond_to? mapping[0]
+        values = send(mapping[0]) if respond_to? mapping[0]
         values = mapping[1].call(values) if mapping.length == 2
         values = [values] unless values.is_a? Array
       end

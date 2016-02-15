@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ApplicationHelper
   def collection_search_parameters?
     !params[:cq].blank?
@@ -9,7 +10,7 @@ module ApplicationHelper
   end
 
   def link_to_help(subject)
-    link_to '#', id: "#{subject}_help", rel: 'popover'.freeze,
+    link_to '#', id: "#{subject}_help", rel: 'popover',
                  'data-content' => t("hydra.metadata_help.#{subject}_html"), 'data-original-title' => subject.titleize,
                  'aria-label' => "Help for #{subject.titleize}" do
       help_icon

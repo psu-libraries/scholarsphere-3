@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Mailboxer.setup do |config|
   # Configures if you applications uses or no the email sending for Notifications and Messages
   config.uses_emails = true

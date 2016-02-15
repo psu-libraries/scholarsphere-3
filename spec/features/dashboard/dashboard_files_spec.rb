@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../feature_spec_helper'
 include Selectors::Dashboard
 
@@ -96,13 +97,13 @@ describe 'Dashboard Files', type: :feature do
         visit "/users/#{current_user.login}"
         expect(page).to have_css '.active a', text: "Contributions"
         within '#contributions' do
-          expect(page).to have_link "#{file.filename.first}"
+          expect(page).to have_link file.filename.first.to_s
         end
 
         # It is displayed on my highlights
         go_to_dashboard_highlights
         within '#documents' do
-          expect(page).to have_link "#{file.filename.first}"
+          expect(page).to have_link file.filename.first.to_s
         end
       end
 

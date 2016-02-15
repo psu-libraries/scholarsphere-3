@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative './feature_spec_helper'
 
 $in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'

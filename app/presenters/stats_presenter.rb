@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class StatsPresenter
   attr_reader :start_datetime, :end_datetime
 

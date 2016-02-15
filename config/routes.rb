@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ScholarSphere::Application.routes.draw do
   resource :landing_page, only: [:new, :create]
   get ':managedata' => 'landing_pages#new', as: :request_info, constraints: { managedata: /managedata/i }

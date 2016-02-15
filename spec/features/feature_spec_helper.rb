@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Require this file at the top of each feature spec.
 require 'support/rails'
 require 'support/capybara'

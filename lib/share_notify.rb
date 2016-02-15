@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ShareNotify
   autoload :NotifyAPI,    'share_notify/notify_api'
   autoload :Metadata,     'share_notify/metadata'

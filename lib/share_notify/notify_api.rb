@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Interact with the SHARE Notify API
 # @attr_reader [Hash] headers includes the authorization token needed to post data
 # @attr_reader [HTTParty::Response] response from the service

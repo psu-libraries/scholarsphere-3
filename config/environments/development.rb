@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Sufia::Engine.configure do
   config.contact_email = 'DLT-GAMMA-PROJECT@lists.psu.edu'
   config.from_email = "ScholarSphere Form <scholarsphere-service-support@dlt.psu.edu>"

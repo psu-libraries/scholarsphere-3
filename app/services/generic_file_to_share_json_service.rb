@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GenericFileToShareJSONService
   attr_reader :generic_file, :document
 

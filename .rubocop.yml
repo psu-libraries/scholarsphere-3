@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
-  RunRailsCops: true
+  TargetRubyVersion: 2.3
   DisplayCopNames: true
   Include:
     - '**/Rakefile'
@@ -32,7 +32,6 @@ Metrics/CyclomaticComplexity:
     - 'app/services/scholarsphere_audit_service.rb'
     - 'app/models/user.rb'
     - 'app/models/generic_file.rb'
-    - 'app/controllers/concerns/sufia/files_controller/browse_everything.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
@@ -41,7 +40,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/scholarsphere_audit_service.rb'
     - 'app/models/user.rb'
     - 'app/models/generic_file.rb'
-    - 'app/controllers/concerns/sufia/files_controller/browse_everything.rb'
 
 Style/BlockDelimiters:
   Exclude:
@@ -121,6 +119,15 @@ Style/PredicateName:
   Exclude:
     - 'app/controllers/application_controller.rb'
 
+# Causes spec/views/catalog/_index_default.html.erb_spec.rb:20 to fail because Blacklight is enforcing the
+# encoding of a frozen string:
+# RuntimeError:
+#   can't modify frozen String
+#   /Users/awead/.gem/ruby/2.3.0/gems/blacklight-5.17.2/app/presenters/blacklight/document_presenter.rb:85:in `force_encoding'
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'spec/views/catalog/_index_default.html.erb_spec.rb'
+
 Lint/UselessAssignment:
   Exclude:
     - 'config/compass.rb'
@@ -129,6 +136,9 @@ Lint/UselessAssignment:
 Lint/RescueException:
   Exclude:
     - 'app/controllers/landing_pages_controller.rb'
+
+Rails:
+  Enabled: true
 
 Rails/Date:
   Enabled: false

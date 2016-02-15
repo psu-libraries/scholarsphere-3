@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ActiveRecord::Base
   # Connects this user object to Sufia behaviors.
   include Sufia::User
@@ -133,7 +134,7 @@ class User < ActiveRecord::Base
               []
             end
     # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
-    if (users.nil?) && (Hydra::LDAP.connection.get_operation_result[:message] == "Size Limit Exceeded")
+    if users.nil? && (Hydra::LDAP.connection.get_operation_result[:message] == "Size Limit Exceeded")
       filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
       users = begin
                 retry_unless(7.times, -> { Hydra::LDAP.connection.get_operation_result.code == 53 }) do

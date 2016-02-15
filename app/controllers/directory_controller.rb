@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DirectoryController < ApplicationController
   # returns true if the user exists and false otherwise
   def user
@@ -5,11 +6,11 @@ class DirectoryController < ApplicationController
   end
 
   def user_attribute
-    if params[:attribute] == "groups"
-      res = User.groups(params[:uid])
-    else
-      res = User.directory_attributes(params[:uid], params[:attribute])
-    end
+    res = if params[:attribute] == "groups"
+            User.groups(params[:uid])
+          else
+            User.directory_attributes(params[:uid], params[:attribute])
+          end
     render json: res
   end
 

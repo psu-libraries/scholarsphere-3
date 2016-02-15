@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: move this into Sufia
 # Resque job that updates files uploaded via the BatchController
 class BatchUpdateJob

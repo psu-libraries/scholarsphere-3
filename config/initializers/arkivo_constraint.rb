@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Sufia
   class ArkivoConstraint
     def self.matches?(_request)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Sufia.config do |config|
   # Sufia can integrate with Zotero's Arkivo service for automatic deposit
   # of Zotero-managed research items.

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ResourceFilteredList
   attr_reader :generic_files, :resource_types
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include Hydra::Controller::ControllerBehavior
@@ -67,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_legacy_url_prefix
-    legacy_prefix = "scholarsphere:".freeze
+    legacy_prefix = "scholarsphere:"
     id = params[:id].to_s
     return id unless id.start_with?(legacy_prefix)
     new_id = id[legacy_prefix.length..-1]

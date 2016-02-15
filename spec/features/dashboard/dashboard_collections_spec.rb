@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../feature_spec_helper'
 
 include Selectors::Dashboard
@@ -7,7 +8,7 @@ describe 'Dashboard Collections:', type: :feature do
 
   let(:jill) { create :jill }
   let!(:collection) do
-    Collection.new.tap do|col|
+    Collection.new.tap do |col|
       col.apply_depositor_metadata(jill.user_key)
       col.title = "jill collection"
       col.save!

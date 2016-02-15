@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe 'layouts/_head_tag_content.html.erb', type: :view do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative './feature_spec_helper'
 
 describe 'Visting the home page:', type: :feature do

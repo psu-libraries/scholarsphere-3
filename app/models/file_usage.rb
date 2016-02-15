@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FileUsage
   attr_accessor :id, :created, :path, :downloads, :pageviews
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CollectionsHelper
   def create_collection(title, creator, description)
     expect(page).to have_content 'Create New Collection', wait: Capybara.default_max_wait_time * 2

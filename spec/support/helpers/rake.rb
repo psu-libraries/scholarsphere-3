@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RakeHelper
   def load_rake_environment(files)
     @rake = Rake::Application.new

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Encapsulates the response from the SHARE Search api
 module ShareNotify
   class SearchResponse

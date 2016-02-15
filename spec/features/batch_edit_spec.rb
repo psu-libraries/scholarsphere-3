@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This spec unconvered a front end bug when editing
 # multiple attributes. Although the attributes seem
 # to be saved in the database, the front end behavior

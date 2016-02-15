@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NameDisambiguationService
   attr_reader :name, :email_for_name_cache, :results
 

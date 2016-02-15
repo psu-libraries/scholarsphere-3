@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ZoteroSubscription
   def self.call
     # get a list of the users with zotero ids and no arkivo subscription

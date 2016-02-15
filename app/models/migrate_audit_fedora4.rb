@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MigrateAuditFedora4
   AuditResult = Struct.new("AuditResult", :id, :f3_pid, :f4_id, :status)
 

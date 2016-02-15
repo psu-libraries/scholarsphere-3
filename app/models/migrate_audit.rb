@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MigrateAudit < ActiveRecord::Base
   # This method populates the migrate_audit table with data
   # from the Fedora 3 repo.

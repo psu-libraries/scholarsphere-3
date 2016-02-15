@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PublicFilteredList
   attr_reader :generic_files, :filters
 

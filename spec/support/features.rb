@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "#{Rails.root}/spec/support/session_helpers"
 
 RSpec.configure do |config|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class LandingPagesController < ApplicationController
   layout 'landing'
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'devise/strategies/http_header_authenticatable'
 module Devise
   module Models
@@ -6,8 +7,6 @@ module Devise
 
       def after_database_authentication
       end
-
-      protected
     end
   end
 end

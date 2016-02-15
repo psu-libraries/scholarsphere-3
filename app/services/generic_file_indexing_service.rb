@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GenericFileIndexingService < ActiveFedora::IndexingService
   STORED_SYMBOL = Solrizer::Descriptor.new(:symbol, :stored)
 

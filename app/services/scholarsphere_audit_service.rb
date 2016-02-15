@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ScholarsphereAuditService < Sufia::GenericFileAuditService
   def audit_stat
     audit_results = ChecksumAuditLog.logs_for(generic_file.id, "content").collect { |result| result["pass"] }

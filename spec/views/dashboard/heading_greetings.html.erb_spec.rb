@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do

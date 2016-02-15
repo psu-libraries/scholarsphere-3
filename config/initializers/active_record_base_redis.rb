@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'nest'
 
 ActiveRecord::Base.class_eval do

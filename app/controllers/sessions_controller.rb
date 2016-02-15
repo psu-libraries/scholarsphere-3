@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SessionsController < ApplicationController
   def destroy
     # make any local additions here (e.g. expiring local sessions, etc.)

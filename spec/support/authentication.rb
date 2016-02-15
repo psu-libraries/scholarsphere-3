@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Stub out authentication for tests.
 
 # This authentication strategy will automatically succeed for the user that was

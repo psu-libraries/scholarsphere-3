@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+# frozen_string_literal: true
 require 'blacklight/catalog'
 require 'blacklight_advanced_search'
 
@@ -31,19 +32,16 @@ class CatalogController < ApplicationController
   #
   # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
   def rsolr_request_error(exception)
-    if ['development', 'test'].include?(Rails.env)
-      raise exception # Rails own code will catch and give usual Rails error page with stack trace
+    raise exception if ['development', 'test'].include?(Rails.env)
+    flash_notice = "Sorry, I don't understand your search."
+    # Set the notice flag if the flash[:notice] is already set to the error that we are setting.
+    # This is intended to stop the redirect loop error
+    notice = flash[:notice] if flash[:notice] == flash_notice
+    unless notice
+      flash[:notice] = flash_notice
+      redirect_to root_path, status: 500
     else
-      flash_notice = "Sorry, I don't understand your search."
-      # Set the notice flag if the flash[:notice] is already set to the error that we are setting.
-      # This is intended to stop the redirect loop error
-      notice = flash[:notice] if flash[:notice] == flash_notice
-      unless notice
-        flash[:notice] = flash_notice
-        redirect_to root_path, status: 500
-      else
-        render template: "public/500.html", layout: false, status: 500
-      end
+      render template: "public/500.html", layout: false, status: 500
     end
   end
 
@@ -149,7 +147,7 @@ class CatalogController < ApplicationController
       title_name = solr_name("title", :stored_searchable)
       field.solr_parameters = {
         qf: "#{all_names} id all_text_timv",
-        pf: "#{title_name}"
+        pf: title_name.to_s
       }
     end
 

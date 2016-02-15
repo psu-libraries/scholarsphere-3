@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module LinkedFieldHelper
   def render_linked_field(value, link_function, opt_param)
     return link_function.call value if opt_param.blank?

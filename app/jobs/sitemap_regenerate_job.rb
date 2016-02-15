@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SitemapRegenerateJob
   def run
     Rake::Task['sitemap:generate'].invoke

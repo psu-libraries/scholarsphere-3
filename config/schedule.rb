@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Use this file to easily define all of your cron jobs.
 #
 # NOTE: If you want the cronjob to run only on one machine, use :job for the roles

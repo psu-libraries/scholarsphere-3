@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Load the Ruby on Rails app
 
 ENV['RAILS_ENV'] ||= 'test'

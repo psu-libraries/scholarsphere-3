@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+# frozen_string_literal: true
 class SolrDocument
   # Add Blacklight behaviors to the SolrDocument
   include Blacklight::Solr::Document
@@ -14,7 +15,7 @@ class SolrDocument
     return nil if self[Solrizer.solr_name(:collection)].blank?
     collections_in = Array(self[Solrizer.solr_name(:collection)])
     collections = []
-    collections_in.each do|pid|
+    collections_in.each do |pid|
       begin
         collections << Collection.load_instance_from_solr(pid)
       rescue

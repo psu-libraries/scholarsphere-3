@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Code borrowed from Obie's Redis patterns talk at RailsConf'12
 Nest.class_eval do
   def initialize(key, redis = $redis)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DepositSearchBuilder < Blacklight::Solr::SearchBuilder
   include Hydra::Collections::SearchBehaviors
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MailboxController < ApplicationController
   before_action :authenticate_user!
 

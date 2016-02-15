@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO:  This override should be removed once we upgrade sufia to 6.1
 module My
   class CollectionsController < MyController

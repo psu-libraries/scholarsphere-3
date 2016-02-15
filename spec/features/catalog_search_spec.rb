@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative './feature_spec_helper'
 
 describe 'catalog searching', type: :feature do
@@ -6,7 +7,7 @@ describe 'catalog searching', type: :feature do
   let!(:gf2) { create_file user, title: ['title 2'], tag: ["tag2", "tag3"] }
   let!(:gf3) { create_file user, title: ['title 3'], tag: ["tag3", "tag4"] }
   let!(:collection) do
-    Collection.new.tap do|col|
+    Collection.new.tap do |col|
       col.apply_depositor_metadata(user.user_key)
       col.title = "collection title"
       col.tag = ["tag3", "tag4"]

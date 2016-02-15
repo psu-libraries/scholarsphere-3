@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DownloadsController < ApplicationController
   include Sufia::DownloadsControllerBehavior
 

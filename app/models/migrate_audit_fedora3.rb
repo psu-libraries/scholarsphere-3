@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MigrateAuditFedora3
   Fedora3Object = Struct.new("Fedora3Object", :pid, :has_model, :title)
 
@@ -39,7 +40,7 @@ class MigrateAuditFedora3
     all_pids = []
     session_token = nil
     loop do
-      session = (session_token.nil?) ? "" : "sessionToken=#{session_token}"
+      session = session_token.nil? ? "" : "sessionToken=#{session_token}"
       query_string = "query=&resultFormat=xml&maxResults=#{batch_size}&pid=true&#{session}"
       fedora_response = fedora_get("/objects", query_string)
       xml = Nokogiri::XML(fedora_response)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Be sure to restart your server when you modify this file.Mime::Type.register_alias "text/plain", :refworks_marc_txt
 Mime::Type.register_alias "text/plain", :openurl_kev
 Mime::Type.register_alias "text/plain", :refworks_marc_txt

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ScholarsphereBatchUpdateJob < BatchUpdateJob
   def queue_additional_jobs(gf)
     super

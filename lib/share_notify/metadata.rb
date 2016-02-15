@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Queries the SHARE search api for an existing record. This assumes the class into which this
 # module is included responds to #url and that in turn is mapped to the docID of the Share
 # document that was originally uploaded via the SHARE push API.
