@@ -16,6 +16,8 @@ describe GenericFilesController, type: :controller do
         expect_any_instance_of(CanCan::ControllerResource).not_to receive(:load_and_authorize_resource)
         get :show, id: gf.id
         expect(assigns[:generic_file].readonly?).to be_truthy # we get a read only object if it is loaded from solr
+        expect(assigns[:generic_file].content).to be_kind_of(ActiveFedora::LoadableFromJson::SolrBackedMetadataFile)
+        expect(assigns[:generic_file].content).not_to respond_to(:has_versions?)
       end
     end
   end
