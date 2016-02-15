@@ -128,10 +128,6 @@ Lint/UselessAssignment:
   Exclude:
     - 'config/compass.rb'
 
-Lint/RescueException:
-  Exclude:
-    - 'app/controllers/landing_pages_controller.rb'
-
 Rails:
   Enabled: true
 

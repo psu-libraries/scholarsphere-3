@@ -78,6 +78,6 @@ ScholarSphere::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js ZeroClipboard.swf bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js ie8-and-down.css ie9-and-down.css application-landing.css)
+  config.assets.precompile += %w( generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js ZeroClipboard.swf bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js ie8-and-down.css ie9-and-down.css)
   config.assets.precompile += %w( *.jpg *.png *.gif *.ico *.svg )
 end

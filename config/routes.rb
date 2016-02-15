@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 ScholarSphere::Application.routes.draw do
-  resource :landing_page, only: [:new, :create]
-  get ':managedata' => 'landing_pages#new', as: :request_info, constraints: { managedata: /managedata/i }
-  get ':managedata/:thankyou' => 'landing_pages#thanks', as: :request_thanks, constraints: { managedata: /managedata/i, thankyou: /thankyou/i }
+  get '/landing_page/new', to: redirect('/contact')
+  get '/managedata', to: redirect('/contact')
 
   devise_for :users
 

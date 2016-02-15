@@ -116,10 +116,6 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    # configure the landing page email
-    config.landing_email = 'ScholarSphere Information <l-scholarsphere-info@lists.psu.edu>'
-    config.landing_from_email = 'PATRICIA M HSWE <pmh22@psu.edu>'
-
     def config.stats_email
       vhost = ScholarSphere::Application.get_vhost_by_host[0]
       if vhost == 'scholarsphere.psu.edu'
