@@ -27,24 +27,6 @@ class CatalogController < ApplicationController
     solr_name('date_modified', :stored_sortable, type: :date)
   end
 
-  # COPIED AND MODIFIED from:
-  #	/usr/local/rvm/gems/ree-1.8.7-2011.03@scholarsphere/gems/blacklight-3.3.2/lib/blacklight/catalog.rb
-  #
-  # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
-  def rsolr_request_error(exception)
-    raise exception if ['development', 'test'].include?(Rails.env)
-    flash_notice = "Sorry, I don't understand your search."
-    # Set the notice flag if the flash[:notice] is already set to the error that we are setting.
-    # This is intended to stop the redirect loop error
-    notice = flash[:notice] if flash[:notice] == flash_notice
-    unless notice
-      flash[:notice] = flash_notice
-      redirect_to root_path, status: 500
-    else
-      render template: "public/500.html", layout: false, status: 500
-    end
-  end
-
   configure_blacklight do |config|
     # Show gallery view
     config.view.gallery.partials = [:index_header, :index]
