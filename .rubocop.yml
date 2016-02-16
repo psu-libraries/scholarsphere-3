@@ -92,7 +92,7 @@ Style/ClassVars:
 
 Style/GlobalVars:
   Exclude:
-    - 'spec/support/cleanup.rb'
+    - 'spec/features/support/feature_cleanup.rb'
     - 'spec/features/static_pages_spec.rb'
     - 'config/initializers/redis_config.rb'
     - 'config/initializers/active_record_base_redis.rb'

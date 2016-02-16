@@ -1,22 +1,24 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Dashboard Shares', type: :feature do
-  let!(:current_user) { create :user }
+  let(:current_user) { FactoryGirl.find_or_create(:user) }
 
-  before do
-    sign_in_as current_user
-  end
+  context "the default" do
+    before do
+      sign_in_with_js(current_user)
+      go_to_dashboard_shares
+    end
 
-  scenario 'tab title and buttons' do
-    go_to_dashboard_shares
-    expect(page).to have_content("Files Shared with Me")
-    within('#sidebar') do
-      expect(page).to have_content("Upload")
-      expect(page).to have_content("Create Collection")
-      expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
+    it 'displays tab title and buttons' do
+      expect(page).to have_content("Files Shared with Me")
+      within('#sidebar') do
+        expect(page).to have_content("Upload")
+        expect(page).to have_content("Create Collection")
+        expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
+      end
     end
   end
 
@@ -48,8 +50,12 @@ describe 'Dashboard Shares', type: :feature do
       end
     end
 
-    scenario 'does not display collections and others files' do
+    before do
+      sign_in_with_js(current_user)
       go_to_dashboard_shares
+    end
+
+    it 'does not display collections and others files' do
       expect(page).to_not have_content(collection_title)
       expect(page).to_not have_content(gf.title[0])
       expect(page).to have_content(gf2.title[0])

@@ -20,7 +20,7 @@ describe MigrateAudit, type: :model do
     results
   end
 
-  before do
+  before(:all) do
     GenericFile.create(id: "111xyzfile") { |file| file.apply_depositor_metadata('dmc') }
     GenericFile.create(id: "333xyzfile") { |file| file.apply_depositor_metadata('dmc') }
   end

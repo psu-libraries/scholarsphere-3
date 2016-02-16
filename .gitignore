@@ -115,3 +115,4 @@ jetty
 .capistrano
 report.json
 migration_report
+user_emails.txt

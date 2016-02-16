@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require_relative './feature_spec_helper'
+require 'feature_spec_helper'
 
 describe 'Visting the home page:', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.find_or_create(:user) }
 
   before :each do
     @blk = ContentBlock.find_or_create_by(name: "marketing_text").tap do |market|
@@ -13,7 +13,7 @@ describe 'Visting the home page:', type: :feature do
 
   context 'when logged in' do
     before do
-      sign_in_as current_user
+      sign_in_with_js(current_user)
     end
 
     context 'and I do not belong to any groups' do

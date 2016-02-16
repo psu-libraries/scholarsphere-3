@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require_relative './feature_spec_helper'
+require 'feature_spec_helper'
 
 describe 'catalog searching', type: :feature do
-  let(:user) { create :jill }
+  let(:user) { FactoryGirl.find_or_create(:jill) }
   let!(:gf1) { create_file user, title: ['title 1'], tag: ["tag1", "tag2"] }
   let!(:gf2) { create_file user, title: ['title 2'], tag: ["tag2", "tag3"] }
   let!(:gf3) { create_file user, title: ['title 3'], tag: ["tag3", "tag4"] }
@@ -16,7 +16,7 @@ describe 'catalog searching', type: :feature do
   end
 
   before do
-    sign_in_as user
+    sign_in(user)
     visit '/'
   end
 

@@ -1,18 +1,18 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:', type: :feature do
   context 'When logged in as a PSU user' do
-    let!(:current_user) { create :user }
-    let(:other_user) { create :user }
-    let(:filename) { 'little_file.txt' }
-    let(:batch) { ['little_file.txt', 'little_file.txt'] }
-    let(:file) { find_file_by_title "little_file.txt" }
+    let(:current_user)  { FactoryGirl.find_or_create(:user) }
+    let(:other_user)    { FactoryGirl.find_or_create(:user) }
+    let(:filename)      { 'little_file.txt' }
+    let(:batch)         { ['little_file.txt', 'little_file.txt'] }
+    let(:file)          { find_file_by_title "little_file.txt" }
 
     before do
-      sign_in_as current_user
+      sign_in_with_js(current_user)
     end
 
     context 'the user agreement' do
@@ -29,7 +29,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
-        attach_file 'files[]', test_file_path(filename)
+        attach_file('files[]', test_file_path(filename), visible: false)
         redirect_url = find("#redirect-loc", visible: false).text(:all)
         click_button 'main_upload_start'
         wait_for_page redirect_url
@@ -181,11 +181,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
   end
 
   context 'When logged in as a non-PSU user' do
-    let!(:current_user) { create :non_psu_user }
+    let(:current_user) { FactoryGirl.find_or_create(:non_psu_user) }
 
-    before do
-      sign_in_as current_user
-    end
+    before { sign_in_with_js(current_user) }
 
     specify 'I cannot access the upload page' do
       visit Sufia::Engine.routes.url_helpers.new_generic_file_path

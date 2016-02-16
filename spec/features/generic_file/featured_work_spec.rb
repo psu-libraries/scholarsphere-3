@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'feature_spec_helper'
 
 describe "Showing the Generic File", type: :feature do
-  let(:current_user) { create :administrator }
-  let!(:gf) { create_file current_user, title: 'file title' }
+  let(:current_user) { FactoryGirl.find_or_create(:administrator) }
+  let!(:gf)          { create_file current_user, title: 'file title' }
 
   before do
-    sign_in_as current_user
+    sign_in_with_js(current_user)
     visit "/"
     click_link "Recent Additions"
     expect(page).to have_content(gf.title.first)

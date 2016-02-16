@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 include Selectors::EditCollections
 
 describe 'Collection editing:', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.create(:user) }
   # TODO: why can this not be small_file.txt??
   # let(:filenames) { %w{world.png little_file.txt scholarsphere_test5.txt} }
   let(:title) { 'Test Collection Title' }
@@ -17,7 +17,7 @@ describe 'Collection editing:', type: :feature do
   let(:collection) { Collection.first }
 
   before do
-    sign_in_as current_user
+    sign_in_with_js(current_user)
     go_to_dashboard_files
     db_file_checkbox(file_1).click
     db_file_checkbox(file_2).click
