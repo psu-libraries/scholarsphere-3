@@ -4,41 +4,9 @@ require 'spec_helper'
 describe My::FilesController, type: :controller do
   routes { Sufia::Engine.routes }
   let(:user) { FactoryGirl.find_or_create(:archivist) }
-  let(:strategy) do
-    strategy = Devise::Strategies::HttpHeaderAuthenticatable.new(nil)
-    allow(strategy).to receive(:request) { request }
-    strategy
-  end
-  before do
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-  end
-  # This doesn't really belong here, but it works for now
-  describe "authenticate!" do
-    before do
-      allow(request).to receive(:headers).and_return('REMOTE_USER' => user.login)
-    end
-    it "populates LDAP attrs if user is new" do
-      allow(User).to receive(:find_by_login).with(user.login).and_return(nil)
-      expect(User).to receive(:create).with(login: user.login, email: user.login).once.and_return(user)
-      expect_any_instance_of(User).to receive(:populate_attributes).once
-      expect(strategy).to be_valid
-      expect(strategy.authenticate!).to eq(:success)
-      sign_in user
-      get :index
-    end
-    it "does not populate LDAP attrs if user is not new" do
-      allow(User).to receive(:find_by_login).with(user.login).and_return(user)
-      expect(User).to receive(:create).with(login: user.login).never
-      expect_any_instance_of(User).to receive(:populate_attributes).never
-      expect(strategy).to be_valid
-      expect(strategy.authenticate!).to eq(:success)
-      sign_in user
-      get :index
-    end
-  end
   describe "logged in user" do
     before do
-      sign_in user
+      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
     describe "#index" do
@@ -46,7 +14,7 @@ describe My::FilesController, type: :controller do
 
       let(:batch_id)  { "batch_id" }
       let(:batch_id2) { "batch_id2" }
-      let(:batch)       { double }
+      let(:batch)     { double }
       let!(:generic_file) do
         GenericFile.new(id: "mine123", title: ["mine"]) do |f|
           f.apply_depositor_metadata(user.login)

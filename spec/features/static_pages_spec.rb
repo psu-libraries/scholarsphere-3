@@ -1,11 +1,13 @@
 # frozen_string_literal: true
-require_relative './feature_spec_helper'
+require 'feature_spec_helper'
 
 $in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
 
 describe 'Static pages:', type: :feature do
-  shared_examples 'verify each static page' do |logged_in|
-    before { create :user } if logged_in
+  shared_examples 'verify each static page' do |user|
+    before do
+      sign_in_with_js(user)
+    end
 
     [
       '/about',
@@ -16,7 +18,7 @@ describe 'Static pages:', type: :feature do
         it 'has verified hyperlinks' do
           verify_links path
         end
-        unless logged_in
+        unless user
           # Verifying youtube links is done via visiting an external url.
           # We can only do so if we are not logged in as a user.
           it 'has verified videos exist', unless: $in_travis do
@@ -28,11 +30,11 @@ describe 'Static pages:', type: :feature do
   end
 
   describe 'When not logged in' do
-    we_can 'verify each static page', false
+    we_can 'verify each static page', nil
   end
 
   describe 'When logged in' do
-    we_can 'verify each static page', true
+    we_can 'verify each static page', FactoryGirl.find_or_create(:user)
   end
 
   def verify_links(path)

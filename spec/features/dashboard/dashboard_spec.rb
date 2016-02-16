@@ -1,27 +1,28 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'The Dashboard', type: :feature do
-  let!(:current_user) { create :user }
+  let(:user) { FactoryGirl.find_or_create(:user) }
 
-  before do
-    sign_in_as current_user
-  end
-
-  context "with files and collections" do
-    let!(:generic_file) { GenericFile.new.tap do |f|
-      f.apply_depositor_metadata(current_user.user_key)
-      f.save
-    end }
-    let!(:collection) { Collection.new.tap do |c|
-      c.title = "test"
-      c.apply_depositor_metadata(current_user.user_key)
-      c.save
-    end }
+  describe "a user who has files and collections" do
+    let!(:generic_file) do
+      GenericFile.new.tap do |f|
+        f.apply_depositor_metadata(user.user_key)
+        f.save
+      end
+    end
+    let!(:collection) do
+      Collection.new.tap do |c|
+        c.title = "test"
+        c.apply_depositor_metadata(user.user_key)
+        c.save
+      end
+    end
 
     before do
+      sign_in(user)
       go_to_dashboard
     end
 
@@ -34,11 +35,11 @@ describe 'The Dashboard', type: :feature do
     end
   end
 
-  context "without files and collections" do
+  describe "a user without files and collections" do
     before do
+      sign_in(user)
       go_to_dashboard
     end
-
     it "displays information correctly" do
       # displays information about the user
       expect(page).to have_content "Joe Example"
@@ -51,52 +52,57 @@ describe 'The Dashboard', type: :feature do
       expect(page).to have_content "User Activity"
       expect(page).to have_content "User has no recent activity"
     end
+  end
 
-    describe 'proxy portal' do
-      context "with multiple current proxies" do
-        let!(:second_user) { create(:user, display_name: "First Proxy") }
-        let!(:third_user) { create(:user, display_name: "Second Proxy") }
+  describe "a user with multiple current proxies" do
+    let!(:first_proxy)  { FactoryGirl.find_or_create(:first_proxy) }
+    let!(:second_proxy) { FactoryGirl.find_or_create(:second_proxy) }
 
-        before do
-          create_proxy_using_partial(second_user, third_user)
-        end
+    before do
+      sign_in_with_js(user)
+      go_to_dashboard
+      create_proxy_using_partial(first_proxy, second_proxy)
+    end
 
-        it "lists each proxy if both are authorized" do
-          within("#authorizedProxies") do
-            expect(page).to have_content(second_user.display_name)
-            expect(page).to have_content(third_user.display_name)
-          end
-          go_to_dashboard
-          within("#authorizedProxies") do
-            expect(page).to have_content(second_user.display_name)
-            expect(page).to have_content(third_user.display_name)
-          end
+    it "lists each proxy if both are authorized" do
+      within("#authorizedProxies") do
+        expect(page).to have_content(first_proxy.display_name)
+        expect(page).to have_content(second_proxy.display_name)
+      end
+      go_to_dashboard
+      within("#authorizedProxies") do
+        expect(page).to have_content(first_proxy.display_name)
+        expect(page).to have_content(second_proxy.display_name)
+      end
 
-          # should remove a proxy
-          first(".remove-proxy-button").click
-          sleep(1.second)
-          go_to_dashboard
-          within("#authorizedProxies") do
-            expect(page).to have_content(third_user.display_name)
-            expect(page).not_to have_content(second_user.display_name)
-          end
-        end
+      # should remove a proxy
+      first(".remove-proxy-button").click
+      sleep(1.second)
+      go_to_dashboard
+      within("#authorizedProxies") do
+        expect(page).to have_content(second_proxy.display_name)
+        expect(page).not_to have_content(first_proxy.display_name)
       end
     end
   end
 
-  context "with transfers" do
-    let(:another_user) { create :jill }
+  describe "a user with transfers" do
+    let(:another_user) { FactoryGirl.find_or_create(:jill) }
 
     context "when incoming" do
       let!(:incoming_file) do
         GenericFile.new.tap do |f|
           f.apply_depositor_metadata(another_user.user_key)
           f.save!
-          f.request_transfer_to(current_user)
+          f.request_transfer_to(user)
         end
       end
-      before { go_to_dashboard }
+
+      before do
+        sign_in(user)
+        go_to_dashboard
+      end
+
       it "displays received files" do
         within("#incoming-transfers") do
           expect(page).to have_link another_user.name
@@ -109,12 +115,17 @@ describe 'The Dashboard', type: :feature do
     context "when outgoing" do
       let!(:outgoing_file) do
         GenericFile.new.tap do |f|
-          f.apply_depositor_metadata(current_user.user_key)
+          f.apply_depositor_metadata(user.user_key)
           f.save!
           f.request_transfer_to(another_user)
         end
       end
-      before { go_to_dashboard }
+
+      before do
+        sign_in(user)
+        go_to_dashboard
+      end
+
       it "displays files sent to another user" do
         within("#outgoing-transfers") do
           expect(page).to have_link another_user.name

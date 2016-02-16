@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative './feature_spec_helper'
+require 'feature_spec_helper'
 
 describe 'Contact form:', type: :feature do
   let(:email_address) { 'kurt@example.com' }

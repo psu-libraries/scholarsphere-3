@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Dashboard Collections:', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.create :user }
 
-  let(:jill) { create :jill }
+  let(:jill) { FactoryGirl.create :jill }
   let!(:collection) do
     Collection.new.tap do |col|
       col.apply_depositor_metadata(jill.user_key)
@@ -16,7 +16,7 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   before do
-    sign_in_as current_user
+    sign_in_with_js(current_user)
     go_to_dashboard
     click_link("Create Collection")
     create_collection ["My collection"], current_user, ["Personal collection of great things"]

@@ -9,10 +9,15 @@ module Behaviors
 
     protected
 
+      # In production, only check for REMOTE_USER. HTTP_ is removed from the variable before
+      # it is passed to the application. In test or development, this may or may not
+      # happen depending on the setup or testing framework, so we allow both.
       def remote_user(headers)
-        return headers['REMOTE_USER'] if headers['REMOTE_USER']
-        return headers['HTTP_REMOTE_USER'] if headers['HTTP_REMOTE_USER'] && Rails.env.development?
-        nil
+        if Rails.env.production?
+          headers.fetch("REMOTE_USER", nil)
+        else
+          headers.fetch("REMOTE_USER", nil) || headers.fetch("HTTP_REMOTE_USER", nil)
+        end
       end
   end
 end

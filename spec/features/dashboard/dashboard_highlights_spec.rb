@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Dashboard Highlights', type: :feature do
-  let!(:current_user) { create :user }
+  let(:current_user) { FactoryGirl.find_or_create(:user) }
 
   before do
-    sign_in_as current_user
+    sign_in(current_user)
     go_to_dashboard_highlights
   end
 

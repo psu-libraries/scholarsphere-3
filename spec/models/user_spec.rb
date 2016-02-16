@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe User, type: :model do
-  let(:user)        { FactoryGirl.find_or_create(:jill) }
+  let(:user)        { FactoryGirl.find_or_create(:ldap_jill) }
   let(:empty_user)  { described_class.new }
 
   it "has a login" do

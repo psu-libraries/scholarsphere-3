@@ -1,21 +1,20 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'feature_spec_helper'
 
 describe "User Statistics", type: :feature do
-  let!(:current_user) { create :administrator }
-  let(:user_name) { current_user.login }
+  let!(:user) { FactoryGirl.find_or_create(:administrator) }
 
   before do
-    sign_in_as current_user
+    sign_in(user)
   end
 
   context "deposited files" do
     before do
       # More than 10 times, because the pagination threshold is 10
       12.times do |_t|
-        create_file current_user
+        create_file user
       end
-      UserStat.create!(user_id: current_user.id, date: Date.today, file_views: 11, file_downloads: 6)
+      UserStat.create!(user_id: user.id, date: Date.today, file_views: 11, file_downloads: 6)
       visit "/dashboard"
       expect(page).to have_content "Your Statistics"
     end

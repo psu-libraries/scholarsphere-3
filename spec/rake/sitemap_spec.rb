@@ -35,7 +35,7 @@ describe "sitemap:generate" do
     load_rake_environment ["#{sitemap_path}/lib/tasks/sitemap.rake"]
   end
 
-  describe 'sitemap generation' do
+  describe 'sitemap generation', clean: true do
     it 'includes public generic files and users' do
       run_task 'sitemap:generate'
       filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")

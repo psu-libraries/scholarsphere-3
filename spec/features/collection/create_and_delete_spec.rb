@@ -1,16 +1,16 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Collection creation and deletion:', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.create(:user) }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
 
   before do
-    sign_in_as current_user
+    sign_in_with_js(current_user)
   end
 
   describe 'When creating an empty collection' do

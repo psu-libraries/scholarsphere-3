@@ -1,29 +1,28 @@
 # frozen_string_literal: true
 # This file is a Work in Progress
-
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Generic File viewing and downloading:', type: :feature do
-  let(:current_user) { create :user }
-  let!(:file_1) { create_file current_user, title: 'File 1' }
-  let!(:file_2) do
-    create_file(current_user, title: 'File 2',
-                              creator: '',
-                              contributor: '',
-                              tag: '',
-                              subject: '',
-                              language: '',
-                              based_near: '',
-                              publisher: '',
-                              rights: '',
-                              read_groups: [])
-  end
-
   context "generic user" do
+    let(:current_user) { FactoryGirl.find_or_create(:user) }
+    let!(:file_1)      { create_file current_user, title: 'File 1' }
+    let!(:file_2) do
+      create_file(current_user, title: 'File 2',
+                                creator: '',
+                                contributor: '',
+                                tag: '',
+                                subject: '',
+                                language: '',
+                                based_near: '',
+                                publisher: '',
+                                rights: '',
+                                read_groups: [])
+    end
+
     before do
-      sign_in_as current_user
+      sign_in_with_js(current_user)
       visit '/dashboard/files'
       expect(page).to have_css '.active a', text: "Files"
       db_item_title(file_1).click
@@ -102,40 +101,31 @@ describe 'Generic File viewing and downloading:', type: :feature do
       #  expect(page).to have_css('.modal-header')
       # end
     end
+  end
 
-    context "administrator user" do
-      let(:admin_user) { create :administrator }
-      let!(:public_file) { create_file admin_user, title: 'File 3' }
-      let!(:private_file) { create_file admin_user, title: 'File 4', read_groups: [] }
+  context "administrator user" do
+    let(:admin_user)    { FactoryGirl.find_or_create(:administrator) }
+    let!(:public_file)  { create_file admin_user, title: 'File 3' }
+    let!(:private_file) { create_file admin_user, title: 'File 4', read_groups: [] }
 
-      before do
-        sign_in_as admin_user
-        visit '/dashboard/files'
-      end
+    before do
+      sign_in_with_js(admin_user)
+      visit '/dashboard/files'
+    end
 
-      context 'When viewing a public file' do
-        before do
-          db_item_title(public_file).click
-        end
+    context 'When viewing a public file' do
+      before  { db_item_title(public_file).click }
+      specify { expect(page).to have_link "Feature" }
+    end
 
-        specify 'I can feature' do
-          expect(page).to have_link "Feature"
-        end
-      end
-
-      context 'When viewing a private file' do
-        before do
-          db_item_title(private_file).click
-        end
-
-        specify 'I can not feature' do
-          expect(page).not_to have_link "Feature"
-        end
-      end
+    context 'When viewing a private file' do
+      before  { db_item_title(private_file).click }
+      specify { expect(page).not_to have_link "Feature" }
     end
   end
 
   context 'When downloading a file' do
+    # TBD
   end
 
   def store_link(link_name, test_links)

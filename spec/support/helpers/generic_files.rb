@@ -9,7 +9,7 @@ module GenericFilesHelper
   def upload_generic_file(filename)
     visit Sufia::Engine.routes.url_helpers.new_generic_file_path
     check 'terms_of_service'
-    attach_file 'files[]', test_file_path(filename)
+    attach_file('files[]', test_file_path(filename), visible: false)
     redirect_url = find("#redirect-loc", visible: false).text(:all)
     click_button 'main_upload_start'
     wait_for_page redirect_url
