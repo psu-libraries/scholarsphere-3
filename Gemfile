@@ -10,7 +10,7 @@ gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700d
 gem 'hydra-derivatives', '1.1.0'
 gem 'hydra-head', '~> 9.5.0'
 gem 'hydra-ldap', '0.1.0'
-gem 'sufia', '~> 6.5.0'
+gem 'sufia', '~> 6.6.0'
 
 # sprockets-rails 3 is complaining about images not being precompiled. 
 gem 'sprockets-rails', '< 3.0.0'
