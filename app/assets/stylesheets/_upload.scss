@@ -1,4 +1,4 @@
-.tab-pane .alert.restrictions {
+.tab-pane .alert.restrictions, .tab-pane .alert.content-policy {
   margin-top: 0px;
   padding-top: 0px;
 }
@@ -7,12 +7,13 @@
   padding: 1.2em 1em;
 }
 
-.restrictions h3 {
+.restrictions h3, .content-policy h3 {
   font-size: 1.25em;
   margin-top: 1em;
 }
 
 .restrictions {
+  margin-bottom: 0;
   ul {
     padding-left: 0;
   }
@@ -21,5 +22,11 @@
   }
   p {
     padding-top: 1em;
+  }
+}
+
+.content-policy {
+  h3 {
+    margin-top: 0;
   }
 }
