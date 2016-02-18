@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
@@ -18,7 +18,7 @@ gem 'sprockets-rails', '< 3.0.0'
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
-gem 'devise', '~> 3.4'
+gem 'devise', '~> 3.5'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails', '~> 3.1'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
