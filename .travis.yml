@@ -11,8 +11,7 @@ env:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - JS=true
   matrix:
-    - TEST_SUITE=mainfeature
-    - TEST_SUITE=subfeature
+    - TEST_SUITE=feature
     - TEST_SUITE=unit
     - TEST_SUITE=rubocop
 before_install:

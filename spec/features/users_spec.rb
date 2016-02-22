@@ -1,16 +1,12 @@
 # frozen_string_literal: true
-require 'spec_helper'
-require_relative 'feature_spec_helper'
+require 'feature_spec_helper'
 
 describe "User Profile", type: :feature do
-  let(:admin_user) { create :administrator }
-
-  let(:user_name) { admin_user.login }
-
-  let!(:archivist) { create :archivist }
+  let(:admin_user) { FactoryGirl.find_or_create(:administrator) }
+  let!(:archivist) { FactoryGirl.find_or_create(:archivist) }
 
   before do
-    sign_in_as admin_user
+    sign_in_with_js(admin_user)
     visit "/"
   end
 

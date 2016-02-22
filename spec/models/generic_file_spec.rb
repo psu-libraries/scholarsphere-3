@@ -3,11 +3,22 @@ require 'spec_helper'
 
 describe GenericFile, type: :model do
   let(:file) do
-    described_class.new(id: 'somepid') { |file| file.apply_depositor_metadata('dmc') }
+    described_class.create.tap do |file|
+      file.apply_depositor_metadata('dmc')
+      file.save
+    end
   end
 
-  it 'exports as endnote' do
-    expect(file.export_as_endnote).to eq("%0 GenericFile\n%R http://scholarsphere.psu.edu/files/somepid\n%~ ScholarSphere\n%W Penn State University")
+  subject { file }
+
+  it "creates a noid on save" do
+    expect(subject.id.length).to eq 9
+  end
+
+  describe "#export_as_endnote" do
+    let(:export) { "%0 GenericFile\n%R http://scholarsphere.psu.edu/files/somepid\n%~ ScholarSphere\n%W Penn State University" }
+    subject { described_class.new(id: 'somepid') { |file| file.apply_depositor_metadata('dmc') } }
+    its(:export_as_endnote) { is_expected.to eq(export) }
   end
 
   describe "#create_thumbnail" do
@@ -19,11 +30,7 @@ describe GenericFile, type: :model do
         file.add_file(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), path: 'content')
         file.save
       end
-      subject { file }
-
-      it "keeps the thumbnail at its original size" do
-        expect(subject.content).not_to be_changed
-      end
+      its(:content) { is_expected.not_to be_changed }
     end
   end
 
@@ -32,20 +39,10 @@ describe GenericFile, type: :model do
       file.add_file(File.open(fixture_path + '/scholarsphere/scholarsphere_test4.pdf', 'rb'), path: 'content', original_name: 'sufia_test4.pdf')
       file.characterize
     end
-    subject { file }
 
     it "does NOT append metadata from the characterization" do
       expect(subject.title).not_to include "Microsoft Word - sample.pdf.docx"
       expect(subject.format_label).to eq ["Portable Document Format"]
-    end
-  end
-
-  describe "noid instead of id" do
-    let(:file) { described_class.new { |f| f.apply_depositor_metadata('dmc') } }
-
-    it "creates a noid on save" do
-      file.save
-      expect(file.id.length).to eq 9
     end
   end
 end

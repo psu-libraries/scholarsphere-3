@@ -61,12 +61,12 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '~> 2.0'
+  gem 'capybara'
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
   gem 'fuubar'
-  gem 'poltergeist', '< 1.8.0'
+  gem 'poltergeist', '~> 1.9'
   gem 'rspec-activemodel-mocks'
   gem 'vcr'
   gem 'webmock'

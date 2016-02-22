@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 describe 'Generic File Thumbnail Creation:', type: :feature do
-  let!(:current_user) { create :user }
-  let!(:file) { create_file current_user, title: 'little_file.txt' }
+  let!(:current_user)  { FactoryGirl.find_or_create(:user) }
+  let!(:file)          { create_file current_user, title: 'little_file.txt' }
   let(:thumbnail_path) { Sufia::Engine.routes.url_helpers.download_path(file, file: 'thumbnail') }
 
   before do
-    sign_in_as current_user
+    sign_in(current_user)
     allow_any_instance_of(SolrDocument).to receive(:mime_type).and_return(mime_type)
     go_to_dashboard_files
   end

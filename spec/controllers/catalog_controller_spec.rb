@@ -10,12 +10,7 @@ describe CatalogController, type: :controller do
     Solrizer.solr_name("contributor", :facetable)
   end
 
-  let(:user) { FactoryGirl.find_or_create(:user) }
-  before do
-    allow_any_instance_of(GenericFile).to receive(:characterize_if_changed).and_yield
-    sign_in user
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-
+  before(:all) do
     GenericFile.create(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['public']).tap do |f|
       f.apply_depositor_metadata('mjg36')
       f.save
@@ -45,6 +40,12 @@ describe CatalogController, type: :controller do
       f.save
     end
   end
+
+  before do
+    allow_any_instance_of(GenericFile).to receive(:characterize_if_changed).and_yield
+    allow_any_instance_of(User).to receive(:groups).and_return([])
+  end
+
   describe "#index" do
     describe "term search" do
       it "finds pdf files" do

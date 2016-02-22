@@ -5,7 +5,7 @@ require "rake"
 describe "share" do
   before { load_rake_environment ["#{Rails.root}/lib/tasks/share_notify.rake"] }
 
-  describe "files" do
+  describe "files", clean: true do
     let(:file) { double("File", id: "1234") }
     let(:job)  { double("job") }
     before { allow_any_instance_of(ResourceFilteredList).to receive(:filter).and_return([file]) }

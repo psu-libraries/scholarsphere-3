@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Collection viewing and searching:', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.create(:user) }
   let(:filenames) { %w(world.png little_file.txt) }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
@@ -14,7 +14,7 @@ describe 'Collection viewing and searching:', type: :feature do
     let(:collection) { Collection.first }
 
     before do
-      sign_in_as current_user
+      sign_in_with_js(current_user)
       filenames.each do |filename|
         create_file current_user, title: [filename], creator: "#{filename}_creator"
       end

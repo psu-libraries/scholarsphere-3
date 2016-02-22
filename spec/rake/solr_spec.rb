@@ -15,7 +15,7 @@ describe "scholarsphere:solr" do
     end
   end
 
-  context "with a sample file" do
+  context "with a sample file", clean: true do
     before do
       GenericFile.create.tap do |f|
         f.title = ["Rake test"]

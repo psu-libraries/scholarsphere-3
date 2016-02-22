@@ -4,7 +4,15 @@ FactoryGirl.define do
     "user#{n}"
   end
 
-  factory :user do |_u|
+  factory :ladp_user, class: User do
+    factory :ldap_jill do
+      login 'jilluser'
+      display_name 'Jill Z. User'
+      title 'LDAP User'
+    end
+  end
+
+  factory :user do
     login
     display_name 'Joe Example'
     title 'User'
@@ -22,12 +30,41 @@ FactoryGirl.define do
       ldap_last_update { Time.zone.now }
     end
 
-    factory :administrator, class: User do |_u|
+    factory :administrator do
       login 'administrator1'
       display_name 'Administrator 1'
       title 'Administrator'
       group_list 'umg/up.dlt.scholarsphere-admin-viewers'
       groups_last_update Time.now
+    end
+
+    factory :first_proxy do
+      display_name 'First Proxy'
+    end
+
+    factory :second_proxy do
+      display_name 'Second Proxy'
+    end
+
+    factory :archivist do
+      login 'archivist1'
+      title 'Archivist'
+    end
+
+    factory :curator do
+      login 'curator1'
+      title 'Curator'
+      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+      groups_last_update Time.now
+    end
+
+    factory :random_user do
+      display_name 'Random User'
+    end
+
+    factory :jill do
+      login 'jilluser'
+      display_name 'Jill Z. User'
     end
   end
 end

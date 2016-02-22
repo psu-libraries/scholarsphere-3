@@ -4,9 +4,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'rake'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'capybara/rspec'
-require 'capybara/rails'
-require 'support/cleanup'
 require 'equivalent-xml/rspec_matchers'
 require 'byebug' unless ENV['TRAVIS']
 
@@ -19,10 +16,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  # Make Capybara wait a bit longer so sluggish AJAX reqs can finish
-  # on Travis
-  Capybara.default_max_wait_time = 15
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -36,8 +29,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.include Devise::TestHelpers, type: :controller
-  config.include Warden::Test::Helpers, type: :feature
-  config.include UserLogin, type: :feature
+  config.include FactoryGirl::Syntax::Methods
 
   config.infer_spec_type_from_file_location!
 end

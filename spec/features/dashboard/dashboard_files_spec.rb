@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require_relative '../feature_spec_helper'
+require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Files', type: :feature do
-  let!(:current_user) { create :user }
+  let!(:current_user) { FactoryGirl.create :user }
 
   let!(:file) { create_file current_user, title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" }
 
-  let(:jill) { create :jill }
+  let(:jill) { FactoryGirl.create :jill }
   let!(:other_collection) do
     Collection.create(title: 'jill collection') do |col|
       col.apply_depositor_metadata(jill.user_key)
@@ -16,7 +16,7 @@ describe 'Dashboard Files', type: :feature do
   end
 
   before do
-    sign_in_as current_user
+    sign_in_with_js(current_user)
     go_to_dashboard_files
   end
 

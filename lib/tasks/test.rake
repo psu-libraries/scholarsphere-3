@@ -9,22 +9,13 @@ namespace :scholarsphere do
       t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
     end
 
-    desc "Run feature tests in the main directory"
-    RSpec::Core::RakeTask.new(:mainfeature) do |t|
+    desc "Run all feature tests"
+    RSpec::Core::RakeTask.new(:feature) do |t|
       t.pattern = FileList['spec{,/features/**}/*_spec.rb']
-                    .exclude("spec/features/collection/*_spec.rb")
-                    .exclude("spec/features/dashboard/*_spec.rb")
-                    .exclude("spec/features/generic_file/*_spec.rb")
-      t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
-    end
-
-    desc "Run feature tests in subdirectories of the main directory"
-    RSpec::Core::RakeTask.new(:subfeature) do |t|
-      t.pattern = FileList['spec/features/*/*_spec.rb']
       t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
     end
       
-    desc "Run unit tests (i.e. everything except features)"
+    desc "Run all tests except features"
     RSpec::Core::RakeTask.new(:unit) do |t| 
       t.pattern = FileList['spec/**/*_spec.rb'].exclude("spec/features/**/*_spec.rb")
       t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
@@ -49,17 +40,10 @@ namespace :scholarsphere do
   
     namespace :travis do
 
-      desc "Run main feature tests on Travis"
-      task mainfeature: :environment do
+      desc "Run feature tests on Travis"
+      task feature: :environment do
         Rake::Task["scholarsphere:prep"].invoke
-        error = jetty_test('scholarsphere:mainfeature')
-        raise "test failures: #{error}" if error
-      end
-
-      desc "Run sub feature tests on Travis"
-      task subfeature: :environment do
-        Rake::Task["scholarsphere:prep"].invoke
-        error = jetty_test('scholarsphere:subfeature')
+        error = jetty_test('scholarsphere:feature')
         raise "test failures: #{error}" if error
       end
 
