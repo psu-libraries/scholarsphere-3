@@ -25,8 +25,8 @@ every :day, at: "3:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/update_user_stats.bash"
 end
 
-every :day, at: "6:00 am", roles: [:job] do
-  command "#{path}/config/cronjobs/send_daily_stats.bash"
+every :monday, at: "6:00 am", roles: [:job] do
+  command "#{path}/config/cronjobs/send_weekly_stats.bash"
 end
 
 every 60.minutes, roles: [:app] do
