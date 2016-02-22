@@ -24,7 +24,7 @@ describe 'Contact form:', type: :feature do
   }
   let(:admin_message) {
     sent_messages.detect do |message|
-      message.from == ['scholarsphere-service-support@dlt.psu.edu']
+      message.from == ['scholarsphere@servicedesk.css.psu.edu']
     end
   }
 
