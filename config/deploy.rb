@@ -54,6 +54,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/blacklight.yml',
   'config/ga-privatekey.p12',
   'config/browse_everything_providers.yml',
+  'config/arkivo.yml',
   'config/zotero.yml',
   'public/sitemap.xml',
   'public/robots.txt',
