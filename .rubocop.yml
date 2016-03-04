@@ -31,14 +31,12 @@ Metrics/CyclomaticComplexity:
   Exclude:
     - 'spec/support/helpers/generic_files.rb'
     - 'spec/features/static_pages_spec.rb'
-    - 'app/models/user.rb'
     - 'app/models/generic_file.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
     - 'spec/support/helpers/generic_files.rb'
     - 'spec/features/static_pages_spec.rb'
-    - 'app/models/user.rb'
     - 'app/models/generic_file.rb'
 
 Style/BlockDelimiters:

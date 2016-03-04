@@ -22,12 +22,13 @@ FactoryGirl.define do
     # is where we stub that information out to force it to be true.
     ldap_available true
     ldap_last_update { Time.zone.now }
+    groups_last_update { Time.zone.now }
+    group_list 'umg/up.dlt.scholarsphere-users'
 
     # This user should be able to log in and modify metadata, but not
     # upload files.
     factory :non_psu_user do
       ldap_available false
-      ldap_last_update { Time.zone.now }
     end
 
     factory :administrator do
@@ -35,7 +36,6 @@ FactoryGirl.define do
       display_name 'Administrator 1'
       title 'Administrator'
       group_list 'umg/up.dlt.scholarsphere-admin-viewers'
-      groups_last_update Time.now
     end
 
     factory :first_proxy do
@@ -55,7 +55,6 @@ FactoryGirl.define do
       login 'curator1'
       title 'Curator'
       group_list 'umg/up.dlt.scholarsphere-admin-viewers'
-      groups_last_update Time.now
     end
 
     factory :random_user do
