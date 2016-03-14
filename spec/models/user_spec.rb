@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'spec_helper'
+require "cancan/matchers"
 
 describe User, type: :model do
   let(:user) { FactoryGirl.find_or_create(:ldap_jill) }
@@ -81,34 +82,6 @@ describe User, type: :model do
     end
   end
 
-  describe "#query_ldap_by_name" do
-    context "when known user" do
-      let(:first_name) { "Carolyn Ann" }
-      let(:last_name) { "Cole" }
-      let(:first_name_parts) { ["Carolyn", "Ann"] }
-      let(:filter) { Net::LDAP::Filter.construct("(& (& (givenname=#{first_name_parts[0]}*) (givenname=*#{first_name_parts[1]}*) (sn=#{last_name})) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))))") }
-      let(:attrs) {  ['uid', 'givenname', 'sn', 'mail', "eduPersonPrimaryAffiliation"] }
-
-      let(:results) do
-        [
-          Net::LDAP::Entry.new("uid=cam156,dc=psu,dc=edu").tap do |e|
-            e[:uid] = ["cam156"]
-            e[:givenname] = ["CAROLYN A"]
-            e[:sn] = "COLE"
-            e[:mail] = ["cam156@psu.edu"]
-          end
-        ]
-      end
-      before do
-        expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
-        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
-      end
-      it "returns an array of people" do
-        expect(described_class.query_ldap_by_name(first_name, last_name)).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: [] }])
-      end
-    end
-  end
-
   describe "#from_url_component" do
     let(:entry) do
       Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
@@ -144,6 +117,93 @@ describe User, type: :model do
         expect(described_class.count).to eq 0
         is_expected.to_not be_a_kind_of(described_class)
         expect(described_class.count).to eq 0
+      end
+    end
+  end
+
+  describe "administrator?" do
+    subject { user.administrator? }
+
+    context "normal user" do
+      let(:user) { create :user }
+      it { is_expected.to be_falsey }
+    end
+    context "administrative user" do
+      let(:user) { create :administrator }
+      it { is_expected.to be_truthy }
+    end
+  end
+
+  describe "file abilities" do
+    let(:private_file) do
+      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
+        gf.apply_depositor_metadata("other")
+      end
+    end
+
+    let(:my_file) do
+      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
+        gf.apply_depositor_metadata(user.login)
+      end
+    end
+
+    let(:shared_file) do
+      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
+        gf.apply_depositor_metadata("other")
+        gf.edit_users = ["other", user.login]
+      end
+    end
+    describe "abilities" do
+      subject { Ability.new(user) }
+      context "normal user" do
+        let(:user) { create :user }
+
+        it { should be_able_to(:edit, my_file) }
+        it { should be_able_to(:edit, shared_file) }
+        it { should_not be_able_to(:edit, private_file) }
+      end
+
+      context "administrative user" do
+        let(:user) { create :administrator }
+
+        it { should be_able_to(:edit, my_file) }
+        it { should be_able_to(:edit, shared_file) }
+        it { should be_able_to(:edit, private_file) }
+      end
+    end
+
+    describe "administrating?" do
+      subject { user.administrating?(file) }
+
+      context "normal user" do
+        let(:user) { create :user }
+        context "user's file" do
+          let(:file) { my_file }
+          it { is_expected.to be_falsey }
+        end
+        context "private file" do
+          let(:file) { private_file }
+          it { is_expected.to be_falsey }
+        end
+        context "shared file" do
+          let(:file) { shared_file }
+          it { is_expected.to be_falsey }
+        end
+      end
+      context "administrative user" do
+        let(:user) { create :administrator }
+        context "user's file" do
+          let(:file) { my_file }
+          it { is_expected.to be_falsey }
+        end
+        context "private file" do
+          let(:file) { private_file }
+          it { is_expected.to be_truthy }
+        end
+        context "shared file" do
+          let(:file) { shared_file }
+          it { is_expected.to be_falsey }
+        end
       end
     end
   end

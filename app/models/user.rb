@@ -58,26 +58,6 @@ class User < ActiveRecord::Base
       users.map { |u| { id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})" } }
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    def query_ldap_by_name(given_name, surname)
-      first_names = []
-      first_names = given_name.split(/[\s.]+/) unless given_name.blank?
-      users = []
-      users = get_users("(givenname=#{first_names[0]}*) (givenname=*#{first_names[1]}*) (sn=#{surname})") if first_names.count >= 2
-      users = get_users("(givenname=#{first_names[0]}) (sn=#{surname})") if users.count == 0 && first_names.count > 0
-      users = get_users("(givenname=#{first_names[0]}*) (sn=#{surname})") if users.count == 0 && first_names.count > 0
-      users = get_users("(givenname=*#{first_names[0]}*) (sn=#{surname})") if users.count == 0 && first_names.count > 0
-      # users = get_users("(displayname=*#{first_names[0]}*) (displayname=*#{surname}*)") if users.count == 0
-      users.map { |u| { id: u[:uid].first, given_name: u[:givenname].first, surname: u[:sn].first, email: u[:mail].first, affiliation: u[:eduPersonPrimaryAffiliation] } }
-    end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-    def get_users(name_filter)
-      person_filter = LdapUser.filter_for(:student, :faculty, :staff, :employee, :retiree, :emeritus, :member)
-      filter = Net::LDAP::Filter.construct("(& (& #{name_filter}) #{person_filter})")
-      LdapUser.get_user(filter, ['uid', 'givenname', 'sn', 'mail', 'eduPersonPrimaryAffiliation'])
-    end
-
     def directory_attributes(login, attrs = [])
       LdapUser.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
     end
@@ -108,6 +88,14 @@ class User < ActiveRecord::Base
     return display_name.titleize || login
   rescue
     login
+  end
+
+  def administrator?
+    groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+  end
+
+  def administrating?(file)
+    administrator? && BaseAbility.new(self).cannot?(:edit, file)
   end
 
   # Redefine this for more intuitive keys in Redis

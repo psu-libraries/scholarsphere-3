@@ -44,4 +44,44 @@ describe GenericFilesController, type: :controller do
       delete :destroy, id: file
     end
   end
+
+  context "when file is private" do
+    let(:gf) { create(:private_file) }
+
+    before do
+      sign_in user
+    end
+    context "when user is not administrator" do
+      let(:user) { FactoryGirl.create(:user) }
+
+      it "does not allow any user to edit" do
+        get :edit, id: gf.id
+        expect(response.status).to eq(302)
+        expect(flash[:alert]).to eq("You do not have sufficient privileges to edit this document")
+      end
+
+      it "does not allow any user to update" do
+        post :update, id: gf.id, generic_file: { title: ['new_title'] }
+        expect(response.status).to eq(302)
+        expect(flash[:alert]).to eq("You are not authorized to access this page.")
+      end
+    end
+
+    context "when user is an administrator" do
+      let(:user) { FactoryGirl.create(:administrator) }
+      let(:update_message) { double('content update message') }
+      before do
+        allow(ContentUpdateEventJob).to receive(:new).with(gf.id, user.user_key).and_return(update_message)
+      end
+
+      it "allows edits" do
+        get :edit, id: gf.id
+        expect(response.status).to eq(200)
+      end
+      it "allows updates" do
+        expect(Sufia.queue).to receive(:push).with(update_message)
+        post :update, id: gf.id, generic_file: { title: ['new_title'] }
+      end
+    end
+  end
 end
