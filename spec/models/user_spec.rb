@@ -2,8 +2,7 @@
 require 'spec_helper'
 
 describe User, type: :model do
-  let(:user)        { FactoryGirl.find_or_create(:ldap_jill) }
-  let(:empty_user)  { described_class.new }
+  let(:user) { FactoryGirl.find_or_create(:ldap_jill) }
 
   it "has a login" do
     expect(user.login).to eq("jilluser")
@@ -11,73 +10,39 @@ describe User, type: :model do
   it "redefines to_param to make redis keys more recognizable" do
     expect(user.to_param).to eq(user.login)
   end
-  describe "#groups" do
-    describe "valid user" do
-      before do
-        filter = Net::LDAP::Filter.eq('uid', user.login)
-        expect(Hydra::LDAP).to receive(:groups_for_user).with(filter).and_return(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
-        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
-      end
-      it "returns a list" do
-        expect(user.groups).to eq(["umg/up.dlt.gamma-ci", "umg/up.dlt.redmine"])
-      end
-    end
-    describe "empty user" do
-      before do
-        expect(Hydra::LDAP).to receive(:groups_for_user).never
-        expect(Hydra::LDAP.connection).to receive(:get_operation_result).never
-      end
-      it "returns a list" do
-        expect(empty_user.groups).to eq([])
-      end
-    end
-  end
   describe "#ldap_exist?" do
-    describe "valid user" do
-      before do
-        filter = Net::LDAP::Filter.eq('uid', user.login)
-        expect(Hydra::LDAP).to receive(:does_user_exist?).with(filter).and_return(true)
-        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
-      end
-      it "returns a list" do
-        expect(user.ldap_exist?).to eq(true)
-      end
+    subject { user.ldap_exist? }
+    context "when the user exists" do
+      before { allow(LdapUser).to receive(:check_ldap_exist!).and_return(true) }
+      it { is_expected.to be true }
     end
-    describe "empty user" do
-      before do
-        expect(Hydra::LDAP).to receive(:does_user_exist?).never
-        expect(Hydra::LDAP.connection).to receive(:get_operation_result).never
-      end
-      it "returns a list" do
-        expect(empty_user.ldap_exist?).to eq(false)
-      end
+    context "when the user does not exist" do
+      before { allow(LdapUser).to receive(:check_ldap_exist!).and_return(false) }
+      it { is_expected.to be false }
     end
-    describe "LDAP miss behaves" do
+    context "when LDAP misbehaves" do
       before do
         Sufia.config.retry_unless_sleep = 0.01
         filter = Net::LDAP::Filter.eq('uid', user.login)
         allow(Hydra::LDAP).to receive(:does_user_exist?).twice.with(filter).and_return(true)
-        # get unwilling the first run through
-        expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 53, message: "Unwilling"))
-        # get success the second run through which is two calls and one more in the main code
-        expect(Hydra::LDAP.connection).to receive(:get_operation_result).twice.and_return(OpenStruct.new(code: 0, message: "sucess"))
       end
-      #
-      it "returns true after failing and sleeping once" do
-        expect(described_class).to receive(:sleep).with(0.01)
+
+      it "returns true after LDAP returns 'unwilling' first, then sleeps and returns true on the second call" do
+        expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 53, message: "Unwilling"))
+        expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 0, message: "sucess"))
+        expect(LdapUser).to receive(:sleep).with(0.01)
         expect(user.ldap_exist?).to eq(true)
       end
-      #
     end
   end
 
   describe "#directory_attributes" do
-    before do
-      entry = Net::LDAP::Entry.new
-      entry['dn'] = ["uid=mjg36,dc=psu,edu"]
-      entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
-      expect(Hydra::LDAP).to receive(:get_user).and_return([entry])
+    let(:entry) do
+      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
+        entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
+      end
     end
+    before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
     it "returns user attributes from LDAP" do
       expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
     end
@@ -138,24 +103,27 @@ describe User, type: :model do
         expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
         allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
       end
-      it "returns a list or people" do
+      it "returns an array of people" do
         expect(described_class.query_ldap_by_name(first_name, last_name)).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: [] }])
       end
     end
   end
 
   describe "#from_url_component" do
+    let(:entry) do
+      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
+        entry[:cn] = ["MICHAEL JOSEPH GIARLO"]
+        entry[:displayname] = ["John Smith"]
+        entry[:psofficelocation] = ["Beaver Stadium$Seat 100"]
+      end
+    end
     subject { described_class.from_url_component("cam") }
 
     context "when user exists" do
       before do
-        entry = Net::LDAP::Entry.new
-        entry['dn'] = ["uid=mjg36,dc=psu,edu"]
-        entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
-        entry['displayname'] = ["John Smith"]
-        entry['psofficelocation'] = ["Beaver Stadium$Seat 100"]
+        allow(LdapUser).to receive(:check_ldap_exist!).and_return(true)
+        allow(LdapUser).to receive(:group_response_from_ldap).and_return([])
         allow(Hydra::LDAP).to receive(:get_user).and_return([entry])
-        allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(true)
       end
 
       it "creates a user" do
@@ -170,9 +138,7 @@ describe User, type: :model do
     end
 
     context "user does not exists" do
-      before do
-        allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(false)
-      end
+      before { allow(Hydra::LDAP).to receive(:does_user_exist?).and_return(false) }
 
       it "does not create a user" do
         expect(described_class.count).to eq 0
