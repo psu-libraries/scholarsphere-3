@@ -135,5 +135,8 @@ module ScholarSphere
 
     # allow errors to be raised in callbacks
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Needed for ScholarsphereLockManager, remove this when we've upgraded to Redis 2.6+
+    config.statefile = '/tmp/lockmanager-state'
   end
 end
