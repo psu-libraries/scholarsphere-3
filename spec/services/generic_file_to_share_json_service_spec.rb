@@ -58,5 +58,15 @@ describe GenericFileToShareJSONService do
         is_expected.to eq(json)
       end
     end
+
+    context "when deleting the file" do
+      let(:creator) { 'Guy, Bad' }
+      let(:creator_email) { 'badguy@trouble.com' }
+      before { allow(name_service).to receive(:disambiguate).and_return([{ email: creator_email }]) }
+      subject { JSON.parse(described_class.new(file, delete: true).json) }
+      it "adds a delete property" do
+        expect(subject["jsonData"]["otherProperties"]).to eq([{ "name" => "status", "properties" => { "status" => ["deleted"] } }])
+      end
+    end
   end
 end
