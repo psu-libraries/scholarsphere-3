@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Export
   class VersionsFromGraph
     attr_accessor :versions

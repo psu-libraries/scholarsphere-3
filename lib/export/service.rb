@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./lib/export/generic_file_export.rb"
 
 module Export

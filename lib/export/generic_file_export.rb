@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./lib/export/permissions.rb"
 require "./lib/export/versions_from_graph.rb"
 
