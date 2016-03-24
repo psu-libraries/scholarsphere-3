@@ -16,6 +16,7 @@ module Export
     # Each JSON file is named gw_###.json (where ### is the Generic File's ID)
     def self.export(ids, path)
       ids.each do |id|
+        yield id if block_given?
         file_name = File.join(path, "gf_#{id}.json")
         export_one_to_file(id, file_name)
       end
