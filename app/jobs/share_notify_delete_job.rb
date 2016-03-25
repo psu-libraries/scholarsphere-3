@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 class ShareNotifyDeleteJob < ShareNotifyJob
   def run
-    return unless object.share_notified?
     Sufia.queue.push(notification_job)
+  end
+
+  # Allows us to cache the document before sending it to SHARE in case the
+  # actual file is to be deleted.
+  def document
+    @document ||= GenericFileToShareJSONService.new(object, delete: true).json
   end
 
   private
 
     def response
-      @response ||= ShareNotify::SearchResponse.new(
-        share.post(GenericFileToShareJSONService.new(object, delete: true).json)
-      )
+      @response ||= ShareNotify::SearchResponse.new(share.post(document))
     end
 
     def notification_job
