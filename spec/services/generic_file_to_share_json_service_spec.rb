@@ -8,7 +8,7 @@ describe GenericFileToShareJSONService do
     allow(NameDisambiguationService).to receive(:new).with(creator).and_return(name_service)
   end
   context "when checking the fixture file" do
-    let(:file) { GenericFile.new(id: "x346f017s", title: ["Set9 ShamR 1.tif"], creator: ["Santy, Lorraine C"], date_modified: DateTime.parse("2015-07-30T20:15:08.528+00:00")) }
+    let(:file) { build(:file, id: "x346f017s", title: ["Set9 ShamR 1.tif"], creator: ["Santy, Lorraine C"], date_modified: DateTime.parse("2015-07-30T20:15:08.528+00:00")) }
     let(:json) { JSON.parse(File.open(fixture_path + '/ss-share.json', 'rb').read) }
     let(:creator) { 'Santy, Lorraine C' }
     it "generates valid json" do
@@ -35,7 +35,7 @@ describe GenericFileToShareJSONService do
       }"
     end
     let(:json)    { JSON.parse(json_template) }
-    let(:file)    { GenericFile.new(id: id, title: [title], creator: [creator], date_modified: DateTime.parse(date_uploaded)) }
+    let(:file)    { build(:file, id: id, title: [title], creator: [creator], date_modified: DateTime.parse(date_uploaded)) }
     let(:title)   { "abc123" }
     let(:id) { 'zzzzz' }
     let(:date_uploaded) { "2015-07-30T20:15:08Z" }

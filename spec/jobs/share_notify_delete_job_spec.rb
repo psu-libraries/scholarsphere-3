@@ -4,18 +4,8 @@ require 'support/vcr'
 
 describe ShareNotifyDeleteJob do
   let(:user) { FactoryGirl.find_or_create(:jill) }
-  let(:file) do
-    GenericFile.create.tap do |f|
-      f.title = ["The Difficulties of Being Green"]
-      f.resource_type = ["Dissertation"]
-      f.creator = ["Frog, Kermit T."]
-      f.visibility = "open"
-      f.date_modified = DateTime.now
-      f.apply_depositor_metadata(user)
-      f.save
-    end
-  end
-  let(:job) { described_class.new(file.id) }
+  let(:file) { create(:file) }
+  let(:job)  { described_class.new(file.id) }
 
   context "when the file has been sent to SHARE" do
     before do

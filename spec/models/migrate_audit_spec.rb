@@ -21,8 +21,8 @@ describe MigrateAudit, type: :model do
   end
 
   before(:all) do
-    GenericFile.create(id: "111xyzfile") { |file| file.apply_depositor_metadata('dmc') }
-    GenericFile.create(id: "333xyzfile") { |file| file.apply_depositor_metadata('dmc') }
+    create(:file, id: "111xyzfile")
+    create(:file, id: "333xyzfile")
   end
 
   context "with a file migrated correctly" do

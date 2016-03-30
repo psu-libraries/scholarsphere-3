@@ -19,12 +19,7 @@ describe CollectionsController, type: :controller do
   end
 
   context "when requesting an existing collection" do
-    let(:collection) do
-      Collection.create(title: "My collection",
-                        description: "My incredibly detailed description of the collection") do |c|
-        c.apply_depositor_metadata("cam156")
-      end
-    end
+    let(:collection) { create(:collection) }
     let(:resp) { [{ Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL) => "20" }, { Solrizer.solr_name(:file_size, GenericFileIndexingService::STORED_SYMBOL) => "20" }] }
     before do
       allow(ActiveFedora::SolrService).to receive(:query).and_return(resp)

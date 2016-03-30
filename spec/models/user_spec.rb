@@ -38,11 +38,7 @@ describe User, type: :model do
   end
 
   describe "#directory_attributes" do
-    let(:entry) do
-      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
-        entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
-      end
-    end
+    let(:entry) { build(:ldap_entry, uid: "mjg36", cn: "MICHAEL JOSEPH GIARLO") }
     before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
     it "returns user attributes from LDAP" do
       expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
@@ -54,18 +50,9 @@ describe User, type: :model do
     let(:filter) { Net::LDAP::Filter.construct("(& (| (uid=#{name_part}* ) (givenname=#{name_part}*) (sn=#{name_part}*)) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))") }
     let(:results) do
       [
-        Net::LDAP::Entry.new("uid=cac6094,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["cac6094"]
-          e[:displayname] = ["CAMILO CAPURRO"]
-        end,
-        Net::LDAP::Entry.new("uid=csl5210,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["csl5210"]
-          e[:displayname] = ["CAMERON SIERRA LANGSJOEN"]
-        end,
-        Net::LDAP::Entry.new("uid=cnt5046,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["cnt5046"]
-          e[:displayname] = ["CAMILLE NAKIA TINDAL"]
-        end
+        build(:ldap_entry, uid: "cac6094", displayname: "CAMILO CAPURRO"),
+        build(:ldap_entry, uid: "csl5210", displayname: "CAMERON SIERRA LANGSJOEN"),
+        build(:ldap_entry, uid: "cnt5046", displayname: "CAMILLE NAKIA TINDAL")
       ]
     end
     let(:attrs) { ["uid", "displayname"] }
@@ -82,13 +69,30 @@ describe User, type: :model do
     end
   end
 
+  describe "#query_ldap_by_name" do
+    context "when known user" do
+      let(:first_name) { "Carolyn Ann" }
+      let(:last_name) { "Cole" }
+      let(:first_name_parts) { ["Carolyn", "Ann"] }
+      let(:filter) { Net::LDAP::Filter.construct("(& (& (givenname=#{first_name_parts[0]}*) (givenname=*#{first_name_parts[1]}*) (sn=#{last_name})) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))))") }
+      let(:attrs) {  ['uid', 'givenname', 'sn', 'mail', "eduPersonPrimaryAffiliation"] }
+
+      let(:results) do
+        [build(:ldap_entry, uid: "cam156", givenname: "CAROLYN A", sn: "COLE", mail: "cam156@psu.edu")]
+      end
+      before do
+        expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
+        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
+      end
+      it "returns an array of people" do
+        expect(described_class.query_ldap_by_name(first_name, last_name)).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: [] }])
+      end
+    end
+  end
+
   describe "#from_url_component" do
     let(:entry) do
-      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
-        entry[:cn] = ["MICHAEL JOSEPH GIARLO"]
-        entry[:displayname] = ["John Smith"]
-        entry[:psofficelocation] = ["Beaver Stadium$Seat 100"]
-      end
+      build(:ldap_entry, uid: 'mjg36', cn: "MICHAEL JOSEPH GIARLO", displayname: "John Smith", psofficelocation: "Beaver Stadium$Seat 100")
     end
     subject { described_class.from_url_component("cam") }
 

@@ -2,7 +2,9 @@
 require 'spec_helper'
 
 describe PublicFilteredList, type: :model do
-  let(:file_list) { [GenericFile.new(title: ["private"]), GenericFile.new(title: ['public']) { |f| f.visibility = 'open' }] }
+  let(:file_list) do
+    [create(:private_file, title: ["private"]), create(:public_file, title: ["public"])]
+  end
 
   subject { described_class.new(file_list).filter }
 

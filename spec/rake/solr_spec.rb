@@ -16,17 +16,9 @@ describe "scholarsphere:solr" do
   end
 
   context "with a sample file", clean: true do
-    before do
-      GenericFile.create.tap do |f|
-        f.title = ["Rake test"]
-        f.apply_depositor_metadata "user"
-        f.save
-      end
-    end
-
+    let!(:file) { create(:file) }
     describe "index" do
-      let(:id) { GenericFile.all.first.id }
-      subject { capture_stdout { Rake::Task["scholarsphere:solr:index"].invoke(id) } }
+      subject { capture_stdout { Rake::Task["scholarsphere:solr:index"].invoke(file.id) } }
       it { is_expected.to be_empty }
     end
 

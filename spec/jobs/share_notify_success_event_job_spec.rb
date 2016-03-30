@@ -3,14 +3,7 @@ require 'spec_helper'
 
 describe ShareNotifySuccessEventJob do
   let(:user) { FactoryGirl.find_or_create(:jill) }
-
-  let(:file) do
-    GenericFile.new.tap do |f|
-      f.apply_depositor_metadata(user)
-      f.title = ["Shared file"]
-      f.save
-    end
-  end
+  let(:file) { create(:file) }
 
   before do
     allow_any_instance_of(described_class).to receive(:depositor).and_return(user)

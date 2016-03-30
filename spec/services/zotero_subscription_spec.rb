@@ -2,9 +2,12 @@
 require 'spec_helper'
 
 describe ZoteroSubscription do
-  let!(:users) { [User.create(login: 'zzz'), User.create(login: 'abc111', zotero_userid: 'abc', arkivo_token: '123abc'), User.create(login: 'def333', zotero_userid: 'def', arkivo_token: 'def333', arkivo_subscription: 'subscribed')] }
+  before(:all) do 
+    create(:user, login: 'zzz')
+    create(:user, login: 'abc111', zotero_userid: 'abc', arkivo_token: '123abc')
+    create(:user, login: 'def333', zotero_userid: 'def', arkivo_token: 'def333', arkivo_subscription: 'subscribed')
+  end  
   let(:job) { double }
-  # let(:chain) { double }
   describe "#call" do
     it "Creates a subscription job for users with no subscription" do
       expect(Sufia::Arkivo::CreateSubscriptionJob).to receive(:new).with('abc111').and_return(job)
