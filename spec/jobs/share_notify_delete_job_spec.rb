@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'support/vcr'
 
 describe ShareNotifyDeleteJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:jill) }
   let(:file) { create(:file) }
   let(:job)  { described_class.new(file.id) }
 

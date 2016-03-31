@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe ShareNotifyDeleteEventJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:jill) }
   let(:file) { create(:file) }
 
   before do

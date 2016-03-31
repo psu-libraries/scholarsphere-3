@@ -6,9 +6,9 @@
 require 'feature_spec_helper'
 
 describe 'Batch management of generic files', type: :feature do
-  let(:current_user) { FactoryGirl.find_or_create(:user) }
-  let!(:file_1)       { create_file current_user, title: 'world.png' }
-  let!(:file_2)       { create_file current_user, title: 'little_file.txt' }
+  let(:current_user) { create(:user) }
+  let!(:file1)       { create(:public_file, :with_complete_metadata, depositor: current_user.login) }
+  let!(:file2)       { create(:public_file, :with_complete_metadata, depositor: current_user.login) }
 
   before do
     sign_in_with_js(current_user)
@@ -21,30 +21,30 @@ describe 'Batch management of generic files', type: :feature do
       click_on 'batch-edit'
       assert page.has_content? 'Batch Edit Descriptions'
       fields.each { |f| fill_in_field(f) }
-      file_1.reload
-      file_2.reload
+      file1.reload
+      file2.reload
     end
     it 'edits each field and displays the changes', js: true do
-      expect(file_1.contributor).to eq ['NEW contributor']
-      expect(file_1.description).to eq ['NEW description']
-      expect(file_1.tag).to eq ['NEW tag']
-      expect(file_1.publisher).to eq ['NEW publisher']
-      expect(file_1.date_created).to eq ['NEW date_created']
-      expect(file_1.subject).to eq ['NEW subject']
-      expect(file_1.language).to eq ['NEW language']
-      expect(file_1.identifier).to eq ['NEW identifier']
-      expect(file_1.based_near).to eq ['NEW based_near']
-      expect(file_1.related_url).to eq ['NEW related_url']
-      expect(file_2.contributor).to eq ['NEW contributor']
-      expect(file_2.description).to eq ['NEW description']
-      expect(file_2.tag).to eq ['NEW tag']
-      expect(file_2.publisher).to eq ['NEW publisher']
-      expect(file_2.date_created).to eq ['NEW date_created']
-      expect(file_2.subject).to eq ['NEW subject']
-      expect(file_2.language).to eq ['NEW language']
-      expect(file_2.identifier).to eq ['NEW identifier']
-      expect(file_2.based_near).to eq ['NEW based_near']
-      expect(file_2.related_url).to eq ['NEW related_url']
+      expect(file1.contributor).to eq ['NEW contributor']
+      expect(file1.description).to eq ['NEW description']
+      expect(file1.tag).to eq ['NEW tag']
+      expect(file1.publisher).to eq ['NEW publisher']
+      expect(file1.date_created).to eq ['NEW date_created']
+      expect(file1.subject).to eq ['NEW subject']
+      expect(file1.language).to eq ['NEW language']
+      expect(file1.identifier).to eq ['NEW identifier']
+      expect(file1.based_near).to eq ['NEW based_near']
+      expect(file1.related_url).to eq ['NEW related_url']
+      expect(file2.contributor).to eq ['NEW contributor']
+      expect(file2.description).to eq ['NEW description']
+      expect(file2.tag).to eq ['NEW tag']
+      expect(file2.publisher).to eq ['NEW publisher']
+      expect(file2.date_created).to eq ['NEW date_created']
+      expect(file2.subject).to eq ['NEW subject']
+      expect(file2.language).to eq ['NEW language']
+      expect(file2.identifier).to eq ['NEW identifier']
+      expect(file2.based_near).to eq ['NEW based_near']
+      expect(file2.related_url).to eq ['NEW related_url']
 
       # Reload the form and verify
       visit '/dashboard/files'

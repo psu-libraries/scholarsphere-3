@@ -39,7 +39,7 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
   end
 
   describe "authenticate!" do
-    let(:user) { FactoryGirl.find_or_create(:archivist) }
+    let(:user) { create(:archivist) }
     let(:request) { double(headers: { "HTTP_REMOTE_USER" => user.login }) }
     context "with a new user" do
       before { allow(User).to receive(:find_by_login).with(user.login).and_return(nil) }

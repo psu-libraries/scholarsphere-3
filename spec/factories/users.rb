@@ -13,6 +13,11 @@ FactoryGirl.define do
   end
 
   factory :user do
+    ignore do
+      event nil
+      proxy_for nil
+    end
+
     login
     display_name 'Joe Example'
     title 'User'
@@ -64,6 +69,18 @@ FactoryGirl.define do
     factory :jill do
       login 'jilluser'
       display_name 'Jill Z. User'
+    end
+
+    trait :with_event do
+      after(:create) do |u, attrs|
+        u.log_profile_event(u.create_event(attrs.event, Time.now.to_i))
+      end
+    end
+
+    trait :with_proxy do
+      after(:create) do |u, attrs|
+        u.can_make_deposits_for << attrs.proxy_for
+      end
     end
   end
 end

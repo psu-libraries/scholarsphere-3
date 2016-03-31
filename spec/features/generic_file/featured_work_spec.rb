@@ -2,19 +2,16 @@
 require 'feature_spec_helper'
 
 describe "Showing the Generic File", type: :feature do
-  let(:current_user) { FactoryGirl.find_or_create(:administrator) }
-  let!(:gf)          { create_file current_user, title: 'file title' }
+  let(:current_user) { create(:administrator) }
+  let!(:gf)          { create(:public_file, depositor: current_user.login) }
 
-  before do
+  it "allows a feature to be marked and deleted" do
     sign_in_with_js(current_user)
     visit "/"
     click_link "Recent Additions"
     expect(page).to have_content(gf.title.first)
     click_link gf.title.first
     expect(page).to have_content("Descriptions")
-  end
-
-  it "allows a feature to be marked and deleted" do
     expect(page).to have_link "Feature"
     click_link "Feature"
     expect(page).to have_content("Unfeature")

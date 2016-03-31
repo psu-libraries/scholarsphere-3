@@ -2,7 +2,7 @@
 require 'feature_spec_helper'
 
 describe "User Statistics", type: :feature do
-  let!(:user) { FactoryGirl.find_or_create(:administrator) }
+  let!(:user) { create(:administrator) }
 
   before do
     sign_in(user)
@@ -11,9 +11,7 @@ describe "User Statistics", type: :feature do
   context "deposited files" do
     before do
       # More than 10 times, because the pagination threshold is 10
-      12.times do |_t|
-        create_file user
-      end
+      12.times { create(:public_file, depositor: user.login) }
       UserStat.create!(user_id: user.id, date: Date.today, file_views: 11, file_downloads: 6)
       visit "/dashboard"
       expect(page).to have_content "Your Statistics"

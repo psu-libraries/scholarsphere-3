@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe My::FilesController, type: :controller do
   routes { Sufia::Engine.routes }
-  let(:user) { FactoryGirl.find_or_create(:archivist) }
+  let(:user) { create(:archivist) }
   describe "logged in user" do
     before do
       allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)

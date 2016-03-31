@@ -5,10 +5,6 @@ $in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
 
 describe 'Static pages:', type: :feature do
   shared_examples 'verify each static page' do |user|
-    before do
-      sign_in_with_js(user)
-    end
-
     [
       '/about',
       '/help',
@@ -29,12 +25,14 @@ describe 'Static pages:', type: :feature do
     end
   end
 
-  describe 'When not logged in' do
-    we_can 'verify each static page', nil
+  context 'when not logged in' do
+    we_can 'verify each static page', user: false
   end
 
-  describe 'When logged in' do
-    we_can 'verify each static page', FactoryGirl.find_or_create(:user)
+  context 'when logged in' do
+    let(:user) { create(:user) }
+    before { sign_in_with_js(user) }
+    we_can 'verify each static page', user: true
   end
 
   def verify_links(path)

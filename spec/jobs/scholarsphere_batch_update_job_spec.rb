@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe ScholarsphereBatchUpdateJob do
-  let(:user)   { FactoryGirl.find_or_create(:jill) }
+  let(:user)   { create(:jill) }
   let(:batch)  { Batch.create }
   let!(:file)  { create(:file, depositor: user.login, batch: batch) }
   let!(:file2) { create(:file, depositor: user.login, batch: batch) }

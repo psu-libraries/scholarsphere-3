@@ -4,7 +4,8 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Shares', type: :feature do
-  let(:current_user) { FactoryGirl.find_or_create(:user) }
+  let(:current_user) { create(:user) }
+  let(:jill)         { create(:jill) }
 
   context "the default" do
     before do
@@ -23,31 +24,15 @@ describe 'Dashboard Shares', type: :feature do
   end
 
   context 'when user has a collection' do
-    let(:collection_title) { 'My interesting collection' }
-    let!(:my_collection) {
-      Collection.new(title: collection_title).tap do |c|
-        c.apply_depositor_metadata(current_user.user_key)
-        c.save!
-      end
-    }
-    let!(:gf) do
-      GenericFile.new.tap do |gf|
-        gf.title = ["jill's files"]
-        gf.filename = ['test.pdf']
-        gf.read_groups = ['public']
-        gf.apply_depositor_metadata("jilluser")
-        gf.save!
-      end
-    end
+    let!(:collection) { create(:collection, depositor: current_user.user_key) }
+    let!(:gf) { create(:public_file, title: ["Public, unshared file"], depositor: jill.user_key) }
 
     let!(:gf2) do
-      GenericFile.new.tap do |gf|
-        gf.title = ["jill's shared file"]
-        gf.filename = ['test.pdf']
-        gf.permissions << Hydra::AccessControls::Permission.new(type: 'person', name: current_user.user_key, access: 'edit')
-        gf.apply_depositor_metadata("jilluser")
-        gf.save!
-      end
+      create(:private_file,
+             title: ["Private, shared filed"],
+             depositor: jill.user_key,
+             edit_users: [current_user.user_key]
+            )
     end
 
     before do
@@ -56,9 +41,9 @@ describe 'Dashboard Shares', type: :feature do
     end
 
     it 'does not display collections and others files' do
-      expect(page).to_not have_content(collection_title)
-      expect(page).to_not have_content(gf.title[0])
-      expect(page).to have_content(gf2.title[0])
+      expect(page).to_not have_content(collection.title)
+      expect(page).to_not have_content(gf.title.first)
+      expect(page).to have_content(gf2.title.first)
     end
   end
 end

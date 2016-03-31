@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :file, aliases: [:private_file], class: GenericFile do
+    ignore do
+      transfer_to nil
+    end
+
     title ["Sample Title"]
     after(:build) do |file, attrs|
       file.apply_depositor_metadata((attrs.depositor || "user"))
     end
+
+    after(:create) do |file, attrs|
+      file.request_transfer_to(attrs.transfer_to) if attrs.transfer_to
+    end
+
     visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
 
     factory :public_file do
@@ -14,6 +23,18 @@ FactoryGirl.define do
         title ["SHARE Document"]
         creator ["Joe Contributor"]
         resource_type ["Dissertation"]
+      end
+
+      factory :featured_file do
+        after(:create) do |f|
+          FeaturedWork.create!(generic_file_id: f.id)
+        end
+      end
+
+      factory :trophy_file do
+        after(:create) do |f, attrs|
+          Trophy.create!(user_id: User.find_by_login(attrs.depositor).id, generic_file_id: f.id)
+        end
       end
     end
 
@@ -56,6 +77,7 @@ FactoryGirl.define do
       resource_type ['resource_typeresource_type']
       description   ['descriptiondescription']
       format_label  ['format_labelformat_label']
+      related_url   ['http://example.org/TheRelatedURLLink/']
     end
   end
 end

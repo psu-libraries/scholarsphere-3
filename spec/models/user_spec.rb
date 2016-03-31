@@ -3,7 +3,7 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe User, type: :model do
-  let(:user) { FactoryGirl.find_or_create(:ldap_jill) }
+  let(:user) { create(:ldap_jill) }
 
   it "has a login" do
     expect(user.login).to eq("jilluser")
@@ -66,27 +66,6 @@ describe User, type: :model do
                                                                      { id: "csl5210", text: "CAMERON SIERRA LANGSJOEN (csl5210)" },
                                                                      { id: "cnt5046", text: "CAMILLE NAKIA TINDAL (cnt5046)" }
                                                                     ])
-    end
-  end
-
-  describe "#query_ldap_by_name" do
-    context "when known user" do
-      let(:first_name) { "Carolyn Ann" }
-      let(:last_name) { "Cole" }
-      let(:first_name_parts) { ["Carolyn", "Ann"] }
-      let(:filter) { Net::LDAP::Filter.construct("(& (& (givenname=#{first_name_parts[0]}*) (givenname=*#{first_name_parts[1]}*) (sn=#{last_name})) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE) (eduPersonPrimaryAffiliation=RETIREE) (eduPersonPrimaryAffiliation=EMERITUS) (eduPersonPrimaryAffiliation=MEMBER)))))") }
-      let(:attrs) {  ['uid', 'givenname', 'sn', 'mail', "eduPersonPrimaryAffiliation"] }
-
-      let(:results) do
-        [build(:ldap_entry, uid: "cam156", givenname: "CAROLYN A", sn: "COLE", mail: "cam156@psu.edu")]
-      end
-      before do
-        expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
-        allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: "Success"))
-      end
-      it "returns an array of people" do
-        expect(described_class.query_ldap_by_name(first_name, last_name)).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: [] }])
-      end
     end
   end
 

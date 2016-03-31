@@ -13,6 +13,9 @@ describe CatalogController, type: :controller do
     allow_any_instance_of(User).to receive(:groups).and_return([])
   end
 
+  # Default depositor if none is supplied
+  let(:user) { "user" }
+
   describe "#index" do
     describe "term search" do
       it "finds pdf files" do
@@ -106,13 +109,13 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list).count).to eql(1)
       end
       it "finds a file by depositor" do
-        xhr :get, :index, q: "user"
+        xhr :get, :index, q: user
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to eql(3)
       end
       it "finds a file by depositor in advanced search" do
-        xhr :get, :index, depositor: "user", search_field: "advanced"
+        xhr :get, :index, depositor: user, search_field: "advanced"
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to eql(3)
