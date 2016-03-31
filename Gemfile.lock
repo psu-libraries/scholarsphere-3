@@ -334,6 +334,11 @@ GEM
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    ldap_disambiguate (0.0.2)
+      hydra-ldap
+      mail (~> 2.6)
+      namae (= 0.9.3)
+      net-ldap (= 0.13.0)
     ldp (0.4.1)
       faraday
       http_logger
@@ -794,6 +799,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1)
   kaminari!
   launchy
+  ldap_disambiguate
   mysql2 (~> 0.3.17)
   namae (= 0.9.3)
   nest

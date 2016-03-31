@@ -37,6 +37,7 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'ldap_disambiguate'
 
 group :development, :test do
   gem 'jettywrapper'

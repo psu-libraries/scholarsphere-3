@@ -126,6 +126,10 @@ Lint/UselessAssignment:
   Exclude:
     - 'config/compass.rb'
 
+Lint/LiteralInCondition:
+  Exclude:
+    - 'spec/support/user_no_ldap.rb'
+
 Rails:
   Enabled: true
 
