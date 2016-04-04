@@ -13,12 +13,9 @@ module Features
       Capybara.current_driver = driver
     end
 
-    def sign_in_with_js(user = nil)
+    def sign_in_with_js(user = nil, opts = {})
       Capybara.register_driver :poltergeist do |app|
-        Capybara::Poltergeist::Driver.new(app,
-                                          js_errors: true,
-                                          timeout: 90,
-                                          phantomjs_options: ['--ssl-protocol=ANY'])
+        Capybara::Poltergeist::Driver.new(app, defaults.merge(opts))
       end
       Capybara.current_driver = :poltergeist
       page.driver.headers = request_headers(user)
@@ -39,6 +36,14 @@ module Features
         else
           "rack_test_authenticated_header_anonymous"
         end
+      end
+
+      def defaults
+        {
+          js_errors: true,
+          timeout: 90,
+          phantomjs_options: ['--ssl-protocol=ANY']
+        }
       end
   end
 end
