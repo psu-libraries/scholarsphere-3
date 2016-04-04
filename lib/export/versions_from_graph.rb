@@ -13,11 +13,8 @@ module Export
       end
     end
 
+    # Converts a graph with version information to an array of Version objects
     def self.parse(graph)
-      parse_graph(graph)
-    end
-
-    def self.parse_graph(graph)
       versions = []
       find_uris(graph).each do |uri|
         created = find_created(uri, graph)

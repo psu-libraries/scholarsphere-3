@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Export
-  class Permissions
+  class PermissionsMetadata
     attr_accessor :permissions
 
     class Permission

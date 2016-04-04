@@ -1,6 +1,9 @@
 # frozen_string_literal: true
+
+# This class is used to consolidate Collection metadata in a way that
+# can be easily exported to JSON.
 module Export
-  class CollectionExport
+  class CollectionMetadataExport
     attr_accessor :id, :title, :depositor, :description, :creator, :members
 
     def initialize(coll)

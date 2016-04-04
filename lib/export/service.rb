@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "./lib/export/generic_file_export.rb"
-require "./lib/export/collection_export.rb"
+require "./lib/export/generic_file_metadata_export.rb"
+require "./lib/export/collection_metadata_export.rb"
 
 module Export
   class Service
@@ -37,13 +37,13 @@ module Export
 
       def export_one_collection(id, file_name)
         coll = ::Collection.find(id)
-        json = Export::CollectionExport.new(coll).to_json(true)
+        json = Export::CollectionMetadataExport.new(coll).to_json(true)
         File.write(file_name, json)
       end
 
       def export_one_generic_file(id, file_name)
         gf = ::GenericFile.find(id)
-        json = Export::GenericFileExport.new(gf).to_json(true)
+        json = Export::GenericFileMetadataExport.new(gf).to_json(true)
         File.write(file_name, json)
       end
 

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
-require "./lib/export/permissions.rb"
+require "./lib/export/permissions_metadata.rb"
 require "./lib/export/versions_from_graph.rb"
 
+# This class is used to consolidate GenericFile metadata in a way that
+# can be easily exported to JSON. Notice that we don't store the
+# actual binary of the file here.
 module Export
-  class GenericFileExport
+  class GenericFileMetadataExport
     # Properties to be exported
     attr_accessor :id, :label, :depositor, :arkivo_checksum, :relative_path,
                   :import_url, :resource_type, :title, :creator, :contributor,
@@ -44,7 +47,7 @@ module Export
       if gf.content.has_versions?
         @versions = Export::VersionsFromGraph.parse(gf.content.versions)
       end
-      @permissions = Export::Permissions.new(gf.permissions).to_a
+      @permissions = Export::PermissionsMetadata.new(gf.permissions).to_a
     end
 
     def to_json(pretty = false)
