@@ -13,15 +13,6 @@ module Export
     attr_accessor :bibliographic_citation, :source
     attr_accessor :permissions
 
-    # Don't export this. Let the file be re-characterized in Sufia 7.
-    #
-    # attr_accessor :characterization
-    # contains 'full_text'
-    # contains "thumbnail"
-
-    # The content is fetched from Sufia 7 at the time the GenericFile is imported
-    # contains "content", class_name: 'FileContentDatastream'
-
     def initialize(gf)
       @id = gf.id
       @label = gf.label
@@ -49,7 +40,6 @@ module Export
       @source = gf.source
       @batch_id = gf.batch.id if gf.batch
       @visibility = gf.visibility
-      # @characterization = Export::Characterization.new(gf)
       @versions = []
       if gf.content.has_versions?
         @versions = Export::VersionsFromGraph.parse(gf.content.versions)
