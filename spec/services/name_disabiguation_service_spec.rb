@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-# only run the test locally when we have a valid connection to ldap
-in_travis = !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
-
-describe NameDisambiguationService, unless: in_travis do
+describe NameDisambiguationService, unless: travis? do
   subject { described_class.new(name).disambiguate }
 
   context "when we have a normal name" do
