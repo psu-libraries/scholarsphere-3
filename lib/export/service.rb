@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require "./lib/export/generic_file_export.rb"
+require "./lib/export/collection_export.rb"
 
 module Export
   class Service
@@ -9,20 +10,43 @@ module Export
       all_ids = all_uris.map { |uri| uri.split("/").last }
       return all_ids if klass.nil?
       # return only the ones that match the klass
-      all_ids.select { |id| ActiveFedora::Base.find(id).class == klass }
+      all_ids.select do |id|
+        begin
+          # TODO: Replace this with a call to Solr for the model field.
+          ActiveFedora::Base.find(id).class == klass
+        rescue ActiveFedora::ObjectNotFoundError
+          false
+        end
+      end
     end
 
     # Exports each GenericFile to a JSON file in the specified path
     # Each JSON file is named gw_###.json (where ### is the Generic File's ID)
-    def self.export(ids, path)
+    def self.export_generic_files(ids, path)
       ids.each do |id|
         yield id if block_given?
         file_name = File.join(path, "gf_#{id}.json")
-        export_one_to_file(id, file_name)
+        export_one_generic_file(id, file_name)
       end
     end
 
-    def self.export_one_to_file(id, file_name)
+    # Exports each Collection to a JSON file in the specified path
+    # Each JSON file is named coll_###.json (where ### is the Collection's ID)
+    def self.export_collections(ids, path)
+      ids.each do |id|
+        yield id if block_given?
+        file_name = File.join(path, "coll_#{id}.json")
+        export_one_collection(id, file_name)
+      end
+    end
+
+    def self.export_one_collection(id, file_name)
+      coll = ::Collection.find(id)
+      json = Export::CollectionExport.new(coll).to_json(true)
+      File.write(file_name, json)
+    end
+
+    def self.export_one_generic_file(id, file_name)
       gf = ::GenericFile.find(id)
       json = Export::GenericFileExport.new(gf).to_json(true)
       File.write(file_name, json)
