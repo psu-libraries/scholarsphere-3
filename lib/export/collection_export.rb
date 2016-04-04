@@ -8,7 +8,7 @@ module Export
       @title = coll.title
       @description = coll.description
       @creator = coll.creator.map { |c| c }
-      @members = coll.members.map { |gf| gf.id }
+      @members = coll.members.map(&:id)
     end
 
     def to_json(pretty = false)
