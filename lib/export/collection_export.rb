@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 module Export
   class CollectionExport
-    attr_accessor :id, :title, :members
+    attr_accessor :id, :title, :depositor, :description, :creator, :members
 
     def initialize(coll)
       @id = coll.id
       @title = coll.title
-      @members = []
-      coll.members.each do |gf|
-        @members << gf.id
-      end
+      @description = coll.description
+      @creator = coll.creator.map { |c| c }
+      @members = coll.members.map { |gf| gf.id }
     end
 
     def to_json(pretty = false)
