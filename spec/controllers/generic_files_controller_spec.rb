@@ -54,6 +54,12 @@ describe GenericFilesController, type: :controller do
     context "when user is not administrator" do
       let(:user) { FactoryGirl.create(:user) }
 
+      it "does not allow any user to view" do
+        get :show, id: gf.id
+        expect(response.status).to eq(302)
+        expect(flash[:alert]).to eq("You are not authorized to access this page.")
+      end
+
       it "does not allow any user to edit" do
         get :edit, id: gf.id
         expect(response.status).to eq(302)
@@ -74,10 +80,16 @@ describe GenericFilesController, type: :controller do
         allow(ContentUpdateEventJob).to receive(:new).with(gf.id, user.user_key).and_return(update_message)
       end
 
+      it "does allow user to view" do
+        get :show, id: gf.id
+        expect(response.status).to eq(200)
+      end
+
       it "allows edits" do
         get :edit, id: gf.id
         expect(response.status).to eq(200)
       end
+
       it "allows updates" do
         expect(Sufia.queue).to receive(:push).with(update_message)
         post :update, id: gf.id, generic_file: { title: ['new_title'] }
