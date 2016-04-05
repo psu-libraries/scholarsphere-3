@@ -24,10 +24,10 @@ describe 'unified search', type: :feature do
       visit '/'
       expect(page).to have_content("All")
       expect(page).to have_css("a[data-search-label*=All]", visible: false)
-      expect(page).to_not have_css("a[data-search-label*='My Files']", visible: false)
-      expect(page).to_not have_css("a[data-search-label*='My Collections']", visible: false)
-      expect(page).to_not have_css("a[data-search-label*='My Highlights']", visible: false)
-      expect(page).to_not have_css("a[data-search-label*='My Shares']", visible: false)
+      expect(page).not_to have_css("a[data-search-label*='My Files']", visible: false)
+      expect(page).not_to have_css("a[data-search-label*='My Collections']", visible: false)
+      expect(page).not_to have_css("a[data-search-label*='My Highlights']", visible: false)
+      expect(page).not_to have_css("a[data-search-label*='My Shares']", visible: false)
       within('#masthead_controls') do
         click_button("All")
         expect(page).to have_content("All of ScholarSphere")
@@ -38,7 +38,7 @@ describe 'unified search', type: :feature do
       expect(page).to have_content(file1.title.first)
       expect(page).to have_content(file3.title.first)
       expect(page).to have_content(collection.title)
-      expect(page).to_not have_content(file2.title.first)
+      expect(page).not_to have_content(file2.title.first)
       click_link(file1.title.first)
       expect(page).to have_link("Back to search results")
     end
@@ -86,8 +86,8 @@ describe 'unified search', type: :feature do
       expect(page).to have_selector('li.active', text: "Files")
       expect(page).to have_content(file1.title.first)
       expect(page).to have_content(file2.title.first)
-      expect(page).to_not have_content(file3.title.first)
-      expect(page).to_not have_css('#src_copy_link' + collection.id)
+      expect(page).not_to have_content(file3.title.first)
+      expect(page).not_to have_css('#src_copy_link' + collection.id)
     end
     it "searches My Collections" do
       expect(page).to have_content("All")
@@ -99,9 +99,9 @@ describe 'unified search', type: :feature do
       end
       expect(page).to have_selector('li.active', text: "Collections")
       expect(page).to have_content(collection.title)
-      expect(page).to_not have_content(file1.title.first)
-      expect(page).to_not have_content(file2.title.first)
-      expect(page).to_not have_content(file3.title.first)
+      expect(page).not_to have_content(file1.title.first)
+      expect(page).not_to have_content(file2.title.first)
+      expect(page).not_to have_content(file3.title.first)
     end
   end
 end

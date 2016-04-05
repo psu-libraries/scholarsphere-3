@@ -43,8 +43,8 @@ group :development, :test do
   gem 'jettywrapper'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
+  gem 'rubocop', '~> 0.39.0'
+  gem 'rubocop-rspec', '~> 1.4.1'
   gem 'sqlite3'
 end
 

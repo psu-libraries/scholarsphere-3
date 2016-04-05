@@ -41,8 +41,8 @@ describe 'Dashboard Shares', type: :feature do
     end
 
     it 'does not display collections and others files' do
-      expect(page).to_not have_content(collection.title)
-      expect(page).to_not have_content(gf.title.first)
+      expect(page).not_to have_content(collection.title)
+      expect(page).not_to have_content(gf.title.first)
       expect(page).to have_content(gf2.title.first)
     end
   end

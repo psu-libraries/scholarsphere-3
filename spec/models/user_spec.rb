@@ -98,7 +98,7 @@ describe User, type: :model do
 
       it "does not create a user" do
         expect(described_class.count).to eq 0
-        is_expected.to_not be_a_kind_of(described_class)
+        is_expected.not_to be_a_kind_of(described_class)
         expect(described_class.count).to eq 0
       end
     end
