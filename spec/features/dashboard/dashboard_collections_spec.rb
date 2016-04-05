@@ -4,22 +4,14 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Collections:', type: :feature do
-  let!(:current_user) { FactoryGirl.create :user }
+  let!(:jill_collection) { create(:collection, title: "Jill's Collection", depositor: jill.login) }
+  let!(:collection)      { create(:collection, depositor: current_user.login) }
 
-  let(:jill) { FactoryGirl.create :jill }
-  let!(:collection) do
-    Collection.new.tap do |col|
-      col.apply_depositor_metadata(jill.user_key)
-      col.title = "jill collection"
-      col.save!
-    end
-  end
+  let(:current_user) { create(:user) }
+  let(:jill)         { create(:jill) }
 
   before do
     sign_in_with_js(current_user)
-    go_to_dashboard
-    click_link("Create Collection")
-    create_collection ["My collection"], current_user, ["Personal collection of great things"]
     go_to_dashboard_collections
   end
 
@@ -33,18 +25,18 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   specify 'collections are displayed in the Collections list' do
-    expect(page).to have_content "My collection"
-    expect(page).not_to have_content "jill collection"
+    expect(page).to have_content collection.title
+    expect(page).not_to have_content jill_collection.title
   end
 
   specify 'toggle displays additional information' do
     first('i.glyphicon-chevron-right').click
-    expect(page).to have_content("Personal collection of great things")
+    expect(page).to have_content(collection.description)
     expect(page).to have_content(current_user)
   end
 
   specify 'additional information is hidden' do
-    expect(page).not_to have_content("Personal collection of great things")
+    expect(page).not_to have_content(collection.description)
     expect(page).not_to have_content(current_user)
   end
 
@@ -60,7 +52,7 @@ describe 'Dashboard Collections:', type: :feature do
 
   specify 'collections are not displayed in the File list' do
     go_to_dashboard_files
-    expect(page).not_to have_content "My collection"
+    expect(page).not_to have_content collection.title
   end
 
   describe 'facets,' do
@@ -69,7 +61,7 @@ describe 'Dashboard Collections:', type: :feature do
         click_link('Object Type')
         expect(page).to have_content('Collection (1)')
         click_link('Creator')
-        expect(page).to have_content("#{current_user} (1)")
+        expect(page).to have_content("#{collection.creator.first} (1)")
       end
     end
   end

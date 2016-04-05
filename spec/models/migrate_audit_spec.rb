@@ -5,9 +5,9 @@ describe MigrateAudit, type: :model do
   let(:credentials) { ActiveFedora.fedora_config.credentials }
   let(:fedora_url) { credentials[:url] + credentials[:base_path] }
 
-  let(:f3_file_migrated) { FactoryGirl.create(:f3_file_migrated) }
-  let(:f3_file_not_migrated) { FactoryGirl.create(:f3_file_not_migrated) }
-  let(:f3_file_migrated_wrong) { FactoryGirl.create(:f3_file_migrated_wrong) }
+  let(:f3_file_migrated) { create(:f3_file_migrated) }
+  let(:f3_file_not_migrated) { create(:f3_file_not_migrated) }
+  let(:f3_file_migrated_wrong) { create(:f3_file_migrated_wrong) }
   let(:f3_data) { [f3_file_migrated, f3_file_not_migrated, f3_file_migrated_wrong] }
 
   let(:auditor) { MigrateAuditFedora4.new(fedora_url, credentials[:user], credentials[:password]) }
@@ -21,8 +21,8 @@ describe MigrateAudit, type: :model do
   end
 
   before(:all) do
-    GenericFile.create(id: "111xyzfile") { |file| file.apply_depositor_metadata('dmc') }
-    GenericFile.create(id: "333xyzfile") { |file| file.apply_depositor_metadata('dmc') }
+    create(:file, id: "111xyzfile")
+    create(:file, id: "333xyzfile")
   end
 
   context "with a file migrated correctly" do

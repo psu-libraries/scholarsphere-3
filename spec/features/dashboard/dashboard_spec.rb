@@ -4,22 +4,11 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'The Dashboard', type: :feature do
-  let(:user) { FactoryGirl.find_or_create(:user) }
+  let(:user) { create(:user) }
 
   describe "a user who has files and collections" do
-    let!(:generic_file) do
-      GenericFile.new.tap do |f|
-        f.apply_depositor_metadata(user.user_key)
-        f.save
-      end
-    end
-    let!(:collection) do
-      Collection.new.tap do |c|
-        c.title = "test"
-        c.apply_depositor_metadata(user.user_key)
-        c.save
-      end
-    end
+    let!(:generic_file) { create(:file, depositor: user.user_key) }
+    let!(:collection)   { create(:collection, depositor: user.user_key) }
 
     before do
       sign_in(user)
@@ -55,8 +44,8 @@ describe 'The Dashboard', type: :feature do
   end
 
   describe "a user with multiple current proxies" do
-    let!(:first_proxy)  { FactoryGirl.find_or_create(:first_proxy) }
-    let!(:second_proxy) { FactoryGirl.find_or_create(:second_proxy) }
+    let!(:first_proxy)  { create(:first_proxy) }
+    let!(:second_proxy) { create(:second_proxy) }
 
     before do
       sign_in_with_js(user)
@@ -87,16 +76,10 @@ describe 'The Dashboard', type: :feature do
   end
 
   describe "a user with transfers" do
-    let(:another_user) { FactoryGirl.find_or_create(:jill) }
+    let(:another_user) { create(:jill) }
 
     context "when incoming" do
-      let!(:incoming_file) do
-        GenericFile.new.tap do |f|
-          f.apply_depositor_metadata(another_user.user_key)
-          f.save!
-          f.request_transfer_to(user)
-        end
-      end
+      let!(:incoming_file) { create(:file, depositor: another_user.user_key, transfer_to: user) }
 
       before do
         sign_in(user)
@@ -113,13 +96,7 @@ describe 'The Dashboard', type: :feature do
     end
 
     context "when outgoing" do
-      let!(:outgoing_file) do
-        GenericFile.new.tap do |f|
-          f.apply_depositor_metadata(user.user_key)
-          f.save!
-          f.request_transfer_to(another_user)
-        end
-      end
+      let!(:outgoing_file) { create(:file, depositor: user.user_key, transfer_to: another_user) }
 
       before do
         sign_in(user)

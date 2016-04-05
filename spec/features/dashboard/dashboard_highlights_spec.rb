@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Highlights', type: :feature do
-  let(:current_user) { FactoryGirl.find_or_create(:user) }
+  let(:current_user) { create(:user) }
 
   before do
     sign_in(current_user)

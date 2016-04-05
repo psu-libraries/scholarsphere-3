@@ -5,8 +5,8 @@ include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:', type: :feature do
   context 'When logged in as a PSU user' do
-    let(:current_user)  { FactoryGirl.find_or_create(:user) }
-    let(:other_user)    { FactoryGirl.find_or_create(:user) }
+    let(:current_user)  { create(:user) }
+    let(:other_user)    { create(:user) }
     let(:filename)      { 'little_file.txt' }
     let(:batch)         { ['little_file.txt', 'little_file.txt'] }
     let(:file)          { find_file_by_title "little_file.txt" }
@@ -181,7 +181,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
   end
 
   context 'When logged in as a non-PSU user' do
-    let(:current_user) { FactoryGirl.find_or_create(:non_psu_user) }
+    let(:current_user) { create(:non_psu_user) }
 
     before { sign_in_with_js(current_user) }
 

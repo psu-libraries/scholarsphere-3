@@ -3,16 +3,19 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Files', type: :feature do
-  let!(:current_user) { FactoryGirl.create :user }
+  let!(:current_user) { create(:user) }
 
-  let!(:file) { create_file current_user, title: 'little_file.txt', creator: 'little_file.txt_creator', resource_type: "stuff" }
+  let!(:file) do
+    create(:public_file, :with_complete_metadata,
+           depositor: current_user.login,
+           title: ['little_file.txt'],
+           creator: ['little_file.txt_creator']
+          )
+  end
 
-  let(:jill) { FactoryGirl.create :jill }
+  let(:jill) { create(:jill) }
   let!(:other_collection) do
-    Collection.create(title: 'jill collection') do |col|
-      col.apply_depositor_metadata(jill.user_key)
-      col.read_groups = ['public']
-    end
+    create(:collection, title: 'jill collection', depositor: jill.login)
   end
 
   before do
@@ -33,7 +36,7 @@ describe 'Dashboard Files', type: :feature do
       end
       # Additional metadata about the file is hidden
       expect(page).not_to have_content "Edit Access"
-      expect(page).not_to have_content "little_file.txt_creator"
+      expect(page).not_to have_content file.creator.first
 
       # A return controller is specified
       expect(page).to have_css("input#return_controller", visible: false)
@@ -42,7 +45,7 @@ describe 'Dashboard Files', type: :feature do
       within("#documents") do
         first('i.glyphicon-chevron-right').click
       end
-      expect(page).to have_content "little_file.txt_creator"
+      expect(page).to have_content file.creator.first
       expect(page).to have_content "Edit Access"
 
       db_item_actions_toggle(file).click
@@ -97,13 +100,13 @@ describe 'Dashboard Files', type: :feature do
         visit "/users/#{current_user.login}"
         expect(page).to have_css '.active a', text: "Contributions"
         within '#contributions' do
-          expect(page).to have_link file.filename.first.to_s
+          expect(page).to have_link file.title.first
         end
 
         # It is displayed on my highlights
         go_to_dashboard_highlights
         within '#documents' do
-          expect(page).to have_link file.filename.first.to_s
+          expect(page).to have_link file.title.first
         end
       end
 

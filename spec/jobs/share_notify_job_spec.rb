@@ -3,37 +3,24 @@ require 'spec_helper'
 require 'support/vcr'
 
 describe ShareNotifyJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:jill) }
   let(:job)  { described_class.new(file.id) }
+  let(:file) { create(:share_file) }
 
   context "with a shareable file" do
-    before { allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false) }
+    before do
+      allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false)
+      allow_any_instance_of(GenericFileToShareJSONService)
+        .to receive(:email_for_name)
+        .and_return("kermit@muppets.org")
+      WebMock.enable!
+    end
+
+    after { WebMock.disable! }
 
     describe "a successful outcome" do
-      let(:file) do
-        GenericFile.create.tap do |f|
-          f.title = ["The Difficulties of Being Green"]
-          f.resource_type = ["Dissertation"]
-          f.creator = ["Frog, Kermit T."]
-          f.visibility = "open"
-          f.date_modified = DateTime.now
-          f.apply_depositor_metadata(user)
-          f.save
-        end
-      end
-
       context "when it has not been sent to SHARE Notify" do
-        before do
-          allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } }
-          allow_any_instance_of(GenericFileToShareJSONService)
-            .to receive(:email_for_name)
-            .and_return("kermit@muppets.org")
-          WebMock.enable!
-        end
-
-        after do
-          WebMock.disable!
-        end
+        before { allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } } }
 
         it "sends a notification" do
           VCR.use_cassette('share_notify_success_job', record: :none) do
@@ -51,16 +38,6 @@ describe ShareNotifyJob do
     end
 
     describe "an unsuccessful outcome" do
-      let(:file) do
-        GenericFile.create.tap do |f|
-          f.title = ["Bad File"]
-          f.resource_type = ["Dissertation"]
-          f.visibility = "open"
-          f.apply_depositor_metadata(user)
-          f.save
-        end
-      end
-
       let(:error_message) do
         "Posting file #{file.id} to SHARE Notify failed with 400. Response was {\"detail\"=>\"Invalid token.\"}"
       end
@@ -68,11 +45,6 @@ describe ShareNotifyJob do
       before do
         allow(ShareNotify).to receive(:config) { { "token" => "BAD_TOKEN" } }
         allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(400)
-        WebMock.enable!
-      end
-
-      after do
-        WebMock.disable!
       end
 
       it "logs the error" do
@@ -86,14 +58,7 @@ describe ShareNotifyJob do
   end
 
   context "with a file that cannot be shared" do
-    let(:file) do
-      GenericFile.create.tap do |f|
-        f.title = ["Public Dissertation"]
-        f.resource_type = ["Dissertation"]
-        f.apply_depositor_metadata("user")
-        f.save
-      end
-    end
+    let(:file) { create(:file) }
     subject { job.run }
     it { is_expected.to be_nil }
   end
