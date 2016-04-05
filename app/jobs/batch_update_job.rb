@@ -3,7 +3,7 @@
 # Resque job that updates files uploaded via the BatchController
 class BatchUpdateJob
   include Hydra::PermissionsQuery
-  include Sufia::Messages
+  include CurationConcerns::Messages
 
   def queue_name
     :batch_update

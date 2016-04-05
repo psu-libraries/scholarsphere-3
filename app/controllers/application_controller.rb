@@ -2,12 +2,14 @@
 class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include Hydra::Controller::ControllerBehavior
+  include CurationConcerns::ApplicationControllerBehavior
   include Sufia::Controller
-  include Behaviors::HttpHeaderAuthenticatableBehavior
+  include CurationConcerns::ThemedLayoutController
+  include Devise::Behaviors::HttpHeaderAuthenticatableBehavior
 
   layout 'sufia-one-column'
 
-  protect_from_forgery
+  protect_from_forgery with: :exception
 
   before_action :clear_session_user
   before_action :filter_notify

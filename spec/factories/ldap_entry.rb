@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :ldap_entry, class: Net::LDAP::Entry do
-    ignore do
+    transient do
       cn nil
       displayname nil
       uid nil

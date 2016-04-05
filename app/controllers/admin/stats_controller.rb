@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 # frozen_string_literal: true
-
 class Admin::StatsController < ApplicationController
   include Sufia::Admin::StatsBehavior
 
@@ -14,7 +13,7 @@ class Admin::StatsController < ApplicationController
   private
 
     def csv(start_datetime, end_datetime)
-      GenericFileListToCSVService.new(::GenericFile.find_by_date_created(start_datetime, end_datetime)).csv
+      GenericWorkListToCSVService.new(::GenericWork.find_by_date_created(start_datetime, end_datetime)).csv
     end
 
     def file_name

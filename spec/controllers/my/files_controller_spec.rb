@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe My::FilesController, type: :controller do
+describe My::WorksController, type: :controller do
   routes { Sufia::Engine.routes }
   let(:user) { create(:archivist) }
   describe "logged in user" do
@@ -10,7 +10,7 @@ describe My::FilesController, type: :controller do
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
     describe "#index" do
-      include Sufia::Messages
+      include CurationConcerns::Messages
 
       let(:batch_id)            { "batch_id" }
       let(:batch_id2)           { "batch_id2" }

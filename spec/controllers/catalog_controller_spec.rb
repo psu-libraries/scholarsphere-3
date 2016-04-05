@@ -3,13 +3,16 @@ require 'spec_helper'
 
 describe CatalogController, type: :controller do
   before(:all) do
-    create(:public_file, title: ['Test Document PDF'], filename: ['test.pdf'])
-    create(:public_file, title: ['Test 2 Document'], filename: ['test2.pdf'], contributor: ['Contrib2'])
-    create(:public_file, :with_full_text_content, :with_complete_metadata)
+    # TODO: Better testing strategy that doesn't require persisting objects
+    # previous tests left artifacts so we need to remove them
+    ActiveFedora::Cleaner.clean!
+    create(:public_work, :with_pdf, title: ['Test Document PDF'])
+    create(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'])
+    create(:public_work, :with_complete_metadata)
   end
 
   before do
-    allow_any_instance_of(GenericFile).to receive(:characterize_if_changed).and_yield
+    allow_any_instance_of(GenericWork).to receive(:characterize_if_changed).and_yield
     allow_any_instance_of(User).to receive(:groups).and_return([])
   end
 
@@ -89,6 +92,7 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field("resource_type"))[0]).to eql('resource_typeresource_type')
       end
       it "finds a file by format_label" do
+        pending("Fields from characterization should be on the work")
         xhr :get, :index, q: "format_labelformat_label"
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
@@ -103,6 +107,7 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field("description"))[0]).to eql('descriptiondescription')
       end
       it "finds a file by full_text" do
+        pending("Full text only on the FileSet see sufia#1813")
         xhr :get, :index, q: "full_textfull_text"
         expect(response).to be_success
         expect(response).to render_template('catalog/index')

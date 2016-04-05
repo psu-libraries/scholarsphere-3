@@ -3,7 +3,8 @@ require 'net/https'
 require 'uri'
 require 'tempfile'
 
-class ImportUrlJob < ActiveFedoraIdBasedJob
+# TODO: ActiveFedoraIdBasedJob seems to have gone away, ActiveJob::Base seems to be the closest
+class ImportUrlJob < ActiveJob::Base
   def queue_name
     :import_url
   end

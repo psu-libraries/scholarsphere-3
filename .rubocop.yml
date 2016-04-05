@@ -162,3 +162,4 @@ RSpec/DescribeClass:
     - 'spec/routing/**/*'
     - 'spec/rake/**/*'
     - 'spec/config/**/*'
+    - 'spec/models/batch_spec.rb'

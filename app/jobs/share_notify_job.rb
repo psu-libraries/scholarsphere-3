@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-class ShareNotifyJob < ActiveFedoraIdBasedJob
+# TODO: ActiveFedoraIdBasedJob seems to have gone away, ActiveJob::Base seems to be the closest
+class ShareNotifyJob < ActiveJob::Base
   def run
     return if unshareable? || object.share_notified?
     Sufia.queue.push(notification_job)

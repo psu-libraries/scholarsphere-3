@@ -3,6 +3,27 @@ ScholarSphere::Application.routes.draw do
   get '/landing_page/new', to: redirect('/contact')
   get '/managedata', to: redirect('/contact')
 
+  mount BrowseEverything::Engine => '/browse'
+  mount Blacklight::Engine => '/'
+  mount HydraEditor::Engine => '/'
+  mount CurationConcerns::Engine, at: '/'
+
+  curation_concerns_collections
+  curation_concerns_basic_routes
+  curation_concerns_embargo_management
+  concern :exportable, Blacklight::Routes::Exportable.new
+  concern :searchable, Blacklight::Routes::Searchable.new
+
+  Hydra::BatchEdit.add_routes(self)
+
+  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :searchable
+  end
+
+  resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
+    concerns :exportable
+  end
+
   devise_for :users
 
   # Login/logout route to destroy session
@@ -12,9 +33,6 @@ ScholarSphere::Application.routes.draw do
 
   # "Recently added files" route for catalog index view (needed before BL routes)
   get "catalog/recent" => "catalog#recent", as: :catalog_recent
-
-  Blacklight.add_routes(self)
-  Hydra::BatchEdit.add_routes(self)
 
   # Administrative URLs
   namespace :admin do
@@ -34,12 +52,11 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
-  mount BrowseEverything::Engine => '/browse'
-  mount Hydra::Collections::Engine => '/'
-  mount Sufia::Engine => '/'
-  mount HydraEditor::Engine => '/'
-
   root to: "homepage#index"
 
   get ':action' => 'static#:action', constraints: { action: /error_help/ }, as: :static
+
+  # This must be the very last route in the file because it has a catch-all route for 404 errors.
+  # This behavior seems to show up only in production mode.
+  mount Sufia::Engine => '/'
 end

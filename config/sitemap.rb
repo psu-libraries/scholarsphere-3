@@ -10,6 +10,6 @@ Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu') do
     literal Sufia::Engine.routes.url_helpers.generic_file_path(f), priority: 1, change_frequency: 'weekly'
   end
   Collection.where(read_group => 'public').each do |c|
-    literal Hydra::Collections::Engine.routes.url_helpers.collection_path(c), priority: 1, change_frequency: 'weekly'
+    literal CurationConcerns::Collections::Engine.routes.url_helpers.collection_path(c), priority: 1, change_frequency: 'weekly'
   end
 end

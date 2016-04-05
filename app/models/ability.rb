@@ -9,7 +9,7 @@ class Ability < BaseAbility
     if current_user.administrator?
       can :create, TinymceAsset
       can [:create, :update], ContentBlock
-      can [:read, :edit, :update], GenericFile
+      can [:read, :edit, :update], GenericWork
     end
   end
 

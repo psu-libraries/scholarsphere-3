@@ -2,18 +2,17 @@
 class User < ActiveRecord::Base
   extend Deprecation
 
-  # Connects this user object to Sufia behaviors.
-  include Sufia::User
-  # Cache file views & downloads stats for each user
-  include Sufia::UserUsageStats
-  # Connects this user object to Hydra behaviors.
   include Hydra::User
-  # Connects this user object to Blacklights Bookmarks.
-  include Blacklight::User
+  include CurationConcerns::User
+  include Sufia::User
+  include Sufia::UserUsageStats
+
   # Adds acts_as_messageable for user mailboxes
   include Mailboxer::Models::Messageable
+
+  # TODO: Removed in Sufia 7?
   # Workaround to retry LDAP calls a number of times
-  include Sufia::Utils
+  # include Sufia::Utils
 
   self.include_root_in_json = false
 

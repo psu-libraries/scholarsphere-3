@@ -3,6 +3,12 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
-require 'rake'
+
+# Load rake tasks for development and testing
+unless Rails.env.production?
+  Dir.glob(File.expand_path('../tasks/*.rake', __FILE__)).each do |f|
+    load(f)
+  end
+end
 
 ScholarSphere::Application.load_tasks

@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
 
   factory :user do
-    ignore do
+    transient do
       event nil
       proxy_for nil
     end

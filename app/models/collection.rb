@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-class Collection < Sufia::Collection
-  # Override if you are storing your file size in a different way
-  def stored_integer_descriptor
-    GenericFileIndexingService::STORED_SYMBOL
-  end
+class Collection < ActiveFedora::Base
+  include ::CurationConcerns::CollectionBehavior
+  include Sufia::CollectionBehavior
+  include CurationConcerns::BasicMetadata
 end

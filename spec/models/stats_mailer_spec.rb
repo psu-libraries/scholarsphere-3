@@ -6,7 +6,7 @@ describe StatsMailer, type: :model do
   let(:csv) { "a,b,c\nd,e,f\n" }
 
   before do
-    allow(GenericFileListToCSVService).to receive(:new).and_return(mock_service)
+    allow(GenericWorkListToCSVService).to receive(:new).and_return(mock_service)
     allow(mock_service).to receive(:csv).and_return(csv)
   end
 
