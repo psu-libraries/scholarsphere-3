@@ -22,26 +22,6 @@ module GenericFilesHelper
     expect(page).to have_content filename
   end
 
-  def create_file(user, options = {})
-    GenericFile.new.tap do |f|
-      f.title         = [options[:title] || 'Title'].flatten
-      f.resource_type = [options[:resource_type] || 'Video'].flatten
-      f.creator       = [options[:creator] || 'Creator'].flatten
-      f.contributor   = [options[:contributor] || 'Contributor'].flatten
-      f.description   = [options[:description] || "Description http://example.org/TheDescriptionLink/"].flatten
-      f.tag           = [options[:tag] || 'Keyword'].flatten
-      f.rights        = [options[:rights] || 'http://creativecommons.org/licenses/by-nc-nd/3.0/us/'].flatten
-      f.publisher     = [options[:publisher] || 'Publisher'].flatten
-      f.subject       = [options[:subject] || 'Subject'].flatten
-      f.language      = [options[:language] || 'Language'].flatten
-      f.based_near    = [options[:based_near] || 'Location'].flatten
-      f.related_url   = [options[:related_url] || "http://example.org/TheRelatedURLLink/"].flatten
-      f.read_groups   = options[:read_groups] || ['public']
-      f.apply_depositor_metadata(user.login)
-      f.save!
-    end
-  end
-
   def find_file_by_title(title)
     GenericFile.where(Solrizer.solr_name("title", :stored_searchable, type: :string) => title).first
   end

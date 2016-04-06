@@ -118,24 +118,10 @@ describe User, type: :model do
   end
 
   describe "file abilities" do
-    let(:private_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata("other")
-      end
-    end
+    let(:private_file) { create(:registered_file) }
+    let(:my_file)      { create(:registered_file, depositor: user.login) }
+    let(:shared_file)  { create(:registered_file, edit_users: [user.login]) }
 
-    let(:my_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata(user.login)
-      end
-    end
-
-    let(:shared_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata("other")
-        gf.edit_users = ["other", user.login]
-      end
-    end
     describe "abilities" do
       subject { Ability.new(user) }
       context "normal user" do
