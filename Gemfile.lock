@@ -7,16 +7,6 @@ GIT
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
 
-GIT
-  remote: git://github.com/projecthydra-labs/fedora-migrate.git
-  revision: 85dd700df3b3195bceea6b988ec70bb2b82bd282
-  ref: 85dd700df3b3195bceea6b988ec70bb2b82bd282
-  specs:
-    fedora-migrate (0.2.0)
-      hydra-head (~> 9.1)
-      rchardet
-      rubydora (~> 1.8)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -200,8 +190,6 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    domain_name (0.5.25)
-      unf (>= 0.0.5, < 1.0.0)
     dropbox-sdk (1.6.5)
       json
     ebnf (1.0.0)
@@ -219,7 +207,6 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    fastercsv (1.5.5)
     ffi (1.9.10)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
@@ -257,15 +244,11 @@ GEM
     haml (4.0.7)
       tilt
     hashdiff (0.2.3)
-    hooks (0.3.6)
-      uber (~> 0.0.4)
     htmlentities (4.3.4)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
       multipart-post
-    http-cookie (1.0.2)
-      domain_name (~> 0.5)
     http_logger (0.5.1)
     httparty (0.13.7)
       json (~> 1.8)
@@ -404,7 +387,6 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.0.2)
-    netrc (0.11.0)
     newrelic_rpm (3.14.1.311)
     noid (0.8.0)
     nokogiri (1.6.7.2)
@@ -478,7 +460,6 @@ GEM
     rainbow (2.1.0)
     raindrops (0.15.0)
     rake (10.5.0)
-    rchardet (1.6.1)
     rdf (1.99.1)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (1.99.0)
@@ -552,10 +533,6 @@ GEM
       redis (~> 3.0)
       resque (~> 1.25)
       rufus-scheduler (~> 3.0)
-    rest-client (1.8.0)
-      http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
     retriable (1.4.1)
     rsolr (1.0.13)
       builder (>= 2.1.2)
@@ -601,16 +578,6 @@ GEM
       multipart-post
       oauth2
     ruby-progressbar (1.7.5)
-    rubydora (1.8.1)
-      activemodel
-      activesupport
-      deprecation
-      equivalent-xml
-      fastercsv
-      hooks (~> 0.3.0)
-      mime-types
-      nokogiri
-      rest-client
     rubyzip (1.1.7)
     rufus-scheduler (3.2.0)
     safe_yaml (1.0.4)
@@ -731,13 +698,9 @@ GEM
       tinymce-rails (~> 4.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uber (0.0.15)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.7.1)
     unicode-display_width (1.0.3)
     unicorn (5.0.1)
       kgio (~> 2.6)
@@ -790,7 +753,6 @@ DEPENDENCIES
   devise (~> 3.5)
   equivalent-xml
   factory_girl_rails (~> 4.1)
-  fedora-migrate!
   fuubar
   hydra-derivatives (= 1.1.0)
   hydra-head (~> 9.5.0)
