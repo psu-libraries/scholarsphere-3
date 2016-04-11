@@ -7,9 +7,10 @@ describe ShareNotifyJob do
   let(:job)  { described_class.new(file.id) }
   let(:file) { create(:share_file) }
 
+  before { allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false) }
+
   context "with a shareable file" do
     before do
-      allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false)
       allow_any_instance_of(GenericFileToShareJSONService)
         .to receive(:email_for_name)
         .and_return("kermit@muppets.org")
@@ -58,7 +59,7 @@ describe ShareNotifyJob do
   end
 
   context "with a file that cannot be shared" do
-    let(:file) { create(:file) }
+    let(:file) { create(:private_file) }
     subject { job.run }
     it { is_expected.to be_nil }
   end
