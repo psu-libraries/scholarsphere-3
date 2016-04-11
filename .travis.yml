@@ -20,10 +20,6 @@ services:
   - redis-server
 before_script:
   - "cp config/database.yml.travis config/database.yml"
-  - "cp config/redis.yml.sample config/redis.yml"
-  - "cp config/devise.yml.sample config/devise.yml"
-  - "cp config/solr.yml.sample config/solr.yml"
-  - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
   - "cp config/share_notify.yml.sample config/share_notify.yml"
   - redis-cli info
