@@ -93,8 +93,10 @@ class User < ActiveRecord::Base
     groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
   end
 
+  # TODO: What's the difference between an administrator versus someone who's administrating?
   def administrating?(file)
-    administrator? && BaseAbility.new(self).cannot?(:edit, file)
+    administrator?
+    # WAS: administrator? && Ability.new(self).cannot?(:edit, file)
   end
 
   # Redefine this for more intuitive keys in Redis
