@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ShareNotifyJob < ActiveFedoraIdBasedJob
   def run
-    return if object.share_notified? || unshareable?
+    return if unshareable? || object.share_notified?
     Sufia.queue.push(notification_job)
   end
 
