@@ -12,38 +12,26 @@ describe My::WorksController, type: :controller do
     describe "#index" do
       include CurationConcerns::Messages
 
-      let(:batch_id)            { "batch_id" }
-      let(:batch_id2)           { "batch_id2" }
-      let(:batch)               { double }
-      let!(:generic_file)       { create(:file, depositor: user.login) }
-      let!(:other_generic_file) { create(:file) }
+      let!(:work)       { create(:file, depositor: user.login) }
+      let!(:other_work) { create(:file) }
       let(:user_results) do
         ActiveFedora::SolrService.instance.conn.get "select",
                                                     params: { fq: ["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"] }
       end
 
-      before do
-        allow(batch).to receive(:id).and_return(batch_id)
-        User.batchuser.send_message(user, single_success(batch_id, batch), success_subject, false)
-        User.batchuser.send_message(user, multiple_success(batch_id2, [batch]), success_subject, false)
-        xhr :get, :index
-      end
+      before { xhr :get, :index }
+
       it "returns an array of documents I can edit" do
         expect(response).to be_success
         expect(response).to render_template('my/index')
         expect(assigns(:document_list).count).to eql(user_results["response"]["numFound"])
         doc_ids = assigns(:document_list).map(&:id)
-        expect(doc_ids).to include(generic_file.id)
-        expect(doc_ids).not_to include(other_generic_file.id)
-      end
-      it "returns batches" do
-        expect(assigns(:batches).count).to eq(2)
-        expect(assigns(:batches)).to include("ss-" + batch_id)
-        expect(assigns(:batches)).to include("ss-" + batch_id2)
+        expect(doc_ids).to include(work.id)
+        expect(doc_ids).not_to include(other_work.id)
       end
     end
     describe "term search" do
-      before(:all) { create(:public_file, :with_complete_metadata, depositor: "archivist1") }
+      before(:all) { create(:public_work, :with_complete_metadata, depositor: "archivist1") }
       it "finds a file by title" do
         xhr :get, :index, q: "titletitle"
         expect(response).to be_success
@@ -108,6 +96,7 @@ describe My::WorksController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field("resource_type"))[0]).to eql('resource_typeresource_type')
       end
       it "finds a file by format_label" do
+        pending("format_label is now on the FileSet. See sufia #1836")
         xhr :get, :index, q: "format_labelformat_label"
         expect(response).to be_success
         expect(response).to render_template('my/index')
