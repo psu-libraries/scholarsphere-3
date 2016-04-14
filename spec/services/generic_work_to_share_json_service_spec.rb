@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe GenericFileToShareJSONService do
+describe GenericWorkToShareJSONService do
   let(:name_service) { double }
   before do
-    allow_any_instance_of(GenericFile).to receive(:current_host).and_return("https://scholarsphere.psu.edu")
+    allow_any_instance_of(GenericWork).to receive(:current_host).and_return("https://scholarsphere.psu.edu")
     allow(NameDisambiguationService).to receive(:new).with(creator).and_return(name_service)
   end
   context "when checking the fixture file" do

@@ -4,14 +4,13 @@ require 'support/vcr'
 
 describe ShareNotifyDeleteJob do
   let(:user) { create(:jill) }
-  let(:file) { create(:file) }
-  let(:job)  { described_class.new(file.id) }
+  let(:work) { create(:share_file, depositor: user.login) }
 
   context "when the file has been sent to SHARE" do
     before do
-      allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(true)
+      allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true)
       allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } }
-      allow_any_instance_of(GenericFileToShareJSONService)
+      allow_any_instance_of(GenericWorkToShareJSONService)
         .to receive(:email_for_name)
         .and_return("kermit@muppets.org")
       WebMock.enable!
@@ -23,8 +22,8 @@ describe ShareNotifyDeleteJob do
 
     it "sends a notification" do
       VCR.use_cassette('share_notify_success_job', record: :none) do
-        expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyDeleteEventJob))
-        job.run
+        expect(ShareNotifyDeleteEventJob).to receive(:perform_now)
+        described_class.perform_now(work)
       end
     end
   end

@@ -4,14 +4,13 @@ require 'support/vcr'
 
 describe ShareNotifyJob do
   let(:user) { create(:jill) }
-  let(:job)  { described_class.new(file.id) }
-  let(:file) { create(:share_file) }
+  let(:work) { create(:share_file, depositor: user.login) }
 
-  before { allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false) }
+  before { allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false) }
 
   context "with a shareable file" do
     before do
-      allow_any_instance_of(GenericFileToShareJSONService)
+      allow_any_instance_of(GenericWorkToShareJSONService)
         .to receive(:email_for_name)
         .and_return("kermit@muppets.org")
       WebMock.enable!
@@ -25,22 +24,22 @@ describe ShareNotifyJob do
 
         it "sends a notification" do
           VCR.use_cassette('share_notify_success_job', record: :none) do
-            expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifySuccessEventJob))
-            job.run
+            expect(ShareNotifySuccessEventJob).to receive(:perform_now)
+            described_class.perform_now(work)
           end
         end
       end
 
       context "when it has already been sent to SHARE Notify" do
-        before { allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(true) }
-        subject { job.run }
+        before { allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true) }
+        subject { described_class.perform_now(work) }
         it { is_expected.to be_nil }
       end
     end
 
     describe "an unsuccessful outcome" do
       let(:error_message) do
-        "Posting file #{file.id} to SHARE Notify failed with 400. Response was {\"detail\"=>\"Invalid token.\"}"
+        "Posting file #{work.id} to SHARE Notify failed with 400. Response was {\"detail\"=>\"Invalid token.\"}"
       end
 
       before do
@@ -51,16 +50,16 @@ describe ShareNotifyJob do
       it "logs the error" do
         VCR.use_cassette('share_notify_failed_job', record: :none) do
           expect(Rails.logger).to receive(:error).once.with(error_message)
-          expect(Sufia.queue).to receive(:push).with(an_instance_of(ShareNotifyFailureEventJob))
-          job.run
+          expect(ShareNotifyFailureEventJob).to receive(:perform_now)
+          described_class.perform_now(work)
         end
       end
     end
   end
 
   context "with a file that cannot be shared" do
-    let(:file) { create(:private_file) }
-    subject { job.run }
+    let(:work) { create(:private_work) }
+    subject { described_class.perform_now(work) }
     it { is_expected.to be_nil }
   end
 end

@@ -1,14 +1,17 @@
 # frozen_string_literal: true
-# TODO: ActiveFedoraIdBasedJob seems to have gone away, ActiveJob::Base seems to be the closest
 class ShareNotifyJob < ActiveJob::Base
-  def run
-    return if unshareable? || object.share_notified?
-    Sufia.queue.push(notification_job)
+
+  attr_reader :work
+
+  def perform(work)
+    @work = work
+    return if unshareable? || work.share_notified?
+    notification_job
   end
 
   def unshareable?
     ResourceFilteredList.new(
-      PublicFilteredList.new([object]).filter
+      PublicFilteredList.new([work]).filter
     ).filter.empty?
   end
 
@@ -20,13 +23,13 @@ class ShareNotifyJob < ActiveJob::Base
 
     def response
       @response ||= ShareNotify::SearchResponse.new(
-        share.post(GenericFileToShareJSONService.new(object).json)
+        share.post(GenericWorkToShareJSONService.new(work).json)
       )
     end
 
     def notification_job
       if response.status == 201
-        ShareNotifySuccessEventJob.new(generic_file.id, generic_file.depositor)
+        ShareNotifySuccessEventJob.perform_now(work, depositor)
       else
         report_errors
       end
@@ -34,8 +37,12 @@ class ShareNotifyJob < ActiveJob::Base
 
     def report_errors
       Rails.logger.error(
-        "Posting file #{object.id} to SHARE Notify failed with #{response.status}. Response was #{response.response}"
+        "Posting file #{work.id} to SHARE Notify failed with #{response.status}. Response was #{response.response}"
       )
-      ShareNotifyFailureEventJob.new(generic_file.id, generic_file.depositor)
+      ShareNotifyFailureEventJob.perform_now(work, depositor)
+    end
+
+    def depositor
+      User.find_by_login(work.depositor)
     end
 end
