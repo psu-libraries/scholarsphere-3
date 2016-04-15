@@ -43,8 +43,7 @@ describe FileSet, type: :model do
   end
 
   describe "#url" do
-    let(:url) { Rails.application.routes.url_helpers.curation_concerns_file_set_path(file) }
-    its(:url) { is_expected.to end_with(url) }
+    its(:url) { is_expected.to end_with("/concern/file_sets/fixturepng") }
   end
 
   describe "#create_thumbnail" do
