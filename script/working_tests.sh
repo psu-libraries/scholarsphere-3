@@ -5,6 +5,5 @@ bundle exec rspec\
   spec/controllers\
   spec/jobs\
   spec/services\
-  spec/presenters/collection_presenter_spec.rb\
-  spec/presenters/file_set_presenter_spec.rb
+  spec/presenters
   
