@@ -12,6 +12,7 @@ describe GenericWorkToShareJSONService do
     let(:json) { JSON.parse(File.open(fixture_path + '/ss-share.json', 'rb').read) }
     let(:creator) { 'Santy, Lorraine C' }
     it "generates valid json" do
+      pending("See issue #277")
       expect(name_service).to receive(:disambiguate).and_return([{ email: "lcs13@psu.edu" }])
       expect(JSON.parse(described_class.new(file).json)).to eq(json)
     end
@@ -45,6 +46,7 @@ describe GenericWorkToShareJSONService do
       let(:creator) { ' Cole, Carolyn Ann' }
       let(:creator_email) { 'cam156@psu.edu' }
       it "formats the json" do
+        pending("See issue #277")
         expect(name_service).to receive(:disambiguate).and_return([{ email: creator_email }])
         is_expected.to eq(json)
       end
@@ -54,6 +56,7 @@ describe GenericWorkToShareJSONService do
       let(:creator) { ' Frog, Kermit The' }
       let(:creator_email) {}
       it "formats the json" do
+        pending("See issue #277")
         expect(name_service).to receive(:disambiguate).and_return([])
         is_expected.to eq(json)
       end
