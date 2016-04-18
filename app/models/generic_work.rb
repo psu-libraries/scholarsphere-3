@@ -6,5 +6,7 @@ class GenericWork < ActiveFedora::Base
   include ShareNotify::Metadata
   include AdditionalMetadata
 
+  self.human_readable_type = 'Work'
+
   validates :title, presence: { message: 'Your work must have a title.' }
 end

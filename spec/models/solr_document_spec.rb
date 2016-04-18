@@ -7,7 +7,7 @@ describe SolrDocument do
 
   describe "#export_as_endnote" do
     let(:export) do
-      "%0 Generic Work\n" \
+      "%0 Work\n" \
       "%T Sample Title\n" \
       "%R http://scholarsphere.psu.edu/files/#{work.id}\n" \
       "%~ ScholarSphere\n" \
