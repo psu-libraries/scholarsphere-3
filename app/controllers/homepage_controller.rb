@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class HomepageController < ApplicationController
-  include Sufia::HomepageController
+  include Sufia::HomepageControllerBehavior
 
   def index
     super

@@ -3,6 +3,9 @@ ScholarSphere::Application.routes.draw do
   get '/landing_page/new', to: redirect('/contact')
   get '/managedata', to: redirect('/contact')
 
+  # "Recently added files" route for catalog index view (needed before BL routes)
+  get "catalog/recent" => "catalog#recent", as: :catalog_recent
+
   mount BrowseEverything::Engine => '/browse'
   mount Blacklight::Engine => '/'
   mount HydraEditor::Engine => '/'
@@ -30,9 +33,6 @@ ScholarSphere::Application.routes.draw do
   get 'logout' => 'sessions#destroy', as: :destroy_user_session
   get 'login' => 'sessions#new', as: :new_user_session_old
   get 'login_session' => 'sessions#new', as: :new_user_session
-
-  # "Recently added files" route for catalog index view (needed before BL routes)
-  get "catalog/recent" => "catalog#recent", as: :catalog_recent
 
   # Administrative URLs
   namespace :admin do

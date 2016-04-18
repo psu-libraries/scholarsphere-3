@@ -5,5 +5,7 @@ bundle exec rspec\
   spec/controllers\
   spec/jobs\
   spec/services\
-  spec/presenters
+  spec/presenters\
+  spec/rake\
+  spec/routing
   
