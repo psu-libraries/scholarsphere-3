@@ -5,9 +5,11 @@ describe "catalog/_index_default.html.erb" do
                                     'description_tesim' => 'The description') }
 
   let(:config) { CatalogController.blacklight_config }
+  let(:blacklight_configuration_context) { Blacklight::Configuration::Context.new(controller) }
 
   before do
     allow(view).to receive(:blacklight_config).and_return(config)
+    allow(view).to receive(:blacklight_configuration_context).and_return(blacklight_configuration_context)
     allow(view).to receive(:document).and_return(document)
     params[:view] = view_type
     render

@@ -5,8 +5,4 @@ module CatalogHelper
   def titleize(str)
     str.titleize
   end
-
-  def gallery?
-    document_index_view_type == :gallery
-  end
 end

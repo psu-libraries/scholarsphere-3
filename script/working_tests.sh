@@ -7,5 +7,6 @@ bundle exec rspec\
   spec/services\
   spec/presenters\
   spec/rake\
-  spec/routing
+  spec/routing\
+  spec/views
   

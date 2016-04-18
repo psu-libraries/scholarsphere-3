@@ -19,6 +19,9 @@ en:
             label_long:   "All of ScholarSphere"
     dashboard:
       user_activity: "User Activity (last 24 hours)"
+      greeting: "Hello"
+      user_notifications: "User Notifications"
+      transfer_files_link: "Select files to transfer"
     homepage:
       recently_uploaded:    'Recent Additions'
     collection:

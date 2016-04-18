@@ -68,22 +68,22 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field solr_name("title", :stored_searchable), label: "Title", unless: :gallery?
-    config.add_index_field solr_name("description", :stored_searchable), label: "Description", unless: :gallery?
-    config.add_index_field solr_name("tag", :stored_searchable), label: "Keyword", unless: :gallery?
-    config.add_index_field solr_name("subject", :stored_searchable), label: "Subject", unless: :gallery?
-    config.add_index_field solr_name("creator", :stored_searchable), label: "Creator", unless: :gallery?
-    config.add_index_field solr_name("contributor", :stored_searchable), label: "Contributor", unless: :gallery?
-    config.add_index_field solr_name("publisher", :stored_searchable), label: "Publisher", unless: :gallery?
-    config.add_index_field solr_name("based_near", :stored_searchable), label: "Location", unless: :gallery?
-    config.add_index_field solr_name("language", :stored_searchable), label: "Language", unless: :gallery?
-    config.add_index_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded", unless: :gallery?
-    config.add_index_field solr_name("date_modified", :stored_searchable), label: "Date Modified", unless: :gallery?
-    config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created", unless: :gallery?
-    config.add_index_field solr_name("rights", :stored_searchable), label: "Rights", unless: :gallery?
-    config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", unless: :gallery?
-    config.add_index_field solr_name("file_format", :stored_searchable), label: "File Format", unless: :gallery?
-    config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier", unless: :gallery?
+    config.add_index_field solr_name("title", :stored_searchable), label: "Title"
+    config.add_index_field solr_name("description", :stored_searchable), label: "Description"
+    config.add_index_field solr_name("tag", :stored_searchable), label: "Keyword"
+    config.add_index_field solr_name("subject", :stored_searchable), label: "Subject"
+    config.add_index_field solr_name("creator", :stored_searchable), label: "Creator"
+    config.add_index_field solr_name("contributor", :stored_searchable), label: "Contributor"
+    config.add_index_field solr_name("publisher", :stored_searchable), label: "Publisher"
+    config.add_index_field solr_name("based_near", :stored_searchable), label: "Location"
+    config.add_index_field solr_name("language", :stored_searchable), label: "Language"
+    config.add_index_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
+    config.add_index_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
+    config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created"
+    config.add_index_field solr_name("rights", :stored_searchable), label: "Rights"
+    config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
+    config.add_index_field solr_name("file_format", :stored_searchable), label: "File Format"
+    config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
