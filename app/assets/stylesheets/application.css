@@ -11,12 +11,9 @@
  *= require_self
  *= require batch_edit
  *= require editor
- *= require generic_file_show
- *= require generic_files
  *= require jquery-ui
  *= require select2
  *= require sufia
- *= require sufia_overrides
- *= require video-js
+ * require sufia_overrides
  *= require blacklight_gallery/default
  */
