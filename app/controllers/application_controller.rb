@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
 
   before_action :clear_session_user
   before_action :filter_notify
-  before_action :notifications_number
 
   rescue_from ActiveFedora::ObjectNotFoundError, with: :render_404 unless Rails.env.development?
 

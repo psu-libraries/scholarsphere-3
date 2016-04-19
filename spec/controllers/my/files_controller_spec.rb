@@ -10,8 +10,6 @@ describe My::WorksController, type: :controller do
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
     describe "#index" do
-      include CurationConcerns::Messages
-
       let!(:work)       { create(:file, depositor: user.login) }
       let!(:other_work) { create(:file) }
       let(:user_results) do

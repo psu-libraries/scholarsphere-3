@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: ac053bc4ad5565e15b0154dfd26a21e3d4c0f393
+  revision: 522c0e70424ad87633e70a70e360bb8861d8de2f
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -227,7 +227,7 @@ GEM
     concurrent-ruby (1.0.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (0.12.0.pre7)
+    curation_concerns (0.12.0.pre8)
       active-fedora (~> 9.9)
       active_attr
       active_fedora-noid (~> 1.0)
@@ -255,7 +255,7 @@ GEM
     debug_inspector (0.0.2)
     deprecation (0.2.2)
       activesupport
-    devise (3.5.6)
+    devise (3.5.7)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
