@@ -22,5 +22,5 @@ describe GenericWork do
 
   describe "#url" do
     its(:url) { is_expected.to end_with("/concern/generic_works/#{work.id}") }
-  end  
+  end
 end

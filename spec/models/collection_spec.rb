@@ -5,7 +5,7 @@ describe Collection do
   subject { collection }
   context "with no attached files" do
     let(:collection) { build(:collection) }
-    its(:bytes) { is_expected.to eq(0)}
+    its(:bytes) { is_expected.to eq(0) }
   end
 
   context "with attached files" do
@@ -14,7 +14,7 @@ describe Collection do
     let(:work1)       { build(:public_work, id: "1") }
     let(:work2)       { build(:public_work, id: "2") }
     let(:resp) do
-      [ { Solrizer.solr_name(:file_size, CurationConcerns::FileSetIndexer::STORED_INTEGER) => "20" } ]
+      [{ Solrizer.solr_name(:file_size, CurationConcerns::FileSetIndexer::STORED_INTEGER) => "20" }]
     end
 
     before { allow(ActiveFedora::SolrService).to receive(:query).and_return(resp) }

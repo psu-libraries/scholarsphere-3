@@ -47,7 +47,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
   context "when file is private" do
     let(:gf) { create(:private_file) }
     before   { sign_in user }
-    
+
     context "when user is not administrator" do
       let(:user) { FactoryGirl.create(:user) }
 

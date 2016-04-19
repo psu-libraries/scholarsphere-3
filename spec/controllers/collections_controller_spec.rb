@@ -6,7 +6,7 @@ describe CollectionsController, type: :controller do
 
   context "when the Collection doesn't exist" do
     before { get :show, id: 'non-existent-collection' }
-    its(:status) { is_expected.to eq(302) }      
+    its(:status) { is_expected.to eq(302) }
   end
 
   context "when requesting a legacy URL" do
@@ -20,7 +20,7 @@ describe CollectionsController, type: :controller do
     let(:work2)       { create(:public_work) }
     let!(:collection) { create(:public_collection, members: [work1, work2]) }
     before { get :show, id: collection.id, per_page: 1, page: 2 }
-    it { 
+    it {
       pending("Sufia #1835")
       is_expected.to be_success
     }

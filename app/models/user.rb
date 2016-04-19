@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   # TODO: What's the difference between an administrator versus someone who's administrating?
-  def administrating?(file)
+  def administrating?(_file)
     administrator?
     # WAS: administrator? && Ability.new(self).cannot?(:edit, file)
   end

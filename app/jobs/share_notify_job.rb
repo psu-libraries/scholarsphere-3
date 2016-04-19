@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 class ShareNotifyJob < ActiveJob::Base
-
   attr_reader :work
 
   def perform(work)

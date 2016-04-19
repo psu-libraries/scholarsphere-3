@@ -5,7 +5,7 @@ class Ability
   include Sufia::Ability
 
   self.ability_logic += [:everyone_can_create_curation_concerns]
-  
+
   def featured_work_abilities
     can [:create, :destroy, :update], FeaturedWork if admin?
   end
@@ -27,5 +27,5 @@ class Ability
   # TODO: Remove this once projecthydra-labs/curation_concerns#724 is approved
   def admin?
     current_user.administrator?
-  end  
+  end
 end

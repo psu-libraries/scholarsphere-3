@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
-describe "SHARE Notify event jobs" do
+describe ShareNotify do
   let(:user) { create(:jill) }
   let(:file) { create(:work) }
 
   shared_examples "a SHARE Notify event job" do
     it "sends an event to the file activity stream" do
-      expect { 
+      expect {
         described_class.perform_now(file, user)
-      }.to change{file.events.length}.by(1)
+      }.to change { file.events.length }.by(1)
     end
   end
 
@@ -23,7 +24,7 @@ describe "SHARE Notify event jobs" do
   describe ShareNotifyDeleteEventJob do
     it_behaves_like "a SHARE Notify event job"
   end
-  
+
   describe ShareNotifyDeleteFailureEventJob do
     it_behaves_like "a SHARE Notify event job"
   end
