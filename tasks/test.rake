@@ -23,6 +23,7 @@ namespace :scholarsphere do
 
   desc "Run a set of tasks to prepare for testing"
   task prep: :environment do
+    WebMock.disable!
     Rake::Task["db:migrate"].invoke
     Rake::Task["scholarsphere:fits_conf"].invoke
     Rake::Task["scholarsphere:generate_secret"].invoke
@@ -40,15 +41,17 @@ namespace :scholarsphere do
     desc "Run feature tests on Travis"
     task feature: :environment do
       Rake::Task["scholarsphere:prep"].invoke
-      error = test_wrapper('scholarsphere:feature')
-      raise "test failures: #{error}" if error
+      with_test_server do
+        Rake::Task["scholarsphere:feature"].invoke
+      end
     end
 
     desc "Run unit tests on Travis"
     task unit: :environment do
       Rake::Task["scholarsphere:prep"].invoke
-      error = test_wrapper('scholarsphere:unit')
-      raise "test failures: #{error}" if error
+      with_test_server do
+        Rake::Task["scholarsphere:unit"].invoke
+      end
     end
 
     desc 'Run style checker'
@@ -56,12 +59,5 @@ namespace :scholarsphere do
       task.requires << 'rubocop-rspec'
       task.fail_on_error = true
     end 
-  end
-end
-
-def test_wrapper(task)
-  WebMock.disable!
-  with_test_server do
-    Rake::Task[task].invoke
   end
 end
