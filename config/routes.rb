@@ -52,7 +52,7 @@ ScholarSphere::Application.routes.draw do
     end
   end
 
-  root to: "homepage#index"
+  root 'sufia/homepage#index'
 
   get ':action' => 'static#:action', constraints: { action: /error_help/ }, as: :static
 
