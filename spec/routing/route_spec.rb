@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'Routes', type: :routing do
   describe 'Homepage' do
     it 'routes the root url to the catalog controller' do
-      expect(get: '/').to route_to(controller: 'homepage', action: 'index')
+      expect(get: '/').to route_to(controller: 'sufia/homepage', action: 'index')
     end
   end
 

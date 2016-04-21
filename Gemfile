@@ -10,7 +10,7 @@ gem 'hydra-ldap', '0.1.0'
 gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
 
 # sprockets-rails 3 is complaining about images not being precompiled. 
-gem 'sprockets-rails', '< 3.0.0'
+gem 'sprockets-rails'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
@@ -19,6 +19,7 @@ gem 'devise', '~> 3.5'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails', '~> 3.1'
 gem 'kaminari_route_prefix'
+gem 'ldap_disambiguate'
 gem 'namae', '0.9.3'
 gem 'nest'
 gem 'newrelic_rpm'
@@ -30,11 +31,11 @@ gem 'sass-rails'
 gem 'select2-rails'
 gem 'share_notify'
 gem 'sitemap'
+gem 'sprockets-rails'
 gem 'therubyracer'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
-gem 'ldap_disambiguate'
 
 group :development, :test do
   gem 'fcrepo_wrapper', github: 'cbeer/fcrepo_wrapper', ref: 'eab3a7da57a081aec1096642361f2f470539eef0'

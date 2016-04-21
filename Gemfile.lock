@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 522c0e70424ad87633e70a70e360bb8861d8de2f
+  revision: f9de08ef1588a1bd8a6a6c85d75e8bd6f7d3f9df
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -19,7 +19,7 @@ GIT
       blacklight-gallery (~> 0.1)
       browse-everything (~> 0.10)
       carrierwave (~> 0.9)
-      curation_concerns (~> 0.12.0.pre7)
+      curation_concerns (~> 0.12.0.pre8)
       daemons (~> 1.1)
       font-awesome-rails (~> 4.2)
       google-api-client (~> 0.7, < 0.9)
@@ -63,7 +63,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active-fedora (9.10.4)
+    active-fedora (9.12.0)
       active-triples (~> 0.7.1)
       activemodel (>= 4.2, < 6)
       activesupport (>= 4.2.4, < 6)
@@ -87,11 +87,6 @@ GEM
     active_fedora-noid (1.0.3)
       active-fedora (~> 9.7)
       noid (~> 0.7)
-    activefedora-aggregation (0.10.0)
-      active-fedora (~> 9.10.1)
-      activesupport
-      rdf (~> 1.1, >= 1.1.17.1)
-      rdf-vocab (~> 0.8.1)
     activejob (4.2.6)
       activesupport (= 4.2.6)
       globalid (>= 0.3.0)
@@ -227,7 +222,7 @@ GEM
     concurrent-ruby (1.0.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (0.12.0.pre8)
+    curation_concerns (0.12.0.pre9)
       active-fedora (~> 9.9)
       active_attr
       active_fedora-noid (~> 1.0)
@@ -325,8 +320,8 @@ GEM
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    hydra-access-controls (9.9.0)
-      active-fedora (~> 9.10.0)
+    hydra-access-controls (9.10.0)
+      active-fedora (~> 9.11)
       activesupport (~> 4.0)
       blacklight (>= 5.16)
       blacklight-access_controls (~> 0.1)
@@ -343,8 +338,8 @@ GEM
       hydra-works (~> 0.4)
       rdf (~> 1.99)
       rdf-vocab (~> 0)
-    hydra-core (9.9.0)
-      hydra-access-controls (= 9.9.0)
+    hydra-core (9.10.0)
+      hydra-access-controls (= 9.10.0)
       rails (~> 4.0)
     hydra-derivatives (3.0.1)
       active-fedora (~> 9.0)
@@ -359,16 +354,15 @@ GEM
       simple_form (~> 3.1.0)
     hydra-file_characterization (0.3.3)
       activesupport (>= 3.0.0)
-    hydra-head (9.9.0)
-      hydra-access-controls (= 9.9.0)
-      hydra-core (= 9.9.0)
+    hydra-head (9.10.0)
+      hydra-access-controls (= 9.10.0)
+      hydra-core (= 9.10.0)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
       rails
-    hydra-pcdm (0.5.0)
-      active-fedora (~> 9.6)
-      activefedora-aggregation (~> 0.10)
+    hydra-pcdm (0.6.0)
+      active-fedora (~> 9.11)
       mime-types (>= 1)
     hydra-works (0.8.1)
       hydra-derivatives (~> 3.0)
@@ -702,7 +696,7 @@ GEM
       httparty (>= 0.11.0)
       oauth2 (>= 0.9.2)
     slop (4.3.0)
-    solr_wrapper (0.9.1)
+    solr_wrapper (0.10.0)
       ruby-progressbar
       rubyzip
     solrizer (3.4.0)
@@ -729,10 +723,10 @@ GEM
       babel-source (>= 5.8.11)
       babel-transpiler
       sprockets (>= 3.0.0)
-    sprockets-rails (2.3.3)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      sprockets (>= 2.8, < 4.0)
+    sprockets-rails (3.0.4)
+      actionpack (>= 4.0)
+      activesupport (>= 4.0)
+      sprockets (>= 3.0.0)
     sqlite3 (1.3.11)
     sshkit (1.9.0)
       net-scp (>= 1.1.2)
@@ -770,7 +764,7 @@ GEM
       rack (>= 1.0.0)
     warden (1.2.6)
       rack (>= 1.0)
-    webmock (1.24.3)
+    webmock (1.24.5)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -839,7 +833,7 @@ DEPENDENCIES
   share_notify
   sitemap
   solr_wrapper
-  sprockets-rails (< 3.0.0)
+  sprockets-rails
   sqlite3
   sufia!
   therubyracer
