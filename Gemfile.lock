@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: f9de08ef1588a1bd8a6a6c85d75e8bd6f7d3f9df
+  revision: 9d0c339c0dbe8ce22aee22824bfd8ac826afbbc3
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -744,6 +744,8 @@ GEM
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)
       tinymce-rails (~> 4.0)
+    turbolinks (2.5.3)
+      coffee-rails
     twitter-typeahead-rails (0.11.1)
       actionpack (>= 3.1)
       jquery-rails
@@ -837,6 +839,7 @@ DEPENDENCIES
   sqlite3
   sufia!
   therubyracer
+  turbolinks
   uglifier
   unicorn-rails
   vcr

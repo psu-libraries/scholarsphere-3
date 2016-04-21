@@ -9,9 +9,6 @@ gem 'browse-everything', '~> 0.10'
 gem 'hydra-ldap', '0.1.0'
 gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
 
-# sprockets-rails 3 is complaining about images not being precompiled. 
-gem 'sprockets-rails'
-
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
@@ -33,6 +30,7 @@ gem 'share_notify'
 gem 'sitemap'
 gem 'sprockets-rails'
 gem 'therubyracer'
+gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
