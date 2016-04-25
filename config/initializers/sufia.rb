@@ -52,6 +52,7 @@ Sufia.config do |config|
     "Image" => "Image",
     "Journal" => "Journal",
     "Map or Cartographic Material" => "Map or Cartographic Material",
+    "Other" => "Other",
     "Part of Book" => "Part of Book",
     "Poster" => "Poster",
     "Presentation" => "Presentation",
@@ -60,8 +61,30 @@ Sufia.config do |config|
     "Research Paper" => "Research Paper",
     "Software or Program Code" => "Software or Program Code",
     "Thesis" => "Thesis",
-    "Video" => "Video",
-    "Other" => "Other"
+    "Video" => "Video"
+  }
+
+  config.resource_types_to_schema = {
+    "Article" => "http://schema.org/Article",
+    "Audio" => "http://schema.org/AudioObject",
+    "Book" => "http://schema.org/Book",
+    "Capstone Project" => "http://schema.org/CreativeWork",
+    "Conference Proceeding" => "http://schema.org/ScholarlyArticle",
+    "Dataset" => "http://schema.org/Dataset",
+    "Dissertation" => "http://schema.org/ScholarlyArticle",
+    "Image" => "http://schema.org/ImageObject",
+    "Journal" => "http://schema.org/CreativeWork",
+    "Map or Cartographic Material" => "http://schema.org/Map",
+    "Other" => "http://schema.org/CreativeWork",
+    "Part of Book" => "http://schema.org/Book",
+    "Poster" => "http://schema.org/CreativeWork",
+    "Presentation" => "http://schema.org/CreativeWork",
+    "Project" => "http://schema.org/CreativeWork",
+    "Report" => "http://schema.org/CreativeWork",
+    "Research Paper" => "http://schema.org/ScholarlyArticle",
+    "Software or Program Code" => "http://schema.org/Code",
+    "Thesis" => "http://schema.org/ScholarlyArticle",
+    "Video" => "http://schema.org/VideoObject"
   }
 
   config.permission_levels = {
