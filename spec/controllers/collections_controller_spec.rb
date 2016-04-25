@@ -20,9 +20,6 @@ describe CollectionsController, type: :controller do
     let(:work2)       { create(:public_work) }
     let!(:collection) { create(:public_collection, members: [work1, work2]) }
     before { get :show, id: collection.id, per_page: 1, page: 2 }
-    it {
-      pending("Sufia #1835")
-      is_expected.to be_success
-    }
+    it { is_expected.to be_success }
   end
 end

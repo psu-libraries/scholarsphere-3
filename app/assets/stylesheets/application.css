@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require batch_edit
  *= require editor
  *= require jquery-ui
  *= require select2

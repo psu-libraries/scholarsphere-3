@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 9d0c339c0dbe8ce22aee22824bfd8ac826afbbc3
+  revision: 19363536b5e7d58685f5b3ab9b3c4271f336d6ed
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -19,11 +19,11 @@ GIT
       blacklight-gallery (~> 0.1)
       browse-everything (~> 0.10)
       carrierwave (~> 0.9)
-      curation_concerns (~> 0.12.0.pre8)
+      curation_concerns (~> 0.13.0)
       daemons (~> 1.1)
       font-awesome-rails (~> 4.2)
       google-api-client (~> 0.7, < 0.9)
-      hydra-batch-edit (~> 1.1)
+      hydra-batch-edit (~> 2.0)
       hydra-works (~> 0.7)
       jquery-ui-rails (~> 5.0)
       json-schema
@@ -39,7 +39,7 @@ GIT
       tinymce-rails (~> 4.1)
       tinymce-rails-imageupload (~> 4.0.16.beta)
       yaml_db (~> 0.2)
-      zeroclipboard-rails (~> 0.1)
+      zeroclipboard-rails (~> 0.0.13)
 
 GEM
   remote: https://rubygems.org/
@@ -222,7 +222,7 @@ GEM
     concurrent-ruby (1.0.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (0.12.0.pre9)
+    curation_concerns (0.13.1)
       active-fedora (~> 9.9)
       active_attr
       active_fedora-noid (~> 1.0)
@@ -246,7 +246,7 @@ GEM
       solrizer (~> 3.4)
       sprockets-es6
     daemons (1.2.3)
-    database_cleaner (1.5.2)
+    database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     deprecation (0.2.2)
       activesupport
@@ -327,17 +327,10 @@ GEM
       blacklight-access_controls (~> 0.1)
       cancancan (~> 1.8)
       deprecation (~> 0.2)
-    hydra-batch-edit (1.1.1)
+    hydra-batch-edit (2.0.2)
       blacklight
-      hydra-collections
-    hydra-collections (8.2.0)
-      active-fedora (~> 9.9)
-      blacklight (~> 6.0)
-      deprecation (~> 0.1)
-      hydra-head (~> 9.9)
-      hydra-works (~> 0.4)
-      rdf (~> 1.99)
-      rdf-vocab (~> 0)
+      curation_concerns (>= 0.12.0.pre2)
+      rails
     hydra-core (9.10.0)
       hydra-access-controls (= 9.10.0)
       rails (~> 4.0)
@@ -453,7 +446,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     mono_logger (1.1.0)
-    multi_json (1.11.2)
+    multi_json (1.11.3)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.20)
@@ -661,7 +654,7 @@ GEM
       json
       multipart-post
       oauth2
-    ruby-progressbar (1.7.5)
+    ruby-progressbar (1.8.0)
     rubyzip (1.2.0)
     rufus-scheduler (3.2.0)
     safe_yaml (1.0.4)
@@ -728,7 +721,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.11)
-    sshkit (1.9.0)
+    sshkit (1.10.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     stomp (1.3.5)
@@ -766,7 +759,7 @@ GEM
       rack (>= 1.0.0)
     warden (1.2.6)
       rack (>= 1.0)
-    webmock (1.24.5)
+    webmock (1.24.6)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -781,7 +774,7 @@ GEM
     yaml_db (0.3.0)
       rails (>= 3.0, < 4.3)
       rake (>= 0.8.7)
-    zeroclipboard-rails (0.1.1)
+    zeroclipboard-rails (0.0.13)
       railties (>= 3.1)
 
 PLATFORMS
