@@ -14,6 +14,7 @@ describe SessionsController, type: :controller do
   end
   describe "#destroy" do
     it "redirects to the central logout page and destroy the cookie" do
+      pending("Possible changes to cosign")
       request.env['COSIGN_SERVICE'] = 'cosign-gamma-ci.dlt.psu.edu'
       expect(cookies).to receive(:delete).with('cosign-gamma-ci.dlt.psu.edu')
       get :destroy
