@@ -16,7 +16,7 @@ describe 'users/show.html.erb', type: :view do
   end
 
   it "draws 4 tabs" do
-    pending("Profile tab seems to have been removed, see #278")
+    pending("Profile tab seems to have been removed, see #283")
     render
     page = Capybara::Node::Simple.new(rendered)
     expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#contributions']")
@@ -42,6 +42,7 @@ describe 'users/show.html.erb', type: :view do
       assign(:user, stub_model(User, user_key: 'cam156', created_at: join_date, title: 'mrs'))
     end
     it "has the vitals" do
+      pending("Needs UI test review, see #283")
       render
       expect(rendered).to match(/<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/)
       expect(rendered).to match(/<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/)

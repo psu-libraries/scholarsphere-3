@@ -22,6 +22,7 @@ describe 'dashboard/index.html.erb', type: :view do
   end
 
   it "draws transfers" do
+    pending("Needs a UI review")
     render
     page = Capybara::Node::Simple.new(rendered)
     expect(page).to have_selector("#transfers.panel .panel-body .row .col-xs-12.col-sm-3 a", text: 'Select files to transfer')
