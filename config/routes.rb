@@ -29,6 +29,14 @@ ScholarSphere::Application.routes.draw do
     concerns :exportable
   end
 
+  resources :bookmarks do
+    concerns :exportable
+
+    collection do
+      delete 'clear'
+    end
+  end
+
   devise_for :users
 
   # Login/logout route to destroy session

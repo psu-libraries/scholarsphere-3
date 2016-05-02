@@ -2,13 +2,8 @@
 class User < ActiveRecord::Base
   extend Deprecation
 
-  include Hydra::User
-  include CurationConcerns::User
   include Sufia::User
   include Sufia::UserUsageStats
-
-  # Adds acts_as_messageable for user mailboxes
-  include Mailboxer::Models::Messageable
 
   # TODO: Removed in Sufia 7?
   # Workaround to retry LDAP calls a number of times
