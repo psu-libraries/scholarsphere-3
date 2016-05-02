@@ -6,11 +6,9 @@ module Locations
     expect(page).to have_content('My Dashboard')
   end
 
-  def go_to_dashboard_files
-    # go_to_dashboard
-    # click_link('View Files')
-    visit '/dashboard/files'
-    expect(page).to have_selector('li.active', text: "My Files")
+  def go_to_dashboard_works
+    visit '/dashboard/works'
+    expect(page).to have_selector('li.active', text: "My Works")
   end
 
   def go_to_dashboard_collections

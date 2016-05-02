@@ -23,7 +23,8 @@ en:
       user_notifications: "User Notifications"
       transfer_files_link: "Select files to transfer"
     homepage:
-      recently_uploaded:    'Recent Additions'
+      recently_uploaded:
+        tab_label: 'Recent Additions'
     collection:
       select_form:
         update: "Add to Collection"

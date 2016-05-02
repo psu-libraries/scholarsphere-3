@@ -30,13 +30,13 @@ FactoryGirl.define do
 
       factory :featured_file do
         after(:create) do |f|
-          FeaturedWork.create!(generic_file_id: f.id)
+          FeaturedWork.create!(generic_work_id: f.id)
         end
       end
 
       factory :trophy_file do
         after(:create) do |f, attrs|
-          Trophy.create!(user_id: User.find_by_login(attrs.depositor).id, generic_file_id: f.id)
+          Trophy.create!(user_id: User.find_by_login(attrs.depositor).id, generic_work_id: f.id)
         end
       end
     end
