@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 637ac079694ed776f42d7b5d4efc746f4a10d871
+  revision: 2d439b3100dd643881c2688588b344b21fc12d8b
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -19,7 +19,7 @@ GIT
       blacklight-gallery (~> 0.1)
       browse-everything (~> 0.10)
       carrierwave (~> 0.9)
-      curation_concerns (~> 0.14.0.pre1)
+      curation_concerns (~> 0.14.0.pre3)
       daemons (~> 1.1)
       font-awesome-rails (~> 4.2)
       google-api-client (~> 0.7, < 0.9)
@@ -184,7 +184,7 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-harrow (0.3.2)
+    capistrano-harrow (0.4.0)
     capistrano-rails (1.1.6)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -198,7 +198,7 @@ GEM
       capistrano
       resque
       resque-scheduler
-    capybara (2.7.0)
+    capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -227,7 +227,7 @@ GEM
     concurrent-ruby (1.0.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (0.14.0.pre1)
+    curation_concerns (0.14.0.pre3)
       active-fedora (~> 9.9)
       active_attr
       active_fedora-noid (~> 1.0)
@@ -236,7 +236,7 @@ GEM
       blacklight_advanced_search (~> 6.0)
       breadcrumbs_on_rails (~> 2.3)
       deprecation (~> 0.1)
-      hydra-editor (~> 1.1)
+      hydra-editor (~> 2.0)
       hydra-head (~> 9.9)
       hydra-works (~> 0.8, >= 0.8.1)
       jquery-ui-rails
@@ -346,7 +346,7 @@ GEM
       deprecation
       mime-types (> 2.0, < 4.0)
       mini_magick (>= 3.2, < 5)
-    hydra-editor (1.2.0)
+    hydra-editor (2.0.0)
       active-fedora (>= 9.0.0)
       cancancan (~> 1.8)
       rails (~> 4.1)
@@ -600,7 +600,7 @@ GEM
     redlock (0.1.5)
       redis (~> 3, >= 3.0.5)
     ref (2.0.0)
-    responders (2.1.2)
+    responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     resque (1.26.0)
       mono_logger (~> 1.0)
@@ -611,11 +611,11 @@ GEM
     resque-pool (0.6.0)
       rake
       resque (~> 1.22)
-    resque-scheduler (4.1.0)
+    resque-scheduler (4.2.0)
       mono_logger (~> 1.0)
       redis (~> 3.0)
       resque (~> 1.25)
-      rufus-scheduler (~> 3.0)
+      rufus-scheduler (~> 3.2)
     retriable (1.4.1)
     rsolr (1.1.1)
       builder (>= 2.1.2)
@@ -753,7 +753,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.0.3)
+    unicode-display_width (1.0.5)
     unicorn (5.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)

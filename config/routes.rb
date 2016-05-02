@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'resque/server'
+
 ScholarSphere::Application.routes.draw do
   get '/landing_page/new', to: redirect('/contact')
   get '/managedata', to: redirect('/contact')
