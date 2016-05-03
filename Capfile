@@ -23,9 +23,6 @@ require 'capistrano/git' #git
 require './lib/capistrano/submodule_strategy' #custom submodule strategy
 require 'capistrano/rbenv_install' #rbenv install plugin
 
-# Makes Capistrano's output nicer to look at
-require 'airbrussh/capistrano'
-
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 # tasks included: passenger, checksum
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

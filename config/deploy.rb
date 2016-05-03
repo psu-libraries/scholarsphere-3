@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-# config valid only for Capistrano 3.4
-lock '3.4.0'
+lock '3.5.0'
 
 # application and repo settings
 set :application, 'scholarsphere'
@@ -39,6 +38,9 @@ set :scm, :git
 set :log_level, :debug
 set :pty, true
 
+# Airbrussh options
+set :format_options, command_output: false
+
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(
   'config/database.yml',
@@ -56,10 +58,9 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/browse_everything_providers.yml',
   'config/arkivo.yml',
   'config/zotero.yml',
+  'config/secrets.yml',
   'public/sitemap.xml',
   'public/robots.txt',
-  'config/initializers/secret_token.rb',
-  'config/initializers/sufia-secret.rb',
   'config/initializers/arkivo_constraint.rb'
 )
 
@@ -102,7 +103,8 @@ namespace :deploy do
       end
     end
   end
-  after :migrate, :resolrize
+  # Disable resolrization until after PCDM migration
+  # after :migrate, :resolrize
 
   desc "Restart resque-pool"
   task :resquepoolrestart do
@@ -122,7 +124,8 @@ namespace :deploy do
       end
     end
   end
-  after :published, :sitemapxml
+  # Disabled, see psu-stewardship/scholarsphere#285
+  # after :published, :sitemapxml
 
   # Passenger Capistrano Task
   # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
