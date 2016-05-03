@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 2d439b3100dd643881c2688588b344b21fc12d8b
+  revision: 7e65c9f2f03461bb3ab2c16ea30d47e64811bc9a
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -19,7 +19,7 @@ GIT
       blacklight-gallery (~> 0.1)
       browse-everything (~> 0.10)
       carrierwave (~> 0.9)
-      curation_concerns (~> 0.14.0.pre3)
+      curation_concerns (~> 0.14.0.pre4)
       daemons (~> 1.1)
       font-awesome-rails (~> 4.2)
       google-api-client (~> 0.7, < 0.9)
@@ -224,10 +224,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    concurrent-ruby (1.0.1)
+    concurrent-ruby (1.0.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (0.14.0.pre3)
+    curation_concerns (0.14.0.pre4)
       active-fedora (~> 9.9)
       active_attr
       active_fedora-noid (~> 1.0)
@@ -246,8 +246,6 @@ GEM
       rdf (~> 1.99)
       rdf-vocab (~> 0)
       redlock (~> 0.1.2)
-      resque (~> 1.23)
-      resque-pool (~> 0.3)
       simple_form (~> 3.1)
       solrizer (~> 3.4)
       sprockets-es6
@@ -256,7 +254,7 @@ GEM
     debug_inspector (0.0.2)
     deprecation (0.2.2)
       activesupport
-    devise (3.5.8)
+    devise (3.5.9)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -765,7 +763,7 @@ GEM
       rack (>= 1.0.0)
     warden (1.2.6)
       rack (>= 1.0)
-    webmock (2.0.0)
+    webmock (2.0.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -847,4 +845,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.11.2
+   1.12.1
