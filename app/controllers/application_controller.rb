@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class ApplicationController < ActionController::Base
+  helper Openseadragon::OpenseadragonHelper
   include Blacklight::Controller
   include Hydra::Controller::ControllerBehavior
   include CurationConcerns::ApplicationControllerBehavior
