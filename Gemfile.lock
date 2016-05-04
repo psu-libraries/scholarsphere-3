@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 7e65c9f2f03461bb3ab2c16ea30d47e64811bc9a
+  revision: 224101238189fbbf1ac5eb133c78f19d163eeae1
   branch: master
   specs:
     sufia (7.0.0.beta1)
@@ -450,7 +450,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     mono_logger (1.1.0)
-    multi_json (1.11.3)
+    multi_json (1.12.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.20)
@@ -660,7 +660,7 @@ GEM
       oauth2
     ruby-progressbar (1.8.0)
     rubyzip (1.2.0)
-    rufus-scheduler (3.2.0)
+    rufus-scheduler (3.2.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.4)
