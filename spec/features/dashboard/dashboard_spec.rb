@@ -34,8 +34,8 @@ describe 'The Dashboard', type: :feature do
       expect(page).to have_content "Joe Example"
       expect(page).to have_link "View Profile"
       expect(page).to have_link "Edit Profile"
-      expect(page).to have_content("0 Files you've deposited")
-      expect(page).to have_content("0 Collections you've created")
+      expect(page).to have_content("0 Deposited Files")
+      expect(page).to have_content("0 Collections created")
 
       # shows recent activity
       expect(page).to have_content "User Activity"
