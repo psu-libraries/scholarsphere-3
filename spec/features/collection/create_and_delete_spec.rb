@@ -29,7 +29,7 @@ describe Collection, type: :feature do
     let!(:file1) { create(:file, title: ["First file"], depositor: current_user.login) }
     let!(:file2) { create(:file, title: ["Second file"], depositor: current_user.login) }
     before do
-      go_to_dashboard_files
+      go_to_dashboard_works
       check 'check_all'
       click_button 'Add to Collection'
       db_create_populated_collection_button.click
