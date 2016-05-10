@@ -2,7 +2,7 @@ require 'fcrepo_wrapper'
 require 'fcrepo_wrapper/rake_task'
 require 'solr_wrapper'
 
-FcrepoWrapper.default_instance_options = { port: '8984', instance_dir: 'tmp/fcrepo' }
+#FcrepoWrapper.default_instance_options = { port: '8984', instance_dir: 'tmp/fcrepo' }
 
 namespace :solr do
 
