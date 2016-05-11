@@ -5,9 +5,9 @@ FactoryGirl.define do
       user { FactoryGirl.create(:user) }
     end
     sequence(:title) { |n| ["Title #{n}"] }
-    before(:create) { |work, evaluator|
-      work.apply_depositor_metadata(evaluator.user.user_key)
-    }
+    after(:build) do |collection, attrs|
+      collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
+    end
 
     factory :public_collection do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
