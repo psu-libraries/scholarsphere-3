@@ -29,11 +29,6 @@ class SolrDocument
     collections
   end
 
-  def creator
-    return nil if self[Solrizer.solr_name(:creator)].blank?
-    "#{ul_start_tags} #{self[Solrizer.solr_name(:creator)].join(ul_join_tags)} #{ul_end_tags}".html_safe
-  end
-
   private
 
     def ul_start_tags
