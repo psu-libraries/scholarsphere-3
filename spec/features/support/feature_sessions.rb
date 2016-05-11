@@ -40,7 +40,7 @@ module Features
 
       def defaults
         {
-          js_errors: true,
+          js_errors: false,
           timeout: 90,
           phantomjs_options: ['--ssl-protocol=ANY']
         }

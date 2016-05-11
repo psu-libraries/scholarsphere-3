@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Collections:', type: :feature do
-  let!(:jill_collection) { create(:collection, title: "Jill's Collection", depositor: jill.login) }
+  let!(:jill_collection) { create(:collection, title: ["Jill's Collection"], depositor: jill.login) }
   let!(:collection)      { create(:collection, depositor: current_user.login) }
 
   let(:current_user) { create(:user) }
@@ -17,15 +17,13 @@ describe 'Dashboard Collections:', type: :feature do
 
   specify 'tab title and buttons' do
     expect(page).to have_content("My Collections")
-    within('#sidebar') do
-      expect(page).to have_content("Upload")
-      expect(page).to have_content("Create Collection")
-    end
+    expect(page).to have_link("New Work", visible: false) # link is there (even if collapsed)
+    expect(page).to have_link("New Collection", visible: false) # link is there (even if collapsed)
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
 
   specify 'collections are displayed in the Collections list' do
-    expect(page).to have_content collection.title
+    expect(page).to have_content collection.title.first
     expect(page).not_to have_content jill_collection.title
   end
 
@@ -50,8 +48,8 @@ describe 'Dashboard Collections:', type: :feature do
     expect(page).to have_content("Delete Collection")
   end
 
-  specify 'collections are not displayed in the File list' do
-    go_to_dashboard_files
+  specify 'collections are not displayed in the Works list' do
+    go_to_dashboard_works
     expect(page).not_to have_content collection.title
   end
 
