@@ -37,8 +37,8 @@ describe Collection, type: :feature do
         expect(page).to have_content work2.title.first
         db_item_actions_toggle(work1).click
         click_button 'Remove from Collection'
-        expect(page).to have_content collection.title
-        expect(page).to have_content collection.description
+        expect(page).to have_content collection.title.first
+        expect(page).to have_content collection.description.first
         expect(page).not_to have_content work1.title.first
         expect(page).to have_content work2.title.first
       end
@@ -52,8 +52,8 @@ describe Collection, type: :feature do
         expect(page).to have_content work2.title.first
         check 'check_all'
         click_button 'Remove From Collection'
-        expect(page).to have_content collection.title
-        expect(page).to have_content collection.description
+        expect(page).to have_content collection.title.first
+        expect(page).to have_content collection.description.first
         expect(page).not_to have_content work1.title.first
         expect(page).not_to have_content work2.title.first
       end
@@ -62,8 +62,8 @@ describe Collection, type: :feature do
 
   describe "editing a collection's metadata" do
     let!(:collection)           { create(:collection, depositor: current_user.login) }
-    let!(:original_title)       { collection.title }
-    let!(:original_description) { collection.description }
+    let!(:original_title)       { collection.title.first }
+    let!(:original_description) { collection.description.first }
 
     let(:updated_title)         { 'Updated Title' }
     let(:updated_description)   { 'Updtaed description text.' }
