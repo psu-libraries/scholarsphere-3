@@ -36,7 +36,7 @@ gem 'whenever'
 gem 'yaml_db'
 
 group :development, :test do
-  gem 'fcrepo_wrapper', github: 'cbeer/fcrepo_wrapper', ref: 'eab3a7da57a081aec1096642361f2f470539eef0'
+  gem 'fcrepo_wrapper'
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'rubocop', '~> 0.39.0'
