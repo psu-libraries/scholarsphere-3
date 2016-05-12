@@ -44,8 +44,8 @@ module ScholarSphere
       path || 'ffmpeg'
     end
 
-    config.scholarsphere_version = "v2.5"
-    config.scholarsphere_release_date = "January 14, 2016"
+    config.scholarsphere_version = "v2.6"
+    config.scholarsphere_release_date = "April 12, 2016"
     config.redis_namespace = "scholarsphere"
     config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
