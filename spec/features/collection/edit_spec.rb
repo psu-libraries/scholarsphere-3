@@ -61,17 +61,15 @@ describe Collection, type: :feature do
   end
 
   describe "editing a collection's metadata" do
-    # let!(:collection)           { create(:collection, depositor: current_user.login, description: ["original description"]) }
-    # let!(:original_title)       { collection.title }
-    # let!(:original_description) { collection.description }
-    #
-    # let(:updated_title)         { 'Updated Title' }
-    # let(:updated_description)   { 'Updtaed description text.' }
-    # let(:updated_creators)      { ['Dorje Trollo', 'Vajrayogini'] }
+    let!(:collection)           { create(:collection, depositor: current_user.login, description: ["original description"]) }
+    let!(:original_title)       { collection.title }
+    let!(:original_description) { collection.description }
+
+    let(:updated_title)         { 'Updated Title' }
+    let(:updated_description)   { 'Updtaed description text.' }
+    let(:updated_creators)      { ['Dorje Trollo', 'Vajrayogini'] }
 
     specify do
-      visit '/dashboard/highlights'
-      save_screenshot('/Users/cam156/scholarsphere/file.png', :full => true)
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'

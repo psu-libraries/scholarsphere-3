@@ -13,3 +13,4 @@ bundle exec rspec\
   spec/features/user_stats_spec.rb\
   spec/features/users_spec.rb\
   spec/features/collection/view_and_search_spec.rb
+  spec/features/collection/edit_spec.rb

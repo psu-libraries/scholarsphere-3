@@ -27,9 +27,9 @@ describe NameDisambiguationService, unless: travis? do
   end
 
   context "when we have initials for first name" do
-    let(:name) { "M.L. Ostrowski" }
+    let(:name) { "K.B. Baker" }
     it "finds the user" do
-      is_expected.to eq([{ id: "mlo10", given_name: "MONA LEE", surname: "OSTROWSKI", email: "mlo10@psu.edu", affiliation: ["MEMBER"], displayname: "MONA LEE OSTROWSKI" }])
+      is_expected.to eq([{ id: "kbb2", given_name: "KURT BRADLEY", surname: "BAKER", email: "kbb2@psu.edu", affiliation: ["RETIREE"], displayname: "KURT BRADLEY BAKER" }])
     end
   end
 
