@@ -90,7 +90,6 @@ describe 'unified search', type: :feature do
       expect(page).not_to have_css('#src_copy_link' + collection.id)
     end
     it "searches My Collections" do
-      pending("JS errors present that are unreproduceable in dev")
       expect(page).to have_content("All")
       click_on("All")
       click_on("My Collections")
