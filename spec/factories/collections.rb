@@ -6,6 +6,7 @@ FactoryGirl.define do
     end
     sequence(:title) { |n| ["Title #{n}"] }
     sequence(:description) { |n| ["Description #{n}"] }
+    sequence(:creator) { |n| ["Creator #{n}"] }
     after(:build) do |collection, attrs|
       collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
     end
