@@ -29,7 +29,7 @@ describe 'Dashboard Collections:', type: :feature do
 
   specify 'toggle displays additional information' do
     first('i.glyphicon-chevron-right').click
-    expect(page).to have_content(collection.description)
+    expect(page).to have_content(collection.description.first)
     expect(page).to have_content(current_user)
   end
 
@@ -42,7 +42,7 @@ describe 'Dashboard Collections:', type: :feature do
     expect(page).not_to have_content("Edit Collection")
     expect(page).not_to have_content("Delete Collection")
     within('#documents') do
-      first('.dropdown-toggle').click
+      first('.btn.dropdown-toggle').click
     end
     expect(page).to have_content("Edit Collection")
     expect(page).to have_content("Delete Collection")
