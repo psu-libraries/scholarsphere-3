@@ -13,10 +13,8 @@ describe 'Dashboard Highlights', type: :feature do
 
   specify 'tab title and buttons' do
     expect(page).to have_content("My Highlights")
-    within('#sidebar') do
-      expect(page).to have_content("Upload")
-      expect(page).to have_content("Create Collection")
-    end
+    expect(page).to have_content("New Work")
+    expect(page).to have_content("Create Collection")
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
 end
