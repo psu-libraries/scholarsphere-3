@@ -12,5 +12,7 @@ bundle exec rspec\
   spec/features/unified_search_spec.rb\
   spec/features/user_stats_spec.rb\
   spec/features/users_spec.rb\
-  spec/features/collection/view_and_search_spec.rb
-  spec/features/collection/edit_spec.rb
+  spec/features/collection/view_and_search_spec.rb\
+  spec/features/collection/edit_spec.rb\
+  spec/features/file_set/thumbnail_spec.rb\
+  spec/features/generic_work/thumbnail_spec

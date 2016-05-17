@@ -45,12 +45,56 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
 
+    factory :public_work_without_filesets do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+    end
+
+    factory :public_work_with_png do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: attributes.user,
+                                title: ["A contained PNG file"],
+                                label: 'world.png',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/world.png"
+        Hydra::Works::AddFileToFileSet.call(fs, File.open(file_path), :original_file)
+        CharacterizeJob.perform_now(fs, file_path)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+      end
+    end
+
+    factory :public_work_with_mp3 do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: attributes.user,
+                                title: ["A contained MP3 file"],
+                                label: 'scholarsphere_test5.mp3',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
+        Hydra::Works::AddFileToFileSet.call(fs, File.open(file_path), :original_file)
+        CharacterizeJob.perform_now(fs, file_path)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+      end
+    end
+
     trait :with_one_file do
       before(:create) do |work, evaluator|
-        work.ordered_members << FactoryGirl.create(:file_set,
-                                                   user: evaluator.user,
-                                                   title: (evaluator.file_title || ["A Contained File"]),
-                                                   label: evaluator.file_name || 'filename.pdf')
+        fs = FactoryGirl.create(:file_set,
+                                user: evaluator.user,
+                                title: (evaluator.file_title || ["A Contained File"]),
+                                label: (evaluator.file_name || 'filename.pdf'))
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
       end
     end
 
