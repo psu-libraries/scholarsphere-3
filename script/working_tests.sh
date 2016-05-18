@@ -17,4 +17,5 @@ bundle exec rspec\
   spec/features/file_set/thumbnail_spec.rb\
   spec/features/generic_work/thumbnail_spec\
   spec/features/dashboard/dashboard_shares_spec.rb\
-  spec/features/dashboard/dashboard_highlights_spec.rb
+  spec/features/dashboard/dashboard_highlights_spec.rb\
+  spec/features/generic_file/view_and_download_spec.rb
