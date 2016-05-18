@@ -25,6 +25,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    params[:user].delete(:group_list)
+    super
+  end
+
   protected
 
     def base_query
