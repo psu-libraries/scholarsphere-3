@@ -32,3 +32,9 @@ en:
     labels:
       collection:
         description: "Description"
+    aria_label:
+      collection:
+        default: "Click for help with %{title}"
+    metadata_help:
+      collection:
+        creator_html: The person or group responsible for the collection. Usually this is the author of the collected content. Personal names should be entered with the last name first, e.g. 'Smith, John'. <em>This is a required field</em>.
