@@ -15,11 +15,9 @@ describe 'Dashboard Shares', type: :feature do
 
     it 'displays tab title and buttons' do
       expect(page).to have_content("Files Shared with Me")
-      within('#sidebar') do
-        expect(page).to have_content("Upload")
-        expect(page).to have_content("Create Collection")
-        expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
-      end
+      expect(page).to have_link("New Work", visible: false)
+      expect(page).to have_link("New Collection", visible: false)
+      expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
     end
   end
 
