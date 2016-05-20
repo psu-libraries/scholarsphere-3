@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 class ShareNotifyJob < ActiveFedoraIdBasedJob
+  def queue_name
+    :share_notify
+  end
+
   def run
     return if unshareable? || object.share_notified?
     Sufia.queue.push(notification_job)
