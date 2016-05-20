@@ -2,6 +2,8 @@
 class ShareNotifyJob < ActiveJob::Base
   attr_reader :work
 
+  queue_as :share_notify
+
   def perform(work)
     @work = work
     return if unshareable? || work.share_notified?
