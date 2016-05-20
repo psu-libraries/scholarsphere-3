@@ -2,11 +2,11 @@
 require 'feature_spec_helper'
 include Selectors::Dashboard
 
-describe 'Dashboard Files', type: :feature do
+describe 'Dashboard Works', type: :feature do
   let!(:current_user) { create(:user) }
 
   let!(:file) do
-    create(:public_file, :with_complete_metadata,
+    create(:public_work, :with_complete_metadata,
            depositor: current_user.login,
            title: ['little_file.txt'],
            creator: ['little_file.txt_creator']
@@ -15,25 +15,23 @@ describe 'Dashboard Files', type: :feature do
 
   let(:jill) { create(:jill) }
   let!(:other_collection) do
-    create(:collection, title: 'jill collection', depositor: jill.login)
+    create(:collection, title: ['jill collection'], depositor: jill.login)
   end
 
   before do
     sign_in_with_js(current_user)
-    go_to_dashboard_files
+    go_to_dashboard_works
   end
 
   let(:filename) { file.title.first }
 
-  context 'with one file:' do
+  context 'with one work:' do
     specify 'interactions are wired correctly' do
       # tab title and buttons
-      expect(page).to have_content("My Files")
-      expect(page).to have_selector("h2.sr-only", text: "Files listing")
-      within('#sidebar') do
-        expect(page).to have_content("Upload")
-        expect(page).to have_content("Create Collection")
-      end
+      expect(page).to have_content("My Works")
+      expect(page).to have_selector("h2.sr-only", text: "Works listing")
+      expect(page).to have_link("New Work", visible: false) # link is there (even if collapsed)
+      expect(page).to have_link("New Collection", visible: false) # link is there (even if collapsed)
       # Additional metadata about the file is hidden
       expect(page).not_to have_content "Edit Access"
       expect(page).not_to have_content file.creator.first
@@ -41,64 +39,47 @@ describe 'Dashboard Files', type: :feature do
       # A return controller is specified
       expect(page).to have_css("input#return_controller", visible: false)
 
+      # TODO: This part of the test won't pass until this Sufia
+      #       ticket has been taken care of: https://github.com/projecthydra/sufia/issues/2054
+      #
       # Clicking + displays additional metadata about that file
-      within("#documents") do
-        first('i.glyphicon-chevron-right').click
-      end
-      expect(page).to have_content file.creator.first
-      expect(page).to have_content "Edit Access"
+      # within("#documents") do
+      #   first('i.glyphicon-chevron-right').click
+      # end
+      # expect(page).to have_content file.creator.first
+      # expect(page).to have_content "Edit Access"
 
       db_item_actions_toggle(file).click
-      click_link 'Edit File'
-      expect(page).to have_content "Edit #{filename}"
-
-      # Clicking the Visibility link loads the edit permissions page
-      # The link is not visible in poltergeist unless we resize
-      # the page (1440w x 1200h). Somehow using .trigger gets around
-      # this issue though.
-      go_to_dashboard_files
-      db_visibility_link(file).trigger('click')
-      expect(page).to have_content 'Permissions'
+      click_link 'Edit Work'
+      expect(page).to have_content("Edit Work")
+      expect(page).to have_field("generic_work[title][]", with: filename)
       expect(page).to have_content 'Visibility'
-      expect(page).to have_content 'Share With'
+
+      # TODO: This part of the test won't pass until this Sufia
+      #       ticket has been closed: https://github.com/projecthydra/sufia/issues/2049
+      go_to_dashboard_works
+      db_visibility_link(file).click
+      expect(page).to have_content('Sharing With')
 
       # Clicking Transfer Ownership of File loads the transfer ownership page
-      go_to_dashboard_files
+      go_to_dashboard_works
       db_item_actions_toggle(file).click
-      click_link 'Transfer Ownership of File'
+      click_link 'Transfer Ownership of Work'
       expect(page).to have_content "Transfer ownership of \"#{filename}\""
     end
-
-    # specify 'Clicking the Visibility link loads the edit permissions page' do
-    # end
-
-    # specify 'Additional metadata about the file is hidden' do
-    # end
-
-    # specify 'Clicking + displays additional metadata about that file' do
-    #  first('i.glyphicon-chevron-right').click
-    #  expect(page).to have_content "plain (Plain text)JPG"
-    #  expect(page).to have_content "little_file.txt_creator"
-    # end
-
-    # specify 'Clicking Edit File goes directly to the metadata edit page' do
-    #  db_item_actions_toggle(file).click
-    #  click_link 'Edit File'
-    #  expect(page).to have_content "Edit #{filename}"
-    # end
 
     context 'When I highlight it' do
       before do
         db_item_actions_toggle(file).click
-        click_link 'Highlight File on Profile'
+        click_link 'Highlight Work on Profile'
         db_item_actions_toggle(file).click
-        expect(page).to have_content "Unhighlight File"
+        expect(page).to have_content "Unhighlight Work"
         db_item_actions_toggle(file).trigger('click')
       end
       specify 'It is highlighted' do
         # It is highlighted on my profile
         visit "/users/#{current_user.login}"
-        expect(page).to have_css '.active a', text: "Contributions"
+        expect(page).to have_css '.active a', text: "Highlighted"
         within '#contributions' do
           expect(page).to have_link file.title.first
         end
@@ -109,16 +90,7 @@ describe 'Dashboard Files', type: :feature do
           expect(page).to have_link file.title.first
         end
       end
-
-      # specify 'It is displayed on my highlights' do
-      # end
     end
-
-    # specify 'Clicking Transfer Ownership of File loads the transfer ownership page' do
-    #  db_item_actions_toggle(file).click
-    #  click_link 'Transfer Ownership of File'
-    #  expect(page).to have_content "Transfer ownership of \"#{filename}\""
-    # end
 
     describe 'The Single-Use Link:' do
       skip 'Places the link on the clipboard'
@@ -129,10 +101,10 @@ describe 'Dashboard Files', type: :feature do
 
   let(:conn) { ActiveFedora::SolrService.instance.conn }
 
-  context 'with more than 10 files:' do
+  context 'with more than 10 works:' do
     before do
-      create_files(current_user, 10)
-      visit '/dashboard/files'
+      create_works(current_user, 10)
+      go_to_dashboard_works
     end
 
     after do
@@ -146,8 +118,8 @@ describe 'Dashboard Files', type: :feature do
       specify 'The files should be listed on multiple pages' do
         expect(page).to have_css('.pagination')
 
-        # Increasing Show per page beyond my current number of files and I should not see a page
-        expect(GenericFile.count).to eq(11)
+        # Increasing Show per page beyond my current number of works and I should not see a page
+        expect(GenericWork.count).to eq(11)
         select('20', from: 'per_page')
         find_button('Refresh').click
         expect(page).not_to have_css('.pager')
@@ -198,7 +170,7 @@ describe 'Dashboard Files', type: :feature do
           'Language'      => 'Language1 (10)',
           'Location'      => 'Location1 (10)',
           'Publisher'     => 'Publisher1 (10)',
-          'File Format'   => 'plain () (10)'
+          'Format'        => 'plain () (10)'
         }.each do |facet, value|
           within("#facets") do
             # open facet
@@ -233,10 +205,10 @@ describe 'Dashboard Files', type: :feature do
     end
   end
 
-  context "Many files (more than max_batch, which is currently set to 80)" do
+  context "Many works (more than max_batch, which is currently set to 80)" do
     before do
-      create_files(current_user, 90)
-      visit '/dashboard/files'
+      create_works(current_user, 90)
+      go_to_dashboard_works
     end
 
     after do
@@ -264,7 +236,7 @@ describe 'Dashboard Files', type: :feature do
 
   def search_my_files_by_term(term)
     within('#search-form-header') do
-      expect(page).to have_content("My Files")
+      expect(page).to have_content("My Works")
       fill_in('search-field-header', with: term)
       click_button("Go")
     end
@@ -273,7 +245,7 @@ describe 'Dashboard Files', type: :feature do
   let(:title_field) { Solrizer.solr_name("title", :stored_searchable, type: :string) }
   let(:resp) { ActiveFedora::SolrService.instance.conn.get "select", params: { fl: ['id', title_field] } }
   def page_should_only_list(file)
-    expect(page).to have_selector('li.active', text: "Files")
+    expect(page).to have_selector('li.active', text: "My Works")
     expect(page).to have_content file.title.first
     resp["response"]["docs"].each do |gf|
       unless gf[title_field].nil?
@@ -299,9 +271,9 @@ describe 'Dashboard Files', type: :feature do
     end
   end
 
-  def create_files(user, number_of_files)
-    number_of_files.times do |t|
-      conn.add id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim" => ["GenericFile"],
+  def create_works(user, number_of_works)
+    number_of_works.times do |t|
+      conn.add id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim" => ["GenericWork"],
                Solrizer.solr_name("title", :stored_searchable, type: :string) => ["title_#{t}"],
                "depositor_ssim" => user.login, "edit_access_person_ssim" => user.login,
                Solrizer.solr_name("resource_type", :facetable) => "Video",

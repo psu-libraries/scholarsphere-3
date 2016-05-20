@@ -51,7 +51,7 @@ module Selectors
 
     def db_visibility_link(file)
       within "#document_#{file.id}" do
-        find "a#permission_#{file.id}"
+        find "td a#permission_#{file.id}"
       end
     end
 
