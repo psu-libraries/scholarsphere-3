@@ -35,3 +35,6 @@ en:
     labels:
       collection:
         description: "Description"
+  curation_concerns:
+    institution:
+      name: "Penn State"
