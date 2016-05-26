@@ -5,7 +5,7 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
-  let!(:collection)  { create(:collection, creator: ["somebody"], depositor: current_user.login, members: [file1, file2]) }
+  let!(:collection)  { create(:public_collection, creator: ["somebody"], depositor: current_user.login, members: [file1, file2]) }
 
   let(:current_user) { create(:user) }
   let(:file1)        { create(:public_file, title: ["world.png"], depositor: current_user.login) }

@@ -91,8 +91,8 @@ describe 'Generic File uploading and deletion:', type: :feature do
         allow(Sufia.config).to receive(:browse_everything) { { "dropbox" => { app_key: "fakekey189274942347", app_secret: "fakesecret489289472347298" } } }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { "FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321" }
-        allow_any_instance_of(GenericFile).to receive(:share_notified?).and_return(false)
-        visit Sufia::Engine.routes.url_helpers.new_generic_file_path
+        allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
+        visit Sufia::Engine.routes.url_helpers.new_curation_concerns_generic_work_path
         WebMock.enable!
       end
 
@@ -101,8 +101,8 @@ describe 'Generic File uploading and deletion:', type: :feature do
       end
       specify 'I can click on cloud providers' do
         VCR.use_cassette('dropbox', record: :none) do
-          expect(page).to have_xpath("//a[@href='#browse_everything']")
-          click_link "Cloud Providers"
+          # expect(page).to have_xpath("//a[@href='#browse_everything']")
+          click_link "Files"
           expect(page).to have_content "Browse cloud files"
           click_on "Browse cloud files"
           expect(page).to have_css '#provider-select'
@@ -116,23 +116,17 @@ describe 'Generic File uploading and deletion:', type: :feature do
           find("a", text: "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"
           click_on("Submit")
-          expect(page).to have_content "Submit 1 selected files"
-          check 'terms_of_service'
-          click_on("Submit 1 selected files")
-          uri = URI.parse(current_url)
-          batch = uri.path.split("/")[2]
-          expect(page).to have_content 'Apply Metadata'
-          expect(page).not_to have_css("div.alert-danger")
-          fill_in 'generic_file_tag', with: 'dropbox_tag'
-          fill_in 'generic_file_creator', with: 'dropbox_creator'
-          select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_file_rights'
-          click_on 'upload_submit'
-          expect(page).to have_css '#documents'
-          expect(page).to have_content "Markdown Test.txt"
-          click_on "notify_link"
+          expect(page).to have_content "1 files selected"
+          check 'agreement'
+          click_on 'Metadata'
+          fill_in 'generic_work_title', with: 'Markdown Test'
+          fill_in 'generic_work_keyword', with: 'keyword'
+          fill_in 'generic_work_creator', with: 'creator'
+          select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_work_rights'
+          click_on 'Save'
+          expect(page).to have_css('h1', 'Markdown Test')
+          click_on "Notifications"
           expect(page).to have_content "The file (Markdown Test.txt) was successfully imported"
-          expect(page).to have_content "Markdown Test.txt has been saved"
-          expect(page).to have_css "span#ss-#{batch}"
         end
       end
     end

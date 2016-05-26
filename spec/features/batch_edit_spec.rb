@@ -22,7 +22,7 @@ describe 'Batch management of works', type: :feature do
     it 'edits each field and displays the changes', js: true do
       expect(work1.contributor).to eq ['NEW contributor']
       expect(work1.description).to eq ['NEW description']
-      expect(work1.tag).to eq ['NEW tag']
+      expect(work1.keyword).to eq ['NEW keyword']
       expect(work1.publisher).to eq ['NEW publisher']
       expect(work1.date_created).to eq ['NEW date_created']
       expect(work1.subject).to eq ['NEW subject']
@@ -32,7 +32,7 @@ describe 'Batch management of works', type: :feature do
       expect(work1.related_url).to eq ['NEW related_url']
       expect(work2.contributor).to eq ['NEW contributor']
       expect(work2.description).to eq ['NEW description']
-      expect(work2.tag).to eq ['NEW tag']
+      expect(work2.keyword).to eq ['NEW keyword']
       expect(work2.publisher).to eq ['NEW publisher']
       expect(work2.date_created).to eq ['NEW date_created']
       expect(work2.subject).to eq ['NEW subject']
@@ -50,8 +50,8 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#generic_work_contributor[value*='NEW contributor']"
       expand("description")
       expect(page).to have_css "textarea#generic_work_description", 'NEW description'
-      expand("tag")
-      expect(page).to have_css "input#generic_work_tag[value*='NEW tag']"
+      expand("keyword")
+      expect(page).to have_css "input#generic_work_keyword[value*='NEW keyword']"
       expand("publisher")
       expect(page).to have_css "input#generic_work_publisher[value*='NEW publisher']"
       expand("date_created")
@@ -84,7 +84,7 @@ describe 'Batch management of works', type: :feature do
 
   def fields
     [
-      "contributor", "description", "tag", "publisher", "date_created", "subject",
+      "contributor", "description", "keyword", "publisher", "date_created", "subject",
       "based_near", "language", "identifier", "related_url"
     ]
   end

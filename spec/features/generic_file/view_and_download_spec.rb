@@ -71,8 +71,8 @@ describe 'Generic File viewing and downloading:', type: :feature do
         # 'I can see the link for based_near and it filters correctly' do
         # test_links = store_link work1.based_near.first, test_links
 
-        # 'I can see the link for a keyword and it filters correctly' do
-        # test_links = store_link work1.tag.first, test_links
+        # 'I can see the link for a tag and it filters correctly' do
+        # test_links = store_link file1.keyword.first, test_links
 
         # 'I can see the link for rights and it filters correctly' do
         # test_links = store_link Sufia.config.cc_licenses_reverse[work1.rights.first], test_links

@@ -6,11 +6,11 @@ describe 'unified search', type: :feature do
   let(:user)          { create(:jill) }
   let(:other_user)    { create(:archivist) }
 
-  let!(:file1) { create(:public_file, depositor: user.login, title: ['title 1 abc'], tag: [subject_value]) }
-  let!(:file2) { create(:private_file, depositor: user.login, title: ['title 2 abc'], tag: [subject_value]) }
-  let!(:file3) { create(:public_file, depositor: other_user.login, title: ['title 3 abc'], tag: [subject_value]) }
+  let!(:file1) { create(:public_file, depositor: user.login, title: ['title 1 abc'], keyword: [subject_value]) }
+  let!(:file2) { create(:private_file, depositor: user.login, title: ['title 2 abc'], keyword: [subject_value]) }
+  let!(:file3) { create(:public_file, depositor: other_user.login, title: ['title 3 abc'], keyword: [subject_value]) }
   let!(:collection) do
-    create(:collection,
+    create(:public_collection,
            title: ['collection title abc'],
            description: [subject_value],
            user: user,

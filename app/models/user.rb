@@ -19,20 +19,12 @@ class User < ActiveRecord::Base
   devise :http_header_authenticatable
 
   class << self
-    def batchuser
-      User.find_by_user_key(batchuser_key) || User.create!(Devise.authentication_keys.first => batchuser_key)
+    def batch_user
+      User.find_by_user_key(batch_user_key) || User.create!(Devise.authentication_keys.first => batch_user_key)
     end
 
-    def batchuser_key
-      'batchuser'
-    end
-
-    def audituser
-      User.find_by_user_key(audituser_key) || User.create!(Devise.authentication_keys.first => audituser_key)
-    end
-
-    def audituser_key
-      'audituser'
+    def audit_user
+      User.find_by_user_key(audit_user_key) || User.create!(Devise.authentication_keys.first => audit_user_key)
     end
 
     def groups(login)

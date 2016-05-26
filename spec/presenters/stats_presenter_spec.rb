@@ -7,7 +7,7 @@ describe StatsPresenter, type: :model do
   let(:system_stats) { double }
 
   before do
-    allow(SystemStats).to receive(:new).with(5, start_datetime.to_s, end_datetime.to_s).and_return(system_stats)
+    allow(Sufia::SystemStats).to receive(:new).with(5, start_datetime.to_s, end_datetime.to_s).and_return(system_stats)
   end
 
   describe "#single_day?" do

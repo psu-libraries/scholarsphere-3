@@ -145,8 +145,8 @@ describe 'Dashboard Works', type: :feature do
         # page_should_only_list file
 
         # When I search by Keywords it displays the correct results
-        search_my_files_by_term(file.tag.first)
-        expect(page).to have_content "You searched for: #{file.tag.first}"
+        search_my_files_by_term(file.keyword.first)
+        expect(page).to have_content "You searched for: #{file.keyword.first}"
         page_should_only_list file
 
         # allows me to remove constraints
@@ -271,19 +271,19 @@ describe 'Dashboard Works', type: :feature do
     end
   end
 
-  def create_works(user, number_of_works)
+  def create_works(_user, number_of_works)
+    hash = file.to_solr
+    hash[Solrizer.solr_name("resource_type", :facetable)] = "Video"
+    hash[Solrizer.solr_name("creator", :facetable)] = "Creator1"
+    hash[Solrizer.solr_name("keyword", :facetable)] = "Keyword1"
+    hash[Solrizer.solr_name("subject", :facetable)] = "Subject1"
+    hash[Solrizer.solr_name("language", :facetable)] = "Language1"
+    hash[Solrizer.solr_name("based_near", :facetable)] = "Location1"
+    hash[Solrizer.solr_name("publisher", :facetable)] = "Publisher1"
+    hash[Solrizer.solr_name("file_format", :facetable)] = "plain ()"
     number_of_works.times do |t|
-      conn.add id: "199#{t}", Solrizer.solr_name('depositor', :stored_searchable) => user.login, "has_model_ssim" => ["GenericWork"],
-               Solrizer.solr_name("title", :stored_searchable, type: :string) => ["title_#{t}"],
-               "depositor_ssim" => user.login, "edit_access_person_ssim" => user.login,
-               Solrizer.solr_name("resource_type", :facetable) => "Video",
-               Solrizer.solr_name("creator", :facetable) => "Creator1",
-               Solrizer.solr_name("tag", :facetable) =>  "Keyword1",
-               Solrizer.solr_name("subject", :facetable) => "Subject1",
-               Solrizer.solr_name("language", :facetable) => "Language1",
-               Solrizer.solr_name("based_near", :facetable) => "Location1",
-               Solrizer.solr_name("publisher", :facetable) => "Publisher1",
-               Solrizer.solr_name("file_format", :facetable) => "plain ()"
+      hash[:id] = "199#{t}"
+      conn.add hash
     end
     conn.commit
   end

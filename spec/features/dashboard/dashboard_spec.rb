@@ -7,7 +7,7 @@ describe 'The Dashboard', type: :feature do
   let(:user) { create(:user) }
 
   describe "a user who has files and collections" do
-    let!(:work)         { create(:public_work, :with_one_file, user: user) }
+    let!(:work)         { create(:public_work, :with_one_file, depositor: user.user_key) }
     let!(:collection)   { create(:collection, depositor: user.user_key) }
 
     before do
@@ -17,8 +17,8 @@ describe 'The Dashboard', type: :feature do
 
     it "shows the user's statistics" do
       expect(page).to have_content(user.display_name)
-      expect(page).to have_content("1 Deposited Files")
-      expect(page).to have_content("1 Collections created")
+      expect(page).to have_content("1 Works created")
+      expect(page).to have_content("1 Collections created 1")
       expect(page).to have_content("Following")
       expect(page).to have_content("Follower(s)")
     end
@@ -34,7 +34,7 @@ describe 'The Dashboard', type: :feature do
       expect(page).to have_content "Joe Example"
       expect(page).to have_link "View Profile"
       expect(page).to have_link "Edit Profile"
-      expect(page).to have_content("0 Deposited Files")
+      expect(page).to have_content("0 Works created")
       expect(page).to have_content("0 Collections created")
 
       # shows recent activity

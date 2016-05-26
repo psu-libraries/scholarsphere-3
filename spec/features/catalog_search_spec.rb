@@ -3,10 +3,10 @@ require 'feature_spec_helper'
 
 describe 'catalog searching', type: :feature do
   let(:user)        { create(:jill) }
-  let!(:work1)      { create(:public_work, depositor: user.login, title: ['title 1'], tag: ["tag1", "tag2"]) }
-  let!(:work2)      { create(:public_work, depositor: user.login, title: ['title 2'], tag: ["tag2", "tag3"]) }
-  let!(:work3)      { create(:public_work, depositor: user.login, title: ['title 3'], tag: ["tag3", "tag4"]) }
-  let!(:collection) { create(:collection, depositor: user.login, tag: ["tag3", "tag4"]) }
+  let!(:work1)      { create(:public_work, depositor: user.login, title: ['title 1'], keyword: ["tag1", "tag2"]) }
+  let!(:work2)      { create(:public_work, depositor: user.login, title: ['title 2'], keyword: ["tag2", "tag3"]) }
+  let!(:work3)      { create(:public_work, depositor: user.login, title: ['title 3'], keyword: ["tag3", "tag4"]) }
+  let!(:collection) { create(:collection, depositor: user.login, keyword: ["tag3", "tag4"]) }
 
   before do
     sign_in(user)

@@ -32,8 +32,8 @@ describe 'users/show.html.erb', type: :view do
   describe "when the user doesn't have a title" do
     it "has the vitals" do
       render
-      expect(rendered).to match(/<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/)
-      expect(rendered).not_to match(/<i class="glyphicon glyphicon-briefcase"><\/i>/)
+      expect(rendered).to match(/<span class="glyphicon glyphicon-time"><\/span> Joined on #{join_date.strftime("%b %d, %Y")}/)
+      expect(rendered).not_to match(/<dt>Title<\/dt>/)
     end
   end
 
@@ -42,10 +42,10 @@ describe 'users/show.html.erb', type: :view do
       assign(:user, stub_model(User, user_key: 'cam156', created_at: join_date, title: 'mrs'))
     end
     it "has the vitals" do
-      pending("Needs UI test review, see #283")
       render
-      expect(rendered).to match(/<i class="glyphicon glyphicon-time"><\/i> Joined on #{join_date.strftime("%b %d, %Y")}/)
-      expect(rendered).to match(/<i class="glyphicon glyphicon-briefcase"><\/i> Mrs/)
+      expect(rendered).to match(/<span class="glyphicon glyphicon-time"><\/span> Joined on #{join_date.strftime("%b %d, %Y")}/)
+      expect(rendered).to match(/<dt>Title<\/dt>/)
+      expect(rendered).to match(/<dd>mrs<\/dd>/)
     end
   end
 end

@@ -22,7 +22,6 @@ FactoryGirl.define do
       end
       initialize_with { new(id: id) }
       title ["fake_image.png"]
-      mime_type 'image/png'
       before(:create) do |fs|
         fs.title = ["Sample PNG"]
       end
@@ -30,7 +29,9 @@ FactoryGirl.define do
 
     trait :pdf do
       title ["fake_document.pdf"]
-      mime_type 'image/pdf'
+      before(:create) do |fs|
+        fs.title = ["Fake PDF Title"]
+      end
     end
   end
 end

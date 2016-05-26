@@ -13,7 +13,7 @@ module GenericWorksHelper
     attach_file('files[]', test_file_path(filename), visible: false)
     click_on 'Metadata'
     fill_in 'generic_work_title', with: filename + '_title'
-    fill_in 'generic_work_tag', with: filename + '_tag'
+    fill_in 'generic_work_keyword', with: filename + '_keyword'
     fill_in 'generic_work_creator', with: filename + '_creator'
     select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_work_rights'
     click_on 'Save'

@@ -3,7 +3,7 @@
 #  `rails generate curation_concerns:work GenericWork`
 require 'spec_helper'
 
-describe CurationConcerns::GenericWorkActor do
+describe CurationConcerns::Actors::GenericWorkActor do
   it "has tests" do
     skip "Add your tests here"
   end

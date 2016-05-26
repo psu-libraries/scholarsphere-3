@@ -37,12 +37,12 @@ describe My::WorksController, type: :controller do
         expect(assigns(:document_list).count).to eql(1)
         expect(assigns(:document_list)[0].fetch(solr_field("title"))[0]).to eql('titletitle')
       end
-      it "finds a file by tag" do
+      it "finds a file by keyword" do
         xhr :get, :index, q: "tagtag"
         expect(response).to be_success
         expect(response).to render_template('my/index')
         expect(assigns(:document_list).count).to eql(1)
-        expect(assigns(:document_list)[0].fetch(solr_field("tag"))[0]).to eql('tagtag')
+        expect(assigns(:document_list)[0].fetch(solr_field("keyword"))[0]).to eql('tagtag')
       end
       it "finds a file by subject" do
         xhr :get, :index, q: "subjectsubject"

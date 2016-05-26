@@ -30,13 +30,13 @@ FactoryGirl.define do
 
       factory :featured_file do
         after(:create) do |f|
-          FeaturedWork.create!(generic_work_id: f.id)
+          FeaturedWork.create!(work_id: f.id)
         end
       end
 
       factory :trophy_file do
         after(:create) do |f, attrs|
-          Trophy.create!(user_id: User.find_by_login(attrs.depositor).id, generic_work_id: f.id)
+          Trophy.create!(user_id: User.find_by_login(attrs.depositor).id, work_id: f.id)
         end
       end
     end
@@ -49,7 +49,7 @@ FactoryGirl.define do
       subject ["subject ddd"]
       language ["language fff"]
       based_near ["based_near ggg"]
-      tag ["keyword hhh"]
+      keyword ["keyword hhh"]
       rights ["http://creativecommons.org/licenses/by/3.0/us/"]
     end
 
@@ -74,9 +74,9 @@ FactoryGirl.define do
         file_path = "#{Rails.root}/spec/fixtures/world.png"
         Hydra::Works::AddFileToFileSet.call(fs, File.open(file_path), :original_file)
         CharacterizeJob.perform_now(fs, file_path)
-
         work.ordered_members << fs
         work.thumbnail_id = fs.id
+        work.representative_id = fs.id
       end
     end
 
@@ -134,7 +134,7 @@ FactoryGirl.define do
 
     trait :with_complete_metadata do
       title         ['titletitle']
-      tag           ['tagtag']
+      keyword       ['tagtag']
       based_near    ['based_nearbased_near']
       language      ['languagelanguage']
       creator       ['creatorcreator']

@@ -54,7 +54,7 @@ class StatsPresenter
   private
 
     def stats
-      @stats ||= SystemStats.new(5, start_datetime.to_s, end_datetime.to_s)
+      @stats ||= Sufia::SystemStats.new(5, start_datetime.to_s, end_datetime.to_s)
     end
 
     def documents_by_permission

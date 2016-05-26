@@ -3,6 +3,9 @@ require 'spec_helper'
 
 describe FileSet, type: :model do
   let(:file) { build(:file_set, :with_png, label: "sample_png") }
+  before do
+    allow(file).to receive(:mime_type).and_return('image/png')
+  end
 
   subject { file }
 
@@ -57,16 +60,6 @@ describe FileSet, type: :model do
         skip "Is this still relevant?"
         is_expected.not_to be_changed
       end
-    end
-  end
-
-  describe "#characterize" do
-    let(:file) { create(:file, :with_pdf, :characterized) }
-
-    it "does NOT append metadata from the characterization" do
-      skip "I think this is sufficiently handled in Hydra::Works::CharacterizationService"
-      expect(subject.title).not_to include "Microsoft Word - sample.pdf.docx"
-      expect(subject.format_label).to eq ["Portable Document Format"]
     end
   end
 end
