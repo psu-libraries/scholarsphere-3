@@ -5,7 +5,8 @@ gem 'rails', '4.2.6'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
-gem 'browse-everything', '~> 0.10'
+#gem 'browse-everything', '~> 0.10'
+gem 'browse-everything', branch:'master', ref: '7223ae9'
 gem 'hydra-ldap', '0.1.0'
 gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
 

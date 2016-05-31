@@ -780,7 +780,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
-  browse-everything (~> 0.10)
+  browse-everything
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
