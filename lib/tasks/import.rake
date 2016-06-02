@@ -12,8 +12,15 @@ task :import_sufia_6 => :environment do
   # (leave as false so that we can re-run the import without running into duplicate IDs)
   preserve_ids = false
 
+  # Set to true if you have a running instance of Fedora 4
+  # with the source binaries. Leave as false if you are
+  # only testing the metadata part of the import.
+  import_binary = false
+
   # Files exported from Sufia 6
   files_to_import = File.join(Dir.pwd, "gf_*.json")
-  service = Importer::ImportService.new(user, password, root_uri, preserve_ids)
+
+  settings = Importer::ImportSettings.new(user, password, root_uri, preserve_ids, import_binary)
+  service = Importer::ImportService.new(settings)
   service.import(files_to_import)
 end

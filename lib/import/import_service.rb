@@ -2,12 +2,14 @@ module Importer
   # TODO: Split these classes into individual files
   class ImportSettings
     attr_reader :sufia6_user, :sufia6_password, :sufia6_root_uri, :preserve_ids
+    attr_reader :import_binary
 
-    def initialize(sufia6_user, sufia6_password, sufia6_root_uri, preserve_ids)
+    def initialize(sufia6_user, sufia6_password, sufia6_root_uri, preserve_ids, import_binary)
       @sufia6_user = sufia6_user
       @sufia6_password = sufia6_password
       @sufia6_root_uri = sufia6_root_uri
       @preserve_ids = preserve_ids
+      @import_binary = import_binary
     end
   end
 
@@ -51,7 +53,7 @@ module Importer
       fs.save!
 
       # File
-      if false
+      if @settings.import_binary
         import_old_versions(gf, fs)
         import_current_version(gf, fs)
       end
@@ -209,8 +211,8 @@ module Importer
 
   class ImportService
     attr_reader :settings
-    def initialize(sufia6_user, sufia6_password, sufia6_root_uri, preserve_ids)
-      @settings = ImportSettings.new(sufia6_user, sufia6_password, sufia6_root_uri, preserve_ids)
+    def initialize(settings)
+      @settings = settings
     end
 
     def import(files_pattern)
