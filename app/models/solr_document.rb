@@ -10,11 +10,6 @@ class SolrDocument
   # Adds Sufia behaviors to the SolrDocument.
   include Sufia::SolrDocumentBehavior
 
-  # Method to return the ActiveFedora model
-  def hydra_model
-    Array(self[Solrizer.solr_name('active_fedora_model', Solrizer::Descriptor.new(:string, :stored, :indexed))]).first
-  end
-
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
     collections_in = Array(self[Solrizer.solr_name(:collection)])

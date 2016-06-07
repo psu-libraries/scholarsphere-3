@@ -72,14 +72,17 @@ FactoryGirl.define do
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
         file_path = "#{Rails.root}/spec/fixtures/world.png"
-        Hydra::Works::AddFileToFileSet.call(fs, File.open(file_path), :original_file)
-        CharacterizeJob.perform_now(fs, file_path)
+        IngestFileJob.perform_now(fs, file_path, nil, attributes.user)
+
         work.ordered_members << fs
         work.thumbnail_id = fs.id
         work.representative_id = fs.id
       end
     end
 
+    # Does not call IngestFileJob directly. Because this is a mp3, ffmpeg is required for derivatives.
+    # Travis does not have ffmpeg, so only add the file to the fileset and do not run characterization
+    # or create any derivatives.
     factory :public_work_with_mp3 do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
@@ -90,10 +93,10 @@ FactoryGirl.define do
                                 label: 'scholarsphere_test5.mp3',
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
-        file_path = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
-        Hydra::Works::AddFileToFileSet.call(fs, File.open(file_path), :original_file)
-        CharacterizeJob.perform_now(fs, file_path)
-
+        filename = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
+        local_file = File.open(filename, "rb")
+        Hydra::Works::AddFileToFileSet.call(fs, local_file, :original_file, versioning: false)
+        fs.save!
         work.ordered_members << fs
         work.thumbnail_id = fs.id
       end

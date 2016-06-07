@@ -24,6 +24,7 @@ describe 'Generic File viewing and downloading:', type: :feature do
 
     context 'When viewing a file' do
       specify "I see all the correct information" do
+        pending "Waiting on Sufia issue #2165"
         # "I can see the file's page" do
         expect(page).to have_content work1.title.first
 
