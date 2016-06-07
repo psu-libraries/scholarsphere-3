@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.string   "followable_type", limit: 255,                 null: false
     t.integer  "follower_id",     limit: 4,                   null: false
     t.string   "follower_type",   limit: 255,                 null: false
-    t.boolean  "blocked",         limit: 1,   default: false, null: false
+    t.boolean  "blocked",                     default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.integer  "sender_id",            limit: 4
     t.string   "sender_type",          limit: 255
     t.integer  "conversation_id",      limit: 4
-    t.boolean  "draft",                limit: 1,     default: false
+    t.boolean  "draft",                              default: false
     t.datetime "updated_at",                                         null: false
     t.datetime "created_at",                                         null: false
     t.integer  "notified_object_id",   limit: 4
@@ -155,9 +155,9 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.integer  "receiver_id",     limit: 4
     t.string   "receiver_type",   limit: 255
     t.integer  "notification_id", limit: 4,                   null: false
-    t.boolean  "is_read",         limit: 1,   default: false
-    t.boolean  "trashed",         limit: 1,   default: false
-    t.boolean  "deleted",         limit: 1,   default: false
+    t.boolean  "is_read",                     default: false
+    t.boolean  "trashed",                     default: false
+    t.boolean  "deleted",                     default: false
     t.string   "mailbox_type",    limit: 25
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.string   "label",      limit: 255
     t.string   "lowerLabel", limit: 255
     t.string   "uri",        limit: 255
-    t.datetime "created_at",             default: '2015-06-30 13:53:32'
-    t.datetime "updated_at",             default: '2015-06-30 13:53:32'
+    t.datetime "created_at",             default: '2016-06-07 15:51:43'
+    t.datetime "updated_at",             default: '2016-06-07 15:51:43'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -287,15 +287,15 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.datetime "avatar_updated_at"
     t.text     "group_list",             limit: 65535
     t.datetime "groups_last_update"
-    t.boolean  "ldap_available",         limit: 1
+    t.boolean  "ldap_available"
     t.datetime "ldap_last_update"
     t.string   "facebook_handle",        limit: 255
     t.string   "twitter_handle",         limit: 255
     t.string   "googleplus_handle",      limit: 255
     t.string   "linkedin_handle",        limit: 255
     t.string   "orcid",                  limit: 255
-    t.boolean  "system_created",         limit: 1,     default: false
-    t.boolean  "logged_in",              limit: 1,     default: true
+    t.boolean  "system_created",                       default: false
+    t.boolean  "logged_in",                            default: true
     t.string   "arkivo_token",           limit: 255
     t.string   "arkivo_subscription",    limit: 255
     t.binary   "zotero_token",           limit: 65535
@@ -315,6 +315,6 @@ ActiveRecord::Schema.define(version: 20150220191724) do
   end
 
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
-  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_development"
-  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_development"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_test"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_test"
 end

@@ -90,7 +90,7 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (6.3.6.1)
+    autoprefixer-rails (6.3.6.2)
       execjs
     bcp47 (0.3.3)
       i18n
@@ -121,11 +121,11 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (2.3.1)
-    browse-everything (0.9.1)
+    browse-everything (0.10.2)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
-      google-api-client
+      google-api-client (~> 0.8.6)
       google_drive
       httparty
       rails (>= 3.1)
@@ -210,7 +210,7 @@ GEM
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
-    execjs (2.6.0)
+    execjs (2.7.0)
     extlib (0.9.16)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -389,7 +389,7 @@ GEM
     mime-types (1.25.1)
     mimemagic (0.3.1)
     mini_magick (4.5.1)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.9.0)
     mono_logger (1.1.0)
     multi_json (1.12.1)
@@ -407,8 +407,9 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.14.1.311)
     noid (0.8.0)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     nom-xml (0.5.4)
       activesupport (>= 3.2.18)
       i18n
@@ -433,6 +434,7 @@ GEM
       ast (~> 2.2)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
+    pkg-config (1.1.7)
     poltergeist (1.9.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -723,7 +725,7 @@ GEM
       ref
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.4)
+    tilt (2.0.5)
     tinymce-rails (4.3.12)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.16.beta)
@@ -774,7 +776,7 @@ DEPENDENCIES
   airbrussh
   better_errors
   binding_of_caller
-  browse-everything (= 0.9.1)
+  browse-everything (= 0.10.2)
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
