@@ -6,9 +6,9 @@ class Ability
 
   self.ability_logic += [:everyone_can_create_curation_concerns]
 
-  def featured_work_abilities
-    can [:create, :destroy, :update], FeaturedWork if admin?
-  end
+  # def featured_work_abilities
+  #  can [:create, :destroy, :update], FeaturedWork if admin?
+  # end
 
   def editor_abilities
     super
@@ -24,7 +24,6 @@ class Ability
     can :admin_stats, User if admin?
   end
 
-  # TODO: Remove this once projecthydra-labs/curation_concerns#724 is approved
   def admin?
     current_user.administrator?
   end

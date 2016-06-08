@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 Sufia::Engine.configure do
-  config.contact_email = 'scholarsphere@servicedesk.css.psu.edu'
-  config.from_email = "ScholarSphere Form <scholarsphere@servicedesk.css.psu.edu>"
   config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost/'
   config.login_url = 'https://webaccess.psu.edu/?cosign-localhost&https://localhost/dashboard'
 end
+
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   config.log_level = :debug
@@ -45,4 +44,7 @@ ScholarSphere::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Don't wait for unwilling LDAP responses
+  config.ldap_unwilling_sleep = 0
 end

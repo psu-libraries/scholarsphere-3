@@ -23,7 +23,6 @@ describe User, type: :model do
     end
     context "when LDAP misbehaves" do
       before do
-        Sufia.config.retry_unless_sleep = 0.01
         filter = Net::LDAP::Filter.eq('uid', user.login)
         allow(Hydra::LDAP).to receive(:does_user_exist?).twice.with(filter).and_return(true)
       end
@@ -31,7 +30,7 @@ describe User, type: :model do
       it "returns true after LDAP returns 'unwilling' first, then sleeps and returns true on the second call" do
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 53, message: "Unwilling"))
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 0, message: "sucess"))
-        expect(LdapUser).to receive(:sleep).with(0.01)
+        expect(LdapUser).to receive(:sleep).with(Rails.application.config.ldap_unwilling_sleep)
         expect(user.ldap_exist?).to eq(true)
       end
     end

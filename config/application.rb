@@ -47,7 +47,6 @@ module ScholarSphere
     config.scholarsphere_version = "v2.5"
     config.scholarsphere_release_date = "January 14, 2016"
     config.redis_namespace = "scholarsphere"
-    config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
     # # of fits array items shown on the Generic File show page
     config.fits_message_length = 5
 
@@ -131,12 +130,16 @@ module ScholarSphere
     # html maintenance response
     config.middleware.use 'Rack::Maintenance',
                           file: Rails.root.join('public', 'maintenance.html')
-    config.ldap_unwilling_sleep = 2 # seconds
+
+    # Time (in seconds) to wait before trying any LDAP queries if initial response is unwilling.
+    config.ldap_unwilling_sleep = 2
 
     # allow errors to be raised in callbacks
     config.active_record.raise_in_transactional_callbacks = true
 
     # Needed for ScholarsphereLockManager, remove this when we've upgraded to Redis 2.6+
     config.statefile = '/tmp/lockmanager-state'
+
+    config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
   end
 end

@@ -9,8 +9,6 @@ describe LdapUser do
   let(:psu_user)        { "agw13" }
   let(:psu_user_groups) { "umg/up.dlt.scholarsphere-admin" }
 
-  before { Sufia.config.retry_unless_sleep = 0.1 }
-
   describe "::get_user" do
     before { allow(Hydra::LDAP).to receive(:get_user).and_return(user) }
     subject { described_class.get_user("filter") }

@@ -22,7 +22,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
 
     context "when file is registered" do
       let(:work)   { create(:registered_file) }
-      let(:path)   { Sufia::Engine.routes.url_helpers.curation_concerns_generic_work_path(work) }
+      let(:path)   { Rails.application.routes.url_helpers.curation_concerns_generic_work_path(work) }
       it "redirects with file in url" do
         get :show, id: work.id
         expect(response.status).to eq(302)

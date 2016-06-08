@@ -44,6 +44,12 @@ ScholarSphere::Application.routes.draw do
   get 'login' => 'sessions#new', as: :new_user_session_old
   get 'login_session' => 'sessions#new', as: :new_user_session
 
+  # LDAP-related routes for group and user lookups
+  # TODO: Remove? See #316
+  get 'directory/user/:uid' => 'directory#user'
+  get 'directory/user/:uid/:attribute' => 'directory#user_attribute'
+  get 'directory/group/:cn' => 'directory#group', constraints: { cn: /.*/ }
+
   # Administrative URLs
   namespace :admin do
     # Job monitoring

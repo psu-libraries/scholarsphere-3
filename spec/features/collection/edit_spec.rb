@@ -2,18 +2,17 @@
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
-include Selectors::EditCollections
 
 describe Collection, type: :feature do
   let(:current_user) { create(:user) }
   let(:work1)        { create(:work, depositor: current_user.login, title: ['world.png']) }
   let(:work2)        { create(:work, depositor: current_user.login, title: ['little_file.txt']) }
 
-  before { sign_in_with_js(current_user) }
-
   context "when the collection has files" do
     let!(:collection) { create(:collection, depositor: current_user.login, members: [work1, work2], description: ["my description"]) }
     let!(:work3)      { create(:work, title: ['scholarsphere_test5.txt'], depositor: current_user.login) }
+
+    before { sign_in_with_js(current_user) }
 
     describe 'adding an additional file' do
       specify do
@@ -69,16 +68,19 @@ describe Collection, type: :feature do
     let(:updated_description)   { 'Updtaed description text.' }
     let(:updated_creators)      { ['Dorje Trollo', 'Vajrayogini'] }
 
+    before { sign_in(current_user) }
+
     specify do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
+      click_link 'Additional fields'
       expect(page).to have_field 'collection_title', with: original_title.first
       expect(page).to have_field 'collection_description', with: original_description.first
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
       fill_in 'Creator', with: updated_creators.first
-      ec_update_submit.click
+      click_button 'Update Collection'
       expect(page).not_to have_content original_title.first
       expect(page).not_to have_content original_description.first
       expect(page).to have_content updated_title

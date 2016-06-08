@@ -11,7 +11,7 @@ module GenericWorksHelper
     check 'agreement'
     click_on 'Files'
     attach_file('files[]', test_file_path(filename), visible: false)
-    click_on 'Metadata'
+    click_on 'Descriptions'
     fill_in 'generic_work_title', with: filename + '_title'
     fill_in 'generic_work_keyword', with: filename + '_keyword'
     fill_in 'generic_work_creator', with: filename + '_creator'

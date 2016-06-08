@@ -60,16 +60,6 @@ module Selectors
     end
   end
 
-  module EditCollections
-    def ec_update_submit
-      within '.col-xs-12.col-sm-10' do
-        within '.primary-actions' do
-          find_button 'Update Collection'
-        end
-      end
-    end
-  end
-
   module NewTransfers
     def new_owner_dropdown
       find '#s2id_proxy_deposit_request_transfer_to'

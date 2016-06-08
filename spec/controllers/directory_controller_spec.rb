@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe DirectoryController, type: :controller do
-  routes { Sufia::Engine.routes }
   let(:user) { create(:user) }
   describe "#user" do
     it "gets an existing user" do

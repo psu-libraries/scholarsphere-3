@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 Sufia::Engine.configure do
-  config.contact_email = 'scholarsphere@servicedesk.css.psu.edu'
-  config.from_email = "ScholarSphere Form <scholarsphere@servicedesk.css.psu.edu>"
   config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost:3000/'
   config.login_url = 'https://webaccess.psu.edu/?cosign-localhost&http://localhost:3000/dashboard'
 end
+
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   config.log_level = :debug

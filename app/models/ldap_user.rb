@@ -35,7 +35,7 @@ class LdapUser
         tries.times.each do
           result = yield
           return result unless unwilling?
-          sleep(Sufia.config.retry_unless_sleep) if Sufia.config.retry_unless_sleep > 0
+          sleep(Rails.application.config.ldap_unwilling_sleep)
         end
         Rails.logger.warn "LDAP is unwilling to perform this operation, try upping the number of tries"
         nil

@@ -6,18 +6,15 @@ include Selectors::Dashboard
 describe Collection, type: :feature do
   let!(:current_user) { create(:user) }
   let(:title) { 'Test Collection Title' }
-  let(:creator) { 'Test Creator Name' }
-  let(:description) { 'Description for our test collection.' }
 
-  before do
-    sign_in_with_js(current_user)
-  end
+  before { sign_in_with_js(current_user) }
 
   describe 'When creating an empty collection' do
     before do
       go_to_dashboard
       db_create_empty_collection_button.click
-      create_collection [title], creator, [description]
+      fill_in 'Title', with: title
+      click_button 'Create Collection'
     end
 
     specify 'I should see the new collection page' do
@@ -33,7 +30,8 @@ describe Collection, type: :feature do
       check 'check_all'
       click_button 'Add to Collection'
       db_create_populated_collection_button.click
-      create_collection [title], creator, [description]
+      fill_in 'Title', with: title
+      click_button 'Create Collection'
     end
 
     specify 'I should see the collection page with the files' do

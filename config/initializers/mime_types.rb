@@ -8,3 +8,6 @@ Mime::Type.register "application/x-endnote-refer", :endnote
 Mime::Type.register "application/marc", :marc
 Mime::Type.register "application/marcxml+xml", :marcxml, ["application/x-marc+xml", "application/x-marcxml+xml", "application/marc+xml"]
 Mime::Type.register "audio/mpeg", :audio
+Mime::Type.register "application/n-triples", :nt
+Mime::Type.register "application/ld+json", :jsonld
+Mime::Type.register "text/turtle", :ttl
