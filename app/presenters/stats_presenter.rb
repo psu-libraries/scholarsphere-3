@@ -32,32 +32,32 @@ class StatsPresenter
   end
 
   def total_users
-    stats.recent_users.count
+    system_stats.users_count
   end
 
   def total_uploads
-    documents_by_permission[:total]
+    work_stats.by_permission.fetch(:total, 0)
   end
 
   def total_public_uploads
-    documents_by_permission[:public]
+    work_stats.by_permission.fetch(:public, 0)
   end
 
   def total_registered_uploads
-    documents_by_permission[:registered]
+    work_stats.by_permission.fetch(:registered, 0)
   end
 
   def total_private_uploads
-    documents_by_permission[:private]
+    work_stats.by_permission.fetch(:private, 0)
   end
 
   private
 
-    def stats
-      @stats ||= Sufia::SystemStats.new(5, start_datetime.to_s, end_datetime.to_s)
+    def work_stats
+      @work_stats ||= Sufia::Statistics::Works::Count.new(start_datetime, end_datetime)
     end
 
-    def documents_by_permission
-      @documents_by_permission ||= stats.document_by_permission
+    def system_stats
+      @system_stats ||= Sufia::Statistics::SystemStats.new(5, start_datetime, end_datetime)
     end
 end

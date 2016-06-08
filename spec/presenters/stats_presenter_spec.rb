@@ -3,11 +3,13 @@ require 'spec_helper'
 
 describe StatsPresenter, type: :model do
   let(:end_datetime) { DateTime.now }
-  let(:presenter) { described_class.new(start_datetime, end_datetime) }
+  let(:presenter)    { described_class.new(start_datetime, end_datetime) }
   let(:system_stats) { double }
+  let(:work_stats)   { double }
 
   before do
-    allow(Sufia::SystemStats).to receive(:new).with(5, start_datetime.to_s, end_datetime.to_s).and_return(system_stats)
+    allow(Sufia::Statistics::SystemStats).to receive(:new).with(5, start_datetime, end_datetime).and_return(system_stats)
+    allow(Sufia::Statistics::Works::Count).to receive(:new).with(start_datetime, end_datetime).and_return(work_stats)
   end
 
   describe "#single_day?" do
@@ -59,9 +61,9 @@ describe StatsPresenter, type: :model do
 
   describe "upload stats" do
     let(:start_datetime) { DateTime.parse("2004-01-01T01:01:01") }
-
-    it "calls SystemStats for data" do
-      expect(system_stats).to receive(:document_by_permission).and_return(total: 100, public: 70, registered: 20, private: 10)
+    let(:stats) { { total: 100, public: 70, registered: 20, private: 10 } }
+    before { allow(work_stats).to receive(:by_permission).and_return(stats) }
+    it "calls Sufia::Statistics::Works::Count for data" do
       expect(presenter.total_uploads).to eq(100)
       expect(presenter.total_public_uploads).to eq(70)
       expect(presenter.total_registered_uploads).to eq(20)
@@ -71,14 +73,8 @@ describe StatsPresenter, type: :model do
 
   describe "#total_users" do
     let(:start_datetime) { DateTime.parse("2004-01-01T01:01:01") }
-    let(:mock_query) { double }
-
-    before do
-      allow(mock_query).to receive(:count).and_return(100)
-    end
-
-    it "calls SystemStats for data" do
-      expect(system_stats).to receive(:recent_users).and_return(mock_query)
+    it "calls Sufia::Statistics::SystemStats for data" do
+      expect(system_stats).to receive(:users_count).and_return(100)
       expect(presenter.total_users).to eq(100)
     end
   end
