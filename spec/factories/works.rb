@@ -77,6 +77,7 @@ FactoryGirl.define do
         work.ordered_members << fs
         work.thumbnail_id = fs.id
         work.representative_id = fs.id
+        work.update_index
       end
     end
 

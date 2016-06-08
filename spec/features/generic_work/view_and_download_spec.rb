@@ -4,11 +4,11 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Generic File viewing and downloading:', type: :feature do
-  context "generic user" do
+describe GenericWork, type: :feature do
+  context "when viewing as a standard user" do
     let(:current_user) { create(:user) }
     let!(:work1) do
-      create(:public_work_with_png, :full_meta_data,
+      create(:public_work, :with_one_file, :with_complete_metadata,
              depositor: current_user.login,
              description: ["Description http://example.org/TheDescriptionLink/"]
             )
@@ -17,9 +17,7 @@ describe 'Generic File viewing and downloading:', type: :feature do
 
     before do
       sign_in_with_js(current_user)
-      visit '/dashboard/works'
-      expect(page).to have_css '.active a', text: "Works"
-      db_item_title(work1).click
+      visit(main_app.polymorphic_path(work1))
     end
 
     context 'When viewing a file' do
