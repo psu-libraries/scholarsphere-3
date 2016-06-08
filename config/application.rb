@@ -28,8 +28,8 @@ module ScholarSphere
     config.service_instance = ss_config.fetch(:service_instance, Socket.gethostname)
     config.virtual_host = ss_config.fetch(:virtual_host, "https://#{Socket.gethostname}")
 
-    config.scholarsphere_version = "v2.6"
-    config.scholarsphere_release_date = "April 12, 2016"
+    config.scholarsphere_version = "v2.7"
+    config.scholarsphere_release_date = "June 15, 2016"
     config.redis_namespace = "scholarsphere"
 
     # Number of fits array items shown on the Generic File show page
