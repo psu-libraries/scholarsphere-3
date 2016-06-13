@@ -17,6 +17,23 @@ GIT
       rchardet
       rubydora (~> 1.8)
 
+GIT
+  remote: git://github.com/projecthydra/browse-everything.git
+  revision: 518d905e5998579eff6c905add0c0d56d2e7c841
+  ref: 518d905
+  specs:
+    browse-everything (0.10.2)
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client (~> 0.8.6)
+      google_drive
+      httparty
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      skydrive
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -121,17 +138,6 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (2.3.1)
-    browse-everything (0.10.2)
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client (~> 0.8.6)
-      google_drive
-      httparty
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      skydrive
     builder (3.2.2)
     byebug (8.2.1)
     cancancan (1.14.0)
@@ -776,7 +782,7 @@ DEPENDENCIES
   airbrussh
   better_errors
   binding_of_caller
-  browse-everything (= 0.10.2)
+  browse-everything!
   byebug
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
