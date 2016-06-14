@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe My::FilesController, type: :controller do
   routes { Sufia::Engine.routes }
-  let(:user) { FactoryGirl.find_or_create(:archivist) }
+  let(:user) { create(:archivist) }
   describe "logged in user" do
     before do
       allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
@@ -12,21 +12,11 @@ describe My::FilesController, type: :controller do
     describe "#index" do
       include Sufia::Messages
 
-      let(:batch_id)  { "batch_id" }
-      let(:batch_id2) { "batch_id2" }
-      let(:batch)     { double }
-      let!(:generic_file) do
-        GenericFile.new(id: "mine123", title: ["mine"]) do |f|
-          f.apply_depositor_metadata(user.login)
-          f.update_index
-        end
-      end
-      let!(:other_generic_file) do
-        GenericFile.new(id: "other123", title: ["other"]) do |f|
-          f.apply_depositor_metadata("abc123")
-          f.update_index
-        end
-      end
+      let(:batch_id)            { "batch_id" }
+      let(:batch_id2)           { "batch_id2" }
+      let(:batch)               { double }
+      let!(:generic_file)       { create(:file, depositor: user.login) }
+      let!(:other_generic_file) { create(:file) }
       let(:user_results) do
         ActiveFedora::SolrService.instance.conn.get "select",
                                                     params: { fq: ["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"] }
@@ -53,29 +43,7 @@ describe My::FilesController, type: :controller do
       end
     end
     describe "term search" do
-      def solr_field(name)
-        Solrizer.solr_name(name, :stored_searchable, type: :string)
-      end
-      before do
-        GenericFile.new(id: "abc123").tap do |f|
-          f.title = ['titletitle']
-          f.filename = ['filename.filename']
-          f.read_groups = ['public']
-          f.tag = ['tagtag']
-          f.based_near = ["based_nearbased_near"]
-          f.language = ["languagelanguage"]
-          f.creator = ["creatorcreator"]
-          f.contributor = ["contributorcontributor"]
-          f.publisher = ["publisherpublisher"]
-          f.subject = ["subjectsubject"]
-          f.resource_type = ["resource_typeresource_type"]
-          f.resource_type = ["resource_typeresource_type"]
-          f.description = ["descriptiondescription"]
-          f.format_label = ["format_labelformat_label"]
-          f.apply_depositor_metadata(user.login)
-          f.update_index
-        end
-      end
+      before(:all) { create(:public_file, :with_complete_metadata, depositor: "archivist1") }
       it "finds a file by title" do
         xhr :get, :index, q: "titletitle"
         expect(response).to be_success

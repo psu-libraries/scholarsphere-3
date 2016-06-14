@@ -3,8 +3,8 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Collection creation and deletion:', type: :feature do
-  let!(:current_user) { FactoryGirl.create(:user) }
+describe Collection, type: :feature do
+  let!(:current_user) { create(:user) }
   let(:title) { 'Test Collection Title' }
   let(:creator) { 'Test Creator Name' }
   let(:description) { 'Description for our test collection.' }
@@ -25,14 +25,10 @@ describe 'Collection creation and deletion:', type: :feature do
     end
   end
 
-  let(:filenames) { %w(world.png small_file.txt) }
-  let(:files) { GenericFile.all }
-
-  describe 'When creating a collection with files' do
+  describe 'when creating a collection with files' do
+    let!(:file1) { create(:file, title: ["First file"], depositor: current_user.login) }
+    let!(:file2) { create(:file, title: ["Second file"], depositor: current_user.login) }
     before do
-      filenames.each do |filename|
-        create_file current_user, title: [filename], creator: "#{filename}_creator"
-      end
       go_to_dashboard_files
       check 'check_all'
       click_button 'Add to Collection'
@@ -42,19 +38,14 @@ describe 'Collection creation and deletion:', type: :feature do
 
     specify 'I should see the collection page with the files' do
       expect(page).to have_content 'Collection was successfully created.'
-      files.each do |file|
-        expect(page).to have_content file.title.first
-      end
+      expect(page).to have_content file1.title.first
+      expect(page).to have_content file2.title.first
     end
   end
 
-  let(:collection) { Collection.first }
-
-  describe 'When deleting a collection' do
+  context 'when deleting a collection' do
+    let!(:collection) { create(:collection, depositor: current_user.login) }
     before do
-      visit '/dashboard'
-      db_create_empty_collection_button.click
-      create_collection [title], creator, [description]
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Delete Collection'

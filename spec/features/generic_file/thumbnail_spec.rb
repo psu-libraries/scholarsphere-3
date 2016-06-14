@@ -2,8 +2,8 @@
 require 'feature_spec_helper'
 
 describe 'Generic File Thumbnail Creation:', type: :feature do
-  let!(:current_user)  { FactoryGirl.find_or_create(:user) }
-  let!(:file)          { create_file current_user, title: 'little_file.txt' }
+  let!(:current_user)  { create(:user) }
+  let!(:file)          { create(:public_file, depositor: current_user.login) }
   let(:thumbnail_path) { Sufia::Engine.routes.url_helpers.download_path(file, file: 'thumbnail') }
 
   before do

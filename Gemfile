@@ -5,7 +5,7 @@ gem 'rails', '4.2.5.2'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra community components
-gem 'browse-everything', '0.9.1'
+gem 'browse-everything', github: 'projecthydra/browse-everything', ref: '518d905'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
 gem 'hydra-derivatives', '1.1.0'
 gem 'hydra-head', '~> 9.5.0'
@@ -43,8 +43,8 @@ group :development, :test do
   gem 'jettywrapper'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
+  gem 'rubocop', '~> 0.39.0'
+  gem 'rubocop-rspec', '~> 1.4.1'
   gem 'sqlite3'
 end
 

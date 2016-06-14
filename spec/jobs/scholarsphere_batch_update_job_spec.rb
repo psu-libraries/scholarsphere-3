@@ -2,22 +2,10 @@
 require 'spec_helper'
 
 describe ScholarsphereBatchUpdateJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-  let(:batch) { Batch.create }
-
-  let!(:file) do
-    GenericFile.new(batch: batch) do |file|
-      file.apply_depositor_metadata(user)
-      file.save!
-    end
-  end
-
-  let!(:file2) do
-    GenericFile.new(batch: batch) do |file|
-      file.apply_depositor_metadata(user)
-      file.save!
-    end
-  end
+  let(:user)   { create(:jill) }
+  let(:batch)  { Batch.create }
+  let!(:file)  { create(:file, depositor: user.login, batch: batch) }
+  let!(:file2) { create(:file, depositor: user.login, batch: batch) }
 
   describe "#run" do
     let(:title) { { file.id => ['File One'], file2.id => ['File Two'] } }

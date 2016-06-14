@@ -6,32 +6,26 @@ include Selectors::Dashboard
 
 describe 'Generic File viewing and downloading:', type: :feature do
   context "generic user" do
-    let(:current_user) { FactoryGirl.find_or_create(:user) }
-    let!(:file_1)      { create_file current_user, title: 'File 1' }
-    let!(:file_2) do
-      create_file(current_user, title: 'File 2',
-                                creator: '',
-                                contributor: '',
-                                tag: '',
-                                subject: '',
-                                language: '',
-                                based_near: '',
-                                publisher: '',
-                                rights: '',
-                                read_groups: [])
+    let(:current_user) { create(:user) }
+    let!(:file1) do
+      create(:public_file, :with_complete_metadata,
+             depositor: current_user.login,
+             description: ["Description http://example.org/TheDescriptionLink/"]
+            )
     end
+    let!(:file2) { create(:private_file, depositor: current_user.login) }
 
     before do
       sign_in_with_js(current_user)
       visit '/dashboard/files'
       expect(page).to have_css '.active a', text: "Files"
-      db_item_title(file_1).click
+      db_item_title(file1).click
     end
 
     context 'When viewing a file' do
       specify "I see all the correct information" do
         # "I can see the file's page" do
-        expect(page).to have_content file_1.title.first
+        expect(page).to have_content file1.title.first
 
         # 'I can not feature' do
         expect(page).not_to have_link "Feature"
@@ -47,7 +41,7 @@ describe 'Generic File viewing and downloading:', type: :feature do
 
         # 'I can see the link for all the linkable items' do
         expect(page).to have_link 'http://example.org/TheDescriptionLink/'
-        expect(page).to have_link file_1.related_url.first
+        expect(page).to have_link file1.related_url.first
 
         # 'I can download an Endnote version of the file'
         endnote_link = find_link('EndNote')[:href]
@@ -56,28 +50,28 @@ describe 'Generic File viewing and downloading:', type: :feature do
         test_links = {}
 
         # 'I can see the link for creator and it filters correctly' do
-        test_links = store_link file_1.creator.first, test_links
+        test_links = store_link file1.creator.first, test_links
 
         # 'I can see the link for contributor and it filters correctly' do
-        test_links = store_link file_1.contributor.first, test_links
+        test_links = store_link file1.contributor.first, test_links
 
         # 'I can see the link for publisher and it filters correctly' do
-        test_links = store_link file_1.publisher.first, test_links
+        test_links = store_link file1.publisher.first, test_links
 
         # 'I can see the link for subject and it filters correctly' do
-        test_links = store_link file_1.subject.first, test_links
+        test_links = store_link file1.subject.first, test_links
 
         # 'I can see the link for language and it filters correctly' do
-        test_links = store_link file_1.language.first, test_links
+        test_links = store_link file1.language.first, test_links
 
         # 'I can see the link for based_near and it filters correctly' do
-        test_links = store_link file_1.based_near.first, test_links
+        test_links = store_link file1.based_near.first, test_links
 
         # 'I can see the link for a tag and it filters correctly' do
-        test_links = store_link file_1.tag.first, test_links
+        test_links = store_link file1.tag.first, test_links
 
         # 'I can see the link for rights and it filters correctly' do
-        test_links = store_link Sufia.config.cc_licenses_reverse[file_1.rights.first], test_links
+        test_links = store_link Sufia.config.cc_licenses_reverse[file1.rights.first], test_links
 
         # loop through all links
         test_links.each do |name, link|
@@ -104,9 +98,9 @@ describe 'Generic File viewing and downloading:', type: :feature do
   end
 
   context "administrator user" do
-    let(:admin_user)    { FactoryGirl.find_or_create(:administrator) }
-    let!(:public_file)  { create_file admin_user, title: 'File 3' }
-    let!(:private_file) { create_file admin_user, title: 'File 4', read_groups: [] }
+    let(:admin_user)    { create(:administrator) }
+    let!(:public_file)  { create(:public_file, depositor: admin_user.login) }
+    let!(:private_file) { create(:private_file, depositor: admin_user.login) }
 
     before do
       sign_in_with_js(admin_user)
@@ -130,13 +124,13 @@ describe 'Generic File viewing and downloading:', type: :feature do
 
   def store_link(link_name, test_links)
     expect(page).to have_link link_name
-    test_links[file_1.tag.first] = find_link(file_1.tag.first)[:href]
+    test_links[file1.tag.first] = find_link(file1.tag.first)[:href]
     test_links
   end
 
   def test_link(_link_name, link_value)
     visit link_value
-    expect(page).to have_content file_1.title.first
-    expect(page).not_to have_content file_2.title.first
+    expect(page).to have_content file1.title.first
+    expect(page).not_to have_content file2.title.first
   end
 end

@@ -14,7 +14,7 @@ describe GenericFileListToCSVService do
     end
 
     context "with one files" do
-      let(:file_list) { [GenericFile.new(id: 'abc123')] }
+      let(:file_list) { [build(:file, id: 'abc123')] }
       it { is_expected.to include('files/abc123,"",abc123') }
       it "can be parsed" do
         parsed = CSV.parse(subject)
@@ -25,7 +25,7 @@ describe GenericFileListToCSVService do
     end
 
     context "with multiple files" do
-      let(:file_list) { [GenericFile.new(id: 'abc123'), GenericFile.new(id: 'def456'), GenericFile.new(id: 'ghi789')] }
+      let(:file_list) { [build(:file, id: 'abc123'), build(:file, id: 'def456'), build(:file, id: 'ghi789')] }
       it { is_expected.to include('files/abc123,"",abc123') }
       it { is_expected.to include('files/def456,"",def456') }
       it { is_expected.to include('files/ghi789,"",ghi789') }

@@ -1,0 +1,5 @@
+require: rubocop-rspec
+
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/**/*'

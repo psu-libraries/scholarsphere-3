@@ -3,12 +3,13 @@ require 'spec_helper'
 
 describe ResourceFilteredList, type: :model do
   let(:file_list) do
-    [GenericFile.new(title: ["Dataset"], resource_type: ["Dataset"]),
-     GenericFile.new(title: ["Poster"], resource_type: ["Poster"]),
-     GenericFile.new(title: ["Thesis"], resource_type: ["Thesis"]),
-     GenericFile.new(title: ["Dissertation"], resource_type: ["Dissertation"]),
-     GenericFile.new(title: ["Report"], resource_type: ["Report"]),
-     GenericFile.new(title: ['none'])
+    [
+      create(:file, title: ["Dataset"], resource_type: ["Dataset"]),
+      create(:file, title: ["Poster"], resource_type: ["Poster"]),
+      create(:file, title: ["Thesis"], resource_type: ["Thesis"]),
+      create(:file, title: ["Dissertation"], resource_type: ["Dissertation"]),
+      create(:file, title: ["Report"], resource_type: ["Report"]),
+      create(:file, title: ['none'])
     ]
   end
 

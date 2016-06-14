@@ -2,7 +2,7 @@
 require 'feature_spec_helper'
 
 describe 'Visting the home page:', type: :feature do
-  let!(:current_user) { FactoryGirl.find_or_create(:user) }
+  let!(:current_user) { create(:user) }
 
   before :each do
     @blk = ContentBlock.find_or_create_by(name: "marketing_text").tap do |market|
@@ -52,8 +52,8 @@ describe 'Visting the home page:', type: :feature do
     end
 
     context 'and tag cloud is shown' do
-      let!(:gf1) { create_file current_user, title: 'doc 1', tag: ["tagX", "tagY"] }
-      let!(:gf2) { create_file current_user, title: 'doc 2', tag: ["tagY", "tagZ"] }
+      let!(:gf1) { create(:public_file, depositor: current_user.login, title: ['doc 1'], tag: ["tagX", "tagY"]) }
+      let!(:gf2) { create(:public_file, depositor: current_user.login, title: ['doc 2'], tag: ["tagY", "tagZ"]) }
       specify 'tags are listed' do
         visit '/'
         expect(page).to have_content 'tagX tagY tagZ'

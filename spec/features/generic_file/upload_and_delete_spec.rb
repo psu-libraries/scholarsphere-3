@@ -5,8 +5,8 @@ include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:', type: :feature do
   context 'When logged in as a PSU user' do
-    let(:current_user)  { FactoryGirl.find_or_create(:user) }
-    let(:other_user)    { FactoryGirl.find_or_create(:user) }
+    let(:current_user)  { create(:user) }
+    let(:other_user)    { create(:user) }
     let(:filename)      { 'little_file.txt' }
     let(:batch)         { ['little_file.txt', 'little_file.txt'] }
     let(:file)          { find_file_by_title "little_file.txt" }
@@ -20,7 +20,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         Sufia::Engine.routes.url_helpers.new_generic_file_path
       end
       it "does not show Sufia's user agreement" do
-        expect(page).to_not have_content("Sufia's Deposit Agreement")
+        expect(page).not_to have_content("Sufia's Deposit Agreement")
       end
     end
 
@@ -52,7 +52,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         click_on 'Show Additional Fields'
         expect(page).to have_css("#generic_file_publisher")
         click_on 'Hide Additional Fields'
-        expect(page).to_not have_css("#generic_file_publisher")
+        expect(page).not_to have_css("#generic_file_publisher")
 
         # If these tests start to randomly fail please consider re-adding
         # the calls to sleep and save_and_open that I removed because they
@@ -64,7 +64,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           find('.help-icon').trigger('click')
           expect(page).to have_css('h3.popover-title', text: 'Visibility')
           find('.help-icon').trigger('click')
-          expect(page).to_not have_css('h3.popover-title', text: 'Visibility')
+          expect(page).not_to have_css('h3.popover-title', text: 'Visibility')
         end
 
         # Share With is a tooltip. Click on it once to show it,
@@ -73,12 +73,12 @@ describe 'Generic File uploading and deletion:', type: :feature do
           find('.help-icon').trigger('click')
           expect(page).to have_css('h3.popover-title', text: 'Share With')
           find('.help-icon').trigger('click')
-          expect(page).to_not have_css('h3.popover-title', text: 'Share With')
+          expect(page).not_to have_css('h3.popover-title', text: 'Share With')
         end
 
         # Rights (i.e. License Descriptions) is a modal form
         # with a close button.
-        expect(page).to_not have_css('#rightsModal')
+        expect(page).not_to have_css('#rightsModal')
         within('#generic_file_rights_help_modal') do
           find('.help-icon').click
         end
@@ -95,7 +95,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         # modal_closed = find('#rightsModal', visible: false)
         # expect(modal_closed[:style]).to match(/display: none/)
         #
-        # expect(page).to_not have_content('Creative Commons licenses can take the following combinations')
+        # expect(page).not_to have_content('Creative Commons licenses can take the following combinations')
         # page.should_not have_selector(:css, '#rightsModal')
       end
     end
@@ -181,7 +181,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
   end
 
   context 'When logged in as a non-PSU user' do
-    let(:current_user) { FactoryGirl.find_or_create(:non_psu_user) }
+    let(:current_user) { create(:non_psu_user) }
 
     before { sign_in_with_js(current_user) }
 

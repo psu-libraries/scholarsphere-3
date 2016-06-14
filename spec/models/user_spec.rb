@@ -3,7 +3,7 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe User, type: :model do
-  let(:user) { FactoryGirl.find_or_create(:ldap_jill) }
+  let(:user) { create(:ldap_jill) }
 
   it "has a login" do
     expect(user.login).to eq("jilluser")
@@ -38,11 +38,7 @@ describe User, type: :model do
   end
 
   describe "#directory_attributes" do
-    let(:entry) do
-      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
-        entry['cn'] = ["MICHAEL JOSEPH GIARLO"]
-      end
-    end
+    let(:entry) { build(:ldap_entry, uid: "mjg36", cn: "MICHAEL JOSEPH GIARLO") }
     before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
     it "returns user attributes from LDAP" do
       expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
@@ -54,18 +50,9 @@ describe User, type: :model do
     let(:filter) { Net::LDAP::Filter.construct("(& (| (uid=#{name_part}* ) (givenname=#{name_part}*) (sn=#{name_part}*)) (| (eduPersonPrimaryAffiliation=STUDENT) (eduPersonPrimaryAffiliation=FACULTY) (eduPersonPrimaryAffiliation=STAFF) (eduPersonPrimaryAffiliation=EMPLOYEE))))") }
     let(:results) do
       [
-        Net::LDAP::Entry.new("uid=cac6094,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["cac6094"]
-          e[:displayname] = ["CAMILO CAPURRO"]
-        end,
-        Net::LDAP::Entry.new("uid=csl5210,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["csl5210"]
-          e[:displayname] = ["CAMERON SIERRA LANGSJOEN"]
-        end,
-        Net::LDAP::Entry.new("uid=cnt5046,dc=psu,dc=edu").tap do |e|
-          e[:uid] = ["cnt5046"]
-          e[:displayname] = ["CAMILLE NAKIA TINDAL"]
-        end
+        build(:ldap_entry, uid: "cac6094", displayname: "CAMILO CAPURRO"),
+        build(:ldap_entry, uid: "csl5210", displayname: "CAMERON SIERRA LANGSJOEN"),
+        build(:ldap_entry, uid: "cnt5046", displayname: "CAMILLE NAKIA TINDAL")
       ]
     end
     let(:attrs) { ["uid", "displayname"] }
@@ -84,11 +71,7 @@ describe User, type: :model do
 
   describe "#from_url_component" do
     let(:entry) do
-      Net::LDAP::Entry.new("uid=mjg36,dc=psu,edu").tap do |entry|
-        entry[:cn] = ["MICHAEL JOSEPH GIARLO"]
-        entry[:displayname] = ["John Smith"]
-        entry[:psofficelocation] = ["Beaver Stadium$Seat 100"]
-      end
+      build(:ldap_entry, uid: 'mjg36', cn: "MICHAEL JOSEPH GIARLO", displayname: "John Smith", psofficelocation: "Beaver Stadium$Seat 100")
     end
     subject { described_class.from_url_component("cam") }
 
@@ -115,7 +98,7 @@ describe User, type: :model do
 
       it "does not create a user" do
         expect(described_class.count).to eq 0
-        is_expected.to_not be_a_kind_of(described_class)
+        is_expected.not_to be_a_kind_of(described_class)
         expect(described_class.count).to eq 0
       end
     end
@@ -135,24 +118,10 @@ describe User, type: :model do
   end
 
   describe "file abilities" do
-    let(:private_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata("other")
-      end
-    end
+    let(:private_file) { create(:registered_file) }
+    let(:my_file)      { create(:registered_file, depositor: user.login) }
+    let(:shared_file)  { create(:registered_file, edit_users: [user.login]) }
 
-    let(:my_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata(user.login)
-      end
-    end
-
-    let(:shared_file) do
-      GenericFile.create!(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['registered']) do |gf|
-        gf.apply_depositor_metadata("other")
-        gf.edit_users = ["other", user.login]
-      end
-    end
     describe "abilities" do
       subject { Ability.new(user) }
       context "normal user" do

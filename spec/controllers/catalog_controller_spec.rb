@@ -2,49 +2,19 @@
 require 'spec_helper'
 
 describe CatalogController, type: :controller do
-  def solr_field(name)
-    Solrizer.solr_name(name, :stored_searchable, type: :string)
-  end
-
-  def contributor_facet
-    Solrizer.solr_name("contributor", :facetable)
-  end
-
   before(:all) do
-    GenericFile.create(title: ['Test Document PDF'], filename: ['test.pdf'], read_groups: ['public']).tap do |f|
-      f.apply_depositor_metadata('mjg36')
-      f.save
-    end
-
-    GenericFile.create(title: ['Test 2 Document'], filename: ['test2.doc'], contributor: ['Contrib2'], read_groups: ['public']).tap do |f|
-      f.apply_depositor_metadata('mjg36')
-      f.save
-    end
-
-    GenericFile.create.tap do |f|
-      f.title = ['titletitle']
-      f.filename = ['filename.filename']
-      f.read_groups = ['public']
-      f.tag = ['tagtag']
-      f.based_near = ["based_nearbased_near"]
-      f.language = ["languagelanguage"]
-      f.creator = ["creatorcreator"]
-      f.contributor = ["contributorcontributor"]
-      f.publisher = ["publisherpublisher"]
-      f.subject = ["subjectsubject"]
-      f.resource_type = ["resource_typeresource_type"]
-      f.description = ["descriptiondescription"]
-      f.format_label = ["format_labelformat_label"]
-      f.full_text.content = "full_textfull_text"
-      f.apply_depositor_metadata('mjg36')
-      f.save
-    end
+    create(:public_file, title: ['Test Document PDF'], filename: ['test.pdf'])
+    create(:public_file, title: ['Test 2 Document'], filename: ['test2.pdf'], contributor: ['Contrib2'])
+    create(:public_file, :with_full_text_content, :with_complete_metadata)
   end
 
   before do
     allow_any_instance_of(GenericFile).to receive(:characterize_if_changed).and_yield
     allow_any_instance_of(User).to receive(:groups).and_return([])
   end
+
+  # Default depositor if none is supplied
+  let(:user) { "user" }
 
   describe "#index" do
     describe "term search" do
@@ -139,13 +109,13 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list).count).to eql(1)
       end
       it "finds a file by depositor" do
-        xhr :get, :index, q: "mjg36"
+        xhr :get, :index, q: user
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to eql(3)
       end
       it "finds a file by depositor in advanced search" do
-        xhr :get, :index, depositor: "mjg36", search_field: "advanced"
+        xhr :get, :index, depositor: user, search_field: "advanced"
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to eql(3)

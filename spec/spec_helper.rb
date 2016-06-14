@@ -7,6 +7,10 @@ require 'rspec/rails'
 require 'equivalent-xml/rspec_matchers'
 require 'byebug' unless ENV['TRAVIS']
 
+def travis?
+  ENV.fetch("TRAVIS", false)
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -32,11 +36,4 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.infer_spec_type_from_file_location!
-end
-
-module FactoryGirl
-  def self.find_or_create(handle, by = :login)
-    tmpl = FactoryGirl.build(handle)
-    tmpl.class.send("find_by_#{by}".to_sym, tmpl.send(by)) || FactoryGirl.create(handle)
-  end
 end
