@@ -1,3 +1,5 @@
 --color
---format Fuubar
+--format progress
+--format html
+--out tmp/rspec_results.html
 --profile

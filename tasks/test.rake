@@ -6,19 +6,19 @@ require 'active_fedora/rake_support'
 namespace :scholarsphere do
   desc "Run specs"
   RSpec::Core::RakeTask.new(:rspec) do |t|
-    t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
+    t.rspec_opts = ['--color', '--backtrace']
   end
 
   desc "Run all feature tests"
   RSpec::Core::RakeTask.new(:feature) do |t|
     t.pattern = FileList['spec{,/features/**}/*_spec.rb']
-    t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
+    t.rspec_opts = ['--color', '--backtrace']
   end
     
   desc "Run all tests except features"
   RSpec::Core::RakeTask.new(:unit) do |t| 
     t.pattern = FileList['spec/**/*_spec.rb'].exclude("spec/features/**/*_spec.rb")
-    t.rspec_opts = ['--color', '--backtrace', '--format Fuubar']
+    t.rspec_opts = ['--color', '--backtrace']
   end
 
   desc "Run a set of tasks to prepare for testing"

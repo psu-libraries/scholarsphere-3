@@ -37,6 +37,7 @@ gem 'yaml_db'
 
 group :development, :test do
   gem 'fcrepo_wrapper'
+  gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'rubocop', '~> 0.39.0'
@@ -62,7 +63,6 @@ group :test do
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
-  gem 'fuubar'
   gem 'poltergeist', '~> 1.9'
   gem 'rspec-activemodel-mocks'
   gem 'vcr'
