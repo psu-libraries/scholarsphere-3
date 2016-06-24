@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 Sufia.config do |config|
   config.arkivo_api = true
-  config.arkivo_api = Rails.application.get_vhost_by_host[0] == "scholarsphere-qa.dlt.psu.edu" || Rails.env.development?
 
   config.register_curation_concern :generic_work
 
@@ -11,7 +10,7 @@ Sufia.config do |config|
   config.fits_path = "fits.sh"
   config.max_days_between_audits = 7
   config.enable_ffmpeg = true
-  config.ffmpeg_path = Rails.application.ffmpeg_path
+  config.ffmpeg_path = Rails.application.config.ffmpeg_path
 
   config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
 

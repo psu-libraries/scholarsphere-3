@@ -1,0 +1,15 @@
+development:
+  ffmpeg_path: "ffmpeg"
+  service_instance: "localhost"
+  virtual_host: "http://localhost:3000/"
+  stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
+test:
+  ffmpeg_path: "ffmpeg"
+  service_instance: "example"
+  virtual_host: "http://example.com/"
+  stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
+production:
+  ffmpeg_path: "ffmpeg"
+  service_instance: "scholarsphere-qa"
+  virtual_host: "https://scholarsphere-qa.dlt.psu.edu/"
+  stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"

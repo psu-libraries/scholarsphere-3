@@ -22,64 +22,18 @@ module ScholarSphere
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    def get_vhost_by_host
-      hostname = Socket.gethostname
-      vhost = config.hosts_vhosts_map[hostname] || "https://#{hostname}/"
-      uri = URI.parse(vhost)
-      service = uri.host
-      port = uri.port
-      service << "-#{port}" unless port == 443
-      [service, vhost]
-    end
+    ss_config = YAML.load(File.read(File.join(Rails.root, 'config/scholarsphere.yml')))[Rails.env].with_indifferent_access
 
-    def google_analytics_id
-      vhost = get_vhost_by_host[0]
-      ga_id = config.ga_host_map[vhost]
-      ga_id || Rails.application.secrets.google_analytics_tracking_id
-    end
-
-    def ffmpeg_path
-      vhost = get_vhost_by_host[0]
-      path = config.ffmpeg_path_map[vhost]
-      path || 'ffmpeg'
-    end
+    config.ffmpeg_path = ss_config.fetch(:ffmpeg_path, "ffmpeg")
+    config.service_instance = ss_config.fetch(:service_instance, Socket.gethostname)
+    config.virtual_host = ss_config.fetch(:virtual_host, "https://#{Socket.gethostname}")
 
     config.scholarsphere_version = "v2.5"
     config.scholarsphere_release_date = "January 14, 2016"
     config.redis_namespace = "scholarsphere"
-    # # of fits array items shown on the Generic File show page
+
+    # Number of fits array items shown on the Generic File show page
     config.fits_message_length = 5
-
-    # Map hostnames onto Google Analytics tracking IDs
-    config.ga_host_map = {
-      'scholarsphere-test.dlt.psu.edu' => 'UA-33252017-1',
-      'scholarsphere.psu.edu' => 'UA-33252017-2',
-      'scholarsphere-qa.dlt.psu.edu' => 'UA-33252017-3',
-      'scholarsphere-demo.dlt.psu.edu' => 'UA-33252017-4',
-      'scholarsphere-staging.dlt.psu.edu' => 'UA-33252017-5'
-    }
-
-    # Map hostnames onto ffmpeg paths
-    config.ffmpeg_path_map = {
-      'scholarsphere.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-production',
-      'scholarsphere-qa.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-qa',
-      'scholarsphere-staging.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-staging',
-      'scholarsphere-demo.dlt.psu.edu' => '/dlt/scholarsphere/ffmpeg/ffmpeg-demo'
-    }
-
-    config.hosts_vhosts_map = {
-      'ss2test' => 'https://scholarsphere-test.dlt.psu.edu/',
-      'ss1demo' => 'https://scholarsphere-demo.dlt.psu.edu/',
-      'ss1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
-      'ss2qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
-      'ssjobs1qa' => 'https://scholarsphere-qa.dlt.psu.edu/',
-      'ss1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
-      'ss2stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
-      'ssjobs1stage' => 'https://scholarsphere-staging.dlt.psu.edu/',
-      'ss1prod' => 'https://scholarsphere.psu.edu/',
-      'ss2prod' => 'https://scholarsphere.psu.edu/',
-      'ssjobs1prod' => 'https://scholarsphere.psu.edu/'
-    }
 
     config.assets.enabled = true
     config.assets.compress = !Rails.env.development?
@@ -115,15 +69,9 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    def config.stats_email
-      vhost = ScholarSphere::Application.get_vhost_by_host[0]
-      if vhost == 'scholarsphere.psu.edu'
-        'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
-      else
-        "\"ScholarSphere Stats #{vhost}\" <umg-up.its.sas.scholarsphere-qa-email@groups.ucs.psu.edu>"
-      end
-    end
-    config.stats_from_email = 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
+    config.stats_email = ss_config.fetch(:stats_email, "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
+
+    config.stats_from_email = 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu'
 
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 

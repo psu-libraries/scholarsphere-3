@@ -14,7 +14,7 @@ module AdditionalMetadata
   private
 
     def current_host
-      Rails.application.get_vhost_by_host[1].chomp("/")
+      Rails.application.config.virtual_host.chomp("/")
     end
 
     def path
