@@ -7,7 +7,8 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 # Hydra community components
 gem 'browse-everything', '~> 0.10'
 gem 'hydra-ldap', '0.1.0'
-gem 'sufia', '~> 7.0.0.rc1'
+#gem 'sufia', '~> 7.0.0.rc1'
+gem 'sufia', github:'projecthydra/sufia', ref: '1649da874'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'

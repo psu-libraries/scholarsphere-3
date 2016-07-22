@@ -1,3 +1,37 @@
+GIT
+  remote: git://github.com/projecthydra/sufia.git
+  revision: 1649da8749adc4ecbf3b9f10a033c713dddfb33e
+  ref: 1649da874
+  specs:
+    sufia (7.0.0.rc2)
+      acts_as_follower (>= 0.1.1, < 0.3)
+      almond-rails (~> 0.0.1)
+      blacklight-gallery (~> 0.1)
+      browse-everything (>= 0.10.3)
+      carrierwave (~> 0.9)
+      curation_concerns (~> 1.1)
+      daemons (~> 1.1)
+      flot-rails (~> 0.0.6)
+      font-awesome-rails (~> 4.2)
+      google-api-client (~> 0.7, < 0.9)
+      hydra-batch-edit (~> 2.0)
+      jquery-ui-rails (~> 5.0)
+      json-schema
+      legato (~> 0.3)
+      mail_form (~> 1.5)
+      mailboxer (~> 0.12)
+      nest (~> 1.1)
+      oauth
+      oauth2 (~> 0.9)
+      posix-spawn
+      qa (~> 0.8)
+      redis-namespace (~> 1.5.2)
+      select2-rails (~> 3.5.9)
+      tinymce-rails (~> 4.1)
+      tinymce-rails-imageupload (~> 4.0.16.beta)
+      yaml_db (~> 0.2)
+      zeroclipboard-rails (~> 0.0.13)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -118,7 +152,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (2.3.1)
-    browse-everything (0.10.2)
+    browse-everything (0.10.3)
       bootstrap-sass
       dropbox-sdk (>= 1.6.2)
       font-awesome-rails
@@ -688,34 +722,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     stomp (1.4.1)
-    sufia (7.0.0.rc1)
-      acts_as_follower (>= 0.1.1, < 0.3)
-      almond-rails (~> 0.0.1)
-      blacklight-gallery (~> 0.1)
-      browse-everything (~> 0.10)
-      carrierwave (~> 0.9)
-      curation_concerns (~> 1.1)
-      daemons (~> 1.1)
-      flot-rails (~> 0.0.6)
-      font-awesome-rails (~> 4.2)
-      google-api-client (~> 0.7, < 0.9)
-      hydra-batch-edit (~> 2.0)
-      jquery-ui-rails (~> 5.0)
-      json-schema
-      legato (~> 0.3)
-      mail_form (~> 1.5)
-      mailboxer (~> 0.12)
-      nest (~> 1.1)
-      oauth
-      oauth2 (~> 0.9)
-      posix-spawn
-      qa (~> 0.8)
-      redis-namespace (~> 1.5.2)
-      select2-rails (~> 3.5.9)
-      tinymce-rails (~> 4.1)
-      tinymce-rails-imageupload (~> 4.0.16.beta)
-      yaml_db (~> 0.2)
-      zeroclipboard-rails (~> 0.0.13)
     sxp (0.1.5)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
@@ -821,7 +827,7 @@ DEPENDENCIES
   solr_wrapper
   sprockets-rails
   sqlite3
-  sufia (~> 7.0.0.rc1)
+  sufia!
   therubyracer
   turbolinks
   uglifier
