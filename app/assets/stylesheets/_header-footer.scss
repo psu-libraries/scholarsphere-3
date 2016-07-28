@@ -1,67 +1,58 @@
-#masthead {
-
-  #shield img {
-    float: left;
-    margin-top: 15px;
-  }
-  .logo a:link, .logo a:visited {
-    color: $classic-white;
-    display: block;
-    font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
-    font-size: 2em;
-    font-weight: 300;
-    text-decoration: none;
-    padding-top: .5em;
-  }
-  .logoBold {
-    font-weight: 500;
-  }
-  #user_utility_links {
-    margin-top: 1em;
-  }
-}
-
 @media screen and (min-width: 400px) {
   #masthead {
+    #shield img {
+      float: left;
+      margin-top: 0.75em;
+    }
+
     .logo a:link, .logo a:visited, .logo a:hover {
+      color: $classic-white;
+      display: block;
+      font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
+      font-weight: 300;
+      text-decoration: none;
+
       font-size: 1.5em;
-      padding-top: .5em;
+      padding-left: 3.8em;
+    }
+
+    .login_button {
+      margin-right: 0;
+    }
+
+    #user_utility_links {
+      margin-top: 2em;
     }
   }
 }
 
-@media screen and (min-width: 644px) {
+@media screen and (min-width: 709px) {
   #masthead {
     .logo a:link, .logo a:visited, .logo a:hover {
       font-size: 1.5em;
-      padding-top: .95em;
+      padding-top: 1.5em;
     }
   }
 }
 
-@media screen and (min-width: 733px) {
+@media screen and (min-width: 785px) {
   #masthead {
     .logo a:link, .logo a:visited, .logo a:hover {
       font-size: 2em;
-      padding-top: .5em;
+      padding-top: .9em;
     }
   }
 }
 
-@media screen and (min-width: 781px) {
+@media screen and (min-width: 912px) {
   #masthead {
-    .logo a:link, .logo a:visited, .logo a:hover {
-      font-size: 3em;
-      padding-top: .15em;
+    #shield img {
+      margin-right: 2.5em;
     }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  #masthead {
     .logo a:link, .logo a:visited, .logo a:hover {
-      font-size: 3.25em;
-      padding-top: .15em;
+      font-size: 2.25em;
+      letter-spacing: .05em;
+      padding-top: .72em;
     }
   }
 }
