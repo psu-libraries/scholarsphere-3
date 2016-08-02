@@ -11,7 +11,8 @@ class UserMailer < ActionMailer::Base
   def stats_email(start_datetime, end_datetime)
     @presenter = StatsPresenter.new(start_datetime, end_datetime)
     attachments[stats_report_name] = stats_report
-    mail(to: ScholarSphere::Application.config.stats_email,
+    mail(to:      ScholarSphere::Application.config.stats_email,
+         from:    ScholarSphere::Application.config.stats_from_email,
          subject: ::I18n.t("statistic.report.subject"))
   end
 
