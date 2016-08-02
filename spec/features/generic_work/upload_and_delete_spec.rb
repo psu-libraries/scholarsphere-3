@@ -117,7 +117,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           find("a", text: "Markdown Test.txt").trigger("click")
           expect(page).to have_content "1 file selected"
           click_on("Submit")
-          expect(page).to have_content "1 files selected"
+          within "tr.template-download" do
+            expect(page).to have_content "Markdown Test.txt"
+          end
           check 'agreement'
           click_on 'Descriptions'
           fill_in 'generic_work_title', with: 'Markdown Test'
