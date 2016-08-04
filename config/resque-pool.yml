@@ -2,8 +2,9 @@ batch_update: 3
 derivatives: 1
 resolrize: 1
 audit: 2
-event: 5
+event: 4
 import_url: 3
 sufia: 1
 share_notify: 1
+arkivo_subscription: 1
 "*": 1
