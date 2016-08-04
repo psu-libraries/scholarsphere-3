@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  before_action :clear_session_user
-  before_action :filter_notify
+  before_action :clear_session_user, :filter_notify
 
   rescue_from ActiveFedora::ObjectNotFoundError, with: :render_404 unless Rails.env.development?
 
@@ -87,7 +86,7 @@ class ApplicationController < ActionController::Base
     def has_access?
       return if current_user && current_user.ldap_exist?
       logger.error "User: `#{current_user.user_key}' does not exist in ldap"
-      render template: '/error/401', layout: "error", formats: [:html], status: 401
+      render 'curation_concerns/base/unauthorized', status: :unauthorized
     end
 
     def filtered_flash_messages

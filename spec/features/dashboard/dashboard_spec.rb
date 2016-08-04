@@ -78,7 +78,22 @@ describe 'The Dashboard', type: :feature do
   describe "a user with transfers" do
     let(:another_user) { create(:jill) }
 
-    context "when incoming" do
+    context "with no transfers" do
+      before do
+        sign_in(user)
+        go_to_dashboard
+      end
+
+      it "shows no transfers" do
+        within("div#transfers") do
+          expect(page).to have_link("Select works to transfer")
+          expect(page).to have_content "You haven't transferred any work"
+          expect(page).to have_content "You haven't received any work transfer requests"
+        end
+      end
+    end
+
+    context "with one incoming" do
       let!(:incoming_file) { create(:file, depositor: another_user.user_key, transfer_to: user) }
 
       before do
@@ -95,7 +110,7 @@ describe 'The Dashboard', type: :feature do
       end
     end
 
-    context "when outgoing" do
+    context "with one outgoing" do
       let!(:outgoing_file) { create(:file, depositor: user.user_key, transfer_to: another_user) }
 
       before do

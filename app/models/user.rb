@@ -80,10 +80,11 @@ class User < ActiveRecord::Base
     groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
   end
 
-  # TODO: What's the difference between an administrator versus someone who's administrating?
-  def administrating?(_file)
-    administrator?
-    # WAS: administrator? && Ability.new(self).cannot?(:edit, file)
+  # In Sufia 7, administrators are granted edit rights via Ability, so if
+  # if the administrator isn't the depositor, or isn't in the edit_users
+  # group, then they're administrating the work.
+  def administrating?(file)
+    administrator? && (login != file.depositor && !file.edit_users.include?(login))
   end
 
   # Redefine this for more intuitive keys in Redis

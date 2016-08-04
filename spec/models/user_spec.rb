@@ -117,9 +117,10 @@ describe User, type: :model do
   end
 
   describe "file abilities" do
-    let(:private_file) { create(:registered_file) }
+    let(:private_user) { create(:user) }
+    let(:private_file) { create(:private_file, depositor: private_user.login) }
     let(:my_file)      { create(:registered_file, depositor: user.login) }
-    let(:shared_file)  { create(:registered_file, edit_users: [user.login]) }
+    let(:shared_file)  { create(:registered_file, depositor: private_user.login, edit_users: [user.login]) }
 
     describe "abilities" do
       subject { Ability.new(user) }
@@ -163,7 +164,6 @@ describe User, type: :model do
         context "user's file" do
           let(:file) { my_file }
           it {
-            pending("Why is this false?")
             is_expected.to be_falsey
           }
         end
@@ -174,7 +174,6 @@ describe User, type: :model do
         context "shared file" do
           let(:file) { shared_file }
           it {
-            pending("Why is this false?")
             is_expected.to be_falsey
           }
         end

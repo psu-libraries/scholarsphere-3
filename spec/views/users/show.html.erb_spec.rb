@@ -18,18 +18,6 @@ describe 'users/show.html.erb', type: :view do
 
   describe "when the user doesn't have a title" do
     let(:user) { build(:user, title: nil, created_at: join_date) }
-    it "draws 4 tabs" do
-      pending("Profile tab seems to have been removed, see #283")
-      page = Capybara::Node::Simple.new(rendered)
-      expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#contributions']")
-      expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#profile']")
-      expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#proxies']")
-      expect(page).to have_selector("ul#myTab.nav.nav-tabs > li > a[href='#activity_log']")
-      expect(page).to have_selector(".tab-content > div#contributions.tab-pane")
-      expect(page).to have_selector(".tab-content > div#profile.tab-pane")
-      expect(page).to have_selector(".tab-content > div#proxies.tab-pane")
-      expect(page).to have_selector(".tab-content > div#activity_log.tab-pane")
-    end
 
     it "has the vitals" do
       expect(rendered).to match(/<span class="glyphicon glyphicon-time"><\/span> Joined on #{join_date.strftime("%b %d, %Y")}/)

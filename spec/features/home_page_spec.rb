@@ -27,7 +27,7 @@ describe 'Visting the home page:', type: :feature do
   context 'and I belong to a lot of groups' do
     let(:current_user) { create(:user, :with_many_groups) }
     it do
-      pending("POSTing to Solr is not working as expected")
+      pending("Causes error RSolr::Error::Http - 414 Request-URI Too Long Error")
       is_expected.to have_content('Share. Manage. Preserve.')
       is_expected.to have_content(current_user.display_name)
     end

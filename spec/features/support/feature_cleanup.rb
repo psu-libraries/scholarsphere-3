@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 RSpec.configure do |config|
-  # Clean Fedora and Solr prior to each feature test
+  # Clean out Redis, Fedora and Solr prior to each feature test
   config.before :each do |_example|
     begin
-      $redis.keys('events:*').each { |key| $redis.del key }
-      $redis.keys('User:*').each { |key| $redis.del key }
-      $redis.keys('GenericFile:*').each { |key| $redis.del key }
+      redis_instance = Sufia::RedisEventStore.instance
+      redis_instance.keys('events:*').each { |key| redis_instance.del key }
+      redis_instance.keys('User:*').each { |key| redis_instance.del key }
+      redis_instance.keys('GenericWork:*').each { |key| redis_instance.del key }
     rescue => e
       Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
     end

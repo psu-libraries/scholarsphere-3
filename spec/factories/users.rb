@@ -73,7 +73,7 @@ FactoryGirl.define do
 
     trait :with_event do
       after(:create) do |u, attrs|
-        u.log_profile_event(u.create_event(attrs.event, Time.now.to_i))
+        u.log_profile_event(Sufia::Event.create(attrs.event, Time.current.to_i))
       end
     end
 

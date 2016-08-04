@@ -48,18 +48,4 @@ describe FileSet, type: :model do
   describe "#url" do
     its(:url) { is_expected.to end_with("/concern/file_sets/fixturepng") }
   end
-
-  describe "#create_thumbnail" do
-    describe "with an image that doesn't get resized" do
-      before do
-        allow(file).to receive(:mime_type) { 'image/png' } # Would get set by the characterization job
-        allow(file).to receive(:width) { ['50'] } # Would get set by the characterization job
-        allow(file).to receive(:height) { ['50'] } # Would get set by the characterization job
-      end
-      its(:content) do
-        skip "Is this still relevant?"
-        is_expected.not_to be_changed
-      end
-    end
-  end
 end

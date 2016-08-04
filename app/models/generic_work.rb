@@ -9,4 +9,8 @@ class GenericWork < ActiveFedora::Base
   self.human_readable_type = 'Work'
 
   validates :title, presence: { message: 'Your work must have a title.' }
+
+  def self.indexer
+    WorkIndexer
+  end
 end

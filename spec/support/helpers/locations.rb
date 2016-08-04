@@ -31,11 +31,6 @@ module Locations
     visit '/dashboard/highlights'
     expect(page).to have_content('My Highlights')
   end
-
-  def go_to_user_profile
-    first(".dropdown-toggle").click
-    click_link "my profile"
-  end
 end
 
 RSpec.configure do |config|

@@ -148,6 +148,14 @@ FactoryGirl.define do
       resource_type ['resource_typeresource_type']
       description   ['descriptiondescription']
       related_url   ['http://example.org/TheRelatedURLLink/']
+      rights  ['http://creativecommons.org/licenses/by/3.0/us/']
+    end
+
+    trait :with_required_metadata do
+      title   ['a required title']
+      keyword ['required keyword']
+      creator ['required creator']
+      rights  ['http://creativecommons.org/licenses/by/3.0/us/']
     end
   end
 end

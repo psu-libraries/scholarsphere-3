@@ -23,4 +23,9 @@ describe GenericWork do
   describe "#url" do
     its(:url) { is_expected.to end_with("/concern/generic_works/#{work.id}") }
   end
+
+  describe "::indexer" do
+    subject { described_class }
+    its(:indexer) { is_expected.to eq(WorkIndexer) }
+  end
 end

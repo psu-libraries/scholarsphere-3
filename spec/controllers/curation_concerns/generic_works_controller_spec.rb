@@ -13,10 +13,9 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     end
 
     context "when the work doesn't exist" do
-      it "renders the 404 page" do
-        pending("Sufia now redirects. Should this be the expected behavior?")
+      it "redirects to the login" do
         get :show, id: 'non-existent-id'
-        expect(response.status).to eq(404)
+        expect(response.redirect_url).to eq("http://test.host/login_session")
       end
     end
 
@@ -52,24 +51,18 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       let(:user) { FactoryGirl.create(:user) }
 
       it "does not allow any user to view" do
-        pending("Sufia now renders 401. Better?")
         get :show, id: gf.id
-        expect(response.status).to eq(302)
-        expect(flash[:alert]).to eq("You are not authorized to access this page.")
+        expect(response.status).to eq(401)
       end
 
       it "does not allow any user to edit" do
-        pending("Sufia now renders 401. Better?")
         get :edit, id: gf.id
-        expect(response.status).to eq(302)
-        expect(flash[:alert]).to eq("You do not have sufficient privileges to edit this document")
+        expect(response.status).to eq(401)
       end
 
       it "does not allow any user to update" do
-        pending("Sufia now renders 401. Better?")
         post :update, id: gf.id, generic_file: { title: ['new_title'] }
-        expect(response.status).to eq(302)
-        expect(flash[:alert]).to eq("You are not authorized to access this page.")
+        expect(response.status).to eq(401)
       end
     end
 

@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe My::WorksController, type: :controller do
+  include FactoryHelpers
   routes { Sufia::Engine.routes }
   let(:user) { create(:archivist) }
   describe "logged in user" do
@@ -29,7 +30,19 @@ describe My::WorksController, type: :controller do
       end
     end
     describe "term search" do
-      before(:all) { create(:public_work, :with_complete_metadata, depositor: "archivist1") }
+      let!(:file_set) { build(:file_set, id: "fs") }
+      let!(:work)     { build(:public_work, :with_complete_metadata, members: [file_set], depositor: "archivist1", id: "1234") }
+
+      let(:file) { mock_file_factory(format_label: ['format_labelformat_label']) }
+
+      before do
+        allow(file_set).to receive(:original_file).and_return(file)
+        allow(work).to receive(:representative).and_return(file_set)
+        ActiveFedora::Cleaner.cleanout_solr
+        ActiveFedora::SolrService.add(file_set.to_solr)
+        ActiveFedora::SolrService.add(work.to_solr)
+        ActiveFedora::SolrService.commit
+      end
       it "finds a file by title" do
         xhr :get, :index, q: "titletitle"
         expect(response).to be_success
@@ -94,12 +107,11 @@ describe My::WorksController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field("resource_type"))[0]).to eql('resource_typeresource_type')
       end
       it "finds a file by format_label" do
-        pending("format_label is now on the FileSet. See sufia #1836")
         xhr :get, :index, q: "format_labelformat_label"
         expect(response).to be_success
         expect(response).to render_template('my/index')
         expect(assigns(:document_list).count).to eql(1)
-        expect(assigns(:document_list)[0].fetch(solr_field("file_format"))[0]).to eql('format_labelformat_label')
+        expect(assigns(:document_list)[0].fetch(solr_field("file_format"))[0]).to eql('plain (format_labelformat_label)')
       end
       it "finds a file by description" do
         xhr :get, :index, q: "descriptiondescription"

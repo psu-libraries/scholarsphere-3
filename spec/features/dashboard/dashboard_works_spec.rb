@@ -92,11 +92,12 @@ describe 'Dashboard Works', type: :feature do
       end
     end
 
-    describe 'The Single-Use Link:' do
-      skip 'Places the link on the clipboard'
-      skip 'The first visit displays the file data'
-      skip 'Subsequent visits fail to load the page'
-    end
+    # TODO: Feature tests for single-use links
+    # describe 'The Single-Use Link:' do
+    #   skip 'Places the link on the clipboard'
+    #   skip 'The first visit displays the file data'
+    #   skip 'Subsequent visits fail to load the page'
+    # end
   end
 
   let(:conn) { ActiveFedora::SolrService.instance.conn }

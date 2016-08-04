@@ -22,69 +22,38 @@ describe GenericWork, type: :feature do
 
     context 'When viewing a file' do
       specify "I see all the correct information" do
-        pending "Waiting on Sufia issue #2165"
-        # "I can see the file's page" do
         expect(page).to have_content work1.title.first
-
-        # 'I can not feature' do
         expect(page).not_to have_link "Feature"
-
-        # 'I should see the visibility link' do
         within("h1 span") do
           expect(page).to have_content("Open Access")
         end
 
-        # 'I should see the breadcrumb trail' do
-        expect(page).to have_link("My Dashboard")
+        within("ul.breadcrumb") do
+          expect(page).to have_link("My Dashboard")
+          # TODO: sufia does not contain the works breadcrumb
+          # expect(page).to have_link("My Works")
+        end
 
-        # TODO: sufia does not contain the works breadcrumb
-        # expect(page).to have_link("My Works")
-
-        # 'I can see the link for all the linkable items' do
-        # TODO sufia does not contain linked text in the description
-        # expect(page).to have_link 'http://example.org/TheDescriptionLink/'
+        expect(page).to have_link 'http://example.org/TheDescriptionLink/'
         expect(page).to have_link work1.related_url.first
+        expect(page).to have_link work1.creator.first
+        expect(page).to have_link work1.contributor.first
+        expect(page).to have_link work1.keyword.first
+        expect(page).to have_link work1.subject.first
+        expect(page).to have_link work1.publisher.first
+        expect(page).to have_link work1.language.first
+        expect(page).to have_link work1.based_near.first
+        expect(page).to have_link work1.resource_type.first
+        expect(page).to have_link work1.related_url.first
+        expect(page).to have_link("Attribution 3.0 United States")
 
-        # 'I can download an Endnote version of the file'
-        endnote_link = find_link('EndNote')[:href]
-
-        # get an array of all the links we are testing
-        test_links = {}
-
-        # 'I can see the link for creator and it filters correctly' do
-        test_links = store_link work1.creator.first, test_links
-
-        # 'I can see the link for contributor and it filters correctly' do
-        test_links = store_link work1.contributor.first, test_links
-
-        # TODO: sufia does not currently support linking the following fields
-        # 'I can see the link for publisher and it filters correctly' do
-        # test_links = store_link work1.publisher.first, test_links
-
-        # 'I can see the link for subject and it filters correctly' do
-        # test_links = store_link work1.subject.first, test_links
-
-        # 'I can see the link for language and it filters correctly' do
-        # test_links = store_link work1.language.first, test_links
-
-        # 'I can see the link for based_near and it filters correctly' do
-        # test_links = store_link work1.based_near.first, test_links
-
-        # 'I can see the link for a tag and it filters correctly' do
-        # test_links = store_link file1.keyword.first, test_links
-
-        # 'I can see the link for rights and it filters correctly' do
-        # test_links = store_link Sufia.config.cc_licenses_reverse[work1.rights.first], test_links
-        store_link Sufia.config.cc_licenses_reverse[work1.rights.first], test_links
-
-        # TODO: sufia does not create the correct links for us to find our file
-        # loop through all links
+        # TODO: loop through all links to visit and check them
         # test_links.each do |name, link|
         #   test_link name, link
         # end
 
-        # test the end not page
-        visit endnote_link
+        # test the EndNote page
+        visit(find_link('EndNote')[:href])
         expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer; charset=utf-8')
       end
 

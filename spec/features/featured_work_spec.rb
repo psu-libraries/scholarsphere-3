@@ -5,7 +5,7 @@ describe "Featured works on the home page", type: :feature do
   let!(:user)         { create(:user) }
   let!(:jill_user)    { create(:jill) }
   let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title']) }
-  let!(:file2)        { create(:featured_file, depositor: user.login, title: ['another_title_bites_the_dust']) }
+  let!(:file2)        { create(:featured_file, :with_required_metadata, depositor: user.login) }
   let!(:private_file) { create(:private_file, depositor: jill_user.login, title: ['private_document']) }
 
   let(:admin_user) { create(:administrator) }
@@ -49,19 +49,16 @@ describe "Featured works on the home page", type: :feature do
     end
 
     it 'removes a featured work if it becomes private' do
-      pending("PR: projecthydra/sufia#1953")
       within('#featured_container') do
         expect(page).to have_content(file2.title[0])
       end
 
-      click_on file2.title[0]
-      click_on 'Edit'
-      choose 'generic_work_visibility_restricted'
-      click_on 'Save'
-      visit '/'
+      file2.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+      file2.save
+      visit('/')
 
       within('#featured_container') do
-        expect(page).to have_no_content(file2.title[0])
+        expect(page).not_to have_content(file2.title[0])
       end
     end
   end
