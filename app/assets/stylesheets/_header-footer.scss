@@ -1,8 +1,9 @@
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 350px) {
   #masthead {
     #shield img {
       float: left;
       margin-top: 0.75em;
+      width: 155px;
     }
 
     .logo a:link, .logo a:visited, .logo a:hover {
@@ -12,8 +13,8 @@
       font-weight: 300;
       text-decoration: none;
 
-      font-size: 1.5em;
-      padding-left: 3.8em;
+      font-size: 1.25em;
+      padding-left: 3.25em;
     }
 
     .login_button {
@@ -21,25 +22,62 @@
     }
 
     #user_utility_links {
-      margin-top: 2em;
+      margin-top: 1.25em;
     }
   }
 }
 
-@media screen and (min-width: 709px) {
+@media screen and (min-width: 549px) {
+  #masthead {
+    #shield img {
+      margin-top: 0.15em;
+    }
+    .logo a:link, .logo a:visited, .logo a:hover {
+      padding-top: 0.8em;
+    }
+    #user_utility_links {
+      margin-top: 0.8em;
+    }
+  }
+}
+
+@media screen and (min-width: 650px) {
   #masthead {
     .logo a:link, .logo a:visited, .logo a:hover {
       font-size: 1.5em;
-      padding-top: 1.5em;
+      padding-top: 0.5em;
     }
+  }
+}
+
+@media screen and (min-width: 715px) {
+  #masthead {
+    #shield img {
+      width: 175px
+    }
+    .logo a:link, .logo a:visited, .logo a:hover {
+      padding-top: 0.65em;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #masthead {
+    min-height: 6em;
   }
 }
 
 @media screen and (min-width: 785px) {
   #masthead {
+    #shield img {
+      width: 225px;
+    }
     .logo a:link, .logo a:visited, .logo a:hover {
       font-size: 2em;
-      padding-top: .9em;
+      padding-top: 0.6em;
+    }
+    #user_utility_links {
+      margin-top: 1.5em;
     }
   }
 }
@@ -47,12 +85,23 @@
 @media screen and (min-width: 912px) {
   #masthead {
     #shield img {
-      margin-right: 2.5em;
+      margin-right: 2em;
     }
     .logo a:link, .logo a:visited, .logo a:hover {
-      font-size: 2.25em;
+      font-size: 2.15em;
       letter-spacing: .05em;
-      padding-top: .72em;
+      padding-top: 0.45em;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #masthead {
+    #shield img {
+      width: 250px;
+    }
+    .logo a:link, .logo a:visited, .logo a:hover {
+      padding-top: 0.63em;
     }
   }
 }
