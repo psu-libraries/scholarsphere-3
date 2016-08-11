@@ -12,6 +12,7 @@ ScholarSphere::Application.routes.draw do
   mount Blacklight::Engine => '/'
   mount HydraEditor::Engine => '/'
   mount CurationConcerns::Engine, at: '/'
+  mount Qa::Engine => '/authorities'
 
   curation_concerns_collections
   curation_concerns_basic_routes
