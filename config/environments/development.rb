@@ -8,6 +8,9 @@ ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   config.log_level = :debug
 
+  # set up resque in production only (uncomment if you would like reque locally)
+  # config.active_job.queue_adapter = :resque
+
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the webserver when you make code changes.
