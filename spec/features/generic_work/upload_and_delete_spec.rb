@@ -171,7 +171,6 @@ describe 'Generic File uploading and deletion:', type: :feature do
     before { sign_in_with_js(current_user) }
 
     specify 'I cannot access the upload page' do
-      pending "Needs to be re-implemented"
       visit new_generic_work_path
       expect(page).to have_content 'Unauthorized'
       expect(page).not_to have_content 'Upload'

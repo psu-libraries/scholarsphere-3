@@ -10,7 +10,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
   end
 
   around_action :notify_users_of_permission_changes, only: [:update]
-  skip_before_action :has_access?, only: [:stats]
+  before_action :has_access?, except: [:show, :stats]
   before_action :delete_from_share, only: [:destroy]
 
   def notify_users_of_permission_changes

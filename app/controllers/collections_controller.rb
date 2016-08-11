@@ -9,6 +9,8 @@ class CollectionsController < ApplicationController
     handle_legacy_url_prefix { |new_id| redirect_to collection_path(new_id), status: :moved_permanently }
   end
 
+  before_action :has_access?, except: :show
+
   # TODO: Move to CC?
   def filter_docs_with_read_access!
     super
