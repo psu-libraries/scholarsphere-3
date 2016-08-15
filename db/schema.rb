@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.string   "label",      limit: 255
     t.string   "lowerLabel", limit: 255
     t.string   "uri",        limit: 255
-    t.datetime "created_at",             default: '2016-06-07 15:51:43'
-    t.datetime "updated_at",             default: '2016-06-07 15:51:43'
+    t.datetime "created_at",             default: '2016-08-15 11:48:26'
+    t.datetime "updated_at",             default: '2016-08-15 11:48:26'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
@@ -315,6 +315,6 @@ ActiveRecord::Schema.define(version: 20150220191724) do
   end
 
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
-  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_test"
-  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_test"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_development"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_development"
 end
