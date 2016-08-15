@@ -29,7 +29,7 @@ describe 'Static pages:', type: :feature do
 
   context 'when not logged in' do
     before do
-      sign_in_with_js(nil, js_errors: false)
+      sign_in_with_named_js(:error_polergeist, nil, js_errors: false)
       visit(path)
     end
 
@@ -53,7 +53,7 @@ describe 'Static pages:', type: :feature do
   context 'when logged in' do
     let(:user) { create(:user) }
     before do
-      sign_in_with_js(user, js_errors: false)
+      sign_in_with_named_js(:error_polergeist, user, js_errors: false)
       visit(path)
     end
 

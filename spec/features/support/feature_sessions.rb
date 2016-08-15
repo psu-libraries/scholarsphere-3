@@ -14,10 +14,14 @@ module Features
     end
 
     def sign_in_with_js(user = nil, opts = {})
-      Capybara.register_driver :poltergeist do |app|
+      sign_in_with_named_js(:poltergeist, user, opts)
+    end
+
+    def sign_in_with_named_js(name, user = nil, opts = {})
+      Capybara.register_driver name do |app|
         Capybara::Poltergeist::Driver.new(app, defaults.merge(opts))
       end
-      Capybara.current_driver = :poltergeist
+      Capybara.current_driver = name
       page.driver.headers = request_headers(user)
     end
 
