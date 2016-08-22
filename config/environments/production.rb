@@ -7,6 +7,9 @@ end
 ScholarSphere::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # set up resque in production only
+  config.active_job.queue_adapter = :resque
+
   # Set cookies as secure, force all connections over SSL
   config.force_ssl = true
 
