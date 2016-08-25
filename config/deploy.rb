@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-lock '3.5.0'
+lock '3.6'
 
 # application and repo settings
 set :application, 'scholarsphere'
@@ -43,37 +43,38 @@ set :format_options, command_output: false
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(
+  'config/analytics.yml',
+  'config/arkivo.yml',
+  'config/blacklight.yml',
+  'config/browse_everything_providers.yml',
   'config/database.yml',
   'config/devise.yml',
   'config/fedora.yml',
   'config/fedora3.yml',
+  'config/ga-privatekey.p12',
   'config/hydra-ldap.yml',
+  'config/initializers/arkivo_constraint.rb',
+  'config/initializers/sufia-secret.rb',
   'config/newrelic.yml',
   'config/redis.yml',
-  'config/solr.yml',
-  'config/analytics.yml',
-  'config/share_notify.yml',
-  'config/blacklight.yml',
-  'config/ga-privatekey.p12',
-  'config/browse_everything_providers.yml',
-  'config/arkivo.yml',
-  'config/zotero.yml',
+  'config/scholarsphere.yml',
   'config/secrets.yml',
-  'public/sitemap.xml',
+  'config/share_notify.yml',
+  'config/solr.yml',
+  'config/zotero.yml',
   'public/robots.txt',
-  'config/initializers/arkivo_constraint.rb',
-  'config/initializers/sufia-secret.rb'
+  'public/sitemap.xml'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
-  'tmp/pids',
+  'public/system',
   'tmp/cache',
   'tmp/derivatives',
+  'tmp/pids',
   'tmp/sockets',
-  'vendor/bundle',
-  'public/system',
-  'public/uploads'
+  'tmp/uploads',
+  'vendor/bundle'
 )
 
 # Default value for keep_releases is 5

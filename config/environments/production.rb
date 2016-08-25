@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Sufia::Engine.configure do
   config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Rails.application.config.virtual_host}"
-  config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.config.service_name}&#{Rails.application.config.virtual_host}dashboard"
+  config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.config.service_instance}&#{Rails.application.config.virtual_host}dashboard"
 end
 
 ScholarSphere::Application.configure do
