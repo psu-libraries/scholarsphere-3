@@ -127,19 +127,6 @@ class User < ActiveRecord::Base
     @directory_attributes ||= self.class.directory_attributes(login).first
   end
 
-  # This override can be removed as soon as the error handler
-  # for files not found has been added to Sufia.
-  def trophy_files
-    trophies.map do |t|
-      begin
-        ::GenericFile.load_instance_from_solr(t.generic_file_id)
-      rescue ActiveFedora::ObjectNotFoundError
-        logger.error("Invalid trophy for user #{user_key} (generic file id: #{t.generic_file_id})")
-        nil
-      end
-    end.compact
-  end
-
   private
 
     def get_net_attribute(entry, attribute_name, blank_return = nil)
