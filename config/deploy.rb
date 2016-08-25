@@ -61,7 +61,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/secrets.yml',
   'public/sitemap.xml',
   'public/robots.txt',
-  'config/initializers/arkivo_constraint.rb'
+  'config/initializers/arkivo_constraint.rb',
+  'config/initializers/sufia-secret.rb'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
