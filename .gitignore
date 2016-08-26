@@ -1,4 +1,4 @@
-# These files should be copied from the $file.yml.sample and tweaked
+# These files should be copied from the config/sample directory and tweaked
 # per environment.
 config/database.yml
 config/fedora3.yml
