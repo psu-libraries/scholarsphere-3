@@ -6,6 +6,8 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
 gem 'sufia', '~> 7.0'
+#gem 'sufia', github: 'projecthydra/sufia', ref: '6a5d807'
+gem 'curation_concerns', '1.3.3'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
@@ -47,7 +49,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano', '~> 3.0', require: false
+  gem 'capistrano', '~> 3.5.0', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
   gem 'capistrano-rbenv', '~> 2.0', require: false

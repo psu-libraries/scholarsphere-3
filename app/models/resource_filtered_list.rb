@@ -8,6 +8,6 @@ class ResourceFilteredList
   end
 
   def filter
-    @filtered ||= generic_files.reject { |gf| !((gf.resource_type & resource_types).count > 0) }
+    @filtered ||= generic_files.reject { |gf| !((gf.resource_type.to_ary & resource_types).count > 0) }
   end
 end

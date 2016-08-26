@@ -155,8 +155,8 @@ describe 'Dashboard Works', type: :feature do
         expect(page).not_to have_content "You searched for:"
 
         # When I search by Creator it displays the correct results
-        search_my_files_by_term(file.creator)
-        expect(page).to have_content "You searched for: #{file.creator}"
+        search_my_files_by_term(file.creator.first.to_s)
+        expect(page).to have_content "You searched for: #{file.creator.first}"
         page_should_only_list file
       end
     end
