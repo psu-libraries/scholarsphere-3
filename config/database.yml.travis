@@ -1,4 +1,0 @@
-# needed for travis
-test: &sqlite
-  adapter: sqlite3
-  database: db/<%= Rails.env %>.sqlite3
