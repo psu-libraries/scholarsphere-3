@@ -11,7 +11,7 @@ describe SolrDocument do
       "%T Sample Title\n" \
       "%R http://scholarsphere.psu.edu/files/#{work.id}\n" \
       "%~ ScholarSphere\n" \
-      "%W Penn State University"
+      "%W Penn State"
     end
     its(:export_as_endnote) { is_expected.to eq(export) }
   end
