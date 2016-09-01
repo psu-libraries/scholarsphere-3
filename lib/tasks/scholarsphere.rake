@@ -9,6 +9,46 @@ namespace :scholarsphere do
     Rails.logger
   end
 
+  def file_fq
+    "#{Solrizer.solr_name('has_model', :symbol)}:FileSet"
+  end
+
+  def work_fq
+    "#{Solrizer.solr_name('has_model', :symbol)}:GenericWork"
+  end
+
+  def file_set_id_list( model_filter = file_fq, query = '')
+    resp = ActiveFedora::SolrService.instance.conn.get "select",
+                                                       params: { fl: ['id'],
+                                                                 fq: model_filter,
+                                                                 q:  query }
+    puts resp
+    # get the totalNumber and the size of the current response
+    total_num = resp["response"]["numFound"]
+    id_list = resp["response"]["docs"]
+    page = 1
+
+    # loop through each page appending the ids to the original list
+    while id_list.length < total_num
+      page += 1
+      resp = ActiveFedora::SolrService.instance.conn.get "select",
+                                                         params: { fl: ['id'],
+                                                                   fq: file_fq,
+                                                                   page: page,
+                                                                   q:  query }
+      id_list += resp["response"]["docs"]
+      total_num = resp["response"]["numFound"]
+    end
+    id_list.map{|o| o["id"]}
+  end
+
+  def process_file_set_id_list(id_list, &block)
+    id_list.each do |id|
+      file_set = FileSet.find(id)
+      block.call file_set
+    end
+  end
+
   desc "Restore missing user accounts"
   task restore_users: :environment do
     # Query Solr for unique depositors
@@ -41,7 +81,7 @@ namespace :scholarsphere do
     users = {}
     User.all.each do |u|
       # for each user query get list of documents
-      user_files = GenericFile.find(depositor: u.login)
+      user_files = FileSet.where(depositor: u.login)
       # sum the size of the users docs
       sz = 0
       user_files.each do |f|
@@ -53,18 +93,11 @@ namespace :scholarsphere do
       users = users.merge(uname => sz)
     end
     longest_key = users.keys.max { |a, b| a.length <=> b.length }
-    printf "%-#{longest_key.length}s %s".background(:white).foreground(:black), "User", "Space Used"
+    printf "%-#{longest_key.length}s %s", "User", "Space Used"
     puts ""
+    users = users.sort_by {|_key, value| value}.to_h
     users.each_pair do |k, v|
-      if v >= problem_sz
-        printf "%-#{longest_key.length}s %s".background(:red).foreground(:white).blink, k, number_to_human_size(v)
-      elsif v >= warning_sz
-        printf "%-#{longest_key.length}s %s".background(:red).foreground(:white), k, number_to_human_size(v)
-      elsif v >= caution_sz
-        printf "%-#{longest_key.length}s %s".background(:yellow).foreground(:black), k, number_to_human_size(v)
-      else
-        printf "%-#{longest_key.length}s %s".background(:black).foreground(:white), k, number_to_human_size(v)
-      end
+      printf "%-#{longest_key.length}s %s", k, number_to_human_size(v)
       puts ""
     end
   end
@@ -78,28 +111,9 @@ namespace :scholarsphere do
 
   desc "Characterize all files"
   task characterize: :environment do
-    # grab the first increment of document ids from solr
-
-    resp = ActiveFedora::SolrService.instance.conn.get "select",
-                                                       params: { fl: ['id'], fq: "#{Solrizer.solr_name('has_model', :symbol)}:GenericFile" }
-    puts resp
-    # get the totalNumber and the size of the current response
-    totalNum = resp["response"]["numFound"]
-    idList = resp["response"]["docs"]
-    page = 1
-
-    # loop through each page appending the ids to the original list
-    while idList.length < totalNum
-      page += 1
-      resp = ActiveFedora::SolrService.instance.conn.get "select",
-                                                         params: { fl: ['id'], fq: "#{Solrizer.solr_name('has_model', :symbol)}:GenericFile",
-                                                                   page: page }
-      idList += resp["response"]["docs"]
-      totalNum = resp["response"]["numFound"]
+    process_file_set_id_list(file_set_id_list) do |file_set|
+      CharacterizeJob.perform_later file_set, file_set.original_file.id
     end
-
-    # for each document in the database call characterize
-    idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"]) }
   end
 
   desc "Re-solrize all objects"
@@ -133,10 +147,11 @@ namespace :scholarsphere do
       raise "rake scholarsphere:export:rdfxml output=FILE" unless ENV['output']
       export_file = ENV['output']
       triples = RDF::Repository.new
-      rows = GenericFile.count
-      GenericFile.find(:all).each do |gf|
-        next unless gf.rightsMetadata.groups["public"] == "read" && gf.descMetadata.content
-        RDF::Reader.for(:ntriples).new(gf.descMetadata.content) do |reader|
+      rows = FileSet.count
+      FileSet.find(:all).each do |file_set|
+        next unless file_set.public?
+        # TODO how do I get tripples for a file_set.  Should I include the work metadata
+        RDF::Reader.for(:ntriples).new(file_set.descMetadata.content) do |reader|
           reader.each_statement do |statement|
             triples << statement
           end
@@ -209,83 +224,57 @@ namespace :scholarsphere do
   end
 
   namespace "checksum" do
-    desc "Run a checksum on all the GenericFiles"
+    desc "Validate checksum on all the FileSets"
     task "all"  => :environment do
       errors = []
-      GenericFile.all.each do |gf|
-        next unless gf.content.checksum.blank?
-        gf.content.checksumType = "MD5"
-        if gf.content.checksum == gf.original_checksum[0]
-          gf.content.checksumType = "SHA-1"
-          gf.save # to do update version committer to checksum
-        else
-          errors << gf
+      process_file_set_id_list(file_set_id_list) do |file_set|
+        md5 = Digest::MD5.new
+        md5 << file_set.original_file.content
+        if md5.hexdigest != file_set.original_file.original_checksum.first
+          errors << file_set
         end
       end
-      errors.each { |gf| puts "Invalid Checksum: #{gf.pid} new: #{gf.content.checksum} original: #{gf.original_checksum[0]} " }
+      errors.each { |file_set| puts "Invalid Checksum: #{file_set.id} " }
     end
   end
 
   desc "Convert Resource Type"
   task "master_thesis" => :environment do
-    # def add_advanced_parse_q_to_solr(solr_parameters, req_params = params)
-    #  solr_parameters[:fq]="{!raw f=resource_type_sim}Masters Thesis"
-    # end
 
-    resp = ActiveFedora::SolrService.instance.conn.get "select",
-                                                       params: { fl: ['id'], q: "#{Solrizer.solr_name('resource_type')}:\"Masters Thesis\"",
-                                                                 fq: "#{Solrizer.solr_name('has_model', :symbol)}:GenericFile" }
-    docs = resp["response"]["docs"]
-    docs.each do |doc|
-      gf = GenericFile.find(doc["id"])
-      puts "File Found #{gf.title} #{gf.resource_type}"
-      resources = gf.resource_type
-      gf.resource_type = resources.map { |type| type == "Masters Thesis" ? "Thesis" : type }
-      puts "File Updated #{gf.title} #{gf.resource_type}"
-      gf.save
+    file_set_id_list(work_fq, "#{Solrizer.solr_name('resource_type')}:\"Masters Thesis\"").each do |id|
+      work = GenericWork.find(id)
+      puts "Work Found #{work.title} #{work.resource_type}"
+      resources = work.resource_type
+      work.resource_type = resources.map { |type| type == "Masters Thesis" ? "Thesis" : type }
+      puts "Work Updated #{work.title} #{work.resource_type}"
+      work.save
     end
   end
 
-  def solr_generic_files_only(solr_parameters, _user_parameters)
-    solr_parameters[:fq] ||= []
-    solr_parameters[:fq] += [
-      ActiveFedora::SolrService.construct_query_for_rel(has_model: ::GenericFile.to_class_uri)
-    ]
+  def generate_thumbnails(id_list)
+    errors = 0
+    process_file_set_id_list(id_list) do |file_set|
+      begin
+        CreateDerivativesJob.perform_later file_set, file_set.original_file.id
+        puts "Queued derivatives for FileSet: #{file_set.id}"
+      rescue Exception => e
+        errors += 1
+        logger.error "Error processing document: #{id}\r\n#{e.message}\r\n#{e.backtrace.inspect}"
+      end
+    end
+    logger.error("Total errors: #{errors}") if errors > 0
+
   end
 
   desc "Generate thumbnails for ALL documents"
   task "generate_thumbnails" => :environment do
-    solr = ActiveFedora::SolrService.instance.conn.get "select",
-                                                       params: { fl: ['id'], fq: "#{Solrizer.solr_name('has_model', :symbol)}:GenericFile" }
-    total_docs = solr["response"]["numFound"]
-    logger.info "Total documents to process: #{total_docs}"
-
-    total_processed = errors = page = 0
-    while total_processed < total_docs
-      page += 1
-      solr = ActiveFedora::SolrService.instance.conn.get "select",
-                                                         params: { fl: ['id'], fq: "#{Solrizer.solr_name('has_model', :symbol)}:GenericFile",
-                                                                   page: page }
-      total_docs = solr["response"]["numFound"]
-      docs = solr["response"]["docs"]
-      docs.each do |doc|
-        begin
-          id = doc["id"]
-          Sufia.queue.push(CreateDerivativesJob.new id)
-        rescue Exception => e
-          errors += 1
-          logger.error "Error processing document: #{id}\r\n#{e.message}\r\n#{e.backtrace.inspect}"
-        end
-      end
-      total_processed += docs.length
-      logger.info "Total documents queued: #{total_processed}"
-    end
-    logger.error("Total errors: #{errors}") if errors > 0
+    generate_thumbnails(file_set_id_list)
   end
 
   # Start date must be in format 'yyyy/MM/dd'
   desc "Prints to stdout a list of failed jobs in resque"
   task "get_failed_jobs", [:start_date, :details] => :environment do |_cmd, args|
+    #todo Not sure we can do this with the new Active Job based records
     details = (args[:details] == "true")
     start_date = args[:start_date] || Date.today.to_s.tr('-', '/')
     log = ""
@@ -334,31 +323,28 @@ namespace :scholarsphere do
     puts "Done."
   end
 
-  desc "Create derivatives for the documents indicated in a file. Each line in the file must include a PID (e.g. scholarsphere:123xyz)"
-  task "generate_thumbnail", [:file_name] => :environment do |_cmd, args|
-    file_name = args[:file_name]
+  def id_list_from_file(file_name)
     abort "Must provide a file name to read the PIDs" if file_name.nil?
     puts "Processing file #{file_name}"
+    id_list = []
     File.readlines(file_name).each do |line|
       pid = line.chomp
-      unless pid.empty?
-        Sufia.queue.push(CreateDerivativesJob.new pid)
-        puts "Queued derivatives for PID: #{pid}"
-      end
+      id_list << pid unless pid.empty?
     end
+    id_list
+  end
+
+  desc "Create derivatives for the documents indicated in a file. Each line in the file must include a PID (e.g. scholarsphere:123xyz)"
+  task "generate_thumbnail", [:file_name] => :environment do |_cmd, args|
+    generate_thumbnails(id_list_from_file(args[:file_name]))
   end
 
   desc "Characterizes documents indicated in a file. Each line in the file must include a PID (e.g. scholarsphere:123xyz)"
   task "characterize_some", [:file_name] => :environment do |_cmd, args|
-    file_name = args[:file_name]
-    abort "Must provide a file name to read the PIDs" if file_name.nil?
-    puts "Processing file #{file_name}"
-    File.readlines(file_name).each do |line|
-      pid = line.chomp
-      unless pid.empty?
-        Sufia.queue.push(CharacterizeJob.new pid)
-        puts "Queued characterization for PID: #{pid}"
-      end
+    id_list = id_list_from_file(args[:file_name])
+    process_file_set_id_list(id_list) do |file_set|
+      CharacterizeJob.perform_later file_set, file_set.original_file.id
+      puts "Queued characterization for FileSet: #{file_set.id}"
     end
   end
 
@@ -384,13 +370,17 @@ namespace :scholarsphere do
     UserMailer.stats_email(8.day.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
   end
 
-  desc "Mark a file as private"
-  task "make_private", [:file_id] => :environment do |_cmd, args|
-    file_id = args[:file_id]
-    abort "Must provide a file id to mark as private" if file_id.nil?
-    gf = GenericFile.find(file_id)
-    gf.read_groups = []
-    result = gf.save
-    puts "File #{file_id} marked as private: #{result}"
+  desc "Mark a work as private"
+  task "make_private", [:work_id] => :environment do |_cmd, args|
+    work_id = args[:work_id]
+    abort "Must provide a work id to mark as private" if work_id.nil?
+    work = GenericWork.find(work_id)
+    work.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+    work.file_sets.each do |file_set|
+      file_set.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+      file_set.save
+    end
+    result = work.save
+    puts "Work #{work_id} marked as private: #{result}"
   end
 end
