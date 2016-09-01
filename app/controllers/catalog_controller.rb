@@ -17,6 +17,25 @@ class CatalogController < ApplicationController
     solr_name('date_modified', :stored_sortable, type: :date)
   end
 
+  def self.update_show_fields(config, fields)
+    fields.each do |key, field_config|
+      config.add_show_field solr_name(key.to_s, :stored_searchable), label: field_config.label
+    end
+  end
+
+  def self.update_index_fields(config, fields)
+    fields.each do |key, field_config|
+      config.add_index_field solr_name(key.to_s, :stored_searchable), label: field_config.label
+    end
+  end
+
+  def self.update_facet_fields(config, fields)
+    fields.each do |key, field_config|
+      solr_type = field_config.opts.fetch(:solr_type, :facetable)
+      config.add_facet_field solr_name(key, solr_type), label: field_config.label, limit: 5, helper_method: field_config.opts[:helper_method]
+    end
+  end
+
   configure_blacklight do |config|
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
@@ -46,16 +65,7 @@ class CatalogController < ApplicationController
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
-    config.add_facet_field solr_name("resource_type", :facetable), label: "Resource Type", limit: 5
-    config.add_facet_field solr_name("collection", :facetable), label: "Collection",  helper_method: :collection_helper_method, limit: 5
-    config.add_facet_field solr_name("creator", :facetable), label: "Creator", limit: 5
-    config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
-    config.add_facet_field solr_name("subject", :facetable), label: "Subject", limit: 5
-    config.add_facet_field solr_name("language", :facetable), label: "Language", limit: 5
-    config.add_facet_field solr_name("based_near", :facetable), label: "Location", limit: 5
-    config.add_facet_field solr_name("publisher", :facetable), label: "Publisher", limit: 5
-    config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
-    config.add_facet_field solr_name("has_model", :symbol), label: "Object Type", helper_method: :titleize
+    update_facet_fields(config, FieldConfigurator.facet_fields)
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -64,42 +74,11 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field solr_name("title", :stored_searchable), label: "Title"
-    config.add_index_field solr_name("description", :stored_searchable), label: "Description"
-    config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword"
-    config.add_index_field solr_name("subject", :stored_searchable), label: "Subject"
-    config.add_index_field solr_name("creator", :stored_searchable), label: "Creator"
-    config.add_index_field solr_name("contributor", :stored_searchable), label: "Contributor"
-    config.add_index_field solr_name("publisher", :stored_searchable), label: "Publisher"
-    config.add_index_field solr_name("based_near", :stored_searchable), label: "Location"
-    config.add_index_field solr_name("language", :stored_searchable), label: "Language"
-    config.add_index_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
-    config.add_index_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
-    config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created"
-    config.add_index_field solr_name("rights", :stored_searchable), label: "Rights"
-    config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
-    config.add_index_field solr_name("file_format", :stored_searchable), label: "File Format"
-    config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier"
+    update_index_fields(config, FieldConfigurator.index_fields)
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field solr_name("title", :stored_searchable), label: "Title"
-    config.add_show_field solr_name("description", :stored_searchable), label: "Description"
-    config.add_show_field solr_name("keyword", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("subject", :stored_searchable), label: "Subject"
-    config.add_show_field solr_name("creator", :stored_searchable), label: "Creator"
-    config.add_show_field solr_name("contributor", :stored_searchable), label: "Contributor"
-    config.add_show_field solr_name("publisher", :stored_searchable), label: "Publisher"
-    config.add_show_field solr_name("based_near", :stored_searchable), label: "Location"
-    config.add_show_field solr_name("language", :stored_searchable), label: "Language"
-    config.add_show_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
-    config.add_show_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
-    config.add_show_field solr_name("date_created", :stored_searchable), label: "Date Created"
-    config.add_show_field solr_name("rights", :stored_searchable), label: "Rights"
-    config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
-    config.add_show_field solr_name("file_format", :stored_searchable), label: "File Format"
-    config.add_show_field solr_name("identifier", :stored_searchable), label: "Identifier"
-    config.add_show_field solr_name("depositor", :stored_searchable), label: "Depositor"
+    update_show_fields(config, FieldConfigurator.show_fields)
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
