@@ -38,7 +38,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
     it "is deleted from SHARE notify" do
-      expect(controller).to receive(:delete_from_share)
+      expect(ShareNotifyDeleteJob).to receive(:perform_later).with(work)
       delete :destroy, id: work
     end
   end

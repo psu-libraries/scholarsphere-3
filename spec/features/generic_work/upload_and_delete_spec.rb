@@ -138,6 +138,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
       context 'with a single file' do
         before do
           create_work_and_upload_file(filename)
+          allow(ShareNotifyDeleteJob).to receive(:perform_later)
         end
         specify 'uploading, deleting and notifications' do
           click_link "My Dashboard"
@@ -159,7 +160,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content file.title.first
           db_item_actions_toggle(file).click
           click_link 'Delete Work'
-          expect(page).not_to have_content file.title.first
+          expect(page).to have_content "Deleted #{file.title.first}"
         end
       end
     end

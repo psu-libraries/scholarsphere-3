@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu') do
   path :root, priority: 1, change_frequency: 'weekly'
-  path :catlaog_index, priority: 1, change_frequency: 'weekly'
+  path :search_catalog, priority: 1, change_frequency: 'weekly'
   User.all.each do |user|
     literal Sufia::Engine.routes.url_helpers.profile_path(user.login),
             priority: 0.8, change_frequency: 'daily'
