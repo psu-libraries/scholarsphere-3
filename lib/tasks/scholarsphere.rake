@@ -104,7 +104,7 @@ namespace :scholarsphere do
 
   desc "Re-solrize all objects"
   task resolrize: :environment do
-    Sufia.queue.push(ResolrizeJob.new)
+    ResolrizeJob.perform_later
   end
 
   desc "Re-solrize top level objects"
@@ -364,7 +364,7 @@ namespace :scholarsphere do
 
   desc "Queues a job to (re)generate the sitemap.xml"
   task "sitemap_queue_generate" => :environment do
-    Sufia.queue.push(SitemapRegenerateJob.new)
+    SitemapRegenerateJob.perform_later
   end
 
   desc "list user's email"

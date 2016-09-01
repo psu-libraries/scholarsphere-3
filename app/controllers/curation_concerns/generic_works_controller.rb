@@ -25,8 +25,6 @@ class CurationConcerns::GenericWorksController < ApplicationController
   end
 
   def delete_from_share
-    job = ShareNotifyDeleteJob.new(@curation_concern.id)
-    job.document
-    Sufia.queue.push(job)
+    ShareNotifyDeleteJob.perform_later(@curation_concern)
   end
 end

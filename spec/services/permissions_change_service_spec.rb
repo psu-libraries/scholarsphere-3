@@ -6,10 +6,10 @@ describe PermissionsChangeService do
   let(:batch_user)      { double('stubbed batch user') }
   let(:message)         { "You can now edit file title" }
   let(:message_subject) { "Permission change notification" }
-  let(:generic_file)    { double('stubbed file', id: "1234", title: "title") }
+  let(:generic_work)    { double('stubbed file', id: "1234", title: "title") }
   let(:state)           { double('subbed permission change set') }
   let(:permissions)     { [{ name: "abd123", type: "person", access: "edit" }] }
-  let(:service) { described_class.new(state, generic_file) }
+  let(:service) { described_class.new(state, generic_work) }
 
   before do
     allow(User).to receive(:find_by_user_key).and_return(user)
@@ -57,8 +57,8 @@ describe PermissionsChangeService do
         allow(state).to receive(:publicized?).and_return(false)
       end
       it "deletes the file from SHARE" do
-        expect(service).to receive(:delete_from_share)
-        expect(service).not_to receive(:send_to_share)
+        expect(ShareNotifyDeleteJob).to receive(:perform_later)
+        expect(ShareNotifyJob).not_to receive(:perform_later)
         expect(service.call).to be_nil
       end
     end
@@ -68,8 +68,8 @@ describe PermissionsChangeService do
         allow(state).to receive(:publicized?).and_return(true)
       end
       it "sends the file to SHARE" do
-        expect(service).not_to receive(:delete_from_share)
-        expect(service).to receive(:send_to_share)
+        expect(ShareNotifyDeleteJob).not_to receive(:perform_later)
+        expect(ShareNotifyJob).to receive(:perform_later)
         expect(service.call).to be_nil
       end
     end

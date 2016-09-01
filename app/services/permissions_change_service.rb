@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 # TODO: When upgrading to Sufia 7, this should extend Sufia::MessageUserService
 class PermissionsChangeService
-  attr_reader :state, :generic_file
+  attr_reader :state, :generic_work
 
   # @param [PermissionsChangeSet] permission_state hash representing changes in permissions
-  # @param [GenericFile] generic_file whose permissions have been changed
-  def initialize(permission_state, generic_file)
+  # @param [GenericWork] generic_work whose permissions have been changed
+  def initialize(permission_state, generic_work)
     @state = permission_state
-    @generic_file = generic_file
+    @generic_work = generic_work
   end
 
   def call
@@ -32,22 +32,22 @@ class PermissionsChangeService
   private
 
     def unshareable?
-      ResourceFilteredList.new([generic_file]).filter.empty?
+      ResourceFilteredList.new([generic_work]).filter.empty?
     end
 
     def send_to_share
-      Sufia.queue.push(ShareNotifyJob.new(generic_file.id))
+      ShareNotifyJob.perform_later(generic_work)
     end
 
     def delete_from_share
-      Sufia.queue.push(ShareNotifyDeleteJob.new(generic_file.id))
+      ShareNotifyDeleteJob.perform_later(generic_work.id)
     end
 
     def send_message(access, recipient = nil)
       return if recipient.nil?
       User.batchuser.send_message(
         recipient,
-        "You can now #{access} file #{generic_file.title}",
+        "You can now #{access} file #{generic_work.title}",
         "Permission change notification"
       )
     end
