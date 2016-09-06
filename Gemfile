@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems

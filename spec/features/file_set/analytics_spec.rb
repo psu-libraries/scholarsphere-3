@@ -53,6 +53,6 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
 
   it "renders without error" do
     click_on "Analytics"
-    expect(page).to have_text("30 views and 12 downloads since #{four_days_ago.strftime('%B %d, %Y')}")
+    expect(page).to have_text("30 views and 12 downloads since #{four_days_ago.strftime('%B %-d, %Y')}")
   end
 end
