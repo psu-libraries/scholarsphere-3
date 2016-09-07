@@ -7,6 +7,7 @@ module GenericWorksHelper
   end
 
   def create_work_and_upload_file(filename)
+    allow(ShareNotifyJob).to receive(:perform_later)
     visit '/concern/generic_works/new'
     check 'agreement'
     click_on 'Files'

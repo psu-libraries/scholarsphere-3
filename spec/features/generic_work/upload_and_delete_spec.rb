@@ -101,6 +101,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         WebMock.disable!
       end
       specify 'I can click on cloud providers' do
+        expect(ShareNotifyJob).to receive(:perform_later)
         VCR.use_cassette('dropbox', record: :none) do
           # expect(page).to have_xpath("//a[@href='#browse_everything']")
           click_link "Files"
