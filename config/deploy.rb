@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 lock '3.6'
 
+# Set assets roles to occur on jobs as well as web
+set :assets_role, [:web, :job]
+
 # application and repo settings
 set :application, 'scholarsphere'
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
