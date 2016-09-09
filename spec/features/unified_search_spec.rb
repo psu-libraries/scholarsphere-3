@@ -53,7 +53,6 @@ describe 'unified search', type: :feature do
       expect(page).to have_css("a[data-search-label*=All]", visible: false)
       expect(page).to have_css("a[data-search-label*='My Works']", visible: false)
       expect(page).to have_css("a[data-search-label*='My Collections']", visible: false)
-      expect(page).to have_css("a[data-search-label*='My Highlights']", visible: false)
       expect(page).to have_css("a[data-search-label*='My Shares']", visible: false)
       within('#search-form-header') do
         fill_in('search-field-header', with: subject_value)

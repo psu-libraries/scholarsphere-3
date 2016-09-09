@@ -31,8 +31,9 @@ class StatsPresenter
     [:total_users, :total_uploads, :total_public_uploads, :total_registered_uploads, :total_private_uploads]
   end
 
+  # Duplicates Sufia::AdminDashboardPresenter.user_count
   def total_users
-    system_stats.users_count
+    ::User.count
   end
 
   def total_uploads

@@ -54,7 +54,7 @@ describe GenericWork, type: :feature do
 
         # test the EndNote page
         visit(find_link('EndNote')[:href])
-        expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer; charset=utf-8')
+        expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
       end
 
       # specify 'I can see the Mendeley modal' do

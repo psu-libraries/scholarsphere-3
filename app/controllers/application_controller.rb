@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include CurationConcerns::ThemedLayoutController
   include Devise::Behaviors::HttpHeaderAuthenticatableBehavior
 
-  layout 'sufia-one-column'
+  with_themed_layout '1_column'
 
   protect_from_forgery with: :exception
 
@@ -47,14 +47,15 @@ class ApplicationController < ActionController::Base
     session[:user_return_to] = return_url
   end
 
+  # Overrides CurationConcerns::ApplicationControllerBehavior with custom error method
   def render_404(exception)
     logger.error("Rendering 404 page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
-    render template: '/error/404', layout: "error", formats: [:html], status: 404
+    render template: '/errors/404', layout: "error", formats: [:html], status: 404
   end
 
   def render_500(exception)
     logger.error("Rendering 500 page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
-    render template: '/error/500', layout: "error", formats: [:html], status: 500
+    render template: '/errors/500', layout: "error", formats: [:html], status: 500
   end
 
   # Remove bogus error messages and extraneous paperclip errors.

@@ -72,10 +72,10 @@ describe StatsPresenter, type: :model do
   end
 
   describe "#total_users" do
-    let(:start_datetime) { DateTime.parse("2004-01-01T01:01:01") }
-    it "calls Sufia::Statistics::SystemStats for data" do
-      expect(system_stats).to receive(:users_count).and_return(100)
-      expect(presenter.total_users).to eq(100)
+    let(:start_datetime) { DateTime.now }
+    before { 3.times { create(:user) } }
+    it "returns the total number of user records" do
+      expect(presenter.total_users).to eq(3)
     end
   end
 end

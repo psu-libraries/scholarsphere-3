@@ -5,9 +5,9 @@ gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
-gem 'sufia', '~> 7.0'
-#gem 'sufia', github: 'projecthydra/sufia', ref: '6a5d807'
-gem 'curation_concerns', '1.3.3'
+gem 'active-fedora', '~> 10.3.0.rc2'
+gem 'sufia', github: 'projecthydra/sufia', ref: '574e6c38c848613f6952e7372263235945b8b944'
+gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
@@ -22,6 +22,7 @@ gem 'nest'
 gem 'newrelic_rpm'
 gem 'rack-maintenance'
 gem 'rainbow'
+gem 'rdf', '~> 1.99'
 gem 'resque-pool'
 gem 'rsolr'
 gem 'sass-rails'
