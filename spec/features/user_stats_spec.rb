@@ -15,7 +15,5 @@ describe "User Statistics", type: :feature do
     expect(page).to have_selector('span.badge', text: "12")
     expect(page).to have_content('11 Views')
     expect(page).to have_content('6 Downloads')
-    expect(page).to have_content('Follower(s) No one is following you. Close 0')
-    expect(page).to have_content('Following You are not following anyone. Close')
   end
 end

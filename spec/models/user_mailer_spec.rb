@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe UserMailer do
   describe "#acknowledgment_email" do
-    let(:form)    { { contact_form: { email: "email@somewhere.com", subject: "Selected topic" } } }
+    let(:form)    { { sufia_contact_form: { email: "email@somewhere.com", subject: "Selected topic" } } }
     let(:params)  { ActionController::Parameters.new(form) }
     let(:message) { described_class.acknowledgment_email(params) }
 

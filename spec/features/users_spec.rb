@@ -14,16 +14,6 @@ describe "User Profile", type: :feature do
       sign_in_with_js(admin_user)
       visit("/users/#{admin_user}")
 
-      # allows viewing follow and following modal
-      click_link "Follower(s)"
-      expect(page).to have_content I18n.t("sufia.user_profile.no_followers")
-      click_on "Close"
-      expect(page).not_to have_content I18n.t("sufia.user_profile.no_followers")
-      click_link "Following"
-      expect(page).to have_content I18n.t("sufia.user_profile.no_following")
-      click_on "Close"
-      expect(page).not_to have_content I18n.t("sufia.user_profile.no_following")
-
       # allows to view profile with trophies
       expect(page).to have_css '.active a', text: "Highlighted"
       expect(page).to have_content file1.title.first
@@ -52,8 +42,6 @@ describe "User Profile", type: :feature do
       click_button "user_submit"
       expect(page).not_to have_xpath("//td/a[@href='/users/#{admin_user.login}']")
       expect(page).to have_xpath("//td/a[@href='/users/archivist1']")
-
-      # TODO: add test for follow following
     end
   end
 end

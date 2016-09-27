@@ -72,7 +72,7 @@ FactoryGirl.define do
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
         file_path = "#{Rails.root}/spec/fixtures/world.png"
-        IngestFileJob.perform_now(fs, file_path, nil, attributes.user)
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
 
         work.ordered_members << fs
         work.thumbnail_id = fs.id

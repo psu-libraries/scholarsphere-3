@@ -19,8 +19,6 @@ describe 'The Dashboard', type: :feature do
       expect(page).to have_content(user.display_name)
       expect(page).to have_content("1 Works created")
       expect(page).to have_content("1 Collections created 1")
-      expect(page).to have_content("Following")
-      expect(page).to have_content("Follower(s)")
     end
   end
 

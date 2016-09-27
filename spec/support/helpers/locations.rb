@@ -19,10 +19,7 @@ module Locations
   end
 
   def go_to_dashboard_shares
-    # go_to_dashboard_files
-    # click_link('Files Shared with Me')
     visit '/dashboard/shares'
-    expect(page).to have_content('Files Shared with Me')
   end
 
   def go_to_dashboard_highlights

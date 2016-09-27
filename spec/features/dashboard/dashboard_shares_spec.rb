@@ -14,7 +14,7 @@ describe 'Dashboard Shares', type: :feature do
     end
 
     it 'displays tab title and buttons' do
-      expect(page).to have_content("Files Shared with Me")
+      expect(page).to have_content("Works Shared with Me")
       expect(page).to have_link("New Work", visible: false)
       expect(page).to have_link("New Collection", visible: false)
       expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
@@ -38,7 +38,7 @@ describe 'Dashboard Shares', type: :feature do
       go_to_dashboard_shares
     end
 
-    it 'does not display collections and others files' do
+    it "does not display collections and others' files" do
       expect(page).not_to have_content(collection.title)
       expect(page).not_to have_content(gf.title.first)
       expect(page).to have_content(gf2.title.first)
