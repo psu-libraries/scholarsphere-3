@@ -127,6 +127,8 @@ describe 'Generic File uploading and deletion:', type: :feature do
           fill_in 'generic_work_keyword', with: 'keyword'
           fill_in 'generic_work_creator', with: 'creator'
           select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_work_rights'
+          fill_in 'generic_work_description', with: 'My description'
+          select 'Audio', from: 'generic_work_resource_type'
           click_on 'Save'
           expect(page).to have_css('h1', 'Markdown Test')
           click_on "Notifications"

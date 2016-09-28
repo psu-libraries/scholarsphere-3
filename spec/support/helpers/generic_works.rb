@@ -16,6 +16,8 @@ module GenericWorksHelper
     fill_in 'generic_work_title', with: filename + '_title'
     fill_in 'generic_work_keyword', with: filename + '_keyword'
     fill_in 'generic_work_creator', with: filename + '_creator'
+    fill_in 'generic_work_description', with: filename + '_description'
+    select 'Audio', from: 'generic_work_resource_type'
     select 'Attribution-NonCommercial-NoDerivs 3.0 United States', from: 'generic_work_rights'
     click_on 'Save'
     expect(page).to have_css('h1', filename + '_title')
