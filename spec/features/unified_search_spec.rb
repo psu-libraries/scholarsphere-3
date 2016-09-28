@@ -27,7 +27,7 @@ describe 'unified search', type: :feature do
       expect(page).not_to have_css("a[data-search-label*='My Files']", visible: false)
       expect(page).not_to have_css("a[data-search-label*='My Collections']", visible: false)
       expect(page).not_to have_css("a[data-search-label*='My Highlights']", visible: false)
-      expect(page).not_to have_css("a[data-search-label*='My Shares']", visible: false)
+      expect(page).not_to have_css("a[data-search-label*='My Shared Files']", visible: false)
       within('#masthead_controls') do
         click_button("All")
         expect(page).to have_content("All of ScholarSphere")
@@ -54,7 +54,7 @@ describe 'unified search', type: :feature do
       expect(page).to have_css("a[data-search-label*='My Files']", visible: false)
       expect(page).to have_css("a[data-search-label*='My Collections']", visible: false)
       expect(page).to have_css("a[data-search-label*='My Highlights']", visible: false)
-      expect(page).to have_css("a[data-search-label*='My Shares']", visible: false)
+      expect(page).to have_css("a[data-search-label*='My Shared Files']", visible: false)
       within('#masthead_controls') do
         fill_in('search-field-header', with: subject_value)
         click_button("Go")

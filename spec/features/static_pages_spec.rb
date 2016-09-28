@@ -6,6 +6,7 @@ describe 'Static pages:', type: :feature do
     it "has links to external pages", unless: travis? do
       external_links.each do |link|
         visit(link)
+        puts "#{link} #{status_code}" if status_code != 200
         expect(status_code).to eq(200)
       end
     end
