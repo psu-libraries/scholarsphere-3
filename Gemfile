@@ -6,15 +6,15 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
 gem 'active-fedora', '~> 10.3.0.rc2'
-gem 'sufia', github: 'projecthydra/sufia', ref: '574e6c38c848613f6952e7372263235945b8b944'
+gem 'sufia', github: 'projecthydra/sufia', branch: '7.2-migration'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
-gem 'devise', '~> 3.5'
-gem 'jbuilder', '~> 2.0'
-gem 'jquery-rails', '~> 3.1'
+gem 'devise', '~> 4.2'
+gem 'jbuilder', '~> 2.6'
+gem 'jquery-rails', '~> 4.2'
 gem 'kaminari_route_prefix'
 gem 'ldap_disambiguate'
 gem 'namae', '0.9.3'
