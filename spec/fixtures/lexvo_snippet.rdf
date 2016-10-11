@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:lvont="http://lexvo.org/ontology#"
+  xmlns:lexvo="http://lexvo.org/id/"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:skos="http://www.w3.org/2008/05/skos#"
+  xmlns:skosxl="http://www.w3.org/2008/05/skos-xl#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#" >
+
+<!--
+This data file is a part of
+
+Lexvo
+http://www.lexvo.org/
+Gerard de Melo, 2008-2013
+
+License: Creative Commons Attribution-Share Alike 3.0 Unported
+http://creativecommons.org/licenses/by-sa/3.0/
+
+Portions copyright various contributors (e.g. article authors on Wikipedia).
+For information about the data sources and the respective copyrights,
+please see:
+http://www.lexvo.org/linkeddata/sources.html
+-->
+<rdf:Description rdf:about="http://lexvo.org/id/iso639-3/aab">
+  <rdf:type rdf:resource="lvont:Language" />
+  <rdfs:comment xml:lang="en">Alumu (Alumu–Akpondu, Alumu–Tesu) is a Niger–Congo language spoken by approxi
+mately 7000 people in Nassarawa State, Nigeria. It has lost the nominal affix system characteristic of the
+Niger–Congo family.</rdfs:comment>
+  <rdfs:label xml:lang="de">Alumu-Tesu</rdfs:label>
+  <rdfs:label xml:lang="en">Alumu language</rdfs:label>
+  <rdfs:label xml:lang="en">Alumu-Tesu</rdfs:label>
+  <rdfs:label xml:lang="hr">Alumu-Tesu jezik</rdfs:label>
+  <rdfs:label xml:lang="nl">Alumu-Tesu</rdfs:label>
+  <rdfs:label xml:lang="pms">Lenga Alumu-Tesu</rdfs:label>
+  <owl:sameAs rdf:resource="http://dbpedia.org/resource/Alumu_language" />
+  <owl:sameAs rdf:resource="http://www.mpii.de/yago/resource/Alumu_language" />
+  <lvont:iso639P3PCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aab</lvont:iso639P3PCode>
+  <lvont:label rdf:resource="http://lexvo.org/id/term/deu/Alumu-Tesu" /> <!-- Alumu-Tesu -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Alumu%20language" /> <!-- Alumu language -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Alumu-Tesu" /> <!-- Alumu-Tesu -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/hrv/Alumu-Tesu%20jezik" /> <!-- Alumu-Tesu jezik -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/nld/Alumu-Tesu" /> <!-- Alumu-Tesu -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/pms/Lenga%20Alumu-Tesu" /> <!-- Lenga Alumu-Tesu -->
+  <skos:prefLabel xml:lang="en">Alumu-Tesu</skos:prefLabel>
+</rdf:Description>
+<rdf:Description rdf:about="http://lexvo.org/id/iso639-3/aac">
+  <rdf:type rdf:resource="lvont:Language" />
+  <rdfs:comment xml:lang="en">The Ari language is a Papuan language of the Trans–New Guinea family. As of the 2000 census there were only 50 Ari speakers, living in two villages.</rdfs:comment>
+  <rdfs:label xml:lang="en">Ari language</rdfs:label>
+  <rdfs:label xml:lang="en">Ari</rdfs:label>
+  <rdfs:label xml:lang="fr">Ari</rdfs:label>
+  <rdfs:label xml:lang="hr">Ari jezik</rdfs:label>
+  <rdfs:label xml:lang="nl">Ari</rdfs:label>
+  <rdfs:label xml:lang="pms">Lenga Ari</rdfs:label>
+  <owl:sameAs rdf:resource="http://dbpedia.org/resource/Ari_language" />
+  <owl:sameAs rdf:resource="http://www.lingvoj.org/lang/aac" />
+  <owl:sameAs rdf:resource="http://www.mpii.de/yago/resource/Ari_language" />
+  <lvont:iso639P3PCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aac</lvont:iso639P3PCode>
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Ari%20language" /> <!-- Ari language -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/fra/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/hrv/Ari%20jezik" /> <!-- Ari jezik -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/nld/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/pms/Lenga%20Ari" /> <!-- Lenga Ari -->
+  <skos:prefLabel xml:lang="en">Ari</skos:prefLabel>
+</rdf:Description>
+<rdf:Description rdf:about="http://lexvo.org/id/iso639-3/aac">
+  <rdf:type rdf:resource="lvont:Language" />
+  <rdfs:comment xml:lang="en">The Ari language is a Papuan language of the Trans–New Guinea family. As of the 2000 census there were only 50 Ari speakers, living in two villages.</rdfs:comment>
+  <rdfs:label xml:lang="en">Ari language</rdfs:label>
+  <rdfs:label xml:lang="en">Ari</rdfs:label>
+  <rdfs:label xml:lang="fr">Ari</rdfs:label>
+  <rdfs:label xml:lang="hr">Ari jezik</rdfs:label>
+  <rdfs:label xml:lang="nl">Ari</rdfs:label>
+  <rdfs:label xml:lang="pms">Lenga Ari</rdfs:label>
+  <owl:sameAs rdf:resource="http://dbpedia.org/resource/Ari_language" />
+  <owl:sameAs rdf:resource="http://www.lingvoj.org/lang/aac" />
+  <owl:sameAs rdf:resource="http://www.mpii.de/yago/resource/Ari_language" />
+  <lvont:iso639P3PCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aac</lvont:iso639P3PCode>
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Ari%20language" /> <!-- Ari language -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/eng/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/fra/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/hrv/Ari%20jezik" /> <!-- Ari jezik -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/nld/Ari" /> <!-- Ari -->
+  <lvont:label rdf:resource="http://lexvo.org/id/term/pms/Lenga%20Ari" /> <!-- Lenga Ari -->
+  <skos:prefLabel xml:lang="en">Ari</skos:prefLabel>
+</rdf:Description>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913151675) do
+ActiveRecord::Schema.define(version: 20161011161638) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false
@@ -68,22 +68,6 @@ ActiveRecord::Schema.define(version: 20160913151675) do
   add_index "curation_concerns_operations", ["rgt"], name: "index_curation_concerns_operations_on_rgt"
   add_index "curation_concerns_operations", ["user_id"], name: "index_curation_concerns_operations_on_user_id"
 
-  create_table "domain_terms", force: :cascade do |t|
-    t.string "model"
-    t.string "term"
-  end
-
-  add_index "domain_terms", ["model", "term"], name: "terms_by_model_and_term"
-
-  create_table "domain_terms_local_authorities", id: false, force: :cascade do |t|
-    t.integer "domain_term_id"
-    t.integer "local_authority_id"
-  end
-
-  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "domain_terms_by_domain_term_id_and_local_authority", unique: true
-  add_index "domain_terms_local_authorities", ["domain_term_id", "local_authority_id"], name: "dtla_by_ids2"
-  add_index "domain_terms_local_authorities", ["local_authority_id", "domain_term_id"], name: "dtla_by_ids1"
-
   create_table "featured_works", force: :cascade do |t|
     t.integer  "order",      default: 5
     t.string   "work_id"
@@ -130,19 +114,6 @@ ActiveRecord::Schema.define(version: 20160913151675) do
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
-
-  create_table "local_authorities", force: :cascade do |t|
-    t.string "name"
-  end
-
-  create_table "local_authority_entries", force: :cascade do |t|
-    t.integer "local_authority_id"
-    t.string  "label"
-    t.string  "uri"
-  end
-
-  add_index "local_authority_entries", ["local_authority_id", "label"], name: "entries_by_term_and_label"
-  add_index "local_authority_entries", ["local_authority_id", "uri"], name: "entries_by_term_and_uri"
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
     t.integer "unsubscriber_id"
@@ -223,6 +194,27 @@ ActiveRecord::Schema.define(version: 20160913151675) do
   add_index "proxy_deposit_rights", ["grantee_id"], name: "index_proxy_deposit_rights_on_grantee_id"
   add_index "proxy_deposit_rights", ["grantor_id"], name: "index_proxy_deposit_rights_on_grantor_id"
 
+  create_table "qa_local_authorities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "qa_local_authorities", ["name"], name: "index_qa_local_authorities_on_name", unique: true
+
+  create_table "qa_local_authority_entries", force: :cascade do |t|
+    t.integer  "local_authority_id"
+    t.string   "label"
+    t.string   "uri"
+    t.string   "lower_label"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "qa_local_authority_entries", ["local_authority_id"], name: "index_qa_local_authority_entries_on_local_authority_id"
+  add_index "qa_local_authority_entries", ["lower_label", "local_authority_id"], name: "index_qa_local_authority_entries_on_lower_label_and_authority"
+  add_index "qa_local_authority_entries", ["uri"], name: "index_qa_local_authority_entries_on_uri", unique: true
+
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
     t.integer  "user_id"
@@ -241,16 +233,6 @@ ActiveRecord::Schema.define(version: 20160913151675) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "subject_local_authority_entries", force: :cascade do |t|
-    t.string   "label"
-    t.string   "lowerLabel"
-    t.string   "uri"
-    t.datetime "created_at", default: '2016-01-07 18:49:13'
-    t.datetime "updated_at", default: '2016-01-07 18:49:13'
-  end
-
-  add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label"
 
   create_table "sufia_features", force: :cascade do |t|
     t.string   "key",                        null: false
