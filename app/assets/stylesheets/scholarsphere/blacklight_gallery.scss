@@ -1,0 +1,12 @@
+/* These styles are very specific to override the thumbnails from blacklight gallery */
+
+#documents .grid .document .thumbnail {
+  padding: 0;
+}
+#documents .grid .document .thumbnail > a > img {
+  left: 0;
+  top: 0;
+  max-width: 100%;
+  max-height: none;
+  position: absolute;
+}
