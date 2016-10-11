@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'pages/show.html.erb', type: :view do
   subject { rendered }

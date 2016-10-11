@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "spec_helper"
-require "rake"
+require 'rails_helper'
+require 'rake'
 
 describe "scholarsphere:list_users" do
   let!(:user_list) do

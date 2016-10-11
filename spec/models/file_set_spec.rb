@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe FileSet, type: :model do
   let(:file) { build(:file_set, :with_png, label: "sample_png") }

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe Rails.application.secrets do
   it 'responds to google_analytics_tracking_id' do

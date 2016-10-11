@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "spec_helper"
-require "rake"
+require 'rails_helper'
+require 'rake'
 
 describe "sitemap:generate" do
   def sitemap_path

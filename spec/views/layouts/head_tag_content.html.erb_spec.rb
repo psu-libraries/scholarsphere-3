@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'layouts/_head_tag_content.html.erb', type: :view do
   it 'links to a favicon' do

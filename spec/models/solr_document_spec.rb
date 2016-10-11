@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe SolrDocument do
   let(:work) { build(:work, id: "foo") }

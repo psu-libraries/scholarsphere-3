@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe GenericWorkListToCSVService do
   let(:service) { described_class.new(file_list) }

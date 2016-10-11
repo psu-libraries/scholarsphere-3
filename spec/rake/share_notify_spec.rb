@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "spec_helper"
-require "rake"
+require 'rails_helper'
+require 'rake'
 
 describe "share" do
   before { load_rake_environment ["#{Rails.root}/lib/tasks/share_notify.rake"] }

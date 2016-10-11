@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe Devise::Strategies::HttpHeaderAuthenticatable do
   subject { described_class.new(nil) }
