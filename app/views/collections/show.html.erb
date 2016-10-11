@@ -5,7 +5,7 @@
   <div itemscope itemtype="http://schema.org/CollectionPage" class="row">
     <div class="col-xs-9 pull-right">
       <header>
-        <h1><%= @presenter.title %></h1>
+        <h1 class="visibility"><%= @presenter.title %> <%= render_collection_visibility_badge %></h1>
         <p class="collection_description"><%=iconify_auto_link(@presenter.description)%></p>
       </header>
       <% unless collection_search_parameters? %>
