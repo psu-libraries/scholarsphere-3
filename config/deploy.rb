@@ -115,7 +115,7 @@ namespace :deploy do
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
-      execute "cd ~deploy/scholarsphere/current && ./script/restart_resque.sh production"
+      execute "sudo /sbin/service resque_pool restart"
     end
   end
   after :published, :resquepoolrestart
