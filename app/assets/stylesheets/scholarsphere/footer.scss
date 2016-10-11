@@ -1,0 +1,44 @@
+.footer-wrapper {
+  background: #036;
+  color: #FFF;
+  margin-top: 2em;
+  padding: 1em;
+  min-height: 4em;
+}
+
+.footer-wrapper a:link,
+.footer-wrapper a:visited {
+  color: #FFF;
+}
+
+.footer-logo {
+  font-size: 2em;
+  font-weight: 300;
+}
+
+.footer-logo-bold {
+  font-weight: 500;
+}
+
+.footer-version {
+  padding: 0.5em;
+  a:link {
+    text-decoration: underline;
+  }
+}
+
+.footer-service {
+  clear: both;
+}
+
+.footer-text {
+  ul {
+    padding-left: 0;
+  }
+  li {
+    display: inline;
+  }
+  a:link {
+    text-decoration: underline;
+  }
+}
