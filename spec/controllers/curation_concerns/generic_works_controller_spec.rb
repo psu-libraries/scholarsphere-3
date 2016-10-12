@@ -31,15 +31,27 @@ describe CurationConcerns::GenericWorksController, type: :controller do
   end
 
   describe "#delete" do
-    let(:user)  { create(:user) }
-    let!(:work) { create(:share_file, depositor: user.login) }
+    let(:user) { create(:user) }
+
     before do
       allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
-    it "is deleted from SHARE notify" do
-      expect(ShareNotifyDeleteJob).to receive(:perform_later).with(work)
-      delete :destroy, id: work
+
+    context "when the work has been pushed to Share" do
+      let!(:work) { create(:share_file, depositor: user.login) }
+      it "is deleted from SHARE notify" do
+        expect(ShareNotifyDeleteJob).to receive(:perform_later).with(work)
+        delete :destroy, id: work
+      end
+    end
+
+    context "after deletion" do
+      let!(:work) { create(:work, depositor: user.login) }
+      it "redirects to My Works" do
+        delete :destroy, id: work
+        expect(response).to redirect_to(Sufia::Engine.routes.url_helpers.dashboard_works_path)
+      end
     end
   end
 
