@@ -15,4 +15,9 @@ describe SolrDocument do
     end
     its(:export_as_endnote) { is_expected.to eq(export) }
   end
+
+  describe "#file_size" do
+    subject { described_class.new(file_size_is: ["1234"]) }
+    its(:file_size) { is_expected.to eq("1234") }
+  end
 end
