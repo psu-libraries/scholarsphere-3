@@ -30,8 +30,8 @@ describe BatchUpdateJob do
     end
 
     describe "sends events" do
-      let(:s1) { double('one') }
-      let(:s2) { double('two') }
+      let(:s1) { instance_double('ContentUpdateEventJob') }
+      let(:s2) { instance_double('ContentUpdateEventJob') }
       it "logs a content update event" do
         expect_any_instance_of(User).to receive(:can?).with(:edit, file).and_return(true)
         expect_any_instance_of(User).to receive(:can?).with(:edit, file2).and_return(true)
