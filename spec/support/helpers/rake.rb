@@ -7,9 +7,12 @@ module RakeHelper
     files.each { |file| load file }
   end
 
-  def run_task(task)
+  # @param [String] task the rake task such as my:task
+  # @param [Array, String, NilClass] arguments string or array of arguments that get passed to the task.
+  #                                  Defaults to nil.
+  def run_task(task, arguments = nil)
     capture_stdout do
-      @rake[task].invoke
+      @rake[task].invoke(*arguments)
     end
   end
 

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85098119">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85098119">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Parks</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85098119">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh00000024">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh00000024">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Rio Oscuro (N.M.)</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh00000024">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88001123">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88001123">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Uhlemeyer family</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88001123">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008009931">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008009931">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Dissostichus mawsoni fisheries</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008009931">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85003748">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85003748">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Almanacs, Canadian</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85003748">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88000740">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88000740">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Bayot (African people)</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh88000740">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2007005750">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2007005750">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Black Volta River</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2007005750">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85061481">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85061481">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Holism</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85061481">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh96011366">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh96011366">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Ball games in art</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh96011366">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008103233">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008103233">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Environmental law--Brazil</ns0:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh2008103233">
+    <ns0:inScheme xmlns:ns0="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://id.loc.gov/authorities/subjects"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85042985">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://id.loc.gov/authorities/subjects/sh85042985">
+    <ns0:prefLabel xmlns:ns0="http://www.w3.org/2004/02/skos/core#" xml:lang="en">Enchondroma</ns0:prefLabel>
+  </rdf:Description>
+</rdf:RDF>
+
