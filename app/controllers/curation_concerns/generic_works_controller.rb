@@ -27,4 +27,17 @@ class CurationConcerns::GenericWorksController < ApplicationController
   def delete_from_share
     ShareNotifyDeleteJob.perform_later(@curation_concern)
   end
+
+  protected
+
+    # TODO: Ticketed new feature in Sufia to make this configurable or change
+    # See https://github.com/projecthydra/curation_concerns/issues/1052
+    # closes https://github.com/projecthydra/sufia/issues/2447
+    def after_destroy_response(title)
+      flash[:notice] = "Deleted #{title}"
+      respond_to do |wants|
+        wants.html { redirect_to Sufia::Engine.routes.url_helpers.dashboard_works_path }
+        wants.json { render_json_response(response_type: :deleted, message: "Deleted #{curation_concern.id}") }
+      end
+    end
 end
