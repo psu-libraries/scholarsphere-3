@@ -24,6 +24,11 @@ class SolrDocument
     collections
   end
 
+  # Remove this once https://github.com/projecthydra/curation_concerns/issues/1055 is resolved
+  def file_size
+    Array(self["file_size_is"]).first
+  end
+
   private
 
     def ul_start_tags
