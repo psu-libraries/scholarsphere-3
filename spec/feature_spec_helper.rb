@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'features/support/feature_cleanup'
 require 'features/support/feature_sessions'
+require 'features/support/batch_edit_actions'
 
 RSpec.configure do |config|
   config.include Warden::Test::Helpers, type: :feature
