@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'user_mailer/stats_email.html.erb', type: :view do
   let(:presenter) { StatsPresenter.new(start_datetime, end_datetime) }

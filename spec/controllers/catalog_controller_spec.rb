@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe CatalogController, type: :controller do
   include FactoryHelpers
@@ -13,7 +13,6 @@ describe CatalogController, type: :controller do
   let(:file) { mock_file_factory(format_label: ['format_labelformat_label']) }
 
   before do
-    allow_any_instance_of(GenericWork).to receive(:characterize_if_changed).and_yield
     allow_any_instance_of(User).to receive(:groups).and_return([])
     allow(file_set).to receive(:extracted_text).and_return(text)
     allow(file_set).to receive(:original_file).and_return(file)

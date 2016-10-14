@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe PermissionsChangeSet do
   describe "#added and #removed" do

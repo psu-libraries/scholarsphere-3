@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'user_mailer/acknowledgment_email.html.erb', type: :view do
   before { render }

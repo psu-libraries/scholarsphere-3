@@ -13,7 +13,7 @@ class Admin::StatsController < ApplicationController
   private
 
     def csv(start_datetime, end_datetime)
-      GenericWorkListToCSVService.new(::GenericWork.find_by_date_created(start_datetime, end_datetime)).csv
+      GenericWorkListToCSVService.new(query_service.find_by_date_created(start_datetime, end_datetime)).csv
     end
 
     def file_name
@@ -35,5 +35,9 @@ class Admin::StatsController < ApplicationController
         @end_datetime = start_datetime if @end_datetime < start_datetime
       end
       @end_datetime = @end_datetime.end_of_day
+    end
+
+    def query_service
+      @query_service ||= Sufia::QueryService.new
     end
 end

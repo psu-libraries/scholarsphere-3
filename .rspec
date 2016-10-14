@@ -3,3 +3,4 @@
 --format html
 --out tmp/rspec_results.html
 --profile
+--require spec_helper

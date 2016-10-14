@@ -1,12 +1,14 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::StatsController, type: :controller do
+  let(:query_service) { Sufia::QueryService.new }
+  before { allow(controller).to receive(:query_service).and_return(query_service) }
   describe "#export" do
     context "when format is csv" do
       let(:header) { "Url,Time Uploaded,Id,Title,Depositor,Creator,Visibility,Resource Type,Rights,File Format\n" }
       before do
-        allow(GenericWork).to receive(:find_by_date_created).and_return(file_list)
+        allow(query_service).to receive(:find_by_date_created).and_return(file_list)
       end
       context "no files" do
         let(:file_list) { [] }
@@ -37,7 +39,7 @@ describe Admin::StatsController, type: :controller do
           let(:start_datetime) { 2.days.ago }
           let(:end_datetime) { 1.day.ago.end_of_day }
           it "defaults end date and pasess start date parameters" do
-            expect(GenericWork).to receive(:find_by_date_created).with(begining, ending).and_return([])
+            expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", start_datetime: start_datetime_str
           end
         end
@@ -47,7 +49,7 @@ describe Admin::StatsController, type: :controller do
           let(:start_datetime) { 1.day.ago.beginning_of_day }
           let(:end_datetime) { 1.day.ago }
           it "defaults start date and pasess end date parameters" do
-            expect(GenericWork).to receive(:find_by_date_created).with(begining, ending).and_return([])
+            expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", end_datetime: end_datetime_str
           end
         end
@@ -57,7 +59,7 @@ describe Admin::StatsController, type: :controller do
           let(:start_datetime) { 2.days.ago }
           let(:end_datetime) { 1.day.ago }
           it "pasess start and end date" do
-            expect(GenericWork).to receive(:find_by_date_created).with(begining, ending).and_return([])
+            expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
             get :export, format: "csv", start_datetime: start_datetime_str, end_datetime: end_datetime_str
           end
         end
