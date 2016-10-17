@@ -2,6 +2,7 @@
 # port: 8983
 version: 5.5.2
 instance_dir: tmp/solr-development
+download_dir: tmp
 collection:
   persist: true
   dir: solr/config/
