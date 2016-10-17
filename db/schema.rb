@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220191724) do
+ActiveRecord::Schema.define(version: 20160928163958) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",     limit: 4,   null: false
@@ -223,11 +223,20 @@ ActiveRecord::Schema.define(version: 20150220191724) do
     t.string   "label",      limit: 255
     t.string   "lowerLabel", limit: 255
     t.string   "uri",        limit: 255
-    t.datetime "created_at",             default: '2016-08-15 11:48:26'
-    t.datetime "updated_at",             default: '2016-08-15 11:48:26'
+    t.datetime "created_at",             default: '2016-10-10 17:33:27'
+    t.datetime "updated_at",             default: '2016-10-10 17:33:27'
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label", using: :btree
+
+  create_table "sufia_migration_survey_items", force: :cascade do |t|
+    t.string   "object_id",        limit: 255
+    t.string   "object_class",     limit: 255
+    t.text     "object_title",     limit: 65535
+    t.integer  "migration_status", limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "superusers", force: :cascade do |t|
     t.integer "user_id", limit: 4, null: false
