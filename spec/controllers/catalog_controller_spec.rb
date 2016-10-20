@@ -25,11 +25,10 @@ describe CatalogController, type: :controller do
   describe "#index" do
     before do
       ActiveFedora::Cleaner.cleanout_solr
-      ActiveFedora::SolrService.add(file_set.to_solr)
-      ActiveFedora::SolrService.add(work1.to_solr)
-      ActiveFedora::SolrService.add(work2.to_solr)
-      ActiveFedora::SolrService.add(work3.to_solr)
-      ActiveFedora::SolrService.commit
+      index_file_set(file_set)
+      index_work(work1)
+      index_work(work2)
+      index_work(work3)
     end
     describe "term search" do
       it "finds pdf files" do

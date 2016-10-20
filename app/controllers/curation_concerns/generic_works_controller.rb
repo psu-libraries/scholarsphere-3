@@ -4,6 +4,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
   include Sufia::WorksControllerBehavior
 
   self.curation_concern_type = GenericWork
+  self.show_presenter = ::WorkShowPresenter
 
   prepend_before_action only: [:show, :edit] do
     handle_legacy_url_prefix { |new_id| redirect_to sufia.generic_file_path(new_id), status: :moved_permanently }

@@ -8,7 +8,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       it "loads from solr" do
         expect_any_instance_of(CanCan::ControllerResource).not_to receive(:load_and_authorize_resource)
         get :show, id: work.id
-        expect(assigns(:presenter)).to be_kind_of Sufia::WorkShowPresenter
+        expect(assigns(:presenter)).to be_kind_of ::WorkShowPresenter
       end
     end
 

@@ -39,9 +39,8 @@ describe My::WorksController, type: :controller do
         allow(file_set).to receive(:original_file).and_return(file)
         allow(work).to receive(:representative).and_return(file_set)
         ActiveFedora::Cleaner.cleanout_solr
-        ActiveFedora::SolrService.add(file_set.to_solr)
-        ActiveFedora::SolrService.add(work.to_solr)
-        ActiveFedora::SolrService.commit
+        index_file_set(file_set)
+        index_work(work)
       end
       it "finds a file by title" do
         xhr :get, :index, q: "titletitle"

@@ -28,4 +28,18 @@ describe GenericWork do
     subject { described_class }
     its(:indexer) { is_expected.to eq(WorkIndexer) }
   end
+
+  describe "#bytes" do
+    let(:file_size_field)  { work.send(:file_size_field)  }
+    let(:file1)            { build(:file_set, id: "fs1")  }
+    let(:file2)            { build(:file_set, id: "fs2")  }
+    before do
+      ActiveFedora::Cleaner.cleanout_solr
+      ActiveFedora::SolrService.add(file1.to_solr.merge!(file_size_field.to_sym => "1024"))
+      ActiveFedora::SolrService.add(file2.to_solr.merge!(file_size_field.to_sym => "1024"))
+      ActiveFedora::SolrService.commit
+      allow(work).to receive(:member_ids).and_return(["fs1", "fs2"])
+    end
+    its(:bytes) { is_expected.to eq(2048) }
+  end
 end

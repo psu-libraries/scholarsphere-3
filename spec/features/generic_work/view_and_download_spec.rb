@@ -34,18 +34,27 @@ describe GenericWork, type: :feature do
           # expect(page).to have_link("My Works")
         end
 
-        expect(page).to have_link 'http://example.org/TheDescriptionLink/'
-        expect(page).to have_link work1.related_url.first
-        expect(page).to have_link work1.creator.first
-        expect(page).to have_link work1.contributor.first
-        expect(page).to have_link work1.keyword.first
-        expect(page).to have_link work1.subject.first
-        expect(page).to have_link work1.publisher.first
-        expect(page).to have_link work1.language.first
-        expect(page).to have_link work1.based_near.first
-        expect(page).to have_link work1.resource_type.first
-        expect(page).to have_link work1.related_url.first
-        expect(page).to have_link("Attribution 3.0 United States")
+        within("p.work_description") do
+          expect(page).to have_link 'http://example.org/TheDescriptionLink/'
+        end
+
+        within("table.generic_work") do
+          expect(page).to have_link work1.related_url.first
+          expect(page).to have_link work1.creator.first
+          expect(page).to have_link work1.contributor.first
+          expect(page).to have_link work1.keyword.first
+          expect(page).to have_link work1.subject.first
+          expect(page).to have_link work1.publisher.first
+          expect(page).to have_link work1.language.first
+          expect(page).to have_link work1.based_near.first
+          expect(page).to have_link work1.resource_type.first
+          expect(page).to have_link work1.related_url.first
+          expect(page).to have_link("Attribution 3.0 United States")
+          expect(page).to have_content("0 Bytes")
+          within("li.total_items") do
+            expect(page).to have_content("1")
+          end
+        end
 
         # TODO: loop through all links to visit and check them
         # test_links.each do |name, link|

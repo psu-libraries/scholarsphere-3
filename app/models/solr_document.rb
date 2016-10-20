@@ -29,6 +29,10 @@ class SolrDocument
     Array(self["file_size_is"]).first
   end
 
+  def bytes
+    Array(self[Solrizer.solr_name(:bytes, CurationConcerns::CollectionIndexer::STORED_LONG)]).first
+  end
+
   private
 
     def ul_start_tags

@@ -21,6 +21,9 @@ describe WorkIndexer do
   describe "#generate_solr_document" do
     let(:solr_doc) { indexer.generate_solr_document }
 
+    subject { solr_doc }
+    it { is_expected.to include("bytes_lts" => 0) }
+
     describe "file_format" do
       subject { solr_doc[Solrizer.solr_name("file_format", :facetable)] }
 
