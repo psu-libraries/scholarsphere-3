@@ -18,11 +18,16 @@ module Features
     end
 
     def sign_in_with_named_js(name, user = nil, opts = {})
+      opts.merge!(disable_animations) if opts.delete(:disable_animations)
       Capybara.register_driver name do |app|
         Capybara::Poltergeist::Driver.new(app, defaults.merge(opts))
       end
       Capybara.current_driver = name
       page.driver.headers = request_headers(user)
+    end
+
+    def disable_animations
+      { extensions: ["#{Rails.root}/spec/features/support/disable_animations.js"] }
     end
 
     private
