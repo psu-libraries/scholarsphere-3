@@ -117,7 +117,7 @@ namespace :scholarsphere do
     immediate_descendant_uris.each do |uri|
       id = ActiveFedora::Base.uri_to_id(uri)
       puts "Re-index everything ... #{id}"
-      ActiveFedora::Base.find(id).update_index if (id.length == 9)
+      ActiveFedora::Base.find(id).update_index if (id.length == 9) rescue puts "error processing #{id}"
     end
   end
 
