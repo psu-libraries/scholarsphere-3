@@ -109,7 +109,7 @@ namespace :scholarsphere do
 
   desc "Re-solrize top level objects"
   task resolrize_top: :environment do
-    resource = Ldp::Resource::RdfSource.new(ActiveFedora.fedora.connection, ActiveFedora::Base.id_to_uri(''))
+    resource = Ldp::Resource::RdfSource.new(ActiveFedora.fedora.connection, ActiveFedora.fedora.host + ActiveFedora.fedora.base_path)
     # GET could be slow if it's a big resource, we're using HEAD to avoid this problem,
     # but this causes more requests to Fedora.
     return [] unless Ldp::Response.rdf_source?(resource.head)
@@ -117,7 +117,7 @@ namespace :scholarsphere do
     immediate_descendant_uris.each do |uri|
       id = ActiveFedora::Base.uri_to_id(uri)
       puts "Re-index everything ... #{id}"
-      ActiveFedora::Base.find(id).update_index if (id.length == 9) rescue puts "error processing #{id}"
+      ActiveFedora::Base.find(id).update_index rescue logger.error "error processing #{id}"
     end
   end
 
