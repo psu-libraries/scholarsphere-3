@@ -1,0 +1,96 @@
+@media screen and (min-width: 400px) {
+
+  a .user-util-text {
+    color: #FFF;
+  }
+
+  li.open a .user-util-text {
+    color: #000
+  }
+
+  a:hover .user-util-text {
+    color: #000;
+  }
+
+  .lion-logo {
+    margin-top: 0.15em;
+    width: 125px;
+  }
+
+  #masthead .navbar-header > .logo-padding-fix {
+    padding-left: 0; /* Needs to be very specific to override code from 3 gems */
+    margin-left: -5px;
+  }
+
+  #masthead .navbar-nav > li > a {
+    color: #FFF; /* Needs to be very specific to override code from 3 gems */
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    text-align: center;
+  }
+
+  .navbar-header {
+    background-color: #036;
+  }
+
+  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
+    color: #FFF;
+    display: block;
+    font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
+    font-weight: 300;
+    text-decoration: none;
+
+    font-size: 1.25em;
+    padding-top: 0.5em;
+    padding-left: .75em;
+  }
+
+  .ss-toolbar {
+    background-color: #2C76C7;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .navbar-inline > .nav > li {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #masthead .navbar-nav .open .dropdown-menu {
+    background-color: #FFF; /* Needs to be very specific to override code from 3 gems */
+  }
+  #masthead .navbar-nav .open .dropdown-menu > li > a {
+    color: #333; /* Needs to be very specific to override code from 3 gems */
+  }
+  #masthead .navbar-nav .open .dropdown-menu > li > a:hover {
+    background-color: #f5f5f5; /* Needs to be very specific to override code from 3 gems */
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .lion-logo {
+    width: 150px;
+  }
+  .navbar-inline .nav li {
+    margin-top: 0.5em;
+  }
+  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
+    padding-top: 0.5em;
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .lion-logo {
+    width: 175px;
+  }
+  .navbar-inline .nav li {
+    margin-top: 0.5em;
+  }
+  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
+    padding-top: 0.5em;
+    font-size: 1.75em;
+  }
+}
