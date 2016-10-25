@@ -6,13 +6,13 @@ namespace :scholarsphere do
     desc "Harvest LC subjects"
     task :lc_subjects, [:file] => :environment do |task, args|
       puts "Loading #{args.file} ..."
-      RDFAuthorityImporter.import_subjects(args.file)
+      SubjectAuthorityImportJob.perform_later(args.file)
     end
 
     desc "Harvest Lexvo languages"
     task :lexvo_languages, [:file] => :environment do |task, args|
       puts "Loading #{args.file} ..."
-      RDFAuthorityImporter.import_languages(args.file)
+      LanguageAuthorityImportJob.perform_later(args.file)
     end
   end
 end

@@ -7,14 +7,14 @@ describe "scholarsphere:harvest" do
 
   context "when harvesting lexvo languages" do
     it 'loads the terms from the rdf file' do
-      expect(RDFAuthorityImporter).to receive(:import_languages).with('rdfxml_file')
+      expect(LanguageAuthorityImportJob).to receive(:perform_later).with('rdfxml_file')
       run_task('scholarsphere:harvest:lexvo_languages', 'rdfxml_file')
     end
   end
 
   context "when harvesting LC subjects" do
     it 'loads the terms from the rdf file' do
-      expect(RDFAuthorityImporter).to receive(:import_subjects).with('rdfxml_file')
+      expect(SubjectAuthorityImportJob).to receive(:perform_later).with('rdfxml_file')
       run_task('scholarsphere:harvest:lc_subjects', 'rdfxml_file')
     end
   end

@@ -13,7 +13,7 @@ describe Qa::TermsController do
       let(:parameters) { { "q" => "Alu", "vocab" => "local", "subauthority" => "languages" } }
 
       before do
-        RDFAuthorityImporter.import_languages(File.join(fixture_path, "lexvo_snippet.rdf"))
+        LanguageAuthorityImportJob.perform_now(File.join(fixture_path, "lexvo_snippet.rdf"))
         get :search, parameters
       end
 
@@ -24,7 +24,7 @@ describe Qa::TermsController do
       let(:parameters) { { "q" => "Rio", "vocab" => "local", "subauthority" => "subjects" } }
 
       before do
-        RDFAuthorityImporter.import_subjects(File.join(fixture_path, "loc_subjects_snippet.rdfxml.skos"))
+        SubjectAuthorityImportJob.perform_now(File.join(fixture_path, "loc_subjects_snippet.rdfxml.skos"))
         get :search, parameters
       end
 

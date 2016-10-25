@@ -6,4 +6,5 @@ event: 5
 import_url: 3
 sufia: 1
 share_notify: 1
+authority_import: 1
 "*": 1
