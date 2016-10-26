@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 class ResolrizeJob
+  def queue_name
+    :resolrize
+  end
+
   def run
     resource = Ldp::Resource::RdfSource.new(ActiveFedora.fedora.connection, ActiveFedora.fedora.host + ActiveFedora.fedora.base_path)
     # GET could be slow if it's a big resource, we're using HEAD to avoid this problem,
