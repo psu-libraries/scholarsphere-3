@@ -41,7 +41,7 @@ class CatalogController < ApplicationController
     config.show.partials.insert(1, :openseadragon)
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
-    config.view.slideshow.partials = [:index]
+    # config.view.slideshow.partials = [:index]
 
     # default advanced config values
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
