@@ -8,11 +8,11 @@ describe ResolrizeJob, :clean do
 
   describe "#run" do
     it "Updates the index for all parts of the records" do
-      expect(ActiveFedora::Base).to receive(:find).with(file.id).and_return(file)
       file.permissions.each do |perm|
         expect(ActiveFedora::Base).to receive(:find).with(perm.id).and_return(perm)
-        expect(perm).to receive(:update_index)
+        expect(perm).to receive(:update_index).ordered
       end
+      expect(ActiveFedora::Base).to receive(:find).with(file.id).and_return(file).ordered
       expect(file).to receive(:update_index)
       job.run
     end
