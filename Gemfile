@@ -57,6 +57,7 @@ group :development do
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
   gem 'unicorn-rails'
+  gem 'xray-rails'
 end
 
 group :test do
