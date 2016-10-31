@@ -78,7 +78,7 @@ describe 'Dashboard Works', type: :feature do
       end
       specify 'It is highlighted' do
         # It is highlighted on my profile
-        visit "/users/#{current_user.login}"
+        visit "/users/#{current_user.login}\#contributions"
         expect(page).to have_css '.active a', text: "Highlighted"
         within '#contributions' do
           expect(page).to have_link file.title.first
