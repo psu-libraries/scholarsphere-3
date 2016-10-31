@@ -24,4 +24,22 @@ describe WorkShowPresenter do
       its(:total_items) { is_expected.to eq(2) }
     end
   end
+
+  describe "#member_presenters" do
+    let(:work) { create(:public_work, ordered_members: [file_set1, file_set2]) }
+
+    subject { presenter.member_presenters }
+
+    context "when the current user has read access to all file sets" do
+      let(:file_set1) { create(:file_set, :public) }
+      let(:file_set2) { create(:file_set, :public) }
+      its(:count) { is_expected.to eq(2) }
+    end
+
+    context "when the current user does not have read access to all file sets" do
+      let(:file_set1) { create(:file_set, :public) }
+      let(:file_set2) { create(:file_set) }
+      its(:count) { is_expected.to eq(1) }
+    end
+  end
 end
