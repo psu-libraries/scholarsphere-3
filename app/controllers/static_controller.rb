@@ -19,4 +19,8 @@ class StaticController < ApplicationController
       format.js { render layout: false }
     end
   end
+
+  def licenses
+    @page = ContentBlock.find_or_create_by(name: ContentBlock::LICENSE)
+  end
 end

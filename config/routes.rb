@@ -73,6 +73,8 @@ ScholarSphere::Application.routes.draw do
 
   get ':action' => 'static#:action', constraints: { action: /error_help/ }, as: :static
 
+  get "licenses", controller: 'static', action: "licenses", as: "licenses"
+
   # This must be the very last route in the file because it has a catch-all route for 404 errors.
   # This behavior seems to show up only in production mode.
   mount Sufia::Engine => '/'

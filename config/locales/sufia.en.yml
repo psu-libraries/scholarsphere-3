@@ -36,6 +36,11 @@ en:
     labels:
       collection:
         description: "Description"
+    hints:
+      generic_work:
+        rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
+      collection:
+        rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
   curation_concerns:
     institution:
       name: "Penn State"

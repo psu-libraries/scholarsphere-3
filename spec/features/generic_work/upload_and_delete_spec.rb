@@ -70,19 +70,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content("Penn State")
         end
 
-        # Rights modal has been removed, see #314
-        # Rights (i.e. License Descriptions) is a modal form
-        # with a close button.
-        # expect(page).not_to have_css('#rightsModal')
-        # within('#generic_work_rights_help_modal') do
-        #   find('.help-icon').click
-        # end
-        # expect(page).to have_css('#rightsModal')
-        # expect(page).to have_css('h2#rightsModallLabel', text: 'ScholarSphere License Descriptions')
-        # modal = find('#rightsModal')
-        # expect(modal[:style]).to match(/display: block/)
-        # expect(page).to have_content('Creative Commons licenses can take the following combinations')
-        # click_on('Close')
+        within("#metadata") do
+          expect(page).to have_link("Licenses")
+        end
       end
     end
 

@@ -50,6 +50,12 @@ describe 'Static pages:', type: :feature do
       it_behaves_like "a page with YouTube links"
       # it_behaves_like "a page with links"
     end
+
+    describe "the licenses page" do
+      let(:path) { "/licenses" }
+      subject { page }
+      it { is_expected.to have_content("ScholarSphere License Descriptions") }
+    end
   end
 
   context 'when logged in' do
@@ -73,6 +79,12 @@ describe 'Static pages:', type: :feature do
       let(:path) { "/help" }
       it_behaves_like "a page with YouTube links"
       it_behaves_like "a page with links"
+    end
+
+    describe "the licenses page" do
+      let(:path) { "/licenses" }
+      subject { page }
+      it { is_expected.to have_content("ScholarSphere License Descriptions") }
     end
   end
 end
