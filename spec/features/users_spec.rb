@@ -12,9 +12,9 @@ describe "User Profile", type: :feature do
   context "with any user" do
     specify do
       sign_in_with_js(admin_user)
-      visit("/users/#{admin_user}")
+      visit("/users/#{admin_user}\#contributions")
 
-      # allows to view profile with trophies
+      # allows to view profile with highlighted works
       expect(page).to have_css '.active a', text: "Highlighted"
       expect(page).to have_content file1.title.first
 
@@ -23,8 +23,13 @@ describe "User Profile", type: :feature do
       expect(page).to have_selector('li.active', text: "Activity")
       expect(page).to have_content(event_text)
 
+      # allows clicking on User Info tab
+      click_link "User Info"
+      expect(page).to have_selector('h3', text: "Directory Information")
+      expect(page).to have_selector('dt', text: "Title")
+
       # allows editing the user's profile
-      click_link "Edit Your Profile"
+      click_link "Edit Profile"
       fill_in 'user_twitter_handle', with: 'curatorOfData'
       fill_in 'user_orcid', with: '0000-0000-0000-0000'
       click_button 'Save Profile'

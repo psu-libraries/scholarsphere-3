@@ -1,0 +1,33 @@
+<div class="tab-pane" id="contributions">
+    <% if presenter.trophies.count > 0 %>
+        <table class="highlighted-works">
+          <thead>
+          <tr>
+            <th scope="col" class="sr-only">Thumbnail</th>
+            <th scope="col" class="sr-only">Highlighted Work</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% presenter.trophies.each do |t| %>
+              <tr id="trophyrow_<%= t.id %>">
+                <td>
+                  <%= link_to t do %>
+                      <%= image_tag t.thumbnail_path, width: 90 %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to t.to_s, t %>
+                  <% if presenter.current_user? %>
+                      <%= display_trophy_link current_user, t.id, class: 'glyphicon glyphicon-star', data: { removerow: true } do %>
+                          <span class='trophy-on glyphicon glyphicon-remove'></span>
+                      <% end %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% else %>
+        <%= presenter.name %> has no highlighted works.
+    <% end %>
+</div>
