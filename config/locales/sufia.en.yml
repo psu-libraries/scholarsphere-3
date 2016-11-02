@@ -38,6 +38,9 @@ en:
     labels:
       collection:
         description: "Description"
+      defaults:
+        lease_expiration_date:     'until date'
+        embargo_release_date:      'until date'
     hints:
       generic_work:
         rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"

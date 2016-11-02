@@ -1,0 +1,43 @@
+<div id="fileupload">
+  <!-- Redirect browsers with JavaScript disabled to the origin page -->
+  <noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
+  <!-- The table listing the files available for upload/download -->
+  <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+
+  <h2><%= t('curation_concerns.base.form_files.local_upload') %></h2>
+  <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+  <div class="row fileupload-buttonbar">
+    <div class="col-xs-7">
+        <input type="file" name="files[]" id="inputfiles" class="inputfile" multiple />
+        <label for="inputfiles"> Add files</label>
+      <% if browser_supports_directory_upload? %>
+          <input type="file" name="files[]" id="inputfolder" class="inputfile" multiple directory webkitdirectory>
+          <label for="inputfolder"> Add folder</label>
+      <% end %>
+      <button type="reset" class="btn btn-warning cancel hidden">
+        <span class="glyphicon glyphicon-ban-circle"></span>
+        <span>Cancel upload</span>
+      </button>
+      <!-- The global file processing state -->
+      <span class="fileupload-process"></span>
+    </div>
+    <!-- The global progress state -->
+    <div class="col-xs-5 fileupload-progress fade">
+      <!-- The global progress bar -->
+      <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+      </div>
+      <!-- The extended global progress state -->
+      <div class="progress-extended">&nbsp;</div>
+    </div>
+  </div>
+  <div class="dropzone">
+    <%= t('curation_concerns.base.form_files.dropzone') %>
+  </div>
+</div>
+
+<%= render 'sufia/uploads/js_templates' %>
+<% if Sufia.config.browse_everything %>
+    <h2><%= t('curation_concerns.base.form_files.external_upload') %></h2>
+    <%= render 'browse_everything', f: f %>
+<% end %>
