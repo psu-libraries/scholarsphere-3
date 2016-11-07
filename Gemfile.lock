@@ -105,7 +105,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active-fedora (9.7.2)
+    active-fedora (9.7.3)
       active-triples (~> 0.7.1)
       activesupport (>= 4.1.0)
       deprecation
@@ -121,7 +121,7 @@ GEM
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    active_fedora-noid (1.1.2)
+    active_fedora-noid (1.1.3)
       active-fedora (>= 9.7, < 11)
       noid (~> 0.7)
     activejob (4.2.7.1)
@@ -342,12 +342,12 @@ GEM
       hydra-access-controls (= 9.5.0)
       jettywrapper (>= 2.0.0)
       rails (~> 4.0)
-    hydra-derivatives (1.1.0)
+    hydra-derivatives (1.2.1)
       active-fedora (~> 9.0)
       activesupport (~> 4.0)
       deprecation (~> 0.1)
       hydra-file_characterization (~> 0.3)
-      mime-types (~> 1)
+      mime-types (>= 1)
       mini_magick (>= 3.2, < 5)
     hydra-editor (1.2.0)
       active-fedora (>= 9.0.0)
@@ -437,7 +437,7 @@ GEM
       carrierwave (>= 0.5.8)
       rails (>= 4.2.0)
     memoist (0.15.0)
-    mime-types (1.25.1)
+    mime-types (2.99.3)
     mimemagic (0.3.2)
     mini_magick (4.5.1)
     mini_portile2 (2.1.0)
@@ -458,9 +458,8 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.14.1.311)
     noid (0.9.0)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     nom-xml (0.6.0)
       activesupport (>= 3.2.18)
       i18n
@@ -485,7 +484,6 @@ GEM
       ast (~> 2.2)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
-    pkg-config (1.1.7)
     poltergeist (1.9.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -784,6 +782,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (= 9.7.3)
   airbrussh
   better_errors
   binding_of_caller
@@ -806,7 +805,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.1)
   fedora-migrate!
   fuubar
-  hydra-derivatives (= 1.1.0)
+  hydra-derivatives (= 1.2.1)
   hydra-head (~> 9.5.0)
   hydra-ldap (= 0.1.0)
   jbuilder (~> 2.0)

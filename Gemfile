@@ -7,12 +7,13 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 # Hydra community components
 gem 'browse-everything', github: 'projecthydra/browse-everything', ref: '518d905'
 gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700df3b3195bceea6b988ec70bb2b82bd282'
-gem 'hydra-derivatives', '1.1.0'
+gem 'hydra-derivatives', '1.2.1'
 gem 'hydra-head', '~> 9.5.0'
 gem 'hydra-ldap', '0.1.0'
 gem 'sufia', github: 'projecthydra/sufia', ref: 'a9ca83cac8b'
 gem 'blacklight', '5.18.0'
 gem 'redis', '3.2.0'
+gem 'active-fedora', '9.7.3'
 
 # sprockets-rails 3 is complaining about images not being precompiled. 
 gem 'sprockets-rails', '< 3.0.0'
