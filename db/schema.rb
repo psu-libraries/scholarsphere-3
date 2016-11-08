@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011161638) do
+ActiveRecord::Schema.define(version: 20161103162601) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -216,6 +216,14 @@ ActiveRecord::Schema.define(version: 20161011161638) do
   add_index "qa_local_authority_entries", ["local_authority_id"], name: "index_qa_local_authority_entries_on_local_authority_id", using: :btree
   add_index "qa_local_authority_entries", ["lower_label", "local_authority_id"], name: "index_qa_local_authority_entries_on_lower_label_and_authority", using: :btree
   add_index "qa_local_authority_entries", ["uri"], name: "index_qa_local_authority_entries_on_uri", unique: true, using: :btree
+
+  create_table "queued_files", force: :cascade do |t|
+    t.string   "work_id",    limit: 255
+    t.string   "file_id",    limit: 255
+    t.string   "filename",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "searches", force: :cascade do |t|
     t.text     "query_params", limit: 65535

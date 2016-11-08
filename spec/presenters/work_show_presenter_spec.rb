@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 describe WorkShowPresenter do
-  let(:work)      { build(:work) }
+  let(:work)      { build(:work, id: "1234") }
   let(:solr_doc)  { SolrDocument.new(work.to_solr) }
   let(:ability)   { Ability.new(nil) }
   let(:presenter) { described_class.new(solr_doc, ability) }
@@ -40,6 +40,19 @@ describe WorkShowPresenter do
       let(:file_set1) { create(:file_set, :public) }
       let(:file_set2) { create(:file_set) }
       its(:count) { is_expected.to eq(1) }
+    end
+  end
+
+  describe "#uploading?" do
+    subject { presenter }
+
+    context "when file sets are in process" do
+      before { QueuedFile.create(work_id: "1234") }
+      it { is_expected.to be_uploading }
+    end
+
+    context "when no file sets are in process" do
+      it { is_expected.not_to be_uploading }
     end
   end
 end

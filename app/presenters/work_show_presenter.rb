@@ -16,4 +16,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   def member_presenters(ids = ordered_ids, presenter_class = composite_presenter_class)
     super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
   end
+
+  def uploading?
+    QueuedFile.where(work_id: id).present?
+  end
 end

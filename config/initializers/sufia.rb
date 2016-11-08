@@ -12,6 +12,8 @@ Sufia.config do |config|
   config.enable_ffmpeg = true
   config.ffmpeg_path = Rails.application.config.ffmpeg_path
 
+  config.ingest_queue_name = :files
+
   config.persistent_hostpath = "http://scholarsphere.psu.edu/files/"
 
   config.permission_levels = {

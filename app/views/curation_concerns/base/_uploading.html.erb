@@ -1,0 +1,9 @@
+<% if presenter.uploading? %>
+  <div class="alert alert-warning" role="alert">
+    Uploading in progress
+  </div>
+<% elsif !presenter.member_presenters.present? %>
+  <div class="alert alert-warning" role="alert">
+    <%= t('curation_concerns.base.items.empty', type: presenter.human_readable_type) %>
+  </div>
+<% end %>
