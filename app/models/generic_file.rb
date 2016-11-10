@@ -2,6 +2,7 @@
 class GenericFile < ActiveFedora::Base
   include Sufia::GenericFile
   include ShareNotify::Metadata
+  include TextExtractionOverride
 
   def self.indexer
     GenericFileIndexingService

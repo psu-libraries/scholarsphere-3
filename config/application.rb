@@ -126,7 +126,7 @@ module ScholarSphere
     end
     config.stats_from_email = 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>'
 
-    config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
+    config.max_upload_file_size = 15 * 1024 * 1024 * 1024 # 15GB which matches with the amount of temp space on the servers
 
     # html maintenance response
     config.middleware.use 'Rack::Maintenance',

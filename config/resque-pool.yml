@@ -1,8 +1,8 @@
-batch_update: 3
+batch_update: 2
 derivatives: 1
 resolrize: 1
 audit: 2
-event: 4
+event: 3
 import_url: 3
 sufia: 1
 share_notify: 1

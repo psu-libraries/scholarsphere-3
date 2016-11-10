@@ -56,7 +56,8 @@ class ImportUrlJob < ActiveFedoraIdBasedJob
         generic_file.reload
 
         attach_file(user, f, path, mime_type)
-      end
+        f
+      end.unlink
     end
 
     def attach_local_file(user, uri)
