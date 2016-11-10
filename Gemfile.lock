@@ -36,8 +36,8 @@ GIT
 
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: a9ca83cac8be86dc9643d313c578c945f162edc9
-  ref: a9ca83cac8b
+  revision: b7f17caa2389a04a2f29d07ebe116c6db28901fc
+  ref: b7f17caa
   specs:
     sufia (6.7.0)
       blacklight (~> 5.16)
@@ -64,7 +64,7 @@ GIT
       yaml_db (~> 0.2)
     sufia-models (6.7.0)
       active-fedora (~> 9.7.2, < 9.8)
-      active_fedora-noid (~> 1.0)
+      active_fedora-noid (= 1.1.1)
       activerecord-import (~> 0.5)
       activeresource (~> 4.0)
       acts_as_follower (>= 0.1.1, < 0.3)
@@ -72,7 +72,7 @@ GIT
       google-api-client (~> 0.7, < 0.9)
       hydra-collections (>= 5.0.3, < 6.0)
       hydra-derivatives (~> 1.0)
-      hydra-head (< 9.6)
+      hydra-head (~> 9.5.0)
       legato (~> 0.3)
       mailboxer (~> 0.12)
       mini_magick
@@ -121,7 +121,7 @@ GEM
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    active_fedora-noid (1.1.3)
+    active_fedora-noid (1.1.1)
       active-fedora (>= 9.7, < 11)
       noid (~> 0.7)
     activejob (4.2.7.1)
@@ -430,9 +430,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    mail_form (1.5.1)
-      actionmailer (>= 3.2, < 5)
-      activemodel (>= 3.2, < 5)
+    mail_form (1.6.0)
+      actionmailer (>= 3.2, < 5.1)
+      activemodel (>= 3.2, < 5.1)
     mailboxer (0.14.0)
       carrierwave (>= 0.5.8)
       rails (>= 4.2.0)
@@ -476,7 +476,7 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
-    openseadragon (0.3.0)
+    openseadragon (0.3.1)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
     os (0.9.6)
@@ -489,7 +489,7 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
-    posix-spawn (0.3.11)
+    posix-spawn (0.3.12)
     powerpack (0.1.1)
     rack (1.6.4)
     rack-maintenance (2.0.1)
