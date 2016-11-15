@@ -58,7 +58,7 @@ describe 'Dashboard Works', type: :feature do
       # TODO: This part of the test won't pass until this Sufia
       #       ticket has been closed: https://github.com/projecthydra/sufia/issues/2049
       go_to_dashboard_works
-      db_visibility_link(file).click
+      db_visibility_link(file).trigger('click')
       expect(page).to have_content('Sharing With')
 
       # Clicking Transfer Ownership of File loads the transfer ownership page
