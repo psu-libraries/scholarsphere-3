@@ -1,0 +1,9 @@
+<% if display_editable_content_block? @announcement_text %>
+    <div id="announcement" class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <%= editable_content_block @announcement_text %>
+        </div>
+      </div>
+    </div>
+<% end %>

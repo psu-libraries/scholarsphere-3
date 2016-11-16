@@ -3,10 +3,11 @@
 #documents .grid .document .thumbnail {
   padding: 0;
 }
+
 #documents .grid .document .thumbnail > a > img {
+  position: absolute;
   left: 0;
   top: 0;
   max-width: 100%;
   max-height: none;
-  position: absolute;
 }
