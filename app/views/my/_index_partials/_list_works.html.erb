@@ -1,0 +1,49 @@
+<tr id="document_<%= document.id %>">
+
+  <td>
+    <label for="batch_document_<%= document.id %>" class="sr-only"><%=t("sufia.dashboard.my.sr.batch_checkbox")%></label>
+    <%= render '/batch_select/add_button', document: document %>&nbsp;
+  </td>
+
+  <td>
+    <div class='media'>
+      <%= link_to document, class: 'media-left', 'aria-hidden' => true do %>
+        <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+      <% end %>
+
+      <div class='media-body'>
+        <div class='media-heading'>
+
+          <%= link_to document, id: "src_copy_link#{document.id}", class: 'document-title' do %>
+            <span class="sr-only">
+              <%= t("sufia.dashboard.my.sr.show_label") %>
+            </span>
+            <%= document.title_or_label %>
+          <% end %>
+          <a href="#" class="small" title="Click for more details">
+            <i id="expand_<%= document.id %>" class="glyphicon glyphicon-chevron-right"></i>
+          </a>
+
+          <br />
+          <%= render_collection_links(document) %>
+
+        </div>
+      </div>
+    </div>
+  </td>
+
+  <td class='text-center'><%= document.date_uploaded %></td>
+  <td class='text-center'><%= render_visibility_link document %></td>
+
+  <td class='text-center'>
+    <%= render 'work_action_menu', document: document %>
+  </td>
+</tr>
+<tr id="detail_<%= document.id %>">
+  <td colspan="6">
+    <dl class="expanded-details row">
+      <dt class="col-xs-3 col-lg-2">File Format:</dt>
+      <dd class="col-xs-9 col-lg-10"><%= document.file_format %></dd>
+    </dl>
+  </td>
+</tr>
