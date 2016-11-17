@@ -8,6 +8,11 @@ module CurationConcerns
     self.terms += [:resource_type]
     self.required_fields += [:description, :resource_type]
 
+    def self.multiple?(term)
+      return false if term == :rights
+      super
+    end
+
     def initialize_field(key)
       if key == :creator
         self[key] = creator
