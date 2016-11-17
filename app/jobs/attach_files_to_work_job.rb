@@ -28,7 +28,7 @@ class AttachFilesToWorkJob < ActiveJob::Base
     def attach_content(actor, file)
       case file.file
       when CarrierWave::SanitizedFile
-        actor.create_content(file.file.to_file)
+        add_file(actor, file.file.to_file)
       when CarrierWave::Storage::Fog::File
         import_url(actor, file)
       else
@@ -43,5 +43,13 @@ class AttachFilesToWorkJob < ActiveJob::Base
       log = CurationConcerns::Operation.create!(user: actor.user,
                                                 operation_type: "Attach File")
       ImportUrlJob.perform_later(actor.file_set, log)
+    end
+
+    def add_file(actor, file)
+      if actor.create_content(file)
+        AttachFilesToWorkSuccessService.new(actor.user, file).call
+      else
+        AttachFilesToWorkFailureService.new(actor.user, file).call
+      end
     end
 end
