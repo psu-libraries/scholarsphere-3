@@ -133,6 +133,18 @@ namespace :deploy do
   # Disabled, see psu-stewardship/scholarsphere#285
   # after :published, :sitemapxml
 
+  desc "Compile assets on for selected server roles"
+  task :roleassets do
+    on roles(:job) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "assets:precompile "
+        end
+      end
+    end
+  end
+  after :migrate, :roleassets
+
   # Passenger Capistrano Task
   # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
   # as Ruby is updated on the system.  The PassengerDefaultRuby variable is set to system ruby by default from the Yum
