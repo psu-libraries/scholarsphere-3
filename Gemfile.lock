@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 35c01618b4d3a7a91f99cf92f7e3185bd8f97388
+  revision: 73ff81a6b0c8477c9103c2834cdc3f0da39f319d
   branch: 7.2-migration
   specs:
     sufia (7.2.0)
@@ -98,7 +98,7 @@ GEM
       activemodel (= 4.2.7.1)
       activesupport (= 4.2.7.1)
       arel (~> 6.0)
-    activerecord-import (0.16.1)
+    activerecord-import (0.16.2)
       activerecord (>= 3.2)
     activesupport (4.2.7.1)
       i18n (~> 0.7)
@@ -339,7 +339,7 @@ GEM
     hydra-core (10.3.2)
       hydra-access-controls (= 10.3.2)
       railties (>= 4.0.0, < 6)
-    hydra-derivatives (3.1.4)
+    hydra-derivatives (3.2.0)
       active-fedora (>= 9.0, < 12)
       activesupport (>= 4.0, < 6)
       deprecation
@@ -598,7 +598,7 @@ GEM
       rdf (~> 1.99)
     redic (1.5.0)
       hiredis
-    redis (3.3.1)
+    redis (3.3.2)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
     redlock (0.1.8)
