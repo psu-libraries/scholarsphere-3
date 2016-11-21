@@ -10,7 +10,7 @@ gem 'fedora-migrate', github: 'projecthydra-labs/fedora-migrate', ref: '85dd700d
 gem 'hydra-derivatives', '1.2.1'
 gem 'hydra-head', '~> 9.5.0'
 gem 'hydra-ldap', '0.1.0'
-gem 'sufia', github: 'projecthydra/sufia', ref: 'b7f17caa'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'f61c5d64e'
 gem 'blacklight', '5.18.0'
 gem 'redis', '3.2.0'
 gem 'active-fedora', '9.7.3'
