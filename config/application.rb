@@ -6,6 +6,7 @@ require 'socket'
 require 'sprockets'
 require 'resolv'
 require 'uri'
+require 'sufia/version'
 require 'webmock' unless Rails.env.production?
 
 WebMock.disable! if Rails.env.development?
