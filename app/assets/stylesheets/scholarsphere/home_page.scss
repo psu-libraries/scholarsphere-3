@@ -1,8 +1,10 @@
+/* Needs to be very specific to override Sufia */
 .image-masthead .searchbar-right .dropdown-menu li > a {
-  color: #333; /* Needs to be very specific to override Sufia */
+  color: #333;
 }
 
+/* Needs to be very specific to override Sufia */
 .image-masthead .searchbar-right .dropdown-menu li > a:hover {
-  background-color: #f5f5f5; /* Needs to be very specific to override Sufia */
+  background-color: #f5f5f5;
   color: #262626;
 }

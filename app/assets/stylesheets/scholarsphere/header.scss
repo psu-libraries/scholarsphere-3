@@ -1,7 +1,7 @@
 @media screen and (min-width: 400px) {
 
   a .user-util-text {
-    color: #FFF;
+    color: #fff;
   }
 
   li.open a .user-util-text {
@@ -13,17 +13,19 @@
   }
 
   .lion-logo {
-    margin-top: 0.15em;
+    margin-top: .15em;
     width: 125px;
   }
 
+  /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-header > .logo-padding-fix {
-    padding-left: 0; /* Needs to be very specific to override code from 3 gems */
+    padding-left: 0;
     margin-left: -5px;
   }
 
+  /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-nav > li > a {
-    color: #FFF; /* Needs to be very specific to override code from 3 gems */
+    color: #fff;
   }
 
   .navbar-default .navbar-nav > li > a {
@@ -34,20 +36,21 @@
     background-color: #036;
   }
 
-  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
-    color: #FFF;
+  .ss-logo a:link,
+  .ss-logo a:visited,
+  .ss-logo a:hover {
     display: block;
+    color: #fff;
+    padding-top: .5em;
+    padding-left: .75em;
     font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
+    font-size: 1.25em;
     font-weight: 300;
     text-decoration: none;
-
-    font-size: 1.25em;
-    padding-top: 0.5em;
-    padding-left: .75em;
   }
 
   .ss-toolbar {
-    background-color: #2C76C7;
+    background-color: #2c76c7;
   }
 }
 
@@ -58,14 +61,19 @@
 }
 
 @media screen and (max-width: 767px) {
+  /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-nav .open .dropdown-menu {
-    background-color: #FFF; /* Needs to be very specific to override code from 3 gems */
+    background-color: #fff;
   }
+
+  /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-nav .open .dropdown-menu > li > a {
-    color: #333; /* Needs to be very specific to override code from 3 gems */
+    color: #333;
   }
+
+  /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-nav .open .dropdown-menu > li > a:hover {
-    background-color: #f5f5f5; /* Needs to be very specific to override code from 3 gems */
+    background-color: #f5f5f5;
   }
 }
 
@@ -73,11 +81,15 @@
   .lion-logo {
     width: 150px;
   }
+
   .navbar-inline .nav li {
-    margin-top: 0.5em;
+    margin-top: .5em;
   }
-  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
-    padding-top: 0.5em;
+
+  .ss-logo a:link,
+  .ss-logo a:visited,
+  .ss-logo a:hover {
+    padding-top: .5em;
     font-size: 1.5em;
   }
 }
@@ -86,11 +98,15 @@
   .lion-logo {
     width: 175px;
   }
+
   .navbar-inline .nav li {
-    margin-top: 0.5em;
+    margin-top: .5em;
   }
-  .ss-logo a:link, .ss-logo a:visited, .ss-logo a:hover {
-    padding-top: 0.5em;
+
+  .ss-logo a:link,
+  .ss-logo a:visited,
+  .ss-logo a:hover {
+    padding-top: .5em;
     font-size: 1.75em;
   }
 }

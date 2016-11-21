@@ -2,21 +2,25 @@
   <div class="container-fluid">
     <div class="row">
       <div class="navbar-header col-xs-12">
-        <div class="col-xs-6 logo-padding-fix">
-          <%= render partial: '/logo' %>
-        </div>
-        <div class="col-xs-6 navbar-inline">
-          <%= render partial: '/user_util_links' %>
+        <div class="row">
+          <div class="col-xs-6 logo-padding-fix">
+            <%= render partial: '/logo' %>
+          </div>
+          <div class="col-xs-6 navbar-inline">
+            <%= render partial: '/user_util_links' %>
+          </div>
         </div>
       </div>
     </div>
     <div class="row ss-toolbar">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+      <div class="col-xs-12">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
       <div class="col-xs-12 collapse navbar-collapse" id="top-navbar-collapse">
         <%= render partial: '/toolbar' %>
       </div>
