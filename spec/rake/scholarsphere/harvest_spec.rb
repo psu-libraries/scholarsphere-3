@@ -3,7 +3,7 @@ require 'rails_helper'
 require 'rake'
 
 describe "scholarsphere:harvest" do
-  before { load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere-harvest.rake"] }
+  before { load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere/harvest.rake"] }
 
   context "when harvesting lexvo languages" do
     it 'loads the terms from the rdf file' do

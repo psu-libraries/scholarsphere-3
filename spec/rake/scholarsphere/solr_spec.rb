@@ -4,7 +4,7 @@ require 'rake'
 
 describe "scholarsphere:solr" do
   before do
-    load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere-solr.rake"]
+    load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere/solr.rake"]
   end
 
   context "with incorrect input" do
