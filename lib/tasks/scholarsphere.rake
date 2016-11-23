@@ -109,13 +109,6 @@ namespace :scholarsphere do
     end
   end
 
-  desc "Characterize all files"
-  task characterize: :environment do
-    process_file_set_id_list(file_set_id_list) do |file_set|
-      CharacterizeJob.perform_later file_set, file_set.original_file.id
-    end
-  end
-
   desc "Re-solrize all objects"
   task resolrize: :environment do
     ResolrizeJob.perform_later
@@ -193,26 +186,6 @@ namespace :scholarsphere do
     end
   end
 
-  def generate_thumbnails(id_list)
-    errors = 0
-    process_file_set_id_list(id_list) do |file_set|
-      begin
-        CreateDerivativesJob.perform_later file_set, file_set.original_file.id
-        puts "Queued derivatives for FileSet: #{file_set.id}"
-      rescue Exception => e
-        errors += 1
-        logger.error "Error processing document: #{id}\r\n#{e.message}\r\n#{e.backtrace.inspect}"
-      end
-    end
-    logger.error("Total errors: #{errors}") if errors > 0
-
-  end
-
-  desc "Generate thumbnails for ALL documents"
-  task "generate_thumbnails" => :environment do
-    generate_thumbnails(file_set_id_list)
-  end
-
   # Start date must be in format 'yyyy/MM/dd'
   desc "Prints to stdout a list of failed jobs in resque"
   task "get_failed_jobs", [:start_date, :details] => :environment do |_cmd, args|
@@ -274,20 +247,6 @@ namespace :scholarsphere do
       id_list << pid unless pid.empty?
     end
     id_list
-  end
-
-  desc "Create derivatives for the documents indicated in a file. Each line in the file must include a PID (e.g. scholarsphere:123xyz)"
-  task "generate_thumbnail", [:file_name] => :environment do |_cmd, args|
-    generate_thumbnails(id_list_from_file(args[:file_name]))
-  end
-
-  desc "Characterizes documents indicated in a file. Each line in the file must include a PID (e.g. scholarsphere:123xyz)"
-  task "characterize_some", [:file_name] => :environment do |_cmd, args|
-    id_list = id_list_from_file(args[:file_name])
-    process_file_set_id_list(id_list) do |file_set|
-      CharacterizeJob.perform_later file_set, file_set.original_file.id
-      puts "Queued characterization for FileSet: #{file_set.id}"
-    end
   end
 
   desc "Queues a job to (re)generate the sitemap.xml"
