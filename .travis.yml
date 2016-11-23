@@ -22,6 +22,7 @@ before_script:
   - "cp config/sample/database.yml config/database.yml"
   - "cp config/sample/hydra-ldap.yml config/hydra-ldap.yml"
   - "cp config/sample/share_notify.yml config/share_notify.yml"
+  - "cp config/sample/initializers/qa.rb config/initializers/qa.rb"
   - redis-cli info
 matrix:
   fast_finish: true
