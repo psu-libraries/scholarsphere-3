@@ -28,6 +28,10 @@
     color: #fff;
   }
 
+  .navbar-default .navbar-nav {
+    margin-top: 0;
+  }
+
   .navbar-default .navbar-nav > li > a {
     text-align: center;
   }
@@ -43,7 +47,6 @@
     color: #fff;
     padding-top: .5em;
     padding-left: .75em;
-    font-family: 'Lato', Verdana, Arail, Helvetica, sans-serif;
     font-size: 1.25em;
     font-weight: 300;
     text-decoration: none;

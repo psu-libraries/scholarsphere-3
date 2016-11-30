@@ -1,0 +1,6 @@
+/* Needs to be overly specific to override Bootstrap styles coming from 3 gems */
+
+html > body h1,
+html > body h2 {
+  font-weight: 300;
+}
