@@ -26,6 +26,7 @@ module ScholarSphere
     ss_config = YAML.load(File.read(File.join(Rails.root, 'config/scholarsphere.yml')))[Rails.env].with_indifferent_access
 
     config.ffmpeg_path = ss_config.fetch(:ffmpeg_path, "ffmpeg")
+    config.derivatives_path = ss_config.fetch(:derivatives_path, File.join(Rails.root, 'tmp', 'derivatives'))
     config.service_instance = ss_config.fetch(:service_instance, Socket.gethostname)
     config.virtual_host = ss_config.fetch(:virtual_host, "https://#{Socket.gethostname}")
 
