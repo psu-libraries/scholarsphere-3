@@ -76,7 +76,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'tmp/pids',
   'tmp/sockets',
   'tmp/uploads',
-  'tmp/derivatives',
   'vendor/bundle'
 )
 

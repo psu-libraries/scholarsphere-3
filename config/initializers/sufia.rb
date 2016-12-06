@@ -43,4 +43,6 @@ Sufia.config do |config|
   end
 
   config.temp_file_base = "/tmp"
+
+  config.derivatives_path = Rails.application.config.derivatives_path
 end
