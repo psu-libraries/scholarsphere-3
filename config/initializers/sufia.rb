@@ -45,4 +45,6 @@ Sufia.config do |config|
   config.temp_file_base = "/tmp"
 
   config.derivatives_path = Rails.application.config.derivatives_path
+
+  config.minter_statefile = Rails.application.config.minter_statefile
 end
