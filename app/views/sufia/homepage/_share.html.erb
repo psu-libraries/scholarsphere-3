@@ -1,0 +1,9 @@
+<% if @presenter.display_share_button? %>
+    <div class="home-share-work text-center">
+      <%= link_to [:new, Sufia.primary_work_type.model_name.singular_route_key],
+                  class: "btn btn-primary btn-lg" do %>
+          <span class="glyphicon glyphicon-upload"></span> <%= t('sufia.share_button') %>
+      <% end %>
+      <p><a href="/terms/">Terms of Use</a></p>
+    </div>
+<% end %>
