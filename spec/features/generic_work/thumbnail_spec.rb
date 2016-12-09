@@ -18,8 +18,10 @@ describe "Generic Work Thumbnail Display:", type: :feature do
       go_to_dashboard_works
     end
 
-    it "renders the thumbnail" do
+    it "renders the thumbnail without the filename as the alt attribute and hides from screen readers" do
       expect(page).to have_css("img[src*='#{thumbnail_path}']")
+      expect(page).to have_css("img[aria-hidden='true']")
+      expect(page).to have_css("img[alt='']")
     end
   end
 
