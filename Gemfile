@@ -8,6 +8,7 @@ gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 gem 'active-fedora', '~> 10.3.0.rc2'
 gem 'sufia', github: 'projecthydra/sufia', branch: '7.2-migration'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
+gem 'curation_concerns', '1.6.3'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
