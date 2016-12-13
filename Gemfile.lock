@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/projecthydra/sufia.git
-  revision: 7bab08e96d006659b4dc68ed3dfd1cb12540272d
+  revision: 73eaac881de55c4bdd744bcd93d6abd146cc2bae
   branch: 7.2-migration
   specs:
     sufia (7.2.0)
@@ -84,7 +84,7 @@ GEM
     active_attr (0.9.0)
       activemodel (>= 3.0.2, < 5.1)
       activesupport (>= 3.0.2, < 5.1)
-    active_fedora-noid (2.0.0.beta6)
+    active_fedora-noid (2.0.0)
       active-fedora (>= 9.7, < 12)
       noid (~> 0.9)
       rails (>= 4.2.7.1, < 6)
@@ -118,7 +118,7 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (6.5.3)
+    autoprefixer-rails (6.5.3.1)
       execjs
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
@@ -325,7 +325,7 @@ GEM
     http_logger (0.5.1)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
-    hydra-access-controls (10.3.2)
+    hydra-access-controls (10.3.4)
       active-fedora (>= 10.0.0, < 12)
       activesupport (>= 4, < 6)
       blacklight (>= 5.16)
@@ -336,8 +336,8 @@ GEM
       blacklight
       curation_concerns (>= 0.12.0.pre2)
       rails
-    hydra-core (10.3.2)
-      hydra-access-controls (= 10.3.2)
+    hydra-core (10.3.4)
+      hydra-access-controls (= 10.3.4)
       railties (>= 4.0.0, < 6)
     hydra-derivatives (3.2.1)
       active-fedora (>= 9.0, < 12)
@@ -354,9 +354,9 @@ GEM
       sprockets-es6
     hydra-file_characterization (0.3.3)
       activesupport (>= 3.0.0)
-    hydra-head (10.3.2)
-      hydra-access-controls (= 10.3.2)
-      hydra-core (= 10.3.2)
+    hydra-head (10.3.4)
+      hydra-access-controls (= 10.3.4)
+      hydra-core (= 10.3.4)
       rails (>= 3.2.6)
     hydra-ldap (0.1.0)
       net-ldap
@@ -364,10 +364,10 @@ GEM
     hydra-pcdm (0.9.0)
       active-fedora (>= 10, < 12)
       mime-types (>= 1)
-    hydra-works (0.14.0)
+    hydra-works (0.15.0)
       hydra-derivatives (~> 3.0)
       hydra-file_characterization (~> 0.3, >= 0.3.3)
-      hydra-pcdm (>= 0.8)
+      hydra-pcdm (>= 0.9)
       om (~> 3.1)
     i18n (0.7.0)
     jbuilder (2.6.0)
@@ -452,16 +452,16 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
-    mini_magick (4.5.1)
+    mini_magick (4.6.0)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     mono_logger (1.1.0)
     multi_json (1.12.1)
-    multi_xml (0.5.5)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
     namae (0.9.3)
-    nest (2.0.0)
+    nest (2.1.0)
       redic
     net-http-persistent (2.9.4)
     net-ldap (0.13.0)
@@ -488,7 +488,7 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
-    openseadragon (0.3.1)
+    openseadragon (0.3.2)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
     os (0.9.6)
@@ -544,7 +544,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     raindrops (0.17.0)
-    rake (11.3.0)
+    rake (12.0.0)
     rdf (1.99.1)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (1.99.0)
@@ -742,11 +742,11 @@ GEM
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.19.1)
+    thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
     tins (1.6.0)
-    tinymce-rails (4.4.3)
+    tinymce-rails (4.5.1)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.17.beta)
       railties (>= 3.2, < 6)
@@ -810,6 +810,7 @@ DEPENDENCIES
   capybara-screenshot
   clamav
   coffee-rails
+  curation_concerns (= 1.6.3)
   database_cleaner
   devise (~> 4.2)
   equivalent-xml
