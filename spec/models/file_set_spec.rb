@@ -11,7 +11,7 @@ describe FileSet, type: :model do
 
   describe "::indexer" do
     subject { described_class.indexer }
-    it { is_expected.to be(CurationConcerns::FileSetIndexer) }
+    it { is_expected.to be(FileSetIndexer) }
   end
 
   describe "#.to_solr" do

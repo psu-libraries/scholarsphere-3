@@ -17,7 +17,7 @@ describe SolrDocument do
   end
 
   describe "#file_size" do
-    subject { described_class.new(file_size_is: ["1234"]) }
+    subject { described_class.new(file_size_lts: ["1234"]) }
     its(:file_size) { is_expected.to eq("1234") }
   end
 

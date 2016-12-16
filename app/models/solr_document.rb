@@ -26,7 +26,7 @@ class SolrDocument
 
   # Remove this once https://github.com/projecthydra/curation_concerns/issues/1055 is resolved
   def file_size
-    Array(self["file_size_is"]).first
+    Array(self["file_size_lts"]).first
   end
 
   def bytes
