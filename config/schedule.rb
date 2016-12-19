@@ -33,4 +33,8 @@ every 60.minutes, roles: [:app] do
   command "#{path}/config/cronjobs/temp_file_clean.bash"
 end
 
+every 10.minutes, roles: [:job] do
+  command "#{path}/config/cronjobs/resque-cleanup.bash"
+end
+
 # Learn more: http://github.com/javan/whenever
