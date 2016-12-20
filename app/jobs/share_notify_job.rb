@@ -13,7 +13,7 @@ class ShareNotifyJob < ActiveJob::Base
   def unshareable?
     ResourceFilteredList.new(
       PublicFilteredList.new([work]).filter
-    ).filter.empty?
+    ).filter.empty? || depositor.blank?
   end
 
   private
