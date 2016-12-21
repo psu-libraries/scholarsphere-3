@@ -1,4 +1,33 @@
 GIT
+  remote: git://github.com/projecthydra/curation_concerns.git
+  revision: b073550c40a1c1088f85970aa8c0e9538bc2d5ce
+  ref: b073550
+  specs:
+    curation_concerns (1.6.3)
+      active-fedora (>= 10.3.0.rc1)
+      active_attr
+      active_fedora-noid (~> 2.0.0.beta1)
+      awesome_nested_set (~> 3.0)
+      blacklight (~> 6.3)
+      blacklight_advanced_search (~> 6.0)
+      breadcrumbs_on_rails (>= 3.0.1, < 4)
+      browse-everything (~> 0.10)
+      clipboard-rails (~> 1.5)
+      hydra-editor (>= 2, < 4)
+      hydra-head (>= 10.0.0, < 11)
+      hydra-works (>= 0.14.0)
+      jquery-ui-rails
+      kaminari_route_prefix (~> 0.0.1)
+      qa (~> 0.5)
+      rails_autolink
+      rdf (>= 1.99)
+      rdf-vocab (>= 0.8)
+      redlock (~> 0.1.2)
+      simple_form (~> 3.1)
+      solrizer (~> 3.4)
+      sprockets-es6
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: e0483651cd5b505613542f8b7a6a6cb263ec4406
   branch: 7.2-migration
@@ -229,29 +258,6 @@ GEM
     concurrent-ruby (1.0.3)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    curation_concerns (1.6.3)
-      active-fedora (>= 10.3.0.rc1)
-      active_attr
-      active_fedora-noid (~> 2.0.0.beta1)
-      awesome_nested_set (~> 3.0)
-      blacklight (~> 6.3)
-      blacklight_advanced_search (~> 6.0)
-      breadcrumbs_on_rails (>= 3.0.1, < 4)
-      browse-everything (~> 0.10)
-      clipboard-rails (~> 1.5)
-      hydra-editor (>= 2, < 4)
-      hydra-head (>= 10.0.0, < 11)
-      hydra-works (>= 0.14.0)
-      jquery-ui-rails
-      kaminari_route_prefix (~> 0.0.1)
-      qa (~> 0.5)
-      rails_autolink
-      rdf (>= 1.99)
-      rdf-vocab (>= 0.8)
-      redlock (~> 0.1.2)
-      simple_form (~> 3.1)
-      solrizer (~> 3.4)
-      sprockets-es6
     daemons (1.2.4)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
@@ -810,7 +816,7 @@ DEPENDENCIES
   capybara-screenshot
   clamav
   coffee-rails
-  curation_concerns (= 1.6.3)
+  curation_concerns!
   database_cleaner
   devise (~> 4.2)
   equivalent-xml
