@@ -66,7 +66,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/solr.yml',
   'config/zotero.yml',
   'public/robots.txt',
-  'public/sitemap.xml'
+  'public/sitemap.xml',
+  'config/initializers/sufia6.rb'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
