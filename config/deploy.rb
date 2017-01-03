@@ -99,6 +99,14 @@ namespace :apache do
 end
 
 namespace :deploy do
+  desc "Restart resque-pool"
+  task :resquepoolrestart do
+    on roles(:job) do
+      execute "sudo /sbin/service resque_pool restart"
+    end
+  end
+  after :published, :resquepoolrestart
+
   desc "Re-solrize objects"
   task :resolrize do
     on roles(:job) do
@@ -110,15 +118,7 @@ namespace :deploy do
     end
   end
   # Disable resolrization until after PCDM migration
-  # after :migrate, :resolrize
-
-  desc "Restart resque-pool"
-  task :resquepoolrestart do
-    on roles(:job) do
-      execute "sudo /sbin/service resque_pool restart"
-    end
-  end
-  after :published, :resquepoolrestart
+  after :resquepoolrestart, :resolrize
 
   desc "Queue sitemap.xml to be generated"
   task :sitemapxml do
