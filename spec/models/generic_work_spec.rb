@@ -7,7 +7,7 @@ describe GenericWork do
   subject { work }
 
   it "creates a noid on save" do
-    expect(subject.id.length).to eq 9
+    expect(subject.id.length).to eq 10
   end
 
   describe "#time_uploaded" do
