@@ -34,6 +34,9 @@ en:
       cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
     user_profile:
       tab_user_info: "User Info"
+    works:
+      new:
+        after_create_html: "Your files are being processed by %{application_name} in the background. Files will be marked <span class=\"label label-danger\" title=\"Private\">Private</span> until this process is complete. You may need to refresh this page to see these updates."
   simple_form:
     labels:
       collection:
