@@ -20,4 +20,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   def uploading?
     QueuedFile.where(work_id: id).present?
   end
+
+  def page_title
+    "Work | #{title.first} | Work ID: #{solr_document.id} | ScholarSphere"
+  end
 end
