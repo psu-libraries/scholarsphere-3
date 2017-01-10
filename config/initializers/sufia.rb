@@ -47,4 +47,6 @@ Sufia.config do |config|
   config.derivatives_path = Rails.application.config.derivatives_path
 
   config.noid_template = ".reeeddeeddk"
+
+  config.google_analytics_id = Rails.application.config.google_analytics_id
 end

@@ -29,6 +29,7 @@ module ScholarSphere
     config.derivatives_path = ss_config.fetch(:derivatives_path, File.join(Rails.root, 'tmp', 'derivatives'))
     config.service_instance = ss_config.fetch(:service_instance, Socket.gethostname)
     config.virtual_host = ss_config.fetch(:virtual_host, "https://#{Socket.gethostname}")
+    config.google_analytics_id = ss_config.fetch(:google_analytics_id, nil)
 
     config.scholarsphere_version = "v2.8"
     config.scholarsphere_release_date = "October 24, 2016"

@@ -28,4 +28,9 @@ describe "Scholarsphere yaml config" do
     subject { config.derivatives_path }
     it { is_expected.to end_with("tmp/derivatives") }
   end
+
+  describe "Google analytics ID" do
+    subject { config.google_analytics_id }
+    it { is_expected.to be_nil }
+  end
 end
