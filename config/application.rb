@@ -90,9 +90,6 @@ module ScholarSphere
     # allow errors to be raised in callbacks
     config.active_record.raise_in_transactional_callbacks = true
 
-    # Needed for ScholarsphereLockManager, remove this when we've upgraded to Redis 2.6+
-    config.statefile = '/tmp/lockmanager-state'
-
     config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
   end
 end
