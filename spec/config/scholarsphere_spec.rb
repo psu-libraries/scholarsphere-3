@@ -28,9 +28,4 @@ describe "Scholarsphere yaml config" do
     subject { config.derivatives_path }
     it { is_expected.to end_with("tmp/derivatives") }
   end
-
-  describe "minter state file" do
-    subject { config.minter_statefile }
-    it { is_expected.to eq("/tmp/minter-state") }
-  end
 end

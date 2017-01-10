@@ -46,7 +46,5 @@ Sufia.config do |config|
 
   config.derivatives_path = Rails.application.config.derivatives_path
 
-  config.minter_statefile = Rails.application.config.minter_statefile
-
   config.noid_template = ".reeeddeeddk"
 end

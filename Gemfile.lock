@@ -113,7 +113,7 @@ GEM
     active_attr (0.9.0)
       activemodel (>= 3.0.2, < 5.1)
       activesupport (>= 3.0.2, < 5.1)
-    active_fedora-noid (2.0.0)
+    active_fedora-noid (2.0.1)
       active-fedora (>= 9.7, < 12)
       noid (~> 0.9)
       rails (>= 4.2.7.1, < 6)
@@ -141,7 +141,7 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     almond-rails (0.0.3)
       rails (>= 4.2, < 6)
-    arel (6.0.3)
+    arel (6.0.4)
     ast (2.3.0)
     autoparse (0.3.3)
       addressable (>= 2.3.1)
@@ -255,7 +255,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    concurrent-ruby (1.0.3)
+    concurrent-ruby (1.0.4)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.4)
@@ -508,7 +508,7 @@ GEM
       websocket-driver (>= 0.2.0)
     posix-spawn (0.3.12)
     powerpack (0.1.1)
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     qa (0.10.2)
       activerecord-import
       deprecation
@@ -535,9 +535,9 @@ GEM
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.7)
+    rails-dom-testing (1.0.8)
       activesupport (>= 4.2.0.beta, < 5.0)
-      nokogiri (~> 1.6.0)
+      nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
@@ -709,7 +709,7 @@ GEM
       faraday
       ruby-progressbar
       rubyzip
-    solrizer (3.4.0)
+    solrizer (3.4.1)
       activesupport
       daemons
       nokogiri
@@ -864,4 +864,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

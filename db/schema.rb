@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103162601) do
+ActiveRecord::Schema.define(version: 20170110142323) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -171,6 +171,18 @@ ActiveRecord::Schema.define(version: 20161103162601) do
     t.string   "status",     limit: 255
   end
 
+  create_table "minter_states", force: :cascade do |t|
+    t.string   "namespace",  limit: 255,   default: "default", null: false
+    t.string   "template",   limit: 255,                       null: false
+    t.text     "counters",   limit: 65535
+    t.integer  "seq",        limit: 8,     default: 0
+    t.binary   "rand",       limit: 65535
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "minter_states", ["namespace"], name: "index_minter_states_on_namespace", unique: true, using: :btree
+
   create_table "proxy_deposit_requests", force: :cascade do |t|
     t.string   "work_id",           limit: 255,                       null: false
     t.integer  "sending_user_id",   limit: 4,                         null: false
@@ -210,7 +222,7 @@ ActiveRecord::Schema.define(version: 20161103162601) do
     t.string   "uri",                limit: 255
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.string   "lower_label",        limit: 256
+    t.string   "lower_label",        limit: 175
   end
 
   add_index "qa_local_authority_entries", ["local_authority_id"], name: "index_qa_local_authority_entries_on_local_authority_id", using: :btree
