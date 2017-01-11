@@ -1,0 +1,6 @@
+<% provide :page_title, "Edit Work | #{@form.title.first} | Work ID: #{curation_concern.to_param} | ScholarSphere" %>
+<% provide :page_header do %>
+    <h1><%= t("sufia.works.#{action_name}.header") %></h1>
+<% end %>
+
+<%= render 'form' %>
