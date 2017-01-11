@@ -92,5 +92,6 @@ module ScholarSphere
     config.active_record.raise_in_transactional_callbacks = true
 
     config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
+    config.action_mailer.default_url_options = { host: ss_config.fetch(:service_instance, Socket.gethostname), protocol: 'https' }
   end
 end
