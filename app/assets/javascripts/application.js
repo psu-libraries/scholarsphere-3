@@ -8,5 +8,10 @@
 // Required by Blacklight
 //= require blacklight/blacklight
 
-//= require_tree .
+// Requiring each file individually so we can load Sufia's JS, with our overrides, at the end.
+//= require batch_edit
+//= require blacklight_gallery
+//= require openseadragon
+//= require scholarsphere_fileupload
+//= require scholarsphere_layout
 //= require sufia
