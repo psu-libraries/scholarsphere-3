@@ -4,3 +4,26 @@ html > body h1,
 html > body h2 {
   font-weight: 300;
 }
+
+html > body a {
+  color: #2d699e;
+  text-decoration: underline;
+}
+
+/* Overrides that hop onto existing classes where the UI convention is enough */
+a.btn,
+.breadcrumb a,
+.dropdown-menu > li > a,
+.facets h3 a,
+.facets h4 a,
+.heading-tile a,
+.nav-tabs > li > a,
+.no-underline,
+.visibility-link { text-decoration: none; }
+
+/* Overrides the heavy default underline on H2 titles in the search */
+.blacklight-genericwork h2 > a {
+  text-decoration: none;
+  text-shadow: 0 2px #fff;
+  border-bottom: 1px solid;
+}

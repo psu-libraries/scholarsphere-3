@@ -2,6 +2,7 @@
 
   a .user-util-text {
     color: #fff;
+    text-decoration: none;
   }
 
   li.open a .user-util-text {
@@ -26,6 +27,7 @@
   /* Needs to be very specific to override code from 3 gems */
   #masthead .navbar-nav > li > a {
     color: #fff;
+    text-decoration: none;
   }
 
   .navbar-default .navbar-nav {

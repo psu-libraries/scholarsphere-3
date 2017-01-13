@@ -1,6 +1,7 @@
 /* Override styles coming from Sufia for better contrast */
 html > body .navbar-default .navbar-nav > li > a {
   color: #686868;
+  text-decoration: none;
 }
 
 .marketing {
@@ -27,6 +28,8 @@ html > body .navbar-default .navbar-nav > li > a {
   border: 2px solid #fff;
   font-size: 1.4em;
 }
+
+.home-tabs .nav a:link { text-decoration: none; }
 
 .home-share-work p a:link,
 .home-tabs .nav a:link,

@@ -1,13 +1,13 @@
 <% if user_signed_in? %>
     <ul id="user_utility_links" class="nav navbar-right">
       <li>
-        <%= link_to sufia.notifications_path do %>
+        <%= link_to sufia.notifications_path, class: 'no-underline' do %>
             <span class="user-util-text">Notifications</span>
             <%= render partial: 'users/notify_number' %>
         <% end %>
       </li>
       <li class="dropdown">
-        <%= link_to sufia.profile_path(current_user), role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do %>
+        <%= link_to sufia.profile_path(current_user), class: 'no-underline', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do %>
             <span class="sr-only">View</span>
             <span class="hidden-xs user-util-text">&nbsp;<%= current_user.name %></span>
             <span class="sr-only"> profile</span>
