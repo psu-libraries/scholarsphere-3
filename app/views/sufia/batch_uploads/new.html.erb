@@ -1,0 +1,10 @@
+ <!-- Add an override for batch upload new to change the title displayed on the batch upload screen -->
+ <!-- If this file is not present app/views/curation_concerns/base/new.html.erb will be used -->
+<% provide :page_title, curation_concern_page_title(curation_concern) %>
+<% provide :page_header do %>
+  <h1>
+    Add Multiple New Works
+  </h1>
+<% end %>
+
+<%= render 'form' %>
