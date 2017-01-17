@@ -36,7 +36,7 @@ en:
       tab_user_info: "User Info"
     works:
       new:
-        after_create_html: "Your files are being processed by %{application_name} in the background. Files will be marked <span class=\"label label-danger\" title=\"Private\">Private</span> until this process is complete. You may need to refresh this page to see these updates."
+        after_create_html: "Your files are being processed by %{application_name} in the background. Your files will be displayed below as they are processed. You may need to refresh this page to see these updates."
   simple_form:
     labels:
       collection:
