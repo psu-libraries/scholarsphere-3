@@ -45,6 +45,7 @@ module ScholarSphere
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
+    config.autoload_paths += %W(#{config.root}/app/forms/concerns)
 
     config.i18n.enforce_available_locales = true
 
