@@ -14,6 +14,7 @@ gem 'curation_concerns', github: 'projecthydra/curation_concerns', ref: 'b073550
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
 gem 'devise', '~> 4.2'
+gem 'figaro'
 gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails', '~> 4.2'
 gem 'kaminari_route_prefix'

@@ -1,0 +1,9 @@
+# Figaro configuration file
+# See https://github.com/laserlemon/figaro
+#
+# Example:
+# ---
+# production:
+#   TMPDIR:
+test:
+  useless-variable: "foo"

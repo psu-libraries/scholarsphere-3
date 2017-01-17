@@ -47,6 +47,7 @@ set :format_options, command_output: false
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push(
   'config/analytics.yml',
+  'config/application.yml',
   'config/arkivo.yml',
   'config/blacklight.yml',
   'config/browse_everything_providers.yml',
@@ -58,6 +59,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/hydra-ldap.yml',
   'config/initializers/arkivo_constraint.rb',
   'config/initializers/qa.rb',
+  'config/initializers/sufia6.rb',
   'config/newrelic.yml',
   'config/redis.yml',
   'config/scholarsphere.yml',
@@ -66,8 +68,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/solr.yml',
   'config/zotero.yml',
   'public/robots.txt',
-  'public/sitemap.xml',
-  'config/initializers/sufia6.rb'
+  'public/sitemap.xml'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(

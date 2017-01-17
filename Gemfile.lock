@@ -289,6 +289,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     fcrepo_wrapper (0.6.0)
       ruby-progressbar
+    figaro (1.1.1)
+      thor (~> 0.14)
     flot-rails (0.0.7)
       jquery-rails
     font-awesome-rails (4.7.0.1)
@@ -822,6 +824,7 @@ DEPENDENCIES
   equivalent-xml
   factory_girl_rails (~> 4.1)
   fcrepo_wrapper
+  figaro
   flipflop!
   jbuilder (~> 2.6)
   jquery-rails (~> 4.2)
