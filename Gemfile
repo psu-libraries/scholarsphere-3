@@ -9,6 +9,7 @@ gem 'active-fedora', '~> 10.3.0.rc2'
 gem 'sufia', github: 'projecthydra/sufia', branch: '7.2-migration'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
 gem 'curation_concerns', github: 'projecthydra/curation_concerns', ref: 'b073550'
+gem 'hydra-works', github: 'projecthydra/hydra-works', ref: 'd0e87d0'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'

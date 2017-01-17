@@ -28,6 +28,17 @@ GIT
       sprockets-es6
 
 GIT
+  remote: git://github.com/projecthydra/hydra-works.git
+  revision: d0e87d017c20ffbecbaeda8c09b376747b9cdebc
+  ref: d0e87d0
+  specs:
+    hydra-works (0.15.0)
+      hydra-derivatives (~> 3.0)
+      hydra-file_characterization (~> 0.3, >= 0.3.3)
+      hydra-pcdm (>= 0.9)
+      om (~> 3.1)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 603e8fc8bd4f49ab20ac3149ef7fb6042638ff2b
   branch: 7.2-migration
@@ -372,11 +383,6 @@ GEM
     hydra-pcdm (0.9.0)
       active-fedora (>= 10, < 12)
       mime-types (>= 1)
-    hydra-works (0.15.0)
-      hydra-derivatives (~> 3.0)
-      hydra-file_characterization (~> 0.3, >= 0.3.3)
-      hydra-pcdm (>= 0.9)
-      om (~> 3.1)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -826,6 +832,7 @@ DEPENDENCIES
   fcrepo_wrapper
   figaro
   flipflop!
+  hydra-works!
   jbuilder (~> 2.6)
   jquery-rails (~> 4.2)
   kaminari_route_prefix
