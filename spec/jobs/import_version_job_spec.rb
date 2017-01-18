@@ -8,7 +8,6 @@ describe ImportVersionJob do
   let(:file_set)         { work.file_sets.first }
 
   before do
-    allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
     FileUtils.cp fixture_file, file
   end
 

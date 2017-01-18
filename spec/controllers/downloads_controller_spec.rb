@@ -8,10 +8,7 @@ describe DownloadsController do
   let(:my_file)    { create(:file_set, user: user, content: file) }
   let(:other_file) { create(:file_set, user: other_user, content: file) }
 
-  before do
-    allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-    allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
-  end
+  before { allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login) }
 
   describe "#authorize_download!" do
     subject { controller.send(:authorize_download!) }

@@ -59,7 +59,6 @@ describe Import::VersionBuilder do
     end
     context "good http" do
       before do
-        allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
         FileUtils.copy version1.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version1_#{file_set.label}")
         FileUtils.copy version2.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version2_#{file_set.label}")
       end

@@ -7,10 +7,7 @@ describe AttachFilesToWorkJob do
   let(:file)             { File.open(File.join(fixture_path, "world.png")) }
   let(:uploaded_file)    { Sufia::UploadedFile.create(file: file, user: user) }
 
-  before do
-    allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-    QueuedFile.create(work_id: work.id, file_id: uploaded_file.id)
-  end
+  before { QueuedFile.create(work_id: work.id, file_id: uploaded_file.id) }
 
   it "adds the file set to the process list" do
     expect(CharacterizeJob).to receive(:perform_later).once
