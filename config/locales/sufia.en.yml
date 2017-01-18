@@ -52,3 +52,9 @@ en:
   curation_concerns:
     institution:
       name: "Penn State"
+    base:
+      social_media:
+        facebook: 'Share on Facebook'
+        twitter: 'Share on Twitter'
+        tumblr: 'Share on Tumblr'
+        google: 'Share on Google+'
