@@ -1,9 +1,9 @@
-<h3><span class="glyphicon glyphicon-user"></span> Directory Info (LDAP) <%= link_to 'Edit Instructions', 'http://www.psu.edu/directory/#update', class: 'btn btn-mini btn-primary' %></h3>
+<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Directory Info (LDAP) <%= link_to 'Edit Instructions', 'http://www.psu.edu/directory/#update', class: 'btn btn-mini btn-primary' %></h3>
 <%= render 'user_info',  {user: @user } %>
 
 <hr />
 
-<h3><span class="glyphicon glyphicon-group"></span> User Managed Groups Info (UMG) <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', class: 'btn btn-xs btn-primary' %> </h3>
+<h3><span class="glyphicon glyphicon-group" aria-hidden="true"></span> User Managed Groups Info (UMG) <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', class: 'btn btn-xs btn-primary' %> </h3>
 <% current_user.groups.each do |g| %>
-  <i class="glyphicon glyphicon-asterisk"></i> <%= g %><br />
+  <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <%= g %><br />
 <% end %>

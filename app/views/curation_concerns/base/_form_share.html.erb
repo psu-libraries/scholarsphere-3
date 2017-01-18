@@ -60,7 +60,7 @@
   </div>
   <div class="col-sm-3">
     <button class="btn btn-default" id="add_new_user_skel">
-      <span class="glyphicon glyphicon-plus"></span>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       Add <%= t('sufia.account_label') %>
     </button>
     <br /> <span id="directory_user_result"></span>
@@ -83,7 +83,7 @@
     <%= select_tag 'new_group_permission_skel', options_for_select(Sufia.config.permission_levels), class: 'form-control' %>
   </div>
   <div class="col-sm-3">
-    <button class="btn btn-default" id="add_new_group_skel"><span class="glyphicon glyphicon-plus"></span> Add Group</button>
+    <button class="btn btn-default" id="add_new_group_skel"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Group</button>
     <br /><span id="directory_group_result"></span>
   </div>
 </div>
