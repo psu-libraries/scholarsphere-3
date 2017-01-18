@@ -4,7 +4,7 @@
       <ul class="nav navbar-nav col-sm-5 col-md-6">
         <li <%= 'class=active' if current_page?(sufia.root_path) %>>
           <%= link_to t(:'sufia.controls.home'), sufia.root_path, :'data-no-turbolink'=>"true" %></li>
-        <li <%= 'class=active' if current_page?(sufia.about_path) %>>
+        <li <%= 'class=active' if action_name == "about" %>>
           <%= link_to t(:'sufia.controls.about'), sufia.about_path, :'data-no-turbolink'=>"true" %></li>
         <li <%= 'class=active' if action_name == "help" %>>
           <%= link_to t(:'sufia.controls.help'), sufia.help_path %></li>

@@ -2,6 +2,10 @@
 class StaticController < ApplicationController
   rescue_from AbstractController::ActionNotFound, with: :render_404
 
+  def about
+    @page = ContentBlock.find_or_create_by(name: "about")
+  end
+
   def help
     @page = ContentBlock.find_or_create_by(name: "help_faq")
   end
