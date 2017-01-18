@@ -1,5 +1,8 @@
 language: ruby
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - "dep_cache"
 bundler_args: --without development debug
 sudo: false
 rvm:
@@ -16,6 +19,11 @@ env:
     - TEST_SUITE=rubocop
 before_install:
   - export PATH="$PATH:$(pwd)/fits"
+  - "mkdir -p dep_cache"
+  - "pwd"
+  - "ls -l dep_cache"
+  - "cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml"
+  - "cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml"
 services:
   - redis-server
 before_script:
@@ -28,9 +36,3 @@ matrix:
   fast_finish: true
 script:
   - "bundle exec rake scholarsphere:travis:$TEST_SUITE"
-notifications:
-  irc:
-    channels:
-      - "irc.freenode.org#scholarsphere"
-    template:
-      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"

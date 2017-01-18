@@ -1,0 +1,9 @@
+#config/solr_wrapper_test.yml
+version: 5.5.2
+port: 8985
+instance_dir: solr-test
+download_dir: dep_cache
+collection:
+    persist: false
+    dir: solr/config
+    name: hydra-test
