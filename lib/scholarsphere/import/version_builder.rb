@@ -62,6 +62,7 @@ module Import
       def sufia6_version_open_uri(content_uri)
         req = Net::HTTP::Get.new(content_uri)
         req.basic_auth sufia6_user, sufia6_password
+        req
       end
 
       def characterize(file_set, filename_on_disk)
