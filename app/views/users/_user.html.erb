@@ -20,7 +20,7 @@
 
     <% if can? :edit, user %>
         <%= link_to sufia.edit_profile_path(user), class: "btn btn-default pull-right" do %>
-            <i class="glyphicon glyphicon-edit"></i> <%= t("sufia.edit_profile") %>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <%= t("sufia.edit_profile") %>
         <% end %>
     <% end %>
   </div>
