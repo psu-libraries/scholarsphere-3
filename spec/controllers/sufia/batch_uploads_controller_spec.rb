@@ -10,7 +10,7 @@ describe Sufia::BatchUploadsController do
 
     before { sign_in user }
 
-    context "enquing a update job" do
+    context "queuing a update job" do
       let(:expected_types)             { { '1' => 'Article' } }
       let(:expected_individual_params) { { '1' => 'foo' } }
 
@@ -38,6 +38,19 @@ describe Sufia::BatchUploadsController do
         expect(response).to redirect_to Sufia::Engine.routes.url_helpers.dashboard_works_path
         expect(flash[:notice]).to include("Your files are being processed")
       end
+    end
+  end
+
+  describe "#uploading_on_behalf_of?" do
+    subject { described_class.new }
+    before { allow(subject).to receive(:hash_key_for_curation_concern).and_return(:generic_work) }
+    context "without a proxy" do
+      before { allow(subject).to receive(:params).and_return(generic_work: {}) }
+      its(:uploading_on_behalf_of?) { is_expected.to be false }
+    end
+    context "with a proxy" do
+      before { allow(subject).to receive(:params).and_return(generic_work: { on_behalf_of: "joe" }) }
+      its(:uploading_on_behalf_of?) { is_expected.to be true }
     end
   end
 end

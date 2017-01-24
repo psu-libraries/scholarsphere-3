@@ -42,4 +42,8 @@ class Sufia::BatchUploadsController < ApplicationController
                                    attributes_for_actor.to_h,
                                    log)
     end
+
+    def uploading_on_behalf_of?
+      params.fetch(hash_key_for_curation_concern).fetch(:on_behalf_of, nil).present?
+    end
 end
