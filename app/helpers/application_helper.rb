@@ -39,4 +39,9 @@ module ApplicationHelper
            end
     link_to content_tag(:span, value, class: "label #{class_name}", title: value), path, id: "permission_#{document.id}"
   end
+
+  # TODO: Remove this once we've upgraded to Sufia 7.3 or later
+  def more_facets_link_path(solr_field)
+    sufia.send("dashboard_#{controller_name}_facet_path", solr_field)
+  end
 end
