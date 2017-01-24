@@ -48,13 +48,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Overrides CurationConcerns::ApplicationControllerBehavior with custom error method
-  def render_404(exception)
-    logger.error("Rendering 404 page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
+  def render_404(exception = nil)
+    log_exception(exception, "404") if exception.present?
     render template: '/errors/404', layout: "error", formats: [:html], status: 404
   end
 
-  def render_500(exception)
-    logger.error("Rendering 500 page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
+  def render_500(exception = nil)
+    log_exception(exception, "500") if exception.present?
     render template: '/errors/500', layout: "error", formats: [:html], status: 500
   end
 
@@ -100,5 +100,11 @@ class ApplicationController < ActionController::Base
     def nil_request
       logger.warn("Request is Nil, how weird!!!")
       nil
+    end
+
+  private
+
+    def log_exception(exception, status)
+      logger.error("Rendering #{status} page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
     end
 end
