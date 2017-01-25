@@ -12,4 +12,8 @@ class FileSetPresenter < Sufia::FileSetPresenter
   def file_size
     number_to_human_size(super)
   end
+
+  def page_title
+    "File | #{title.first} | File ID: #{solr_document.id} | ScholarSphere"
+  end
 end
