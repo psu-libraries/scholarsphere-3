@@ -36,6 +36,6 @@ class GenericWork < ActiveFedora::Base
 
     # Field name to look up when locating the size of each file in Solr.
     def file_size_field
-      Solrizer.solr_name(:file_size, CurationConcerns::FileSetIndexer::STORED_INTEGER)
+      Solrizer.solr_name(:file_size, CurationConcerns::CollectionIndexer::STORED_LONG)
     end
 end

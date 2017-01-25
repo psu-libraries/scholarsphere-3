@@ -8,7 +8,7 @@ describe GenericWork, type: :feature do
   context "when viewing as a standard user" do
     let(:current_user) { create(:user) }
     let!(:work1) do
-      create(:public_work, :with_one_file, :with_complete_metadata,
+      create(:public_work, :with_one_file_and_size, :with_complete_metadata,
              depositor: current_user.login,
              description: ["Description http://example.org/TheDescriptionLink/"]
             )
@@ -50,7 +50,7 @@ describe GenericWork, type: :feature do
           expect(page).to have_link work1.resource_type.first
           expect(page).to have_link work1.related_url.first
           expect(page).to have_link("Attribution 3.0 United States")
-          expect(page).to have_content("0 Bytes")
+          expect(page).to have_content("1 Byte")
           within("li.total_items") do
             expect(page).to have_content("1")
           end

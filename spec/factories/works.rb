@@ -114,6 +114,17 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_one_file_and_size do
+      before(:create) do |work, evaluator|
+        fs = FactoryGirl.create(:file_set, :with_file_size,
+                                user: evaluator.user,
+                                title: (evaluator.file_title || ["A Contained File"]),
+                                label: (evaluator.file_name || 'filename.pdf'))
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+      end
+    end
+
     trait :with_full_text_content do
       after(:build) do |f|
         f.full_text.content = "full_textfull_text"

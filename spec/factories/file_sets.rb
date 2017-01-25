@@ -40,5 +40,11 @@ FactoryGirl.define do
         fs.title = ["Fake PDF Title"]
       end
     end
+
+    trait :with_file_size do
+      after(:build) do |fs|
+        fs.stub(:file_size).and_return '1234'
+      end
+    end
   end
 end
