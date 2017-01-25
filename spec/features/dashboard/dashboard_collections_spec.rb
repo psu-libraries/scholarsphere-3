@@ -28,7 +28,7 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   specify 'toggle displays additional information' do
-    first('i.glyphicon-chevron-right').click
+    first('span.glyphicon-chevron-right').click
     expect(page).to have_content(collection.description.first)
     expect(page).to have_content(current_user)
   end
