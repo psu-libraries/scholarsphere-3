@@ -138,5 +138,8 @@ module ScholarSphere
 
     # Needed for ScholarsphereLockManager, remove this when we've upgraded to Redis 2.6+
     config.statefile = '/tmp/lockmanager-state'
+
+    # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
+    # config.read_only = true
   end
 end

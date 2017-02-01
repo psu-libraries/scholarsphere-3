@@ -15,18 +15,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
       sign_in_with_js(current_user)
     end
 
-    context 'the user agreement' do
-      before do
-        Sufia::Engine.routes.url_helpers.new_generic_file_path
-      end
-      it "does not show Sufia's user agreement" do
-        expect(page).not_to have_content("Sufia's Deposit Agreement")
-      end
-    end
-
     context 'user needs help' do
       before do
         visit Sufia::Engine.routes.url_helpers.new_generic_file_path
+        expect(page).not_to have_content("Sufia's Deposit Agreement")
         expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
         check 'terms_of_service'
         attach_file('files[]', test_file_path(filename), visible: false)
