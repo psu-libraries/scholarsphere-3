@@ -16,4 +16,8 @@ class FileSetPresenter < Sufia::FileSetPresenter
   def page_title
     "File | #{title.first} | File ID: #{solr_document.id} | ScholarSphere"
   end
+
+  def display_download_link?
+    CurationConcerns.config.display_media_download_link
+  end
 end
