@@ -19,6 +19,11 @@ module SolrHelper
     ActiveFedora::SolrService.commit
   end
 
+  def index_document(doc)
+    ActiveFedora::SolrService.add(doc)
+    ActiveFedora::SolrService.commit
+  end
+
   RSpec.configure do |config|
     config.include SolrHelper
   end
