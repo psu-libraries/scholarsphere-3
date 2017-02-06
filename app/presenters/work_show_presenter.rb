@@ -4,6 +4,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   delegate :bytes, to: :solr_document
 
+  self.file_presenter_class = ::FileSetPresenter
+
   def size
     number_to_human_size(bytes)
   end
@@ -25,6 +27,12 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     "Work | #{title.first} | Work ID: #{solr_document.id} | ScholarSphere"
   end
 
+  # Check for member presenters before rendering the representative in CurationConcerns::WorkShowPresenter
+  # @ return [FileSetPresenter, NullRepresentativePresenter]
+  def representative_presenter
+    @representative_presenter ||= build_representative_presenter
+  end
+
   private
 
     # Override to add rows parameter
@@ -38,5 +46,12 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
                                                           fq: "{!join from=ordered_targets_ssim to=id}id:\"#{id}/list_source\"")
                                                    .flat_map { |x| x.fetch(ActiveFedora.id_field, []) }
                         end
+    end
+
+    def build_representative_presenter
+      return NullRepresentativePresenter.new(current_ability, request) if member_presenters.empty? || representative_id.blank?
+      result = member_presenters([representative_id]).first
+      return result.representative_presenter if result.respond_to?(:representative_presenter)
+      result
     end
 end

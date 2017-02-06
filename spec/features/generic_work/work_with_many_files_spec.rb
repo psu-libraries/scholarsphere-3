@@ -42,7 +42,6 @@ describe GenericWork, type: :feature do
     end
 
     it "displays the work page with all the files" do
-      expect(page).to have_content("No preview available")
       within("table.attributes") do
         expect(page).to have_selector('li.total_items', text: "100")
       end
