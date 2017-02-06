@@ -9,6 +9,7 @@ module Import
       super
       import_binary = settings.fetch(:import_binary, true)
       @file_set_builder = Import::FileSetBuilder.new(import_binary)
+      @work_builder = Import::WorkBuilder.new
     end
   end
 end
