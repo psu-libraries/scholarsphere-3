@@ -36,6 +36,12 @@ class CatalogController < ApplicationController
     end
   end
 
+  def self.search_fields
+    FieldConfigurator.search_fields.map do |tuple|
+      Solrizer.solr_name(tuple.first, :stored_searchable)
+    end
+  end
+
   configure_blacklight do |config|
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
@@ -98,7 +104,7 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
     config.add_search_field('all_fields', label: 'All Fields', include_in_advanced_search: false) do |field|
-      all_names = config.show_fields.values.map(&:field).join(" ")
+      all_names = search_fields.join(" ")
       title_name = solr_name("title", :stored_searchable)
       field.solr_parameters = {
         qf: "#{all_names} id all_text_timv",

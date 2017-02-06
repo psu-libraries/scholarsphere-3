@@ -14,14 +14,13 @@ class FieldConfigurator
   end
 
   def self.index_fields
-    { title: FieldConfig.new("Title"),
-      description: FieldConfig.new("Description") }.merge(
-        common_fields).merge(contributor: FieldConfig.new("Contributor"),
-                             date_uploaded: FieldConfig.new("Date Uploaded"),
-                             date_modified: FieldConfig.new("Date Modified"),
-                             date_created: FieldConfig.new("Date Created"),
-                             rights: FieldConfig.new("Rights"),
-                             identifier: FieldConfig.new("Identifier"))
+    { description: FieldConfig.new("Description") }.merge(
+      common_fields).merge(contributor: FieldConfig.new("Contributor"),
+                           date_uploaded: FieldConfig.new("Date Uploaded"),
+                           date_modified: FieldConfig.new("Date Modified"),
+                           date_created: FieldConfig.new("Date Created"),
+                           rights: FieldConfig.new("Rights"),
+                           identifier: FieldConfig.new("Identifier"))
   end
 
   def self.show_fields
@@ -33,5 +32,9 @@ class FieldConfigurator
                         file_format: FieldConfig.new(label: "File Format"),
                         has_model: FieldConfig.new(label: "Object Type", helper_method: :titleize, solr_type: :symbol)
                        )
+  end
+
+  def self.search_fields
+    show_fields.merge(title: FieldConfig.new("Title"))
   end
 end
