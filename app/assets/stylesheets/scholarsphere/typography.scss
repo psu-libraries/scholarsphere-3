@@ -1,7 +1,8 @@
 /* Needs to be overly specific to override Bootstrap styles coming from 3 gems */
 
 html > body h1,
-html > body h2 {
+html > body h2,
+html > body h3 {
   font-weight: 300;
 }
 
@@ -22,7 +23,7 @@ a.btn,
 .visibility-link { text-decoration: none; }
 
 /* Overrides the heavy default underline on H2 titles in the search */
-.blacklight-genericwork h2 > a {
+.blacklight-genericwork h3 > a {
   text-decoration: none;
   text-shadow: 0 2px #fff;
   border-bottom: 1px solid;
