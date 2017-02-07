@@ -76,7 +76,7 @@ describe Import::WorkBuilder do
       expect(work1.id).to eq "th83kz34n"
       expect(work2.title).to eq ['another title for us']
       expect(work2.id).to eq "abc123"
-      expect(work2.creator).to eq ["Adams, Nancy E. ", "Gaffney, Maureen A.", "Lynn, Valerie"]
+      expect(work2.creator).to eq ["Adams, Nancy E.", "Gaffney, Maureen A.", "Lynn, Valerie"]
     end
   end
 end
