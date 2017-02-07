@@ -1,0 +1,15 @@
+<% if show_sort_and_per_page? and has_alternative_views? -%>
+    <fieldset class="inline-block">
+      <legend class="sr-only"><%= t('blacklight.search.view_title') %></legend>
+      <div class="view-type">
+        <div class="view-type-group btn-group">
+          <%  document_index_views.each do |view, config| %>
+              <%= link_to url_for(search_state.to_h.merge(view: view)), title: view_label(view), class: "btn btn-default view-type-#{ view.to_s.parameterize } #{"active" if document_index_view_type == view}" do %>
+                  <%= render_view_type_group_icon view %>
+                  <span class="caption"><%= view_label(view) %></span>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </fieldset>
+<% end %>

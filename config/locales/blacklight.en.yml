@@ -1,3 +1,8 @@
 en:
   blacklight:
     application_name: 'Blacklight'
+    search:
+      search_results: 'Listing of Search Results'
+      search_results_header: 'Search Results'
+      sort:
+        controls: 'Sort Results'

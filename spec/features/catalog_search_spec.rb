@@ -27,7 +27,12 @@ describe 'catalog searching', type: :feature do
     end
 
     # All fields are displayed in the list view
-    expect(page).to have_content('Search Results')
+    expect(page).to have_selector('h1', text: "Search Results")
+    expect(page).to have_selector('fieldset')
+    expect(page).to have_selector('legend', text: "Sort Results")
+    expect(page).to have_selector('legend', text: "Number of results to display per page")
+    expect(page).to have_selector('legend', text: "View results as:")
+    expect(page).to have_selector('h2', text: "Listing of Search Results")
     within("#search-results") do
       expect(page).to have_link(work1.title.first)
       expect(page).to have_content(work1.description.first)

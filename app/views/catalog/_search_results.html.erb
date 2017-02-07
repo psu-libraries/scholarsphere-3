@@ -1,0 +1,28 @@
+<% provide :page_title, "Search Results | ScholarSphere" %>
+
+<h1 class="sr-only"><%= t('blacklight.search.search_results_header') %></h1>
+
+<% content_for(:head) do -%>
+    <%= render_opensearch_response_metadata %>
+    <%= rss_feed_link_tag %>
+    <%= atom_feed_link_tag %>
+<% end %>
+
+<% content_for(:container_header) do -%>
+    <%= render 'constraints' %>
+<% end %>
+
+
+<%= render 'search_header' %>
+
+<h2 class="sr-only"><%= t('blacklight.search.search_results') %></h2>
+
+<%- if @response.empty? %>
+    <%= render "zero_results" %>
+<%- elsif render_grouped_response? %>
+    <%= render_grouped_document_index %>
+<%- else %>
+    <%= render_document_index %>
+<%- end %>
+
+<%= render 'results_pagination' %>
