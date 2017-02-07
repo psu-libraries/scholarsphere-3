@@ -20,7 +20,8 @@ module Import
       work = super(gf_metadata)
       work.date_uploaded = DateTime.parse(work.date_uploaded)
       work.date_modified = DateTime.parse(work.date_modified)
-      work.creator = gf_metadata[:creator].map(&:squish)
+      data = gf_metadata.symbolize_keys
+      work.creator = data[:creator].map(&:squish) unless data[:creator].blank?
       work
     end
   end
