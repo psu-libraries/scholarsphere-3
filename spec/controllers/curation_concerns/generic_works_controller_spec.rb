@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 describe CurationConcerns::GenericWorksController, type: :controller do
+  let(:user) { create(:user) }
+
   describe "#show" do
     context "with a public user" do
       let(:work) { create(:public_work) }
@@ -31,8 +33,6 @@ describe CurationConcerns::GenericWorksController, type: :controller do
   end
 
   describe "#delete" do
-    let(:user) { create(:user) }
-
     before do
       allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
       allow_any_instance_of(User).to receive(:groups).and_return([])
@@ -51,6 +51,25 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       it "redirects to My Works" do
         delete :destroy, id: work
         expect(response).to redirect_to(Sufia::Engine.routes.url_helpers.dashboard_works_path)
+      end
+    end
+  end
+
+  describe "#edit" do
+    before do
+      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+    end
+
+    context "when files are being uploaded to a work" do
+      let!(:work) { create(:work, depositor: user.login) }
+
+      before { allow(QueuedFile).to receive(:where).and_return(["queued file"]) }
+
+      it "redirects" do
+        get :edit, id: work
+        expect(flash.notice).to eq("Edits or deletes not allowed while files are being uploaded to a work")
+        expect(response).to be_redirect
       end
     end
   end
