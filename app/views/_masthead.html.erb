@@ -12,6 +12,7 @@
         </div>
       </div>
     </div>
+    <% if user_signed_in? %>
     <div class="row ss-toolbar">
       <div class="col-xs-12">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
@@ -25,5 +26,6 @@
         <%= render partial: '/toolbar' %>
       </div>
     </div>
+    <% end %>
   </div>
 </nav>
