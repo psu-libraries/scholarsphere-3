@@ -15,11 +15,18 @@ describe Import::WorkBuilder do
                       date_modified: "2016-06-21T09:08:00.000+00:00",
                       rights: 'All rights reserved')
   end
-  let(:json2) do
-    generic_file_json(id: "different_id",
-                      title: ["A different work"])
-  end
+  let(:import_directory) { File.join(fixture_path, 'import') }
+  let(:json_file_name) { File.join(import_directory, "generic_file_zp38wc72r.json") }
+  let(:json2) { File.read(json_file_name) }
 
+  # let(:json2) do
+  #   generic_file_json(id: "different_id",
+  #                     title: ["A different work"],
+  #                     creator: ["Adams, Nancy E.",
+  #                               "Gaffney, Maureen A.",
+  #                               "Lynn, Valerie"])
+  # end
+  #
   let(:permission_builder) { instance_double(Sufia::Import::PermissionBuilder) }
   before do
     allow(Sufia::Import::PermissionBuilder).to receive(:new).and_return(permission_builder)
@@ -67,8 +74,9 @@ describe Import::WorkBuilder do
       work2 = builder.build(gf_metadata2)
       expect(work1.title).to eq ['My Awesone File']
       expect(work1.id).to eq "th83kz34n"
-      expect(work2.title).to eq ['A different work']
-      expect(work2.id).to eq "different_id"
+      expect(work2.title).to eq ['another title for us']
+      expect(work2.id).to eq "abc123"
+      expect(work2.creator).to eq ["Adams, Nancy E. ", "Gaffney, Maureen A.", "Lynn, Valerie"]
     end
   end
 end
