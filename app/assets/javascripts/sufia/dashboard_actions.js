@@ -21,7 +21,7 @@ Blacklight.onLoad(function() {
     }
   }
 
-        // show/hide more information on the dashboard when clicking
+  // show/hide more information on the dashboard when clicking
   // plus/minus
   $('.glyphicon-chevron-right').on('click', function() {
     show_details(this);
