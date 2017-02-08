@@ -49,59 +49,6 @@ namespace :scholarsphere do
     end
   end
 
-  desc "Restore missing user accounts"
-  task restore_users: :environment do
-    # Query Solr for unique depositors
-    terms_url = "#{ActiveFedora.solr_config[:url]}/terms?terms.fl=depositor_tesim&terms.sort=index&terms.limit=5000&wt=json&omitHeader=true"
-    # Parse JSON response (looks like {"terms":{"depositor_tesim":["mjg36",3]}})
-    terms_json = open(terms_url).read
-    depositor_logins = begin
-                         JSON.parse(terms_json)['terms']['depositor_tesim']
-                       rescue
-                         []
-                       end
-    # Filter out doc counts, and leave logins
-    depositor_logins.select! { |item| item.is_a? String }
-    # Check for depositor User accounts & restore/populate if missing
-    depositor_logins.each { |l| User.create(login: l).populate_attributes if User.find_by_login(l).nil? }
-    # Then iterate over other User accounts and populate their attributes just in case
-    User.all.each do |u|
-      # Skip user if already populated earlier
-      next if depositor_logins.include? u.login
-      u.populate_attributes
-    end
-  end
-
-  desc "Report users quota in SS"
-  task quota_report: :environment do
-    caution_sz = 3_000_000_000   # 3GB
-    warning_sz = 5_000_000_000   # 5GB
-    problem_sz = 10_000_000_000  # 10GB
-    # loop over users in active record
-    users = {}
-    User.all.each do |u|
-      # for each user query get list of documents
-      user_files = FileSet.where(depositor: u.login)
-      # sum the size of the users docs
-      sz = 0
-      user_files.each do |f|
-        # puts number_to_human_size(f.file_size.first.to_i)
-        sz += f.file_size.first.to_i
-        # puts "#{sz}:#{f.file_size.first}"
-      end
-      uname = "#{u.login} #{u.name}"
-      users = users.merge(uname => sz)
-    end
-    longest_key = users.keys.max { |a, b| a.length <=> b.length }
-    printf "%-#{longest_key.length}s %s", "User", "Space Used"
-    puts ""
-    users = users.sort_by {|_key, value| value}.to_h
-    users.each_pair do |k, v|
-      printf "%-#{longest_key.length}s %s", k, number_to_human_size(v)
-      puts ""
-    end
-  end
-
   desc "(Re-)Generate the secret token"
   task generate_secret: :environment do
     File.open("#{Rails.root}/config/initializers/secret_token.rb", 'w') do |f|
@@ -252,14 +199,6 @@ namespace :scholarsphere do
   desc "Queues a job to (re)generate the sitemap.xml"
   task "sitemap_queue_generate" => :environment do
     SitemapRegenerateJob.perform_later
-  end
-
-  desc "list user's email"
-  task "list_users" => :environment do
-    users = User.all.map(&:email).reject(&:blank?)
-    f = File.new("user_emails.txt", "w")
-    f.write(users.join(", "))
-    f.close
   end
 
   desc "generate and mail the stats report for yesterday"
