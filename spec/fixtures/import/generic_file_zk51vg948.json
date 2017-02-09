@@ -1,0 +1,91 @@
+{
+  "id": "zk51vg948",
+  "label": "hswe_ala2012_data-curation-collab.pdf",
+  "depositor": "pmh22",
+  "arkivo_checksum": null,
+  "relative_path": null,
+  "import_url": null,
+  "resource_type": [
+    "Presentation"
+  ],
+  "title": [
+    "Collaborating on Curation"
+  ],
+  "creator": [
+    "Hswe, Patricia"
+  ],
+  "contributor": [
+
+  ],
+  "description": [
+    "This invited presentation was given at a 2012 ALA Annual panel, \"Data Curation as a Form of Collaborative Research,\" at which three librarians and a researcher shared their experiences and perspectives on data curation in the context of their respective institutions."
+  ],
+  "tag": [
+    "collaboration",
+    "research data",
+    "research use cases",
+    "data curation",
+    "use cases"
+  ],
+  "rights": [
+    "http://creativecommons.org/licenses/by-sa/3.0/us/"
+  ],
+  "publisher": [
+    "The Pennsylvania State University Libraries"
+  ],
+  "date_created": [
+    "June 24, 2012"
+  ],
+  "date_uploaded": "2013-03-09T20:43:36.592+00:00",
+  "date_modified": "2014-09-10T11:44:21.315Z",
+  "subject": [
+
+  ],
+  "language": [
+    "English"
+  ],
+  "identifier": [
+
+  ],
+  "based_near": [
+    "Anaheim, California, United States"
+  ],
+  "related_url": [
+    "https://sites.google.com/site/acrlrpcdatacurationprogram/",
+    "http://ala12.scheduler.ala.org/node/159"
+  ],
+  "bibliographic_citation": [
+
+  ],
+  "source": [
+
+  ],
+  "batch_id": "zk51vg930",
+  "visibility": "open",
+  "versions": [
+    {
+      "uri": "http://ssrepo1stage.sas.psu.edu:8080/SSstagingFedora4/rest/prod/zk/51/vg/94/zk51vg948/content/fcr:versions/87a0a8c317f1e7baca9975-8d0d-48a9-953d-35d2b527f0ff",
+      "created": "2015-04-11T13:37:04.276Z",
+      "label": "version1"
+    },
+    {
+      "uri": "http://ssrepo1stage.sas.psu.edu:8080/SSstagingFedora4/rest/prod/zk/51/vg/94/zk51vg948/content/fcr:versions/87a0a8c317f1e70c51d2e4-75a3-4902-887f-2a7c4ba57e96",
+      "created": "2015-04-11T13:37:07.2Z",
+      "label": "version2"
+    }
+  ],
+  "permissions": [
+    {
+      "id": "e097615e-9258-4a10-b1c9-cb5b8372e157",
+      "agent": "http://projecthydra.org/ns/auth/person#pmh22",
+      "mode": "http://www.w3.org/ns/auth/acl#Write",
+      "access_to": "zk51vg948"
+    },
+    {
+      "id": "61fbaa5f-73f1-46f6-86d5-db5b859fcdef",
+      "agent": "http://projecthydra.org/ns/auth/group#public",
+      "mode": "http://www.w3.org/ns/auth/acl#Read",
+      "access_to": "zk51vg948"
+    }
+  ]
+}

@@ -53,7 +53,12 @@ module Import
 
         # ...upload it...
         File.open(filename_on_disk, 'rb') do |file_to_upload|
-          Sufia::Import::AddVersionToFileSet.call(file_set, file_to_upload, :original_file, version[:created])
+          date_created = if f3_to_f4_migration_date?(version[:created])
+                           file_set.date_uploaded
+                         else
+                           version[:created].to_datetime
+                         end
+          Sufia::Import::AddVersionToFileSet.call(file_set, file_to_upload, :original_file, date_created)
         end
 
         filename_on_disk
@@ -67,6 +72,10 @@ module Import
 
       def characterize(file_set, filename_on_disk)
         ImportVersionJob.perform_later(file_set, filename_on_disk)
+      end
+
+      def f3_to_f4_migration_date?(date)
+        date.starts_with?("2015-04-11")
       end
   end
 end
