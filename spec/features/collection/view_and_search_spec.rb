@@ -5,17 +5,25 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
-  let!(:collection)  { create(:public_collection, creator: ["somebody"], depositor: current_user.login, members: [file1, file2]) }
+  let!(:collection)  { create(:public_collection, :with_complete_metadata,
+                              creator: ["somebody"],
+                              depositor: current_user.login,
+                              members: [file1, file2]) }
 
   let(:current_user) { create(:user) }
-  let(:file1)        { create(:public_file, :with_one_file_and_size, title: ["world.png"], depositor: current_user.login) }
-  let(:file2)        { create(:private_file, :with_one_file_and_size, title: ["little_file.txt"], depositor: current_user.login) }
+
+  let(:file1)        { create(:public_file, :with_one_file_and_size,
+                              title: ["world.png"],
+                              depositor: current_user.login) }
+
+  let(:file2)        { create(:private_file, :with_one_file_and_size,
+                              title: ["little_file.txt"],
+                              depositor: current_user.login) }
 
   context 'with a logged in user' do
     before do
       sign_in_with_js(current_user)
-      visit '/dashboard/collections'
-      db_item_title(collection).click
+      visit("/collections/#{collection.id}")
     end
 
     describe 'viewing a collection and its files' do
@@ -27,6 +35,10 @@ describe Collection, type: :feature do
         expect(page).to have_content file2.title.first
         expect(page).to have_content "Total Items 2"
         expect(page).to have_content "Size 2 Bytes"
+
+        within("dl.metadata-collections") do
+          expect(page).to have_content("Published Date")
+        end
         go_to_dashboard_works
 
         # TODO: Re-add this test once ticket https://github.com/psu-stewardship/scholarsphere/issues/294

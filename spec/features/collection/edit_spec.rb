@@ -77,6 +77,9 @@ describe Collection, type: :feature do
       click_link 'Additional fields'
       expect(page).to have_field 'collection_title', with: original_title.first
       expect(page).to have_field 'collection_description', with: original_description.first
+      within("div.collection_date_created") do
+        expect(page).to have_content("Published Date")
+      end
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
       fill_in 'Creator', with: updated_creators.first

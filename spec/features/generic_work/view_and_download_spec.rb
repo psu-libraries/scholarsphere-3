@@ -54,6 +54,7 @@ describe GenericWork, type: :feature do
           within("li.total_items") do
             expect(page).to have_content("1")
           end
+          expect(page).to have_content("Published Date")
         end
 
         # TODO: loop through all links to visit and check them

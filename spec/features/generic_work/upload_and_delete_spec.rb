@@ -59,6 +59,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         click_link("Additional fields")
         expect(page).to have_css("#generic_work_contributor")
         expect(page).to have_css(".collapse.in") # wait for JavaScript to collapse fields
+        expect(page).to have_content("Published Date")
         click_link("Additional fields")
         expect(page).to have_no_css("#generic_work_contributor")
 
