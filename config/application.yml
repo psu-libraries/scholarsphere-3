@@ -1,9 +1,19 @@
 # Figaro configuration file
-# See https://github.com/laserlemon/figaro
+# For further instructions see: http://sites.psu.edu/dltdocs/?p=3521
 #
 # Example:
 # ---
 # production:
 #   TMPDIR:
+development:
+  ffmpeg_path: "ffmpeg"
+  service_instance: "localhost"
+  virtual_host: "http://localhost:3000/"
+  stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
 test:
-  useless-variable: "foo"
+  ffmpeg_path: "ffmpeg-test"
+  service_instance: "example-test"
+  virtual_host: "http://test.com/"
+  stats_email: "Test email"
+  google_analytics_id: "test-id"
+

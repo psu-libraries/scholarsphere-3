@@ -27,7 +27,7 @@ describe UserMailer do
 
     it "emails the report" do
       expect(message['from'].to_s).to eq(Rails.application.config.action_mailer.default_options.fetch(:from))
-      expect(message['to'].to_s).to include("ScholarSphere Stats")
+      expect(message['to'].to_s).to include("Test email")
       expect(message.parts.count).to eq(2) # attachment & body
       expect(message.parts[0].body).to include("Report for")
       expect(message.parts[0].attachment?).to be_falsey

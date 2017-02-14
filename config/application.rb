@@ -23,13 +23,13 @@ module ScholarSphere
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    ss_config = YAML.load(File.read(File.join(Rails.root, 'config/scholarsphere.yml')))[Rails.env].with_indifferent_access
-
-    config.ffmpeg_path = ss_config.fetch(:ffmpeg_path, "ffmpeg")
-    config.derivatives_path = ss_config.fetch(:derivatives_path, File.join(Rails.root, 'tmp', 'derivatives'))
-    config.service_instance = ss_config.fetch(:service_instance, Socket.gethostname)
-    config.virtual_host = ss_config.fetch(:virtual_host, "https://#{Socket.gethostname}")
-    config.google_analytics_id = ss_config.fetch(:google_analytics_id, nil)
+    # Environment variables list here are defined in application.yml
+    config.ffmpeg_path = ENV.fetch("ffmpeg_path", "ffmpeg")
+    config.derivatives_path = ENV.fetch("derivatives_path", File.join(Rails.root, 'tmp', 'derivatives'))
+    config.service_instance = ENV.fetch("service_instance", Socket.gethostname)
+    config.virtual_host = ENV.fetch("virtual_host", "https://#{Socket.gethostname}")
+    config.google_analytics_id = ENV.fetch("google_analytics_id", nil)
+    config.stats_email = ENV.fetch("stats_email", "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
 
     config.scholarsphere_version = "v2.8"
     config.scholarsphere_release_date = "October 24, 2016"
@@ -76,8 +76,6 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.stats_email = ss_config.fetch(:stats_email, "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
-
     config.stats_from_email = 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu'
 
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
@@ -93,6 +91,6 @@ module ScholarSphere
     config.active_record.raise_in_transactional_callbacks = true
 
     config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
-    config.action_mailer.default_url_options = { host: ss_config.fetch(:service_instance, Socket.gethostname), protocol: 'https' }
+    config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }
   end
 end
