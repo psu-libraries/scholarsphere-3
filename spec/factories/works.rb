@@ -41,18 +41,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :full_meta_data do
-      creator ["Joe Contributor"]
-      resource_type ["Dissertation aaa"]
-      publisher ["publisher bbb"]
-      contributor ["contrib ccc"]
-      subject ["subject ddd"]
-      language ["language fff"]
-      based_near ["based_near ggg"]
-      keyword ["keyword hhh"]
-      rights ["http://creativecommons.org/licenses/by/3.0/us/"]
-    end
-
     factory :registered_file do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
@@ -160,6 +148,7 @@ FactoryGirl.define do
       description   ['descriptiondescription']
       related_url   ['http://example.org/TheRelatedURLLink/']
       rights        ['http://creativecommons.org/licenses/by/3.0/us/']
+      date_created  ['two days after the day before yesterday']
     end
 
     trait :with_required_metadata do

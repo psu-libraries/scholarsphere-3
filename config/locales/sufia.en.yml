@@ -41,9 +41,13 @@ en:
     labels:
       collection:
         description: "Description"
+        date_created: "Published Date"
       defaults:
         lease_expiration_date:     'until date'
         embargo_release_date:      'until date'
+        date_created: "Published Date"
+      generic_work:
+        date_created: "Published Date"
     hints:
       generic_work:
         rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
@@ -58,3 +62,13 @@ en:
         twitter: 'Share on Twitter'
         tumblr: 'Share on Tumblr'
         google: 'Share on Google+'
+  blacklight:
+    search:
+      fields:
+        index:
+          date_created_tesim: "Published Date"
+          date_created: "Published Date"
+        show:
+          date_created_tesim: "Published Date"
+          date_created: "Published Date"
+

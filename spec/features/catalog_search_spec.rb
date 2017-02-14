@@ -3,9 +3,27 @@ require 'feature_spec_helper'
 
 describe 'catalog searching', type: :feature do
   let(:user)        { create(:jill) }
-  let!(:work1)      { create(:public_work, depositor: user.login, title: ['title 1'], description: ['first work'], keyword: ["tag1", "tag2"]) }
-  let!(:work2)      { create(:public_work, depositor: user.login, title: ['title 2'], description: ['second work'], keyword: ["tag2", "tag3"]) }
-  let!(:work3)      { create(:public_work, depositor: user.login, title: ['title 3'], keyword: ["tag3", "tag4"]) }
+
+  let!(:work1)      { create(:public_work,
+                             depositor: user.login,
+                             title: ['title 1'],
+                             description: ['first work'],
+                             date_created: ['just now'],
+                             keyword: ["tag1", "tag2"]) }
+
+  let!(:work2)      { create(:public_work,
+                             depositor: user.login,
+                             title: ['title 2'],
+                             description: ['second work'],
+                             date_created: ['just now'],
+                             keyword: ["tag2", "tag3"]) }
+
+  let!(:work3)      { create(:public_work,
+                             depositor: user.login,
+                             title: ['title 3'],
+                             date_created: ['just now'],
+                             keyword: ["tag3", "tag4"]) }
+
   let!(:collection) { create(:collection, depositor: user.login, keyword: ["tag3", "tag4"]) }
 
   before do
@@ -40,6 +58,7 @@ describe 'catalog searching', type: :feature do
       expect(page).to have_content(work2.description.first)
       expect(page).not_to have_content(collection.title)
       expect(page).not_to have_content("Title:")
+      expect(page).to have_content("Published Date")
     end
 
     # Not all fields should be displayed in the gallery view
