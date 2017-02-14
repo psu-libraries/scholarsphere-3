@@ -53,6 +53,21 @@ describe FieldConfigurator do
                                        :file_format,
                                        :collection,
                                        :has_model) }
+
+    describe "creator facet" do
+      subject { described_class.facet_fields.fetch(:creator) }
+      its(:opts) { is_expected.to include(facet_cleaners: [:titleize]) }
+    end
+
+    describe "publisher facet" do
+      subject { described_class.facet_fields.fetch(:publisher) }
+      its(:opts) { is_expected.to include(facet_cleaners: [:titleize]) }
+    end
+
+    describe "keyword facet" do
+      subject { described_class.facet_fields.fetch(:keyword) }
+      its(:opts) { is_expected.to include(facet_cleaners: [:downcase]) }
+    end
   end
 
   describe "::search_fields" do

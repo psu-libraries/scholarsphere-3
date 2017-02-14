@@ -3,12 +3,12 @@ class FieldConfigurator
   def self.common_fields
     {
       resource_type: FieldConfig.new("Resource Type"),
-      creator: FieldConfig.new("Creator"),
-      keyword:  FieldConfig.new("Keyword"),
+      creator: FieldConfig.new(label: "Creator", facet_cleaners: [:titleize]),
+      keyword:  FieldConfig.new(label: "Keyword", facet_cleaners: [:downcase]),
       subject: FieldConfig.new("Subject"),
       language: FieldConfig.new("Language"),
       based_near: FieldConfig.new("Location"),
-      publisher: FieldConfig.new("Publisher"),
+      publisher: FieldConfig.new(label: "Publisher", facet_cleaners: [:titleize]),
       file_format: FieldConfig.new("File Format")
     }
   end

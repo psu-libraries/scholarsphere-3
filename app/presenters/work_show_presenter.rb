@@ -33,6 +33,13 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     @representative_presenter ||= build_representative_presenter
   end
 
+  # @return [Array<Hash>] maps a facet's entered value from the user to its cleaned value
+  # @example { original_value => cleaned_value }
+  def facet_mapping(field)
+    config = FieldConfigurator.facet_fields[field]
+    send(field).zip(FacetValueCleaningService.call(send(field), config)).to_h
+  end
+
   private
 
     # Override to add rows parameter

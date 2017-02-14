@@ -5,7 +5,9 @@ describe WorkIndexer do
   include FactoryHelpers
 
   let(:file_set) { build(:file_set) }
-  let(:work)     { build(:work, representative: file_set) }
+  let(:work)     { build(:work, representative: file_set,
+                                creator: ["BIG. Name"],
+                                keyword: ["Bird"]) }
   let(:indexer)  { described_class.new(work) }
 
   let(:file) do
@@ -40,6 +42,13 @@ describe WorkIndexer do
         before { allow(work).to receive(:representative).and_return(nil) }
         it { is_expected.to be_nil }
       end
+    end
+
+    describe "a groomed document" do
+      it { is_expected.to include("creator_sim" => ["Big Name"]) }
+      it { is_expected.to include("creator_tesim" => ["BIG. Name"]) }
+      it { is_expected.to include("keyword_sim" => ["bird"]) }
+      it { is_expected.to include("keyword_tesim" => ["Bird"]) }
     end
   end
 end

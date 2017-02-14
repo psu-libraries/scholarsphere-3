@@ -55,4 +55,10 @@ describe WorkShowPresenter do
       it { is_expected.not_to be_uploading }
     end
   end
+
+  describe "#facet_mapping" do
+    let(:work) { build(:work, creator: ["JOE SMITH"]) }
+    subject { presenter.facet_mapping(:creator) }
+    it { is_expected.to eq("JOE SMITH" => "Joe Smith") }
+  end
 end

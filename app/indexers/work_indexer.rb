@@ -7,6 +7,7 @@ class WorkIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name('file_format', :stored_searchable)] = representative.file_format
       solr_doc[Solrizer.solr_name('file_format', :facetable)] = representative.file_format
       solr_doc[Solrizer.solr_name(:bytes, CurationConcerns::CollectionIndexer::STORED_LONG)] = object.bytes
+      SolrDocumentGroomer.call(solr_doc)
     end
   end
 
