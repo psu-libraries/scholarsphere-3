@@ -187,10 +187,10 @@ describe 'Dashboard Works', type: :feature do
 
     describe 'Sorting:' do
       specify 'Items are sorted correctly' do
-        find('#sort').find(:xpath, 'option[4]').select_option
+        find('#sort').find(:xpath, 'option[2]').select_option
         click_button("Refresh")
         expect(page).to have_content(file.title.first)
-        find('#sort').find(:xpath, 'option[5]').select_option
+        find('#sort').find(:xpath, 'option[3]').select_option
         click_button("Refresh")
         expect(page).to have_content(file.title.first)
       end

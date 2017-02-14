@@ -18,14 +18,18 @@ class CatalogController < ApplicationController
   end
 
   def self.update_show_fields(config, fields)
-    fields.each do |key, field_config|
-      config.add_show_field solr_name(key.to_s, :stored_searchable), label: field_config.label
-    end
+    set_config(:add_show_field, config, fields)
   end
 
   def self.update_index_fields(config, fields)
+    set_config(:add_index_field, config, fields)
+  end
+
+  def self.set_config(method, config, fields)
     fields.each do |key, field_config|
-      config.add_index_field solr_name(key.to_s, :stored_searchable), label: field_config.label
+      solr_type = field_config.opts.fetch(:index_solr_type, :stored_searchable)
+      type = field_config.opts.fetch(:index_type, :text_en)
+      config.send(method, solr_name(key.to_s, solr_type, type: type), label: field_config.label)
     end
   end
 
@@ -287,8 +291,6 @@ class CatalogController < ApplicationController
     config.add_sort_field "score desc, #{uploaded_field} desc", label: "relevance \u25BC"
     config.add_sort_field "#{uploaded_field} desc", label: "date uploaded \u25BC"
     config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
-    config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
-    config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.

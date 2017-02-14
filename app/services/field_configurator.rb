@@ -16,8 +16,8 @@ class FieldConfigurator
   def self.index_fields
     { description: FieldConfig.new("Description") }.merge(
       common_fields).merge(contributor: FieldConfig.new("Contributor"),
-                           date_uploaded: FieldConfig.new("Date Uploaded"),
-                           date_modified: FieldConfig.new("Date Modified"),
+                           date_uploaded: FieldConfig.new(label: "Date Uploaded", index_solr_type: :stored_sortable, index_type: :date),
+                           date_modified: FieldConfig.new(label: "Date Modified", index_solr_type: :stored_sortable, index_type: :date),
                            date_created: FieldConfig.new("Date Created"),
                            rights: FieldConfig.new("Rights"),
                            identifier: FieldConfig.new("Identifier"))
