@@ -1,10 +1,9 @@
 # Figaro configuration file
 # For further instructions see: http://sites.psu.edu/dltdocs/?p=3521
+# Each key under production is checked in Scholarsphere::Config to ensure that files on servers
+# are correct. Add or removing any keys here must include a corresponding change to
+# Scholarsphere::Config::REQUIREMENTS otherwise, the cap deploy will fail.
 #
-# Example:
-# ---
-# production:
-#   TMPDIR:
 development:
   ffmpeg_path: "ffmpeg"
   service_instance: "localhost"
@@ -16,4 +15,11 @@ test:
   virtual_host: "http://test.com/"
   stats_email: "Test email"
   google_analytics_id: "test-id"
-
+production:
+  TMPDIR: "/tmp"
+  ffmpeg_path: "ffmpeg-test"
+  service_instance: "example-prod"
+  virtual_host: "http://test.com/"
+  stats_email: "Test email"
+  google_analytics_id: "test-id"
+  derivatives_path: "path"

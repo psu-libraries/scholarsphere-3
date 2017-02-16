@@ -100,6 +100,16 @@ namespace :apache do
 end
 
 namespace :deploy do
+  desc "Verify yaml configuration files are present and contain the correct keys"
+  task :check_configs do
+    on roles(:all) do
+      within release_path do
+        execute :rake, "scholarsphere:config:check", "RAILS_ENV=production"
+      end
+    end
+  end
+  after :updated, :check_configs
+
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
