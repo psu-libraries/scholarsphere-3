@@ -40,6 +40,11 @@ describe Import::VersionBuilder do
   let(:output_file) { Hydra::PCDM::File.find file_set.original_file.id }
 
   context "when username / password have not been configured" do
+    before do
+      # this code is needed if the system has the correct sufia_6 paswords set to make this test fail
+      ScholarSphere::Application.config.fedora_sufia6_user = 'abc'
+      allow(ScholarSphere::Application.config).to receive(:fedora_sufia6_user).and_raise(NoMethodError)
+    end
     it "raises runtime error" do
       expect { builder.build(file_set, versions) }.to raise_error RuntimeError
     end
@@ -72,6 +77,17 @@ describe Import::VersionBuilder do
         expect(output_file.date_created).to eq(["2016-09-29T15:58:00.639Z"])
         expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z", "2016-09-29T15:58:00.639Z")
         expect(output_file.file_name).to eq ["my label.txt"]
+      end
+    end
+    context "bad http" do
+      let(:bad_http_response) { Net::HTTPInternalServerError.new("1.1", "500", "Internal Error") }
+      before do
+        allow(bad_http_response).to receive(:body).and_return("Bad error")
+        allow(Net::HTTP).to receive(:start).and_yield http
+        allow(http).to receive(:request).with(an_instance_of(Net::HTTP::Get)).and_yield(bad_http_response)
+      end
+      it "raises an error" do
+        expect { builder.build(file_set, versions) }.to raise_error(Net::HTTPFatalError)
       end
     end
     context "when fileset has nil id" do

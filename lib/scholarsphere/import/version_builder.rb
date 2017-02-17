@@ -43,6 +43,10 @@ module Import
         uri = URI(version[:uri])
         Net::HTTP.start(uri.hostname, uri.port) do |http|
           http.request source_request do |response|
+            unless response.is_a?(Net::HTTPSuccess) || response.is_a?(Net::HTTPRedirection)
+              Rails.logger.debug "[IMPORT] download response was an error: #{response.body}"
+              response.value # throws an http error with the correct information loaded
+            end
             File.open(filename_on_disk, 'wb') do |file_to_upload|
               response.read_body do |chunk|
                 file_to_upload.write chunk
