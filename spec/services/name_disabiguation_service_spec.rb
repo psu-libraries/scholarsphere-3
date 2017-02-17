@@ -14,14 +14,14 @@ describe NameDisambiguationService, unless: travis? do
   context "when we have an id" do
     let(:name) { "cam156" }
     it "finds the ids" do
-      expect(subject).to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN A COLE" }])
+      expect(subject).to eq([{ id: "cam156", given_name: "CAROLYN ANN", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN ANN COLE" }])
     end
   end
 
   context "when we have multiple combined with an and" do
     let(:name) { "Carolyn Cole and Adam Wead" }
     it "finds both users" do
-      is_expected.to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN A COLE" },
+      is_expected.to eq([{ id: "cam156", given_name: "CAROLYN ANN", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN ANN COLE" },
                          { id: "agw13", given_name: "ADAM GARNER", surname: "WEAD", email: "agw13@psu.edu", affiliation: ["STAFF"], displayname: "ADAM GARNER WEAD" }])
     end
   end
@@ -78,7 +78,7 @@ describe NameDisambiguationService, unless: travis? do
   context "when the user has additional information" do
     let(:name) { "Cole, Carolyn (Kubicki Group)" }
     it "cleans the name" do
-      is_expected.to eq([{ id: "cam156", given_name: "CAROLYN A", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN A COLE" }])
+      is_expected.to eq([{ id: "cam156", given_name: "CAROLYN ANN", surname: "COLE", email: "cam156@psu.edu", affiliation: ["STAFF"], displayname: "CAROLYN ANN COLE" }])
     end
   end
 
