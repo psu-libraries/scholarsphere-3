@@ -14,6 +14,10 @@ module SolrHelper
     ActiveFedora::SolrService.commit
   end
 
+  def index_works_and_collections(*objects)
+    objects.each { |o| index_work(o) }
+  end
+
   def index_file_set(object)
     ActiveFedora::SolrService.add(object.to_solr)
     ActiveFedora::SolrService.commit

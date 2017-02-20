@@ -50,8 +50,6 @@ class CatalogController < ApplicationController
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
     config.view.gallery.partials = [:index_header, :index]
-    config.view.masonry.partials = [:index]
-    # config.view.slideshow.partials = [:index]
 
     # default advanced config values
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
@@ -297,8 +295,6 @@ class CatalogController < ApplicationController
     config.spell_max = 5
 
     config.http_method = :post
-
-    # config.view.delete(:slideshow)
   end
 
   protected
