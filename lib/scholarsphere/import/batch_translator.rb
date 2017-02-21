@@ -6,10 +6,10 @@ module Import
 
       def build_from_json(json)
         work_ids = json['generic_file_ids']
+        return if work_ids.length < 2 # skip anything that doesn't have at least two works
         works = work_ids.map { |id| GenericWork.find(id) }
         works.each do |work|
           work.related_objects = works - [work]
-          work.save
         end
       end
 

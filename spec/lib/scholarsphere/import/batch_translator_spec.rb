@@ -10,24 +10,42 @@ describe Import::BatchTranslator do
 
   describe "#import" do
     let!(:work1) { create :work, id: 'x920fw89s' }
-    let!(:work2) { create :work, id: 'tm70mv24n' }
-    let!(:work3) { create :work, id: 'g445cd26c' }
-    let(:batch_id) { 'zg64tk99d' }
-
-    let(:sufia6_user) { "s6user" }
-    let(:sufia6_password) { "s6password" }
     let(:translator) { described_class.new(import_dir: import_directory, import_binary: false) }
-
-    let(:import_directory) { File.join(fixture_path, 'import') }
-    let(:json_file_name) { File.join(import_directory, "batch_#{batch_id}.json") }
+    let(:import_directory) { Rails.root.join('tmp', 'import_test') }
+    let(:import_fixture_directory) { File.join(fixture_path, 'import') }
+    let(:json_file_name) { File.join(import_fixture_directory, "batch_#{batch_id}.json") }
     let(:batch_metadata) { JSON.parse(File.read(json_file_name), symbolize_names: true) }
 
-    it 'Creates related Work Links' do
-      expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tk99d.json")
-      translator.import
-      expect(work1.reload.related_object_ids).to eq ['tm70mv24n', 'g445cd26c']
-      expect(work2.reload.related_object_ids).to eq ['x920fw89s', 'g445cd26c']
-      expect(work3.reload.related_object_ids).to eq ['x920fw89s', 'tm70mv24n']
+    before do
+      FileUtils.mkdir(import_directory) unless File.directory?(import_directory)
+      FileUtils.cp(json_file_name, import_directory)
+    end
+
+    after do
+      FileUtils.rm_r(import_directory)
+      work1.destroy(eradicate: true)
+    end
+
+    context "with multiple works" do
+      let!(:work2) { create :work, id: 'tm70mv24n' }
+      let!(:work3) { create :work, id: 'g445cd26c' }
+      let(:batch_id) { 'zg64tk99d' }
+      it 'Creates related Work Links' do
+        expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tk99d.json")
+        translator.import
+        expect(work1.reload.related_object_ids).to eq ['tm70mv24n', 'g445cd26c']
+        expect(work2.reload.related_object_ids).to eq ['x920fw89s', 'g445cd26c']
+        expect(work3.reload.related_object_ids).to eq ['x920fw89s', 'tm70mv24n']
+      end
+    end
+
+    context "with one work" do
+      let(:batch_id) { 'zg64tkabc' }
+      it 'Creates no links' do
+        expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tkabc.json")
+        translator.import
+        expect(work1.reload.related_object_ids).to eq []
+      end
     end
   end
 end
