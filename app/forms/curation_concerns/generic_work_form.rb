@@ -9,6 +9,7 @@ module CurationConcerns
 
     include HydraEditor::Form::Permissions
     include WithCreator
+    include WithCleanerAttributes
 
     def self.multiple?(term)
       return false if term == :rights
