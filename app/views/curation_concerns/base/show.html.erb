@@ -1,0 +1,32 @@
+<%# Overrides Sufia to swap the order of relationships and descriptions partials %>
+<% provide :page_title, @presenter.page_title %>
+<div itemscope itemtype="http://schema.org/CreativeWork" class="row">
+  <div class="col-xs-12">
+    <header>
+      <%= render 'work_title', presenter: @presenter %>
+    </header>
+  </div>
+  <div class="col-sm-8">
+    <%= render 'work_description', presenter: @presenter %>
+    <div class="row">
+      <%= render 'metadata', presenter: @presenter %>
+      <%= render 'relationships', presenter: @presenter %>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <%= render "show_actions", presenter: @presenter %>
+    Last modified: <%= @presenter.date_modified %>
+    <%= render 'representative_media', presenter: @presenter %>
+    <%= render 'social_media' %>
+    <%= render 'citations', presenter: @presenter %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <%= render 'items', presenter: @presenter %>
+    <%# TODO: we may consider adding these partials in the future %>
+    <%#= render 'sharing_with', presenter: @presenter %>
+    <%#= render 'user_activity', presenter: @presenter %>
+  </div>
+</div>

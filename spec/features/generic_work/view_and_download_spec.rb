@@ -38,7 +38,7 @@ describe GenericWork, type: :feature do
           expect(page).to have_link 'http://example.org/TheDescriptionLink/'
         end
 
-        within("table.generic_work") do
+        within("dl.generic_work") do
           expect(page).to have_link work1.related_url.first
           expect(page).to have_link work1.creator.first
           expect(page).to have_link work1.contributor.first
@@ -51,7 +51,7 @@ describe GenericWork, type: :feature do
           expect(page).to have_link work1.related_url.first
           expect(page).to have_link("Attribution 3.0 United States")
           expect(page).to have_content("1 Byte")
-          within("li.total_items") do
+          within("dd.total_items") do
             expect(page).to have_content("1")
           end
           expect(page).to have_content("Published Date")
