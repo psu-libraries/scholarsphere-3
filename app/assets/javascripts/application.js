@@ -12,6 +12,6 @@
 //= require batch_edit
 //= require blacklight_gallery
 //= require openseadragon
-//= require scholarsphere_fileupload
-//= require scholarsphere_layout
+//= require scholarsphere/fileupload
+//= require scholarsphere/layout
 //= require sufia
