@@ -30,6 +30,23 @@ namespace :scholarsphere do
       ).migrate
     end
 
+    desc "fix csv files by converting the content to text"
+    task :csv_fix, [:ids, :fedora_path] => :environment do |t, args|
+      ids = args[:ids].split(',')
+      fedora_path = args[:fedora_path]
+      pred = RDF::URI.new('http://fedora.info/definitions/v4/repository#digest')
+      ids.each  do |id|
+        gf = GenericFile.find(id)
+        sha = gf.content.metadata.ldp_source.graph.query(predicate: pred).first.object.to_s
+        file_name = "#{fedora_path}/#{sha.slice(9,2)}/#{sha.slice(11,2)}/#{sha.slice(13,2)}/#{sha.slice(9,sha.length-9)}"
+        file = File.open(file_name)
+        actor = Sufia::GenericFile::Actor.new(gf, User.find_by(login:"cam156"))
+        uploaded_file = ActionDispatch::Http::UploadedFile.new(tempfile:file)
+        uploaded_file.original_filename = "#{gf.label}.fixed.txt"
+        uploaded_file.content_type = "text/plain"
+        actor.update_content(uploaded_file, "content")
+      end
+    end
 
   end
 
