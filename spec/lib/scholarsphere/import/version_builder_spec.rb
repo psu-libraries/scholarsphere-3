@@ -75,7 +75,7 @@ describe Import::VersionBuilder do
         expect(output_file.versions.all.map(&:label)).to contain_exactly("version1", "version2")
         expect(output_file.content).to eq("hello world! version2")
         expect(output_file.date_created).to eq(["2016-09-29T15:58:00.639Z"])
-        expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z", "2016-09-29T15:58:00.639Z")
+        expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z".to_datetime, "2016-09-29T15:58:00.639Z".to_datetime)
         expect(output_file.file_name).to eq ["my label.txt"]
       end
     end
@@ -93,6 +93,34 @@ describe Import::VersionBuilder do
     context "when fileset has nil id" do
       it "raises runtime error" do
         expect { builder.build(FileSet.new, versions) }.to raise_error("FileSet must have an id before importing any versions")
+      end
+    end
+
+    context "when version date should be translated" do
+      let(:generic_file_id) { 'zk51vg948' }
+      let(:import_directory) { File.join(fixture_path, 'import') }
+      let(:json_file_name) { File.join(import_directory, "generic_file_#{generic_file_id}.json") }
+      let(:generic_file_metadata) { JSON.parse(File.read(json_file_name), symbolize_names: true) }
+      let(:versions) { generic_file_metadata[:versions] }
+      let(:version1_uri) { versions[0][:uri] }
+      let(:version2_uri) { versions[1][:uri] }
+
+      before do
+        allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
+        FileUtils.copy version1.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version1_#{file_set.label}")
+        FileUtils.copy version2.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version2_#{file_set.label}")
+        file_set.date_uploaded = DateTime.parse("2013-03-09T20:43:36.592+00:00")
+      end
+
+      it "changes the date" do
+        expect(Net::HTTP).to receive(:start).twice
+        expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my label.txt/).and_return(true)
+        builder.build(file_set, versions)
+        expect(output_file.versions.all.map(&:label)).to contain_exactly("version1", "version2")
+        expect(output_file.content).to eq("hello world! version2")
+        expect(output_file.date_created).to eq(["2013-03-09T20:43:36.592+00:00"])
+        expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly(file_set.date_uploaded, file_set.date_uploaded)
+        expect(output_file.file_name).to eq ["my label.txt"]
       end
     end
   end
