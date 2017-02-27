@@ -3,5 +3,5 @@
  */
 
 Blacklight.onLoad(function() {
-    $( "#content-wrapper" ).removeClass( "container" ).addClass( "container-fluid" );
+  $( "#content-wrapper" ).removeClass( "container" ).addClass( "container-fluid" );
 });
