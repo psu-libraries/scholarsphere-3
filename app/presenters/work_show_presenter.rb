@@ -23,10 +23,6 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     QueuedFile.where(work_id: id).present?
   end
 
-  def page_title
-    "Work | #{title.first} | Work ID: #{solr_document.id} | ScholarSphere"
-  end
-
   # Check for member presenters before rendering the representative in CurationConcerns::WorkShowPresenter
   # @ return [FileSetPresenter, NullRepresentativePresenter]
   def representative_presenter
