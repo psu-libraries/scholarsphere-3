@@ -94,7 +94,6 @@ describe 'Generic File uploading and deletion:', type: :feature do
       specify 'I can click on cloud providers' do
         expect(ShareNotifyJob).to receive(:perform_later)
         VCR.use_cassette('dropbox', record: :none) do
-          # expect(page).to have_xpath("//a[@href='#browse_everything']")
           click_link "Files"
           expect(page).to have_content "Browse cloud files"
           click_on "Browse cloud files"
@@ -106,7 +105,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content "Writer FAQ.txt"
           expect(page).not_to have_css "a", text: "Writer FAQ.txt"
           expect(page).to have_content "Markdown Test.txt"
-          find("a", text: "Markdown Test.txt").trigger("click")
+          check("writer-markdown-test-txt")
           expect(page).to have_content "1 file selected"
           click_on("Submit")
           within "tr.template-download" do
