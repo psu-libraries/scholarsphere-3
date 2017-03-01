@@ -1,0 +1,4 @@
+<!-- overriding patial so I could remove the help text and put it in _form_files -->
+<%= button_tag(t('sufia.upload.browse_everything.browse_files_button'), type: 'button', class: 'btn btn-lg btn-success', id: "browse-btn",
+               'data-toggle' => 'browse-everything', 'data-route' => browse_everything_engine.root_path,
+               'data-target' => "##{f.object.persisted? ? 'edit' : 'new'}_#{f.object.model.model_name.param_key}" ) %>

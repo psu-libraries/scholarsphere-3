@@ -14,11 +14,6 @@ visually have a focus just like the other form elements.
   overflow: hidden;
 }
 
-.inputfile + label:before {
-  font-family: FontAwesome;
-  content: "\f067"
-}
-
 .inputfile + label {
   display: inline-block;
   color: white;

@@ -31,7 +31,9 @@ en:
         update: "Add to Collection"
         create_new: "Create New Collection"
     upload:
-      cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
+      cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time from Box or DropBox, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
+      browse_everything:
+        browse_files_button: "Add cloud files"
     user_profile:
       tab_user_info: "User Info"
     works:
@@ -62,6 +64,8 @@ en:
         twitter: 'Share on Twitter'
         tumblr: 'Share on Tumblr'
         google: 'Share on Google+'
+      form_files:
+        external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
   blacklight:
     search:
       fields:
