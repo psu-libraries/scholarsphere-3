@@ -4,12 +4,15 @@ require 'rails_helper'
 describe My::WorksController, type: :controller do
   include FactoryHelpers
   routes { Sufia::Engine.routes }
+
   let(:user) { create(:archivist) }
+
   describe "logged in user" do
     before do
       allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
+
     describe "#index" do
       let!(:work)       { create(:file, depositor: user.login) }
       let!(:other_work) { create(:file) }
@@ -18,17 +21,43 @@ describe My::WorksController, type: :controller do
                                                     params: { fq: ["edit_access_group_ssim:public OR edit_access_person_ssim:#{user.user_key}"] }
       end
 
-      before { xhr :get, :index }
+      context "with a standard request" do
+        before { xhr :get, :index }
 
-      it "returns an array of documents I can edit" do
-        expect(response).to be_success
-        expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(user_results["response"]["numFound"])
-        doc_ids = assigns(:document_list).map(&:id)
-        expect(doc_ids).to include(work.id)
-        expect(doc_ids).not_to include(other_work.id)
+        it "returns an array of documents I can edit" do
+          expect(response).to be_success
+          expect(response).to render_template('my/index')
+          expect(assigns(:document_list).count).to eql(user_results["response"]["numFound"])
+          doc_ids = assigns(:document_list).map(&:id)
+          expect(doc_ids).to include(work.id)
+          expect(doc_ids).not_to include(other_work.id)
+        end
+      end
+
+      describe "specifying a collection to add" do
+        let(:incorporate_collection) { create(:collection) }
+
+        before { get :index, add_files_to_collection: collection }
+
+        subject { assigns(:incorporate_collection_presenter) }
+
+        context "when the collection exists" do
+          let(:collection) { incorporate_collection.id }
+          it { is_expected.to be_kind_of(CollectionPresenter) }
+        end
+
+        context "with a null collection to add" do
+          let(:collection) { '' }
+          it { is_expected.to be_nil }
+        end
+
+        context "with a non-existent collection to add" do
+          let(:collection) { 'idontexist' }
+          it { is_expected.to be_nil }
+        end
       end
     end
+
     describe "term search" do
       let!(:file_set) { build(:file_set, id: "fs") }
       let!(:work)     { build(:public_work, :with_complete_metadata, members: [file_set], depositor: "archivist1", id: "1234") }
@@ -121,6 +150,7 @@ describe My::WorksController, type: :controller do
       end
     end
   end
+
   describe "not logged in as a user" do
     describe "#index" do
       it "returns an error" do

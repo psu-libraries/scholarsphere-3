@@ -1,0 +1,13 @@
+<%#
+  Based on Sufia's /collections/form_for_select_collection partial.
+  Used in conjunction with CurationConcerns' collections.js, a hidden radio button mimics the
+  original form so the selected collection id is in the parameters sent to the controller.
+%>
+
+<div class="batch-toggle">
+  <% session[:batch_edit_state] = "on" %>
+  <%= radio_button_tag "id", presenter.id, true, class: "collection-selector hidden" %>
+  <%= render "/collections/button_for_update_collection",
+             label: "Add to #{presenter.title.first}",
+             collection_id: 'collection_replace_id'  %>
+</div>
