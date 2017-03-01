@@ -1,5 +1,5 @@
-<%# Overrides the CC title helper in Sufia and provides the wanted page title %>
-<% provide :page_title, @presenter.page_title %>
+<%# Overrides the CC title helper in Sufia and hard code string with interpolated values %>
+<% provide :page_title, "File | #{@presenter.title.first} | File ID: #{@presenter.id} | ScholarSphere" %>
 <%= render 'shared/citations' %>
 
 <div class="container-fluid">

@@ -1,5 +1,8 @@
-<%# Overrides Sufia to swap the order of relationships and descriptions partials %>
-<% provide :page_title, @presenter.page_title %>
+<%#
+    Overrides the CC title helper in Sufia and hard code string with interpolated values.
+    Overrides Sufia to swap the order of relationships and descriptions partials
+%>
+<% provide :page_title, "Work | #{@presenter.title.first} | Work ID: #{@presenter.id} | ScholarSphere" %>
 <div itemscope itemtype="http://schema.org/CreativeWork" class="row">
   <div class="col-xs-12">
     <header>

@@ -1,6 +1,6 @@
 <%
   # Overrides Sufia app > views > curation_concerns > file_sets > edit.html.erb
-  # provide :page_title, curation_concern_page_title(curation_concern)
+  # hard code string with interpolated values to skip title helper from CC
 %>
 <% provide :page_title, "Edit File | #{curation_concern} | File ID: #{curation_concern.to_param} | ScholarSphere" %>
 <% provide :page_header do %>
