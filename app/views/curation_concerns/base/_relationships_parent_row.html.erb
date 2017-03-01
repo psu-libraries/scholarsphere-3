@@ -1,0 +1,13 @@
+<%# Removes table code for better accessibility %>
+<h3><%= t(".label", type: type.humanize) %></h3>
+    <% if items.blank? %>
+        <p><%= t('.empty', type: type.humanize) %></p>
+    <% else %>
+        <ul class="tabular">
+          <% items.each do |item| %>
+              <li class='attribute title'>
+                <%= link_to item.title.first, [main_app, item] %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>

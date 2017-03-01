@@ -42,8 +42,8 @@ describe GenericWork, type: :feature do
     end
 
     it "displays the work page with all the files" do
-      within("table.attributes") do
-        expect(page).to have_selector('li.total_items', text: "100")
+      within("dl.attributes") do
+        expect(page).to have_selector('dd.total_items', text: "100")
       end
       within("table.related-files") do
         (1..100).each do |id|
