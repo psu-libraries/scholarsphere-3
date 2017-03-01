@@ -1,3 +1,8 @@
 .progress-bar-complete {
   width: 100%;
 }
+
+/* Needs to be overly specific to override Bootstrap styles coming from 3 gems */
+html > body .form-progress .radio input[type="radio"] {
+  margin-left: 0;
+}
