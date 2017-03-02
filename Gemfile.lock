@@ -1,4 +1,24 @@
 GIT
+  remote: git://github.com/projecthydra/browse-everything.git
+  revision: ede4e5c432905384b344d84a811bcf50f187e59a
+  ref: ede4e5c
+  specs:
+    browse-everything (0.12.0)
+      addressable (~> 2.5)
+      aws-sdk
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client (~> 0.9)
+      google_drive
+      httparty
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      signet
+      skydrive
+
+GIT
   remote: git://github.com/projecthydra/curation_concerns.git
   revision: b073550c40a1c1088f85970aa8c0e9538bc2d5ce
   ref: b073550
@@ -205,20 +225,6 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (3.0.1)
-    browse-everything (0.12.0)
-      addressable (~> 2.5)
-      aws-sdk
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client (~> 0.9)
-      google_drive
-      httparty
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      signet
-      skydrive
     builder (3.2.3)
     byebug (9.0.6)
     cancancan (1.15.0)
@@ -826,6 +832,7 @@ DEPENDENCIES
   active-fedora (~> 10.3.0.rc2)
   better_errors
   binding_of_caller
+  browse-everything!
   byebug
   capistrano (= 3.6.0)
   capistrano-bundler (~> 1.1)
