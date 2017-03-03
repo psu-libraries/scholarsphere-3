@@ -95,8 +95,8 @@ describe 'Generic File uploading and deletion:', type: :feature do
         expect(ShareNotifyJob).to receive(:perform_later)
         VCR.use_cassette('dropbox', record: :none) do
           click_link "Files"
-          expect(page).to have_content "Browse cloud files"
-          click_on "Browse cloud files"
+          expect(page).to have_content "Add cloud files"
+          click_on "Add cloud files"
           expect(page).to have_css '#provider-select'
           select 'Dropbox', from: 'provider-select'
           sleep 10

@@ -1,4 +1,12 @@
+<!-- Overridden to:
+        make span an label
+        Add arria-hidden to empty spans
+        Put help text above the file list -->
 <div id="fileupload">
+  <div class="alert alert-success">
+    <%= t("sufia.upload.cloud_timeout_message_html", contact_href: link_to(t("sufia.upload.alert.contact_href_text"), sufia.contact_form_index_path)) %>
+  </div>
+
   <!-- Redirect browsers with JavaScript disabled to the origin page -->
   <noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
   <!-- The table listing the files available for upload/download -->
