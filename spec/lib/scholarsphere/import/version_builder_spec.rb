@@ -65,12 +65,12 @@ describe Import::VersionBuilder do
     context "good http" do
       before do
         allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-        FileUtils.copy version1.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version1_#{file_set.label}")
-        FileUtils.copy version2.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version2_#{file_set.label}")
+        copy_version(version1, 'version1', file_set)
+        copy_version(version2, 'version2', file_set)
       end
       it "creates versions" do
         expect(Net::HTTP).to receive(:start).twice
-        expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my label.txt/).and_return(true)
+        expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my_label.txt/).and_return(true)
         builder.build(file_set, versions)
         expect(output_file.versions.all.map(&:label)).to contain_exactly("version1", "version2")
         expect(output_file.content).to eq("hello world! version2")
@@ -107,14 +107,14 @@ describe Import::VersionBuilder do
 
       before do
         allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-        FileUtils.copy version1.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version1_#{file_set.label}")
-        FileUtils.copy version2.to_path, File.join(Rails.root, "tmp/uploads", "#{file_set.id}_version2_#{file_set.label}")
+        copy_version(version1, 'version1', file_set)
+        copy_version(version2, 'version2', file_set)
         file_set.date_uploaded = DateTime.parse("2013-03-09T20:43:36.592+00:00")
       end
 
       it "changes the date" do
         expect(Net::HTTP).to receive(:start).twice
-        expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my label.txt/).and_return(true)
+        expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my_label.txt/).and_return(true)
         builder.build(file_set, versions)
         expect(output_file.versions.all.map(&:label)).to contain_exactly("version1", "version2")
         expect(output_file.content).to eq("hello world! version2")
@@ -123,5 +123,11 @@ describe Import::VersionBuilder do
         expect(output_file.file_name).to eq ["my label.txt"]
       end
     end
+  end
+
+  def copy_version(version, version_label, file_set)
+    to_path = File.join(Rails.root, "tmp/uploads", "#{file_set.id}_#{version_label}_#{file_set.label.tr(' ', '_')}")
+    puts to_path
+    FileUtils.copy version.to_path, to_path
   end
 end
