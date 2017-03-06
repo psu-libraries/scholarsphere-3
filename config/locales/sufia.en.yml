@@ -66,6 +66,8 @@ en:
         google: 'Share on Google+'
       form_files:
         external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
+    visibility:
+      legend: 'Choose Visibility'
   blacklight:
     search:
       fields:

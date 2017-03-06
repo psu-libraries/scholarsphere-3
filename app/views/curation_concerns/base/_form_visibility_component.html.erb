@@ -4,16 +4,18 @@
     <%= render 'form_permission_under_lease', f: f %>
 <% else %>
     <fieldset>
-      <legend class="legend-save-work">Visibility</legend>
-      <ul class="visibility">
+      <legend id="choose_visibility" class="legend-save-work"><%= t('curation_concerns.visibility.legend') %></legend>
+        <p class="help-block">Who should be able to view or download this content?</p>
+      <ul class="visibility" role="radiogroup" aria-labelledby="choose_visibility">
         <li class="radio">
-          <label>
-            <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, data: { 'target': '#collapsePublic' }  %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, data: { 'target': '#collapsePublic' }  %>
+          <label for="generic_work_visibility_open">
             <%= t('curation_concerns.visibility.open.label_html') %>
+          </label>
             <div class="collapse" id="collapsePublic">
               <p>
-                <strong>Please note</strong>, making something visible to the world (i.e.
-                marking this as <%= t('curation_concerns.visibility.open.label_html') %>) may be
+                <strong>Please note</strong>,
+                marking this as <%= t('curation_concerns.visibility.open.label_html') %> may be
                 viewed as publishing which could impact your ability to:
               </p>
               <ul>
@@ -25,17 +27,16 @@
                 information about publisher copyright policies.
               </p>
             </div>
-          </label>
         </li>
         <li class="radio">
-          <label>
-            <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED %>
+          <label for="generic_work_visibility_authenticated">
             <%= t('curation_concerns.visibility.authenticated.label_html', institution: t('curation_concerns.institution.name')) %>
           </label>
         </li>
         <li class="radio">
-          <label>
-            <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO, data: { 'target': '#collapseEmbargo' } %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO, data: { 'target': '#collapseEmbargo' } %>
+          <label for="generic_work_visibility_embargo">
             <%= t('curation_concerns.visibility.embargo.label_html') %>
           </label>
             <div class="collapse" id="collapseEmbargo">
@@ -48,8 +49,8 @@
             </div>
         </li>
         <li class="radio">
-          <label>
-            <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_LEASE, data: { 'target': '#collapseLease' } %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_LEASE, data: { 'target': '#collapseLease' } %>
+          <label for="generic_work_visibility_lease">
             <%= t('curation_concerns.visibility.lease.label_html') %>
           </label>
             <div class="collapse" id="collapseLease">
@@ -62,8 +63,8 @@
             </div>
         </li>
         <li class="radio">
-          <label>
-            <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE %>
+          <label for="generic_work_visibility_restricted">
             <%= t('curation_concerns.visibility.private.label_html') %>
           </label>
         </li>

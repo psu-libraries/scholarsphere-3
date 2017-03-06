@@ -1,0 +1,10 @@
+<fieldset>
+  <legend class="legend-save-work"><%= t('curation_concerns.visibility.legend') %></legend>
+    <p>
+      <strong>This work is under embargo.</strong> You can change the settings of the embargo here, or you can visit the <%= link_to 'Embargo Management Page', main_app.edit_embargo_path(f.object) %> to deactivate it.
+    </p>
+  <div class="form-group">
+    <input type="hidden" name="<%= f.object_name %>[visibility]" value="<%= Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO %>" />
+    <%= render "form_permission_embargo", f: f %>
+  </div>
+</fieldset>
