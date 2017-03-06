@@ -9,7 +9,8 @@ describe 'Dashboard Works', type: :feature do
     create(:public_work, :with_complete_metadata,
            depositor: current_user.login,
            title: ['little_file.txt'],
-           creator: ['little_file.txt_creator']
+           creator: ['little_file.txt_creator'],
+           date_uploaded: DateTime.now + 1.hour
           )
   end
 
@@ -166,7 +167,7 @@ describe 'Dashboard Works', type: :feature do
         {
           'Resource Type' => 'Video (10)',
           'Creator'       => 'Creator1 (10)',
-          'Keyword'       => 'Keyword1 (10)',
+          'Keyword'       => 'keyword1 (10)',
           'Subject'       => 'Subject1 (10)',
           'Language'      => 'Language1 (10)',
           'Location'      => 'Location1 (10)',
@@ -187,12 +188,12 @@ describe 'Dashboard Works', type: :feature do
 
     describe 'Sorting:' do
       specify 'Items are sorted correctly' do
-        find('#sort').find(:xpath, 'option[2]').select_option
+        select("date uploaded ▼", from: "sort")
         click_button("Refresh")
         expect(page).to have_content(file.title.first)
-        find('#sort').find(:xpath, 'option[3]').select_option
+        select("date uploaded ▲", from: "sort")
         click_button("Refresh")
-        expect(page).to have_content(file.title.first)
+        expect(page).not_to have_content(file.title.first)
       end
     end
 
@@ -273,17 +274,18 @@ describe 'Dashboard Works', type: :feature do
   end
 
   def create_works(_user, number_of_works)
-    hash = file.to_solr
-    hash[Solrizer.solr_name("resource_type", :facetable)] = "Video"
-    hash[Solrizer.solr_name("creator", :facetable)] = "Creator1"
-    hash[Solrizer.solr_name("keyword", :facetable)] = "Keyword1"
-    hash[Solrizer.solr_name("subject", :facetable)] = "Subject1"
-    hash[Solrizer.solr_name("language", :facetable)] = "Language1"
-    hash[Solrizer.solr_name("based_near", :facetable)] = "Location1"
-    hash[Solrizer.solr_name("publisher", :facetable)] = "Publisher1"
-    hash[Solrizer.solr_name("file_format", :facetable)] = "plain ()"
     number_of_works.times do |t|
-      hash[:id] = "199#{t}"
+      work = build(:public_work, id: "199#{t}",
+                                 title: ["Sample Work #{t}"],
+                                 date_uploaded: (Time.now - (t + 1).hours),
+                                 depositor: current_user.login, resource_type: ["Video"],
+                                 creator: ["Creator1"], keyword: ["Keyword1"],
+                                 subject: ["Subject1"], language: ["Language1"],
+                                 based_near: ["Location1"], publisher: ["Publisher1"])
+
+      # TODO: how to do we set the file format in the objects with build
+      hash = work.to_solr
+      hash[Solrizer.solr_name("file_format", :facetable)] = "plain ()"
       conn.add hash
     end
     conn.commit
