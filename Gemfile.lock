@@ -697,7 +697,7 @@ GEM
       multipart-post
       oauth2
     ruby-progressbar (1.8.1)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     rufus-scheduler (3.2.2)
     safe_yaml (1.0.4)
     sass (3.4.23)
