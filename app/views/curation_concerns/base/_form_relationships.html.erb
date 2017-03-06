@@ -1,0 +1,11 @@
+<%#
+  Overrides Sufia _form_relationships to only show collection select, and render any pre-selected
+  collections from the previous page.
+%>
+
+<h2><%= t("sufia.works.#{action_name}.in_collections") %></h2>
+<div id="collection-widget">
+  <%= f.input :collection_ids, as: :select, selected: params.fetch(:collection_ids, []),
+              collection: available_collections(nil),
+              input_html: { class: 'form-control', multiple: true } %>
+</div>
