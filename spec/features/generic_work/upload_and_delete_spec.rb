@@ -64,6 +64,8 @@ describe 'Generic File uploading and deletion:', type: :feature do
         expect(page).to have_no_css("#generic_work_contributor")
 
         within("#savewidget") do
+          expect(page).to have_selector("a[href='#metadata']")
+          expect(page).to have_selector("a[href='#files']")
           expect(page).to have_content("Visibility")
           expect(page).to have_content("Public")
           expect(page).to have_content("Embargo")

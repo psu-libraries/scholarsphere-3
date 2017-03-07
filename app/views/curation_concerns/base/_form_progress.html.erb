@@ -5,11 +5,15 @@
   <div class="list-group">
     <div class="list-group-item">
       <fieldset>
-        <legend class="legend-save-work">Requirements</legend>
+        <legend class="legend-save-work"><%= t("curation_concerns.base.form_progress.legend_required") %></legend>
         <ul class="requirements">
-          <li class="incomplete" id="required-metadata">Enter required metadata</li>
+          <li class="incomplete" id="required-metadata">
+            <a href="#metadata"><%= t("curation_concerns.base.form_progress.metadata_required") %></a>
+          </li>
           <% if Sufia.config.work_requires_files %>
-            <li class="incomplete" id="required-files">Add files</li>
+            <li class="incomplete" id="required-files">
+              <a href="#files"><%= t("curation_concerns.base.form_progress.files_required") %></a>
+            </li>
           <% end %>
         </ul>
       </fieldset>

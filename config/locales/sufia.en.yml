@@ -64,6 +64,10 @@ en:
         twitter: 'Share on Twitter'
         tumblr: 'Share on Tumblr'
         google: 'Share on Google+'
+      form_progress:
+        legend_required: 'Requirements'
+        metadata_required: 'Enter required metadata'
+        files_required: 'Add files'
       form_files:
         external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
     visibility:
