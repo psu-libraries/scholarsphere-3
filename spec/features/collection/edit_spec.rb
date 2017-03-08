@@ -91,4 +91,31 @@ describe Collection, type: :feature do
       expect(page).to have_content updated_creators.first
     end
   end
+
+  context "when adding works" do
+    let(:collection) { create(:collection, depositor: current_user.login, title: ["Special collection"]) }
+
+    before do
+      sign_in_with_js(current_user)
+      visit("/collections/#{collection.id}/edit")
+    end
+
+    describe 'adding existing works' do
+      let!(:work4) { create(:work, depositor: current_user.login, title: ["Work to add"]) }
+      specify do
+        click_link("Add existing works")
+        check "check_all"
+        expect(page).to have_button("Add to #{collection.title.first}")
+      end
+    end
+
+    describe 'adding new works' do
+      specify do
+        click_link("Add new works")
+        expect(page).to have_content("Add Multiple New Works")
+        click_link("Relationships")
+        expect(page).to have_select("batch_upload_item_collection_ids", selected: collection.title.first)
+      end
+    end
+  end
 end

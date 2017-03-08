@@ -1,0 +1,13 @@
+<h2 class="sr-only"><%= t('sufia.collection.actions.header') %></h2>
+<div class="actions-controls-collections">
+  <%= link_to t('sufia.collection.actions.add_works.label'),
+              sufia.dashboard_works_path(add_files_to_collection: @form.id),
+              title: t('sufia.collection.actions.add_works.desc'),
+              class: 'btn btn-default' %>
+
+  <%# Overrides Sufia adding button link to the batch upload form with this collection selected %>
+  <%= link_to t('sufia.collection.actions.add_new_works.label'),
+              sufia.new_batch_upload_path(collection_ids: [@form.id]),
+              title: t('sufia.collection.actions.add_new_works.desc'),
+              class: 'btn btn-default' %>
+</div>

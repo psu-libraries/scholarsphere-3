@@ -65,6 +65,23 @@ describe Collection, type: :feature do
         expect(page).not_to have_content collection.creator.first
       end
     end
+
+    describe 'adding existing works' do
+      specify do
+        click_link("Add existing works")
+        check "check_all"
+        expect(page).to have_button("Add to #{collection.title.first}")
+      end
+    end
+
+    describe 'adding new works' do
+      specify do
+        click_link("Add new works")
+        expect(page).to have_content("Add Multiple New Works")
+        click_link("Relationships")
+        expect(page).to have_select("batch_upload_item_collection_ids", selected: collection.title.first)
+      end
+    end
   end
 
   context 'with a public user' do
