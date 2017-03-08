@@ -13,6 +13,14 @@ en:
       my_collections: "My Collections"
     field_label:
       description: "Description"
+    collection:
+      actions:
+        add_works:
+          label: "Add existing works"
+          desc: "Add existing works to this Collection"
+        add_new_works:
+          label: "Add new works"
+          desc: "Add new works to this Collection"
 
   hydra:
     metadata_help:
