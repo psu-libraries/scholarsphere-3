@@ -1,0 +1,31 @@
+<% if @form.incorporated_work_presenters.present? %>
+
+  <h2>Items in this Collection</h2>
+
+  <%= render_document_index @form.incorporated_member_docs %>
+
+  <%= f.submit 'Create New Collection',
+    class: 'btn btn-primary',
+    onclick: "confirmation_needed = false;",
+    id: "create_submit",
+    name: "create_collection" %>
+
+<% else %>
+  <%= f.submit 'Create Empty Collection',
+      class: 'btn btn-primary',
+      onclick: "confirmation_needed = false;",
+      id: "create_submit",
+      name: "create_collection" %>
+
+  <%= f.submit 'Create Collection and Upload Works',
+      class: 'btn btn-primary',
+      onclick: "confirmation_needed = false;",
+      id: "create_submit_upload",
+      name: "create_collection_and_upload_works" %>
+
+  <%= f.submit 'Create Collection and Add Existing Works',
+      class: 'btn btn-primary',
+      onclick: "confirmation_needed = false;",
+      id: "create_submit_add",
+      name: "create_collection_and_add_existing_works" %>
+<% end %>

@@ -22,4 +22,9 @@ describe CollectionsController, type: :controller do
     before { get :show, id: collection.id, per_page: 1, page: 2 }
     it { is_expected.to be_success }
   end
+
+  describe "::form_class" do
+    subject { described_class }
+    its(:form_class) { is_expected.to be(CollectionForm) }
+  end
 end
