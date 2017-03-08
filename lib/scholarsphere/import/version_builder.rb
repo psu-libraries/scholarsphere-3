@@ -36,7 +36,7 @@ module Import
     private
 
       def create(file_set, version)
-        filename_on_disk = File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{file_set.label}"
+        filename_on_disk = temp_file_name(file_set, version)
         Rails.logger.debug "[IMPORT] Downloading #{version} to #{filename_on_disk}"
 
         source_request = sufia6_version_open_uri(version[:uri])
@@ -80,6 +80,11 @@ module Import
 
       def f3_to_f4_migration_date?(date)
         date.starts_with?("2015-04-11")
+      end
+
+      def temp_file_name(file_set, version)
+        label = file_set.label.gsub(/[^0-9A-Za-z.\-]/, '_')
+        File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{label}"
       end
   end
 end
