@@ -18,4 +18,29 @@ describe CollectionForm do
     subject { form.incorporated_member_docs }
     it { is_expected.to contain_exactly(kind_of(SolrDocument)) }
   end
+
+  describe "#primary_terms" do
+    subject { form.primary_terms }
+    it { is_expected.to contain_exactly(:title, :description, :keyword) }
+  end
+
+  describe "#secondary_terms" do
+    subject { form.secondary_terms }
+    it { is_expected.to contain_exactly(:creator,
+                                        :contributor,
+                                        :rights,
+                                        :publisher,
+                                        :date_created,
+                                        :subject,
+                                        :language,
+                                        :identifier,
+                                        :based_near,
+                                        :related_url,
+                                        :resource_type) }
+  end
+
+  describe "::required_fields" do
+    subject { described_class.required_fields }
+    it { is_expected.to contain_exactly(:title, :description, :keyword) }
+  end
 end
