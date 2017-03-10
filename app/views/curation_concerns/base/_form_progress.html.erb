@@ -6,14 +6,26 @@
     <div class="list-group-item">
       <fieldset>
         <legend class="legend-save-work"><%= t("curation_concerns.base.form_progress.legend_required") %></legend>
-        <ul class="requirements">
-          <li class="incomplete" id="required-metadata">
-            <a href="#metadata"><%= t("curation_concerns.base.form_progress.metadata_required") %></a>
-          </li>
+        <ul class="requirements" role="group">
+          <%= content_tag :li, id: "required-metadata", role: "listitem", class: "incomplete", data: {
+                complete: t("curation_concerns.base.form_progress.metadata_required_complete"),
+                incomplete: t("curation_concerns.base.form_progress.metadata_required")
+              } do
+          %>
+            <a href="#metadata" class="tabfaker" aria-controls="metadata" role="tab" data-toggle="tab">
+              <%= t("curation_concerns.base.form_progress.metadata_required") %>
+            </a>
+          <% end %>
           <% if Sufia.config.work_requires_files %>
-            <li class="incomplete" id="required-files">
-              <a href="#files"><%= t("curation_concerns.base.form_progress.files_required") %></a>
-            </li>
+            <%= content_tag :li, id: "required-files", role: "listitem", class: "incomplete", data: {
+                  complete: t("curation_concerns.base.form_progress.files_required_complete"),
+                  incomplete: t("curation_concerns.base.form_progress.files_required")
+                } do
+            %>
+              <a href="#files" class="tabfaker" aria-controls="files" role="tab" data-toggle="tab">
+                <%= t("curation_concerns.base.form_progress.files_required") %>
+              </a>
+            <% end %>
           <% end %>
         </ul>
       </fieldset>

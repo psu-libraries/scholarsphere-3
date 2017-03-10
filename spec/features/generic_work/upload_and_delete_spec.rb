@@ -5,7 +5,7 @@ include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:', type: :feature do
   let(:new_generic_work_path) { '/concern/generic_works/new' }
-  context 'When logged in as a PSU user' do
+  context 'when logged in as a PSU user' do
     let(:current_user)          { create(:user) }
     let(:other_user)            { create(:user) }
     let(:filename)              { 'little_file.txt' }
@@ -13,33 +13,52 @@ describe 'Generic File uploading and deletion:', type: :feature do
     let(:file)                  { work }
     let(:work)                  { find_work_by_title "little_file.txt_title" }
 
-    before do
-      sign_in_with_js(current_user)
-    end
+    before { sign_in_with_js(current_user) }
 
-    context 'the user agreement' do
-      before do
-        visit new_generic_work_path
-      end
-      it "does not show Sufia's user agreement" do
+    describe "Sufia's default user agreement" do
+      before { visit new_generic_work_path }
+      it "is not shown" do
         expect(page).not_to have_content("Sufia's Deposit Agreement")
       end
     end
 
-    context 'user needs help' do
-      before do
-        visit new_generic_work_path
-        # TODO: It seems that we removed this screen reader only text from the upload form in Sufia 7.
-        #       Added ticket to address it: https://github.com/psu-stewardship/scholarsphere/issues/308
-        #
-        # expect(page).to have_content "Agree to the deposit agreement and then select files.  Press the Start Upload Button once all files have been selected"
-        #
+    describe "uploading a new work" do
+      before { visit new_generic_work_path }
+
+      it "enforces a workflow" do
+        within("div#savewidget") do
+          expect(page).to have_link "deposit agreement"
+          expect(page).to have_content "I have read and agree to the deposit agreement"
+          expect(page).to have_link("Enter required metadata")
+          expect(page).to have_link("Add files")
+        end
+
+        # Add files
         attach_file('files[]', test_file_path(filename), visible: false)
         check 'agreement'
-      end
 
-      specify 'I can view help for rights, visibility, and share with' do
-        # I can add additional rights
+        # Enter required metadata
+        click_link("Descriptions")
+        fill_in 'generic_work_title', with: 'Upload test'
+        fill_in 'generic_work_keyword', with: 'keyword'
+        fill_in 'generic_work_creator', with: 'creator'
+        select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
+        fill_in 'generic_work_description', with: 'My description'
+        select 'Audio', from: 'generic_work_resource_type'
+
+        within("#metadata")      { expect(page).to have_link("Licenses") }
+        within("div#savewidget") { expect(page).to have_link("Required metadata complete") }
+
+        # Check for additional fields
+        expect(page).to have_no_css("#generic_work_contributor")
+        click_link("Additional fields")
+        expect(page).to have_css("#generic_work_contributor")
+        expect(page).to have_css(".collapse.in") # wait for JavaScript to collapse fields
+        expect(page).to have_content("Published Date")
+        click_link("Additional fields")
+        expect(page).to have_no_css("#generic_work_contributor")
+
+        # Test sharing tab
         expect(User).to receive(:query_ldap_by_name_or_id).and_return([{ id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})" }])
         click_link('Share')
         expect(page).to have_css('a.select2-choice')
@@ -49,32 +68,15 @@ describe 'Generic File uploading and deletion:', type: :feature do
         first('div.select2-result-label').click
         find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
         click_on('add_new_user_skel')
-        within("#share") do
-          expect(page).to have_content(other_user.user_key)
-        end
+        within("#share") { expect(page).to have_content(other_user.user_key) }
 
-        # I am adding can click on more descriptions here so we do not need to add a separate test for it
-        click_link("Descriptions")
-        expect(page).to have_no_css("#generic_work_contributor")
-        click_link("Additional fields")
-        expect(page).to have_css("#generic_work_contributor")
-        expect(page).to have_css(".collapse.in") # wait for JavaScript to collapse fields
-        expect(page).to have_content("Published Date")
-        click_link("Additional fields")
-        expect(page).to have_no_css("#generic_work_contributor")
-
+        # Check visibility
         within("#savewidget") do
-          expect(page).to have_selector("a[href='#metadata']")
-          expect(page).to have_selector("a[href='#files']")
           expect(page).to have_content("Visibility")
           expect(page).to have_content("Public")
           expect(page).to have_content("Embargo")
           expect(page).to have_content("Private")
           expect(page).to have_content("Penn State")
-        end
-
-        within("#metadata") do
-          expect(page).to have_link("Licenses")
         end
       end
     end
@@ -135,22 +137,16 @@ describe 'Generic File uploading and deletion:', type: :feature do
           create_work_and_upload_file(filename)
           allow(ShareNotifyDeleteJob).to receive(:perform_later)
         end
+
         specify 'uploading, deleting and notifications' do
           click_link "My Dashboard"
           expect(page).to have_css "table#activity"
           within("table#activity") do
             expect(page).to have_content filename
           end
-          # TODO: Re-enable notifications after a file has been added.
-          #       See https://github.com/psu-stewardship/scholarsphere/issues/311
-          #
-          # within("#notifications") do
-          #   expect(page).to have_content "Batch upload complete"
-          #   expect(page).to have_content "less than a minute ago"
-          #   expect(page).to have_content filename
-          #   expect(page).to have_content "has been saved."
-          # end
-          #
+          within("#notifications") do
+            expect(page).to have_content "little_file.txt was successfully added"
+          end
           go_to_dashboard_works
           expect(page).to have_content file.title.first
           db_item_actions_toggle(file).click

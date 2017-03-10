@@ -2,7 +2,7 @@ en:
   sufia:
     institution_name: "Penn State"
     institution_name_full: "Penn State University"
-    deposit_agreement:  "the deposit agreement"
+    deposit_agreement:  "deposit agreement"
     upload_tooltip:     "Please accept the deposit agreement before you upload."
     bread_crumb:
       file_list: "Files"
@@ -67,7 +67,9 @@ en:
       form_progress:
         legend_required: 'Requirements'
         metadata_required: 'Enter required metadata'
+        metadata_required_complete: 'Required metadata complete'
         files_required: 'Add files'
+        files_required_complete: 'Required files complete'
       form_files:
         external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
     visibility:
