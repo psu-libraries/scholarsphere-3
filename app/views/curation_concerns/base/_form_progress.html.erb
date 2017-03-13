@@ -66,8 +66,10 @@
   <%# Override Sufia: Provide immediate feedback after the form is submitted while the subsequent page is loading %>
   <div class="panel-footer hidden">
     <div class="progress">
-      <div class="progress-bar progress-bar-striped progress-bar-complete active">
-        <span id="form-feedback" aria-live="assertive">Saving your work. This may take a few moments</span>
+      <div class="progress-bar progress-bar-striped active" style="width: 100%">
+        <span id="form-feedback" aria-live="assertive">
+          <%= t("scholarsphere.upload.progress") %>
+        </span>
       </div>
     </div>
   </div>
