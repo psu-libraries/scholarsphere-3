@@ -54,12 +54,15 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano', '3.6.0', require: false
-  gem 'capistrano-bundler', '~> 1.1', require: false
-  gem 'capistrano-rails', '~> 1.1', require: false
-  gem 'capistrano-rbenv', '~> 2.0', require: false
+
+# Use Capistrano for deployment
+  gem 'capistrano', '~> 3.7', require: false
+  gem 'capistrano-bundler', '~> 1.2',require: false
+  gem 'capistrano-rails', '~> 1.2', require: false
+  gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
+
   gem 'unicorn-rails'
   gem 'xray-rails'
 end
@@ -80,3 +83,4 @@ group :debug do
   gem 'capybara-screenshot'
   gem 'launchy'
 end
+
