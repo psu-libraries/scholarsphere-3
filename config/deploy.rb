@@ -44,6 +44,7 @@ set :pty, true
 set :format_options, command_output: false
 
 # Default value for :linked_files is []
+# Example link: ln -s /opt/heracles/deploy/scholarsphere/shared/config/redis.yml /opt/heracles/deploy/scholarsphere/current/config/redis.yml
 set :linked_files, fetch(:linked_files, []).push(
   'config/analytics.yml',
   'config/application.yml',
@@ -109,10 +110,22 @@ namespace :deploy do
   end
   after :updated, :check_configs
 
+  desc "set up the shared directory to have the symbolic links to the appropriate directories shared between servers"
+  task :symlink_shared_directories do
+    on roles(:web, :job) do
+      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
+      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
+    end
+  end
+  before 'deploy:check:linked_dirs', :symlink_shared_directories
+
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
-      execute "sudo /sbin/service resque_pool restart"
+      execute "sudo /sbin/service resque restart"
     end
   end
   after :published, :resquepoolrestart
@@ -173,7 +186,7 @@ namespace :deploy do
         execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
         execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp'
         execute "sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf"
-        execute "sudo /sbin/service httpd restart"
+        execute "sudo /bin/systemctl restart httpd"
       end
     end
   end
