@@ -44,4 +44,3 @@ server 'ssjobs1qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-
