@@ -38,7 +38,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         check 'agreement'
 
         # Enter required metadata
-        click_link("Descriptions")
+        click_link("Metadata")
         fill_in 'generic_work_title', with: 'Upload test'
         fill_in 'generic_work_keyword', with: 'keyword'
         fill_in 'generic_work_creator', with: 'creator'
@@ -60,7 +60,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Test sharing tab
         expect(User).to receive(:query_ldap_by_name_or_id).and_return([{ id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})" }])
-        click_link('Share')
+        click_link("Collaborators")
         expect(page).to have_css('a.select2-choice')
         first('a.select2-choice').click
         find(".select2-input").set(other_user.user_key)
@@ -116,7 +116,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
             expect(page).to have_content "Markdown Test.txt"
           end
           check 'agreement'
-          click_on 'Descriptions'
+          click_on 'Metadata'
           fill_in 'generic_work_title', with: 'Markdown Test'
           fill_in 'generic_work_keyword', with: 'keyword'
           fill_in 'generic_work_creator', with: 'creator'

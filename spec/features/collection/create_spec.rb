@@ -67,7 +67,7 @@ describe Collection, type: :feature do
         click_button "Create Collection and Upload Works"
         expect(page).to have_content("Collection was successfully created.")
         expect(page).to have_content("Add Multiple New Works")
-        click_link("Relationships")
+        within("ul.nav-tabs") { click_link("Collections") }
         expect(page).to have_select("batch_upload_item_collection_ids", selected: title)
       end
     end
