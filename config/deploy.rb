@@ -44,27 +44,28 @@ set :pty, true
 set :format_options, command_output: false
 
 # Default value for :linked_files is []
+# Example link: ln -s /opt/heracles/deploy/scholarsphere/shared/config/redis.yml /opt/heracles/deploy/scholarsphere/current/config/redis.yml
 set :linked_files, fetch(:linked_files, []).push(
   'config/analytics.yml',
-  'config/application.yml',
-  'config/arkivo.yml',
-  'config/blacklight.yml',
+  # 'config/application.yml',
+  'config/arkivo-new.yml',
+  #  'config/blacklight.yml',
   'config/browse_everything_providers.yml',
   'config/database.yml',
   'config/devise.yml',
-  'config/fedora.yml',
-  'config/fedora3.yml',
+  #  'config/fedora.yml',
+  #  'config/fedora3.yml',
   'config/ga-privatekey.p12',
   'config/hydra-ldap.yml',
   'config/initializers/arkivo_constraint.rb',
   'config/initializers/qa.rb',
   'config/initializers/sufia6.rb',
   'config/newrelic.yml',
-  'config/redis.yml',
-  'config/scholarsphere.yml',
+  #  'config/redis-new.yml',
+  # 'config/scholarsphere.yml',
   'config/secrets.yml',
   'config/share_notify.yml',
-  'config/solr.yml',
+  #  'config/solr.yml',
   'config/zotero.yml',
   'public/robots.txt',
   'public/sitemap.xml'
@@ -112,7 +113,7 @@ namespace :deploy do
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
-      execute "sudo /sbin/service resque_pool restart"
+      execute "sudo /sbin/service resque restart"
     end
   end
   after :published, :resquepoolrestart
@@ -173,11 +174,30 @@ namespace :deploy do
         execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
         execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp'
         execute "sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf"
-        execute "sudo /sbin/service httpd restart"
+        execute "sudo /bin/systemctl restart httpd"
       end
     end
   end
   after :published, "passenger:config_update"
+end
+
+# Temporary Task while moving from old servers to new, some files need kept the same
+namespace :movefiles do
+  desc "Clean up old rbenv versions"
+  task :link_special_files do
+    on roles(:web, :job) do
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/redis-new.yml #{release_path}/config/redis.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/arkivo-new.yml #{release_path}/config/arkivo.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/blacklight-new.yml #{release_path}/config/blacklight.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/fedora-new.yml #{release_path}/config/fedora.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/solr-new.yml #{release_path}/config/solr.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/scholarsphere-new.yml #{release_path}/config/scholarsphere.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/application-new.yml #{release_path}/config/application.yml"
+    end
+  end
+  after "deploy:updated", "movefiles:link_special_files"
+  # after :updated, :link_special_files
+  # after :updated, :check_configs
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions

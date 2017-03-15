@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 server 'ssweb1qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
-# server 'ssweb2qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
+server 'ssweb2qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
 server 'ssjobs1qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
