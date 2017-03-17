@@ -32,7 +32,7 @@ namespace :scholarsphere do
 
     desc "fix csv files by converting the content to text"
     task :csv_fix, [:ids, :fedora_path] => :environment do |t, args|
-      ids = args[:ids].split(',')
+      ids = args[:ids].split(';')
       fedora_path = args[:fedora_path]
       pred = RDF::URI.new('http://fedora.info/definitions/v4/repository#digest')
       ids.each  do |id|
