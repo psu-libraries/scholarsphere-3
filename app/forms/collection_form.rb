@@ -2,6 +2,8 @@
 class CollectionForm < Sufia::Forms::CollectionForm
   attr_reader :current_ability, :request
 
+  self.required_fields = [:title, :description, :keyword]
+
   # @param [Collection] model
   # @param [Ability] current_ability
   # @param [ActionDispatch::Request] request
@@ -24,6 +26,17 @@ class CollectionForm < Sufia::Forms::CollectionForm
   # return [Array<SolrDocument]
   def incorporated_member_docs
     incorporated_work_presenters.map(&:solr_document)
+  end
+
+  def primary_terms
+    self.class.required_fields
+  end
+
+  def secondary_terms
+    [
+      :creator, :contributor, :rights, :publisher, :date_created, :subject, :language, :identifier,
+      :based_near, :related_url, :resource_type
+    ]
   end
 
   private

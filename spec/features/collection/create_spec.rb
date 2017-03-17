@@ -16,6 +16,8 @@ describe Collection, type: :feature do
       expect(page).to have_content("Create New Collection")
       within("div#descriptions_display") do
         expect(page).to have_selector("label", class: "required", text: "Title")
+        expect(page).to have_selector("label", class: "required", text: "Description")
+        expect(page).to have_selector("label", class: "required", text: "Keyword")
       end
       within("div.collection_form_visibility") do
         expect(find("input#visibility_restricted")).to be_checked
@@ -24,11 +26,15 @@ describe Collection, type: :feature do
   end
 
   describe "creating new collections" do
-    before { visit(new_collection_path) }
+    before do
+      visit(new_collection_path)
+      fill_in "Title", with: title
+      fill_in "Description", with: "description"
+      fill_in "Keyword", with: "keyword"
+    end
 
     context "without any files" do
       it "creates an empty collection" do
-        fill_in "Title", with: title
         click_button "Create Empty Collection"
         expect(page).to have_content("Collection was successfully created.")
         expect(page).to have_content(title)
@@ -40,7 +46,6 @@ describe Collection, type: :feature do
       let!(:file2) { create(:file, title: ["Second file"], depositor: current_user.login) }
 
       it "adds existing works after the collection is created" do
-        fill_in "Title", with: title
         click_button "Create Collection and Add Existing Works"
         expect(page).to have_content("Collection was successfully created.")
         check "check_all"
@@ -59,7 +64,6 @@ describe Collection, type: :feature do
 
     context "when adding new works" do
       it "creates new works after the collection is created" do
-        fill_in "Title", with: title
         click_button "Create Collection and Upload Works"
         expect(page).to have_content("Collection was successfully created.")
         expect(page).to have_content("Add Multiple New Works")
@@ -79,6 +83,8 @@ describe Collection, type: :feature do
       click_button "Add to Collection"
       db_create_populated_collection_button.click
       fill_in "Title", with: title
+      fill_in "Description", with: "description"
+      fill_in "Keyword", with: "keyword"
       within("div.primary-actions") do
         expect(page).not_to have_button("Create Empty Collection")
         expect(page).not_to have_button("Create Collection and Upload Works")
