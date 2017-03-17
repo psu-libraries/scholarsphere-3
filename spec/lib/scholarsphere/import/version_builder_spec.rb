@@ -2,12 +2,13 @@
 require 'rails_helper'
 
 describe Import::VersionBuilder do
+  subject { file_set }
+
   let(:user) { create(:user) }
   let(:sufia6_user) { "s6user" }
   let(:sufia6_password) { "s6password" }
   let(:builder) { described_class.new }
   let(:file_set) { create(:file_set, user: user, label: 'my label.txt') }
-  subject { file_set }
 
   let(:version1_uri) { "http://127.0.0.1:8983/fedora/rest/dev/44/55/8d/49/44558d49x/content/fcr:versions/version1" }
   let(:version2_uri) { "http://127.0.0.1:8983/fedora/rest/dev/44/55/8d/49/44558d49x/content/fcr:versions/version2" }
@@ -88,6 +89,23 @@ describe Import::VersionBuilder do
       end
       it "raises an error" do
         expect { builder.build(file_set, versions) }.to raise_error(Net::HTTPFatalError)
+      end
+      context "one bad version" do
+        let(:good_http_response) { Net::HTTPSuccess.new("1.1", "200", "Yeah it worked") }
+        before do
+          allow(good_http_response).to receive(:read_body).and_yield("abc123").and_yield(nil)
+        end
+        it "to process the good version with the bad version's metdata" do
+          expect(http).to receive(:request).once.with(an_instance_of(Net::HTTP::Get)).and_yield(bad_http_response)
+          expect(http).to receive(:request).once.with(an_instance_of(Net::HTTP::Get)).and_yield(good_http_response)
+          expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version1_my_label.txt/).and_return(true)
+          builder.build(file_set, versions)
+          expect(output_file.versions.all.map(&:label)).to contain_exactly("version1")
+          expect(output_file.content).to eq("abc123")
+          expect(output_file.date_created).to eq([DateTime.parse("2016-09-28T20:00:14.658Z")])
+          expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z".to_datetime)
+          expect(output_file.file_name).to eq ["my label.txt"]
+        end
       end
     end
     context "when fileset has nil id" do
