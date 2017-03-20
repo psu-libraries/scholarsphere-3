@@ -78,7 +78,7 @@ describe Collection, type: :feature do
       specify do
         click_link("Add new works")
         expect(page).to have_content("Add Multiple New Works")
-        click_link("Relationships")
+        within("ul.nav-tabs") { click_link("Collections") }
         expect(page).to have_select("batch_upload_item_collection_ids", selected: collection.title.first)
       end
     end
