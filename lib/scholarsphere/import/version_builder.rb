@@ -18,13 +18,21 @@ module Import
       end
       sorted_versions = generic_file_versions.sort_by { |ver| ver[:created] }
       sorted_versions.each_with_index do |gf_version, index|
-        filename_on_disk = create(file_set, gf_version)
+        begin
+          filename_on_disk = create(file_set, gf_version)
+          if index == (sorted_versions.count - 1)
+            # characterize the current version
+            characterize(file_set, filename_on_disk)
+          else
+            File.delete(filename_on_disk)
+          end
+        # we can ignore errors on intermediate version as long as the last version does not exist
+        rescue Net::HTTPFatalError => http_error
+          raise http_error if index == (sorted_versions.count - 1)
 
-        if index == (sorted_versions.count - 1)
-          # characterize the current version
-          characterize(file_set, filename_on_disk)
-        else
-          File.delete(filename_on_disk)
+          # copy the date & depositor of the current version to the next version
+          sorted_versions[index + 1][:label] = sorted_versions[index][:label]
+          sorted_versions[index + 1][:created] = sorted_versions[index][:created]
         end
       end
       # give the actual file its original file_name as opposed to the one we
@@ -83,7 +91,8 @@ module Import
       end
 
       def temp_file_name(file_set, version)
-        label = file_set.label.gsub(/[^0-9A-Za-z.\-]/, '_')
+        label = file_set.label || "null_label"
+        label = label.gsub(/[^0-9A-Za-z.\-]/, '_')
         File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{label}"
       end
   end
