@@ -30,9 +30,10 @@ module Import
         rescue Net::HTTPFatalError => http_error
           raise http_error if index == (sorted_versions.count - 1)
 
-          # copy the date & depositor of the current version to the next version
+          # copy the date, label & creator of the current version to the next version since that should be the fixed version
           sorted_versions[index + 1][:label] = sorted_versions[index][:label]
           sorted_versions[index + 1][:created] = sorted_versions[index][:created]
+          sorted_versions[index + 1][:created_by] = sorted_versions[index][:created_by]
         end
       end
       # give the actual file its original file_name as opposed to the one we
@@ -71,6 +72,7 @@ module Import
                            version[:created].to_datetime
                          end
           Sufia::Import::AddVersionToFileSet.call(file_set, file_to_upload, :original_file, date_created)
+          CurationConcerns::VersioningService.record_committer(file_set.original_file, version_creator(file_set, version))
         end
 
         filename_on_disk
@@ -94,6 +96,10 @@ module Import
         label = file_set.label || "null_label"
         label = label.gsub(/[^0-9A-Za-z.\-]/, '_')
         File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{label}"
+      end
+
+      def version_creator(file_set, version)
+        version[:created_by].blank? ? file_set.depositor : version[:created_by]
       end
   end
 end
