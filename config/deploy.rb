@@ -44,11 +44,10 @@ set :pty, true
 set :format_options, command_output: false
 
 # Default value for :linked_files is []
-# Example link: ln -s /opt/heracles/deploy/scholarsphere/shared/config/redis.yml /opt/heracles/deploy/scholarsphere/current/config/redis.yml
 set :linked_files, fetch(:linked_files, []).push(
   'config/analytics.yml',
   'config/application.yml',
-  'config/arkivo-new.yml',
+  'config/arkivo.yml',
   'config/blacklight.yml',
   'config/browse_everything_providers.yml',
   'config/database.yml',
@@ -61,7 +60,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/qa.rb',
   'config/initializers/sufia6.rb',
   'config/newrelic.yml',
-#  'config/redis-new.yml',
+  'config/redis.yml',
   'config/scholarsphere.yml',
   'config/secrets.yml',
   'config/share_notify.yml',
@@ -179,18 +178,6 @@ namespace :deploy do
     end
   end
   after :published, "passenger:config_update"
-end
- 
-# Temporary Task while moving from old servers to new, some files need kept the same
-namespace :movefiles do
-  desc "Clean up old rbenv versions"
-  task :link_special_files do
-    on roles(:web, :job) do
-     execute 'ln -fs /opt/heracles/deploy/scholarsphere/shared/config/redis-new.yml /opt/heracles/deploy/scholarsphere/current/config/redis.yml'
-     execute 'ln -fs /opt/heracles/deploy/scholarsphere/shared/config/arkivo-new.yml /opt/heracles/deploy/scholarsphere/current/config/arkivo.yml'
-    end
-  end
-  after "deploy:finishing", "link_special_files"
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions
