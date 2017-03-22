@@ -58,9 +58,13 @@ describe 'Generic File uploading and deletion:', type: :feature do
         click_link("Additional fields")
         expect(page).to have_no_css("#generic_work_contributor")
 
+        # Check for optional metadata
+        within("#form-progress") { click_link("Collections") }
+        within("#form-progress") { click_link("Collaborators") }
+
         # Test sharing tab
         expect(User).to receive(:query_ldap_by_name_or_id).and_return([{ id: other_user.user_key, text: "#{other_user.display_name} (#{other_user.user_key})" }])
-        click_link("Collaborators")
+        within("ul.nav-tabs") { click_link("Collaborators") }
         expect(page).to have_css('a.select2-choice')
         first('a.select2-choice').click
         find(".select2-input").set(other_user.user_key)

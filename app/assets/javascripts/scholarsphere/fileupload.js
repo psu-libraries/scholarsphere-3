@@ -15,6 +15,8 @@ Blacklight.onLoad(function() {
   $('.tabfaker').on('click', function(event) {
     var metadata_tab = $("ul.nav-tabs li")[0];
     var files_tab = $("ul.nav-tabs li")[1];
+    var relationships_tab = $("ul.nav-tabs li")[2];
+    var share_tab = $("ul.nav-tabs li")[3];
 
     $("ul.nav-tabs li").removeClass("active");
     $("div.tab-content div").removeClass("active");
@@ -27,6 +29,16 @@ Blacklight.onLoad(function() {
     if ($(this).attr("href") == "#files"){
       $(files_tab).addClass("active");
       $("div#files").addClass("active");
+    }
+
+    if ($(this).attr("href") == "#relationships"){
+        $(relationships_tab).addClass("active");
+        $("div#relationships").addClass("active");
+    }
+
+    if ($(this).attr("href") == "#share"){
+        $(share_tab).addClass("active");
+        $("div#share").addClass("active");
     }
   });
 });
