@@ -33,9 +33,9 @@ describe Import::BatchTranslator do
       it 'Creates related Work Links' do
         expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tk99d.json")
         translator.import
-        expect(work1.reload.related_object_ids).to eq ['tm70mv24n', 'g445cd26c']
-        expect(work2.reload.related_object_ids).to eq ['x920fw89s', 'g445cd26c']
-        expect(work3.reload.related_object_ids).to eq ['x920fw89s', 'tm70mv24n']
+        expect(work1.reload.upload_set).to eq batch_id
+        expect(work2.reload.upload_set).to eq batch_id
+        expect(work3.reload.upload_set).to eq batch_id
       end
     end
 

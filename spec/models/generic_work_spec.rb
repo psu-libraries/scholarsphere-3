@@ -42,4 +42,8 @@ describe GenericWork do
     end
     its(:bytes) { is_expected.to eq(2048) }
   end
+
+  describe "#upload_set" do
+    its(:upload_set) { is_expected.to be_blank }
+  end
 end
