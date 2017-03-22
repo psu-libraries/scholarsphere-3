@@ -35,6 +35,8 @@ describe Import::VersionBuilder do
     file
   end
 
+  let(:version_committers) { VersionCommitter.where("version_id like \"%#{output_file.id}%\"") }
+
   let(:http) { class_double("Net:HTTP") }
   let(:request) { class_double("Net::HTTP::Get") }
 
@@ -78,6 +80,29 @@ describe Import::VersionBuilder do
         expect(output_file.date_created).to eq(["2016-09-29T15:58:00.639Z"])
         expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z".to_datetime, "2016-09-29T15:58:00.639Z".to_datetime)
         expect(output_file.file_name).to eq ["my label.txt"]
+        expect(version_committers.map(&:committer_login)).to contain_exactly(user.login, user.login)
+      end
+
+      context "when a creator is supplied" do
+        let(:jill) { create(:jill) }
+        let(:versions) do
+          [
+            { uri: version1_uri,
+              created: "2016-09-28T20:00:14.658Z",
+              label: "version1",
+              created_by: nil },
+            { uri: version2_uri,
+              created: "2016-09-29T15:58:00.639Z",
+              label: "version2",
+              created_by:  jill.login }
+          ]
+        end
+        it "creates versions with specified committers" do
+          expect(Net::HTTP).to receive(:start).twice
+          expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my_label.txt/).and_return(true)
+          builder.build(file_set, versions)
+          expect(version_committers.map(&:committer_login)).to contain_exactly(user.login, jill.login)
+        end
       end
     end
     context "bad http" do
@@ -91,6 +116,18 @@ describe Import::VersionBuilder do
         expect { builder.build(file_set, versions) }.to raise_error(Net::HTTPFatalError)
       end
       context "one bad version" do
+        let(:versions) do
+          [
+            { uri: version1_uri,
+              created: "2016-09-28T20:00:14.658Z",
+              label: "version1",
+              created_by: user.login },
+            { uri: version2_uri,
+              created: "2016-09-29T15:58:00.639Z",
+              label: "version2",
+              created_by: 'cam156' }
+          ]
+        end
         let(:good_http_response) { Net::HTTPSuccess.new("1.1", "200", "Yeah it worked") }
         before do
           allow(good_http_response).to receive(:read_body).and_yield("abc123").and_yield(nil)
@@ -105,6 +142,7 @@ describe Import::VersionBuilder do
           expect(output_file.date_created).to eq([DateTime.parse("2016-09-28T20:00:14.658Z")])
           expect(output_file.versions.all.map { |v| Hydra::PCDM::File.new(v.uri).date_created.first }).to contain_exactly("2016-09-28T20:00:14.658Z".to_datetime)
           expect(output_file.file_name).to eq ["my label.txt"]
+          expect(version_committers.map(&:committer_login)).to contain_exactly(user.login)
         end
       end
     end
@@ -145,7 +183,6 @@ describe Import::VersionBuilder do
 
   def copy_version(version, version_label, file_set)
     to_path = File.join(Rails.root, "tmp/uploads", "#{file_set.id}_#{version_label}_#{file_set.label.tr(' ', '_')}")
-    puts to_path
     FileUtils.copy version.to_path, to_path
   end
 end
