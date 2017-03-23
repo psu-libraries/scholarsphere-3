@@ -10,7 +10,7 @@ gem 'sufia', github: 'projecthydra/sufia', branch: '7.2-migration'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
 gem 'curation_concerns', github: 'projecthydra/curation_concerns', ref: 'b073550'
 gem 'hydra-works', github: 'projecthydra/hydra-works', ref: 'f948eb0'
-gem 'browse-everything', github: 'projecthydra/browse-everything', ref: 'ede4e5c'
+gem 'browse-everything', github: 'projecthydra/browse-everything', ref: '0e33595'
 
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
