@@ -54,12 +54,9 @@ describe 'catalog searching', type: :feature do
     expect(page).to have_selector('h2', text: "Listing of Search Results")
     within("#search-results") do
       expect(page).to have_link(work1.title.first)
-      expect(page).to have_content(work1.description.first)
       expect(page).to have_link(work2.title.first)
-      expect(page).to have_content(work2.description.first)
       expect(page).not_to have_content(collection.title)
       expect(page).not_to have_content("Title:")
-      expect(page).to have_content("Published Date")
     end
 
     # Not all fields should be displayed in the gallery view
@@ -69,10 +66,8 @@ describe 'catalog searching', type: :feature do
       expect(page).to have_link(work2.title.first)
       expect(page).not_to have_content(work1.keyword.first)
       expect(page).not_to have_content(work1.keyword.last)
-      expect(page).not_to have_content(work1.description.last)
       expect(page).not_to have_content(work2.keyword.first)
       expect(page).not_to have_content(work2.keyword.last)
-      expect(page).not_to have_content(work2.description.last)
       expect(page).not_to have_content(collection.title)
     end
 
