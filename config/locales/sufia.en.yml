@@ -44,6 +44,9 @@ en:
           share: "Collaborators"
       new:
         after_create_html: "Your files are being processed by %{application_name} in the background. Your files will be displayed below as they are processed. You may need to refresh this page to see these updates."
+    batch_uploads:
+      files:
+        instructions: "The file structure will be flattened and each file will be uploaded to a separate new work resulting in one work per uploaded file. If you'd like to maintain the file structure, consider using the zip or similar format."
   simple_form:
     labels:
       collection:
