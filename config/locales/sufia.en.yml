@@ -80,6 +80,10 @@ en:
         files_required_complete: 'Required files complete'
       form_files:
         external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
+      metadata:
+        header: 'Metadata'
+      relationships:
+        header: 'Collections'
     visibility:
       legend: 'Choose Visibility'
   blacklight:

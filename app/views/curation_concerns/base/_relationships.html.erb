@@ -1,4 +1,19 @@
 <div class="col-xs-12 col-sm-5">
   <h2 class="border-bottom-1px"><%= t('.header') %></h2>
-  <%= render 'relationships_parent_rows', presenter: presenter %>
+  <%#= render 'relationships_parent_rows', presenter: presenter %>
+  <%#= Uses an earlier version before the nested works and keeps
+       the relationships_parent_rows intact by displaying code here
+  %>
+  <% collection_presenters = presenter.collection_presenters %>
+  <% if collection_presenters.blank? %>
+      <p><%= t('.empty', type: presenter.human_readable_type) %></p>
+  <% else %>
+      <% collection_presenters.each do |collection| %>
+          <ul class="tabular list-unstyled">
+            <li class='attribute title'>
+              <%= link_to collection.to_s, main_app.collection_path(collection) %>
+            </li>
+          </ul>
+      <% end %>
+  <% end %>
 </div>
