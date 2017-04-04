@@ -14,25 +14,26 @@ class ApplicationController < ActionController::Base
 
   before_action :clear_session_user, :filter_notify
 
-  rescue_from ActiveFedora::ObjectNotFoundError, with: :render_404 unless Rails.env.development?
+  rescue_from ActiveFedora::ObjectNotFoundError,
+              AbstractController::ActionNotFound,
+              ActionController::RoutingError,
+              ActionDispatch::Cookies::CookieOverflow,
+              ActionView::Template::Error,
+              ActiveRecord::RecordNotFound,
+              ActiveRecord::StatementInvalid,
+              Blacklight::Exceptions::ECONNREFUSED,
+              Blacklight::Exceptions::InvalidSolrID,
+              Errno::ECONNREFUSED,
+              NameError,
+              Net::LDAP::LdapError,
+              Redis::CannotConnectError,
+              RSolr::Error::Http,
+              Ldp::BadRequest,
+              StandardError,
+              RuntimeError, with: :render_error_page
 
-  unless Rails.env.development? || Rails.env.test?
-    rescue_from AbstractController::ActionNotFound, with: :render_404
-    rescue_from ActionController::RoutingError, with: :render_404
-    rescue_from ActionDispatch::Cookies::CookieOverflow, with: :render_500
-    rescue_from ActionView::Template::Error, with: :render_500
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
-    rescue_from ActiveRecord::StatementInvalid, with: :render_500
-    rescue_from Blacklight::Exceptions::ECONNREFUSED, with: :render_500
-    rescue_from Blacklight::Exceptions::InvalidSolrID, with: :render_404
-    rescue_from Errno::ECONNREFUSED, with: :render_500
-    rescue_from Mysql2::Error, with: :render_500
-    rescue_from NameError, with: :render_500
-    rescue_from Net::LDAP::LdapError, with: :render_500
-    rescue_from Redis::CannotConnectError, with: :render_500
-    rescue_from RSolr::Error::Http, with: :render_500
-    rescue_from RuntimeError, with: :render_500
-  end
+  # Mysql2 isn't loaded in Travis, so we'll skip testing it
+  rescue_from Mysql2::Error, with: :render_error_page unless Rails.env.test?
 
   # Clears any user session and authorization information by:
   #   * forcing the session to be restarted on every request
@@ -47,15 +48,27 @@ class ApplicationController < ActionController::Base
     session[:user_return_to] = return_url
   end
 
-  # Overrides CurationConcerns::ApplicationControllerBehavior with custom error method
-  def render_404(exception = nil)
-    log_exception(exception, "404") if exception.present?
-    render template: '/errors/404', layout: "error", formats: [:html], status: 404
+  # Overrides CurationConcerns::ApplicationControllerBehavior to use our error presenter with the default
+  # Scholarsphere::Error exception
+  def render_404
+    @presenter = ErrorPresenter.new
+    @presenter.log_exception
+    render template: '/error', layout: "error", formats: [:html], status: @presenter.status
   end
 
-  def render_500(exception = nil)
-    log_exception(exception, "500") if exception.present?
-    render template: '/errors/500', layout: "error", formats: [:html], status: 500
+  # @param [Exception] exception
+  # Renders a custom error page based on the class type of the exception.
+  # Preserves existing behavior in {CurationConcerns::ApplicationControllerBehavior} and
+  # {Hydra::Controller::ControllerBehavior} which applies special redirects to login pages
+  # when {CanCan::AccessDenied} is raised.
+  def render_error_page(exception)
+    if exception.is_a?(CanCan::AccessDenied)
+      deny_access(exception)
+    else
+      @presenter = ErrorPresenter.new(exception)
+      @presenter.log_exception
+      render template: '/error', layout: "error", formats: [:html], status: @presenter.status
+    end
   end
 
   # Remove bogus error messages and extraneous paperclip errors.
@@ -100,11 +113,5 @@ class ApplicationController < ActionController::Base
     def nil_request
       logger.warn("Request is Nil, how weird!!!")
       nil
-    end
-
-  private
-
-    def log_exception(exception, status)
-      logger.error("Rendering #{status} page due to exception: #{exception.inspect} - #{exception.backtrace if exception.respond_to? :backtrace}")
     end
 end

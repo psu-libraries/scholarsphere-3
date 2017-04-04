@@ -56,3 +56,32 @@ en:
       subject: "ScholarSphere - Statistic Report"
       csv:
         file_name: "scholarsphere-stats_%{date_str}.csv"
+
+  # Error messages used in conjunction with ErrorPresenter. The key for each error is derived as follows:
+  #   StandardError => standard_error
+  #   MyModule::SpecialError => my_module_special_error
+  #
+  # If no key is present for an exception, a default message and 500 status is returned.
+  errors:
+    active_fedora_object_not_found_error:
+      title: "Not Found"
+      message: "This item is not available"
+      status: 404
+    abstract_controller_action_not_found:
+      title: "Not Found"
+      message: "This item is not available"
+      status: 404
+    action_controller_routing_error:
+      title: "Not Found"
+      message: "This item is not available"
+      status: 404
+    active_record_record_not_found:
+      title: "Not Found"
+      message: "This item is not available"
+      status: 404
+    ldp_bad_request:
+      message: "We cannot process the metadata as entered. This usually occurs when unexpected characters are copied from another source. Try typing your metadata by hand."
+    scholarsphere_error:
+      title: "Not Found"
+      message: "This item is not available"
+      status: 404
