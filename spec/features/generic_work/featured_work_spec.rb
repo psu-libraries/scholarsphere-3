@@ -11,7 +11,7 @@ describe "Showing the Generic File", type: :feature do
     click_link "Recent Additions"
     expect(page).to have_content(gf.title.first)
     click_link gf.title.first
-    expect(page).to have_content("Descriptions")
+    expect(page).to have_content("Metadata")
     expect(page).to have_link "Feature"
     click_link "Feature"
     visit "/concern/generic_works/#{gf.id}" # force a page refresh
