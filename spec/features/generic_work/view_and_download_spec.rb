@@ -15,13 +15,20 @@ describe GenericWork, type: :feature do
     end
     let!(:work2) { create(:private_work, depositor: current_user.login) }
 
-    before do
-      sign_in_with_js(current_user)
-      visit(main_app.polymorphic_path(work1))
-    end
+    before { sign_in_with_js(current_user) }
 
     context 'When viewing a file' do
       specify "I see all the correct information" do
+        visit(root_path)
+
+        # Work is listed under Recently Uploaded
+        click_link("Recent Additions")
+        within("#recent_docs") do
+          expect(page).to have_link(work1.keyword.first)
+          click_link(work1.title.first)
+        end
+
+        # View the work's show page
         expect(page).to have_content work1.title.first
         expect(page).not_to have_link "Feature"
         within("h1 span") do
