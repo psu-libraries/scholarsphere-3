@@ -110,6 +110,18 @@ namespace :deploy do
   end
   after :updated, :check_configs
 
+  desc "set up the shared directory to have the symbolic links to the appropriate directories shared between servers"
+  task :symlink_shared_directories do
+    on roles(:web, :job) do
+      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
+      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
+    end
+  end
+  before 'deploy:symlink:shared', :symlink_shared_directories
+
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
