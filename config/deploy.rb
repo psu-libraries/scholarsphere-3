@@ -60,7 +60,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/arkivo_constraint.rb',
   'config/initializers/qa.rb',
   'config/initializers/sufia6.rb',
-  'config/newrelic.yml',
+  #  'config/newrelic.yml',
   #  'config/redis-new.yml',
   # 'config/scholarsphere.yml',
   'config/secrets.yml',
@@ -205,6 +205,7 @@ namespace :movefiles do
       execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/solr-new.yml #{release_path}/config/solr.yml"
       execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/scholarsphere-new.yml #{release_path}/config/scholarsphere.yml"
       execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/application-new.yml #{release_path}/config/application.yml"
+      execute "ln -fs /opt/heracles/deploy/scholarsphere/shared/config/newrelic-new.yml #{release_path}/config/newrelic.yml"
     end
   end
   after "deploy:updated", "movefiles:link_special_files"
