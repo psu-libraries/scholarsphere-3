@@ -11,8 +11,9 @@
         <% content_for :metadata_tab do %>
             <p class="switch-upload-type">
               To create a separate work for each of the files, go to <%= link_to "Batch upload", sufia.new_batch_upload_path,
-                                                                                 class: "btn btn-default" %>
+                                                                                 class: 'btn btn-default' %>
             </p>
+            <p class="instructions"><%= t("sufia.batch_uploads.files.concepts") %></p>
         <% end %>
     <% end %>
     <%= render 'curation_concerns/base/guts4form', f: f %>
