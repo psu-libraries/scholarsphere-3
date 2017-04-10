@@ -61,9 +61,17 @@ en:
         date_created: "Published Date"
     hints:
       generic_work:
-        rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
+        creator: "The person or group responsible for the work. Usually this is the author of the content. This makes sure that this item can be searched on all the creators' names. Personal names should be entered with the last name first, e.g. &quot;Smith, John.&quot;."
+        description: "Free-text notes about the work. Examples include abstracts of a paper or citation information for a journal article. Providing a concise but informative description greatly increases the ability of search engines to index your work. It also helps others quickly understand the content of your work."
+        keyword: "Words or phrases you select to describe what the work is about. These are used to search for content. Keywords help others find your work and also help build facets."
+        resource_type: "Defining the correct resource type allows others to quickly find the type of content they need."
+        rights: "Licensing and distribution information governing access to the work. A rights statement or license ensures your work gets used appropriately and that you get credit when your work is used. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
+        title: "A name to aid in identifying a work. A descriptive title will make it much easier to find your work. Avoid uninformative titles."
       collection:
-        rights: "Licensing and distribution information governing access to the work. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
+        description: "Free-text notes about the collection. Examples include abstracts of a paper or citation information for a journal article. Providing a concise but informative description greatly increases the ability of search engines to index your collection. It also helps others quickly understand the content of your collection."
+        keyword: "Words or phrases you select to describe what the collection is about. These are used to search for content. Keywords help others find your collection and also help build facets."
+        rights: "Licensing and distribution information governing access to the collection. A rights statement or license ensures your collection gets used appropriately and that you get credit when your collection is used. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
+        title: "A name to aid in identifying a collection. A descriptive title will make it much easier to find your collection. Avoid uninformative titles."
   curation_concerns:
     institution:
       name: "Penn State"
