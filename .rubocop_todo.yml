@@ -3,3 +3,7 @@ require: rubocop-rspec
 RSpec/AnyInstance:
   Exclude:
     - 'spec/**/*'
+
+Style/RaiseArgs:
+  Exclude:
+    - 'spec/controllers/application_controller_spec.rb'
