@@ -69,6 +69,7 @@ describe 'catalog searching', type: :feature do
       expect(page).not_to have_content(work2.keyword.first)
       expect(page).not_to have_content(work2.keyword.last)
       expect(page).not_to have_content(collection.title)
+      expect(page).not_to have_button("Bookmark")
     end
 
     expect(page).not_to have_selector("a.view-type-masonry")
