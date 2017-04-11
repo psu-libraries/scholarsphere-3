@@ -7,41 +7,30 @@ describe 'Dashboard Shares', type: :feature do
   let(:current_user) { create(:user) }
   let(:jill)         { create(:jill) }
 
-  context "the default" do
-    before do
-      sign_in_with_js(current_user)
-      go_to_dashboard_shares
-    end
+  let!(:collection) { create(:collection, depositor: current_user.user_key) }
+  let!(:gf)         { create(:public_file, title: ["Public, unshared file"], depositor: jill.user_key) }
 
-    it 'displays tab title and buttons' do
-      expect(page).to have_content("Works Shared with Me")
-      expect(page).to have_link("New Work", visible: false)
-      expect(page).to have_link("New Collection", visible: false)
-      expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
-    end
+  let!(:gf2) do
+    create(:private_file, title: ["Private, shared filed"],
+                          depositor: jill.user_key,
+                          edit_users: [current_user.user_key])
   end
 
-  context 'when user has a collection' do
-    let!(:collection) { create(:collection, depositor: current_user.user_key) }
-    let!(:gf) { create(:public_file, title: ["Public, unshared file"], depositor: jill.user_key) }
+  before do
+    sign_in_with_js(current_user)
+    go_to_dashboard_shares
+  end
 
-    let!(:gf2) do
-      create(:private_file,
-             title: ["Private, shared filed"],
-             depositor: jill.user_key,
-             edit_users: [current_user.user_key]
-            )
-    end
-
-    before do
-      sign_in_with_js(current_user)
-      go_to_dashboard_shares
-    end
-
-    it "does not display collections and others' files" do
-      expect(page).not_to have_content(collection.title)
-      expect(page).not_to have_content(gf.title.first)
-      expect(page).to have_content(gf2.title.first)
+  it "displays only shared files" do
+    expect(page).to have_content("Works Shared with Me")
+    expect(page).to have_link("New Work", visible: false)
+    expect(page).to have_link("New Collection", visible: false)
+    expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
+    expect(page).not_to have_content(collection.title)
+    expect(page).not_to have_content(gf.title.first)
+    expect(page).to have_content(gf2.title.first)
+    within("tr#document_#{gf2.id}") do
+      expect(page).to have_link("Edit Work")
     end
   end
 end
