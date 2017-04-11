@@ -120,7 +120,7 @@ namespace :deploy do
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
     end
   end
-  before 'deploy:symlink:shared', :symlink_shared_directories
+  before 'deploy:check:linked_dirs', :symlink_shared_directories
 
   desc "Restart resque-pool"
   task :resquepoolrestart do
