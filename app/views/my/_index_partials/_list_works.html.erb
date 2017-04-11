@@ -36,7 +36,13 @@
   <td class='text-center'><%= render_visibility_link document %></td>
 
   <td class='text-center'>
-    <%= render 'work_action_menu', document: document %>
+    <%# Override Sufia to only display edit button for works shared with current user %>
+    <% if controller_name == "shares" %>
+      <%= link_to t("sufia.dashboard.my.action.edit_work"), edit_polymorphic_path([main_app, document]),
+          class: 'btn btn-default btn-sm' %>
+    <% else %>
+      <%= render 'work_action_menu', document: document %>
+    <% end %>
   </td>
 </tr>
 <tr id="detail_<%= document.id %>">
