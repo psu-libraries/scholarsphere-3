@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
               RSolr::Error::Http,
               Ldp::BadRequest,
               StandardError,
-              RuntimeError, with: :render_error_page
+              RuntimeError, with: :render_error_page unless Rails.env.development?
 
   # Mysql2 isn't loaded in Travis, so we'll skip testing it
   rescue_from Mysql2::Error, with: :render_error_page unless Rails.env.test?
