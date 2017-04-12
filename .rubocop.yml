@@ -166,3 +166,4 @@ RSpec/DescribeClass:
     - 'spec/config/**/*'
     - 'spec/models/batch_spec.rb'
     - 'spec/features/**/*'
+    - 'spec/support/**/*'

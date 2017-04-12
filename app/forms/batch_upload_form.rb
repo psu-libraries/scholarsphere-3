@@ -4,6 +4,7 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
 
   include WithCreator
   include WithCleanerAttributes
+  include WithOpenAccess
 
   def self.multiple?(term)
     CurationConcerns::GenericWorkForm.multiple?(term)
