@@ -1,9 +1,9 @@
-# Place any default configuration for solr_wrapper here
-# port: 8983
-version: 6.4.0
+# .solr_wrapper
+version: 6.4.1
+port: 8983
 instance_dir: tmp/solr-development
 download_dir: tmp
 collection:
   persist: true
-  dir: solr/config/
+  dir: solr/config
   name: hydra-development
