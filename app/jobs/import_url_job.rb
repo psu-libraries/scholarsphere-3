@@ -11,11 +11,19 @@ class ImportUrlJob < ActiveJob::Base
     log.pending_job(job)
   end
 
+  # @param [FileSet] file_set
+  # @param [String] file_name
+  # @param [CurationConcerns::Operation] log to send messages
+  # Overrides the CurationConcerns job to accept the remote file's original name. The file
+  # is downloaded using its original name and extension, but sanitized with CarrierWave to
+  # remove any non-alphanumeric characters. This is the same process that occurs with locally
+  # uploaded files (via CarrierWave) and avoids problems later when interacting with filenames
+  # that have unsupported characters.
   def perform(file_set, file_name, log)
     log.performing!
     user = User.find_by_user_key(file_set.depositor)
 
-    File.open(File.join(Dir.tmpdir, file_name), "w+") do |f|
+    File.open(File.join(Dir.tmpdir, CarrierWave::SanitizedFile.new(file_name).filename), "w+") do |f|
       copy_remote_file(file_set, f)
 
       # reload the FileSet once the data is copied since this is a long running task
