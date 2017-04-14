@@ -1,90 +1,47 @@
 # frozen_string_literal: true
 require 'feature_spec_helper'
 
-describe 'Static pages:', type: :feature do
-  shared_examples "a page with links" do
-    it "has links to external pages", unless: travis? do
-      pending("Failing locally with 302 instead of 200")
-      # Capybara::Poltergeist::TimeoutError Exception: Timed out waiting for response
-      external_links.each do |link|
-        visit(link)
-        expect(status_code).to eq(200)
-      end
-    end
-
-    it "has links to anchors" do
-      anchor_links.each do |link|
-        visit(link)
-        expect(status_code).to eq(200)
-      end
-    end
+describe "Static pages" do
+  it "displays the About page" do
+    visit("/about")
+    expect(page).to have_content("About")
   end
 
-  shared_examples "a page with YouTube links" do
-    it "has links to YouTube videos", unless: travis? do
-      youtube_links.each do |link|
-        visit(link)
-        expect(status_code).to eq(200)
-      end
-    end
+  it "displays the Help page" do
+    visit("/help")
+    expect(page).to have_content("Frequently Asked Questions")
+    expect(page).to have_content("User Support")
+    expect(page).to have_content("Support Hours")
+    expect(page).to have_content("User Guides")
+    expect(page).to have_link("Contact Form")
+    expect(page).to have_link("Publishing and Curation Services")
+    expect(page).to have_link("University Libraries")
+    expect(page).to have_link("Getting Started")
+    expect(page).to have_link("Collections")
   end
 
-  context 'when not logged in' do
-    before do
-      sign_in_with_named_js(:help_poltergeist, nil, js_errors: false)
-      visit(path)
-    end
-
-    describe "the about page" do
-      let(:path) { "/about" }
-      it_behaves_like "a page with links"
-    end
-
-    describe "the contact page" do
-      let(:path) { "/contact" }
-      it_behaves_like "a page with links"
-    end
-
-    describe "the help page" do
-      let(:path) { "/help" }
-      it_behaves_like "a page with YouTube links"
-      # it_behaves_like "a page with links"
-    end
-
-    describe "the licenses page" do
-      let(:path) { "/licenses" }
-      subject { page }
-      it { is_expected.to have_content("ScholarSphere License Descriptions") }
-    end
+  it "displays the Zotero page" do
+    visit("/zotero")
+    expect(page).to have_content("Export to Zotero")
   end
 
-  context 'when logged in' do
-    let(:user) { create(:user) }
-    before do
-      sign_in_with_named_js(:help_poltergeist, nil, js_errors: false)
-      visit(path)
-    end
+  it "displays the Mendeley page" do
+    visit("/mendeley")
+    expect(page).to have_content("Export to Mendeley")
+  end
 
-    describe "the about page" do
-      let(:path) { "/about" }
-      it_behaves_like "a page with links"
-    end
+  it "displays the Licenses page" do
+    visit("/licenses")
+    expect(page).to have_content("ScholarSphere License Descriptions")
+  end
 
-    describe "the contact page" do
-      let(:path) { "/contact" }
-      it_behaves_like "a page with links"
-    end
+  it "displays the Versions page" do
+    visit("/versions")
+    expect(page).to have_content("Versions")
+  end
 
-    describe "the help page" do
-      let(:path) { "/help" }
-      it_behaves_like "a page with YouTube links"
-      it_behaves_like "a page with links"
-    end
-
-    describe "the licenses page" do
-      let(:path) { "/licenses" }
-      subject { page }
-      it { is_expected.to have_content("ScholarSphere License Descriptions") }
-    end
+  it "displays the Terms of Use page" do
+    visit("/terms")
+    expect(page).to have_content("Terms of Use for ScholarSphere")
   end
 end
