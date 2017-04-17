@@ -21,6 +21,14 @@ en:
         add_new_works:
           label: "Add new works"
           desc: "Add new works to this Collection"
+    single_use_links:
+      button: "Create Single-Use Link"
+      expiration_message: "Link id %{link} expires %{time}"
+      accessibility:
+        no_links: "No links present. To create a new link, click Create Single-Use Link"
+        copy: "Copy link id %{link} to clipboard"
+        delete: "Delete link id %{link}"
+
 
   hydra:
     metadata_help:

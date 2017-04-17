@@ -1,0 +1,23 @@
+<%# Overrides Sufia to provide better accessibility %>
+<h3><%= t('curation_concerns.single_use_links.title') %></h3>
+
+<table class="table table-striped table-condensed <%= dom_class(presenter) %> single-use-links" aria-live="assertive">
+  <caption>
+    Listing of current single-use links to this file
+  </caption>
+  <tbody data-url="<%= curation_concerns.generated_single_use_links_path(presenter) %>">
+    <% if presenter.single_use_links.present? %>
+      <%= render 'single_use_link_rows', single_use_links: presenter.single_use_links %>
+    <% else %>
+      <tr class="sr-only" scope="row">
+        <td><%= t('sufia.single_use_links.accessibility.no_links') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="form_actions">
+  <%= link_to t('sufia.single_use_links.button'),
+              curation_concerns.generate_download_single_use_link_path(presenter),
+              class: 'btn btn-default generate-single-use-link' %>
+</div>
