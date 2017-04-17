@@ -37,6 +37,20 @@ describe 'Generic File uploading and deletion:', type: :feature do
         attach_file('files[]', test_file_path(filename), visible: false)
         check 'agreement'
 
+        # Check visibility
+        within("#savewidget") do
+          expect(page).to have_content("Visibility")
+          expect(page).to have_content("Public")
+          expect(page).to have_content("Embargo")
+          expect(page).to have_content("Private")
+          expect(page).to have_content("Penn State")
+          expect(page).to have_checked_field("Public")
+          expect(page).to have_content("marking this as Public")
+          sleep(1.second)
+          choose 'generic_work_visibility_restricted'
+          expect(page).not_to have_content("marking this as Public")
+        end
+
         # Enter required metadata
         click_link("Metadata")
         fill_in 'generic_work_title', with: 'Upload test'
@@ -73,15 +87,6 @@ describe 'Generic File uploading and deletion:', type: :feature do
         find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
         click_on('add_new_user_skel')
         within("#share") { expect(page).to have_content(other_user.user_key) }
-
-        # Check visibility
-        within("#savewidget") do
-          expect(page).to have_content("Visibility")
-          expect(page).to have_content("Public")
-          expect(page).to have_content("Embargo")
-          expect(page).to have_content("Private")
-          expect(page).to have_content("Penn State")
-        end
       end
     end
 
@@ -119,6 +124,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within "tr.template-download" do
             expect(page).to have_content "Markdown Test.txt"
           end
+          within("#savewidget") do
+            choose 'generic_work_visibility_restricted'
+          end
           check 'agreement'
           click_on 'Metadata'
           fill_in 'generic_work_title', with: 'Markdown Test'
@@ -127,7 +135,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
           fill_in 'generic_work_description', with: 'My description'
           select 'Audio', from: 'generic_work_resource_type'
+          sleep(1.second)
           click_on 'Save'
+          expect(page).to have_content 'Your files are being processed'
           expect(page).to have_css('h1', 'Markdown Test')
           click_on "Notifications"
           expect(page).to have_content "The file (Markdown Test.txt) was successfully imported"
@@ -137,12 +147,25 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
     context 'user does not need help' do
       context 'with a single file' do
-        before do
-          create_work_and_upload_file(filename)
-          allow(ShareNotifyDeleteJob).to receive(:perform_later)
-        end
+        before { allow(ShareNotifyDeleteJob).to receive(:perform_later) }
 
         specify 'uploading, deleting and notifications' do
+          visit '/concern/generic_works/new'
+          click_on 'Files'
+          attach_file('files[]', test_file_path(filename), visible: false)
+          click_on 'Metadata'
+          fill_in 'generic_work_title', with: filename + '_title'
+          fill_in 'generic_work_keyword', with: filename + '_keyword'
+          fill_in 'generic_work_creator', with: filename + '_creator'
+          fill_in 'generic_work_description', with: filename + '_description'
+          select 'Audio', from: 'generic_work_resource_type'
+          select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
+          within("#savewidget") do
+            choose 'generic_work_visibility_restricted'
+          end
+          check 'agreement'
+          click_on 'Save'
+          expect(page).to have_css('h1', filename + '_title')
           click_link "My Dashboard"
           expect(page).to have_css "table#activity"
           within("table#activity") do

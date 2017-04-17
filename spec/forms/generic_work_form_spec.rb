@@ -18,4 +18,15 @@ describe CurationConcerns::GenericWorkForm do
       it { is_expected.to include(title: ["I am in a space"], rights: "url") }
     end
   end
+
+  it_behaves_like "a standard work form"
+
+  describe "#visibility" do
+    subject { work }
+    context "with an existing work" do
+      let(:work) { build(:private_work) }
+      before { allow(work).to receive(:new_record?).and_return(false) }
+      its(:visibility) { is_expected.to eq("restricted") }
+    end
+  end
 end
