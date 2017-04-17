@@ -17,8 +17,12 @@ describe Collection, type: :feature do
       db_item_actions_toggle(collection).click
       click_link 'Delete Collection'
       expect(page).to have_content 'Collection was successfully deleted'
-      expect(page).to have_css '#documents'
-      expect(page).not_to have_content title
+      within("#my_nav") do
+        expect(page).to have_content("My Collections")
+      end
+      within("#documents") do
+        expect(page).not_to have_content title
+      end
     end
   end
 end

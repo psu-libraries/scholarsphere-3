@@ -27,4 +27,28 @@ describe CollectionsController, type: :controller do
     subject { described_class }
     its(:form_class) { is_expected.to be(CollectionForm) }
   end
+
+  describe "#delete" do
+    let(:user) { create(:user) }
+    let(:collection) { create(:collection, depositor: user.login) }
+
+    before do
+      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+    end
+
+    context "when the collection is successfully deleted" do
+      before { delete :destroy, id: collection }
+      it { is_expected.to redirect_to("/dashboard/collections") }
+    end
+
+    context "when the collection is not successfully deleted" do
+      before do
+        controller.instance_variable_set(:@collection, collection)
+        allow(collection).to receive(:destroy).and_return(false)
+        delete :destroy, id: collection
+      end
+      it { is_expected.to redirect_to("/dashboard/collections") }
+    end
+  end
 end
