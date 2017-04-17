@@ -1,36 +1,43 @@
-<!-- Overridden to:
+<%# Overridden to:
         make span an label
-        Add arria-hidden to empty spans
-        Put help text above the file list -->
+        Add aria-hidden to empty spans
+        Put help text above the file list
+#%>
 <div id="fileupload">
   <div class="alert alert-success">
     <%= t("sufia.upload.cloud_timeout_message_html", contact_href: link_to(t("sufia.upload.alert.contact_href_text"), sufia.contact_form_index_path)) %>
   </div>
 
-  <!-- Redirect browsers with JavaScript disabled to the origin page -->
-  <noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
-  <!-- The table listing the files available for upload/download -->
-  <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-
+  <!-- The fileupload-buttonbar contains buttons to add/delete files -->
   <h2><%= t('curation_concerns.base.form_files.local_upload') %></h2>
-  <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+  <span><%= t('scholarsphere.upload.local') %></span>
   <div class="row fileupload-buttonbar">
-    <div class="col-xs-7">
-        <input type="file" name="files[]" id="inputfiles" class="inputfile" multiple />
-        <label for="inputfiles"> Add files</label>
+    <div class="col-xs-4">
+      <input type="file" name="files[]" id="inputfiles" class="inputfile" multiple />
+      <label for="inputfiles">Add files</label>
       <% if browser_supports_directory_upload? %>
-          <input type="file" name="files[]" id="inputfolder" class="inputfile" multiple directory webkitdirectory>
-          <label for="inputfolder"> Add folder</label>
+        <input type="file" name="files[]" id="inputfolder"
+               class="inputfile" multiple directory webkitdirectory>
+        <label for="inputfolder">Add folder</label>
       <% end %>
-      <button type="reset" class="btn btn-warning cancel hidden">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-        <span>Cancel upload</span>
+    </div>
+    <div class="col-xs-8">
+      <div class="dropzone">
+        <%= t('curation_concerns.base.form_files.dropzone') %>
+      </div>
+    </div>
+  </div>
+  <div id="all_files" class="row hidden">
+    <div class="col-xs-4">
+      <button class="btn btn-info all" aria-label="Upload all local files from the listing of files">
+        <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+        <span>Upload all local files</span>
       </button>
       <!-- The global file processing state -->
       <span class="fileupload-process"></span>
     </div>
     <!-- The global progress state -->
-    <div class="col-xs-5 fileupload-progress fade">
+    <div class="col-xs-8 fileupload-progress fade">
       <!-- The global progress bar -->
       <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-success" style="width:0%;"></div>
@@ -39,13 +46,26 @@
       <div class="progress-extended">&nbsp;</div>
     </div>
   </div>
-  <div class="dropzone">
-    <%= t('curation_concerns.base.form_files.dropzone') %>
-  </div>
+
+  <h2><%= t('curation_concerns.base.form_files.external_upload') %></h2>
+  <%= render 'browse_everything', f: f %>
+
+  <!-- The table listing the files available for upload/download -->
+  <h2><%= t('scholarsphere.upload.available') %></h2>
+  <table class="table table-striped" aria-live="assertive">
+    <caption><%= t('scholarsphere.upload.caption') %></caption>
+    <thead>
+      <tr>
+        <th scope="col">File</th>
+        <th scope="col">Size</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="files"></tbody>
+  </table>
 </div>
 
+<!-- Redirect browsers with JavaScript disabled to the origin page -->
+<noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
+
 <%= render 'sufia/uploads/js_templates' %>
-<% if Sufia.config.browse_everything %>
-    <h2><%= t('curation_concerns.base.form_files.external_upload') %></h2>
-    <%= render 'browse_everything', f: f %>
-<% end %>

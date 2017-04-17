@@ -59,6 +59,9 @@ en:
       restrictions_html: "<h3>Maximum Upload Restrictions</h3><ul><li>Individual File Size: 500 MB</li><li>Up to 100 files and totaling less than 1GB in size</li></ul><p><a href='/contact'>Need to upload a larger file? Contact us for support.</a></p>"
       content_policy_html: "<h3>Content Policy</h3><p class='content-policy'>Please review <a href='/about#Content_Policy'>ScholarSphere’s Content Policy</a> to make sure you are not depositing materials that are sensitive.</p>"
       progress: "Saving your work. This may take a few moments"
+      available: "Files Available for Upload"
+      caption: "Listing of files ready to be uploaded"
+      local: "Files must be added before they can be uploaded"
   statistic:
     report:
       subject: "ScholarSphere - Statistic Report"

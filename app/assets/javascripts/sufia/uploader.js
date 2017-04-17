@@ -1,4 +1,9 @@
-// This is overriding Sufia's uploader.js so we can change the value of limitConcurrentUploads
+// Overrides Sufia's uploader.js
+// Injects new UI behavior where auto-uploading is disabled and a new button is provided to
+// being uploading all the files after their records are individually added to the DOM.
+// Although this does add on additional step to the workflow, it avoids the problems
+// we were seeing in #453, while at the same time enables non-sequential, concurrent
+// uploading for increased performance.
 
 //= require fileupload/tmpl
 //= require fileupload/jquery.iframe-transport
@@ -24,22 +29,23 @@
   $.fn.extend({
     sufiaUploader: function( options ) {
       // Initialize our jQuery File Upload widget.
-      // TODO: get these values from configuration.
       this.fileupload($.extend({
-        // xhrFields: {withCredentials: true},              // to send cross-domain cookies
-        // acceptFileTypes: /(\.|\/)(png|mov|jpe?g|pdf)$/i, // not a strong check, just a regex on the filename
-        // limitMultiFileUploadSize: 500000000, // bytes
-        // limit to one file at a time (see #453)
-        limitConcurrentUploads: 1,
+        sequentialUploads: false,
+        limitConcurrentUploads: 6,
         maxNumberOfFiles: 100,
         maxFileSize: 500000000, // bytes, i.e. 500 MB
-        autoUpload: true,
+        autoUpload: false,
         url: '/uploads/',
         type: 'POST',
         dropZone: $(this).find('.dropzone')
       }, options))
       .bind('fileuploadadded', function (e, data) {
         $(e.currentTarget).find('button.cancel').removeClass('hidden');
+        $(e.currentTarget).find('div#all_files').removeClass('hidden');
+      })
+      .bind('fileuploadcompleted', function (e, data) {
+        if ($('button.start').length == 0)
+          $(e.currentTarget).find('div#all_files').addClass('hidden');
       });
 
       $(document).bind('dragover', function(e) {
@@ -68,6 +74,11 @@
             window.dropZoneTimeout = null;
             dropZone.removeClass('in hover');
         }, 100);
+      });
+
+      $('button.all').on('click', function(event) {
+        event.preventDefault();
+        $('button.start').click();
       });
     }
   });
