@@ -45,7 +45,9 @@
     </div>
     <% unless current_user.can_make_deposits_for.empty? %>
         <div class="list-group-item">
-          <%= f.input :on_behalf_of, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: "Yourself" %>
+          <label for="generic_work_on_behalf_of"><%= t('curation_concerns.base.form_progress.on_behalf_of') %></label>
+          <p class="help-block"><%= t('curation_concerns.base.form_progress.on_behalf_of_help') %></p>
+          <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: "Yourself" %>
         </div>
     <% end %>
   </div>

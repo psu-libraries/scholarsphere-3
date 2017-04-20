@@ -87,6 +87,8 @@ en:
         metadata_required_complete: 'Required metadata complete'
         files_required: 'Add files'
         files_required_complete: 'Required files complete'
+        on_behalf_of: 'On behalf of'
+        on_behalf_of_help: 'Remember to correct the creator field if you are depositing on behalf of someone else.'
       form_files:
         external_upload: 'Add Files from the Cloud (E.g. Box, Dropbox)'
       metadata:
