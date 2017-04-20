@@ -28,13 +28,17 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   specify 'toggle displays additional information' do
-    first('i.glyphicon-chevron-right').click
-    expect(page).to have_content(collection.description.first)
+    first('span.glyphicon-chevron-right').click
+    expect(page).to have_content(collection.creator.first)
+    expect(page).to have_content(collection.depositor)
+    expect(page).to have_content "Edit Access"
     expect(page).to have_content(current_user)
   end
 
   specify 'additional information is hidden' do
-    expect(page).not_to have_content(collection.description)
+    expect(page).not_to have_content(collection.creator.first)
+    expect(page).not_to have_content(collection.depositor)
+    expect(page).not_to have_content "Edit Access"
     expect(page).not_to have_content(current_user)
   end
 

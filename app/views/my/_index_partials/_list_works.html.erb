@@ -48,8 +48,18 @@
 <tr id="detail_<%= document.id %>">
   <td colspan="6">
     <dl class="expanded-details row">
-      <dt class="col-xs-3 col-lg-2">File Format:</dt>
-      <dd class="col-xs-9 col-lg-10"><%= document.file_format %></dd>
+      <dt class="col-xs-3 col-lg-2">Creator:</dt>
+      <dd class="col-xs-9 col-lg-10"><%= document.creator.to_a.to_sentence %></dd>
+      <dt class="col-xs-3 col-lg-2">Depositor:</dt>
+      <dd class="col-xs-9 col-lg-10"><%= link_to_profile document.depositor %></dd>
+      <dt class="col-xs-3 col-lg-2"><%= t("sufia.dashboard.my.collection_list.edit_access") %></dt>
+      <dd class="col-xs-9 col-lg-10">
+        <% if document.edit_groups.present? %>
+            <%= t("sufia.dashboard.my.collection_list.groups") %> <%= document.edit_groups.join(', ') %>
+            <br/>
+        <% end %>
+        <%= t("sufia.dashboard.my.collection_list.users") %> <%= document.edit_people.join(', ') %>
+      </dd>
     </dl>
   </td>
 </tr>

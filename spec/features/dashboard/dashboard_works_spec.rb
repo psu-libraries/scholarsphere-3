@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'feature_spec_helper'
+
 include Selectors::Dashboard
 
 describe 'Dashboard Works', type: :feature do
@@ -39,16 +40,11 @@ describe 'Dashboard Works', type: :feature do
 
       # A return controller is specified
       expect(page).to have_css("input#return_controller", visible: false)
-
-      # TODO: This part of the test won't pass until this Sufia
-      #       ticket has been taken care of: https://github.com/projecthydra/sufia/issues/2054
-      #
-      # Clicking + displays additional metadata about that file
-      # within("#documents") do
-      #   first('i.glyphicon-chevron-right').click
-      # end
-      # expect(page).to have_content file.creator.first
-      # expect(page).to have_content "Edit Access"
+      # Displays additional metadata about that file
+      first('span.glyphicon-chevron-right').click
+      expect(page).to have_content file.creator.first
+      expect(page).to have_content file.depositor
+      expect(page).to have_content "Edit Access"
 
       db_item_actions_toggle(file).click
       click_link 'Edit Work'
