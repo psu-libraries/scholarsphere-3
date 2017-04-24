@@ -20,7 +20,7 @@ describe Collection, type: :feature do
         expect(page).to have_selector("label", class: "required", text: "Keyword")
       end
       within("div.collection_form_visibility") do
-        expect(find("input#visibility_restricted")).to be_checked
+        expect(find("input#visibility_open")).to be_checked
       end
     end
   end

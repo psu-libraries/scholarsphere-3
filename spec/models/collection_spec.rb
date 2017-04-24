@@ -25,4 +25,11 @@ describe Collection do
     let(:collection) { described_class }
     its(:indexer) { is_expected.to eq(CollectionIndexer) }
   end
+
+  context "with a new collection" do
+    let(:collection) { build(:collection) }
+
+    it { is_expected.not_to be_private_access }
+    it { is_expected.to be_open_access }
+  end
 end

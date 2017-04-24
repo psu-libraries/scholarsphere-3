@@ -4,6 +4,16 @@ class Collection < ActiveFedora::Base
   include CurationConcerns::BasicMetadata
   self.indexer = CollectionIndexer
 
+  def private_access?
+    super unless new_record?
+    false
+  end
+
+  def open_access?
+    super unless new_record?
+    true
+  end
+
   private
 
     # Field name to look up when locating the size of each file in Solr.
