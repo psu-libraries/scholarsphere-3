@@ -13,8 +13,8 @@
               To create a separate work for each of the files, go to <%= link_to "Batch upload", sufia.new_batch_upload_path,
                                                                                  class: 'btn btn-default' %>
             </p>
-            <p class="instructions"><%= t("sufia.batch_uploads.files.concepts") %></p>
-            <p class="instructions"><%= t("sufia.batch_uploads.files.instructions") %></p>
+            <p class="instructions"><%= t("sufia.concepts.work_collection") %></p>
+            <p class="instructions"><%= t("sufia.works.files.instructions") %></p>
         <% end %>
     <% end %>
     <%= render 'curation_concerns/base/guts4form', f: f %>

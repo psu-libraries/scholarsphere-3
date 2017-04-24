@@ -30,6 +30,9 @@ en:
       select_form:
         update: "Add to Collection"
         create_new: "Create New Collection"
+      concept: "A collection represents multiple works that are related by theme. A work consists of one or more files that work together as a functional unit. If your items are a functional unit, consider creating a work instead."
+    concepts:
+      work_collection: "A work consists of one or more files that work together as a functional unit. This might be software, a research project, or a presentation with associated images. If you are uploading multiple files that are more related by theme, consider creating a collection instead."
     upload:
       cloud_timeout_message_html: "Please note that if you upload a large number of files within a short period of time from Box or DropBox, the cloud provider may not be able to accommodate your request. If you experience any errors uploading from the cloud, let us know via the %{contact_href}."
       browse_everything:
@@ -42,11 +45,12 @@ en:
           metadata: "Metadata"
           relationships: "Collections"
           share: "Collaborators"
+      files:
+        instructions: "The file structure will be flattened and all files will be uploaded to one new work. If you'd like to maintain the file structure, consider using the zip or similar format."
       new:
         after_create_html: "Your files are being processed by %{application_name} in the background. Your files will be displayed below as they are processed. You may need to refresh this page to see these updates."
     batch_uploads:
       files:
-        concepts: "A work consists of one or more files that work together as a functional unit. This might be software, a research project, or a presentation with associated images. If you are uploading multiple files that are more related by theme, consider creating a collection instead."
         instructions: "The file structure will be flattened and each file will be uploaded to a separate new work resulting in one work per uploaded file. If you'd like to maintain the file structure, consider using the zip or similar format."
   simple_form:
     labels:
