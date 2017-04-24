@@ -23,6 +23,8 @@ en:
       greeting: "Hello"
       user_notifications: "User Notifications"
       transfer_files_link: "Select files to transfer"
+      my:
+        shares: 'Shared with Me'
     homepage:
       recently_uploaded:
         tab_label: 'Recent Additions'
@@ -80,6 +82,7 @@ en:
     institution:
       name: "Penn State"
     base:
+      back_to_top: 'Back to Top'
       social_media:
         facebook: 'Share on Facebook'
         twitter: 'Share on Twitter'
