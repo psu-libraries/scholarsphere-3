@@ -127,6 +127,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within("#savewidget") do
             choose 'generic_work_visibility_restricted'
           end
+          sleep(1.second)
           check 'agreement'
           click_on 'Metadata'
           fill_in 'generic_work_title', with: 'Markdown Test'
@@ -153,6 +154,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           visit '/concern/generic_works/new'
           click_on 'Files'
           attach_file('files[]', test_file_path(filename), visible: false)
+          click_on 'Start'
           click_on 'Metadata'
           fill_in 'generic_work_title', with: filename + '_title'
           fill_in 'generic_work_keyword', with: filename + '_keyword'
