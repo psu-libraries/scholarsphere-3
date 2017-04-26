@@ -42,12 +42,12 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_content("Visibility")
           expect(page).to have_content("Public")
           expect(page).to have_content("Embargo")
-          expect(page).to have_content("Private")
+          expect(page).not_to have_content("Private")
           expect(page).to have_content("Penn State")
           expect(page).to have_checked_field("Public")
           expect(page).to have_content("marking this as Public")
           sleep(1.second)
-          choose 'generic_work_visibility_restricted'
+          choose 'generic_work_visibility_authenticated'
           expect(page).not_to have_content("marking this as Public")
         end
 
@@ -125,7 +125,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
             expect(page).to have_content "Markdown Test.txt"
           end
           within("#savewidget") do
-            choose 'generic_work_visibility_restricted'
+            choose 'generic_work_visibility_authenticated'
           end
           sleep(1.second)
           check 'agreement'
@@ -163,7 +163,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           select 'Audio', from: 'generic_work_resource_type'
           select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
           within("#savewidget") do
-            choose 'generic_work_visibility_restricted'
+            choose 'generic_work_visibility_authenticated'
           end
           check 'agreement'
           click_on 'Save'
