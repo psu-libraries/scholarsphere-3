@@ -13,7 +13,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
     let(:file)                  { work }
     let(:work)                  { find_work_by_title "little_file.txt_title" }
 
-    before { sign_in_with_js(current_user) }
+    before { sign_in_with_named_js(:upload_and_delete, current_user, disable_animations: true) }
 
     describe "Sufia's default user agreement" do
       before { visit new_generic_work_path }
@@ -166,6 +166,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
             choose 'generic_work_visibility_authenticated'
           end
           check 'agreement'
+          sleep(1.second)
           click_on 'Save'
           expect(page).to have_css('h1', filename + '_title')
           click_link "My Dashboard"
