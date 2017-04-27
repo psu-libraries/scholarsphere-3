@@ -80,6 +80,8 @@ describe Collection, type: :feature do
       within("div.collection_date_created") do
         expect(page).to have_content("Published Date")
       end
+      expect(page).to have_checked_field("Public")
+      expect(page).to have_no_checked_field("Private")
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
       fill_in 'Creator', with: updated_creators.first
