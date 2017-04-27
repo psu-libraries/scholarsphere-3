@@ -112,7 +112,12 @@ namespace :deploy do
   desc "Restart resque-pool"
   task :resquepoolrestart do
     on roles(:job) do
-      execute "sudo /sbin/service resque_pool restart"
+      # You can remove this logic once we're all on the new servers
+      if host.hostname =~ /new/
+        execute "sudo /sbin/service resque restart"
+      else
+        execute "sudo /sbin/service resque_pool restart"
+      end
     end
   end
   after :published, :resquepoolrestart
