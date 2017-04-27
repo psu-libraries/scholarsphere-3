@@ -11,9 +11,11 @@
             role: "button",
             'aria-expanded'=> "false",
             'aria-controls'=> "extended-terms" %>
+<p class="hidden-xs"><a href="#savework" target="_self"><%= t('curation_concerns.base.back_to_top') %></a></p>
 <div id="extended-terms" class='collapse'>
   <%= render 'form_media', f: f %>
   <% f.object.secondary_terms.each do |term| %>
       <%= render_edit_field_partial(term, f: f) %>
   <% end %>
+  <p class="hidden-xs"><a href="#savework" target="_self"><%= t('curation_concerns.base.back_to_top') %></a></p>
 </div>
