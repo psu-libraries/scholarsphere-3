@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # NOTE: If you want the cronjob to run only on one machine, use :job for the roles
@@ -9,9 +10,10 @@ every :day, at: "12:00am", roles: [:app] do
   command "/dlt/scholarsphere/bin/whenever_generate_sitemap.sh"
 end
 
-every :day, at: "7:00am", roles: [:job] do
-  rake 'share:files'
-end
+# TODO: turn this back on once share notify implementation is back up and working
+# every :day, at: "7:00am", roles: [:job] do
+#   rake 'share:files'
+# end
 
 every :day, at: "12:20am", roles: [:job] do
   command "/dlt/scholarsphere/bin/whenever_audit_repository.sh"
