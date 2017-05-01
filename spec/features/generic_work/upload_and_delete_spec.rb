@@ -165,6 +165,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within("#savewidget") do
             choose 'generic_work_visibility_authenticated'
           end
+          sleep(1.second)
           check 'agreement'
           sleep(1.second)
           click_on 'Save'
