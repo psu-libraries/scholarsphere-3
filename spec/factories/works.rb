@@ -41,7 +41,7 @@ FactoryGirl.define do
       end
     end
 
-    factory :registered_file do
+    factory :registered_file, aliases: [:registered_work] do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
 
