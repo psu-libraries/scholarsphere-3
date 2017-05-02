@@ -62,6 +62,8 @@ en:
       available: "Files Available for Upload"
       caption: "Listing of files ready to be uploaded"
       local: "Files must be added before they can be uploaded"
+    batch_edit:
+      permissions_warning: "Warning! Making changes to visibility or sharing permissions will remove any existing permissions on the files in this batch and replace them with the ones specified here."
   statistic:
     report:
       subject: "ScholarSphere - Statistic Report"
