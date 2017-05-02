@@ -6,6 +6,8 @@
 <p>Changes will be applied to the following <%= @form.names.size %> works:</p>
 <%= @form.names.join(", ").html_safe %>
 
+<div class="alert alert-warning"><%= t('scholarsphere.batch_edit.permissions_warning') %></div>
+
 <div class="row">
   <div class="col-xs-12 col-sm-8" role="main">
 
@@ -36,11 +38,11 @@
             <div id="status_permissions" class="status fleft"></div>
           </div>
         <% end %>
-      </div>     
+      </div>
     </div>
 
     <!-- Ajax call to clear the batch before page uload. -->
-    <%= button_to "Clear Batch", { controller: :batch_edits, action: :clear }, 
+    <%= button_to "Clear Batch", { controller: :batch_edits, action: :clear },
         form_class: 'hidden', remote: true, id: 'clear_batch' %>
   </div>
 </div>

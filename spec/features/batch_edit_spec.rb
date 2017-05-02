@@ -42,6 +42,7 @@ describe "Batch management of works", type: :feature do
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
       expect(page).to have_no_checked_field("Private")
+      expect(page).to have_content(I18n.t('scholarsphere.batch_edit.permissions_warning'))
     end
   end
 
