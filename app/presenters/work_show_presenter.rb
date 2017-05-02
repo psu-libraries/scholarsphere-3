@@ -36,6 +36,10 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     send(field).zip(FacetValueCleaningService.call(send(field), config)).to_h
   end
 
+  def permission_badge_class
+    PublicPermissionBadge
+  end
+
   private
 
     # Override to add rows parameter

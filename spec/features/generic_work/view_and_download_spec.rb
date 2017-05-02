@@ -31,7 +31,7 @@ describe GenericWork, type: :feature do
         expect(page).to have_content work1.title.first
         expect(page).not_to have_link "Feature"
         within("h1 span") do
-          expect(page).to have_content("Open Access")
+          expect(page).to have_content("Public")
         end
 
         within("ul.breadcrumb") do

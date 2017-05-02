@@ -16,4 +16,8 @@ class FileSetPresenter < Sufia::FileSetPresenter
   def display_download_link?
     CurationConcerns.config.display_media_download_link
   end
+
+  def permission_badge_class
+    PublicPermissionBadge
+  end
 end
