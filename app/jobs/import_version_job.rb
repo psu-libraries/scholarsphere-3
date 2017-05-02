@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ImportVersionJob < ActiveJob::Base
   queue_as :files
   # @param [ActiveFedora::Base] the work class
@@ -7,6 +8,10 @@ class ImportVersionJob < ActiveJob::Base
     # characterize the current version
     CharacterizeJob.perform_now(file_set, file_set.original_file.id, filename_on_disk)
   ensure
-    File.delete(filename_on_disk)
+    begin
+      File.delete(filename_on_disk)
+    rescue StandardError => e
+      logger.warn("Error deleting #{filename_on_disk}: #{e.message}")
+    end
   end
 end
