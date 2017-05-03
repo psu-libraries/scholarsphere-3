@@ -74,6 +74,7 @@ set :linked_files, fetch(:linked_files, []).push(
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
   'public/system',
+  'public/uploads',
   'tmp/cache',
   'tmp/pids',
   'tmp/sockets',
@@ -114,6 +115,7 @@ namespace :deploy do
   task :symlink_shared_directories do
     on roles(:web, :job) do
       execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
+      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads /opt/heracles/deploy/scholarsphere/shared/public/"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.txt"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
