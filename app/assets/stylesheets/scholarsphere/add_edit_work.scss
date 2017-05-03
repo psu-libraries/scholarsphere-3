@@ -49,3 +49,8 @@ select.form-control.select_perm {
   display: inline-block;
   width: auto;
 }
+
+.name,
+.filename {
+  word-break: break-all;
+}
