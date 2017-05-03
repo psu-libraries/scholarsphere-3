@@ -1,24 +1,23 @@
 # frozen_string_literal: true
-# This file is a Work in Progress
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe GenericWork, type: :feature do
-  context "when viewing as a standard user" do
+  context "as a standard user" do
     let(:current_user) { create(:user) }
-    let!(:work1) do
-      create(:public_work, :with_one_file_and_size, :with_complete_metadata,
-             depositor: current_user.login,
-             description: ["Description http://example.org/TheDescriptionLink/"]
-            )
-    end
-    let!(:work2) { create(:private_work, depositor: current_user.login) }
 
     before { sign_in_with_js(current_user) }
 
-    context 'When viewing a file' do
-      specify "I see all the correct information" do
+    context "with a public work" do
+      let!(:work1) do
+        create(:public_work, :with_one_file_and_size, :with_complete_metadata,
+               depositor: current_user.login,
+               description: ["Description http://example.org/TheDescriptionLink/"]
+              )
+      end
+
+      specify "I can see all the correct information" do
         visit(root_path)
 
         # Work is listed under Recently Uploaded
@@ -37,8 +36,7 @@ describe GenericWork, type: :feature do
 
         within("ul.breadcrumb") do
           expect(page).to have_link("My Dashboard")
-          # TODO: sufia does not contain the works breadcrumb
-          # expect(page).to have_link("My Works")
+          expect(page).to have_link("My Works")
         end
 
         within("p.work_description") do
@@ -63,28 +61,49 @@ describe GenericWork, type: :feature do
           end
           expect(page).to have_content("Published Date")
         end
-
-        # TODO: loop through all links to visit and check them
-        # test_links.each do |name, link|
-        #   test_link name, link
-        # end
-
-        # test the EndNote page
-        visit(find_link('EndNote')[:href])
-        expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
       end
 
-      # specify 'I can see the Mendeley modal' do
-      #  skip 'This does not appear to be functioning properly'
-      #  click_link 'Mendeley'
-      #  expect(page).to have_css('.modal-header')
-      # end
-      #
-      # specify 'I can see the Zotero modal' do
-      #  skip 'This does not appear to be functioning properly'
-      #  click_link 'Zotero'
-      #  expect(page).to have_css('.modal-header')
-      # end
+      describe "external services" do
+        before { visit(curation_concerns_generic_work_path(work1)) }
+
+        specify "I can download an Endnote reference" do
+          visit(find_link('EndNote')[:href])
+          expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
+        end
+
+        specify 'I can see the Mendeley modal' do
+          click_link 'Mendeley'
+          expect(page).to have_css('.modal-header')
+        end
+
+        specify 'I can see the Zotero modal' do
+          click_link 'Zotero'
+          expect(page).to have_css('.modal-header')
+        end
+      end
+    end
+
+    context "with a registered work" do
+      let(:registered_user)  { create(:user) }
+      let!(:registered_work) { create(:registered_work, title: ["Reg. work"], depositor: registered_user.login) }
+
+      specify "I can see all the correct information" do
+        visit(root_path)
+
+        # Work is listed under Recently Uploaded
+        click_link("Recent Additions")
+        within("#recent_docs") do
+          expect(page).to have_link(registered_work.keyword.first)
+          click_link(registered_work.title.first)
+        end
+
+        # View the work's show page
+        expect(page).to have_content registered_work.title.first
+        expect(page).not_to have_link "Feature"
+        within("h1 span") do
+          expect(page).to have_content("Penn State")
+        end
+      end
     end
   end
 
@@ -107,21 +126,5 @@ describe GenericWork, type: :feature do
       before  { db_item_title(private_file).click }
       specify { expect(page).not_to have_link "Feature" }
     end
-  end
-
-  context 'When downloading a file' do
-    # TBD
-  end
-
-  def store_link(link_name, test_links)
-    expect(page).to have_link link_name
-    test_links[link_name] = find_link(link_name)[:href]
-    test_links
-  end
-
-  def test_link(_link_name, link_value)
-    visit link_value
-    expect(page).to have_content work1.title.first
-    expect(page).not_to have_content work1.title.first
   end
 end

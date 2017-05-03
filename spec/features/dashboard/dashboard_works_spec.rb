@@ -6,13 +6,17 @@ include Selectors::Dashboard
 describe 'Dashboard Works', type: :feature do
   let!(:current_user) { create(:user) }
 
-  let!(:file) do
+  let!(:work1) do
     create(:public_work, :with_complete_metadata,
            depositor: current_user.login,
            title: ['little_file.txt'],
            creator: ['little_file.txt_creator'],
            date_uploaded: DateTime.now + 1.hour
           )
+  end
+
+  let!(:work2) do
+    create(:registered_work, depositor: current_user.login, title: ['Registered work'])
   end
 
   let(:jill) { create(:jill) }
@@ -25,28 +29,38 @@ describe 'Dashboard Works', type: :feature do
     go_to_dashboard_works
   end
 
-  let(:filename) { file.title.first }
+  let(:filename) { work1.title.first }
 
-  context 'with one work:' do
+  context 'with two works' do
     specify 'interactions are wired correctly' do
       # tab title and buttons
       expect(page).to have_content("My Works")
       expect(page).to have_selector("h2.sr-only", text: "Works listing")
       expect(page).to have_link("New Work", visible: false) # link is there (even if collapsed)
       expect(page).to have_link("New Collection", visible: false) # link is there (even if collapsed)
-      # Additional metadata about the file is hidden
+
+      # Additional metadata about the work1 is hidden
       expect(page).not_to have_content "Edit Access"
-      expect(page).not_to have_content file.creator.first
+      expect(page).not_to have_content work1.creator.first
 
       # A return controller is specified
       expect(page).to have_css("input#return_controller", visible: false)
-      # Displays additional metadata about that file
+
+      # Displays visibility information about my works
+      within("#document_#{work1.id}") do
+        expect(page).to have_selector("span.label-success", text: "Open Access")
+      end
+      within("#document_#{work2.id}") do
+        expect(page).to have_selector("span.label-info", text: "Penn State")
+      end
+
+      # Displays additional metadata about that work1
       first('span.glyphicon-chevron-right').click
-      expect(page).to have_content file.creator.first
-      expect(page).to have_content file.depositor
+      expect(page).to have_content work1.creator.first
+      expect(page).to have_content work1.depositor
       expect(page).to have_content "Edit Access"
 
-      db_item_actions_toggle(file).click
+      db_item_actions_toggle(work1).click
       click_link 'Edit Work'
       expect(page).to have_content("Edit Work")
       expect(page).to have_field("generic_work[title][]", with: filename)
@@ -55,36 +69,36 @@ describe 'Dashboard Works', type: :feature do
       # TODO: This part of the test won't pass until this Sufia
       #       ticket has been closed: https://github.com/projecthydra/sufia/issues/2049
       go_to_dashboard_works
-      db_visibility_link(file).trigger('click')
+      db_visibility_link(work1).trigger('click')
       expect(page).to have_content('Sharing With')
 
-      # Clicking Transfer Ownership of File loads the transfer ownership page
+      # Clicking Transfer Ownership loads the transfer ownership page
       go_to_dashboard_works
-      db_item_actions_toggle(file).click
+      db_item_actions_toggle(work1).click
       click_link 'Transfer Ownership of Work'
       expect(page).to have_content "Transfer ownership of \"#{filename}\""
     end
 
     context 'When I highlight it' do
       before do
-        db_item_actions_toggle(file).click
+        db_item_actions_toggle(work1).click
         click_link 'Highlight Work on Profile'
-        db_item_actions_toggle(file).click
+        db_item_actions_toggle(work1).click
         expect(page).to have_content "Unhighlight Work"
-        db_item_actions_toggle(file).trigger('click')
+        db_item_actions_toggle(work1).trigger('click')
       end
       specify 'It is highlighted' do
         # It is highlighted on my profile
         visit "/users/#{current_user.login}\#contributions"
         expect(page).to have_css '.active a', text: "Highlighted"
         within '#contributions' do
-          expect(page).to have_link file.title.first
+          expect(page).to have_link work1.title.first
         end
 
         # It is displayed on my highlights
         go_to_dashboard_highlights
         within '#documents' do
-          expect(page).to have_link file.title.first
+          expect(page).to have_link work1.title.first
         end
       end
     end
@@ -92,7 +106,7 @@ describe 'Dashboard Works', type: :feature do
     # TODO: Feature tests for single-use links
     # describe 'The Single-Use Link:' do
     #   skip 'Places the link on the clipboard'
-    #   skip 'The first visit displays the file data'
+    #   skip 'The first visit displays the work1 data'
     #   skip 'Subsequent visits fail to load the page'
     # end
   end
@@ -117,7 +131,7 @@ describe 'Dashboard Works', type: :feature do
         expect(page).to have_css('.pagination')
 
         # Increasing Show per page beyond my current number of works and I should not see a page
-        expect(GenericWork.count).to eq(11)
+        expect(GenericWork.count).to eq(12)
         select('20', from: 'per_page')
         find_button('Refresh').click
         expect(page).not_to have_css('.pager')
@@ -132,29 +146,29 @@ describe 'Dashboard Works', type: :feature do
         page_should_not_list_any_files
 
         # When I search by title using exact words it displays the correct results
-        search_my_files_by_term(file.title.first)
-        expect(page).to have_content "You searched for: #{file.title.first}"
-        page_should_only_list file
+        search_my_files_by_term(work1.title.first)
+        expect(page).to have_content "You searched for: #{work1.title.first}"
+        page_should_only_list work1
 
         # To Do resource type does not seem to be searchable
         ## When I search by Resource Type it displays the correct results
-        # search_my_files_by_term( file.resource_type )
-        # expect(page).to have_content "You searched for: #{file.resource_type}"
-        # page_should_only_list file
+        # search_my_files_by_term( work1.resource_type )
+        # expect(page).to have_content "You searched for: #{work1.resource_type}"
+        # page_should_only_list work1
 
         # When I search by Keywords it displays the correct results
-        search_my_files_by_term(file.keyword.first)
-        expect(page).to have_content "You searched for: #{file.keyword.first}"
-        page_should_only_list file
+        search_my_files_by_term(work1.keyword.first)
+        expect(page).to have_content "You searched for: #{work1.keyword.first}"
+        page_should_only_list work1
 
         # allows me to remove constraints
         find('span.glyphicon-remove').click
         expect(page).not_to have_content "You searched for:"
 
         # When I search by Creator it displays the correct results
-        search_my_files_by_term(file.creator.first.to_s)
-        expect(page).to have_content "You searched for: #{file.creator.first}"
-        page_should_only_list file
+        search_my_files_by_term(work1.creator.first.to_s)
+        expect(page).to have_content "You searched for: #{work1.creator.first}"
+        page_should_only_list work1
       end
     end
 
@@ -186,10 +200,10 @@ describe 'Dashboard Works', type: :feature do
       specify 'Items are sorted correctly' do
         select("date uploaded ▼", from: "sort")
         click_button("Refresh")
-        expect(page).to have_content(file.title.first)
+        expect(page).to have_content(work1.title.first)
         select("date uploaded ▲", from: "sort")
         click_button("Refresh")
-        expect(page).not_to have_content(file.title.first)
+        expect(page).not_to have_content(work1.title.first)
       end
     end
 
@@ -242,13 +256,13 @@ describe 'Dashboard Works', type: :feature do
 
   let(:title_field) { Solrizer.solr_name("title", :stored_searchable, type: :string) }
   let(:resp) { ActiveFedora::SolrService.instance.conn.get "select", params: { fl: ['id', title_field] } }
-  def page_should_only_list(file)
+  def page_should_only_list(work1)
     expect(page).to have_selector('li.active', text: "My Works")
-    expect(page).to have_content file.title.first
+    expect(page).to have_content work1.title.first
     resp["response"]["docs"].each do |gf|
       unless gf[title_field].nil?
         title = gf[title_field].first
-        expect(page).not_to have_content title unless title == file.title.first
+        expect(page).not_to have_content title unless title == work1.title.first
       end
     end
   end
@@ -279,7 +293,7 @@ describe 'Dashboard Works', type: :feature do
                                  subject: ["Subject1"], language: ["Language1"],
                                  based_near: ["Location1"], publisher: ["Publisher1"])
 
-      # TODO: how to do we set the file format in the objects with build
+      # TODO: how to do we set the work1 format in the objects with build
       hash = work.to_solr
       hash[Solrizer.solr_name("file_format", :facetable)] = "plain ()"
       conn.add hash
