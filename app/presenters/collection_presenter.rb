@@ -4,4 +4,8 @@ class CollectionPresenter < Sufia::CollectionPresenter
   def self.terms
     super + [:date_modified, :date_uploaded]
   end
+
+  def permission_badge_class
+    PublicPermissionBadge
+  end
 end

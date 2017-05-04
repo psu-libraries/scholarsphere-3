@@ -48,7 +48,7 @@ describe 'Dashboard Works', type: :feature do
 
       # Displays visibility information about my works
       within("#document_#{work1.id}") do
-        expect(page).to have_selector("span.label-success", text: "Open Access")
+        expect(page).to have_selector("span.label-success", text: "Public")
       end
       within("#document_#{work2.id}") do
         expect(page).to have_selector("span.label-info", text: "Penn State")
