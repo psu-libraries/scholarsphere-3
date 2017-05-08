@@ -13,6 +13,7 @@ module Import
     #   @option :created date the version was created
     #
     def build(file_set, generic_file_versions)
+      time_start = DateTime.now
       if file_set.id.nil?
         raise "FileSet must have an id before importing any versions"
       end
@@ -39,7 +40,10 @@ module Import
       # give the actual file its original file_name as opposed to the one we
       # used for convenience in this script
       file_set.original_file.file_name = file_set.label
-      file_set.original_file.save
+      stat = file_set.original_file.save
+      time_end = DateTime.now
+      Rails.logger.debug "[IMPORT] #{file_set.id} file_set build took #{time_end - time_start}"
+      stat
     end
 
     private
