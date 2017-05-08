@@ -17,11 +17,14 @@ module Import
     #                versions: [],
     #                permissions: [ { id: "b5911dfd-07b1-43ab-b11d-1bc0534d874c", agent: "http://projecthydra.org/ns/auth/person#cam156@psu.edu", mode: "http://www.w3.org/ns/auth/acl#Write", access_to: "44558d49x" } ] }
     def build(gf_metadata)
+      time_start = DateTime.now
       work = super(gf_metadata)
       work.date_uploaded = DateTime.parse(work.date_uploaded)
       work.date_modified = DateTime.parse(work.date_modified)
       data = gf_metadata.symbolize_keys
       work.creator = data[:creator].map(&:squish) unless data[:creator].blank?
+      time_end = DateTime.now
+      Rails.logger.debug "[IMPORT] #{work.id} work build took #{time_end - time_start}"
       work
     end
   end
