@@ -34,6 +34,11 @@ describe GenericWork, type: :feature do
           expect(page).to have_content("Public")
         end
 
+        # Meta tag information for Google Scholar
+        expect(page).to have_css('meta[name="citation_title"]', visible: false)
+        expect(page).to have_css('meta[name="citation_author"]', visible: false)
+        expect(page).to have_css('meta[name="citation_publication_date"]', visible: false)
+
         within("ul.breadcrumb") do
           expect(page).to have_link("My Dashboard")
           expect(page).to have_link("My Works")

@@ -1,8 +1,19 @@
 <%#
-    Overrides the CC title helper in Sufia and hard code string with interpolated values.
-    Overrides Sufia to swap the order of relationships and descriptions partials
+    - Overrides the CC title helper in Sufia and hard code string with interpolated values.
+    - Overrides Sufia to swap the order of relationships and descriptions partials
+    - Moves Twitter and Google Scholar meta tags
 %>
+
+<% content_for(:twitter_meta) do %>
+  <%= render "shared/twitter", presenter: @presenter %>
+<% end %>
+
+<% content_for(:gscholar_meta) do %>
+  <%= render "shared/gscholar", presenter: @presenter %>
+<% end %>
+
 <% provide :page_title, "Work | #{@presenter.title.first} | Work ID: #{@presenter.id} | ScholarSphere" %>
+
 <div itemscope itemtype="http://schema.org/CreativeWork" class="row">
   <div class="col-xs-12">
     <header>
