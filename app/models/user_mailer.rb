@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserMailer < ActionMailer::Base
   attr_reader :presenter
   default from: Rails.application.config.action_mailer.default_options.fetch(:from)
@@ -24,7 +25,9 @@ class UserMailer < ActionMailer::Base
 
     def stats_report
       GenericWorkListToCSVService.new(
-        Sufia::QueryService.new.build_date_query(presenter.start_datetime, presenter.end_datetime)
+        GenericWork.where(
+          Sufia::QueryService.new.build_date_query(presenter.start_datetime, presenter.end_datetime)
+        )
       ).csv
     end
 end
