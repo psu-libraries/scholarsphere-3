@@ -42,7 +42,7 @@ module Import
       file_set.original_file.file_name = file_set.label
       stat = file_set.original_file.save
       time_end = DateTime.now
-      Rails.logger.debug "[IMPORT] #{file_set.id} file_set build took #{time_end - time_start}"
+      Rails.logger.debug "[IMPORT] #{file_set.id} file_set build took #{time_end.to_f - time_start.to_f}"
       stat
     end
 

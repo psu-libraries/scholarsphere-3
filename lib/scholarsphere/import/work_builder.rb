@@ -19,12 +19,14 @@ module Import
     def build(gf_metadata)
       time_start = DateTime.now
       work = super(gf_metadata)
+      time_end = DateTime.now
+      Rails.logger.debug "[IMPORT] #{work.id} work super build took #{time_end.to_f - time_start.to_f}"
       work.date_uploaded = DateTime.parse(work.date_uploaded)
       work.date_modified = DateTime.parse(work.date_modified)
       data = gf_metadata.symbolize_keys
       work.creator = data[:creator].map(&:squish) unless data[:creator].blank?
       time_end = DateTime.now
-      Rails.logger.debug "[IMPORT] #{work.id} work build took #{time_end - time_start}"
+      Rails.logger.debug "[IMPORT] #{work.id} work build took #{time_end.to_f - time_start.to_f}"
       work
     end
   end
