@@ -170,6 +170,18 @@ namespace :deploy do
   end
   after :migrate, :roleassets
 
+  desc "Create a symlink to assets used by Resque"
+  task :symlink_resque_assets do
+    on roles(:web) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "resque:assets"
+        end
+      end
+    end
+  end
+  after :roleassets, :symlink_resque_assets
+
   # Passenger Capistrano Task
   # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
   # as Ruby is updated on the system.  The PassengerDefaultRuby variable is set to system ruby by default from the Yum

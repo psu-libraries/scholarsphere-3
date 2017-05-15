@@ -25,3 +25,11 @@ task "resque:retry-failed-jobs" => :environment do
   end
 end
 
+desc "Symlinks assets from Resque's gem to the public/admin folder"
+task "resque:assets" => :environment do
+  FileUtils.mkdir_p(File.join(Rails.root, "public/admin"))
+  resque_path = Gem::Specification.all.select { |gem| gem.name == "resque" }.first.gem_dir
+  assets = File.join(resque_path, "lib/resque/server/public")
+  target = File.join(Rails.root, "public/admin/queues")
+  FileUtils.ln_sf(assets, target)
+end
