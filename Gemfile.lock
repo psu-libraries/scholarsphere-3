@@ -468,7 +468,7 @@ GEM
       multi_json (~> 1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    mail (2.6.4)
+    mail (2.6.6.rc1)
       mime-types (>= 1.16, < 4)
     mailboxer (0.14.0)
       carrierwave (>= 0.5.8)
@@ -856,6 +856,7 @@ DEPENDENCIES
   kaminari_route_prefix
   launchy
   ldap_disambiguate
+  mail (= 2.6.6.rc1)
   mysql2 (~> 0.3.17)
   namae (= 0.9.3)
   nest
@@ -892,4 +893,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
