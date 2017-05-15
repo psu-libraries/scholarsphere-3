@@ -12,6 +12,9 @@ gem 'curation_concerns', github: 'projecthydra/curation_concerns', ref: 'b073550
 gem 'hydra-works', github: 'projecthydra/hydra-works', ref: 'f948eb0'
 gem 'browse-everything', github: 'projecthydra/browse-everything', ref: '0e33595'
 
+# Use patched version of mail. Remove this once 2.6.6 is officially out
+gem 'mail', '= 2.6.6.rc1'
+
 # Other components
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coffee-rails'
