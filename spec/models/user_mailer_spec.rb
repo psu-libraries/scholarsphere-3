@@ -1,7 +1,11 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe UserMailer do
+  before :all do
+    GenericWork.destroy_all
+  end
   describe "#acknowledgment_email" do
     let(:form)    { { sufia_contact_form: { email: "email@somewhere.com", subject: "Selected topic" } } }
     let(:params)  { ActionController::Parameters.new(form) }
@@ -19,9 +23,10 @@ describe UserMailer do
     let(:message)      { described_class.stats_email(1.day.ago, DateTime.now) }
     let(:mock_service) { double }
     let(:csv)          { "a,b,c\nd,e,f\n" }
+    let!(:generic_work) { create :work, :with_pdf }
 
     before do
-      allow(GenericWorkListToCSVService).to receive(:new).and_return(mock_service)
+      allow(GenericWorkListToCSVService).to receive(:new).with([generic_work]).and_return(mock_service)
       allow(mock_service).to receive(:csv).and_return(csv)
     end
 
