@@ -1,4 +1,5 @@
-<% if file_set.respond_to?(:display_download_link?) && file_set.display_download_link? %>
+<%# Overrides Sufia to add class to download link to track statistics via GA %>
+<% if CurationConcerns.config.display_media_download_link %>
     <div>
       <h2 class="sr-only"><%= t('curation_concerns.show.downloadable_content.heading') %></h2>
       <%= image_tag thumbnail_url(file_set),
@@ -9,7 +10,7 @@
                   target: :_blank,
                   data: { turbolinks: false },
                   class: "btn btn-default ga-download" do %>
-          <%= t('curation_concerns.show.downloadable_content.default_link') %>
+          <%= t('curation_concerns.show.downloadable_content.image_link') %>
       <% end %>
     </div>
 <% else %>
