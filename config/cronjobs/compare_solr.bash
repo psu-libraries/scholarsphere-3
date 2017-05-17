@@ -7,7 +7,7 @@
 #  Description:  Compares number of objects in Solr with Fedora
 #                and emails the results
 #
-# V  Installed  Programmer    Description                                     
+# V  Installed  Programmer    Description
 # -- ---------- ------------  -------------------------------------------------
 # 01 2014-09-22 awead         First Edition
 #
@@ -32,7 +32,7 @@ fi
 RESULTS=`bundle exec rake scholarsphere:solr:compare`
 if [ $? -ne 0 ]; then
   MESSAGE="rake scholarsphere:solr:compare exited with a non-zero status. Last success was $DATE. $RESULTS"
-  echo $MESSAGE | mail -s "$SUBJECT" UL-DLT-HYDRA@LISTS.PSU.EDU
+  echo $MESSAGE | mail -s "$SUBJECT" umg-up.its.scholarsphere-support@groups.ucs.psu.edu
 else
   date > /tmp/last_compare_solr_run
 fi

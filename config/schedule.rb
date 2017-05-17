@@ -4,6 +4,9 @@
 #
 # NOTE: If you want the cronjob to run only on one machine, use :job for the roles
 #       otherwise, the :app role will run the cronjob on every server!
+
+# Create the log file, if it isn't there
+FileUtils.touch("#{path}/log/wheneveroutput.log")
 set :output, "#{path}/log/wheneveroutput.log"
 
 every :day, at: "12:00am", roles: [:app] do
@@ -29,6 +32,10 @@ end
 
 every :monday, at: "6:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/send_weekly_stats.bash"
+end
+
+every :day, at: "5:00 am", roles: [:job] do
+  command "#{path}/config/cronjobs/send_daily_stats.bash"
 end
 
 every 60.minutes, roles: [:app] do
