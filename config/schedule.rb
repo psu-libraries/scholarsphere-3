@@ -1,9 +1,16 @@
 # frozen_string_literal: true
-
 # Use this file to easily define all of your cron jobs.
 #
-# NOTE: If you want the cronjob to run only on one machine, use :job for the roles
+# @example Running commands manually
+#   bundle exec cap whenever:clear_crontab
+#   bundle exec cap whenever:update_crontab
+#
+# @note If you want the cronjob to run only on one machine, use :job for the roles
 #       otherwise, the :app role will run the cronjob on every server!
+# @note The clear_crontab and update_crontab commands are run automatically when running cap deploy
+#
+# @see http://github.com/javan/whenever
+
 set :output, "#{path}/log/wheneveroutput.log"
 
 every :day, at: "12:00am", roles: [:app] do
@@ -31,6 +38,10 @@ every :monday, at: "6:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/send_weekly_stats.bash"
 end
 
+every :day, at: "5:00 am", roles: [:job] do
+  command "#{path}/config/cronjobs/send_daily_stats.bash"
+end
+
 every 60.minutes, roles: [:app] do
   command "#{path}/config/cronjobs/temp_file_clean.bash"
 end
@@ -38,5 +49,3 @@ end
 every 10.minutes, roles: [:job] do
   command "#{path}/config/cronjobs/resque-cleanup.bash"
 end
-
-# Learn more: http://github.com/javan/whenever

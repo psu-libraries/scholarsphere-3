@@ -33,8 +33,8 @@ set :passenger_roles, :web
 # rails settings, NOTE: Task is wired into event stack
 set :rails_env, 'production'
 
-# whenever settings, NOTE: Task is wired into event stack
-set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+# Settings for whenever gem that updates the crontab file on the server
+# See schedule.rb for details
 set :whenever_roles, [:app, :job]
 
 set :log_level, :debug
