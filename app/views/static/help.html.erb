@@ -12,9 +12,6 @@
     <li>
       <a href="#faq">Frequently Asked Questions</a>
     </li>
-    <li>
-      <a href="#user_guide">User Guides</a>
-    </li>
   </ol>
 
 <h2 id="user_support">User Support</h2>
@@ -33,9 +30,3 @@
 <h2 id="faq">Frequently Asked Questions</h2>
 <%= editable_content_block @page %>
 <%= tiny_mce_stuff if can? :update, ContentBlock%>
-
-<h2 id="user_guide">User Guides</h2>
-  <p>For step-by-step instructions on how to upload a file to ScholarSphere: <a href="/getting-started.pdf" target="_blank">Getting Started</a></p>
-  <p>For step-by-step instructions on how to create a collection in ScholarSphere: <a href="/collection.pdf" target="_blank">Collections</a></p>
-  <p/>
-  <p>*For additional assistance using ScholarSphere, please submit a request for consultation via the Contact Form (link to contact form)</p>

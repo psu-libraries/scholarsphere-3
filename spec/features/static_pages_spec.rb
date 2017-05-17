@@ -12,12 +12,9 @@ describe "Static pages" do
     expect(page).to have_content("Frequently Asked Questions")
     expect(page).to have_content("User Support")
     expect(page).to have_content("Support Hours")
-    expect(page).to have_content("User Guides")
     expect(page).to have_link("Contact Form")
     expect(page).to have_link("Publishing and Curation Services")
     expect(page).to have_link("University Libraries")
-    expect(page).to have_link("Getting Started")
-    expect(page).to have_link("Collections")
   end
 
   it "displays the Zotero page" do
