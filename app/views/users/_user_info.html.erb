@@ -34,7 +34,7 @@
 
       <% if user.telephone %>
           <dt><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> Telephone</dt>
-          <dd><%= link_to_telephone(user) %></dd>
+          <dd><%= link_to user.telephone, "tel:#{user.telephone.gsub(/\s+/, "")}" %></dd>
       <% end %>
     </dl>
   </div>
