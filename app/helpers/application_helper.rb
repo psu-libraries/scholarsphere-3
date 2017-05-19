@@ -44,4 +44,22 @@ module ApplicationHelper
   def more_facets_link_path(solr_field)
     sufia.send("dashboard_#{controller_name}_facet_path", solr_field)
   end
+
+  # @return [Array] used to render link that switches to a new work with any included collections
+  def switch_to_new_work_path
+    if params.key?(:collection_ids)
+      [:new, Sufia.primary_work_type.model_name.singular_route_key, collection_ids: params.fetch(:collection_ids)]
+    else
+      [:new, Sufia.primary_work_type.model_name.singular_route_key]
+    end
+  end
+
+  # @return [String] used to render link that switches to the batch create page with any included collections
+  def switch_to_batch_upload_path
+    if params.key?(:collection_ids)
+      sufia.new_batch_upload_path(collection_ids: params.fetch(:collection_ids))
+    else
+      sufia.new_batch_upload_path
+    end
+  end
 end
