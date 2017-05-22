@@ -49,4 +49,6 @@ Sufia.config do |config|
   config.noid_template = ".reeeddeeddk"
 
   config.google_analytics_id = Rails.application.config.google_analytics_id
+
+  config.redis_namespace = "scholarsphere"
 end
