@@ -139,6 +139,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           sleep(1.second)
           click_on 'Save'
           expect(page).to have_content 'Your files are being processed'
+          within("#activity_log") do
+            expect(page).to have_content("User #{current_user.display_name} has deposited Markdown Test")
+          end
           expect(page).to have_css('h1', 'Markdown Test')
           click_on "Notifications"
           expect(page).to have_content "The file (Markdown Test.txt) was successfully imported"

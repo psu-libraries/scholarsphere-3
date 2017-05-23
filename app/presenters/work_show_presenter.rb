@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
+  include Sufia::WithEvents
 
   delegate :bytes, to: :solr_document
 
@@ -38,6 +39,14 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   def permission_badge_class
     PublicPermissionBadge
+  end
+
+  def event_class
+    solr_document.hydra_model
+  end
+
+  def events(size = 100)
+    super(size)
   end
 
   private
