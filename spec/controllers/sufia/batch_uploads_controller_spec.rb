@@ -39,6 +39,25 @@ describe Sufia::BatchUploadsController do
         expect(flash[:notice]).to include("Your files are being processed")
       end
     end
+
+    context "when providing a collection" do
+      let(:params) do
+        ActionController::Parameters.new(
+          title: { '1' => 'foo' },
+          resource_type: { '1' => 'Article' },
+          uploaded_files: ['1'],
+          batch_upload_item: { keyword: [""], visibility: 'open', collection_ids: ["collection-id"] }
+        )
+      end
+
+      before { allow(BatchCreateJob).to receive(:perform_later) }
+
+      it "redirects to the collection show page" do
+        post :create, params
+        expect(response).to redirect_to("/collections/collection-id")
+        expect(flash[:notice]).to include("Your files are being processed")
+      end
+    end
   end
 
   describe "#uploading_on_behalf_of?" do

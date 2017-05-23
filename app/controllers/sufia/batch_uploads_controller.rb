@@ -46,4 +46,21 @@ class Sufia::BatchUploadsController < ApplicationController
     def uploading_on_behalf_of?
       params.fetch(hash_key_for_curation_concern).fetch(:on_behalf_of, nil).present?
     end
+
+    # Overrides Sufia to redirect to a collection's show page if needed
+    def redirect_after_update
+      if collection?
+        redirect_to collection_path(attributes_for_actor.fetch(:collection_ids).first)
+      elsif uploading_on_behalf_of?
+        redirect_to sufia.dashboard_shares_path
+      else
+        redirect_to sufia.dashboard_works_path
+      end
+    end
+
+  private
+
+    def collection?
+      attributes_for_actor.fetch(:collection_ids, []).present?
+    end
 end
