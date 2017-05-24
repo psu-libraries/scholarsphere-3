@@ -31,8 +31,8 @@ module ScholarSphere
     config.google_analytics_id = ENV.fetch("google_analytics_id", nil)
     config.stats_email = ENV.fetch("stats_email", "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
 
-    config.scholarsphere_version = "v2.8"
-    config.scholarsphere_release_date = "October 24, 2016"
+    config.scholarsphere_version = "v3.0"
+    config.scholarsphere_release_date = "June 9, 2016"
     config.redis_namespace = "scholarsphere"
 
     # Number of fits array items shown on the Generic File show page
