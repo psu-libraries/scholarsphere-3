@@ -61,4 +61,23 @@ describe WorkShowPresenter do
     subject { presenter.facet_mapping(:creator) }
     it { is_expected.to eq("JOE SMITH" => "Joe Smith") }
   end
+
+  describe "#events" do
+    context "with no events" do
+      let(:work)   { build(:work) }
+      its(:events) { is_expected.to be_empty }
+    end
+
+    context "with events" do
+      let(:events) { double }
+      before do
+        allow(Sufia::RedisEventStore).to receive(:for).with("GenericWork:1234:event").and_return(events)
+        allow(events).to receive(:fetch).with(100).and_return(["event1", "event2"])
+      end
+
+      its(:events) { is_expected.to contain_exactly("event1", "event2") }
+    end
+  end
+
+  its(:event_class) { is_expected.to eq(GenericWork) }
 end
