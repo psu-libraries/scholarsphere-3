@@ -10,7 +10,7 @@
     <% if can?(:edit, member.id) %>
       <%= render 'actions', member: member %>
     <% else %>
-      <%= link_to 'Download', main_app.download_path(member), class: 'btn btn-default btn-sm',
+      <%= link_to 'Download', main_app.download_path(member), class: 'btn btn-default btn-sm ga-download',
                   title: "Download #{member.to_s.inspect}", target: "_blank" %>
     <% end %>
   </td>
