@@ -15,7 +15,9 @@ describe 'FileSet versioning:', type: :feature do
   it "sets the file set title and label to new and reverted file versions" do
     click_link("Edit This File")
     expect(page).to have_field("Title", with: "world.png")
+    expect(page).to have_button("Save")
     click_link("Versions")
+    expect(page).not_to have_content("A PDF is preferred")
     attach_file('file_set[files][]', test_file_path(filename), visible: false)
     click_button("Upload New Version")
     expect(page).to have_selector("h1", text: filename)
