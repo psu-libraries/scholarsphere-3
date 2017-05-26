@@ -54,7 +54,7 @@ FactoryGirl.define do
 
       after(:create) do |work, attributes|
         fs = FactoryGirl.create(:file_set,
-                                user: attributes.user,
+                                user: User.find_by_login(work.depositor),
                                 title: ["A contained PNG file"],
                                 label: 'world.png',
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
