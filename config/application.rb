@@ -31,6 +31,9 @@ module ScholarSphere
     config.google_analytics_id = ENV.fetch("google_analytics_id", nil)
     config.stats_email = ENV.fetch("stats_email", "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
 
+    # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
+    config.read_only = ENV.fetch("read_only", false)
+
     config.scholarsphere_version = "v3.0"
     config.scholarsphere_release_date = "June 9, 2016"
     config.redis_namespace = "scholarsphere"

@@ -98,9 +98,14 @@ class ApplicationController < ActionController::Base
     end
 
     def has_access?
-      return if current_user && current_user.ldap_exist?
-      logger.error "User: `#{current_user.user_key}' does not exist in ldap"
-      render 'curation_concerns/base/unauthorized', status: :unauthorized
+      return if current_user && current_user.ldap_exist? && !ReadOnly.read_only?
+      if ReadOnly.read_only?
+        @announcement = ReadOnly.announcement_text
+        render template: '/error/read_only', layout: "homepage", formats: [:html], status: 503
+      else
+        logger.error "User: `#{current_user.user_key}' does not exist in ldap"
+        render 'curation_concerns/base/unauthorized', status: :unauthorized
+      end
     end
 
     def filtered_flash_messages

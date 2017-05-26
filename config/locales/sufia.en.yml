@@ -80,6 +80,8 @@ en:
         keyword: "Words or phrases you select to describe what the collection is about. These are used to search for content. Keywords help others find your collection and also help build facets."
         rights: "Licensing and distribution information governing access to the collection. A rights statement or license ensures your collection gets used appropriately and that you get credit when your collection is used. See <a href=\"/licenses\" target=\"_blank\">Licenses</a> for more information"
         title: "A name to aid in identifying a collection. A descriptive title will make it much easier to find your collection. Avoid uninformative titles."
+      defaults:
+        files: ""
   curation_concerns:
     institution_name: "Penn State"
     institution:
@@ -116,4 +118,3 @@ en:
         show:
           date_created_tesim: "Published Date"
           date_created: "Published Date"
-
