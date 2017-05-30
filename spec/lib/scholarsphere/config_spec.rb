@@ -6,6 +6,7 @@ describe Scholarsphere::Config do
     context "with our current configuration files" do
       it "checks the contents of our production configuration files" do
         expect { described_class.check }.not_to raise_error(Scholarsphere::Config::Error)
+        expect(FileSet.image_mime_types).to eq(["image/png", "image/jpeg", "image/jpg", "image/jp2", "image/bmp", "image/gif"])
       end
     end
 
