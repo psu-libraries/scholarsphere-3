@@ -16,7 +16,8 @@ class Scholarsphere::Config
         "virtual_host",
         "stats_email",
         "google_analytics_id",
-        "derivatives_path"
+        "derivatives_path",
+        "read_only"
       ]
     }.freeze
 
