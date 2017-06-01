@@ -152,10 +152,12 @@ FactoryGirl.define do
     end
 
     trait :with_required_metadata do
-      title   ['a required title']
-      keyword ['required keyword']
-      creator ['required creator']
-      rights  ['http://creativecommons.org/licenses/by/3.0/us/']
+      title         ['a required title']
+      description   ['a required description']
+      keyword       ['required keyword']
+      creator       ['required creator']
+      rights        ['https://creativecommons.org/licenses/by/4.0/']
+      resource_type ['Article']
     end
   end
 end
