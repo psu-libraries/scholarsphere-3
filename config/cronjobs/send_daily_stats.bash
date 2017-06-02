@@ -5,6 +5,9 @@
 #  Version:      01
 #  Description:  Sends an email daily to our subscribed users that gives system level
 #                  stats and metadata about uploaded files
+#
+# NOT CURRENTLY IN USE!!!
+#
 #============================================================
 
 
