@@ -15,10 +15,17 @@ describe CurationConcerns::Actors::GenericWorkActor do
     work.reload
   end
 
-  context "creator set" do
-    let(:attributes) { { creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] } }
-    it "keeps creator order" do
+  context "with ordered attributes" do
+    let(:attributes) do
+      {
+        creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+        title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+      }
+    end
+
+    it "keeps the correct order" do
       expect(work.creator).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
+      expect(work.title).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     end
   end
 
