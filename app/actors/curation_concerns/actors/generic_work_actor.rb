@@ -7,10 +7,11 @@ module CurationConcerns
       def create(attributes)
         stat = super(attributes)
 
-        # TODO: when we move to RDF 2 we will need to remove this code
-        # This code is a patch to keep order only while we are on RDF 1.9
-        # assign again to keep creator order
+        # TODO: When we move to RDF 2 we will need to remove this code.
+        # Retains order in title and creator while we are on RDF 1.9.
         curation_concern.creator = attributes[:creator]
+        curation_concern.creator = attributes[:title]
+
         stat
       end
     end
