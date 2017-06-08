@@ -38,10 +38,6 @@ every :monday, at: "6:00 am", roles: [:job] do
   command "#{path}/config/cronjobs/send_weekly_stats.bash"
 end
 
-every :day, at: "5:00 am", roles: [:job] do
-  command "#{path}/config/cronjobs/send_daily_stats.bash"
-end
-
 every 60.minutes, roles: [:app] do
   command "#{path}/config/cronjobs/temp_file_clean.bash"
 end

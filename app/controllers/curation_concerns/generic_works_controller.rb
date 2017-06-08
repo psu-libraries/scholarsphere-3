@@ -48,4 +48,10 @@ class CurationConcerns::GenericWorksController < ApplicationController
         wants.json { render_json_response(response_type: :deleted, message: "Deleted #{curation_concern.id}") }
       end
     end
+
+    # Overrides Sufia to reload curation_concern so that removed permissions will be checked.
+    def permissions_changed?
+      curation_concern.reload
+      @saved_permissions != curation_concern.permissions.map(&:to_hash)
+    end
 end

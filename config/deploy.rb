@@ -117,7 +117,7 @@ namespace :deploy do
       execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
       execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads /opt/heracles/deploy/scholarsphere/shared/public/"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.xml"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
     end
