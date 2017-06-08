@@ -1,22 +1,36 @@
 # frozen_string_literal: true
-# Generated via
-#  `rails generate curation_concerns:work GenericWork`
+# Changes the behavior of BaseActor#apply_save_data_to_curation_concern to re-assign the depositor
+# based if the user is depositing on behalf of someone else.
+#
+# Additionally, this actor sets the title and creator (again) because this preserves the order. It is
+# not exactly clear why this happens, but it is a temporary solution until #948 and #949 are addressed.
 module CurationConcerns
   module Actors
     class GenericWorkActor < CurationConcerns::Actors::BaseActor
       def create(attributes)
-        stat = super(attributes)
-
-        # TODO: When we move to RDF 2 we will need to remove this code.
-        # Retains order in title and creator while we are on RDF 1.9.
-        # The interim call to .save is needed, otherwise, resetting the order of titles
-        # changes the order of the creators as well!
-        curation_concern.creator = attributes[:creator]
-        curation_concern.save
-        curation_concern.title = attributes[:title]
-
-        stat
+        preserve_title_and_creator_order(attributes)
+        super
       end
+
+      protected
+
+        # Remove this method once #948 and #949 are resolved.
+        def preserve_title_and_creator_order(attributes)
+          curation_concern.creator = attributes[:creator]
+          curation_concern.save
+          curation_concern.title = attributes[:title]
+        end
+
+        # Overrides CurationConcerns::Actors::BaseActor to reassign the depositor
+        # if the user is depositing on behalf of someone else.
+        def apply_save_data_to_curation_concern(attributes)
+          if attributes.fetch("on_behalf_of", nil).present?
+            depositor = ::User.find_by_user_key(attributes.fetch("on_behalf_of"))
+            curation_concern.apply_depositor_metadata(depositor)
+            curation_concern.edit_users += [depositor, user.user_key]
+          end
+          super
+        end
     end
   end
 end
