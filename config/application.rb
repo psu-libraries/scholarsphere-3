@@ -50,6 +50,7 @@ module ScholarSphere
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
     config.autoload_paths += %W(#{config.root}/app/forms/concerns)
     config.autoload_paths += %W(#{config.root}/app/renderers)
+    config.autoload_paths += %W(#{config.root}/app/prepend)
 
     config.i18n.enforce_available_locales = true
 
@@ -96,5 +97,10 @@ module ScholarSphere
 
     config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
     config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }
+
+    # Inject new behaviors into existing classes without having to override the entire class itself.
+    config.to_prepare do
+      Sufia::StatsUsagePresenter.prepend PrependedStatsUsageBehavior
+    end
   end
 end
