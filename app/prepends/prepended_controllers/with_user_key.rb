@@ -2,7 +2,6 @@
 # Alters Sufia's API::ZoteroController to add the user_key to the current user.
 # This should be removed once Hyrax has this change
 module PrependedControllers::WithUserKey
-
   def callback
     access_token = current_token.get_access_token(oauth_verifier: params['oauth_verifier'])
     # parse userID and API key out of token and store in user instance

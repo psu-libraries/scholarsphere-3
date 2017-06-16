@@ -103,6 +103,7 @@ module ScholarSphere
       Sufia::StatsUsagePresenter.prepend PrependedPresenters::StatsUsageBehavior
       API::ZoteroController.prepend PrependedControllers::WithUserKey
       AttachFilesToWorkJob.prepend PrependedJobs::WithQueuedFiles
+      AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
     end
   end
 end
