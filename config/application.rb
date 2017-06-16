@@ -101,6 +101,7 @@ module ScholarSphere
     # Inject new behaviors into existing classes without having to override the entire class itself.
     config.to_prepare do
       Sufia::StatsUsagePresenter.prepend PrependedPresenters::StatsUsageBehavior
+      API::ZoteroController.prepend PrependedControllers::WithUserKey
     end
   end
 end
