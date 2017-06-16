@@ -17,8 +17,6 @@ class AttachFilesToWorkJob < ActiveJob::Base
       attach_content(actor, uploaded_file.file)
       uploaded_file.update(file_set_uri: file_set.uri)
     end
-
-    QueuedFile.where(work_id: work.id).destroy_all
   end
 
   private
