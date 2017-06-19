@@ -5,7 +5,7 @@
 
 <h2><%= t("sufia.works.#{action_name}.in_collections") %></h2>
 <div id="collection-widget">
-  <%= f.input :collection_ids, as: :select, selected: params.fetch(:collection_ids, []),
+  <%= f.input :collection_ids, as: :select, selected: params.fetch(:collection_ids, f.object.collection_ids),
               collection: available_collections(nil),
               input_html: { class: 'form-control', multiple: true } %>
 </div>
