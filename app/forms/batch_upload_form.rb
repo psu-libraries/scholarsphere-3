@@ -9,4 +9,8 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   def self.multiple?(term)
     CurationConcerns::GenericWorkForm.multiple?(term)
   end
+
+  def target_selector
+    "#new_#{model.model_name.param_key}"
+  end
 end

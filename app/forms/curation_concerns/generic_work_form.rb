@@ -16,5 +16,13 @@ module CurationConcerns
       return false if term == :rights
       super
     end
+
+    def target_selector
+      if persisted?
+        "#edit_#{model.model_name.param_key}_#{model.id}"
+      else
+        "#new_#{model.model_name.param_key}"
+      end
+    end
   end
 end
