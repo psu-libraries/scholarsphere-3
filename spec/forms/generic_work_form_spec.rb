@@ -4,7 +4,7 @@ require 'rails_helper'
 describe CurationConcerns::GenericWorkForm do
   let(:user)    { create(:user, display_name: "Test A User") }
   let(:ability) { Ability.new(user) }
-  let(:work)    { GenericWork.new }
+  let(:work)    { build(:work) }
   let(:form)    { described_class.new(work, ability) }
   describe "#initialize_field" do
     subject { form[:creator] }
@@ -27,6 +27,19 @@ describe CurationConcerns::GenericWorkForm do
       let(:work) { build(:private_work) }
       before { allow(work).to receive(:new_record?).and_return(false) }
       its(:visibility) { is_expected.to eq("restricted") }
+    end
+  end
+
+  describe "#target_selector" do
+    subject { form.target_selector }
+    context "with a new work" do
+      it { is_expected.to eq("#new_generic_work") }
+    end
+
+    context "when editing an existing work" do
+      let(:work) { build(:work, id: "1234") }
+      before { allow(work).to receive(:persisted?).and_return(true) }
+      it { is_expected.to eq("#edit_generic_work_1234") }
     end
   end
 end
