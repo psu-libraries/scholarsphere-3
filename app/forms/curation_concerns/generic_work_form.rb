@@ -24,5 +24,16 @@ module CurationConcerns
         "#new_#{model.model_name.param_key}"
       end
     end
+
+    def select_files
+      Hash[file_presenters.map { |file| [name_for_select_file(file), file.id] }]
+    end
+
+    private
+
+      def name_for_select_file(file)
+        return file.to_s unless model.visibility == "open" && file.solr_document.visibility == "authenticated"
+        [file, I18n.t("scholarsphere.select_file_restriction")].join(" ").to_s
+      end
   end
 end
