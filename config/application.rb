@@ -104,6 +104,7 @@ module ScholarSphere
       API::ZoteroController.prepend PrependedControllers::WithUserKey
       AttachFilesToWorkJob.prepend PrependedJobs::WithQueuedFiles
       AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
+      CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::ConfiguredMicrodata
     end
   end
 end
