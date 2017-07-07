@@ -105,6 +105,7 @@ module ScholarSphere
       AttachFilesToWorkJob.prepend PrependedJobs::WithQueuedFiles
       AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::ConfiguredMicrodata
+      CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::WithLists
     end
   end
 end
