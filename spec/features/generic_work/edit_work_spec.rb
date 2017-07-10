@@ -2,10 +2,11 @@
 require 'feature_spec_helper'
 
 describe "Editing a work" do
-  let(:user1) { create(:user, display_name: "First User") }
-  let(:work)  { create(:public_work, :with_required_metadata, depositor: user1.user_key) }
+  let(:proxy) { create(:first_proxy) }
+  let(:user)  { create(:user, :with_proxy, proxy_for: proxy) }
+  let(:work)  { create(:public_work, :with_required_metadata, depositor: user.user_key) }
 
-  before { sign_in(user1) }
+  before { sign_in(user) }
 
   # Tests the basic outline of the form. This can be expanded later with more detail including
   # refactoring it to incorporate other tests.
@@ -23,5 +24,7 @@ describe "Editing a work" do
     within("#extended-terms") do
       expect(page).to have_selector("h2", text: "Additional Metadata", visible: false)
     end
+
+    expect(page).not_to have_selector("#generic_work_on_behalf_of")
   end
 end
