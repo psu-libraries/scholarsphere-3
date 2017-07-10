@@ -11,7 +11,6 @@ describe FieldConfigurator do
                                        :language,
                                        :based_near,
                                        :publisher,
-                                       :file_format,
                                        :has_model,
                                        :date_uploaded) }
   end
@@ -26,7 +25,6 @@ describe FieldConfigurator do
                                        :language,
                                        :based_near,
                                        :publisher,
-                                       :file_format,
                                        :contributor,
                                        :date_uploaded,
                                        :date_modified,
