@@ -20,7 +20,7 @@ fi
 export RAILS_ENV
 
 
-RESULTS=`bundle exec rake sufia:stats:user_stats 2>&1`
+RESULTS=`bundle exec rake scholarsphere:stats:user_stats 2>&1`
 
 if [ $? -ne 0 ]; then
   SUBJECT="`hostname` user stats task"
