@@ -6,7 +6,7 @@ describe Admin::StatsController, type: :controller do
   before { allow(controller).to receive(:query_service).and_return(query_service) }
   describe "#export" do
     context "when format is csv" do
-      let(:header) { "Url,Time Uploaded,Id,Title,Depositor,Creator,Visibility,Resource Type,Rights,File Format\n" }
+      let(:header) { "Work Url,Work Id,Work Title,Work Resource Type,Work Rights,File Set Url,File Set Time Uploaded,File Set Id,File Set Title,File Set Depositor,File Set Creator,File Set Visibility,File Set File Format\n" }
       before do
         allow(query_service).to receive(:find_by_date_created).and_return(file_list)
       end
