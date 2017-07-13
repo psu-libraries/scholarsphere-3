@@ -61,6 +61,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         select 'Audio', from: 'generic_work_resource_type'
 
         within("#metadata")      { expect(page).to have_link("Licenses") }
+        within("#metadata")      { expect(page).not_to have_css("#work-media") }
         within("div#savewidget") { expect(page).to have_link("Required metadata complete") }
 
         # Check for additional fields
