@@ -42,4 +42,28 @@ describe CurationConcerns::GenericWorkForm do
       it { is_expected.to eq("#edit_generic_work_1234") }
     end
   end
+
+  describe "#select_files" do
+    let(:work) { build(:public_work) }
+
+    let(:public_file_set) do
+      build(:file_set, :with_file_size, :public, id: "public-fileset", title: ["Public File"])
+    end
+
+    let(:registered_file_set) do
+      build(:file_set, :with_file_size, :registered, id: "registered-fileset", title: ["Registered File"])
+    end
+
+    let(:file_presenters) do
+      [
+        CurationConcerns::FileSetPresenter.new(SolrDocument.new(public_file_set.to_solr), Ability.new(nil)),
+        CurationConcerns::FileSetPresenter.new(SolrDocument.new(registered_file_set.to_solr), Ability.new(nil))
+      ]
+    end
+
+    before { allow(form).to receive(:file_presenters).and_return(file_presenters) }
+
+    subject { form }
+    its(:select_files) { is_expected.to include("Registered File (less visible)", "Public File") }
+  end
 end

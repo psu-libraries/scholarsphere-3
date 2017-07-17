@@ -1,24 +1,4 @@
 GIT
-  remote: git://github.com/projecthydra/browse-everything.git
-  revision: 0e335958be2ce6a20818ecf6f592d97d1ca053dd
-  ref: 0e33595
-  specs:
-    browse-everything (0.12.0)
-      addressable (~> 2.5)
-      aws-sdk
-      bootstrap-sass
-      dropbox-sdk (>= 1.6.2)
-      font-awesome-rails
-      google-api-client (~> 0.9)
-      google_drive
-      httparty
-      rails (>= 3.1)
-      ruby-box
-      sass-rails
-      signet
-      skydrive
-
-GIT
   remote: git://github.com/projecthydra/curation_concerns.git
   revision: b073550c40a1c1088f85970aa8c0e9538bc2d5ce
   ref: b073550
@@ -166,7 +146,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.5.0)
+    addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -174,17 +154,17 @@ GEM
       rails (>= 4.2, < 6)
     arel (6.0.4)
     ast (2.3.0)
-    autoprefixer-rails (6.7.7.1)
+    autoprefixer-rails (7.1.2)
       execjs
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
-    aws-sdk (2.8.10)
-      aws-sdk-resources (= 2.8.10)
-    aws-sdk-core (2.8.10)
+    aws-sdk (2.10.9)
+      aws-sdk-resources (= 2.10.9)
+    aws-sdk-core (2.10.9)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.8.10)
-      aws-sdk-core (= 2.8.10)
+    aws-sdk-resources (2.10.9)
+      aws-sdk-core (= 2.10.9)
     aws-sigv4 (1.0.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
@@ -225,6 +205,20 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (3.0.1)
+    browse-everything (0.14.0)
+      addressable (~> 2.5)
+      aws-sdk
+      bootstrap-sass
+      dropbox-sdk (>= 1.6.2)
+      font-awesome-rails
+      google-api-client (~> 0.9)
+      google_drive
+      httparty
+      rails (>= 3.1)
+      ruby-box
+      sass-rails
+      signet
+      skydrive
     builder (3.2.3)
     byebug (9.0.6)
     cancancan (1.15.0)
@@ -308,7 +302,7 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
-    faraday (0.11.0)
+    faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
     fcrepo_wrapper (0.6.0)
       ruby-progressbar
@@ -316,21 +310,19 @@ GEM
       thor (~> 0.14)
     flot-rails (0.0.7)
       jquery-rails
-    font-awesome-rails (4.7.0.1)
-      railties (>= 3.2, < 5.1)
-    globalid (0.3.7)
-      activesupport (>= 4.1.0)
-    google-api-client (0.10.1)
-      addressable (~> 2.3)
+    font-awesome-rails (4.7.0.2)
+      railties (>= 3.2, < 5.2)
+    globalid (0.4.0)
+      activesupport (>= 4.2.0)
+    google-api-client (0.12.0)
+      addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.5)
-      httpclient (~> 2.7)
-      hurley (~> 0.1)
-      memoist (~> 0.11)
-      mime-types (>= 1.6)
+      httpclient (>= 2.8.1, < 3.0)
+      mime-types (~> 3.0)
       representable (~> 3.0)
       retriable (>= 2.0, < 4.0)
-    google_drive (2.1.2)
-      google-api-client (>= 0.9.0, < 1.0.0)
+    google_drive (2.1.5)
+      google-api-client (>= 0.11.0, < 0.13.0)
       googleauth (>= 0.5.0, < 1.0.0)
       nokogiri (>= 1.5.3, < 2.0.0)
     googleauth (0.5.1)
@@ -351,10 +343,9 @@ GEM
       mimemagic
       multipart-post
     http_logger (0.5.1)
-    httparty (0.14.0)
+    httparty (0.15.5)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    hurley (0.2)
     hydra-access-controls (10.3.4)
       active-fedora (>= 10.0.0, < 12)
       activesupport (>= 4, < 6)
@@ -394,7 +385,7 @@ GEM
     hydra-pcdm (0.9.0)
       active-fedora (>= 10, < 12)
       mime-types (>= 1)
-    i18n (0.8.1)
+    i18n (0.8.4)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -463,7 +454,7 @@ GEM
       sparql (~> 1.99)
       sparql-client (~> 1.99)
     little-plugger (1.1.4)
-    logging (2.2.0)
+    logging (2.2.2)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
     loofah (2.0.3)
@@ -473,14 +464,14 @@ GEM
     mailboxer (0.14.0)
       carrierwave (>= 0.5.8)
       rails (>= 4.2.0)
-    memoist (0.15.0)
+    memoist (0.16.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_magick (4.6.1)
-    mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    mini_portile2 (2.2.0)
+    minitest (5.10.2)
     mono_logger (1.1.0)
     multi_json (1.12.1)
     multi_xml (0.6.0)
@@ -496,15 +487,15 @@ GEM
     net-ssh (4.1.0)
     newrelic_rpm (3.17.1.326)
     noid (0.9.0)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
     nom-xml (0.6.0)
       activesupport (>= 3.2.18)
       i18n
       nokogiri
     oauth (0.5.1)
-    oauth2 (1.3.1)
-      faraday (>= 0.8, < 0.12)
+    oauth2 (1.4.0)
+      faraday (>= 0.8, < 0.13)
       jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
@@ -535,7 +526,7 @@ GEM
       faraday
       nokogiri (~> 1.6)
       rails (>= 4.2.0, < 6.0)
-    rack (1.6.5)
+    rack (1.6.8)
     rack-maintenance (2.0.1)
       rack (>= 1.0)
     rack-protection (1.5.3)
@@ -630,7 +621,7 @@ GEM
     redlock (0.1.8)
       redis (~> 3, >= 3.0.0)
     ref (2.0.0)
-    representable (3.0.3)
+    representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
@@ -650,7 +641,7 @@ GEM
       redis (~> 3.3)
       resque (~> 1.26)
       rufus-scheduler (~> 3.2)
-    retriable (3.0.1)
+    retriable (3.0.2)
     rsolr (1.1.2)
       builder (>= 2.1.2)
     rspec (3.5.0)
@@ -698,7 +689,7 @@ GEM
     rubyzip (1.2.1)
     rufus-scheduler (3.2.2)
     safe_yaml (1.0.4)
-    sass (3.4.23)
+    sass (3.4.24)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
@@ -830,7 +821,6 @@ DEPENDENCIES
   active-fedora (~> 10.3.0.rc2)
   better_errors
   binding_of_caller
-  browse-everything!
   byebug
   capistrano (~> 3.7)
   capistrano-bundler (~> 1.2)

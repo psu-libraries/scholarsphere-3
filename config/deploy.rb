@@ -155,8 +155,8 @@ namespace :deploy do
       end
     end
   end
-  # Disabled, see psu-stewardship/scholarsphere#285
-  # after :published, :sitemapxml
+  # Re-enabled, see psu-stewardship/scholarsphere#285
+  after :published, :sitemapxml
 
   desc "Compile assets on for selected server roles"
   task :roleassets do

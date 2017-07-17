@@ -50,7 +50,7 @@ module ScholarSphere
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
     config.autoload_paths += %W(#{config.root}/app/forms/concerns)
     config.autoload_paths += %W(#{config.root}/app/renderers)
-    config.autoload_paths += %W(#{config.root}/app/prepend)
+    config.autoload_paths += %W(#{config.root}/app/prepends)
 
     config.i18n.enforce_available_locales = true
 
@@ -100,7 +100,12 @@ module ScholarSphere
 
     # Inject new behaviors into existing classes without having to override the entire class itself.
     config.to_prepare do
-      Sufia::StatsUsagePresenter.prepend PrependedStatsUsageBehavior
+      Sufia::StatsUsagePresenter.prepend PrependedPresenters::StatsUsageBehavior
+      API::ZoteroController.prepend PrependedControllers::WithUserKey
+      AttachFilesToWorkJob.prepend PrependedJobs::WithQueuedFiles
+      AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
+      CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::ConfiguredMicrodata
+      CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::WithLists
     end
   end
 end

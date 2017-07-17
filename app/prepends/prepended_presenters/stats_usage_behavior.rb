@@ -2,7 +2,7 @@
 # Using Rails' to_prepare hook in config/application.rb, we can inject this module as
 # Sufia::StatsUsagePresenter is loaded, and alter its existing behaviors without having to redefine
 # the entire class.
-module PrependedStatsUsageBehavior
+module PrependedPresenters::StatsUsageBehavior
   private
 
     # @param [DateTime, String] date_str

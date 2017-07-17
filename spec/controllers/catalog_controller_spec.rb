@@ -27,7 +27,6 @@ describe CatalogController, type: :controller do
       subject { described_class.blacklight_config.index_fields.keys }
       it { is_expected.to contain_exactly("based_near_tesim",
                                           "date_uploaded_dtsi",
-                                          "file_format_tesim",
                                           "keyword_tesim",
                                           "language_tesim",
                                           "publisher_tesim",
@@ -40,7 +39,7 @@ describe CatalogController, type: :controller do
     describe "show_fields" do
       subject { described_class.blacklight_config.show_fields.keys }
       it { is_expected.to contain_exactly("depositor_tesim", "based_near_tesim", "date_modified_dtsi", "date_uploaded_dtsi",
-                                          "description_tesim", "file_format_tesim", "identifier_tesim", "keyword_tesim",
+                                          "description_tesim", "identifier_tesim", "keyword_tesim",
                                           "language_tesim", "publisher_tesim", "resource_type_tesim", "rights_tesim",
                                           "subject_tesim", "contributor_tesim", "creator_tesim", "date_created_tesim")
       }

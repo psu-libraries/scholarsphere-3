@@ -33,6 +33,12 @@ describe DownloadsController do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
       end
+
+      context "with my own work" do
+        let(:my_work) { create :public_work_with_png, depositor: user.login }
+        before { controller.params[:id] = my_work.id }
+        it { is_expected.to eq(my_work.id) }
+      end
     end
 
     context "with an administrator" do
@@ -66,6 +72,34 @@ describe DownloadsController do
         it "denies access" do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
+      end
+    end
+  end
+  describe "#show" do
+    subject { controller.send(:show) }
+    before do
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+    end
+
+    context "with a FileSet" do
+      before { controller.params[:id] = my_file.id }
+      it "sends content" do
+        expect(controller).to receive(:send_content)
+        subject
+      end
+    end
+
+    context "with a GenericWork" do
+      let(:my_work) { create :public_work_with_png, depositor: user.login }
+      before do
+        # I must save the work again becuase the factory just sends the representative id to solr
+        #  This save sends the id to fedora
+        my_work.save
+        controller.params[:id] = my_work.id
+      end
+      it "redirects" do
+        expect(controller).to receive(:redirect_to).with("/downloads/#{my_work.file_sets[0].id}", status: :moved_permanently)
+        subject
       end
     end
   end

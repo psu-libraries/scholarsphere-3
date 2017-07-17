@@ -65,9 +65,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     end
 
     def build_representative_presenter
-      return NullRepresentativePresenter.new(current_ability, request) if member_presenters.empty? || representative_id.blank?
-      result = member_presenters([representative_id]).first
-      return result.representative_presenter if result.respond_to?(:representative_presenter)
-      result
+      selected_presenters = member_presenters.select { |presenter| presenter.id == representative_id }
+      return NullRepresentativePresenter.new(current_ability, request) if selected_presenters.empty?
+      selected_presenters.first
     end
 end
