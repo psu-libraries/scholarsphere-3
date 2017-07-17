@@ -4,7 +4,7 @@
 module CurationConcerns
   class GenericWorkForm < Sufia::Forms::WorkForm
     self.model_class = ::GenericWork
-    self.terms += [:resource_type]
+    self.terms += [:resource_type, :subtitle]
     self.required_fields += [:description, :resource_type]
 
     include HydraEditor::Form::Permissions
@@ -12,9 +12,32 @@ module CurationConcerns
     include WithCleanerAttributes
     include WithOpenAccess
 
-    def self.multiple?(term)
-      return false if term == :rights
-      super
+    def self.multiple?(field)
+      if [:title, :rights].include? field.to_sym
+        false
+      else
+        super
+      end
+    end
+
+    def self.model_attributes(_)
+      attrs = super
+      attrs[:title] = Array(attrs[:title]) if attrs[:title]
+      attrs[:rights] = Array(attrs[:rights]) if attrs[:rights]
+      attrs
+    end
+
+    def title
+      super.first || ""
+    end
+
+    def rights
+      super.first || ""
+    end
+
+    # Fields that are automatically drawn on the page above the fold
+    def primary_terms
+      [:title, :subtitle, :creator, :keyword, :rights, :description, :resource_type]
     end
 
     def target_selector

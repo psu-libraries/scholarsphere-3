@@ -31,7 +31,8 @@ describe FieldConfigurator do
                                        :date_created,
                                        :rights,
                                        :identifier,
-                                       :depositor) }
+                                       :depositor,
+                                       :subtitle) }
   end
 
   describe "::facet_fields" do
@@ -81,6 +82,7 @@ describe FieldConfigurator do
                                        :date_created,
                                        :rights,
                                        :identifier,
-                                       :depositor) }
+                                       :depositor,
+                                       :subtitle) }
   end
 end

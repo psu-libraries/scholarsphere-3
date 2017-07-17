@@ -41,7 +41,8 @@ describe CatalogController, type: :controller do
       it { is_expected.to contain_exactly("depositor_tesim", "based_near_tesim", "date_modified_dtsi", "date_uploaded_dtsi",
                                           "description_tesim", "identifier_tesim", "keyword_tesim",
                                           "language_tesim", "publisher_tesim", "resource_type_tesim", "rights_tesim",
-                                          "subject_tesim", "contributor_tesim", "creator_tesim", "date_created_tesim")
+                                          "subject_tesim", "contributor_tesim", "creator_tesim", "date_created_tesim",
+                                          "subtitle_tesim")
       }
     end
     describe "facet_fields" do

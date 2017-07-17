@@ -1,5 +1,5 @@
 <div class="base-terms">
-  <h2>Required Metadata</h2>
+  <h2><%= t('simple_form.headings.base') %></h2>
   <% f.object.primary_terms.each do |term| %>
       <%= render_edit_field_partial(term, f: f) %>
   <% end %>
@@ -26,7 +26,7 @@
             'aria-controls'=> "extended-terms" %>
 
 <div id="extended-terms" class='collapse'>
-  <h2>Additional Metadata</h2>
+  <h2><%= t('simple_form.headings.additional') %></h2>
   <% f.object.secondary_terms.each do |term| %>
       <%= render_edit_field_partial(term, f: f) %>
   <% end %>

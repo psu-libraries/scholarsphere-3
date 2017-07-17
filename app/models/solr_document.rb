@@ -37,6 +37,10 @@ class SolrDocument
     Array(self[Solrizer.solr_name(:bytes, CurationConcerns::CollectionIndexer::STORED_LONG)]).first
   end
 
+  def subtitle
+    self[Solrizer.solr_name('subtitle')]
+  end
+
   private
 
     def ul_start_tags

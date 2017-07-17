@@ -14,8 +14,15 @@ describe CurationConcerns::GenericWorkForm do
   describe "::model_attributes" do
     subject { described_class.model_attributes(params) }
     context "when attributes have multiple spaces" do
-      let(:params) { ActionController::Parameters.new(title: [" I am  in a  space "], rights: " url ") }
-      it { is_expected.to include(title: ["I am in a space"], rights: "url") }
+      let(:params) { ActionController::Parameters.new(title: " I am  in a  space ", rights: " url ") }
+
+      it 'checks that title parameter does not have extra spaces' do
+        expect(subject['title']).to eq ['I am in a space']
+      end
+
+      it 'checks that rights parameter does not have extra spaces' do
+        expect(subject['rights']).to eq ['url']
+      end
     end
   end
 

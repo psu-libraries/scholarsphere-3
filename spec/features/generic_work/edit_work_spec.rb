@@ -13,7 +13,8 @@ describe "Editing a work" do
   it "displays the edit form" do
     visit("/concern/generic_works/#{work.id}/edit")
     within(".base-terms") do
-      expect(page).to have_selector("h2", text: "Required Metadata")
+      expect(page).to have_selector("h2", text: "Basic Metadata")
+      expect(page).to have_selector("label", text: "Subtitle")
     end
 
     within("#work-media") do
