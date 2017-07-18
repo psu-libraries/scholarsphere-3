@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 RSpec.configure do |config|
   # Clean out Redis, Fedora and Solr prior to each feature test
-  config.before :each do |_example|
+  config.before(type: :feature) do
     begin
       redis_instance = Sufia::RedisEventStore.instance
       redis_instance.keys('events:*').each { |key| redis_instance.del key }
@@ -13,7 +13,7 @@ RSpec.configure do |config|
     ActiveFedora::Cleaner.clean!
   end
 
-  config.after(:each) do
+  config.after(type: :feature) do
     sleep 0.1
     Capybara.reset_sessions!
     sleep 0.1
