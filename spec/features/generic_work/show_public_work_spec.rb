@@ -128,4 +128,31 @@ describe GenericWork do
       end
     end
   end
+
+  context "with a public work and a restricted thumbnail" do
+    let(:work) do
+      build(:public_work, :with_complete_metadata,
+            id: "public-work",
+            title: ["Restricted thumbnail"],
+            depositor: current_user.login)
+    end
+
+    before do
+      doc = work.to_solr
+      doc["thumbnail_path_ss"] = "/downloads/restricted-id?file=thumbnail"
+      index_document(doc)
+      sign_in_with_named_js(:thumbnail)
+      visit(root_path)
+    end
+
+    it "displays the default work image for the thumbnail" do
+      within('#search-form-header') do
+        fill_in('search-field-header', with: work.title.first)
+        click_button("Go")
+      end
+      within("#document_public-work") do
+        expect(page.find("img")["src"]).to end_with(ActionController::Base.helpers.image_path("work.png"))
+      end
+    end
+  end
 end
