@@ -20,7 +20,7 @@ describe WorkShowPresenter do
     end
 
     context "with two files in the work" do
-      let(:solr_doc)    { SolrDocument.new(work.to_solr).merge!('member_ids_ssim' => ["thing1", "thing2"]) }
+      let(:solr_doc)    { SolrDocument.new(work.to_solr).to_h.merge!('member_ids_ssim' => ["thing1", "thing2"]) }
       its(:total_items) { is_expected.to eq(2) }
     end
   end

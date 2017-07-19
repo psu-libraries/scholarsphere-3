@@ -21,10 +21,7 @@ describe FileSet, type: :model do
   end
 
   describe "#file_format" do
-    it "is deprecated" do
-      expect(Deprecation).to receive(:warn)
-      expect(subject.file_format).to eq("png")
-    end
+    its(:file_format) { is_expected.to eq("png") }
   end
 
   describe "#visibility" do

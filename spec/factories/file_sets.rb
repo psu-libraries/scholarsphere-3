@@ -43,7 +43,7 @@ FactoryGirl.define do
 
     trait :with_file_size do
       after(:build) do |fs|
-        fs.stub(:file_size).and_return '1234'
+        allow(fs).to receive(:file_size).and_return("1234")
       end
     end
   end

@@ -15,7 +15,7 @@ namespace :scholarsphere do
       raise "Fedora's #{fedora.to_s} objects exceeds Solr's #{solr}" if fedora > solr
       puts "Things appear to be OK"
     end
-    
+
   end
 
   def number_of_objects_in_fedora
@@ -28,7 +28,7 @@ namespace :scholarsphere do
     result = ActiveFedora.fedora.connection.get(url).body
     triples = ::RDF::Reader.for(:ttl).new(result)
     rdf = ::RDF::Graph.new << triples
-    rdf.query(predicate: ::Ldp.contains).count
+    rdf.query(predicate: ::RDF::Vocab::LDP.contains).count
   end
 
   def number_of_objects_in_solr

@@ -1,16 +1,18 @@
 # frozen_string_literal: true
-# Cleans up existing fields in the solr document before it is sent on for indexing
+# Cleans up existing fields in the solr document before it is sent on for indexing. Because this is
+# used in conjunction with Blacklight::Document, which prefers hashes, SolrDocument objects are
+# converted to hashes and a hash is always returned.
 class SolrDocumentGroomer
   attr_reader :document
 
   # @param [SolrDocument, Hash]
-  # @return [SolrDocument, Hash]
+  # @return [Hash]
   def self.call(document)
     new(document).groom
   end
 
   def initialize(document)
-    @document = document
+    @document = document.to_h
   end
 
   def groom
