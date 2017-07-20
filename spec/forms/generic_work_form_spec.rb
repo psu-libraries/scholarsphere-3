@@ -64,6 +64,6 @@ describe CurationConcerns::GenericWorkForm do
     before { allow(form).to receive(:file_presenters).and_return(file_presenters) }
 
     subject { form }
-    its(:select_files) { is_expected.to include("Registered File (less visible)", "Public File") }
+    its(:select_files) { is_expected.to eq("Public File" => "public-fileset") }
   end
 end

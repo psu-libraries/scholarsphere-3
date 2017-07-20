@@ -6,11 +6,10 @@
 </div>
 
 <% if action_name == 'edit' %>
-<div id="work-media">
-  <h2>Media</h2>
-  <p><%= t('scholarsphere.media') %></p>
-  <%= render 'form_media', f: f %>
-</div>
+  <div id="work-media">
+    <h2>Media</h2>
+    <%= render 'form_media', f: f %>
+  </div>
 <% end %>
 
 <p class="hidden-xs">
