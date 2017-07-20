@@ -1,0 +1,9 @@
+/**
+ * Display default work icon for broken thumbnails in catalog search results
+ */
+
+Blacklight.onLoad(function() {
+  $(".catalog img").error(function(){
+    $(this).attr("src", "<%= asset_path('work.png') %>");
+  });
+});
