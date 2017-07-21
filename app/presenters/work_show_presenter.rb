@@ -60,7 +60,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
                                                           fl: ActiveFedora.id_field,
                                                           rows: 1000,
                                                           fq: "{!join from=ordered_targets_ssim to=id}id:\"#{id}/list_source\"")
-                                                   .flat_map { |x| x.fetch(ActiveFedora.id_field, []) }
+                            .flat_map { |x| x.fetch(ActiveFedora.id_field, []) }
                         end
     end
 

@@ -49,6 +49,7 @@ spec/dummy/tmp/
 .ruby-gemset
 .rvmrc
 /.bundle
+.rubocop-http*
 
 ## PROJECT::GENERAL
 coverage

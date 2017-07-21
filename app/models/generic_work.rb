@@ -28,7 +28,7 @@ class GenericWork < ActiveFedora::Base
   def bytes
     return 0 if member_ids.count == 0
     raise 'Work must be saved to query for bytes' if new_record?
-    sizes = member_ids.collect { |fs_id| file_set_size(fs_id) }
+    sizes = member_ids.map { |fs_id| file_set_size(fs_id) }
     sizes.compact.map { |fs| fs[file_size_field] }.reduce(0, :+)
   end
 

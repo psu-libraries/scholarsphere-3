@@ -1,26 +1,11 @@
 require: rubocop-rspec
 
-inherit_from: .rubocop_todo.yml
+inherit_from:
+  - https://raw.githubusercontent.com/psu-stewardship/guides/master/style/ruby/.rubocop.yml
+  - .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.3
-  DisplayCopNames: true
-  Include:
-    - '**/Rakefile'
-    - '**/config.ru'
-  Exclude:
-    - 'db/**/*'
-    - 'script/**/*'
-    - 'vendor/**/*'
-
-Metrics/LineLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
 
 # catalog_controller.rb is usually long because it is mostly configuration
 # user.rb could use some refactoring, see #249
@@ -42,53 +27,6 @@ Metrics/PerceivedComplexity:
     - 'spec/features/static_pages_spec.rb'
     - 'app/models/generic_file.rb'
     - 'app/helpers/catalog_helper.rb'
-
-Style/BlockDelimiters:
-  Exclude:
-    - 'spec/**/*'
-
-Style/BlockEndNewline:
-  Exclude:
-    - 'spec/**/*'
-
-Style/MultilineBlockLayout:
-  Exclude:
-    - 'spec/**/*'
-
-Style/IndentationConsistency:
-  EnforcedStyle: rails
-
-Style/CollectionMethods:
-  PreferredMethods:
-    collect: 'map'
-    collect!: 'map!'
-    inject: 'reduce'
-    detect: 'find'
-    find_all: 'select'
-
-Style/WordArray:
-  Enabled: false
-
-Style/RegexpLiteral:
-  Enabled: false
-
-Style/StringLiterals:
-  Description: 'Checks if uses of quotes match the configured preference.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-string-literals'
-  EnforcedStyle: single_quotes
-  Enabled: true
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/SingleLineBlockParams:
-  Enabled: false
-
-Style/SignalException:
-  Enabled: false
 
 Style/ClassVars:
   Exclude:
@@ -136,30 +74,6 @@ Lint/UselessAssignment:
 Lint/LiteralInCondition:
   Exclude:
     - 'spec/support/user_no_ldap.rb'
-
-Rails:
-  Enabled: true
-
-Rails/Date:
-  Enabled: false
-
-Rails/TimeZone:
-  Enabled: false
-
-RSpec/ExampleWording:
-  CustomTransform:
-    be: is
-    have: has
-    not: does not
-    NOT: does NOT
-  IgnoredWords:
-    - only
-
-RSpec/FilePath:
-  Enabled: false
-
-RSpec/InstanceVariable:
-  Enabled: false
 
 RSpec/DescribeClass:
   Exclude:

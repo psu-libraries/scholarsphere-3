@@ -7,12 +7,12 @@ describe 'Contact form:', type: :feature do
   let(:user)          { create(:user, email: email) }
   let(:sent_messages) { ActionMailer::Base.deliveries }
   let(:admin_message) {
-    sent_messages.detect do |message|
+    sent_messages.find do |message|
       message.to == ['scholarsphere@servicedesk.css.psu.edu', 'umg-up.its.scholarsphere-support@groups.ucs.psu.edu']
     end
   }
   let(:thank_you_message) {
-    sent_messages.detect do |message|
+    sent_messages.find do |message|
       message.to == [email]
     end
   }
