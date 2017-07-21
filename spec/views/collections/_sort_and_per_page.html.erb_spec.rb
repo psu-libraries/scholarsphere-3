@@ -7,7 +7,7 @@ describe "collections/_sort_and_per_page.html.erb" do
 
   before do
     assign(:response, solr_response)
-    controller.stub(:params).and_return(action: "edit")
+    allow(controller).to receive(:params).and_return(action: "edit")
     render "collections/sort_and_per_page", collection: collection
   end
 

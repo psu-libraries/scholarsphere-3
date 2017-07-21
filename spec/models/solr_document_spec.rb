@@ -25,4 +25,8 @@ describe SolrDocument do
     subject { described_class.new(bytes_lts: ["1234"]) }
     its(:bytes) { is_expected.to eq("1234") }
   end
+
+  describe "#to_hash" do
+    its(:to_hash) { is_expected.to eq(subject.to_h) }
+  end
 end

@@ -10,6 +10,10 @@ class SolrDocument
   # Adds Sufia behaviors to the SolrDocument.
   include Sufia::SolrDocumentBehavior
 
+  # Avoid deprecation warning in Blacklight::Document#initialize
+  # Expects a hash-like object responding to :to_hash
+  alias to_hash to_h
+
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
     collections_in = Array(self[Solrizer.solr_name(:collection)])

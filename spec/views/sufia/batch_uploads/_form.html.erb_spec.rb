@@ -6,7 +6,7 @@ describe "sufia/batch_uploads/_form.html.erb" do
 
   before do
     assign(:form, form)
-    controller.stub(:params).and_return(params)
+    allow(controller).to receive(:params).and_return(params)
     stub_template "_form_files.html.erb" => ""
     stub_template "_form_metadata.html.erb" => ""
     stub_template "_form_relationships.html.erb" => ""
