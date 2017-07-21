@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'support/vcr'
+require "rails_helper"
+require "support/vcr"
 
 describe ShareNotifyJob do
   let(:user) { create(:jill) }
@@ -23,7 +23,7 @@ describe ShareNotifyJob do
         before { allow(ShareNotify).to receive(:config) { { "token" => "SECRET_TOKEN" } } }
 
         it "sends a notification" do
-          VCR.use_cassette('share_notify_success_job', record: :none) do
+          VCR.use_cassette("share_notify_success_job", record: :none) do
             expect(ShareNotifySuccessEventJob).to receive(:perform_now)
             described_class.perform_now(work)
           end
@@ -48,7 +48,7 @@ describe ShareNotifyJob do
       end
 
       it "logs the error" do
-        VCR.use_cassette('share_notify_failed_job', record: :none) do
+        VCR.use_cassette("share_notify_failed_job", record: :none) do
           expect(Rails.logger).to receive(:error).once.with(error_message)
           expect(ShareNotifyFailureEventJob).to receive(:perform_now)
           described_class.perform_now(work)

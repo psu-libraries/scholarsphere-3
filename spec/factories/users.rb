@@ -6,9 +6,9 @@ FactoryGirl.define do
 
   factory :ladp_user, class: User do
     factory :ldap_jill do
-      login 'jilluser'
-      display_name 'Jill Z. User'
-      title 'LDAP User'
+      login "jilluser"
+      display_name "Jill Z. User"
+      title "LDAP User"
     end
   end
 
@@ -19,8 +19,8 @@ FactoryGirl.define do
     end
 
     login
-    display_name 'Joe Example'
-    title 'User'
+    display_name "Joe Example"
+    title "User"
 
     # Scholarsphere grants uploading rights to PSU users. We know
     # that a user is a PSU user if their information is in LDAP. This
@@ -28,7 +28,7 @@ FactoryGirl.define do
     ldap_available true
     ldap_last_update { Time.zone.now }
     groups_last_update { Time.zone.now }
-    group_list 'umg/up.dlt.scholarsphere-users'
+    group_list "umg/up.dlt.scholarsphere-users"
 
     # This user should be able to log in and modify metadata, but not
     # upload files.
@@ -37,38 +37,38 @@ FactoryGirl.define do
     end
 
     factory :administrator do
-      login 'administrator1'
-      display_name 'Administrator 1'
-      title 'Administrator'
-      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+      login "administrator1"
+      display_name "Administrator 1"
+      title "Administrator"
+      group_list "umg/up.dlt.scholarsphere-admin-viewers"
     end
 
     factory :first_proxy do
-      display_name 'First Proxy'
+      display_name "First Proxy"
     end
 
     factory :second_proxy do
-      display_name 'Second Proxy'
+      display_name "Second Proxy"
     end
 
     factory :archivist do
-      login 'archivist1'
-      title 'Archivist'
+      login "archivist1"
+      title "Archivist"
     end
 
     factory :curator do
-      login 'curator1'
-      title 'Curator'
-      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+      login "curator1"
+      title "Curator"
+      group_list "umg/up.dlt.scholarsphere-admin-viewers"
     end
 
     factory :random_user do
-      display_name 'Random User'
+      display_name "Random User"
     end
 
     factory :jill do
-      login 'jilluser'
-      display_name 'Jill Z. User'
+      login "jilluser"
+      display_name "Jill Z. User"
     end
 
     trait :with_event do
@@ -86,7 +86,7 @@ FactoryGirl.define do
     trait :with_two_groups do
       after(:create) do |u|
         group_list_array = ["umg/up.dlt.scholarsphere-admin.admin1", "umg/up.dlt.scholarsphere-admin.admin2"]
-        u.update_attribute :group_list, group_list_array.join(';?;')
+        u.update_attribute :group_list, group_list_array.join(";?;")
         u.update_attribute :groups_last_update, Time.now
       end
     end
@@ -94,7 +94,7 @@ FactoryGirl.define do
     trait :with_many_groups do
       after(:create) do |u|
         group_list_array = (0..100).map { |i| "umg/up.dlt.scholarsphere-admin.admin#{i}" }
-        u.update_attribute :group_list, group_list_array.join(';?;')
+        u.update_attribute :group_list, group_list_array.join(";?;")
         u.update_attribute :groups_last_update, Time.now
       end
     end

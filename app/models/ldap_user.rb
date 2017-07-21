@@ -12,7 +12,7 @@ class LdapUser
 
     def check_ldap_exist!(login)
       return false if login.blank?
-      retry_if { Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq('uid', login)) } || false
+      retry_if { Hydra::LDAP.does_user_exist?(Net::LDAP::Filter.eq("uid", login)) } || false
     end
 
     def filter_for(*people)
@@ -24,8 +24,8 @@ class LdapUser
 
       def parse_ldap_groups(result)
         return [] if result.empty?
-        result.first[:psmemberof].select { |y| y.starts_with? 'cn=umg/' }.map do |x|
-          x.sub(/^cn=/, '').sub(/,dc=psu,dc=edu/, '')
+        result.first[:psmemberof].select { |y| y.starts_with? "cn=umg/" }.map do |x|
+          x.sub(/^cn=/, "").sub(/,dc=psu,dc=edu/, "")
         end
       end
 
@@ -56,7 +56,7 @@ class LdapUser
       # Response from LDAP
       # We have to pass a block, see https://github.com/projecthydra-labs/hydra-ldap/issues/8
       def group_response_from_ldap(login)
-        Hydra::LDAP.groups_for_user(Net::LDAP::Filter.eq('uid', login)) { |r| r }
+        Hydra::LDAP.groups_for_user(Net::LDAP::Filter.eq("uid", login)) { |r| r }
       end
 
       def ldap_error_message(e)

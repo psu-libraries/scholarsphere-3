@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe GenericWorkToShareJSONService do
   let(:name_service) { double }
@@ -9,8 +9,8 @@ describe GenericWorkToShareJSONService do
   end
   context "when checking the fixture file" do
     let(:file) { build(:file, id: "x346f017s", title: ["Set9 ShamR 1.tif"], creator: ["Santy, Lorraine C"], date_modified: DateTime.parse("2015-07-30T20:15:08.528+00:00")) }
-    let(:json) { JSON.parse(File.open(fixture_path + '/ss-share.json', 'rb').read) }
-    let(:creator) { 'Santy, Lorraine C' }
+    let(:json) { JSON.parse(File.open(fixture_path + "/ss-share.json", "rb").read) }
+    let(:creator) { "Santy, Lorraine C" }
     it "generates valid json" do
       pending("See issue #277")
       expect(name_service).to receive(:disambiguate).and_return([{ email: "lcs13@psu.edu" }])
@@ -38,13 +38,13 @@ describe GenericWorkToShareJSONService do
     let(:json)    { JSON.parse(json_template) }
     let(:file)    { build(:file, id: id, title: [title], creator: [creator], date_modified: DateTime.parse(date_uploaded)) }
     let(:title)   { "abc123" }
-    let(:id) { 'zzzzz' }
+    let(:id) { "zzzzz" }
     let(:date_uploaded) { "2015-07-30T20:15:08Z" }
     subject { JSON.parse(described_class.new(file).json) }
 
     context "when the creator exists in ldap" do
-      let(:creator) { ' Cole, Carolyn Ann' }
-      let(:creator_email) { 'cam156@psu.edu' }
+      let(:creator) { " Cole, Carolyn Ann" }
+      let(:creator_email) { "cam156@psu.edu" }
       it "formats the json" do
         pending("See issue #277")
         expect(name_service).to receive(:disambiguate).and_return([{ email: creator_email }])
@@ -53,7 +53,7 @@ describe GenericWorkToShareJSONService do
     end
 
     context "when the creator does not exist in ldap" do
-      let(:creator) { ' Frog, Kermit The' }
+      let(:creator) { " Frog, Kermit The" }
       let(:creator_email) {}
       it "formats the json" do
         pending("See issue #277")
@@ -63,8 +63,8 @@ describe GenericWorkToShareJSONService do
     end
 
     context "when deleting the file" do
-      let(:creator) { 'Guy, Bad' }
-      let(:creator_email) { 'badguy@trouble.com' }
+      let(:creator) { "Guy, Bad" }
+      let(:creator_email) { "badguy@trouble.com" }
       before { allow(name_service).to receive(:disambiguate).and_return([{ email: creator_email }]) }
       subject { JSON.parse(described_class.new(file, delete: true).json) }
       it "adds a delete property" do

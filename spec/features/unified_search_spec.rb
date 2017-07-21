@@ -1,17 +1,17 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
-describe 'unified search', type: :feature do
-  let(:subject_value) { 'fffzzz' }
+describe "unified search", type: :feature do
+  let(:subject_value) { "fffzzz" }
   let(:user)          { create(:jill) }
   let(:other_user)    { create(:archivist) }
 
-  let!(:file1) { create(:public_file, depositor: user.login, title: ['title 1 abc'], keyword: [subject_value]) }
-  let!(:file2) { create(:private_file, depositor: user.login, title: ['title 2 abc'], keyword: [subject_value]) }
-  let!(:file3) { create(:public_file, depositor: other_user.login, title: ['title 3 abc'], keyword: [subject_value]) }
+  let!(:file1) { create(:public_file, depositor: user.login, title: ["title 1 abc"], keyword: [subject_value]) }
+  let!(:file2) { create(:private_file, depositor: user.login, title: ["title 2 abc"], keyword: [subject_value]) }
+  let!(:file3) { create(:public_file, depositor: other_user.login, title: ["title 3 abc"], keyword: [subject_value]) }
   let!(:collection) do
     create(:public_collection,
-           title: ['collection title abc'],
+           title: ["collection title abc"],
            description: [subject_value],
            user: user,
            members: [file1, file2]
@@ -21,7 +21,7 @@ describe 'unified search', type: :feature do
   context "anonymous user" do
     it "only searches all" do
       sign_in
-      visit '/'
+      visit "/"
       expect(page).to have_content("All")
       expect(page).to have_css("a[data-search-label*=All]", visible: false)
       expect(page).not_to have_css("a[data-search-label*='My Works']", visible: false)
@@ -31,10 +31,10 @@ describe 'unified search', type: :feature do
       within('#search-form-header') do
         click_button("All")
         expect(page).to have_content("All of ScholarSphere")
-        fill_in('search-field-header', with: subject_value)
+        fill_in("search-field-header", with: subject_value)
         find("#search-submit-header").click
       end
-      expect(page).to have_content('Search Results')
+      expect(page).to have_content("Search Results")
       expect(page).to have_content(file1.title.first)
       expect(page).to have_content(file3.title.first)
       expect(page).to have_content(collection.title.first)
@@ -46,7 +46,7 @@ describe 'unified search', type: :feature do
   context "known user" do
     before do
       sign_in_with_js(user)
-      visit('/')
+      visit("/")
     end
     it "searches all" do
       expect(page).to have_content("All")
@@ -55,10 +55,10 @@ describe 'unified search', type: :feature do
       expect(page).to have_css("a[data-search-label*='My Collections']", visible: false)
       expect(page).to have_css("a[data-search-label*='My Shares']", visible: false)
       within('#search-form-header') do
-        fill_in('search-field-header', with: subject_value)
+        fill_in("search-field-header", with: subject_value)
         click_button("Go")
       end
-      expect(page).to have_content('Search Results')
+      expect(page).to have_content("Search Results")
       expect(page).to have_content(file1.title.first)
       expect(page).to have_content(file2.title.first)
       expect(page).to have_content(file3.title.first)
@@ -79,10 +79,10 @@ describe 'unified search', type: :feature do
       click_on("All")
       click_on("My Works")
       within('#search-form-header') do
-        fill_in('search-field-header', with: subject_value)
+        fill_in("search-field-header", with: subject_value)
         click_button("Go")
       end
-      expect(page).to have_selector('li.active', text: "Works")
+      expect(page).to have_selector("li.active", text: "Works")
       expect(page).to have_content(file1.title.first)
       expect(page).to have_content(file2.title.first)
       expect(page).not_to have_content(file3.title.first)
@@ -93,10 +93,10 @@ describe 'unified search', type: :feature do
       click_on("All")
       click_on("My Collections")
       within('#search-form-header') do
-        fill_in('search-field-header', with: subject_value)
+        fill_in("search-field-header", with: subject_value)
         click_button("Go")
       end
-      expect(page).to have_selector('li.active', text: "Collections")
+      expect(page).to have_selector("li.active", text: "Collections")
       expect(page).to have_content(collection.title.first)
       expect(page).not_to have_content(file1.title.first)
       expect(page).not_to have_content(file2.title.first)

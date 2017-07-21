@@ -56,7 +56,7 @@ FactoryGirl.define do
         fs = FactoryGirl.create(:file_set,
                                 user: User.find_by_login(work.depositor),
                                 title: ["A contained PNG file"],
-                                label: 'world.png',
+                                label: "world.png",
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
         file_path = "#{Rails.root}/spec/fixtures/world.png"
@@ -79,7 +79,7 @@ FactoryGirl.define do
         fs = FactoryGirl.create(:file_set,
                                 user: attributes.user,
                                 title: ["A contained MP3 file"],
-                                label: 'scholarsphere_test5.mp3',
+                                label: "scholarsphere_test5.mp3",
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
         filename = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
@@ -96,7 +96,7 @@ FactoryGirl.define do
         fs = FactoryGirl.create(:file_set,
                                 user: evaluator.user,
                                 title: (evaluator.file_title || ["A Contained File"]),
-                                label: (evaluator.file_name || 'filename.pdf'))
+                                label: (evaluator.file_name || "filename.pdf"))
         work.ordered_members << fs
         work.thumbnail_id = fs.id
       end
@@ -107,7 +107,7 @@ FactoryGirl.define do
         fs = FactoryGirl.create(:file_set, :with_file_size,
                                 user: evaluator.user,
                                 title: (evaluator.file_title || ["A Contained File"]),
-                                label: (evaluator.file_name || 'filename.pdf'))
+                                label: (evaluator.file_name || "filename.pdf"))
         work.ordered_members << fs
         work.thumbnail_id = fs.id
       end
@@ -121,7 +121,7 @@ FactoryGirl.define do
 
     trait :with_png do
       after(:build) do |f|
-        f.add_file(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), path: 'content')
+        f.add_file(File.open("#{Rails.root}/spec/fixtures/world.png", "rb"), path: "content")
       end
     end
 
@@ -136,28 +136,28 @@ FactoryGirl.define do
     end
 
     trait :with_complete_metadata do
-      title         ['titletitle']
-      keyword       ['tagtag']
-      based_near    ['based_nearbased_near']
-      language      ['languagelanguage']
-      creator       ['creatorcreator']
-      contributor   ['contributorcontributor']
-      publisher     ['publisherpublisher']
-      subject       ['subjectsubject']
-      resource_type ['resource_typeresource_type']
-      description   ['descriptiondescription']
-      related_url   ['http://example.org/TheRelatedURLLink/']
-      rights        ['http://creativecommons.org/licenses/by/3.0/us/']
-      date_created  ['two days after the day before yesterday']
+      title         ["titletitle"]
+      keyword       ["tagtag"]
+      based_near    ["based_nearbased_near"]
+      language      ["languagelanguage"]
+      creator       ["creatorcreator"]
+      contributor   ["contributorcontributor"]
+      publisher     ["publisherpublisher"]
+      subject       ["subjectsubject"]
+      resource_type ["resource_typeresource_type"]
+      description   ["descriptiondescription"]
+      related_url   ["http://example.org/TheRelatedURLLink/"]
+      rights        ["http://creativecommons.org/licenses/by/3.0/us/"]
+      date_created  ["two days after the day before yesterday"]
     end
 
     trait :with_required_metadata do
-      title         ['a required title']
-      description   ['a required description']
-      keyword       ['required keyword']
-      creator       ['required creator']
-      rights        ['https://creativecommons.org/licenses/by/4.0/']
-      resource_type ['Article']
+      title         ["a required title"]
+      description   ["a required description"]
+      keyword       ["required keyword"]
+      creator       ["required creator"]
+      rights        ["https://creativecommons.org/licenses/by/4.0/"]
+      resource_type ["Article"]
     end
   end
 end

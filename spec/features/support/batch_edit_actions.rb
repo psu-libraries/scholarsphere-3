@@ -7,8 +7,8 @@ module Features
         click_button "#{id}_save"
       end
       within "#form_#{id}" do
-        sleep 0.1 until page.text.include?('Changes Saved')
-        expect(page).to have_content 'Changes Saved', wait: Capybara.default_max_wait_time * 4
+        sleep 0.1 until page.text.include?("Changes Saved")
+        expect(page).to have_content "Changes Saved", wait: Capybara.default_max_wait_time * 4
       end
     end
 

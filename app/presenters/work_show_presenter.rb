@@ -12,7 +12,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   end
 
   def total_items
-    solr_document.fetch('member_ids_ssim', []).length
+    solr_document.fetch("member_ids_ssim", []).length
   end
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved

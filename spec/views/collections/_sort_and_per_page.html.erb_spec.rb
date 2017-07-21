@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "collections/_sort_and_per_page.html.erb" do
   let(:collection) { build(:collection, id: "coll1") }

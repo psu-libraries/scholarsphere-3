@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_form_visibility_component.html.erb" do
   let(:work) { build(:work) }
@@ -8,7 +8,7 @@ describe "curation_concerns/base/_form_visibility_component.html.erb" do
 
   let(:page) do
     view.simple_form_for(form) do |f|
-      render 'curation_concerns/base/form_visibility_component.html.erb', f: f
+      render "curation_concerns/base/form_visibility_component.html.erb", f: f
     end
     Capybara::Node::Simple.new(rendered)
   end

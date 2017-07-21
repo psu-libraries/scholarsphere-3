@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Load the rails application
-require File.expand_path('../application', __FILE__)
+require File.expand_path("../application", __FILE__)
 
 class Logger
   def format_message(_severity, timestamp, _progname, msg)

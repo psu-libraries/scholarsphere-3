@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "Showing the Generic File", type: :feature do
   let(:current_user) { create(:administrator) }
@@ -16,7 +16,7 @@ describe "Showing the Generic File", type: :feature do
     click_link "Feature"
     visit "/concern/generic_works/#{gf.id}" # force a page refresh
     expect(page).to have_content("Unfeature")
-    visit '/'
+    visit "/"
     within(".new_featured_work_list") do
       expect(page).to have_content(gf.title[0])
       find(".glyphicon-remove").click

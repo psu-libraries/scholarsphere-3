@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe AttachFilesToWorkFailureService do
   let(:depositor) { create(:user) }
@@ -12,7 +12,7 @@ describe AttachFilesToWorkFailureService do
     it "sends a failure message" do
       subject.call
       expect(inbox.count).to eq(1)
-      inbox.each { |msg| expect(msg.last_message.subject).to eq('File failed to attach') }
+      inbox.each { |msg| expect(msg.last_message.subject).to eq("File failed to attach") }
     end
   end
 end

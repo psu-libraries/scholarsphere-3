@@ -43,7 +43,7 @@ module Hydra::Derivatives::Processors
 
       def convert_to(format)
         self.class.encode(source_path, format, Hydra::Derivatives.temp_file_base)
-        File.join(Hydra::Derivatives.temp_file_base, [File.basename(source_path, ".*"), format].join('.'))
+        File.join(Hydra::Derivatives.temp_file_base, [File.basename(source_path, ".*"), format].join("."))
       end
   end
 end

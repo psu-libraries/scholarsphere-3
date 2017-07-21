@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe BatchUploadForm do
   let(:user)    { create(:user, display_name: "Test A User") }

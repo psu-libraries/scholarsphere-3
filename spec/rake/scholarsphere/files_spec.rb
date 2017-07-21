@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'rake'
+require "rails_helper"
+require "rake"
 
 describe "scholarsphere:files" do
   before do
@@ -18,7 +18,7 @@ describe "scholarsphere:files" do
     context "when no list is supplied" do
       it "uses all FileSets" do
         expect(FileSetManagementService).to receive(:new).with([]).and_return(mock_service)
-        run_task('scholarsphere:files:create_derivatives')
+        run_task("scholarsphere:files:create_derivatives")
       end
     end
 
@@ -26,7 +26,7 @@ describe "scholarsphere:files" do
       let(:argument) { "1 2 3" }
       it "uses all FileSets" do
         expect(FileSetManagementService).to receive(:new).with(["1", "2", "3"]).and_return(mock_service)
-        run_task('scholarsphere:files:create_derivatives', argument)
+        run_task("scholarsphere:files:create_derivatives", argument)
       end
     end
   end
@@ -42,7 +42,7 @@ describe "scholarsphere:files" do
     context "when no list is supplied" do
       it "uses all FileSets" do
         expect(FileSetManagementService).to receive(:new).with([]).and_return(mock_service)
-        run_task('scholarsphere:files:characterize')
+        run_task("scholarsphere:files:characterize")
       end
     end
 
@@ -50,7 +50,7 @@ describe "scholarsphere:files" do
       let(:argument) { "1 2 3" }
       it "uses all FileSets" do
         expect(FileSetManagementService).to receive(:new).with(["1", "2", "3"]).and_return(mock_service)
-        run_task('scholarsphere:files:characterize', argument)
+        run_task("scholarsphere:files:characterize", argument)
       end
     end
   end

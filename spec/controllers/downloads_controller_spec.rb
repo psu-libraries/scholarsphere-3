@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe DownloadsController do
   let(:user)       { create(:user) }
   let(:other_user) { create(:user) }
-  let(:file)       { File.open(File.join(fixture_path, 'world.png')) }
+  let(:file)       { File.open(File.join(fixture_path, "world.png")) }
   let(:my_file)    { create(:file_set, user: user, content: file) }
   let(:other_file) { create(:file_set, user: other_user, content: file) }
   let(:public_file) { create(:file_set, :public, user: user, content: file) }

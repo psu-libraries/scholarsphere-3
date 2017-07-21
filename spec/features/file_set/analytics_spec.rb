@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 # Notice that with Sufia 7 we generate thumbnails at the FileSets level
 # in a similar way to what we did in Sufia 6 for GenericFiles.
-describe 'FileSet Thumbnail Creation:', type: :feature do
+describe "FileSet Thumbnail Creation:", type: :feature do
   let(:work)           { create(:public_work_with_png, file_title: ["Some work"], depositor: current_user.login) }
   let(:current_user)   { create(:user) }
   let(:file_set)       { work.file_sets.first }
-  let(:thumbnail_path) { main_app.download_path(file_set, file: 'thumbnail') }
+  let(:thumbnail_path) { main_app.download_path(file_set, file: "thumbnail") }
   let(:today)          { Time.zone.today }
   let(:four_days_ago)  { (Time.zone.today - 4.days) }
 

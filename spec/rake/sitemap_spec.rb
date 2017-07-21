@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'rake'
+require "rails_helper"
+require "rake"
 
 describe "sitemap:generate" do
   def sitemap_path
-    Gem.loaded_specs['sitemap'].full_gem_path
+    Gem.loaded_specs["sitemap"].full_gem_path
   end
 
   let(:user) { create(:user) }
@@ -16,10 +16,10 @@ describe "sitemap:generate" do
     load_rake_environment ["#{sitemap_path}/lib/tasks/sitemap.rake"]
   end
 
-  describe 'sitemap generation', clean: true do
-    it 'includes public generic files and users' do
+  describe "sitemap generation", clean: true do
+    it "includes public generic files and users" do
       pending("See #277")
-      run_task 'sitemap:generate'
+      run_task "sitemap:generate"
       filename = Rails.root.join(File.expand_path("public"), "sitemap.xml")
       expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)

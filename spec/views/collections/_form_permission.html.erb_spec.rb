@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "collections/_form_permission.html.erb" do
   let(:collection) { build(:collection) }
@@ -7,7 +7,7 @@ describe "collections/_form_permission.html.erb" do
 
   let(:page) do
     view.simple_form_for form do |f|
-      render 'collections/form_permission.html.erb', f: f
+      render "collections/form_permission.html.erb", f: f
     end
     Capybara::Node::Simple.new(rendered)
   end

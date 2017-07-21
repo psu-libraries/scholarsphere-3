@@ -73,7 +73,10 @@ Style/RegexpLiteral:
   Enabled: false
 
 Style/StringLiterals:
-  Enabled: false
+  Description: 'Checks if uses of quotes match the configured preference.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-string-literals'
+  EnforcedStyle: double_quotes
+  Enabled: true
 
 Style/ClassAndModuleChildren:
   Enabled: false

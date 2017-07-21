@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "User Statistics", type: :feature do
   let!(:user) { create(:user) }
@@ -12,8 +12,8 @@ describe "User Statistics", type: :feature do
   end
   it "includes file deposited, viewed, and downloaded, as well as followers" do
     visit "/dashboard"
-    expect(page).to have_selector('span.badge', text: "12")
-    expect(page).to have_content('11 Views')
-    expect(page).to have_content('6 Downloads')
+    expect(page).to have_selector("span.badge", text: "12")
+    expect(page).to have_content("11 Views")
+    expect(page).to have_content("6 Downloads")
   end
 end

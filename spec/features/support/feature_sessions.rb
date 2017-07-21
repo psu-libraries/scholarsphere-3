@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'capybara/poltergeist'
+require "capybara/poltergeist"
 
 module Features
   module SessionHelpers
@@ -36,7 +36,7 @@ module Features
       # either when testing, it doesn't matter.
       def request_headers(user = nil)
         return {} unless user
-        { 'REMOTE_USER' => user.login }
+        { "REMOTE_USER" => user.login }
       end
 
       def driver_name(user = nil)
@@ -51,7 +51,7 @@ module Features
         {
           js_errors: true,
           timeout: 90,
-          phantomjs_options: ['--ssl-protocol=ANY']
+          phantomjs_options: ["--ssl-protocol=ANY"]
         }
       end
   end

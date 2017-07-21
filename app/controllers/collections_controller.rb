@@ -29,7 +29,7 @@ class CollectionsController < ApplicationController
     form
     respond_to do |format|
       ActiveFedora::SolrService.instance.conn.commit
-      format.html { redirect_to after_create_path, notice: 'Collection was successfully created.' }
+      format.html { redirect_to after_create_path, notice: "Collection was successfully created." }
       format.json { render json: @collection, status: :created, location: @collection }
     end
   end
@@ -38,7 +38,7 @@ class CollectionsController < ApplicationController
   # Redirects to the user's collections dashboard page
   def after_destroy(id)
     respond_to do |format|
-      format.html { redirect_to sufia.dashboard_collections_path, notice: 'Collection was successfully deleted.' }
+      format.html { redirect_to sufia.dashboard_collections_path, notice: "Collection was successfully deleted." }
       format.json { render json: { id: id }, status: :destroyed, location: @collection }
     end
   end
@@ -47,7 +47,7 @@ class CollectionsController < ApplicationController
   # Redirects to the user's collections dashboard page
   def after_destroy_error(id)
     respond_to do |format|
-      format.html { redirect_to sufia.dashboard_collections_path, notice: 'Collection could not be deleted.' }
+      format.html { redirect_to sufia.dashboard_collections_path, notice: "Collection could not be deleted." }
       format.json { render json: { id: id }, status: :destroy_error, location: @collection }
     end
   end

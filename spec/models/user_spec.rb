@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 require "cancan/matchers"
 
 describe User, type: :model do
@@ -23,7 +23,7 @@ describe User, type: :model do
     end
     context "when LDAP misbehaves" do
       before do
-        filter = Net::LDAP::Filter.eq('uid', user.login)
+        filter = Net::LDAP::Filter.eq("uid", user.login)
         allow(Hydra::LDAP).to receive(:does_user_exist?).twice.with(filter).and_return(true)
       end
 
@@ -40,7 +40,7 @@ describe User, type: :model do
     let(:entry) { build(:ldap_entry, uid: "mjg36", cn: "MICHAEL JOSEPH GIARLO") }
     before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
     it "returns user attributes from LDAP" do
-      expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
+      expect(described_class.directory_attributes("mjg36", ["cn"]).first["cn"]).to eq(["MICHAEL JOSEPH GIARLO"])
     end
   end
 
@@ -70,7 +70,7 @@ describe User, type: :model do
 
   describe "#from_url_component" do
     let(:entry) do
-      build(:ldap_entry, uid: 'mjg36', cn: "MICHAEL JOSEPH GIARLO", displayname: "John Smith", psofficelocation: "Beaver Stadium$Seat 100")
+      build(:ldap_entry, uid: "mjg36", cn: "MICHAEL JOSEPH GIARLO", displayname: "John Smith", psofficelocation: "Beaver Stadium$Seat 100")
     end
     subject { described_class.from_url_component("cam") }
 

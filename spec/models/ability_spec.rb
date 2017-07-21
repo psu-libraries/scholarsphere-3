@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'cancan/matchers'
+require "rails_helper"
+require "cancan/matchers"
 
 describe Ability do
   let(:user)     { create(:user) }
   let(:admin)    { create(:administrator) }
-  let(:work)     { build(:work, id: '1234') }
+  let(:work)     { build(:work, id: "1234") }
   let(:solr_doc) { SolrDocument.new(work.to_solr) }
 
   context "with a typical user" do

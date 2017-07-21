@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe NameDisambiguationService, unless: travis? do
   subject { described_class.new(name).disambiguate }

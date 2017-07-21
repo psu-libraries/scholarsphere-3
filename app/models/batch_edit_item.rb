@@ -8,7 +8,7 @@ class BatchEditItem < ActiveFedora::Base
   include Sufia::WorkBehavior
   include AdditionalMetadata
 
-  self.human_readable_type = 'Batch Edit Item'
+  self.human_readable_type = "Batch Edit Item"
 
   attr_reader :batch
 

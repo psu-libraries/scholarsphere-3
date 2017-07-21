@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_form_permission.html.erb" do
   let(:work) { build(:work) }
@@ -7,7 +7,7 @@ describe "curation_concerns/base/_form_permission.html.erb" do
 
   let(:page) {
     view.simple_form_for(form) do |f|
-      render 'curation_concerns/base/form_permission.html.erb', f: f
+      render "curation_concerns/base/form_permission.html.erb", f: f
     end
     Capybara::Node::Simple.new(rendered)
   }

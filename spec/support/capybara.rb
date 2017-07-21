@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Capybara is a high level DSL for driving a browser.
-require 'capybara/rspec'
-require 'capybara/rails'
+require "capybara/rspec"
+require "capybara/rails"
 
 # Tell capybara to use css selectors, as opposed to xpath
 Capybara.default_selector = :css
@@ -17,6 +17,6 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
 
   # Alias for shared examples
-  config.alias_it_should_behave_like_to :we_can, 'We can'
+  config.alias_it_should_behave_like_to :we_can, "We can"
   config.infer_spec_type_from_file_location!
 end

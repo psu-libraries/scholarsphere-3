@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "Editing a work" do
   let(:proxy) { create(:first_proxy) }
@@ -18,7 +18,7 @@ describe "Editing a work" do
 
     within("#work-media") do
       expect(page).to have_selector("h2", text: "Media")
-      expect(page).to have_content(I18n.t('scholarsphere.media'))
+      expect(page).to have_content(I18n.t("scholarsphere.media"))
     end
 
     within("#extended-terms") do

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 
-describe 'The Dashboard', type: :feature do
+describe "The Dashboard", type: :feature do
   let(:user) { create(:user) }
 
   describe "a user who has files and collections" do

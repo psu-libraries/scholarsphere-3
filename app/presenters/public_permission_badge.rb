@@ -4,13 +4,13 @@ class PublicPermissionBadge < CurationConcerns::PermissionBadge
 
     def link_title
       if open_access_with_embargo?
-        'Open Access with Embargo'
+        "Open Access with Embargo"
       elsif open_access?
-        I18n.translate('sufia.visibility.open')
+        I18n.translate("sufia.visibility.open")
       elsif registered?
-        I18n.translate('curation_concerns.institution_name')
+        I18n.translate("curation_concerns.institution_name")
       else
-        'Private'
+        "Private"
       end
     end
 end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require File.expand_path('../boot', __FILE__)
+require File.expand_path("../boot", __FILE__)
 
-require 'rails/all'
-require 'socket'
-require 'sprockets'
-require 'resolv'
-require 'uri'
-require 'sufia/version'
-require 'webmock' unless Rails.env.production?
+require "rails/all"
+require "socket"
+require "sprockets"
+require "resolv"
+require "uri"
+require "sufia/version"
+require "webmock" unless Rails.env.production?
 
 WebMock.disable! if Rails.env.development?
 
@@ -25,7 +25,7 @@ module ScholarSphere
 
     # Environment variables list here are defined in application.yml
     config.ffmpeg_path = ENV.fetch("ffmpeg_path", "ffmpeg")
-    config.derivatives_path = ENV.fetch("derivatives_path", File.join(Rails.root, 'tmp', 'derivatives'))
+    config.derivatives_path = ENV.fetch("derivatives_path", File.join(Rails.root, "tmp", "derivatives"))
     config.service_instance = ENV.fetch("service_instance", Socket.gethostname)
     config.virtual_host = ENV.fetch("virtual_host", "https://#{Socket.gethostname}")
     config.google_analytics_id = ENV.fetch("google_analytics_id", nil)
@@ -46,7 +46,7 @@ module ScholarSphere
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("lib")
     config.autoload_paths += %W(#{config.root}/app/models/datastreams)
     config.autoload_paths += %W(#{config.root}/app/forms/concerns)
     config.autoload_paths += %W(#{config.root}/app/renderers)
@@ -81,13 +81,13 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.stats_from_email = 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu'
+    config.stats_from_email = "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu"
 
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 
     # html maintenance response
-    config.middleware.use 'Rack::Maintenance',
-                          file: Rails.root.join('public', 'maintenance.html')
+    config.middleware.use "Rack::Maintenance",
+                          file: Rails.root.join("public", "maintenance.html")
 
     # Time (in seconds) to wait before trying any LDAP queries if initial response is unwilling.
     config.ldap_unwilling_sleep = 2
@@ -96,7 +96,7 @@ module ScholarSphere
     config.active_record.raise_in_transactional_callbacks = true
 
     config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
-    config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }
+    config.action_mailer.default_url_options = { host: config.service_instance, protocol: "https" }
 
     # Inject new behaviors into existing classes without having to override the entire class itself.
     config.to_prepare do

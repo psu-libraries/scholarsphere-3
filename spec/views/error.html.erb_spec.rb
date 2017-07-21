@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-describe 'error.html.erb' do
+describe "error.html.erb" do
   before do
     assign(:presenter, presenter)
     render

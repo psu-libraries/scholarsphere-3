@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_items.html.erb", verify_partial_doubles: false do
   let(:user)        { create(:user) }

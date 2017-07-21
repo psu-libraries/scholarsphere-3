@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CollectionIndexer do
   describe "fontawesome default icon" do

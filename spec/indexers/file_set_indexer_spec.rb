@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe FileSetIndexer do
   include FactoryHelpers
@@ -9,11 +9,11 @@ describe FileSetIndexer do
 
   let(:file) do
     mock_file_factory(
-      mime_type: 'image/jpeg',
-      format_label: ['JPEG Image'],
-      height: ['500'],
-      width: ['600'],
-      file_size: ['12']
+      mime_type: "image/jpeg",
+      format_label: ["JPEG Image"],
+      height: ["500"],
+      width: ["600"],
+      file_size: ["12"]
     )
   end
 

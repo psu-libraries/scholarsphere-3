@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'uri'
-require 'tempfile'
-require 'browse_everything/retriever'
+require "uri"
+require "tempfile"
+require "browse_everything/retriever"
 
 class ImportUrlJob < ActiveJob::Base
   queue_as CurationConcerns.config.ingest_queue_name
@@ -49,7 +49,7 @@ class ImportUrlJob < ActiveJob::Base
 
     def on_error(log, file_set, user)
       CurationConcerns.config.callback.run(:after_import_url_failure, file_set, user)
-      log.fail!(file_set.errors.full_messages.join(' '))
+      log.fail!(file_set.errors.full_messages.join(" "))
     end
 
     def copy_remote_file(file_set, f)
@@ -61,7 +61,7 @@ class ImportUrlJob < ActiveJob::Base
       f.binmode
 
       # download file from url
-      spec = { 'url' => uri }
+      spec = { "url" => uri }
       retriever = BrowseEverything::Retriever.new
       retriever.retrieve(spec) do |chunk|
         f.write(chunk)

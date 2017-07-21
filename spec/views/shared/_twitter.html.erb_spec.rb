@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "shared/_twitter.html.erb" do
   let(:doc)       { SolrDocument.new(build(:work, id: "citation-test").to_solr) }

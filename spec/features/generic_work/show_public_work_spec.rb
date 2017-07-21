@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe GenericWork do
   let(:current_user) { create(:user) }
@@ -147,7 +147,7 @@ describe GenericWork do
 
     it "displays the default work image for the thumbnail" do
       within('#search-form-header') do
-        fill_in('search-field-header', with: work.title.first)
+        fill_in("search-field-header", with: work.title.first)
         click_button("Go")
       end
       within("#document_public-work") do

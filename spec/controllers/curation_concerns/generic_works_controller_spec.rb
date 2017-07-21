@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CurationConcerns::GenericWorksController, type: :controller do
   let(:user) { create(:user) }
@@ -16,7 +16,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
 
     context "when the work doesn't exist" do
       it "redirects to the login" do
-        get :show, id: 'non-existent-id'
+        get :show, id: "non-existent-id"
         expect(response.redirect_url).to eq("http://test.host/login_session")
       end
     end
@@ -92,7 +92,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       end
 
       it "does not allow any user to update" do
-        post :update, id: gf.id, generic_file: { title: ['new_title'] }
+        post :update, id: gf.id, generic_file: { title: ["new_title"] }
         expect(response.status).to eq(401)
       end
     end
@@ -111,9 +111,9 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       end
 
       it "allows updates" do
-        post :update, id: gf.id, generic_work: { title: ['new_title'] }
+        post :update, id: gf.id, generic_work: { title: ["new_title"] }
         expect(response.status).to eq(302)
-        expect(gf.reload.title).to eq(['new_title'])
+        expect(gf.reload.title).to eq(["new_title"])
       end
     end
   end

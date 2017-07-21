@@ -60,7 +60,7 @@ module Import
               Rails.logger.debug "[IMPORT] download response was an error: #{response.body}"
               response.value # throws an http error with the correct information loaded
             end
-            File.open(filename_on_disk, 'wb') do |file_to_upload|
+            File.open(filename_on_disk, "wb") do |file_to_upload|
               response.read_body do |chunk|
                 file_to_upload.write chunk
               end
@@ -69,7 +69,7 @@ module Import
         end
 
         # ...upload it...
-        File.open(filename_on_disk, 'rb') do |file_to_upload|
+        File.open(filename_on_disk, "rb") do |file_to_upload|
           date_created = if f3_to_f4_migration_date?(version[:created])
                            file_set.date_uploaded
                          else
@@ -98,7 +98,7 @@ module Import
 
       def temp_file_name(file_set, version)
         label = file_set.label || "null_label"
-        label = label.gsub(/[^0-9A-Za-z.\-]/, '_')
+        label = label.gsub(/[^0-9A-Za-z.\-]/, "_")
         File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{label}"
       end
 

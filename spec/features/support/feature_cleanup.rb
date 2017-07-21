@@ -4,9 +4,9 @@ RSpec.configure do |config|
   config.before(type: :feature) do
     begin
       redis_instance = Sufia::RedisEventStore.instance
-      redis_instance.keys('events:*').each { |key| redis_instance.del key }
-      redis_instance.keys('User:*').each { |key| redis_instance.del key }
-      redis_instance.keys('GenericWork:*').each { |key| redis_instance.del key }
+      redis_instance.keys("events:*").each { |key| redis_instance.del key }
+      redis_instance.keys("User:*").each { |key| redis_instance.del key }
+      redis_instance.keys("GenericWork:*").each { |key| redis_instance.del key }
     rescue => e
       Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-describe 'pages/show.html.erb', type: :view do
+describe "pages/show.html.erb", type: :view do
   subject { rendered }
 
   before do

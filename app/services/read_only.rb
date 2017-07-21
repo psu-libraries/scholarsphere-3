@@ -13,13 +13,13 @@ class ReadOnly
     private
 
       def homepage_text
-        block = ContentBlock.find_by(name: 'annoucement_text')
+        block = ContentBlock.find_by(name: "annoucement_text")
         return "" unless block
         block.value.html_safe
       end
 
       def default_read_only_announcement
-        'The system is currently in read only mode for maintenance. Please try again later to upload or modify your ScholarSphere content.'
+        "The system is currently in read only mode for maintenance. Please try again later to upload or modify your ScholarSphere content."
       end
 
       def config_boolean

@@ -1,3 +1,3 @@
 # frozen_string_literal: true
-require 'susy'
+require "susy"
 project_type = :rails

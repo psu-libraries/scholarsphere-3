@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
-describe 'FileSet versioning:', type: :feature do
+describe "FileSet versioning:", type: :feature do
   let(:work)         { create(:public_work_with_png, file_title: ["Some work"], depositor: current_user.login) }
   let(:current_user) { create(:user) }
   let(:file_set)     { work.file_sets.first }
@@ -18,7 +18,7 @@ describe 'FileSet versioning:', type: :feature do
     expect(page).to have_button("Save")
     click_link("Versions")
     expect(page).not_to have_content("A PDF is preferred")
-    attach_file('file_set[files][]', test_file_path(filename), visible: false)
+    attach_file("file_set[files][]", test_file_path(filename), visible: false)
     click_button("Upload New Version")
     expect(page).to have_selector("h1", text: filename)
     within(".file-show-details") do

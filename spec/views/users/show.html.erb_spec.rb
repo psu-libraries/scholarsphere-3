@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
-describe 'users/show.html.erb', type: :view do
+describe "users/show.html.erb", type: :view do
   let(:join_date) { 5.days.ago }
   let(:user)      { build(:user) }
   let(:ability)   { double(current_user: user) }

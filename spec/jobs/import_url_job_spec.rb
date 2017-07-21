@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe ImportUrlJob do
   let(:user)           { create(:user) }
@@ -36,7 +36,7 @@ describe ImportUrlJob do
       described_class.perform_now(file_set, file_name, log)
       expect(inbox.count).to eq(1)
       last_message = inbox[0].last_message
-      expect(last_message.subject).to eq('File Import Error')
+      expect(last_message.subject).to eq("File Import Error")
       expect(last_message.body).to eq("Error Downloading Content for <a href=\"/concern/file_sets/#{file_set.id}\">Development Team Projects and Milestones (not downloaded).xlsx</a>")
     end
   end

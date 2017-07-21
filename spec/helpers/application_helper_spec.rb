@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe ApplicationHelper do
   describe "#more_facets_link_path" do

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe StatsPresenter, type: :model do
   let(:end_datetime) { DateTime.now }

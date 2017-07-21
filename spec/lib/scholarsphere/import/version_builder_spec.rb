@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Import::VersionBuilder do
   subject { file_set }
@@ -8,7 +8,7 @@ describe Import::VersionBuilder do
   let(:sufia6_user) { "s6user" }
   let(:sufia6_password) { "s6password" }
   let(:builder) { described_class.new }
-  let(:file_set) { create(:file_set, user: user, label: 'my label.txt') }
+  let(:file_set) { create(:file_set, user: user, label: "my label.txt") }
 
   let(:version1_uri) { "http://127.0.0.1:8983/fedora/rest/dev/44/55/8d/49/44558d49x/content/fcr:versions/version1" }
   let(:version2_uri) { "http://127.0.0.1:8983/fedora/rest/dev/44/55/8d/49/44558d49x/content/fcr:versions/version2" }
@@ -23,13 +23,13 @@ describe Import::VersionBuilder do
     ]
   end
   let(:version1) do
-    file = Tempfile.new('version1')
+    file = Tempfile.new("version1")
     file.write("hello world! version1")
     file.rewind
     file
   end
   let(:version2) do
-    file = Tempfile.new('version2')
+    file = Tempfile.new("version2")
     file.write("hello world! version2")
     file.rewind
     file
@@ -45,7 +45,7 @@ describe Import::VersionBuilder do
   context "when username / password have not been configured" do
     before do
       # this code is needed if the system has the correct sufia_6 paswords set to make this test fail
-      ScholarSphere::Application.config.fedora_sufia6_user = 'abc'
+      ScholarSphere::Application.config.fedora_sufia6_user = "abc"
       allow(ScholarSphere::Application.config).to receive(:fedora_sufia6_user).and_raise(NoMethodError)
     end
     it "raises runtime error" do
@@ -68,8 +68,8 @@ describe Import::VersionBuilder do
     context "good http" do
       before do
         allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-        copy_version(version1, 'version1', file_set)
-        copy_version(version2, 'version2', file_set)
+        copy_version(version1, "version1", file_set)
+        copy_version(version2, "version2", file_set)
       end
       it "creates versions" do
         expect(Net::HTTP).to receive(:start).twice
@@ -125,7 +125,7 @@ describe Import::VersionBuilder do
             { uri: version2_uri,
               created: "2016-09-29T15:58:00.639Z",
               label: "version2",
-              created_by: 'cam156' }
+              created_by: "cam156" }
           ]
         end
         let(:good_http_response) { Net::HTTPSuccess.new("1.1", "200", "Yeah it worked") }
@@ -153,8 +153,8 @@ describe Import::VersionBuilder do
     end
 
     context "when version date should be translated" do
-      let(:generic_file_id) { 'zk51vg948' }
-      let(:import_directory) { File.join(fixture_path, 'import') }
+      let(:generic_file_id) { "zk51vg948" }
+      let(:import_directory) { File.join(fixture_path, "import") }
       let(:json_file_name) { File.join(import_directory, "generic_file_#{generic_file_id}.json") }
       let(:generic_file_metadata) { JSON.parse(File.read(json_file_name), symbolize_names: true) }
       let(:versions) { generic_file_metadata[:versions] }
@@ -163,8 +163,8 @@ describe Import::VersionBuilder do
 
       before do
         allow(Hydra::Works::VirusCheckerService).to receive(:file_has_virus?).and_return(false)
-        copy_version(version1, 'version1', file_set)
-        copy_version(version2, 'version2', file_set)
+        copy_version(version1, "version1", file_set)
+        copy_version(version2, "version2", file_set)
         file_set.date_uploaded = DateTime.parse("2013-03-09T20:43:36.592+00:00")
       end
 

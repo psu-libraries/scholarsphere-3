@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'rake'
+require "rails_helper"
+require "rake"
 
 describe "scholarsphere:solr" do
   before do
@@ -10,7 +10,7 @@ describe "scholarsphere:solr" do
   context "with incorrect input" do
     describe "index" do
       it "raises an error" do
-        expect { run_task 'scholarsphere:solr:index' }.to raise_error(RuntimeError)
+        expect { run_task "scholarsphere:solr:index" }.to raise_error(RuntimeError)
       end
     end
   end

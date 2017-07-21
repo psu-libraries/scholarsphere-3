@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'active_fedora/noid/rspec'
+require "active_fedora/noid/rspec"
 
 RSpec.configure do |config|
   include ActiveFedora::Noid::RSpec

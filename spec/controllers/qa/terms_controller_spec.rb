@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Qa::TermsController do
   # NB: Although technically a controller test, this tests the integration of Questioning Authority's

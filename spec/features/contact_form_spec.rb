@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
-describe 'Contact form:', type: :feature do
+describe "Contact form:", type: :feature do
   let(:email)         { "archivist1@example.com" }
   let(:email_subject) { "My Subject is Cool" }
   let(:user)          { create(:user, email: email) }
@@ -30,7 +30,7 @@ describe 'Contact form:', type: :feature do
   before { sign_in(user) }
 
   it "sends emails to the service desk and confirmations to the user" do
-    visit '/'
+    visit "/"
     click_link "Contact"
     expect(page).to have_content "Contact Form"
     expect(find_field("sufia_contact_form_name").value).to eq(user.name)

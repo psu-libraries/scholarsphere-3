@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe PermissionsChangeSet do
   describe "#added and #removed" do
@@ -22,20 +22,20 @@ describe PermissionsChangeSet do
         its(:removed) { is_expected.to be_empty }
       end
       context "and one permission before" do
-        let(:before) { build(:file, edit_users: ['abd123']) }
+        let(:before) { build(:file, edit_users: ["abd123"]) }
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to eq(one_perm) }
       end
       context "and multiple permissions before" do
-        let(:before) { build(:file, edit_users: ['zzz123', 'def123']) }
+        let(:before) { build(:file, edit_users: ["zzz123", "def123"]) }
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to eq(multi_perm) }
       end
     end
     context "with one permission after" do
-      let(:after) { build(:file, edit_users: ['abd123']) }
+      let(:after) { build(:file, edit_users: ["abd123"]) }
       context "and one permission before" do
-        let(:before) { build(:file, edit_users: ['abd123']) }
+        let(:before) { build(:file, edit_users: ["abd123"]) }
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to be_empty }
       end
@@ -45,15 +45,15 @@ describe PermissionsChangeSet do
         its(:removed) { is_expected.to be_empty }
       end
       context "and multiple permissions before" do
-        let(:before) { build(:file, edit_users: ['zzz123', 'def123']) }
+        let(:before) { build(:file, edit_users: ["zzz123", "def123"]) }
         its(:added)   { is_expected.to eq(one_perm) }
         its(:removed) { is_expected.to eq(multi_perm) }
       end
     end
     context "with multiple permissions after" do
-      let(:after) { build(:file, edit_users: ['zzz123', 'def123']) }
+      let(:after) { build(:file, edit_users: ["zzz123", "def123"]) }
       context "and multiple permissions before" do
-        let(:before) { build(:file, edit_users: ['zzz123', 'def123']) }
+        let(:before) { build(:file, edit_users: ["zzz123", "def123"]) }
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to be_empty }
       end
@@ -63,7 +63,7 @@ describe PermissionsChangeSet do
         its(:removed) { is_expected.to be_empty }
       end
       context "and one permission before" do
-        let(:before) { build(:file, edit_users: ['abd123']) }
+        let(:before) { build(:file, edit_users: ["abd123"]) }
         its(:added)   { is_expected.to eq(multi_perm) }
         its(:removed) { is_expected.to eq(one_perm) }
       end

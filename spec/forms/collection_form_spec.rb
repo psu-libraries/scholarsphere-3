@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CollectionForm do
   let(:ability)    { Ability.new(nil) }

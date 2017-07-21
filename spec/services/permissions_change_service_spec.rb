@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe PermissionsChangeService do
-  let(:user)            { double('stubbed user') }
-  let(:batch_user)      { double('stubbed batch user') }
+  let(:user)            { double("stubbed user") }
+  let(:batch_user)      { double("stubbed batch user") }
   let(:message)         { "You can now edit file title" }
   let(:message_subject) { "Permission change notification" }
-  let(:generic_work)    { double('stubbed file', id: "1234", title: "title") }
-  let(:state)           { double('subbed permission change set') }
+  let(:generic_work)    { double("stubbed file", id: "1234", title: "title") }
+  let(:state)           { double("subbed permission change set") }
   let(:permissions)     { [{ name: "abd123", type: "person", access: "edit" }] }
   let(:service) { described_class.new(state, generic_work) }
 
