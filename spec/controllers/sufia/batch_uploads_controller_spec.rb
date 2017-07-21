@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Sufia::BatchUploadsController do
   its(:form_class) { is_expected.to eq(::BatchUploadForm) }
@@ -11,19 +11,19 @@ describe Sufia::BatchUploadsController do
     before { sign_in user }
 
     context "queuing a update job" do
-      let(:expected_types)             { { '1' => 'Article' } }
-      let(:expected_individual_params) { { '1' => 'foo' } }
+      let(:expected_types)             { { "1" => "Article" } }
+      let(:expected_individual_params) { { "1" => "foo" } }
 
       let(:expected_attributes_for_actor) do
-        { 'keyword' => [], 'visibility' => 'open', 'remote_files' => [], 'uploaded_files' => ['1'] }
+        { "keyword" => [], "visibility" => "open", "remote_files" => [], "uploaded_files" => ["1"] }
       end
 
       let(:params) do
         ActionController::Parameters.new(
-          title: { '1' => 'foo' },
-          resource_type: { '1' => 'Article' },
-          uploaded_files: ['1'],
-          batch_upload_item: { keyword: [""], visibility: 'open' }
+          title: { "1" => "foo" },
+          resource_type: { "1" => "Article" },
+          uploaded_files: ["1"],
+          batch_upload_item: { keyword: [""], visibility: "open" }
         )
       end
 
@@ -43,10 +43,10 @@ describe Sufia::BatchUploadsController do
     context "when providing a collection" do
       let(:params) do
         ActionController::Parameters.new(
-          title: { '1' => 'foo' },
-          resource_type: { '1' => 'Article' },
-          uploaded_files: ['1'],
-          batch_upload_item: { keyword: [""], visibility: 'open', collection_ids: ["collection-id"] }
+          title: { "1" => "foo" },
+          resource_type: { "1" => "Article" },
+          uploaded_files: ["1"],
+          batch_upload_item: { keyword: [""], visibility: "open", collection_ids: ["collection-id"] }
         )
       end
 

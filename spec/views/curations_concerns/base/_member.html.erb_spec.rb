@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_member.html.erb", verify_partial_doubles: false do
   let(:user)     { create(:user) }
@@ -22,7 +22,7 @@ describe "curation_concerns/base/_member.html.erb", verify_partial_doubles: fals
       allow(ability).to receive(:can?).with(:edit, member.id).and_return(false)
       render("curation_concerns/base/member.html.erb", member: member)
     end
-    it { is_expected.to have_selector('a.btn', text: "Download") }
+    it { is_expected.to have_selector("a.btn", text: "Download") }
   end
 
   context "when the user can edit" do

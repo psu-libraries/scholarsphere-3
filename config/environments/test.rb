@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Sufia::Engine.configure do
-  config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost/'
-  config.login_url = 'https://webaccess.psu.edu/?cosign-localhost&https://localhost/dashboard'
+  config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?http://localhost/"
+  config.login_url = "https://webaccess.psu.edu/?cosign-localhost&https://localhost/dashboard"
 end
 
 ScholarSphere::Application.configure do

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe FileSet, type: :model do
   let(:file) { build(:file_set, :with_png, label: "sample_png") }
   before do
-    allow(file).to receive(:mime_type).and_return('image/png')
+    allow(file).to receive(:mime_type).and_return("image/png")
   end
 
   subject { file }

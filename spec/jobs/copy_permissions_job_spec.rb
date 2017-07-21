@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CopyPermissionsJob do
   context "when changing visibility" do
@@ -28,11 +28,11 @@ describe CopyPermissionsJob do
     end
 
     context "when edit people change" do
-      let(:name) { 'abc@123.com' }
-      let(:type) { 'person' }
-      let(:access) { 'edit' }
+      let(:name) { "abc@123.com" }
+      let(:type) { "person" }
+      let(:access) { "edit" }
 
-      it 'copies permissions to its contained files' do
+      it "copies permissions to its contained files" do
         # files have the depositor as the edit user to begin with
         expect(work.file_sets.first.edit_users).to eq [user.to_s]
 
@@ -49,7 +49,7 @@ describe CopyPermissionsJob do
           file_set.save
         end
 
-        it 'copies permissions to its contained files' do
+        it "copies permissions to its contained files" do
           # files have the depositor as the edit user to begin with
           expect(work.file_sets.first.edit_users).to eq [user.to_s, "remove_me"]
 
@@ -62,11 +62,11 @@ describe CopyPermissionsJob do
     end
 
     context "when read people change" do
-      let(:name) { 'abc@123.com' }
-      let(:type) { 'person' }
-      let(:access) { 'read' }
+      let(:name) { "abc@123.com" }
+      let(:type) { "person" }
+      let(:access) { "read" }
 
-      it 'copies permissions to its contained files' do
+      it "copies permissions to its contained files" do
         # files have the depositor as the edit user to begin with
         expect(work.file_sets.first.read_users).to eq []
 
@@ -79,11 +79,11 @@ describe CopyPermissionsJob do
     end
 
     context "when read groups change" do
-      let(:name) { 'my_read_group' }
-      let(:type) { 'group' }
-      let(:access) { 'read' }
+      let(:name) { "my_read_group" }
+      let(:type) { "group" }
+      let(:access) { "read" }
 
-      it 'copies permissions to its contained files' do
+      it "copies permissions to its contained files" do
         # files have the depositor as the edit user to begin with
         expect(work.file_sets.first.read_groups).to eq []
 
@@ -96,11 +96,11 @@ describe CopyPermissionsJob do
     end
 
     context "when edit groups change" do
-      let(:name) { 'my_edit_group' }
-      let(:type) { 'group' }
-      let(:access) { 'edit' }
+      let(:name) { "my_edit_group" }
+      let(:type) { "group" }
+      let(:access) { "edit" }
 
-      it 'copies permissions to its contained files' do
+      it "copies permissions to its contained files" do
         # files have the depositor as the edit user to begin with
         expect(work.file_sets.first.read_groups).to eq []
 

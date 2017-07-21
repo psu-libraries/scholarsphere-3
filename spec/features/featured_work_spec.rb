@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "Featured works on the home page", type: :feature do
   let!(:user)         { create(:user) }
   let!(:jill_user)    { create(:jill) }
-  let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title']) }
+  let!(:file1)        { create(:featured_file, depositor: user.login, title: ["file title"]) }
   let!(:file2)        { create(:featured_file, :with_required_metadata, depositor: user.login) }
-  let!(:private_file) { create(:private_file, depositor: jill_user.login, title: ['private_document']) }
+  let!(:private_file) { create(:private_file, depositor: jill_user.login, title: ["private_document"]) }
 
   let(:admin_user) { create(:administrator) }
 
@@ -37,25 +37,25 @@ describe "Featured works on the home page", type: :feature do
       sign_in_with_js(admin_user)
       visit("/")
     end
-    it 'allows the user to remove it as a featured work' do
-      document = find('li.dd-item:nth-of-type(1)')
-      expect(document['data-id']).to eq(file1.id)
+    it "allows the user to remove it as a featured work" do
+      document = find("li.dd-item:nth-of-type(1)")
+      expect(document["data-id"]).to eq(file1.id)
 
-      within('li.dd-item:nth-of-type(1)') do
-        expect(page).to have_css '.glyphicon-remove'
-        find('.glyphicon-remove').click
+      within("li.dd-item:nth-of-type(1)") do
+        expect(page).to have_css ".glyphicon-remove"
+        find(".glyphicon-remove").click
         expect(page).to have_no_content(file1.title[0])
       end
     end
 
-    it 'removes a featured work if it becomes private' do
+    it "removes a featured work if it becomes private" do
       within('#featured_container') do
         expect(page).to have_content(file2.title[0])
       end
 
       file2.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
       file2.save
-      visit('/')
+      visit("/")
 
       within('#featured_container') do
         expect(page).not_to have_content(file2.title[0])

@@ -14,9 +14,9 @@
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
-server 'ssweb1prod-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
-server 'ssweb2prod-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
-server 'scholarsphere-jobs-prod.libraries.psu.edu:1855', user: 'deploy', roles: %w(app job)
+server "ssweb1prod-new.vmhost.psu.edu:1855", user: "deploy", roles: %w(web app db), primary: true
+server "ssweb2prod-new.vmhost.psu.edu:1855", user: "deploy", roles: %w(web app db)
+server "scholarsphere-jobs-prod.libraries.psu.edu:1855", user: "deploy", roles: %w(app job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options

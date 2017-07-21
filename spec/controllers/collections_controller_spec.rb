@@ -1,16 +1,16 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CollectionsController, type: :controller do
   subject { response }
 
   context "when the Collection doesn't exist" do
-    before { get :show, id: 'non-existent-collection' }
+    before { get :show, id: "non-existent-collection" }
     its(:status) { is_expected.to eq(302) }
   end
 
   context "when requesting a legacy URL" do
-    before { get :show, id: 'scholarsphere:123' }
+    before { get :show, id: "scholarsphere:123" }
     its(:status) { is_expected.to eq(301) }
     its(:location) { is_expected.to eq("http://test.host/collections/123") }
   end

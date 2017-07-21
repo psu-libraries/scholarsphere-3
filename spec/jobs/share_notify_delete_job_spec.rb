@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'support/vcr'
+require "rails_helper"
+require "support/vcr"
 
 describe ShareNotifyDeleteJob do
   let(:user) { create(:jill) }
@@ -21,7 +21,7 @@ describe ShareNotifyDeleteJob do
     end
 
     it "sends a notification" do
-      VCR.use_cassette('share_notify_success_job', record: :none) do
+      VCR.use_cassette("share_notify_success_job", record: :none) do
         expect(ShareNotifyDeleteEventJob).to receive(:perform_now)
         described_class.perform_now(work)
       end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 module FactoryHelpers
   def mock_file_factory(opts = {})
-    mock_model('MockFile',
-               mime_type:         opts.fetch(:mime_type, 'text/plain'),
-               content:           opts.fetch(:content, 'content'),
+    mock_model("MockFile",
+               mime_type:         opts.fetch(:mime_type, "text/plain"),
+               content:           opts.fetch(:content, "content"),
                file_size:         opts.fetch(:file_size, []),
                format_label:      opts.fetch(:format_label, []),
                height:            opts.fetch(:height, []),

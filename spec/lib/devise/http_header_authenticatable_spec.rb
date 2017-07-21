@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Devise::Strategies::HttpHeaderAuthenticatable do
   subject { described_class.new(nil) }
@@ -7,7 +7,7 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
 
   describe "#valid_user?" do
     context "in a production environment" do
-      let(:production) { ActiveSupport::StringInquirer.new('production') }
+      let(:production) { ActiveSupport::StringInquirer.new("production") }
       before { allow(Rails).to receive(:env).and_return(production) }
       context "using REMOTE_USER" do
         let(:request) { double(headers: { "REMOTE_USER" => "abc123" }) }

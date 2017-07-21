@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require "spec_helper"
 
-RSpec.describe 'my/_sort_and_per_page.html.erb', type: :view do
-  let(:mock_response) { double(response: { 'numFound' => 7 }) }
+RSpec.describe "my/_sort_and_per_page.html.erb", type: :view do
+  let(:mock_response) { double(response: { "numFound" => 7 }) }
   let(:sort_fields) { double(empty?: true) }
 
   before do
@@ -16,7 +16,7 @@ RSpec.describe 'my/_sort_and_per_page.html.erb', type: :view do
       render
     end
     it "has buttons" do
-      expect(rendered).to have_selector('button', text: 'Add to Collection')
+      expect(rendered).to have_selector("button", text: "Add to Collection")
       expect(rendered).to have_selector('input[value="Edit Selected"]')
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe 'my/_sort_and_per_page.html.erb', type: :view do
       render
     end
     it "has buttons" do
-      expect(rendered).not_to have_selector('button', text: 'Add to Collection')
+      expect(rendered).not_to have_selector("button", text: "Add to Collection")
       expect(rendered).to have_selector('input[value="Edit Selected"]')
     end
   end

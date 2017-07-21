@@ -1,6 +1,6 @@
 
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 
@@ -20,13 +20,13 @@ describe Collection, type: :feature do
                               title: ["little_file.txt"],
                               depositor: current_user.login) }
 
-  context 'with a logged in user' do
+  context "with a logged in user" do
     before do
       sign_in_with_js(current_user)
       visit("/collections/#{collection.id}")
     end
 
-    describe 'viewing a collection and its files' do
+    describe "viewing a collection and its files" do
       specify do
         expect(page).to have_content collection.title.first
         expect(page).to have_content collection.description.first
@@ -50,10 +50,10 @@ describe Collection, type: :feature do
       end
     end
 
-    describe 'searching within a collection' do
+    describe "searching within a collection" do
       specify do
-        fill_in 'collection_search', with: file1.title.first
-        click_button 'collection_submit'
+        fill_in "collection_search", with: file1.title.first
+        click_button "collection_submit"
         expect(page).to have_content collection.title.first
         expect(page).to have_content collection.description.first
 
@@ -66,7 +66,7 @@ describe Collection, type: :feature do
       end
     end
 
-    describe 'adding existing works' do
+    describe "adding existing works" do
       specify do
         click_link("Add existing works")
         check "check_all"
@@ -74,7 +74,7 @@ describe Collection, type: :feature do
       end
     end
 
-    describe 'adding new works' do
+    describe "adding new works" do
       specify do
         click_link("Add new works")
         expect(page).to have_content("Add Multiple New Works")
@@ -84,7 +84,7 @@ describe Collection, type: :feature do
     end
   end
 
-  context 'with a public user' do
+  context "with a public user" do
     it "displays the collection and only public files" do
       visit "/collections/#{collection.id}"
       expect(page.status_code).to eql(200)

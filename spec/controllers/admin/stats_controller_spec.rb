@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Admin::StatsController, type: :controller do
   let(:query_service) { Sufia::QueryService.new }
@@ -70,7 +70,7 @@ describe Admin::StatsController, type: :controller do
       it "renders the form" do
         get :export
         expect(response).to be_success
-        expect(response).to render_template('admin/stats/export')
+        expect(response).to render_template("admin/stats/export")
       end
     end
   end

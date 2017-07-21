@@ -5,7 +5,7 @@
 set :assets_role, [:web, :job]
 
 # application and repo settings
-set :application, 'scholarsphere'
+set :application, "scholarsphere"
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "develop"
 
@@ -22,7 +22,7 @@ set :ssh_options, {
 
 # rbenv settings
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, File.read(File.join(File.dirname(__FILE__), '..', '.ruby-version')).chomp # read from file above
+set :rbenv_ruby, File.read(File.join(File.dirname(__FILE__), "..", ".ruby-version")).chomp # read from file above
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec" # rbenv settings
 set :rbenv_map_bins, %w(rake gem bundle ruby rails) # map the following bins
 set :rbenv_roles, :all # default value
@@ -31,7 +31,7 @@ set :rbenv_roles, :all # default value
 set :passenger_roles, :web
 
 # rails settings, NOTE: Task is wired into event stack
-set :rails_env, 'production'
+set :rails_env, "production"
 
 # Settings for whenever gem that updates the crontab file on the server
 # See schedule.rb for details
@@ -46,40 +46,40 @@ set :format_options, command_output: false
 # Default value for :linked_files is []
 # Example link: ln -s /opt/heracles/deploy/scholarsphere/shared/config/redis.yml /opt/heracles/deploy/scholarsphere/current/config/redis.yml
 set :linked_files, fetch(:linked_files, []).push(
-  'config/analytics.yml',
-  'config/application.yml',
-  'config/arkivo.yml',
-  'config/blacklight.yml',
-  'config/browse_everything_providers.yml',
-  'config/database.yml',
-  'config/devise.yml',
-  'config/fedora.yml',
-  'config/fedora3.yml',
-  'config/ga-privatekey.p12',
-  'config/hydra-ldap.yml',
-  'config/initializers/arkivo_constraint.rb',
-  'config/initializers/qa.rb',
-  'config/initializers/sufia6.rb',
-  'config/newrelic.yml',
-  'config/redis.yml',
-  'config/scholarsphere.yml',
-  'config/secrets.yml',
-  'config/share_notify.yml',
-  'config/solr.yml',
-  'config/zotero.yml',
-  'public/robots.txt',
-  'public/sitemap.xml'
+  "config/analytics.yml",
+  "config/application.yml",
+  "config/arkivo.yml",
+  "config/blacklight.yml",
+  "config/browse_everything_providers.yml",
+  "config/database.yml",
+  "config/devise.yml",
+  "config/fedora.yml",
+  "config/fedora3.yml",
+  "config/ga-privatekey.p12",
+  "config/hydra-ldap.yml",
+  "config/initializers/arkivo_constraint.rb",
+  "config/initializers/qa.rb",
+  "config/initializers/sufia6.rb",
+  "config/newrelic.yml",
+  "config/redis.yml",
+  "config/scholarsphere.yml",
+  "config/secrets.yml",
+  "config/share_notify.yml",
+  "config/solr.yml",
+  "config/zotero.yml",
+  "public/robots.txt",
+  "public/sitemap.xml"
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
-  'log',
-  'public/system',
-  'public/uploads',
-  'tmp/cache',
-  'tmp/pids',
-  'tmp/sockets',
-  'tmp/uploads',
-  'vendor/bundle'
+  "log",
+  "public/system",
+  "public/uploads",
+  "tmp/cache",
+  "tmp/pids",
+  "tmp/sockets",
+  "tmp/uploads",
+  "vendor/bundle"
 )
 
 # Default value for keep_releases is 5
@@ -122,7 +122,7 @@ namespace :deploy do
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
     end
   end
-  before 'deploy:check:linked_dirs', :symlink_shared_directories
+  before "deploy:check:linked_dirs", :symlink_shared_directories
 
   desc "Restart resque-pool"
   task :resquepoolrestart do
@@ -212,7 +212,7 @@ namespace :rbenv_custom_ruby_cleanup do
   desc "Clean up old rbenv versions"
   task :purge_old_versions do
     on roles(:web) do
-      execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
+      execute "ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf"
     end
   end
   after "deploy:finishing", "rbenv_custom_ruby_cleanup:purge_old_versions"

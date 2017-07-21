@@ -8,9 +8,9 @@ module ApplicationHelper
 
   # TODO: Needed? this is in curation_concerns-0.14.0.pre1/app/inputs/select_with_modal_help_input.rb
   def link_to_help(subject)
-    link_to '#', id: "#{subject}_help", rel: 'popover',
-                 'data-content' => t("hydra.metadata_help.#{subject}_html"), 'data-original-title' => subject.titleize,
-                 'aria-label' => "Help for #{subject.titleize}" do
+    link_to '#', id: "#{subject}_help", rel: "popover",
+                 "data-content" => t("hydra.metadata_help.#{subject}_html"), "data-original-title" => subject.titleize,
+                 "aria-label" => "Help for #{subject.titleize}" do
       help_icon
     end
   end
@@ -23,7 +23,7 @@ module ApplicationHelper
 
   def permission_level_tag(document)
     if document.registered?
-      value = t('sufia.institution_name')
+      value = t("sufia.institution_name")
       class_name = "label-info"
     elsif document.public?
       value = "Open Access"

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "Catalog facets" do
   let(:work1) { build(:public_work, id: "1",
@@ -20,7 +20,7 @@ describe "Catalog facets" do
 
   before do
     index_works_and_collections(work1, work2, work3)
-    visit '/catalog'
+    visit "/catalog"
     click_link("Creator")
   end
 

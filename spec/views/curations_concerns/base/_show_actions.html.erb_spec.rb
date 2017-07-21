@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_show_actions.html.erb" do
   let(:user)      { create(:user) }

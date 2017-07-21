@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'rails_helper'
-require 'rake'
+require "rails_helper"
+require "rake"
 
 describe "scholarsphere:config" do
   before do
@@ -9,7 +9,7 @@ describe "scholarsphere:config" do
 
   describe ":check" do
     it "checks the validity of our production yaml files" do
-      run_task('scholarsphere:config:check')
+      run_task("scholarsphere:config:check")
     end
   end
 end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe AttachFilesToWorkSuccessService do
   let(:depositor) { create(:user) }
@@ -12,7 +12,7 @@ describe AttachFilesToWorkSuccessService do
     it "sends passing mail" do
       subject.call
       expect(inbox.count).to eq(1)
-      inbox.each { |msg| expect(msg.last_message.subject).to eq('File successfully attached') }
+      inbox.each { |msg| expect(msg.last_message.subject).to eq("File successfully attached") }
     end
   end
 end

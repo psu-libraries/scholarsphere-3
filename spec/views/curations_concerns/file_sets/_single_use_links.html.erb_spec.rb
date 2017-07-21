@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/file_sets/_single_use_links.html.erb" do
   let(:user)      { create(:user) }
@@ -17,8 +17,8 @@ describe "curation_concerns/file_sets/_single_use_links.html.erb" do
   context "when links are present" do
     let(:sul_presenter) { CurationConcerns::SingleUseLinkPresenter.new(create(:single_use_link)) }
     let(:page) { Capybara::Node::Simple.new(rendered) }
-    let(:copy_button) { page.find('button.copy-single-use-link')['aria-label'] }
-    let(:delete_link) { page.find('a.delete-single-use-link')['aria-label'] }
+    let(:copy_button) { page.find("button.copy-single-use-link")["aria-label"] }
+    let(:delete_link) { page.find("a.delete-single-use-link")["aria-label"] }
 
     before do
       controller.params = { id: "fs-id" }

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Sufia::CreateWithRemoteFilesActor do
   let(:user) { create(:user) }
   let(:work) { create(:work, user: user) }
 
   let(:create_actor) do
-    double('create actor', create: true,
+    double("create actor", create: true,
                            curation_concern: work,
                            user: user)
   end

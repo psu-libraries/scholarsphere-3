@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 
-describe 'Dashboard Shares', type: :feature do
+describe "Dashboard Shares", type: :feature do
   let(:current_user) { create(:user) }
   let(:jill)         { create(:jill) }
 

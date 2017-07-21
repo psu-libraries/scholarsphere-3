@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'active_fedora/cleaner'
+require "active_fedora/cleaner"
 # The other tests rely on a clean database *before* each test. So we
 # clean up after ourselves here.
 RSpec.configure do |config|

@@ -8,14 +8,14 @@ module LinkChecker
   end
 
   def anchor_links
-    links = all('a').map do |page_link|
+    links = all("a").map do |page_link|
       page_link[:href] if page_link[:href].include?('#')
     end
     links.uniq.compact.delete_if(&:blank?)
   end
 
   def external_links
-    links = all('a').map do |page_link|
+    links = all("a").map do |page_link|
       page_link[:href] unless page_link[:href].match(Capybara.current_session.server.host)
     end
     links.uniq.compact.delete_if(&:blank?)

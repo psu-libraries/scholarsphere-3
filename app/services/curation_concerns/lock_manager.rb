@@ -3,7 +3,7 @@
 # overriding this file to use the current configured redis instead of a new redis
 # so that we get the entire configuration including the password
 #
-require 'redlock'
+require "redlock"
 module CurationConcerns
   class LockManager
     class UnableToAcquireLockError < StandardError; end

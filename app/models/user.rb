@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   Devise.add_module(:http_header_authenticatable,
                     strategy: true,
                     controller: :sessions,
-                    model: 'devise/models/http_header_authenticatable')
+                    model: "devise/models/http_header_authenticatable")
 
   devise :http_header_authenticatable
 
@@ -35,17 +35,17 @@ class User < ActiveRecord::Base
     def query_ldap_by_name_or_id(id_or_name_part)
       person_filter = LdapUser.filter_for(:student, :faculty, :staff, :employee)
       filter = Net::LDAP::Filter.construct("(& (| (uid=#{id_or_name_part}* ) (givenname=#{id_or_name_part}*) (sn=#{id_or_name_part}*)) #{person_filter})")
-      users = LdapUser.get_user(filter, ['uid', 'displayname'])
+      users = LdapUser.get_user(filter, ["uid", "displayname"])
       # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
       if users.nil? && (Hydra::LDAP.connection.get_operation_result[:message] == "Size Limit Exceeded")
         filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
-        users = LdapUser.get_user(filter2, ['uid', 'displayname'])
+        users = LdapUser.get_user(filter2, ["uid", "displayname"])
       end
       users.map { |u| { id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})" } }
     end
 
     def directory_attributes(login, attrs = [])
-      LdapUser.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
+      LdapUser.get_user(Net::LDAP::Filter.eq("uid", login), attrs)
     end
 
     def from_url_component(component)
@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
   end
 
   def administrator?
-    groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    groups.include? "umg/up.dlt.scholarsphere-admin-viewers"
   end
 
   # In Sufia 7, administrators are granted edit rights via Ability, so if
@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
     end
 
     def get_net_attribute_with_new_lines(entry, attribute_name)
-      attribute = get_net_attribute(entry, attribute_name, "").tr('$', "\n")
+      attribute = get_net_attribute(entry, attribute_name, "").tr("$", "\n")
       attribute.blank? ? nil : attribute
     end
 

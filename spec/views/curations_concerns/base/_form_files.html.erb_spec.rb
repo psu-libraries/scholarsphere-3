@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "curation_concerns/base/_form_files.html.erb" do
   let(:user)      { create(:user) }
@@ -7,11 +7,11 @@ describe "curation_concerns/base/_form_files.html.erb" do
   let(:ability)   { Ability.new(user) }
   let(:form)      { CurationConcerns::GenericWorkForm.new(work, ability) }
   let(:page)      { Capybara::Node::Simple.new(rendered) }
-  let(:all_label) { page.find('button.all')['aria-label'] }
+  let(:all_label) { page.find("button.all")["aria-label"] }
 
   before do
     view.simple_form_for form do |f|
-      render 'curation_concerns/base/form_files.html.erb', f: f
+      render "curation_concerns/base/form_files.html.erb", f: f
     end
   end
 

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe "sufia/batch_uploads/_form.html.erb" do
   let(:form) { BatchUploadForm.new(BatchUploadItem.new, Ability.new(nil)) }

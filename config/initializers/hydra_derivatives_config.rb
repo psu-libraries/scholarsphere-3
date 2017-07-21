@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'hydra/derivatives'
+require "hydra/derivatives"
 
 Hydra::Derivatives::Processors::Video::Processor.timeout = 10.minutes
 Hydra::Derivatives::Processors::Document.timeout = 5.minutes

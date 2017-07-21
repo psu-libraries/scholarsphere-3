@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CurationConcerns::Renderers::AttributeRenderer do
   context "when schema.org locale information is missing" do

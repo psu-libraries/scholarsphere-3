@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 

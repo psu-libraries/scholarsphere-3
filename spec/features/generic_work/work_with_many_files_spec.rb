@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe GenericWork, type: :feature do
   context "when viewing a work with many files" do
@@ -43,7 +43,7 @@ describe GenericWork, type: :feature do
 
     it "displays the work page with all the files" do
       within("dl.attributes") do
-        expect(page).to have_selector('dd.total_items', text: "100")
+        expect(page).to have_selector("dd.total_items", text: "100")
       end
       within("table.related-files") do
         (1..100).each do |id|

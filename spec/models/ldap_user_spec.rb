@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe LdapUser do
-  let(:user)        { ['mocked ldap user'] }
+  let(:user)        { ["mocked ldap user"] }
   let(:empty_user)  { User.new }
 
   # You'll need to change these if I ever go meet Elvis
@@ -102,7 +102,7 @@ describe LdapUser do
         it { is_expected.to be_empty }
       end
     end
-    context "with a real PSU user", :need_ldap, unless: ENV['TRAVIS'] do
+    context "with a real PSU user", :need_ldap, unless: ENV["TRAVIS"] do
       subject { described_class.get_groups(psu_user) }
       it { is_expected.to include(psu_user_groups) }
     end

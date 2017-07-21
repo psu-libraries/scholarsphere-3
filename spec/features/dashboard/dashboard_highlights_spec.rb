@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 
-describe 'Dashboard Highlights', type: :feature do
+describe "Dashboard Highlights", type: :feature do
   let(:current_user) { create(:user) }
 
   before do
@@ -11,7 +11,7 @@ describe 'Dashboard Highlights', type: :feature do
     go_to_dashboard_highlights
   end
 
-  specify 'tab title and buttons' do
+  specify "tab title and buttons" do
     expect(page).to have_content("My Highlights")
     expect(page).to have_content("New Work")
     expect(page).to have_content("Create Collection")

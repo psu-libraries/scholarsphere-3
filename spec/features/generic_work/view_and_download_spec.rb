@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 include Selectors::Dashboard
 
@@ -45,7 +45,7 @@ describe GenericWork, type: :feature do
         end
 
         within("p.work_description") do
-          expect(page).to have_link 'http://example.org/TheDescriptionLink/'
+          expect(page).to have_link "http://example.org/TheDescriptionLink/"
         end
 
         within("dl.generic_work") do
@@ -72,18 +72,18 @@ describe GenericWork, type: :feature do
         before { visit(curation_concerns_generic_work_path(work1)) }
 
         specify "I can download an Endnote reference" do
-          visit(find_link('EndNote')[:href])
-          expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
+          visit(find_link("EndNote")[:href])
+          expect(page.response_headers["Content-Type"]).to eq("application/x-endnote-refer")
         end
 
-        specify 'I can see the Mendeley modal' do
-          click_link 'Mendeley'
-          expect(page).to have_css('.modal-header')
+        specify "I can see the Mendeley modal" do
+          click_link "Mendeley"
+          expect(page).to have_css(".modal-header")
         end
 
-        specify 'I can see the Zotero modal' do
-          click_link 'Zotero'
-          expect(page).to have_css('.modal-header')
+        specify "I can see the Zotero modal" do
+          click_link "Zotero"
+          expect(page).to have_css(".modal-header")
         end
       end
     end
@@ -119,15 +119,15 @@ describe GenericWork, type: :feature do
 
     before do
       sign_in_with_js(admin_user)
-      visit '/dashboard/works'
+      visit "/dashboard/works"
     end
 
-    context 'When viewing a public file' do
+    context "When viewing a public file" do
       before  { db_item_title(public_file).click }
       specify { expect(page).to have_link "Feature" }
     end
 
-    context 'When viewing a private file' do
+    context "When viewing a private file" do
       before  { db_item_title(private_file).click }
       specify { expect(page).not_to have_link "Feature" }
     end

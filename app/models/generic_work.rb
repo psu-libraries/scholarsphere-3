@@ -6,9 +6,9 @@ class GenericWork < ActiveFedora::Base
   include ShareNotify::Metadata
   include AdditionalMetadata
 
-  self.human_readable_type = 'Work'
+  self.human_readable_type = "Work"
 
-  validates :title, presence: { message: 'Your work must have a title.' }
+  validates :title, presence: { message: "Your work must have a title." }
 
   property :upload_set, predicate: ::RDF::URI.new('http://scholarsphere.psu.edu/ns#upload_set'), multiple: false
 

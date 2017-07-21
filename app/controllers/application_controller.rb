@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include CurationConcerns::ThemedLayoutController
   include Devise::Behaviors::HttpHeaderAuthenticatableBehavior
 
-  with_themed_layout '1_column'
+  with_themed_layout "1_column"
 
   protect_from_forgery with: :exception
 
@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     return nil_request if request.nil?
     search = session[:search].dup if session[:search]
     return_url = session[:user_return_to].dup if session[:user_return_to]
-    request.env['warden'].logout unless user_logged_in?
+    request.env["warden"].logout unless user_logged_in?
     session[:search] = search
     session[:user_return_to] = return_url
   end
@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   def render_404
     @presenter = ErrorPresenter.new
     @presenter.log_exception
-    render template: '/error', layout: "error", formats: [:html], status: @presenter.status
+    render template: "/error", layout: "error", formats: [:html], status: @presenter.status
   end
 
   # @param [Exception] exception
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     else
       @presenter = ErrorPresenter.new(exception)
       @presenter.log_exception
-      render template: '/error', layout: "error", formats: [:html], status: @presenter.status
+      render template: "/error", layout: "error", formats: [:html], status: @presenter.status
     end
   end
 
@@ -101,16 +101,16 @@ class ApplicationController < ActionController::Base
       return if current_user && current_user.ldap_exist? && !ReadOnly.read_only?
       if ReadOnly.read_only?
         @announcement = ReadOnly.announcement_text
-        render template: '/error/read_only', layout: "homepage", formats: [:html], status: 503
+        render template: "/error/read_only", layout: "homepage", formats: [:html], status: 503
       else
         logger.error "User: `#{current_user.user_key}' does not exist in ldap"
-        render 'curation_concerns/base/unauthorized', status: :unauthorized
+        render "curation_concerns/base/unauthorized", status: :unauthorized
       end
     end
 
     def filtered_flash_messages
       [flash[:alert]].flatten.reject do |item|
-        item == 'You need to sign in or sign up before continuing.' ||
+        item == "You need to sign in or sign up before continuing." ||
           item =~ /is not recognized by the 'identify' command/
       end
     end

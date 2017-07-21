@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe TranslatedFacetAttributeRenderer do
   let(:field)   { :name }
@@ -10,7 +10,7 @@ describe TranslatedFacetAttributeRenderer do
     let(:expected) { Nokogiri::HTML(dl_content) }
 
     context "with explicit facet values" do
-      let(:renderer) { described_class.new(field, ['BOB', 'JESSICA'], mapping: mapping) }
+      let(:renderer) { described_class.new(field, ["BOB", "JESSICA"], mapping: mapping) }
 
       let(:dl_content) {%(
         <dt class="attribute-term">Name</dt>
@@ -23,7 +23,7 @@ describe TranslatedFacetAttributeRenderer do
     end
 
     context "without facet values" do
-      let(:renderer) { described_class.new(field, ['BOB', 'JESSICA']) }
+      let(:renderer) { described_class.new(field, ["BOB", "JESSICA"]) }
 
       let(:dl_content) {%(
         <dt class="attribute-term">Name</dt>

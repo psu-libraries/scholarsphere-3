@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe PublicFilteredList, type: :model do
   let(:file_list) do
@@ -10,7 +10,7 @@ describe PublicFilteredList, type: :model do
 
   it "keeps public files" do
     expect(subject.count).to eq(1)
-    expect(subject.map(&:title)).to include(['public'])
-    expect(subject.map(&:title)).not_to include(['private'])
+    expect(subject.map(&:title)).to include(["public"])
+    expect(subject.map(&:title)).not_to include(["private"])
   end
 end

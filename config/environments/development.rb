@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 # In production, these are normally "eager loaded" but in development, they are not.
 # This enables the stats view pages to render.
-require 'legato'
-require 'sufia/pageview'
-require 'sufia/download'
+require "legato"
+require "sufia/pageview"
+require "sufia/download"
 
 Sufia::Engine.configure do
-  config.logout_url = 'https://webaccess.psu.edu/cgi-bin/logout?http://localhost:3000/'
-  config.login_url = 'https://webaccess.psu.edu/?cosign-localhost&http://localhost:3000/dashboard'
+  config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?http://localhost:3000/"
+  config.login_url = "https://webaccess.psu.edu/?cosign-localhost&http://localhost:3000/dashboard"
 end
 
 ScholarSphere::Application.configure do

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CurationConcerns::Actors::GenericWorkActor do
   let(:user) { create(:user) }
@@ -18,14 +18,14 @@ describe CurationConcerns::Actors::GenericWorkActor do
   context "with ordered attributes" do
     let(:attributes) do
       {
-        creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-        title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+        creator: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        title: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
       }
     end
 
     it "keeps the correct order" do
-      expect(work.creator).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
-      expect(work.title).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
+      expect(work.creator).to eq(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"])
+      expect(work.title).to eq(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"])
     end
   end
 

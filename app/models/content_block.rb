@@ -2,7 +2,7 @@
 class ContentBlock < ActiveRecord::Base
   include Sufia::ContentBlockBehavior
 
-  LICENSE = 'license_text'
+  LICENSE = "license_text"
 
   def self.license_text
     find_or_create_by(name: LICENSE)

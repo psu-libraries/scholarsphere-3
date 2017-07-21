@@ -8,14 +8,14 @@ class Capistrano::Git < Capistrano::SCM
     end
 
     def clone
-      git :clone, '-b', fetch(:branch), '--recursive', repo_url, repo_path
+      git :clone, "-b", fetch(:branch), "--recursive", repo_url, repo_path
     end
 
     def release
-      context.execute :rm, '-rf', release_path
-      git :clone, '--branch', fetch(:branch),
-          '--recursive',
-          '--no-hardlinks',
+      context.execute :rm, "-rf", release_path
+      git :clone, "--branch", fetch(:branch),
+          "--recursive",
+          "--no-hardlinks",
           repo_path, release_path
     end
   end

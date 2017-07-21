@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe ContentBlock do
   let!(:content_block) { create(:license_text) }

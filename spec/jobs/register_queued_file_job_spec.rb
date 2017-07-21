@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe RegisterQueuedFileJob do
   let(:work) { build(:work, id: "1234") }

@@ -13,13 +13,13 @@ FactoryGirl.define do
 
     initialize_with { new("uid=#{uid},dc=psu,edu") }
     after(:build) do |u, attrs|
-      u['cn'] = attrs.cn
-      u['displayname'] = attrs.displayname
-      u['uid'] = attrs.uid
-      u['givenname'] = attrs.givenname
-      u['sn'] = attrs.sn
-      u['mail'] = attrs.mail
-      u['psofficelocation'] = attrs.psofficelocation
+      u["cn"] = attrs.cn
+      u["displayname"] = attrs.displayname
+      u["uid"] = attrs.uid
+      u["givenname"] = attrs.givenname
+      u["sn"] = attrs.sn
+      u["mail"] = attrs.mail
+      u["psofficelocation"] = attrs.psofficelocation
     end
   end
 end

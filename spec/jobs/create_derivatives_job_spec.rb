@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe CreateDerivativesJob do
   let(:file_set) { build(:file_set) }

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'rails_helper'
+require "rails_helper"
 
 describe Import::WorkBuilder do
   let(:sufia6_user) { "s6user" }
@@ -13,9 +13,9 @@ describe Import::WorkBuilder do
     generic_file_json(id: "th83kz34n",
                       date_uploaded: "2016-06-21T09:08:00.000+00:00",
                       date_modified: "2016-06-21T09:08:00.000+00:00",
-                      rights: 'All rights reserved')
+                      rights: "All rights reserved")
   end
-  let(:import_directory) { File.join(fixture_path, 'import') }
+  let(:import_directory) { File.join(fixture_path, "import") }
   let(:json_file_name) { File.join(import_directory, "generic_file_zp38wc72r.json") }
   let(:json2) { File.read(json_file_name) }
 
@@ -72,9 +72,9 @@ describe Import::WorkBuilder do
     it "creates a distinct Works" do
       work1 = builder.build(gf_metadata)
       work2 = builder.build(gf_metadata2)
-      expect(work1.title).to eq ['My Awesone File']
+      expect(work1.title).to eq ["My Awesone File"]
       expect(work1.id).to eq "th83kz34n"
-      expect(work2.title).to eq ['another title for us']
+      expect(work2.title).to eq ["another title for us"]
       expect(work2.id).to eq "abc123"
       expect(work2.creator).to eq ["Adams, Nancy E.", "Gaffney, Maureen A.", "Lynn, Valerie"]
     end

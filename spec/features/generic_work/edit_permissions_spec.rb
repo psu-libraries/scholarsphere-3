@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'feature_spec_helper'
+require "feature_spec_helper"
 
 describe "Editing permissions on a work" do
   context "when removing permissions from a work with files" do
