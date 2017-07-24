@@ -64,15 +64,11 @@ en:
       local: "Files must be added before they can be uploaded"
     batch_edit:
       permissions_warning: "Warning! Making changes to visibility or sharing permissions will remove any existing permissions on the files in this batch and replace them with the ones specified here."
-    select_file_restriction: "(less visible)"
-    media: "Choosing a representative listed as <em>less visible</em> may not appear if the work is public"
-
   statistic:
     report:
       subject: "ScholarSphere - Statistic Report"
       csv:
         file_name: "scholarsphere-stats_%{date_str}.csv"
-
 
   # Error messages used in conjunction with ErrorPresenter. The key for each error is derived as follows:
   #   StandardError => standard_error

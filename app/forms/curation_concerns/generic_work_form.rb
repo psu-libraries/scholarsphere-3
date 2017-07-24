@@ -49,14 +49,10 @@ module CurationConcerns
     end
 
     def select_files
-      Hash[file_presenters.map { |file| [name_for_select_file(file), file.id] }]
-    end
-
-    private
-
-      def name_for_select_file(file)
-        return file.to_s unless model.visibility == "open" && file.solr_document.visibility == "authenticated"
-        [file, I18n.t("scholarsphere.select_file_restriction")].join(" ").to_s
+      available_files = file_presenters.select do |file|
+        model.visibility == file.solr_document.visibility
       end
+      Hash[available_files.map { |file| [file.to_s, file.id] }]
+    end
   end
 end

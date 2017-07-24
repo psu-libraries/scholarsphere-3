@@ -19,7 +19,6 @@ describe "Editing a work" do
 
     within("#work-media") do
       expect(page).to have_selector("h2", text: "Media")
-      expect(page).to have_content(I18n.t('scholarsphere.media'))
     end
 
     within("#extended-terms") do
