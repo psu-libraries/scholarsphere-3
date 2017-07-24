@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   def render_404
     @presenter = ErrorPresenter.new
     @presenter.log_exception
-    render template: '/error', layout: "error", formats: [:html], status: @presenter.status
+    render template: '/error', layout: 'error', formats: [:html], status: @presenter.status
   end
 
   # @param [Exception] exception
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     else
       @presenter = ErrorPresenter.new(exception)
       @presenter.log_exception
-      render template: '/error', layout: "error", formats: [:html], status: @presenter.status
+      render template: '/error', layout: 'error', formats: [:html], status: @presenter.status
     end
   end
 
@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_legacy_url_prefix
-    legacy_prefix = "scholarsphere:"
+    legacy_prefix = 'scholarsphere:'
     id = params[:id].to_s
     return id unless id.start_with?(legacy_prefix)
     new_id = id[legacy_prefix.length..-1]
@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
       return if current_user && current_user.ldap_exist? && !ReadOnly.read_only?
       if ReadOnly.read_only?
         @announcement = ReadOnly.announcement_text
-        render template: '/error/read_only', layout: "homepage", formats: [:html], status: 503
+        render template: '/error/read_only', layout: 'homepage', formats: [:html], status: 503
       else
         logger.error "User: `#{current_user.user_key}' does not exist in ldap"
         render 'curation_concerns/base/unauthorized', status: :unauthorized
@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
     end
 
     def nil_request
-      logger.warn("Request is Nil, how weird!!!")
+      logger.warn('Request is Nil, how weird!!!')
       nil
     end
 end

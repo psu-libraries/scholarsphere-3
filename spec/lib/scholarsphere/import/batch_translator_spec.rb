@@ -2,13 +2,13 @@
 require 'rails_helper'
 
 describe Import::BatchTranslator do
-  describe "default_prefix" do
-    it "default prefix is batch" do
-      expect(described_class.new({}).send(:default_prefix)).to eq("batch_")
+  describe 'default_prefix' do
+    it 'default prefix is batch' do
+      expect(described_class.new({}).send(:default_prefix)).to eq('batch_')
     end
   end
 
-  describe "#import" do
+  describe '#import' do
     let!(:work1) { create :work, id: 'x920fw89s' }
     let(:translator) { described_class.new(import_dir: import_directory, import_binary: false) }
     let(:import_directory) { Rails.root.join('tmp', 'import_test') }
@@ -26,12 +26,12 @@ describe Import::BatchTranslator do
       work1.destroy(eradicate: true)
     end
 
-    context "with multiple works" do
+    context 'with multiple works' do
       let!(:work2) { create :work, id: 'tm70mv24n' }
       let!(:work3) { create :work, id: 'g445cd26c' }
       let(:batch_id) { 'zg64tk99d' }
       it 'Creates related Work Links' do
-        expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tk99d.json")
+        expect(Rails.logger).to receive(:debug).with('Importing batch_zg64tk99d.json')
         translator.import
         expect(work1.reload.upload_set).to eq batch_id
         expect(work2.reload.upload_set).to eq batch_id
@@ -39,10 +39,10 @@ describe Import::BatchTranslator do
       end
     end
 
-    context "with one work" do
+    context 'with one work' do
       let(:batch_id) { 'zg64tkabc' }
       it 'Creates no links' do
-        expect(Rails.logger).to receive(:debug).with("Importing batch_zg64tkabc.json")
+        expect(Rails.logger).to receive(:debug).with('Importing batch_zg64tkabc.json')
         translator.import
         expect(work1.reload.related_object_ids).to eq []
       end

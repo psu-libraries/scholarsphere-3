@@ -18,7 +18,7 @@ class PermissionsChangeService
 
   def inform_users
     state.added.each do |permission|
-      next unless permission[:type] == "person"
+      next unless permission[:type] == 'person'
       send_message(permission[:access], User.find_by_user_key(permission[:name]))
     end
   end
@@ -48,7 +48,7 @@ class PermissionsChangeService
       User.batchuser.send_message(
         recipient,
         "You can now #{access} file #{generic_work.title}",
-        "Permission change notification"
+        'Permission change notification'
       )
     end
 end

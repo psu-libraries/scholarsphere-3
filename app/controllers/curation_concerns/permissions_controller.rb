@@ -13,6 +13,6 @@ class CurationConcerns::PermissionsController < ApplicationController
   def copy_access
     authorize! :edit, curation_concern
     CopyPermissionsJob.perform_later(curation_concern)
-    redirect_to [main_app, curation_concern], notice: I18n.t("sufia.upload.change_access_flash_message")
+    redirect_to [main_app, curation_concern], notice: I18n.t('sufia.upload.change_access_flash_message')
   end
 end

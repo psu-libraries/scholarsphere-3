@@ -7,16 +7,16 @@ set :assets_role, [:web, :job]
 # application and repo settings
 set :application, 'scholarsphere'
 set :repo_url, "https://github.com/psu-stewardship/#{fetch(:application)}.git"
-set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "develop"
+set :branch, ENV['REVISION'] || ENV['BRANCH_NAME'] || 'develop'
 
 # default user and deployment location
-set :user, "deploy"
+set :user, 'deploy'
 set :deploy_to, "/opt/heracles/deploy/#{fetch(:application)}"
 set :use_sudo, false
 
 # ssh key settings
 set :ssh_options, {
-  keys: [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")],
+  keys: [File.join(ENV['HOME'], '.ssh', 'id_deploy_rsa')],
   forward_agent: true
 }
 
@@ -101,17 +101,17 @@ namespace :apache do
 end
 
 namespace :deploy do
-  desc "Verify yaml configuration files are present and contain the correct keys"
+  desc 'Verify yaml configuration files are present and contain the correct keys'
   task :check_configs do
     on roles(:all) do
       within release_path do
-        execute :rake, "scholarsphere:config:check", "RAILS_ENV=production"
+        execute :rake, 'scholarsphere:config:check', 'RAILS_ENV=production'
       end
     end
   end
   after :updated, :check_configs
 
-  desc "set up the shared directory to have the symbolic links to the appropriate directories shared between servers"
+  desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
       execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
@@ -124,15 +124,15 @@ namespace :deploy do
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
 
-  desc "Restart resque-pool"
+  desc 'Restart resque-pool'
   task :resquepoolrestart do
     on roles(:job) do
-      execute "sudo /sbin/service resque restart"
+      execute 'sudo /sbin/service resque restart'
     end
   end
   after :published, :resquepoolrestart
 
-  desc "Re-solrize objects"
+  desc 'Re-solrize objects'
   task :resolrize do
     on roles(:job) do
       within release_path do
@@ -145,7 +145,7 @@ namespace :deploy do
   # Disable resolrization until after PCDM migration
   after :resquepoolrestart, :resolrize
 
-  desc "Queue sitemap.xml to be generated"
+  desc 'Queue sitemap.xml to be generated'
   task :sitemapxml do
     on roles(:job) do
       within release_path do
@@ -158,24 +158,24 @@ namespace :deploy do
   # Re-enabled, see psu-stewardship/scholarsphere#285
   after :published, :sitemapxml
 
-  desc "Compile assets on for selected server roles"
+  desc 'Compile assets on for selected server roles'
   task :roleassets do
     on roles(:job) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "assets:precompile "
+          execute :rake, 'assets:precompile '
         end
       end
     end
   end
   after :migrate, :roleassets
 
-  desc "Create a symlink to assets used by Resque"
+  desc 'Create a symlink to assets used by Resque'
   task :symlink_resque_assets do
     on roles(:web) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "resque:assets"
+          execute :rake, 'resque:assets'
         end
       end
     end
@@ -193,27 +193,27 @@ namespace :deploy do
   # Replace passenger conf file with temp file.
 
   namespace :passenger do
-    desc "Passenger Version Config Update"
+    desc 'Passenger Version Config Update'
     task :config_update do
       on roles(:web) do
-        execute "mkdir --parents /opt/heracles/deploy/passenger"
+        execute 'mkdir --parents /opt/heracles/deploy/passenger'
         execute 'cd ~deploy/scholarsphere/current && echo -n "PassengerRuby " > ~deploy/passenger/passenger-ruby-version.cap   && rbenv which ruby >> ~deploy/passenger/passenger-ruby-version.cap'
         execute 'v_passenger_ruby=$(cat ~deploy/passenger/passenger-ruby-version.cap) &&    cp --force /etc/httpd/conf.d/phusion-passenger-default-ruby.conf ~deploy/passenger/passenger-ruby-version.tmp &&    sed -i -e "s|.*PassengerRuby.*|${v_passenger_ruby}|" ~deploy/passenger/passenger-ruby-version.tmp'
-        execute "sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf"
-        execute "sudo /bin/systemctl restart httpd"
+        execute 'sudo /bin/mv ~deploy/passenger/passenger-ruby-version.tmp /etc/httpd/conf.d/phusion-passenger-default-ruby.conf'
+        execute 'sudo /bin/systemctl restart httpd'
       end
     end
   end
-  after :published, "passenger:config_update"
+  after :published, 'passenger:config_update'
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions
 namespace :rbenv_custom_ruby_cleanup do
-  desc "Clean up old rbenv versions"
+  desc 'Clean up old rbenv versions'
   task :purge_old_versions do
     on roles(:web) do
       execute 'ls -dt ~deploy/.rbenv/versions/*/ | tail -n +3 | xargs rm -rf'
     end
   end
-  after "deploy:finishing", "rbenv_custom_ruby_cleanup:purge_old_versions"
+  after 'deploy:finishing', 'rbenv_custom_ruby_cleanup:purge_old_versions'
 end

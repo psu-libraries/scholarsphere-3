@@ -10,15 +10,15 @@ describe RedirectToWebAccessFailure do
       'warden.options' => { scope: :user },
       'rack.session' => {},
       'action_dispatch.request.formats' => Array(env_params.delete('formats') || Mime::HTML),
-      'rack.input' => "",
+      'rack.input' => '',
       'warden' => OpenStruct.new(message: nil)
     }.merge!(env_params)
 
     @response = RedirectToWebAccessFailure.call(env).to_a
     @request  = ActionDispatch::Request.new(env)
   end
-  describe "when http_auth? is false" do
-    it "does not set flash" do
+  describe 'when http_auth? is false' do
+    it 'does not set flash' do
       call_failure
       expect(@response.first).to eq 302
       expect(@response.second['Location']).to eq 'https://webaccess.psu.edu/?cosign-localhost&https://localhost'

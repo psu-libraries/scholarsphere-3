@@ -15,9 +15,9 @@ module Devise
         # happen depending on the setup or testing framework, so we allow both.
         def remote_user(headers)
           if Rails.env.production?
-            headers.fetch("REMOTE_USER", nil)
+            headers.fetch('REMOTE_USER', nil)
           else
-            headers.fetch("REMOTE_USER", nil) || headers.fetch("HTTP_REMOTE_USER", nil)
+            headers.fetch('REMOTE_USER', nil) || headers.fetch('HTTP_REMOTE_USER', nil)
           end
         end
     end

@@ -16,9 +16,9 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   specify 'tab title and buttons' do
-    expect(page).to have_content("My Collections")
-    expect(page).to have_link("New Work", visible: false) # link is there (even if collapsed)
-    expect(page).to have_link("New Collection", visible: false) # link is there (even if collapsed)
+    expect(page).to have_content('My Collections')
+    expect(page).to have_link('New Work', visible: false) # link is there (even if collapsed)
+    expect(page).to have_link('New Collection', visible: false) # link is there (even if collapsed)
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
 
@@ -31,25 +31,25 @@ describe 'Dashboard Collections:', type: :feature do
     first('span.glyphicon-chevron-right').click
     expect(page).to have_content(collection.creator.first)
     expect(page).to have_content(collection.depositor)
-    expect(page).to have_content "Edit Access"
+    expect(page).to have_content 'Edit Access'
     expect(page).to have_content(current_user)
   end
 
   specify 'additional information is hidden' do
     expect(page).not_to have_content(collection.creator.first)
     expect(page).not_to have_content(collection.depositor)
-    expect(page).not_to have_content "Edit Access"
+    expect(page).not_to have_content 'Edit Access'
     expect(page).not_to have_content(current_user)
   end
 
-  specify "toggle addtitional actions" do
-    expect(page).not_to have_content("Edit Collection")
-    expect(page).not_to have_content("Delete Collection")
+  specify 'toggle addtitional actions' do
+    expect(page).not_to have_content('Edit Collection')
+    expect(page).not_to have_content('Delete Collection')
     within('#documents') do
       first('.btn.dropdown-toggle').click
     end
-    expect(page).to have_content("Edit Collection")
-    expect(page).to have_content("Delete Collection")
+    expect(page).to have_content('Edit Collection')
+    expect(page).to have_content('Delete Collection')
   end
 
   specify 'collections are not displayed in the Works list' do
@@ -58,8 +58,8 @@ describe 'Dashboard Collections:', type: :feature do
   end
 
   describe 'facets,' do
-    specify "displays the correct totals for each facet" do
-      within("#facets") do
+    specify 'displays the correct totals for each facet' do
+      within('#facets') do
         click_link('Object Type')
         expect(page).to have_content('Collection (1)')
         click_link('Creator')

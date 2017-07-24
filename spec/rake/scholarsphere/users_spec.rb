@@ -2,7 +2,7 @@
 require 'rails_helper'
 require 'rake'
 
-describe "scholarsphere:users:list" do
+describe 'scholarsphere:users:list' do
   let!(:user_list) do
     (1..3).map do |n|
       User.create(login: "user#{n}", email: "user#{n}@example.org")
@@ -14,10 +14,10 @@ describe "scholarsphere:users:list" do
     load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere/users.rake"]
   end
 
-  describe "list users" do
-    it "includes all users" do
-      run_task "scholarsphere:users:list"
-      filename = Rails.root.join("user_emails.txt")
+  describe 'list users' do
+    it 'includes all users' do
+      run_task 'scholarsphere:users:list'
+      filename = Rails.root.join('user_emails.txt')
       expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)
       output = f.read
@@ -27,15 +27,15 @@ describe "scholarsphere:users:list" do
     end
   end
 
-  describe "restoring users" do
-    it "adds users to the database" do
-      run_task "scholarsphere:users:restore"
+  describe 'restoring users' do
+    it 'adds users to the database' do
+      run_task 'scholarsphere:users:restore'
     end
   end
 
-  describe "quota report" do
-    it "adds users to the database" do
-      run_task "scholarsphere:users:quota_report"
+  describe 'quota report' do
+    it 'adds users to the database' do
+      run_task 'scholarsphere:users:quota_report'
     end
   end
 end

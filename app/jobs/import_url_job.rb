@@ -23,10 +23,10 @@ class ImportUrlJob < ActiveJob::Base
   def perform(file_set, file_name, log)
     log.performing!
     user = User.find_by_user_key(file_set.depositor)
-    File.open(File.join(Dir.tmpdir, CarrierWave::SanitizedFile.new(file_name).filename), "w+") do |f|
+    File.open(File.join(Dir.tmpdir, CarrierWave::SanitizedFile.new(file_name).filename), 'w+') do |f|
       status = copy_remote_file(file_set, f)
       unless status
-        file_set.errors.add("Error", "Downloading Content for #{ActionController::Base.helpers.link_to(file_name, Rails.application.routes.url_helpers.curation_concerns_file_set_path(file_set.id))}")
+        file_set.errors.add('Error', "Downloading Content for #{ActionController::Base.helpers.link_to(file_name, Rails.application.routes.url_helpers.curation_concerns_file_set_path(file_set.id))}")
         on_error(log, file_set, user)
         return false
       end

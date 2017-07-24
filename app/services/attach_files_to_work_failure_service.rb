@@ -12,6 +12,6 @@ class AttachFilesToWorkFailureService < Sufia::MessageUserService
   end
 
   def subject
-    "File failed to attach"
+    'File failed to attach'
   end
 end

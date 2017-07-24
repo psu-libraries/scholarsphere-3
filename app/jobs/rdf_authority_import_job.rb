@@ -6,7 +6,7 @@ class RDFAuthorityImportJob < ActiveJob::Base
   queue_as :authority_import
 
   def perform(file, opts = {})
-    raise(NotImplementedError, "No authority defined") if authority.nil?
+    raise(NotImplementedError, 'No authority defined') if authority.nil?
     Qa::LocalAuthority.find_or_create_by(name: authority)
     Qa::Services::RDFAuthorityParser.import_rdf(authority, [file], default_options.merge!(opts))
   end

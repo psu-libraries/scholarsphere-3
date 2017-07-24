@@ -51,6 +51,6 @@ class PermissionsChangeSet
     end
 
     def public_group_read
-      { name: "public", type: "group", access: "read" }
+      { name: 'public', type: 'group', access: 'read' }
     end
 end

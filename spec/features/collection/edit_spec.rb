@@ -8,8 +8,8 @@ describe Collection, type: :feature do
   let(:work1)        { create(:work, depositor: current_user.login, title: ['world.png']) }
   let(:work2)        { create(:work, depositor: current_user.login, title: ['little_file.txt']) }
 
-  context "when the collection has files" do
-    let!(:collection) { create(:collection, depositor: current_user.login, members: [work1, work2], description: ["my description"]) }
+  context 'when the collection has files' do
+    let!(:collection) { create(:collection, depositor: current_user.login, members: [work1, work2], description: ['my description']) }
     let!(:work3)      { create(:work, title: ['scholarsphere_test5.txt'], depositor: current_user.login) }
 
     before { sign_in_with_js(current_user) }
@@ -20,7 +20,7 @@ describe Collection, type: :feature do
         db_file_checkbox(work3).click
         click_button 'Add to Collection'
         db_collection_radio_button(collection).click
-        within("#collection-list-container .modal-footer") do
+        within('#collection-list-container .modal-footer') do
           click_button 'Add to Collection'
         end
         expect(page).to have_content 'Collection was successfully updated.'
@@ -60,7 +60,7 @@ describe Collection, type: :feature do
   end
 
   describe "editing a collection's metadata" do
-    let!(:collection)           { create(:collection, depositor: current_user.login, description: ["original description"]) }
+    let!(:collection)           { create(:collection, depositor: current_user.login, description: ['original description']) }
     let!(:original_title)       { collection.title }
     let!(:original_description) { collection.description }
 
@@ -77,11 +77,11 @@ describe Collection, type: :feature do
       click_link 'Additional fields'
       expect(page).to have_field 'collection_title', with: original_title.first
       expect(page).to have_field 'collection_description', with: original_description.first
-      within("div.collection_date_created") do
-        expect(page).to have_content("Published Date")
+      within('div.collection_date_created') do
+        expect(page).to have_content('Published Date')
       end
-      expect(page).to have_checked_field("Public")
-      expect(page).to have_no_checked_field("Private")
+      expect(page).to have_checked_field('Public')
+      expect(page).to have_no_checked_field('Private')
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
       fill_in 'Creator', with: updated_creators.first
@@ -94,8 +94,8 @@ describe Collection, type: :feature do
     end
   end
 
-  context "when adding works" do
-    let(:collection) { create(:collection, depositor: current_user.login, title: ["Special collection"]) }
+  context 'when adding works' do
+    let(:collection) { create(:collection, depositor: current_user.login, title: ['Special collection']) }
 
     before do
       sign_in_with_js(current_user)
@@ -103,20 +103,20 @@ describe Collection, type: :feature do
     end
 
     describe 'adding existing works' do
-      let!(:work4) { create(:work, depositor: current_user.login, title: ["Work to add"]) }
+      let!(:work4) { create(:work, depositor: current_user.login, title: ['Work to add']) }
       specify do
-        click_link("Add existing works")
-        check "check_all"
+        click_link('Add existing works')
+        check 'check_all'
         expect(page).to have_button("Add to #{collection.title.first}")
       end
     end
 
     describe 'adding new works' do
       specify do
-        click_link("Add new works")
-        expect(page).to have_content("Add Multiple New Works")
-        within("ul.nav-tabs") { click_link("Collections") }
-        expect(page).to have_select("batch_upload_item_collection_ids", selected: collection.title.first)
+        click_link('Add new works')
+        expect(page).to have_content('Add Multiple New Works')
+        within('ul.nav-tabs') { click_link('Collections') }
+        expect(page).to have_select('batch_upload_item_collection_ids', selected: collection.title.first)
       end
     end
   end

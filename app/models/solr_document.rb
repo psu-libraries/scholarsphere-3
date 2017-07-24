@@ -30,7 +30,7 @@ class SolrDocument
 
   # Remove this once https://github.com/projecthydra/curation_concerns/issues/1055 is resolved
   def file_size
-    Array(self["file_size_lts"]).first
+    Array(self['file_size_lts']).first
   end
 
   def bytes
@@ -52,7 +52,7 @@ class SolrDocument
     end
 
     def ul_end_tags
-      "</li></ul>"
+      '</li></ul>'
     end
 
     def person_separator

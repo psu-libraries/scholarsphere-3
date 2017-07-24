@@ -11,6 +11,6 @@ class FileSet < ActiveFedora::Base
   # @return [String, nil]
   # Field value is constructed at index time in CurationConcerns::FileSetIndexer
   def file_format
-    to_solr.fetch("file_format_sim", nil)
+    to_solr.fetch('file_format_sim', nil)
   end
 end

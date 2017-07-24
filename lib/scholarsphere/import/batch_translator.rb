@@ -16,7 +16,7 @@ module Import
       end
 
       def default_prefix
-        "batch_"
+        'batch_'
       end
   end
 end

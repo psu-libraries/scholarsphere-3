@@ -16,8 +16,8 @@ class LdapUser
     end
 
     def filter_for(*people)
-      return "" if people.empty?
-      "(| " + people.map { |p| "(eduPersonPrimaryAffiliation=#{p.to_s.upcase})" }.join(" ") + ")))"
+      return '' if people.empty?
+      '(| ' + people.map { |p| "(eduPersonPrimaryAffiliation=#{p.to_s.upcase})" }.join(' ') + ')))'
     end
 
     private
@@ -37,7 +37,7 @@ class LdapUser
           return result unless unwilling?
           sleep(Rails.application.config.ldap_unwilling_sleep)
         end
-        Rails.logger.warn "LDAP is unwilling to perform this operation, try upping the number of tries"
+        Rails.logger.warn 'LDAP is unwilling to perform this operation, try upping the number of tries'
         nil
       rescue Net::LDAP::Error => e
         Rails.logger.warn "Error getting LDAP response: #{ldap_error_message(e)}"

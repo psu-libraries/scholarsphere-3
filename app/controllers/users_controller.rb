@@ -33,8 +33,8 @@ class UsersController < ApplicationController
 
     def format_linkedin_url
       handle = @user.linkedin_handle
-      handle = "http://www.linkedin.com/in/" + handle unless handle.blank? || handle.include?('linkedin.com')
-      handle = "http://" + handle unless handle.blank? || handle.include?('http')
+      handle = 'http://www.linkedin.com/in/' + handle unless handle.blank? || handle.include?('linkedin.com')
+      handle = 'http://' + handle unless handle.blank? || handle.include?('http')
       handle
     end
 end

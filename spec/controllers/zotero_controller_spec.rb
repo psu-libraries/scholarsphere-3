@@ -13,7 +13,7 @@ describe API::ZoteroController, type: :controller do
 
       specify do
         expect(subject).to have_http_status(302)
-        expect(subject).to redirect_to("https://webaccess.psu.edu/?cosign-localhost&https://localhost")
+        expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
 
@@ -82,7 +82,7 @@ describe API::ZoteroController, type: :controller do
 
       specify do
         expect(subject).to have_http_status(302)
-        expect(subject).to redirect_to("https://webaccess.psu.edu/?cosign-localhost&https://localhost")
+        expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
 

@@ -13,16 +13,16 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
     visit "/concern/file_sets/#{file_set.id}"
   end
 
-  context "When FileSet has a thumbnail" do
-    let(:work) { create(:public_work_with_png, file_title: ["Some work"], depositor: current_user.login) }
-    it "renders the thumbnail" do
+  context 'When FileSet has a thumbnail' do
+    let(:work) { create(:public_work_with_png, file_title: ['Some work'], depositor: current_user.login) }
+    it 'renders the thumbnail' do
       expect(page).to have_css("img[src*='#{thumbnail_path}']")
     end
   end
 
-  context "When fileset does not have a thumbnail" do
-    let(:work)  { create(:public_work_with_mp3, file_title: ["Some work"], depositor: current_user.login) }
-    it "does not render a thumbnail" do
+  context 'When fileset does not have a thumbnail' do
+    let(:work)  { create(:public_work_with_mp3, file_title: ['Some work'], depositor: current_user.login) }
+    it 'does not render a thumbnail' do
       expect(page).not_to have_css("img[src*='#{thumbnail_path}']")
     end
   end

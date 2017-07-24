@@ -16,34 +16,34 @@ FactoryGirl.define do
     end
 
     trait :public do
-      read_groups ["public"]
+      read_groups ['public']
     end
 
     trait :registered do
-      read_groups ["registered"]
+      read_groups ['registered']
     end
 
     trait :with_png do
       transient do
-        id "fixturepng"
+        id 'fixturepng'
       end
       initialize_with { new(id: id) }
-      title ["fake_image.png"]
+      title ['fake_image.png']
       before(:create) do |fs|
-        fs.title = ["Sample PNG"]
+        fs.title = ['Sample PNG']
       end
     end
 
     trait :pdf do
-      title ["fake_document.pdf"]
+      title ['fake_document.pdf']
       before(:create) do |fs|
-        fs.title = ["Fake PDF Title"]
+        fs.title = ['Fake PDF Title']
       end
     end
 
     trait :with_file_size do
       after(:build) do |fs|
-        allow(fs).to receive(:file_size).and_return("1234")
+        allow(fs).to receive(:file_size).and_return('1234')
       end
     end
   end
