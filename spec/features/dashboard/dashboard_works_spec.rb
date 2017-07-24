@@ -63,7 +63,7 @@ describe 'Dashboard Works', type: :feature do
       db_item_actions_toggle(work1).click
       click_link 'Edit Work'
       expect(page).to have_content("Edit Work")
-      expect(page).to have_field("generic_work[title][]", with: filename)
+      expect(page).to have_field("generic_work[title]", with: filename)
       expect(page).to have_content 'Visibility'
 
       # TODO: This part of the test won't pass until this Sufia

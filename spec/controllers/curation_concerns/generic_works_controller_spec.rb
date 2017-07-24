@@ -21,7 +21,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       end
     end
 
-    context "when file is registered" do
+    context "when work is registered" do
       let(:work)   { create(:registered_file) }
       let(:path)   { Rails.application.routes.url_helpers.curation_concerns_generic_work_path(work) }
       it "redirects with file in url" do
@@ -74,25 +74,25 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     end
   end
 
-  context "when file is private" do
-    let(:gf) { create(:private_file) }
-    before   { sign_in user }
+  context "when work is private" do
+    let(:work) { create(:private_work, id: "1234") }
+    before { sign_in user }
 
     context "when user is not administrator" do
       let(:user) { FactoryGirl.create(:user) }
 
       it "does not allow any user to view" do
-        get :show, id: gf.id
+        get :show, id: work.id
         expect(response.status).to eq(401)
       end
 
       it "does not allow any user to edit" do
-        get :edit, id: gf.id
+        get :edit, id: work.id
         expect(response.status).to eq(401)
       end
 
       it "does not allow any user to update" do
-        post :update, id: gf.id, generic_file: { title: ['new_title'] }
+        post :update, id: work.id, generic_work: { title: 'new_title' }
         expect(response.status).to eq(401)
       end
     end
@@ -101,19 +101,19 @@ describe CurationConcerns::GenericWorksController, type: :controller do
       let(:user) { FactoryGirl.create(:administrator) }
 
       it "does allow user to view" do
-        get :show, id: gf.id
+        get :show, id: work.id
         expect(response.status).to eq(200)
       end
 
       it "allows edits" do
-        get :edit, id: gf.id
+        get :edit, id: work.id
         expect(response.status).to eq(200)
       end
 
       it "allows updates" do
-        post :update, id: gf.id, generic_work: { title: ['new_title'] }
+        post :update, id: work.id, generic_work: { title: 'new_title' }
         expect(response.status).to eq(302)
-        expect(gf.reload.title).to eq(['new_title'])
+        expect(work.reload.title.first).to eq('new_title')
       end
     end
   end

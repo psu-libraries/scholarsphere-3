@@ -19,7 +19,8 @@ class FieldConfigurator
              date_created: FieldConfig.new("Date Created"),
              rights: FieldConfig.new("Rights"),
              identifier: FieldConfig.new("Identifier"),
-             description: FieldConfig.new("Description"))
+             description: FieldConfig.new("Description"),
+             subtitle: FieldConfig.new("Subtitle"))
   end
 
   # Defines what fields are shown in the facets on the search index view

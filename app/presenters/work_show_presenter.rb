@@ -3,7 +3,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
   include Sufia::WithEvents
 
-  delegate :bytes, to: :solr_document
+  delegate :bytes, :subtitle, to: :solr_document
 
   self.file_presenter_class = ::FileSetPresenter
 

@@ -12,6 +12,10 @@ class GenericWork < ActiveFedora::Base
 
   property :upload_set, predicate: ::RDF::URI.new('http://scholarsphere.psu.edu/ns#upload_set'), multiple: false
 
+  property :subtitle, predicate: ::RDF::Vocab::EBUCore.subtitle, multiple: false do |index|
+    index.as :stored_searchable
+  end
+
   def self.indexer
     WorkIndexer
   end
