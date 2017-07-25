@@ -24,8 +24,8 @@ module CurationConcerns
         # Overrides CurationConcerns::Actors::BaseActor to reassign the depositor
         # if the user is depositing on behalf of someone else.
         def apply_save_data_to_curation_concern(attributes)
-          if attributes.fetch("on_behalf_of", nil).present?
-            depositor = ::User.find_by_user_key(attributes.fetch("on_behalf_of"))
+          if attributes.fetch('on_behalf_of', nil).present?
+            depositor = ::User.find_by_user_key(attributes.fetch('on_behalf_of'))
             curation_concern.apply_depositor_metadata(depositor)
             curation_concern.edit_users += [depositor, user.user_key]
           end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'feature_spec_helper'
 
-describe "Featured works on the home page", type: :feature do
+describe 'Featured works on the home page', type: :feature do
   let!(:user)         { create(:user) }
   let!(:jill_user)    { create(:jill) }
   let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title']) }
@@ -10,32 +10,32 @@ describe "Featured works on the home page", type: :feature do
 
   let(:admin_user) { create(:administrator) }
 
-  context "as a normal user" do
+  context 'as a normal user' do
     before do
       sign_in_with_js(user)
-      visit("/")
+      visit('/')
     end
 
-    it "appears as a featured work", js: true do
-      expect(page).to have_content "Featured Works"
-      within("#featured_container") do
+    it 'appears as a featured work', js: true do
+      expect(page).to have_content 'Featured Works'
+      within('#featured_container') do
         expect(page).to have_content(file1.title[0])
       end
     end
 
-    it "only public documents appear as recently uploaded files" do
-      click_link "Recent Additions"
-      within("#recently_uploaded") do
+    it 'only public documents appear as recently uploaded files' do
+      click_link 'Recent Additions'
+      within('#recently_uploaded') do
         expect(page).to have_content(file1.title[0])
         expect(page).to have_no_content(private_file.title[0])
       end
     end
   end
 
-  context "as an administrator" do
+  context 'as an administrator' do
     before do
       sign_in_with_js(admin_user)
-      visit("/")
+      visit('/')
     end
     it 'allows the user to remove it as a featured work' do
       document = find('li.dd-item:nth-of-type(1)')

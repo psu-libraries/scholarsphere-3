@@ -28,8 +28,8 @@ class FileSetManagementService
     end
 
     def all_ids
-      args = { fq: "#{Solrizer.solr_name('has_model', :symbol)}:FileSet", fl: ["id"], rows: "100000" }
-      ActiveFedora::SolrService.query("*:*", args).map(&:id)
+      args = { fq: "#{Solrizer.solr_name('has_model', :symbol)}:FileSet", fl: ['id'], rows: '100000' }
+      ActiveFedora::SolrService.query('*:*', args).map(&:id)
     end
 
     def queue_derivatives_job(id)

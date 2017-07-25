@@ -15,7 +15,7 @@ describe CurationConcerns::Actors::GenericWorkActor do
     work.reload
   end
 
-  context "with ordered attributes" do
+  context 'with ordered attributes' do
     let(:attributes) do
       {
         creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
@@ -23,22 +23,22 @@ describe CurationConcerns::Actors::GenericWorkActor do
       }
     end
 
-    it "keeps the correct order" do
+    it 'keeps the correct order' do
       expect(work.creator).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
       expect(work.title).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     end
   end
 
-  context "creator nil" do
+  context 'creator nil' do
     let(:attributes) { { creator: nil } }
-    it "does not error" do
+    it 'does not error' do
       expect(work.creator).to eq([])
     end
   end
 
-  context "when uploading on behalf of another user" do
+  context 'when uploading on behalf of another user' do
     let(:other_user) { create(:user) }
-    let(:attributes) { { title: ["Sample"], on_behalf_of: other_user.login } }
+    let(:attributes) { { title: ['Sample'], on_behalf_of: other_user.login } }
     subject { work }
     its(:depositor) { is_expected.to eq(other_user.login) }
   end

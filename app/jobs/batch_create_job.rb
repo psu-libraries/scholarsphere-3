@@ -26,8 +26,8 @@ class BatchCreateJob < ActiveJob::Base
   private
 
     def create(attributes, titles = {}, resource_types = {})
-      uploaded_files = attributes.delete("uploaded_files")
-      remote_files = attributes.delete("remote_files")
+      uploaded_files = attributes.delete('uploaded_files')
+      remote_files = attributes.delete('remote_files')
       create_uploaded_files(titles, resource_types, attributes, uploaded_files)
       create_remote_files(titles, resource_types, attributes, remote_files)
     end
@@ -41,7 +41,7 @@ class BatchCreateJob < ActiveJob::Base
                                       resource_type: resource_type)
         model = model_to_create(attributes)
         child_log = CurationConcerns::Operation.create!(user: user,
-                                                        operation_type: "Create Work",
+                                                        operation_type: 'Create Work',
                                                         parent: log)
         CreateWorkJob.perform_later(user, model, attributes, child_log)
       end
@@ -49,12 +49,12 @@ class BatchCreateJob < ActiveJob::Base
 
     def create_remote_files(titles, resource_types, attributes, remote_files = [])
       remote_files.each do |file|
-        upload_id = file.fetch("url")
+        upload_id = file.fetch('url')
         attributes = attributes.merge(remote_files: [file],
                                       title: Array.wrap(titles.fetch(upload_id)),
                                       resource_type: Array.wrap(resource_types.fetch(upload_id)))
         child_log = CurationConcerns::Operation.create!(user: user,
-                                                        operation_type: "Create Work",
+                                                        operation_type: 'Create Work',
                                                         parent: log)
         CreateWorkJob.perform_later(user, model_to_create(attributes), attributes, child_log)
       end

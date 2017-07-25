@@ -28,11 +28,11 @@ module CurationConcerns
     end
 
     def title
-      super.first || ""
+      super.first || ''
     end
 
     def rights
-      super.first || ""
+      super.first || ''
     end
 
     # Fields that are automatically drawn on the page above the fold

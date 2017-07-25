@@ -85,7 +85,7 @@ FactoryGirl.define do
 
     trait :with_two_groups do
       after(:create) do |u|
-        group_list_array = ["umg/up.dlt.scholarsphere-admin.admin1", "umg/up.dlt.scholarsphere-admin.admin2"]
+        group_list_array = ['umg/up.dlt.scholarsphere-admin.admin1', 'umg/up.dlt.scholarsphere-admin.admin2']
         u.update_attribute :group_list, group_list_array.join(';?;')
         u.update_attribute :groups_last_update, Time.now
       end

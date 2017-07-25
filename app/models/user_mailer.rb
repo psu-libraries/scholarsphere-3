@@ -14,13 +14,13 @@ class UserMailer < ActionMailer::Base
     attachments[stats_report_name] = stats_report
     mail(to:      ScholarSphere::Application.config.stats_email,
          from:    ScholarSphere::Application.config.stats_from_email,
-         subject: ::I18n.t("statistic.report.subject"))
+         subject: ::I18n.t('statistic.report.subject'))
   end
 
   private
 
     def stats_report_name
-      ::I18n.t("statistic.report.csv.file_name", date_str: presenter.date_str)
+      ::I18n.t('statistic.report.csv.file_name', date_str: presenter.date_str)
     end
 
     def stats_report

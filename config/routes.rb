@@ -6,7 +6,7 @@ ScholarSphere::Application.routes.draw do
   get '/managedata', to: redirect('/contact')
 
   # "Recently added files" route for catalog index view (needed before BL routes)
-  get "catalog/recent" => "catalog#recent", as: :catalog_recent
+  get 'catalog/recent' => 'catalog#recent', as: :catalog_recent
 
   mount BrowseEverything::Engine => '/browse'
   mount Blacklight::Engine => '/'
@@ -73,7 +73,7 @@ ScholarSphere::Application.routes.draw do
 
   get ':action' => 'static#:action', constraints: { action: /error_help/ }, as: :static
 
-  get "licenses", controller: 'static', action: "licenses", as: "licenses"
+  get 'licenses', controller: 'static', action: 'licenses', as: 'licenses'
 
   get 'about' => 'static#about', id: 'about_page'
 

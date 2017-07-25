@@ -24,19 +24,19 @@ module ScholarSphere
     # -- all .rb files in that directory are automatically loaded.
 
     # Environment variables list here are defined in application.yml
-    config.ffmpeg_path = ENV.fetch("ffmpeg_path", "ffmpeg")
-    config.derivatives_path = ENV.fetch("derivatives_path", File.join(Rails.root, 'tmp', 'derivatives'))
-    config.service_instance = ENV.fetch("service_instance", Socket.gethostname)
-    config.virtual_host = ENV.fetch("virtual_host", "https://#{Socket.gethostname}")
-    config.google_analytics_id = ENV.fetch("google_analytics_id", nil)
-    config.stats_email = ENV.fetch("stats_email", "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>")
+    config.ffmpeg_path = ENV.fetch('ffmpeg_path', 'ffmpeg')
+    config.derivatives_path = ENV.fetch('derivatives_path', File.join(Rails.root, 'tmp', 'derivatives'))
+    config.service_instance = ENV.fetch('service_instance', Socket.gethostname)
+    config.virtual_host = ENV.fetch('virtual_host', "https://#{Socket.gethostname}")
+    config.google_analytics_id = ENV.fetch('google_analytics_id', nil)
+    config.stats_email = ENV.fetch('stats_email', 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>')
 
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
-    config.read_only = ENV.fetch("read_only", false)
+    config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = "v3.0"
-    config.scholarsphere_release_date = "June 9, 2016"
-    config.redis_namespace = "scholarsphere"
+    config.scholarsphere_version = 'v3.0'
+    config.scholarsphere_release_date = 'June 9, 2016'
+    config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page
     config.fits_message_length = 5
@@ -73,10 +73,10 @@ module ScholarSphere
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Always render things in UTF-8
-    config.action_dispatch.default_charset = "utf-8"
+    config.action_dispatch.default_charset = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -95,7 +95,7 @@ module ScholarSphere
     # allow errors to be raised in callbacks
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.action_mailer.default_options = { from: "umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu" }
+    config.action_mailer.default_options = { from: 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu' }
     config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }
 
     # Inject new behaviors into existing classes without having to override the entire class itself.

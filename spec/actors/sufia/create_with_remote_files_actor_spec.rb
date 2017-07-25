@@ -15,9 +15,9 @@ describe Sufia::CreateWithRemoteFilesActor do
   end
 
   let(:remote_files) do
-    [{ url: "file:///local/file/ pigs .txt",
-       expires: "2014-03-31T20:37:36.214Z",
-       file_name: "here.txt" }]
+    [{ url: 'file:///local/file/ pigs .txt',
+       expires: '2014-03-31T20:37:36.214Z',
+       file_name: 'here.txt' }]
   end
 
   let(:attributes) { { remote_files: remote_files } }
@@ -27,9 +27,9 @@ describe Sufia::CreateWithRemoteFilesActor do
     allow(create_actor).to receive(:create).and_return(true)
   end
 
-  context "with local files" do
-    it "attaches files with spaces" do
-      expect(IngestLocalFileJob).to receive(:perform_later).with(FileSet, "/local/file/ pigs .txt", user)
+  context 'with local files' do
+    it 'attaches files with spaces' do
+      expect(IngestLocalFileJob).to receive(:perform_later).with(FileSet, '/local/file/ pigs .txt', user)
       expect(actor.create(attributes)).to be true
     end
   end

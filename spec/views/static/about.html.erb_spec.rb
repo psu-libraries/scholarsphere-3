@@ -6,7 +6,7 @@ describe 'pages/show.html.erb', type: :view do
 
   before do
     allow(view).to receive(:can?).and_return(false)
-    assign(:page, ContentBlock.new(name: "about", value: "What is ScholarSphere?"))
+    assign(:page, ContentBlock.new(name: 'about', value: 'What is ScholarSphere?'))
     render
   end
 

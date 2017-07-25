@@ -17,10 +17,10 @@ describe Collection, type: :feature do
       db_item_actions_toggle(collection).click
       click_link 'Delete Collection'
       expect(page).to have_content 'Collection was successfully deleted'
-      within("#my_nav") do
-        expect(page).to have_content("My Collections")
+      within('#my_nav') do
+        expect(page).to have_content('My Collections')
       end
-      within("#documents") do
+      within('#documents') do
         expect(page).not_to have_content title
       end
     end

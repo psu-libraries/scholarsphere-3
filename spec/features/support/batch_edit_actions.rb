@@ -14,8 +14,8 @@ module Features
 
     def batch_edit_fields
       [
-        "contributor", "description", "keyword", "publisher", "date_created", "subject",
-        "language", "identifier", "related_url"
+        'contributor', 'description', 'keyword', 'publisher', 'date_created', 'subject',
+        'language', 'identifier', 'related_url'
       ]
     end
   end

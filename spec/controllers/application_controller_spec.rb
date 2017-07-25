@@ -4,7 +4,7 @@ require 'rails_helper'
 describe ApplicationController do
   subject { response }
 
-  context "with ActiveFedora::ObjectNotFoundError" do
+  context 'with ActiveFedora::ObjectNotFoundError' do
     controller do
       def index
         raise ActiveFedora::ObjectNotFoundError
@@ -14,7 +14,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(404) }
   end
 
-  context "with AbstractController::ActionNotFound" do
+  context 'with AbstractController::ActionNotFound' do
     controller do
       def index
         raise AbstractController::ActionNotFound
@@ -24,17 +24,17 @@ describe ApplicationController do
     its(:status) { is_expected.to be(404) }
   end
 
-  context "with ActionController::RoutingError" do
+  context 'with ActionController::RoutingError' do
     controller do
       def index
-        raise ActionController::RoutingError.new("message")
+        raise ActionController::RoutingError.new('message')
       end
     end
     before { get :index }
     its(:status) { is_expected.to be(404) }
   end
 
-  context "with ActionDispatch::Cookies::CookieOverflow" do
+  context 'with ActionDispatch::Cookies::CookieOverflow' do
     controller do
       def index
         raise ActionDispatch::Cookies::CookieOverflow
@@ -44,7 +44,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with ActionView::Template::Error" do
+  context 'with ActionView::Template::Error' do
     controller do
       def index
         raise ActionView::Template::Error.new(nil, nil)
@@ -54,7 +54,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with ActiveRecord::RecordNotFound" do
+  context 'with ActiveRecord::RecordNotFound' do
     controller do
       def index
         raise ActiveRecord::RecordNotFound
@@ -64,7 +64,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(404) }
   end
 
-  context "with ActiveRecord::StatementInvalid" do
+  context 'with ActiveRecord::StatementInvalid' do
     controller do
       def index
         raise ActiveRecord::StatementInvalid.new(nil)
@@ -74,7 +74,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with Blacklight::Exceptions::ECONNREFUSED" do
+  context 'with Blacklight::Exceptions::ECONNREFUSED' do
     controller do
       def index
         raise Blacklight::Exceptions::ECONNREFUSED
@@ -84,20 +84,20 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with Blacklight::Exceptions::InvalidSolrID" do
+  context 'with Blacklight::Exceptions::InvalidSolrID' do
     controller do
       def index
         raise Blacklight::Exceptions::InvalidSolrID
       end
     end
     before { get :index }
-    it "returns a 404" do
-      pending "Returning 500 instead of 404"
+    it 'returns a 404' do
+      pending 'Returning 500 instead of 404'
       expect(response.status).to be(404)
     end
   end
 
-  context "with Errno::ECONNREFUSED" do
+  context 'with Errno::ECONNREFUSED' do
     controller do
       def index
         raise Errno::ECONNREFUSED
@@ -107,7 +107,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with NameError" do
+  context 'with NameError' do
     controller do
       def index
         raise NameError
@@ -117,7 +117,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with Net::LDAP::LdapError" do
+  context 'with Net::LDAP::LdapError' do
     controller do
       def index
         raise Net::LDAP::LdapError
@@ -127,7 +127,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with Redis::CannotConnectError" do
+  context 'with Redis::CannotConnectError' do
     controller do
       def index
         raise Redis::CannotConnectError
@@ -137,17 +137,17 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with RSolr::Error::Http" do
+  context 'with RSolr::Error::Http' do
     controller do
       def index
-        raise RSolr::Error::Http.new({ uri: "uri" }, nil)
+        raise RSolr::Error::Http.new({ uri: 'uri' }, nil)
       end
     end
     before { get :index }
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with Ldp::BadRequest" do
+  context 'with Ldp::BadRequest' do
     controller do
       def index
         raise Ldp::BadRequest
@@ -157,7 +157,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with RuntimeError" do
+  context 'with RuntimeError' do
     controller do
       def index
         raise RuntimeError
@@ -167,7 +167,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  context "with StandardError" do
+  context 'with StandardError' do
     controller do
       def index
         raise StandardError
@@ -177,7 +177,7 @@ describe ApplicationController do
     its(:status) { is_expected.to be(500) }
   end
 
-  describe "#render_404" do
+  describe '#render_404' do
     controller do
       def index
         render_404

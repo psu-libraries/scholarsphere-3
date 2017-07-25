@@ -12,6 +12,6 @@ class AttachFilesToWorkSuccessService < Sufia::MessageUserService
   end
 
   def subject
-    "File successfully attached"
+    'File successfully attached'
   end
 end

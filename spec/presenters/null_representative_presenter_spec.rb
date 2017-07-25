@@ -7,13 +7,13 @@ describe NullRepresentativePresenter do
 
   subject { presenter }
 
-  describe "#has?" do
-    it "has a thumbnail url" do
-      expect(subject.has?("thumbnail_path_ss")).to be true
+  describe '#has?' do
+    it 'has a thumbnail url' do
+      expect(subject.has?('thumbnail_path_ss')).to be true
     end
   end
 
-  describe "#display_download_link?" do
+  describe '#display_download_link?' do
     its(:display_download_link?) { is_expected.to be false }
   end
 end

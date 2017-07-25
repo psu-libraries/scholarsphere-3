@@ -5,7 +5,7 @@ module SolrHelper
   end
 
   def contributor_facet
-    Solrizer.solr_name("contributor", :facetable)
+    Solrizer.solr_name('contributor', :facetable)
   end
 
   def index_work(object)

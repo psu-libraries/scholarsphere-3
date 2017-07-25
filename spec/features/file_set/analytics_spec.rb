@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 # Notice that with Sufia 7 we generate thumbnails at the FileSets level
 # in a similar way to what we did in Sufia 6 for GenericFiles.
 describe 'FileSet Thumbnail Creation:', type: :feature do
-  let(:work)           { create(:public_work_with_png, file_title: ["Some work"], depositor: current_user.login) }
+  let(:work)           { create(:public_work_with_png, file_title: ['Some work'], depositor: current_user.login) }
   let(:current_user)   { create(:user) }
   let(:file_set)       { work.file_sets.first }
   let(:thumbnail_path) { main_app.download_path(file_set, file: 'thumbnail') }
@@ -19,17 +19,17 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
 
   let(:date_strs) do
     ldate_strs = []
-    dates.each { |date| ldate_strs << date.strftime("%Y%m%d") }
+    dates.each { |date| ldate_strs << date.strftime('%Y%m%d') }
     ldate_strs
   end
 
   let(:sample_download_statistics) do
     [
-      OpenStruct.new(eventCategory: "Files", eventAction: "Downloaded", eventLabel: "sufia:x920fw85p", date: date_strs[0], totalEvents: "1"),
-      OpenStruct.new(eventCategory: "Files", eventAction: "Downloaded", eventLabel: "sufia:x920fw85p", date: date_strs[1], totalEvents: "1"),
-      OpenStruct.new(eventCategory: "Files", eventAction: "Downloaded", eventLabel: "sufia:x920fw85p", date: date_strs[2], totalEvents: "2"),
-      OpenStruct.new(eventCategory: "Files", eventAction: "Downloaded", eventLabel: "sufia:x920fw85p", date: date_strs[3], totalEvents: "3"),
-      OpenStruct.new(eventCategory: "Files", eventAction: "Downloaded", eventLabel: "sufia:x920fw85p", date: date_strs[4], totalEvents: "5")
+      OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: 'sufia:x920fw85p', date: date_strs[0], totalEvents: '1'),
+      OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: 'sufia:x920fw85p', date: date_strs[1], totalEvents: '1'),
+      OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: 'sufia:x920fw85p', date: date_strs[2], totalEvents: '2'),
+      OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: 'sufia:x920fw85p', date: date_strs[3], totalEvents: '3'),
+      OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: 'sufia:x920fw85p', date: date_strs[4], totalEvents: '5')
     ]
   end
 
@@ -52,11 +52,11 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
     visit "/concern/file_sets/#{file_set.id}"
   end
 
-  it "renders without error" do
+  it 'renders without error' do
     pending("Passes when run individually, but raises:
       Routing Error uninitialized constant Sufia::SingularSubresourceController::DenyAccessOverrideBehavior
       when run in the suite. See #379")
-    click_on "Analytics"
+    click_on 'Analytics'
     expect(page).to have_text("30 views and 12 downloads since #{four_days_ago.strftime('%B %-d, %Y')}")
   end
 end

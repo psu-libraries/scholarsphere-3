@@ -27,6 +27,6 @@ class GenericWorkToShareJSONService
 
     def email_for_name(name)
       value = NameDisambiguationService.new(name).disambiguate
-      value.blank? ? "" : value[0][:email]
+      value.blank? ? '' : value[0][:email]
     end
 end

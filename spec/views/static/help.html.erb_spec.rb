@@ -7,7 +7,7 @@ describe 'static/help.html.erb', type: :view do
     assign(:page, ContentBlock.new)
   end
 
-  context "when the user can not edit" do
+  context 'when the user can not edit' do
     before do
       allow(view).to receive(:can?).and_return(false)
       render
@@ -17,7 +17,7 @@ describe 'static/help.html.erb', type: :view do
     it { is_expected.not_to match(/Edit/) }
   end
 
-  context "when the user can edit" do
+  context 'when the user can edit' do
     before do
       allow(view).to receive(:can?).and_return(true)
       render

@@ -3,13 +3,13 @@ require 'rails_helper'
 
 describe TranslatedFacetAttributeRenderer do
   let(:field)   { :name }
-  let(:mapping) { { "BOB" => "Bob", "JESSICA" => "Jessica" } }
+  let(:mapping) { { 'BOB' => 'Bob', 'JESSICA' => 'Jessica' } }
 
-  describe "#attribute_to_html" do
+  describe '#attribute_to_html' do
     subject { Nokogiri::HTML(renderer.render) }
     let(:expected) { Nokogiri::HTML(dl_content) }
 
-    context "with explicit facet values" do
+    context 'with explicit facet values' do
       let(:renderer) { described_class.new(field, ['BOB', 'JESSICA'], mapping: mapping) }
 
       let(:dl_content) {%(
@@ -22,7 +22,7 @@ describe TranslatedFacetAttributeRenderer do
       it { expect(subject).to be_equivalent_to(expected) }
     end
 
-    context "without facet values" do
+    context 'without facet values' do
       let(:renderer) { described_class.new(field, ['BOB', 'JESSICA']) }
 
       let(:dl_content) {%(

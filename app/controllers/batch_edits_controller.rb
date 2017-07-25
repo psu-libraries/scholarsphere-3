@@ -13,7 +13,7 @@ class BatchEditsController < ApplicationController
 
   def update
     batch.map { |id| update_document(ActiveFedora::Base.find(id)) }
-    flash[:notice] = "Batch update complete"
+    flash[:notice] = 'Batch update complete'
     after_update
   end
 

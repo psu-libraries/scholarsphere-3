@@ -2,7 +2,7 @@
 require 'feature_spec_helper'
 
 describe GenericWork, type: :feature do
-  context "when viewing a work with many files" do
+  context 'when viewing a work with many files' do
     let(:current_user) { create(:user) }
 
     # Build 100 file sets
@@ -18,9 +18,9 @@ describe GenericWork, type: :feature do
     # Build a work that contains the 100 file sets
     let(:work) do
       build(:work, :with_complete_metadata,
-            id: "bigwork",
+            id: 'bigwork',
             depositor: current_user.login,
-            representative_id: "multifile50",
+            representative_id: 'multifile50',
             members: file_sets)
     end
 
@@ -38,14 +38,14 @@ describe GenericWork, type: :feature do
       index_document(list_source)
       index_work(work)
       sign_in_with_js(current_user)
-      visit("/concern/generic_works/bigwork")
+      visit('/concern/generic_works/bigwork')
     end
 
-    it "displays the work page with all the files" do
-      within("dl.attributes") do
-        expect(page).to have_selector('dd.total_items', text: "100")
+    it 'displays the work page with all the files' do
+      within('dl.attributes') do
+        expect(page).to have_selector('dd.total_items', text: '100')
       end
-      within("table.related-files") do
+      within('table.related-files') do
         (1..100).each do |id|
           expect(page).to have_link("File #{id}")
         end

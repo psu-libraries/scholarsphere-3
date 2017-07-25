@@ -10,7 +10,7 @@ module SufiaHelper
   end
 
   def help_icon
-    content_tag 'span', nil, "aria-hidden" => true, class: "help-icon"
+    content_tag 'span', nil, 'aria-hidden' => true, class: 'help-icon'
   end
 
   def should_render_index_field?(document, field_config)

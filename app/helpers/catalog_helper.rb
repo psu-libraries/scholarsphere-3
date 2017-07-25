@@ -11,8 +11,8 @@ module CatalogHelper
   # @param [Hash] url_options to pass to #link_to_document
   # @return [String]
   def render_thumbnail_tag(document, image_options = {}, url_options = {})
-    image_options[:alt] = ""
-    image_options["aria-hidden"] = true
+    image_options[:alt] = ''
+    image_options['aria-hidden'] = true
     value = if blacklight_config.view_config(document_index_view_type).thumbnail_method
               send(blacklight_config.view_config(document_index_view_type).thumbnail_method, document, image_options)
             elsif blacklight_config.view_config(document_index_view_type).thumbnail_field

@@ -7,14 +7,14 @@ module AdditionalMetadata
   end
 
   def time_uploaded
-    return "" if date_uploaded.blank?
-    date_uploaded.strftime("%Y-%m-%d %H:%M:%S")
+    return '' if date_uploaded.blank?
+    date_uploaded.strftime('%Y-%m-%d %H:%M:%S')
   end
 
   private
 
     def current_host
-      Rails.application.config.virtual_host.chomp("/")
+      Rails.application.config.virtual_host.chomp('/')
     end
 
     def path

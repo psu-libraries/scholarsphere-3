@@ -15,7 +15,7 @@ module Import
     def build(file_set, generic_file_versions)
       time_start = DateTime.now
       if file_set.id.nil?
-        raise "FileSet must have an id before importing any versions"
+        raise 'FileSet must have an id before importing any versions'
       end
       sorted_versions = generic_file_versions.sort_by { |ver| ver[:created] }
       sorted_versions.each_with_index do |gf_version, index|
@@ -93,13 +93,13 @@ module Import
       end
 
       def f3_to_f4_migration_date?(date)
-        date.starts_with?("2015-04-11")
+        date.starts_with?('2015-04-11')
       end
 
       def temp_file_name(file_set, version)
-        label = file_set.label || "null_label"
+        label = file_set.label || 'null_label'
         label = label.gsub(/[^0-9A-Za-z.\-]/, '_')
-        File.join Rails.root, "tmp/uploads", "#{file_set.id}_#{version[:label]}_#{label}"
+        File.join Rails.root, 'tmp/uploads', "#{file_set.id}_#{version[:label]}_#{label}"
       end
 
       def version_creator(file_set, version)

@@ -18,9 +18,9 @@ describe 'Site authentication', type: :feature do
     end
     describe 'And I try to upload a file' do
       specify 'It should take me back to the upload page after I have logged in' do
-        pending("Need to apply configuration changes to login_url")
+        pending('Need to apply configuration changes to login_url')
         visit '/concern/generic_works/new'
-        expect(unescape(current_url)).to eq(centralized_login_url.gsub(/dashboard/, "concern/generic_works/new"))
+        expect(unescape(current_url)).to eq(centralized_login_url.gsub(/dashboard/, 'concern/generic_works/new'))
       end
     end
   end

@@ -7,7 +7,7 @@ class DirectoryController < ApplicationController
   end
 
   def user_attribute
-    res = if params[:attribute] == "groups"
+    res = if params[:attribute] == 'groups'
             User.groups(params[:uid])
           else
             User.directory_attributes(params[:uid], params[:attribute])

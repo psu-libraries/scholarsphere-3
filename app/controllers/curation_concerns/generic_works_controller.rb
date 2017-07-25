@@ -32,7 +32,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   def redirect_when_uploading
     return unless QueuedFile.where(work_id: params[:id]).present?
-    flash[:notice] = "Edits or deletes not allowed while files are being uploaded to a work"
+    flash[:notice] = 'Edits or deletes not allowed while files are being uploaded to a work'
     redirect_to polymorphic_path([main_app, curation_concern])
   end
 
