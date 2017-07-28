@@ -27,9 +27,9 @@ describe GenericWork, type: :feature do
     # Create a list source record that specifies an order for the file sets
     let(:list_source) do
       HashWithIndifferentAccess.new(ActiveFedora::Aggregation::ListSource.new.to_solr)
-                               .merge(id: "#{work.id}/list_source")
-                               .merge(proxy_in_ssi: work.id.to_s)
-                               .merge(ordered_targets_ssim: file_sets.map(&:id))
+        .merge(id: "#{work.id}/list_source")
+        .merge(proxy_in_ssi: work.id.to_s)
+        .merge(ordered_targets_ssim: file_sets.map(&:id))
     end
 
     # Index everything in solr as opposed to creating it, which would take a very long time!
