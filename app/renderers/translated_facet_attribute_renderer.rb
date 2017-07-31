@@ -14,4 +14,11 @@ class TranslatedFacetAttributeRenderer < CurationConcerns::Renderers::FacetedAtt
       return value unless options.key?(:mapping)
       options[:mapping][value]
     end
+
+    # @return [String] url-encoded path
+    # Overrides CurationConcerns::Renderers::FacetedAttributeRenderer to not use ERB::Util methods
+    # to rewrite the url.
+    def search_path(value)
+      Rails.application.routes.url_helpers.search_catalog_path(:"f[#{search_field}][]" => value)
+    end
 end

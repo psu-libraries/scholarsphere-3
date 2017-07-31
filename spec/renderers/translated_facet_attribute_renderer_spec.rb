@@ -34,5 +34,22 @@ describe TranslatedFacetAttributeRenderer do
       it { expect(renderer).not_to be_microdata(field) }
       it { expect(subject).to be_equivalent_to(expected) }
     end
+
+    context 'with special characters' do
+      let(:field)    { :keyword }
+      let(:mapping)  { { "'55 Chet Atkins" => "'55 chet atkins" } }
+      let(:renderer) { described_class.new(field, ["'55 Chet Atkins"], mapping: mapping) }
+
+      let(:dl_content) {%(
+        <dt class="attribute-term">Keyword</dt>
+        <dd class="attribute keyword">
+          <span itemprop="keywords">
+            <a href="/catalog?f%5Bkeyword_sim%5D%5B%5D=%2755+chet+atkins">'55 Chet Atkins</a>
+          </span>
+        </dd>
+      )}
+
+      it { expect(subject).to be_equivalent_to(expected) }
+    end
   end
 end
