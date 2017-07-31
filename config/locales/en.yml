@@ -64,6 +64,10 @@ en:
       local: "Files must be added before they can be uploaded"
     batch_edit:
       permissions_warning: "Warning! Making changes to visibility or sharing permissions will remove any existing permissions on the files in this batch and replace them with the ones specified here."
+    import_url:
+      failed_title: "Upload failed for %{file_name}. Please delete and upload again"
+      failed_message: "Could not retrieve file for %{link}. Reason: %{message}"
+
   statistic:
     report:
       subject: "ScholarSphere - Statistic Report"
