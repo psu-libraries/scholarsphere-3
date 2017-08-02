@@ -30,6 +30,8 @@ every :day, at: '1:00 am', roles: [:job] do
   command "#{path}/config/cronjobs/compare_solr.bash"
 end
 
+# Solr and Fedora are restarted each morning at 2am
+
 every :day, at: '3:00 am', roles: [:job] do
   command "#{path}/config/cronjobs/update_user_stats.bash"
 end
