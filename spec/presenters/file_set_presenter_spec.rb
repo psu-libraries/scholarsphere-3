@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe FileSetPresenter do
+  subject { presenter }
+
   let(:file)          { build(:file_set) }
   let(:solr_document) { SolrDocument.new(file.to_solr) }
   let(:ability)       { double 'Ability' }
   let(:presenter)     { described_class.new(solr_document, ability) }
-
-  subject { presenter }
 
   describe '#related_files' do
     its(:related_files) { is_expected.to be_empty }

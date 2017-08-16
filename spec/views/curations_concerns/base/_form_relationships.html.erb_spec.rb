@@ -14,6 +14,7 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
     end
     Capybara::Node::Simple.new(rendered)
   }
+
   before do
     allow(view).to receive(:available_collections).and_return([collection, collection2])
   end

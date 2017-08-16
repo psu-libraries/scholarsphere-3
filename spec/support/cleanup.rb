@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'active_fedora/cleaner'
 
 RSpec.configure do |config|

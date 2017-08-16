@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 describe Hydra::Derivatives::Processors::Document do
+  subject { described_class.new(source_path, directives) }
+
   let(:source_path)    { File.join(fixture_path, 'test.doc') }
   let(:output_service) { Hydra::Derivatives::PersistBasicContainedOutputFileService }
 
   before { allow(subject).to receive(:output_file_service).and_return(output_service) }
   before { allow(subject).to receive(:convert_to).with(convert_directive).and_return(converted_file) }
-
-  subject { described_class.new(source_path, directives) }
 
   describe '#encode_file' do
     context 'when converting to jpg' do

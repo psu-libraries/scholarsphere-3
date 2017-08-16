@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'hydra/derivatives'
 
 Hydra::Derivatives::Processors::Video::Processor.timeout = 10.minutes

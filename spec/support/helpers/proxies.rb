@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ProxiesHelper
   def create_proxy_using_partial(*users)
     users.each do |user|

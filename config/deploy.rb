@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # lock '3.6'
 
 # Set assets roles to occur on jobs as well as web

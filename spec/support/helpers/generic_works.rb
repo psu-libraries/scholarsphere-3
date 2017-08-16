@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module GenericWorksHelper
   def wait_for_page(redirect_url)
     Timeout.timeout(Capybara.default_max_wait_time * 5) do

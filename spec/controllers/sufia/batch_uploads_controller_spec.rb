@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Sufia::BatchUploadsController do
@@ -62,6 +63,7 @@ describe Sufia::BatchUploadsController do
 
   describe '#uploading_on_behalf_of?' do
     subject { described_class.new }
+
     before { allow(subject).to receive(:hash_key_for_curation_concern).and_return(:generic_work) }
     context 'without a proxy' do
       before { allow(subject).to receive(:params).and_return(generic_work: {}) }

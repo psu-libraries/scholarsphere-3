@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Base class for jobs that import authority records into database tables
 class RDFAuthorityImportJob < ActiveJob::Base
   class_attribute :authority, :default_options

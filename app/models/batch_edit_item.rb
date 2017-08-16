@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Stand-in class for rendering BatchEditForm, similar to BatchCreateItem. It should never be persisted, and
 # only holds values assigned by the form which are subsequently applied to each object in the batch
 # during BatchEditsController#update.

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CurationConcerns::GenericWorksController, type: :controller do
@@ -7,6 +8,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
   describe '#show' do
     context 'with a public user' do
       let(:work) { create(:public_work) }
+
       it 'loads from solr' do
         expect_any_instance_of(CanCan::ControllerResource).not_to receive(:load_and_authorize_resource)
         get :show, id: work.id
@@ -24,6 +26,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     context 'when work is registered' do
       let(:work)   { create(:registered_file) }
       let(:path)   { Rails.application.routes.url_helpers.curation_concerns_generic_work_path(work) }
+
       it 'redirects with file in url' do
         get :show, id: work.id
         expect(response.status).to eq(302)
@@ -40,6 +43,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
 
     context 'when the work has been pushed to Share' do
       let!(:work) { create(:share_file, depositor: user.login) }
+
       it 'is deleted from SHARE notify' do
         expect(ShareNotifyDeleteJob).to receive(:perform_later).with(work)
         delete :destroy, id: work
@@ -48,6 +52,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
 
     context 'after deletion' do
       let!(:work) { create(:work, depositor: user.login) }
+
       it 'redirects to My Works' do
         delete :destroy, id: work
         expect(response).to redirect_to(Sufia::Engine.routes.url_helpers.dashboard_works_path)
@@ -76,6 +81,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
 
   context 'when work is private' do
     let(:work) { create(:private_work, id: '1234') }
+
     before { sign_in user }
 
     context 'when user is not administrator' do

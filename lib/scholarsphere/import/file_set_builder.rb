@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Builder for generating a File set incluing permissions and versions
 #
 module Import

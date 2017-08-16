@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CurationConcerns::Actors::GenericWorkActor do
@@ -31,15 +32,18 @@ describe CurationConcerns::Actors::GenericWorkActor do
 
   context 'creator nil' do
     let(:attributes) { { creator: nil } }
+
     it 'does not error' do
       expect(work.creator).to eq([])
     end
   end
 
   context 'when uploading on behalf of another user' do
+    subject { work }
+
     let(:other_user) { create(:user) }
     let(:attributes) { { title: ['Sample'], on_behalf_of: other_user.login } }
-    subject { work }
+
     its(:depositor) { is_expected.to eq(other_user.login) }
   end
 end

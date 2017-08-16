@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 # frozen_string_literal: true
+
 class Admin::StatsController < ApplicationController
   include Sufia::Admin::StatsBehavior
 
@@ -21,15 +22,15 @@ class Admin::StatsController < ApplicationController
     end
 
     def start_datetime
-      return @start_datetime unless @start_datetime.blank?
-      @start_datetime = DateTime.parse(params[:start_datetime]) unless params[:start_datetime].blank?
+      return @start_datetime if @start_datetime.present?
+      @start_datetime = DateTime.parse(params[:start_datetime]) if params[:start_datetime].present?
       @start_datetime ||= 1.day.ago
       @start_datetime = @start_datetime.beginning_of_day
     end
 
     def end_datetime
-      return @end_datetime unless @end_datetime.blank?
-      @end_datetime = DateTime.parse(params[:end_datetime]) unless params[:end_datetime].blank?
+      return @end_datetime if @end_datetime.present?
+      @end_datetime = DateTime.parse(params[:end_datetime]) if params[:end_datetime].present?
       if @end_datetime.blank?
         @end_datetime = 1.day.ago
         @end_datetime = start_datetime if @end_datetime < start_datetime

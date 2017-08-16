@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides the CurationConcerns job to accept the remote file's original name and handle failures.
 #
 # The file is downloaded using its original name and extension, but sanitized with CarrierWave to
@@ -35,7 +36,8 @@ class ImportUrlJob < ActiveJob::Base
         file_set.errors.add(
           'Error:',
           I18n.t('scholarsphere.import_url.failed_message', link: file_link(file_name, file_set.id),
-                                                            message: importer.error))
+                                                            message: importer.error)
+        )
         on_error(log, file_set, user)
         return false
       end
@@ -61,7 +63,8 @@ class ImportUrlJob < ActiveJob::Base
     def file_link(file_name, id)
       ActionController::Base.helpers.link_to(
         file_name,
-        Rails.application.routes.url_helpers.curation_concerns_file_set_path(id))
+        Rails.application.routes.url_helpers.curation_concerns_file_set_path(id)
+      )
     end
 
     class UrlImporter

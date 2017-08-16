@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Ability
   include Hydra::Ability
   include CurationConcerns::Ability

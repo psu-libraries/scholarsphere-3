@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FileSet < ActiveFedora::Base
   include ::CurationConcerns::FileSetBehavior
   include Sufia::FileSetBehavior

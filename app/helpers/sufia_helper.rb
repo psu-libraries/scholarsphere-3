@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SufiaHelper
   include ::BlacklightHelper
   include CurationConcerns::MainAppHelpers
@@ -6,7 +7,7 @@ module SufiaHelper
   include Sufia::SufiaHelperBehavior
 
   def collection_search_parameters?
-    !params[:cq].blank?
+    params[:cq].present?
   end
 
   def help_icon

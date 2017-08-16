@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Import
   # Imports a Sufia 6.0-exported GenericFile into a Sufia PCDM GernericWork and FileSet
   class GenericFileTranslator < Sufia::Import::GenericFileTranslator

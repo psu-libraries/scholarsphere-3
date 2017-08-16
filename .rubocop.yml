@@ -6,6 +6,12 @@ inherit_from:
 
 AllCops:
   TargetRubyVersion: 2.3
+  Exclude:
+    - 'fits/**/*'
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
 
 # catalog_controller.rb is usually long because it is mostly configuration
 # user.rb could use some refactoring, see #249

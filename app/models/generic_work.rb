@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GenericWork < ActiveFedora::Base
   include ::CurationConcerns::WorkBehavior
   include ::CurationConcerns::BasicMetadata
@@ -26,7 +27,7 @@ class GenericWork < ActiveFedora::Base
   # @return [Fixnum] size of work in bytes
   # @raise [RuntimeError] unsaved record does not exist in solr
   def bytes
-    return 0 if member_ids.count == 0
+    return 0 if member_ids.count.zero?
     raise 'Work must be saved to query for bytes' if new_record?
     sizes = member_ids.map { |fs_id| file_set_size(fs_id) }
     sizes.compact.map { |fs| fs[file_size_field] }.reduce(0, :+)

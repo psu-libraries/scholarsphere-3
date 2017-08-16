@@ -1,10 +1,13 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CurationConcerns::LicenseService do
   let(:service) { described_class.new }
 
   describe 'all licenses' do
+    subject { service.select_all_options.map(&:last) }
+
     let(:all_license_urls) do
       [
         'http://creativecommons.org/licenses/by/3.0/us/',
@@ -27,11 +30,13 @@ describe CurationConcerns::LicenseService do
         'https://opensource.org/licenses/MIT'
       ]
     end
-    subject { service.select_all_options.map(&:last) }
+
     it { is_expected.to contain_exactly(*all_license_urls) }
   end
 
   describe 'active licenses' do
+    subject { service.select_active_options.map(&:last) }
+
     let(:active_license_urls) do
       [
         'https://creativecommons.org/licenses/by/4.0/',
@@ -48,7 +53,7 @@ describe CurationConcerns::LicenseService do
         'https://opensource.org/licenses/MIT'
       ]
     end
-    subject { service.select_active_options.map(&:last) }
+
     it { is_expected.to contain_exactly(*active_license_urls) }
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 # Notice that with Sufia 7 we generate thumbnails at the FileSets level

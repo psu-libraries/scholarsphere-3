@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FactoryHelpers
   def mock_file_factory(opts = {})
     mock_model('MockFile',
@@ -16,7 +17,6 @@ module FactoryHelpers
                original_checksum: opts.fetch(:original_checksum, []),
                digest:            opts.fetch(:digest, []),
                duration:          opts.fetch(:duration, []),
-               sample_rate:       opts.fetch(:sample_rate, [])
-              )
+               sample_rate:       opts.fetch(:sample_rate, []))
   end
 end

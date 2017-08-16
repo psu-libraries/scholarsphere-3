@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 # Default strategy for signing in a user, based on his email and password in the database.
 module Devise
   module Behaviors
     module HttpHeaderAuthenticatableBehavior
       # Called if the user doesn't already have a rails session cookie
       def valid_user?(headers)
-        !remote_user(headers).blank?
+        remote_user(headers).present?
       end
 
       protected

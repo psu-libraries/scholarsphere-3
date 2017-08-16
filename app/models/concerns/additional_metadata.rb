@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module AdditionalMetadata
   include ActiveSupport::Concerns
 

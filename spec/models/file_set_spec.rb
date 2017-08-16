@@ -1,21 +1,25 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe FileSet, type: :model do
+  subject { file }
+
   let(:file) { build(:file_set, :with_png, label: 'sample_png') }
+
   before do
     allow(file).to receive(:mime_type).and_return('image/png')
   end
 
-  subject { file }
-
   describe '::indexer' do
     subject { described_class.indexer }
+
     it { is_expected.to be(FileSetIndexer) }
   end
 
   describe '#.to_solr' do
     subject { file.to_solr }
+
     it { is_expected.to include(Solrizer.solr_name('file_format') => 'png') }
     it { is_expected.to include(Solrizer.solr_name('label') => 'sample_png') }
   end
@@ -38,6 +42,7 @@ describe FileSet, type: :model do
     end
     context 'with date_uploaded' do
       let(:file) { build(:file_set, date_uploaded: Date.today) }
+
       its(:time_uploaded) { is_expected.to eq(Date.today.strftime('%Y-%m-%d %H:%M:%S')) }
     end
   end

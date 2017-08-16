@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Trophy < ActiveRecord::Base
   validate :count_within_limit, on: :create
 

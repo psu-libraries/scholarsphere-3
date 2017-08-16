@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require 'fcrepo_wrapper'
 require 'fcrepo_wrapper/rake_task'
 require 'solr_wrapper'
 require 'active_fedora/cleaner'
 
 namespace :solr do
-
   desc 'Starts a configured solr instance for local development and testing'
   task start: :environment do
     solr.extract_and_configure
@@ -19,9 +20,10 @@ namespace :solr do
 
   def solr
     @solr ||= SolrWrapper.default_instance(
-    	        port: '8983',
-  		        instance_dir: 'tmp/solr',
-  		        download_dir: 'tmp')
+      port: '8983',
+      instance_dir: 'tmp/solr',
+      download_dir: 'tmp'
+    )
   end
 end
 

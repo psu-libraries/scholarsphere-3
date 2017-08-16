@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This is a prepend intended to be used with AttachFilesToWorkJob.
 # Adds notifications to the user when files are successfully added to works, or not.
 module PrependedJobs::WithNotification

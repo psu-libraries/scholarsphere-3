@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Cleans up existing fields in the solr document before it is sent on for indexing. Because this is
 # used in conjunction with Blacklight::Document, which prefers hashes, SolrDocument objects are
 # converted to hashes and a hash is always returned.

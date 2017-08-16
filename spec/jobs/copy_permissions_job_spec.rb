@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CopyPermissionsJob do
   context 'when changing visibility' do
+    subject { file_set }
+
     let(:work)     { create(:public_work, edit_users: ['user1']) }
     let(:file_set) { create(:file_set) }
-
-    subject { file_set }
 
     before do
       work.ordered_members = [file_set]

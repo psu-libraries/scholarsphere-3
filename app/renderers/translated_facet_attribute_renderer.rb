@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Override CurationConcerns::Renderers::FacetedAttributeRenderer so we can pass different values
 # for facets. This allows us to display a faceted search link using the text that the user
 # originally entered while using the normalized text that was created when the facet was

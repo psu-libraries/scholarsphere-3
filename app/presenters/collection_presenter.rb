@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CollectionPresenter < Sufia::CollectionPresenter
   # TODO: Move to Sufia?
   def self.terms

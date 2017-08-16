@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # When included in a form class, this defaults any new record to public visibility
 module WithOpenAccess
   extend ActiveSupport::Concern

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Collection do
   subject { collection }
+
   context 'with no attached files' do
     let(:collection) { build(:collection) }
+
     its(:bytes) { is_expected.to eq(0) }
   end
 
@@ -23,6 +26,7 @@ describe Collection do
 
   describe '::indexer' do
     let(:collection) { described_class }
+
     its(:indexer) { is_expected.to eq(CollectionIndexer) }
   end
 

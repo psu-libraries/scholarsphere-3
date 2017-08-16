@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   helper Openseadragon::OpenseadragonHelper
   include Blacklight::Controller
@@ -14,23 +15,25 @@ class ApplicationController < ActionController::Base
 
   before_action :clear_session_user, :filter_notify
 
-  rescue_from ActiveFedora::ObjectNotFoundError,
-              AbstractController::ActionNotFound,
-              ActionController::RoutingError,
-              ActionDispatch::Cookies::CookieOverflow,
-              ActionView::Template::Error,
-              ActiveRecord::RecordNotFound,
-              ActiveRecord::StatementInvalid,
-              Blacklight::Exceptions::ECONNREFUSED,
-              Blacklight::Exceptions::InvalidSolrID,
-              Errno::ECONNREFUSED,
-              NameError,
-              Net::LDAP::LdapError,
-              Redis::CannotConnectError,
-              RSolr::Error::Http,
-              Ldp::BadRequest,
-              StandardError,
-              RuntimeError, with: :render_error_page unless Rails.env.development?
+  unless Rails.env.development?
+    rescue_from ActiveFedora::ObjectNotFoundError,
+                AbstractController::ActionNotFound,
+                ActionController::RoutingError,
+                ActionDispatch::Cookies::CookieOverflow,
+                ActionView::Template::Error,
+                ActiveRecord::RecordNotFound,
+                ActiveRecord::StatementInvalid,
+                Blacklight::Exceptions::ECONNREFUSED,
+                Blacklight::Exceptions::InvalidSolrID,
+                Errno::ECONNREFUSED,
+                NameError,
+                Net::LDAP::LdapError,
+                Redis::CannotConnectError,
+                RSolr::Error::Http,
+                Ldp::BadRequest,
+                StandardError,
+                RuntimeError, with: :render_error_page
+  end
 
   # Mysql2 isn't loaded in Travis, so we'll skip testing it
   rescue_from Mysql2::Error, with: :render_error_page unless Rails.env.test?
@@ -77,7 +80,7 @@ class ApplicationController < ActionController::Base
   # If a block is given, it should execute something along the lines of
   # redirect_to controller_name_path(new_id), status: :moved_permanently
   def filter_notify
-    return unless flash[:alert].present?
+    return if flash[:alert].blank?
     flash[:alert] = filtered_flash_messages
     flash[:alert] = nil if flash[:alert].blank?
   end

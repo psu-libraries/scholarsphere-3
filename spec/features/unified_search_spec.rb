@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 describe 'unified search', type: :feature do
@@ -14,8 +15,7 @@ describe 'unified search', type: :feature do
            title: ['collection title abc'],
            description: [subject_value],
            user: user,
-           members: [file1, file2]
-          )
+           members: [file1, file2])
   end
 
   context 'anonymous user' do

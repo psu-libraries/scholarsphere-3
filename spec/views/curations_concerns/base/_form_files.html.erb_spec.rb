@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'curation_concerns/base/_form_files.html.erb' do
@@ -26,12 +27,14 @@ describe 'curation_concerns/base/_form_files.html.erb' do
 
   describe 'BrowseEverything button selector' do
     subject { page.find('#browse-btn')['data-target'] }
+
     context '#edit' do
       it { is_expected.to eq("#edit_generic_work_#{work.id}") }
     end
 
     context '#new' do
       let(:work) { build(:work, depositor: user.login) }
+
       it { is_expected.to eq('#new_generic_work') }
     end
   end

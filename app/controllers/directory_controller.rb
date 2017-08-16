@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO: Is this controller even used anymore? See #316
 class DirectoryController < ApplicationController
   # returns true if the user exists and false otherwise

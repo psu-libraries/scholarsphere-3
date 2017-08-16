@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Changes the behavior of BaseActor#apply_save_data_to_curation_concern to re-assign the depositor
 # based if the user is depositing on behalf of someone else.
 #

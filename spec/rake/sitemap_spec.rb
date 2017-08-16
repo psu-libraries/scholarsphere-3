@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'rake'
 
@@ -11,6 +12,7 @@ describe 'sitemap:generate' do
   let!(:file) { create(:public_work, depositor: user.login) }
   let!(:private_file) { create(:private_work, depositor: user.login) }
   let!(:collection) { create(:collection, depositor: user.login) }
+
   before do
     # set up the rake environment
     load_rake_environment ["#{sitemap_path}/lib/tasks/sitemap.rake"]

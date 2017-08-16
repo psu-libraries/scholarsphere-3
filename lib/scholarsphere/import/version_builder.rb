@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # overriding the version importer because we did not really set up a great way for injecting
 # new classes for the FileSet and Version below the GenericWork
 module Import

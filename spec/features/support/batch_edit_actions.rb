@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Features
   module BatchEditActions
     def fill_in_batch_edit_field(id, opts = {})

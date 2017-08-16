@@ -1,11 +1,13 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe API::ZoteroController, type: :controller do
-  let(:user) { create(:user) }
-  routes { Sufia::Engine.routes }
-
   subject { response }
+
+  let(:user) { create(:user) }
+
+  routes { Sufia::Engine.routes }
 
   context 'with an HTTP GET to /api/zotero' do
     context 'with an unauthenticated client' do

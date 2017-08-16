@@ -1,14 +1,15 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false do
+  subject { Capybara::Node::Simple.new(rendered) }
+
   let(:user)        { create(:user) }
   let(:solr_doc)    { SolrDocument.new(build(:work, id: '1234').to_solr) }
   let(:ability)     { Ability.new(user) }
   let(:presenter)   { WorkShowPresenter.new(solr_doc, ability) }
   let(:queued_file) { QueuedFile.create(work_id: presenter.id, file_id: '1') }
-
-  subject { Capybara::Node::Simple.new(rendered) }
 
   before do
     allow(view).to receive(:current_user).and_return(user)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Sufia::HomepageController < ApplicationController
   include Sufia::HomepageControllerBehavior
 
