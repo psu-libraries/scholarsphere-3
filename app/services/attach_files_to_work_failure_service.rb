@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttachFilesToWorkFailureService < Sufia::MessageUserService
   attr_reader :user, :filename
 

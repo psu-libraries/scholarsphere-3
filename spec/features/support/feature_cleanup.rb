@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.configure do |config|
   # Clean out Redis, Fedora and Solr prior to each feature test
   config.before(type: :feature) do

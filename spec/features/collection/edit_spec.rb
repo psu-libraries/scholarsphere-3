@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
@@ -104,6 +105,7 @@ describe Collection, type: :feature do
 
     describe 'adding existing works' do
       let!(:work4) { create(:work, depositor: current_user.login, title: ['Work to add']) }
+
       specify do
         click_link('Add existing works')
         check 'check_all'

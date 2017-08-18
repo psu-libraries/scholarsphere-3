@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
@@ -11,8 +12,7 @@ describe 'Dashboard Works', type: :feature do
            depositor: current_user.login,
            title: ['little_file.txt'],
            creator: ['little_file.txt_creator'],
-           date_uploaded: DateTime.now + 1.hour
-          )
+           date_uploaded: DateTime.now + 1.hour)
   end
 
   let!(:work2) do
@@ -198,10 +198,10 @@ describe 'Dashboard Works', type: :feature do
 
     describe 'Sorting:' do
       specify 'Items are sorted correctly' do
-        select("date uploaded ▼", from: 'sort')
+        select('date uploaded ▼', from: 'sort')
         click_button('Refresh')
         expect(page).to have_content(work1.title.first)
-        select("date uploaded ▲", from: 'sort')
+        select('date uploaded ▲', from: 'sort')
         click_button('Refresh')
         expect(page).not_to have_content(work1.title.first)
       end
@@ -256,6 +256,7 @@ describe 'Dashboard Works', type: :feature do
 
   let(:title_field) { Solrizer.solr_name('title', :stored_searchable, type: :string) }
   let(:resp) { ActiveFedora::SolrService.instance.conn.get 'select', params: { fl: ['id', title_field] } }
+
   def page_should_only_list(work1)
     expect(page).to have_selector('li.active', text: 'My Works')
     expect(page).to have_content work1.title.first

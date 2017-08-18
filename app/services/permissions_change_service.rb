@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO: When upgrading to Sufia 7, this should extend Sufia::MessageUserService
 class PermissionsChangeService
   attr_reader :state, :generic_work

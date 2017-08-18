@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CatalogController, type: :controller do
@@ -25,6 +26,7 @@ describe CatalogController, type: :controller do
   describe 'config' do
     describe 'index_fields' do
       subject { described_class.blacklight_config.index_fields.keys }
+
       it { is_expected.to contain_exactly('based_near_tesim',
                                           'date_uploaded_dtsi',
                                           'keyword_tesim',
@@ -38,6 +40,7 @@ describe CatalogController, type: :controller do
     end
     describe 'show_fields' do
       subject { described_class.blacklight_config.show_fields.keys }
+
       it { is_expected.to contain_exactly('depositor_tesim', 'based_near_tesim', 'date_modified_dtsi', 'date_uploaded_dtsi',
                                           'description_tesim', 'identifier_tesim', 'keyword_tesim',
                                           'language_tesim', 'publisher_tesim', 'resource_type_tesim', 'rights_tesim',
@@ -47,6 +50,7 @@ describe CatalogController, type: :controller do
     end
     describe 'facet_fields' do
       subject { described_class.blacklight_config.facet_fields.keys }
+
       it { is_expected.to contain_exactly('based_near_sim', 'collection_sim', 'has_model_ssim',
                                           'file_format_sim', 'keyword_sim',
                                           'language_sim', 'publisher_sim', 'resource_type_sim',

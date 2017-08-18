@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe CollectionsController, type: :controller do
@@ -19,12 +20,14 @@ describe CollectionsController, type: :controller do
     let(:work1)       { create(:public_work) }
     let(:work2)       { create(:public_work) }
     let!(:collection) { create(:public_collection, members: [work1, work2]) }
+
     before { get :show, id: collection.id, per_page: 1, page: 2 }
     it { is_expected.to be_success }
   end
 
   describe '::form_class' do
     subject { described_class }
+
     its(:form_class) { is_expected.to be(CollectionForm) }
   end
 

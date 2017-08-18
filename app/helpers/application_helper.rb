@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper methods unique to Scholarsphere only and not overrides of helpers from included gems
 module ApplicationHelper
   def collection_helper_method(value)

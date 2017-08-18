@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 describe 'Batch management of works', type: :feature do
@@ -48,6 +49,7 @@ describe 'Batch management of works', type: :feature do
 
   context 'when selecting multiple works for deletion', js: true do
     subject { GenericWork.count }
+
     before do
       check 'check_all'
       click_button 'Delete Selected'

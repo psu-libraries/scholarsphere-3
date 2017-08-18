@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NullRepresentativePresenter < FileSetPresenter
   # @param [Ability] current_ability
   # @param [ActionDispatch::Request] request the http request context

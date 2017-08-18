@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do
   let(:ability) { double }
+
   before do
     allow(view).to receive(:current_user).and_return(stub_model(User, user_key: 'mjg'))
     allow(controller).to receive(:current_ability).and_return(ability)

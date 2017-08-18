@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BatchCreateJob < ActiveJob::Base
   queue_as :ingest
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'curation_concerns/file_sets/_single_use_links.html.erb' do

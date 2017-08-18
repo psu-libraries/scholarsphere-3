@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class LdapUser
   class << self
     def get_user(filter, fields = [])

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'cancan/matchers'
 
@@ -13,6 +14,7 @@ describe User, type: :model do
   end
   describe '#ldap_exist?' do
     subject { user.ldap_exist? }
+
     context 'when the user exists' do
       before { allow(LdapUser).to receive(:check_ldap_exist!).and_return(true) }
       it { is_expected.to be true }
@@ -38,6 +40,7 @@ describe User, type: :model do
 
   describe '#directory_attributes' do
     let(:entry) { build(:ldap_entry, uid: 'mjg36', cn: 'MICHAEL JOSEPH GIARLO') }
+
     before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
     it 'returns user attributes from LDAP' do
       expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
@@ -63,16 +66,16 @@ describe User, type: :model do
     it 'returns a list or people' do
       expect(described_class.query_ldap_by_name_or_id('cam')).to eq([{ id: 'cac6094', text: 'CAMILO CAPURRO (cac6094)' },
                                                                      { id: 'csl5210', text: 'CAMERON SIERRA LANGSJOEN (csl5210)' },
-                                                                     { id: 'cnt5046', text: 'CAMILLE NAKIA TINDAL (cnt5046)' }
-                                                                    ])
+                                                                     { id: 'cnt5046', text: 'CAMILLE NAKIA TINDAL (cnt5046)' }])
     end
   end
 
   describe '#from_url_component' do
+    subject { described_class.from_url_component('cam') }
+
     let(:entry) do
       build(:ldap_entry, uid: 'mjg36', cn: 'MICHAEL JOSEPH GIARLO', displayname: 'John Smith', psofficelocation: 'Beaver Stadium$Seat 100')
     end
-    subject { described_class.from_url_component('cam') }
 
     context 'when user exists' do
       before do
@@ -108,10 +111,12 @@ describe User, type: :model do
 
     context 'normal user' do
       let(:user) { create :user }
+
       it { is_expected.to be_falsey }
     end
     context 'administrative user' do
       let(:user) { create :administrator }
+
       it { is_expected.to be_truthy }
     end
   end
@@ -124,20 +129,21 @@ describe User, type: :model do
 
     describe 'abilities' do
       subject { Ability.new(user) }
+
       context 'normal user' do
         let(:user) { create :user }
 
-        it { should be_able_to(:edit, my_file) }
-        it { should be_able_to(:edit, shared_file) }
-        it { should_not be_able_to(:edit, private_file) }
+        it { is_expected.to be_able_to(:edit, my_file) }
+        it { is_expected.to be_able_to(:edit, shared_file) }
+        it { is_expected.not_to be_able_to(:edit, private_file) }
       end
 
       context 'administrative user' do
         let(:user) { create :administrator }
 
-        it { should be_able_to(:edit, my_file) }
-        it { should be_able_to(:edit, shared_file) }
-        it { should be_able_to(:edit, private_file) }
+        it { is_expected.to be_able_to(:edit, my_file) }
+        it { is_expected.to be_able_to(:edit, shared_file) }
+        it { is_expected.to be_able_to(:edit, private_file) }
       end
     end
 
@@ -146,33 +152,41 @@ describe User, type: :model do
 
       context 'normal user' do
         let(:user) { create :user }
+
         context "user's file" do
           let(:file) { my_file }
+
           it { is_expected.to be_falsey }
         end
         context 'private file' do
           let(:file) { private_file }
+
           it { is_expected.to be_falsey }
         end
         context 'shared file' do
           let(:file) { shared_file }
+
           it { is_expected.to be_falsey }
         end
       end
       context 'administrative user' do
         let(:user) { create :administrator }
+
         context "user's file" do
           let(:file) { my_file }
+
           it {
             is_expected.to be_falsey
           }
         end
         context 'private file' do
           let(:file) { private_file }
+
           it { is_expected.to be_truthy }
         end
         context 'shared file' do
           let(:file) { shared_file }
+
           it {
             is_expected.to be_falsey
           }

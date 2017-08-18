@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FieldConfigurator
   # Defines what fields are shown on the search index view for each item
   def self.index_fields

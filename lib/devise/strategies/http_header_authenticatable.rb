@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Default strategy for signing in a user, based on his email and password in the database.
 module Devise
   module Strategies

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CurationConcerns::PermissionsController < ApplicationController
   include CurationConcerns::PermissionsControllerBehavior
 

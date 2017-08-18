@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'support/vcr'
 
@@ -33,6 +34,7 @@ describe ShareNotifyJob do
       context 'when it has already been sent to SHARE Notify' do
         before { allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true) }
         subject { described_class.perform_now(work) }
+
         it { is_expected.to be_nil }
       end
     end
@@ -58,8 +60,10 @@ describe ShareNotifyJob do
   end
 
   context 'with a file that cannot be shared' do
-    let(:work) { create(:private_work) }
     subject { described_class.perform_now(work) }
+
+    let(:work) { create(:private_work) }
+
     it { is_expected.to be_nil }
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CurationConcerns::GenericWorksController < ApplicationController
   include CurationConcerns::CurationConcernController
   include Sufia::WorksControllerBehavior
@@ -31,7 +32,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
   end
 
   def redirect_when_uploading
-    return unless QueuedFile.where(work_id: params[:id]).present?
+    return if QueuedFile.where(work_id: params[:id]).blank?
     flash[:notice] = 'Edits or deletes not allowed while files are being uploaded to a work'
     redirect_to polymorphic_path([main_app, curation_concern])
   end

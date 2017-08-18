@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe NullRepresentativePresenter do
+  subject { presenter }
+
   let(:current_ability) { Ability.new(nil) }
   let(:presenter)       { described_class.new(current_ability, nil) }
-
-  subject { presenter }
 
   describe '#has?' do
     it 'has a thumbnail url' do

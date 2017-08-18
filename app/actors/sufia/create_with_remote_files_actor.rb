@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides Sufia. Remove this file when we've updated to Sufia 7.3
 module Sufia
   # Attaches remote files to the work

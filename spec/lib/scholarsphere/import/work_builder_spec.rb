@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Import::WorkBuilder do
@@ -28,6 +29,7 @@ describe Import::WorkBuilder do
   # end
   #
   let(:permission_builder) { instance_double(Sufia::Import::PermissionBuilder) }
+
   before do
     allow(Sufia::Import::PermissionBuilder).to receive(:new).and_return(permission_builder)
   end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Locations
   def go_to_dashboard
     visit '/dashboard'

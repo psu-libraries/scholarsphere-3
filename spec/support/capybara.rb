@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Capybara is a high level DSL for driving a browser.
 require 'capybara/rspec'
 require 'capybara/rails'

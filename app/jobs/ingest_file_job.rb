@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides CurationConcerns to update the file set with the file's name
 class IngestFileJob < ActiveJob::Base
   queue_as CurationConcerns.config.ingest_queue_name

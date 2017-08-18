@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe 'Generic File uploading and deletion:', type: :feature do
   let(:new_generic_work_path) { '/concern/generic_works/new' }
+
   context 'when logged in as a PSU user' do
     let(:current_user)          { create(:user) }
     let(:other_user)            { create(:user) }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe WorkIndexer do
@@ -21,9 +22,10 @@ describe WorkIndexer do
   end
 
   describe '#generate_solr_document' do
+    subject { solr_doc }
+
     let(:solr_doc) { indexer.generate_solr_document }
 
-    subject { solr_doc }
     it { is_expected.to include('bytes_lts' => 0) }
 
     describe 'file_format' do

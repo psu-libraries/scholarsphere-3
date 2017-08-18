@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 # Notice that with Sufia 7 we generate thumbnails at the FileSets level
@@ -15,6 +16,7 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
 
   context 'When FileSet has a thumbnail' do
     let(:work) { create(:public_work_with_png, file_title: ['Some work'], depositor: current_user.login) }
+
     it 'renders the thumbnail' do
       expect(page).to have_css("img[src*='#{thumbnail_path}']")
     end
@@ -22,6 +24,7 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
 
   context 'When fileset does not have a thumbnail' do
     let(:work)  { create(:public_work_with_mp3, file_title: ['Some work'], depositor: current_user.login) }
+
     it 'does not render a thumbnail' do
       expect(page).not_to have_css("img[src*='#{thumbnail_path}']")
     end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe DownloadsController do
@@ -36,6 +37,7 @@ describe DownloadsController do
 
       context 'with my own work' do
         let(:my_work) { create :public_work_with_png, depositor: user.login }
+
         before { controller.params[:id] = my_work.id }
         it { is_expected.to eq(my_work.id) }
       end
@@ -77,6 +79,7 @@ describe DownloadsController do
   end
   describe '#show' do
     subject { controller.send(:show) }
+
     before do
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
@@ -91,6 +94,7 @@ describe DownloadsController do
 
     context 'with a GenericWork' do
       let(:my_work) { create :public_work_with_png, depositor: user.login }
+
       before do
         # I must save the work again becuase the factory just sends the representative id to solr
         #  This save sends the id to fedora

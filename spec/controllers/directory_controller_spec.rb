@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe DirectoryController, type: :controller do
   let(:user) { create(:user) }
+
   describe '#user' do
     it 'gets an existing user' do
       allow(User).to receive(:directory_attributes).and_return('{"attr":"abc"}')

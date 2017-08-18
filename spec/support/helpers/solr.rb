@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SolrHelper
   def solr_field(name)
     Solrizer.solr_name(name, :stored_searchable, type: :string)

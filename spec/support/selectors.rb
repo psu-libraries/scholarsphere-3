@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Selectors
   module Header
     def user_notifications_link

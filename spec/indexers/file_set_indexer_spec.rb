@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe FileSetIndexer do
@@ -18,8 +19,9 @@ describe FileSetIndexer do
   end
 
   describe '#generate_solr_document' do
-    let(:solr_doc) { indexer.generate_solr_document }
     subject { solr_doc }
+
+    let(:solr_doc) { indexer.generate_solr_document }
 
     context 'with a file containing technical metadata' do
       before { allow(file_set).to receive(:original_file).and_return(file) }

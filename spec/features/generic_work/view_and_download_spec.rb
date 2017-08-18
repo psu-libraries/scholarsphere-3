@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
@@ -13,8 +14,7 @@ describe GenericWork, type: :feature do
       let!(:work1) do
         create(:public_work, :with_one_file_and_size, :with_complete_metadata,
                depositor: current_user.login,
-               description: ['Description http://example.org/TheDescriptionLink/']
-              )
+               description: ['Description http://example.org/TheDescriptionLink/'])
       end
 
       specify 'I can see all the correct information' do

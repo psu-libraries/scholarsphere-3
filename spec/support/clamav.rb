@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ClamAV
   include Singleton
   def scanfile(_f)

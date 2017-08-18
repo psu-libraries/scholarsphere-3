@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe AttachFilesToWorkJob do
@@ -23,6 +24,7 @@ describe AttachFilesToWorkJob do
 
   context 'when the file is not successfully added' do
     let(:bad_actor) { double(CurationConcerns::Actors::FileSetActor) }
+
     before do
       allow(bad_actor).to receive(:create_content).with(file).and_return(false)
       allow(bad_actor).to receive(:user).and_return(user)

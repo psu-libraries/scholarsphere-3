@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe My::WorksController, type: :controller do
@@ -35,24 +36,27 @@ describe My::WorksController, type: :controller do
       end
 
       describe 'specifying a collection to add' do
+        subject { assigns(:incorporate_collection_presenter) }
+
         let(:incorporate_collection) { create(:collection) }
 
         before { get :index, add_files_to_collection: collection }
 
-        subject { assigns(:incorporate_collection_presenter) }
-
         context 'when the collection exists' do
           let(:collection) { incorporate_collection.id }
+
           it { is_expected.to be_kind_of(CollectionPresenter) }
         end
 
         context 'with a null collection to add' do
           let(:collection) { '' }
+
           it { is_expected.to be_nil }
         end
 
         context 'with a non-existent collection to add' do
           let(:collection) { 'idontexist' }
+
           it { is_expected.to be_nil }
         end
       end

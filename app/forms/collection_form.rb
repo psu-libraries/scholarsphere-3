@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CollectionForm < Sufia::Forms::CollectionForm
   attr_reader :current_ability, :request
 

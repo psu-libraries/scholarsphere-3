@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'curation_concerns/base/_member.html.erb', verify_partial_doubles: false do
+  subject { Capybara::Node::Simple.new(rendered) }
+
   let(:user)     { create(:user) }
   let(:solr_doc) { SolrDocument.new(build(:file_set, id: '1234').to_solr) }
   let(:ability)  { Ability.new(user) }
   let(:member)   { FileSetPresenter.new(solr_doc, ability) }
-
-  subject { Capybara::Node::Simple.new(rendered) }
 
   before do
     allow(view).to receive(:current_user).and_return(user)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ResourceFilteredList
   attr_reader :generic_files, :resource_types
 
@@ -8,6 +9,6 @@ class ResourceFilteredList
   end
 
   def filter
-    @filtered ||= generic_files.reject { |gf| !((gf.resource_type.to_ary & resource_types).count > 0) }
+    @filtered ||= generic_files.select { |gf| (gf.resource_type.to_ary & resource_types).count.positive? }
   end
 end

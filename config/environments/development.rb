@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # In production, these are normally "eager loaded" but in development, they are not.
 # This enables the stats view pages to render.
 require 'legato'

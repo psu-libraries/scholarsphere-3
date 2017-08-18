@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LinkChecker
   # Returns an array of all iframe links containing YouTube videos
   def youtube_links

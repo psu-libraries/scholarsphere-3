@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu') do
   path :root, priority: 1, change_frequency: 'weekly'
   path :search_catalog, priority: 1, change_frequency: 'weekly'

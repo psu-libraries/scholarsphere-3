@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Import::VersionBuilder do
@@ -97,6 +98,7 @@ describe Import::VersionBuilder do
               created_by:  jill.login }
           ]
         end
+
         it 'creates versions with specified committers' do
           expect(Net::HTTP).to receive(:start).twice
           expect(CharacterizeJob).to receive(:perform_now).with(file_set, anything, /.*version2_my_label.txt/).and_return(true)
@@ -107,6 +109,7 @@ describe Import::VersionBuilder do
     end
     context 'bad http' do
       let(:bad_http_response) { Net::HTTPInternalServerError.new('1.1', '500', 'Internal Error') }
+
       before do
         allow(bad_http_response).to receive(:body).and_return('Bad error')
         allow(Net::HTTP).to receive(:start).and_yield http
@@ -129,6 +132,7 @@ describe Import::VersionBuilder do
           ]
         end
         let(:good_http_response) { Net::HTTPSuccess.new('1.1', '200', 'Yeah it worked') }
+
         before do
           allow(good_http_response).to receive(:read_body).and_yield('abc123').and_yield(nil)
         end

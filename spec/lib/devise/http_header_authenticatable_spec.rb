@@ -1,38 +1,47 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Devise::Strategies::HttpHeaderAuthenticatable do
   subject { described_class.new(nil) }
+
   before { allow(subject).to receive(:request).and_return(request) }
 
   describe '#valid_user?' do
     context 'in a production environment' do
       let(:production) { ActiveSupport::StringInquirer.new('production') }
+
       before { allow(Rails).to receive(:env).and_return(production) }
       context 'using REMOTE_USER' do
         let(:request) { double(headers: { 'REMOTE_USER' => 'abc123' }) }
+
         it { is_expected.to be_valid }
       end
       context 'using HTTP_REMOTE_USER' do
         let(:request) { double(headers: { 'HTTP_REMOTE_USER' => 'abc123' }) }
+
         it { is_expected.not_to be_valid }
       end
       context 'using no header' do
         let(:request) { double(headers: {}) }
+
         it { is_expected.not_to be_valid }
       end
     end
     context 'in a development or test environment' do
       context 'using REMOTE_USER' do
         let(:request) { double(headers: { 'REMOTE_USER' => 'abc123' }) }
+
         it { is_expected.to be_valid }
       end
       context 'using HTTP_REMOTE_USER' do
         let(:request) { double(headers: { 'HTTP_REMOTE_USER' => 'abc123' }) }
+
         it { is_expected.to be_valid }
       end
       context 'using no header' do
         let(:request) { double(headers: {}) }
+
         it { is_expected.not_to be_valid }
       end
     end
@@ -41,6 +50,7 @@ describe Devise::Strategies::HttpHeaderAuthenticatable do
   describe 'authenticate!' do
     let(:user) { create(:archivist) }
     let(:request) { double(headers: { 'HTTP_REMOTE_USER' => user.login }) }
+
     context 'with a new user' do
       before { allow(User).to receive(:find_by_login).with(user.login).and_return(nil) }
       it 'populates LDAP attrs' do

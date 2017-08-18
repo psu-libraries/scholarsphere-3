@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Sufia.config do |config|
   config.arkivo_api = true
 

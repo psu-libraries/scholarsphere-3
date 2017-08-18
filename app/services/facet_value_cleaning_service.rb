@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FacetValueCleaningService
   # @param [Array<String>] values
   # @param [FieldConfig] config of the field that we need to process the values

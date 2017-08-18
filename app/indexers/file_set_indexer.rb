@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # We should be able to remove this once projecthydra/curation_concerns#1117 is closed
 class FileSetIndexer < CurationConcerns::FileSetIndexer
   def generate_solr_document

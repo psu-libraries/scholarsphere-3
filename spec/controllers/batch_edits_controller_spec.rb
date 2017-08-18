@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe BatchEditsController do
@@ -11,6 +12,7 @@ describe BatchEditsController do
 
   describe '#form_class' do
     subject { described_class.new }
+
     its(:form_class) { is_expected.to eq(::BatchEditForm) }
   end
 

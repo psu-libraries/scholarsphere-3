@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DownloadsController < ApplicationController
   include CurationConcerns::DownloadBehavior
   prepend_before_action only: [:show] do

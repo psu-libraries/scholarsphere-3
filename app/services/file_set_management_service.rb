@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FileSetManagementService
   attr_reader :ids
   attr_writer :errors
@@ -9,12 +10,12 @@ class FileSetManagementService
 
   def create_derivatives
     ids.map { |id| queue_derivatives_job(id) }
-    logger.error("Total errors: #{errors}") if errors > 0
+    logger.error("Total errors: #{errors}") if errors.positive?
   end
 
   def characterize
     ids.map { |id| queue_characterization_job(id) }
-    logger.error("Total errors: #{errors}") if errors > 0
+    logger.error("Total errors: #{errors}") if errors.positive?
   end
 
   def errors

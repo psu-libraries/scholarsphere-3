@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CurationConcerns
   class FileSetsController < ApplicationController
     include CurationConcerns::FileSetsControllerBehavior

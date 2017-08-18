@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'sufia/batch_uploads/_form.html.erb' do
@@ -20,11 +21,13 @@ describe 'sufia/batch_uploads/_form.html.erb' do
 
     context 'without no collection id parameters' do
       let(:params) { {} }
+
       it { is_expected.to include('href="/concern/generic_works/new"') }
     end
 
     context 'with collection ids' do
       let(:params) { { collection_ids: ['collection-id'] } }
+
       it { is_expected.to include('href="/concern/generic_works/new?collection_ids%5B%5D=collection-id"') }
     end
   end

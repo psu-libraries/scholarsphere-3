@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Create a hash representation of a file's permissions before and after a change:
 #   > file = GenericFile.new
 #   > before = file.permissions.map(&:to_hash)

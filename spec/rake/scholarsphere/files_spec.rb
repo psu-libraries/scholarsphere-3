@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'rake'
 
@@ -24,6 +25,7 @@ describe 'scholarsphere:files' do
 
     context 'with a list of FileSet ids' do
       let(:argument) { '1 2 3' }
+
       it 'uses all FileSets' do
         expect(FileSetManagementService).to receive(:new).with(['1', '2', '3']).and_return(mock_service)
         run_task('scholarsphere:files:create_derivatives', argument)
@@ -48,6 +50,7 @@ describe 'scholarsphere:files' do
 
     context 'with a list of FileSet ids' do
       let(:argument) { '1 2 3' }
+
       it 'uses all FileSets' do
         expect(FileSetManagementService).to receive(:new).with(['1', '2', '3']).and_return(mock_service)
         run_task('scholarsphere:files:characterize', argument)

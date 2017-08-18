@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FieldConfig
   attr_reader :label, :opts
   def initialize(opts_or_label)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Sufia
   class CollectionThumbnailPathService < CurationConcerns::ThumbnailPathService
     class << self

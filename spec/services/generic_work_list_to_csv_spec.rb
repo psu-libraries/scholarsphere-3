@@ -11,6 +11,7 @@ describe GenericWorkListToCSVService do
 
     context 'with no files' do
       let(:file_list) { [] }
+
       it { is_expected.to eq(header) }
     end
 
@@ -18,6 +19,7 @@ describe GenericWorkListToCSVService do
       let(:file_list) { [create(:work, :with_one_file, file_title: ['CSV Report 1'], resource_type: ['Image'], rights: ['mine'])] }
       let(:file_set)  { file_list[0].file_sets[0] }
       let(:work)      { file_set.parent }
+
       it 'can be parsed' do
         parsed = CSV.parse(subject)
         expect(parsed.count).to eq 2
@@ -34,6 +36,7 @@ describe GenericWorkListToCSVService do
           create(:work, :with_one_file, file_title: ['CSV Multifile-Report 3'])
         ]
       end
+
       it { is_expected.to include('CSV Multifile-Report 1', 'CSV Multifile-Report 2', 'CSV Multifile-Report 3') }
       it 'can be parsed' do
         parsed = CSV.parse(subject)

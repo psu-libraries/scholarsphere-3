@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'shared/_twitter.html.erb' do
+  subject { rendered }
+
   let(:doc)       { SolrDocument.new(build(:work, id: 'citation-test').to_solr) }
   let(:presenter) { WorkShowPresenter.new(doc, Ability.new(nil)) }
-
-  subject { rendered }
 
   context 'without a representative file set' do
     before do

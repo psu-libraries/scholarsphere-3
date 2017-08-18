@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
   include Sufia::WithEvents

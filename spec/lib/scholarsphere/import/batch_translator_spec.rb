@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Import::BatchTranslator do
@@ -30,6 +31,7 @@ describe Import::BatchTranslator do
       let!(:work2) { create :work, id: 'tm70mv24n' }
       let!(:work3) { create :work, id: 'g445cd26c' }
       let(:batch_id) { 'zg64tk99d' }
+
       it 'Creates related Work Links' do
         expect(Rails.logger).to receive(:debug).with('Importing batch_zg64tk99d.json')
         translator.import
@@ -41,6 +43,7 @@ describe Import::BatchTranslator do
 
     context 'with one work' do
       let(:batch_id) { 'zg64tkabc' }
+
       it 'Creates no links' do
         expect(Rails.logger).to receive(:debug).with('Importing batch_zg64tkabc.json')
         translator.import

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe GenericWork do
-  let(:work) { create(:work) }
-
   subject { work }
+
+  let(:work) { create(:work) }
 
   it 'creates a noid on save' do
     expect(subject.id.length).to eq 10
@@ -26,6 +27,7 @@ describe GenericWork do
 
   describe '::indexer' do
     subject { described_class }
+
     its(:indexer) { is_expected.to eq(WorkIndexer) }
   end
 
@@ -33,6 +35,7 @@ describe GenericWork do
     let(:file_size_field)  { work.send(:file_size_field)  }
     let(:file1)            { build(:file_set, id: 'fs1')  }
     let(:file2)            { build(:file_set, id: 'fs2')  }
+
     before do
       ActiveFedora::Cleaner.cleanout_solr
       ActiveFedora::SolrService.add(file1.to_solr.merge!(file_size_field.to_sym => '1024'))
