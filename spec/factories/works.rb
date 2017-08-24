@@ -25,7 +25,7 @@ FactoryGirl.define do
 
       factory :share_file do
         title ['SHARE Document']
-        creator ['Joe Contributor']
+        creator ['Joe Contributor'] # 999
         resource_type ['Dissertation']
       end
 

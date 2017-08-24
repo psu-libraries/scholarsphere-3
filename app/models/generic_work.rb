@@ -2,7 +2,7 @@
 
 class GenericWork < ActiveFedora::Base
   include ::CurationConcerns::WorkBehavior
-  include ::CurationConcerns::BasicMetadata
+  include ::BasicMetadata
   include Sufia::WorkBehavior
   include ShareNotify::Metadata
   include AdditionalMetadata
@@ -16,6 +16,9 @@ class GenericWork < ActiveFedora::Base
   property :subtitle, predicate: ::RDF::Vocab::EBUCore.subtitle, multiple: false do |index|
     index.as :stored_searchable
   end
+
+  has_and_belongs_to_many :creators, class_name: 'Person', predicate: ::RDF::Vocab::DC11.creator
+  #, inverse_of: :works
 
   def self.indexer
     WorkIndexer

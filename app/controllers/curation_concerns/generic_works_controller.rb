@@ -16,6 +16,11 @@ class CurationConcerns::GenericWorksController < ApplicationController
   before_action :delete_from_share, only: [:destroy]
   before_action :redirect_when_uploading, only: [:edit, :update, :destroy]
 
+  def create
+#    raise "999"
+    super
+  end
+
   def notify_users_of_permission_changes
     return if @curation_concern.nil?
     previous_permissions = @curation_concern.permissions.map(&:to_hash)

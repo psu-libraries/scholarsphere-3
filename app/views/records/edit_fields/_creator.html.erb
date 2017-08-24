@@ -1,0 +1,19 @@
+<% @form.creators.each_with_index do |creator, index| %>
+  <% id_base = "generic_work[creators][#{index}]"%>
+
+  <% first_name_id = "#{id_base}[first_name]" %>
+  <%= label_tag first_name_id, 'First Name' %>
+  <%= text_field_tag first_name_id,
+    creator.first_name,
+    required: false,
+    id: first_name_id,
+    class: 'form-control string required' %>
+
+  <% last_name_id = "#{id_base}[last_name]" %>
+  <%= label_tag last_name_id, 'Last Name' %>
+  <%= text_field_tag last_name_id,
+    creator.last_name,
+    required: false,
+    id: last_name_id,
+    class: 'form-control string required' %>
+<% end %>

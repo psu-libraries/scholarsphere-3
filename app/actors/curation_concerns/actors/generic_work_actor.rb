@@ -8,7 +8,15 @@
 module CurationConcerns
   module Actors
     class GenericWorkActor < CurationConcerns::Actors::BaseActor
+
+      # >> p attributes
+      # => {"title"=>["Title"], "contributor"=>[], "description"=>["abs"], "keyword"=>["asdf"], "rights"=>["https://creativecommons.org/licenses/by/4.0/"], "publisher"=>[], "date_created"=>[], "subject"=>[], "language"=>[], "identifier"=>[], "based_near"=>[], "related_url"=>[], "visibility"=>"open", "source"=>[], "resource_type"=>["Article"], "subtitle"=>"", 
+      # "creators"=>{"0"=>{"first_name"=>"first name 000", "last_name"=>"last name 000"}, "1"=>{"first_name"=>"first name 111", "last_name"=>"last name 111"}},
+      # "remote_files"=>[], "uploaded_files"=>["43"]}
+
       def create(attributes)
+        # 999 extract the creators and find or create matching Person records
+# byebug
         preserve_title_and_creator_order(attributes)
         super
       end
@@ -17,8 +25,9 @@ module CurationConcerns
 
         # Remove this method once #948 and #949 are resolved.
         def preserve_title_and_creator_order(attributes)
-          curation_concern.creator = attributes[:creator]
-          curation_concern.save
+          # 999
+          # curation_concern.creator = attributes[:creator]
+          # curation_concern.save
           curation_concern.title = attributes[:title]
         end
 

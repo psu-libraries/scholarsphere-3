@@ -4,17 +4,16 @@ module WithCreator
   extend ActiveSupport::Concern
 
   included do
-    def initialize_field(key)
-      if key == :creator
-        self[key] = creator
-      else
-        super
-      end
+    def creators
+      model.creators.build if model.creators.blank?
+      model.creators.build # 999 delete this later
+      model.creators.to_a
     end
 
-    def creator
-      @creator ||= [Namae::Name.parse(current_ability.current_user.name).sort_order]
-      @creator
+    def self.build_permitted_params
+      permitted = super
+      permitted << { creators: [:id, :first_name, :last_name, :_destroy] }
+      permitted
     end
   end
 end

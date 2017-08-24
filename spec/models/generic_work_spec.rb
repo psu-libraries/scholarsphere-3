@@ -11,6 +11,36 @@ describe GenericWork do
     expect(subject.id.length).to eq 10
   end
 
+  describe 'creators' do
+    before { Person.destroy_all }
+
+    context 'with existing Person records' do
+      let(:work) { build(:work, creators: [frodo, sam]) }
+      let!(:frodo) { create(:person, first_name: 'Frodo') }
+      let!(:sam) { create(:person, first_name: 'Sam') }
+
+      it 'sets the creators' do
+        expect { work.save! }
+          .to change { GenericWork.count }.by(1)
+          .and change { Person.count }.by(0)
+        expect(work.creators).to contain_exactly(frodo, sam)
+      end
+    end
+
+    context 'building a creator' do
+      let(:work) { build(:work) }
+
+      it 'creates a Person record' do
+        work.creators.build(first_name: 'Frodo')
+        expect { work.save! }
+          .to change { GenericWork.count }.by(1)
+          .and change { Person.count }.by(1)
+        expect(work.creators.map(&:first_name)).to eq ['Frodo']
+        expect(Person.first.first_name).to eq 'Frodo'
+      end
+    end
+  end
+
   describe '#time_uploaded' do
     context 'with a blank date_uploaded' do
       its(:time_uploaded) { is_expected.to be_blank }
