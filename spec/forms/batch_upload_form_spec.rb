@@ -18,17 +18,20 @@ describe BatchUploadForm do
   end
 
   describe '#initialize_field' do
-    subject { form[:creator] }
-
-    it { is_expected.to eq(['User, Test A']) }
+    it 'inits to the name of the current user' do
+      expect(form.creators.count).to eq 1
+      current_creator = form.creators.first
+      expect(current_creator.first_name).to eq 'Test A'
+      expect(current_creator.last_name).to eq 'User'
+    end
   end
 
   describe '#model_attributes' do
     subject { described_class.model_attributes(raw_attrs) }
 
-    let(:raw_attrs) { ActionController::Parameters.new('creator' => ['Santy, Lorraine C', ''], 'keyword' => ['hhh'], 'rights' => 'https://creativecommons.org/licenses/by/4.0/', 'description' => ['ghjg'], 'contributor' => [''], 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'source' => [''], 'admin_set_id' => '', 'collection_ids' => [''], 'visibility_during_embargo' => 'restricted', 'embargo_release_date' => '2017-01-24', 'visibility_after_embargo' => 'open', 'visibility_during_lease' => 'open', 'lease_expiration_date' => '2017-01-24', 'visibility_after_lease' => 'restricted', 'visibility' => 'restricted') }
+    let(:raw_attrs) { ActionController::Parameters.new('creators' => { '0' => { 'first_name' => 'Lorraine C', 'last_name' => 'Santy' } }, 'keyword' => ['hhh'], 'rights' => 'https://creativecommons.org/licenses/by/4.0/', 'description' => ['ghjg'], 'contributor' => [''], 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'source' => [''], 'admin_set_id' => '', 'collection_ids' => [''], 'visibility_during_embargo' => 'restricted', 'embargo_release_date' => '2017-01-24', 'visibility_after_embargo' => 'open', 'visibility_during_lease' => 'open', 'lease_expiration_date' => '2017-01-24', 'visibility_after_lease' => 'restricted', 'visibility' => 'restricted') }
 
-    it { is_expected.to eq('creator' => ['Santy, Lorraine C'], 'keyword' => ['hhh'], 'rights' => 'https://creativecommons.org/licenses/by/4.0/', 'description' => ['ghjg'], 'contributor' => [], 'publisher' => [], 'date_created' => [], 'subject' => [], 'language' => [], 'identifier' => [], 'based_near' => [], 'related_url' => [], 'source' => [], 'admin_set_id' => '', 'collection_ids' => [], 'visibility_during_embargo' => 'restricted', 'embargo_release_date' => '2017-01-24', 'visibility_after_embargo' => 'open', 'visibility_during_lease' => 'open', 'lease_expiration_date' => '2017-01-24', 'visibility_after_lease' => 'restricted', 'visibility' => 'restricted') }
+    it { is_expected.to eq('creators' => { '0' => { 'first_name' => 'Lorraine C', 'last_name' => 'Santy' } }, 'keyword' => ['hhh'], 'rights' => 'https://creativecommons.org/licenses/by/4.0/', 'description' => ['ghjg'], 'contributor' => [], 'publisher' => [], 'date_created' => [], 'subject' => [], 'language' => [], 'identifier' => [], 'based_near' => [], 'related_url' => [], 'source' => [], 'admin_set_id' => '', 'collection_ids' => [], 'visibility_during_embargo' => 'restricted', 'embargo_release_date' => '2017-01-24', 'visibility_after_embargo' => 'open', 'visibility_during_lease' => 'open', 'lease_expiration_date' => '2017-01-24', 'visibility_after_lease' => 'restricted', 'visibility' => 'restricted') }
   end
 
   describe '#target_selector' do

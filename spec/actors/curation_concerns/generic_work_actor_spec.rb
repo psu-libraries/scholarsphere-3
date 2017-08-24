@@ -18,23 +18,39 @@ describe CurationConcerns::Actors::GenericWorkActor do
 
   context 'with ordered attributes' do
     let(:attributes) do
-      {
-        creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-        title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
-      }
+      { title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] }
     end
 
     it 'keeps the correct order' do
-      expect(work.creator).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
       expect(work.title).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     end
   end
 
-  context 'creator nil' do
-    let(:attributes) { { creator: nil } }
+  context 'with an existing Person record' do
+    let!(:existing_person) { create(:person) }
+    let(:attributes) do
+      {
+        title: ['A title'],
+        creators: { '0' => { id: existing_person.id, first_name: 'a' } }
+      }
+    end
 
-    it 'does not error' do
-      expect(work.creator).to eq([])
+    it 'sets creator to existing Person record' do
+      expect(work.creators).to eq [existing_person]
+    end
+  end
+
+  context 'creator id nil' do
+    let(:attributes) do
+      {
+        title: ['A title'],
+        creators: { '0' => { id: nil, first_name: 'first', last_name: 'last' } }
+      }
+    end
+
+    it 'sets the creators' do
+      expect(work.creators.map(&:first_name)).to eq ['first']
+      expect(work.creators.map(&:last_name)).to eq ['last']
     end
   end
 

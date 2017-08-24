@@ -6,14 +6,16 @@ include Selectors::Dashboard
 
 describe 'Dashboard Works', type: :feature do
   let!(:current_user) { create(:user) }
+  let(:creator) { create(:creator, first_name: 'Creator1', last_name: 'Jones') }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,
            depositor: current_user.login,
            title: ['little_file.txt'],
-           creator: ['little_file.txt_creator'],
+           creators: [create(:creator)],
            date_uploaded: DateTime.now + 1.hour)
   end
+  let(:work1_creator_name) { [work1.creator.first.first_name, work1.creator.first.last_name].join(' ') }
 
   let!(:work2) do
     create(:registered_work, depositor: current_user.login, title: ['Registered work'])
@@ -41,7 +43,7 @@ describe 'Dashboard Works', type: :feature do
 
       # Additional metadata about the work1 is hidden
       expect(page).not_to have_content 'Edit Access'
-      expect(page).not_to have_content work1.creator.first
+      expect(page).not_to have_content work1_creator_name
 
       # A return controller is specified
       expect(page).to have_css('input#return_controller', visible: false)
@@ -56,7 +58,7 @@ describe 'Dashboard Works', type: :feature do
 
       # Displays additional metadata about that work1
       first('span.glyphicon-chevron-right').click
-      expect(page).to have_content work1.creator.first
+      expect(page).to have_content work1_creator_name
       expect(page).to have_content work1.depositor
       expect(page).to have_content 'Edit Access'
 
@@ -166,8 +168,8 @@ describe 'Dashboard Works', type: :feature do
         expect(page).not_to have_content 'You searched for:'
 
         # When I search by Creator it displays the correct results
-        search_my_files_by_term(work1.creator.first.to_s)
-        expect(page).to have_content "You searched for: #{work1.creator.first}"
+        search_my_files_by_term(work1_creator_name)
+        expect(page).to have_content "You searched for: #{work1_creator_name}"
         page_should_only_list work1
       end
     end
@@ -176,7 +178,7 @@ describe 'Dashboard Works', type: :feature do
       specify 'Displays the correct totals for facet' do
         {
           'Resource Type' => 'Video (10)',
-          'Creator'       => 'Creator1 (10)',
+          'Creator'       => 'Creator1 Jones (10)',
           'Keyword'       => 'keyword1 (10)',
           'Subject'       => 'Subject1 (10)',
           'Language'      => 'Language1 (10)',
@@ -290,9 +292,14 @@ describe 'Dashboard Works', type: :feature do
                                  title: ["Sample Work #{t}"],
                                  date_uploaded: (Time.now - (t + 1).hours),
                                  depositor: current_user.login, resource_type: ['Video'],
-                                 creator: ['Creator1'], keyword: ['Keyword1'],
+                                 keyword: ['Keyword1'],
                                  subject: ['Subject1'], language: ['Language1'],
                                  based_near: ['Location1'], publisher: ['Publisher1'])
+
+      # Since the work isn't persisted, the relationship doesn't
+      # resolve properly for the indexer. Just stub the values
+      # so we can avoid saving the work record for this spec.
+      allow(work).to receive(:creators).and_return([creator])
 
       # TODO: how to do we set the work1 format in the objects with build
       hash = work.to_solr

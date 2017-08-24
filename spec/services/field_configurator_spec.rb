@@ -7,7 +7,7 @@ describe FieldConfigurator do
     subject { described_class.index_fields.keys }
 
     it { is_expected.to contain_exactly(:resource_type,
-                                       :creator,
+                                       :creator_name,
                                        :keyword,
                                        :subject,
                                        :language,
@@ -22,7 +22,7 @@ describe FieldConfigurator do
 
     it { is_expected.to contain_exactly(:description,
                                        :resource_type,
-                                       :creator,
+                                       :creator_name,
                                        :keyword,
                                        :subject,
                                        :language,
@@ -42,7 +42,7 @@ describe FieldConfigurator do
     subject { described_class.facet_fields.keys }
 
     it { is_expected.to contain_exactly(:resource_type,
-                                       :creator,
+                                       :creator_name,
                                        :keyword,
                                        :subject,
                                        :language,
@@ -53,7 +53,7 @@ describe FieldConfigurator do
                                        :has_model) }
 
     describe 'creator facet' do
-      subject { described_class.facet_fields.fetch(:creator) }
+      subject { described_class.facet_fields.fetch(:creator_name) }
 
       its(:opts) { is_expected.to include(facet_cleaners: [:titleize]) }
     end
@@ -77,7 +77,7 @@ describe FieldConfigurator do
     it { is_expected.to contain_exactly(:title,
                                        :description,
                                        :resource_type,
-                                       :creator,
+                                       :creator_name,
                                        :keyword,
                                        :subject,
                                        :language,

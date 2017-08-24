@@ -8,6 +8,10 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   self.file_presenter_class = ::FileSetPresenter
 
+  def creator_name
+    solr_document.fetch('creator_name_tesim', [])
+  end
+
   def size
     number_to_human_size(bytes)
   end

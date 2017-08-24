@@ -8,10 +8,27 @@ describe CurationConcerns::GenericWorkForm do
   let(:work)    { build(:work) }
   let(:form)    { described_class.new(work, ability) }
 
-  describe '#initialize_field' do
-    subject { form[:creator] }
+  describe 'initialize creator fields' do
+    context 'with a display name' do
+      it 'inits to the name of the current user' do
+        expect(form.creators.count).to eq 1
+        current_creator = form.creators.first
+        expect(current_creator.first_name).to eq 'Test A'
+        expect(current_creator.last_name).to eq 'User'
+      end
+    end
 
-    it { is_expected.to eq(['User, Test A']) }
+    context 'without a display name' do
+      before { User.destroy_all }
+      let(:user) { User.create(login: 'SomeUser') }
+
+      it 'inits blank fields for the creator' do
+        expect(form.creators.count).to eq 1
+        current_creator = form.creators.first
+        expect(current_creator.first_name).to eq nil
+        expect(current_creator.last_name).to eq nil
+      end
+    end
   end
 
   describe '::model_attributes' do

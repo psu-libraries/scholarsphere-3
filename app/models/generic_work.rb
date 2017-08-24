@@ -2,10 +2,11 @@
 
 class GenericWork < ActiveFedora::Base
   include ::CurationConcerns::WorkBehavior
-  include ::CurationConcerns::BasicMetadata
+  include ::BasicMetadata
   include Sufia::WorkBehavior
   include ShareNotify::Metadata
   include AdditionalMetadata
+  include HasCreators
 
   self.human_readable_type = 'Work'
 

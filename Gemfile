@@ -46,6 +46,7 @@ gem 'yaml_db'
 
 group :development, :test do
   gem 'fcrepo_wrapper'
+  gem 'faker'
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
@@ -53,6 +54,7 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'solr_wrapper'
   gem 'sqlite3'
+  gem 'capybara-screenshot'
 end
 
 group :development do
@@ -78,12 +80,12 @@ group :test do
   gem 'factory_girl_rails', '~> 4.1'
   gem 'poltergeist', '~> 1.9'
   gem 'rspec-activemodel-mocks'
+  gem 'selenium-webdriver'
   gem 'vcr'
   gem 'webmock'
 end
 
 group :debug do
   gem 'byebug', require: false
-  gem 'capybara-screenshot'
   gem 'launchy'
 end

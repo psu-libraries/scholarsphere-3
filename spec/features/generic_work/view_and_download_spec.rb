@@ -16,6 +16,7 @@ describe GenericWork, type: :feature do
                depositor: current_user.login,
                description: ['Description http://example.org/TheDescriptionLink/'])
       end
+      let(:work1_creator_name) { [work1.creator.first.first_name, work1.creator.first.last_name].compact.join(' ') }
 
       specify 'I can see all the correct information' do
         visit(root_path)
@@ -50,7 +51,7 @@ describe GenericWork, type: :feature do
 
         within('dl.generic_work') do
           expect(page).to have_link work1.related_url.first
-          expect(page).to have_link work1.creator.first
+          expect(page).to have_link work1_creator_name
           expect(page).to have_link work1.contributor.first
           expect(page).to have_link work1.keyword.first
           expect(page).to have_link work1.subject.first

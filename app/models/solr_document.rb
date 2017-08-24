@@ -15,6 +15,10 @@ class SolrDocument
   # Expects a hash-like object responding to :to_hash
   alias to_hash to_h
 
+  def creator
+    fetch(Solrizer.solr_name('creator_name', :stored_searchable), [])
+  end
+
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
     collections_in = Array(self[Solrizer.solr_name(:collection)])

@@ -28,6 +28,10 @@ module CurationConcerns
       attrs
     end
 
+    def model_class_name
+      'generic_work'
+    end
+
     def title
       super.first || ''
     end

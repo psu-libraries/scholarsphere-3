@@ -67,7 +67,6 @@ describe Collection, type: :feature do
 
     let(:updated_title)         { 'Updated Title' }
     let(:updated_description)   { 'Updtaed description text.' }
-    let(:updated_creators)      { ['Dorje Trollo', 'Vajrayogini'] }
 
     before { sign_in(current_user) }
 
@@ -85,13 +84,14 @@ describe Collection, type: :feature do
       expect(page).to have_no_checked_field('Private')
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
-      fill_in 'Creator', with: updated_creators.first
+      fill_in 'collection[creators][0][first_name]', with: 'Dorje'
+      fill_in 'collection[creators][0][last_name]', with: 'Trollo'
       click_button 'Update Collection'
       expect(page).not_to have_content original_title.first
       expect(page).not_to have_content original_description.first
       expect(page).to have_content updated_title
       expect(page).to have_content updated_description
-      expect(page).to have_content updated_creators.first
+      expect(page).to have_content 'Dorje Trollo'
     end
   end
 

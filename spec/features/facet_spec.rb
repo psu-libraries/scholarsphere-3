@@ -3,30 +3,34 @@
 require 'feature_spec_helper'
 
 describe 'Catalog facets' do
+  let(:patricia) { { first_name: 'Patricia M', last_name: 'Hswe' } }
+  let(:patricia_with_dot) { { first_name: 'Patricia M.', last_name: 'Hswe' } }
+  let(:patricia_caps) { { first_name: 'PATRICIA M.', last_name: 'HSWE' } }
+
   let(:work1) { build(:public_work, id: '1',
                                     contributor: ['Contri B. Utor'],
                                     publisher: ['Pu B. Lisher'],
-                                    keyword: ['Key. Word.'],
-                                    creator: ['Patricia M. Hswe']) }
+                                    keyword: ['Key. Word.']) }
   let(:work2) { build(:public_work, id: '2',
                                     contributor: ['CONTRI B. UTOR'],
                                     publisher: ['PU B. LISHER'],
-                                    keyword: ['KEY. WORD.'],
-                                    creator: ['PATRICIA M. HSWE']) }
+                                    keyword: ['KEY. WORD.']) }
   let(:work3) { build(:public_work, id: '3',
                                     contributor: ['Contri B Utor'],
                                     publisher: ['Pu B Lisher'],
-                                    keyword: ['Key Word'],
-                                    creator: ['Patricia M Hswe']) }
+                                    keyword: ['Key Word']) }
 
   before do
+    work1.creators.build(patricia_with_dot)
+    work2.creators.build(patricia_caps)
+    work3.creators.build(patricia)
     index_works_and_collections(work1, work2, work3)
     visit '/catalog'
     click_link('Creator')
   end
 
   it 'displays case and punctuation-corrected facets' do
-    within('div#facet-creator_sim') do
+    within('div#facet-creator_name_sim') do
       expect(page).not_to have_content('Patricia M. Hswe')
       expect(page).to have_content('Patricia M Hswe')
       expect(page).to have_selector('span.facet-count', text: '(3)')

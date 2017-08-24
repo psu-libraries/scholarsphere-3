@@ -14,4 +14,8 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   def target_selector
     "#new_#{model.model_name.param_key}"
   end
+
+  def model_class_name
+    'batch_upload_item'
+  end
 end
