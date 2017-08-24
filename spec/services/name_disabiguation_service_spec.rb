@@ -63,10 +63,10 @@ describe NameDisambiguationService, unless: travis? do
   end
 
   context 'when the user has strange characters' do
-    let(:name) { 'Patricia Hswe *' }
+    let(:name) { 'Suzanne Paterno *' }
 
     it 'cleans the name' do
-      is_expected.to eq([{ id: 'pmh22', given_name: 'PATRICIA M', surname: 'HSWE', email: 'pmh22@psu.edu', affiliation: ['MEMBER'], displayname: 'PATRICIA M HSWE' }])
+      is_expected.to eq([{ id: 'jvp1', given_name: 'SUZANNE', surname: 'PATERNO', email: '', affiliation: ['EMERITUS'], displayname: 'SUZANNE PATERNO' }])
     end
   end
 
@@ -74,7 +74,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { "Anthony R. D'Augelli" }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'ard', given_name: 'ANTHONY RAYMOND', surname: "D'AUGELLI", email: 'ard@psu.edu', affiliation: ['FACULTY'], displayname: "ANTHONY RAYMOND D'AUGELLI" }])
+      is_expected.to eq([{ id: 'ard', given_name: 'ANTHONY RAYMOND', surname: "D'AUGELLI", email: 'ard@psu.edu', affiliation: ['EMERITUS'], displayname: "ANTHONY RAYMOND D'AUGELLI" }])
     end
   end
 
