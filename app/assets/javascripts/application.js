@@ -15,4 +15,5 @@
 //= require scholarsphere/fileupload
 //= require scholarsphere/layout
 //= require scholarsphere/thumbnails
+//= require scholarsphere/creator
 //= require sufia

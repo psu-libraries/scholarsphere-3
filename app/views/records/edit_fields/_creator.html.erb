@@ -1,6 +1,8 @@
+<h3>Creators</h3>
+<div class="creator_container">
 <% @form.creators.each_with_index do |creator, index| %>
   <% id_base = "generic_work[creators][#{index}]"%>
-
+  <div class="well creator_inputs">
   <% first_name_id = "#{id_base}[first_name]" %>
   <%= label_tag first_name_id, 'First Name' %>
   <%= text_field_tag first_name_id,
@@ -15,5 +17,8 @@
     creator.last_name,
     required: false,
     id: last_name_id,
-    class: 'form-control string required' %>
+      class: 'form-control string required' %>
+  </div>
 <% end %>
+</div>
+<button type="button" class="btn btn-link add add-creator"><span class="glyphicon glyphicon-plus"></span><span class="controls-add-text">Add another Creator</span></button>
