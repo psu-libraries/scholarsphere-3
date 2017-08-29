@@ -43,13 +43,20 @@ module GoogleAnalytics
       def classify_download(page_download)
         @work_downloads ||= []
         @file_set_downloads ||= []
-        if page_is_work_download?(page_download)
-          @work_downloads << page_download
-        else
-          @file_set_downloads << page_download
+        safe_page_is_work_download?(page_download, "Error finding object for page download #{page_download}") do |is_work_download|
+          if is_work_download
+            @work_downloads << page_download
+          else
+            @file_set_downloads << page_download
+          end
         end
-      rescue ActiveFedora::ObjectNotFoundError => e
-        puts "Error loading object for download: #{page_download}, error: #{e}"
+      end
+
+      def safe_page_is_work_download?(page_download, error_message)
+        work_download = page_is_work_download?(page_download)
+        yield work_download if block_given?
+      rescue ActiveFedora::ObjectNotFoundError, Ldp::Gone => e
+        puts "#{error_message} #{e}"
       end
 
       def page_is_work_download?(page_download)
