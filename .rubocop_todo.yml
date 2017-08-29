@@ -64,6 +64,7 @@ RSpec/ExampleLength:
      - 'spec/features/**/*'
      - 'spec/lib/scholarsphere/import/work_builder_spec.rb'
      - 'spec/services/field_configurator_spec.rb'
+     - 'spec/services/user_stats_importer_spec.rb'
 
 # Offense count: 2
 RSpec/ExpectActual:
@@ -113,6 +114,7 @@ RSpec/MultipleExpectations:
     - 'spec/controllers/zotero_controller_spec.rb'
     - 'spec/jobs/import_url_job_spec.rb'
     - 'spec/jobs/resolrize_job_spec.rb'
+    - 'spec/services/user_stats_importer_spec.rb'
 
 # Offense count: 77
 RSpec/NamedSubject:
