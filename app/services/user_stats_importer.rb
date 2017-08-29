@@ -39,25 +39,34 @@ class UserStatsImporter < Sufia::UserStatImporter
   private
 
     def process_statistic_list(list, stat_class, object_lookup_method = :lookup_object)
+      return if list.blank?
+
       list.each do |event|
-        object = find_event_object(event, object_lookup_method)
-        create_or_update_object_stat(event, translate_user_login_to_db_id(object.depositor),
-                                     object, stat_class)
+        safe_method_call("Error finding object for event #{event}", :find_event_object, event, object_lookup_method) do |object|
+          object = find_event_object(event, object_lookup_method)
+          create_or_update_object_stat(event, translate_user_login_to_db_id(object.depositor),
+                                       object, stat_class)
+        end
       end
     end
 
     def tally_stats_for_user_files(user, stats)
-      file_ids_for_user(user).each do |file_id|
-        file_set = FileSet.find(file_id)
-        tally_file_set_download_stat(file_set, stats)
-        tally_file_set_view_stat(file_set, stats)
+      safe_method_call("Error find file ids for user: #{user} ", :file_ids_for_user, user) do |file_id_list|
+        file_id_list.each do |file_id|
+          safe_method_call("Error tallying Stats for FilesSet: #{file_id} ", :lookup_object, file_id) do |file_set|
+            tally_file_set_download_stat(file_set, stats)
+            tally_file_set_view_stat(file_set, stats)
+          end
+        end
       end
       stats
     end
 
     def tally_stats_for_user_works(user, stats)
       work_ids_for_user(user).each do |work_id|
-        stats = tally_work_view_stat(GenericWork.find(work_id), stats)
+        safe_method_call("Error tallying Stats for Work: #{work_id} ", :lookup_object, work_id) do |work|
+          stats = tally_work_view_stat(work, stats)
+        end
       end
       stats
     end
@@ -87,6 +96,13 @@ class UserStatsImporter < Sufia::UserStatImporter
 
     def path_to_id(page_path)
       page_path.split('/').last
+    end
+
+    def safe_method_call(error_message, method, *method_args)
+      object = send(method, *method_args)
+      yield object if block_given?
+    rescue ActiveFedora::ObjectNotFoundError, Ldp::Gone, Errno::ECONNREFUSED => e
+      puts "#{error_message} #{e.inspect}"
     end
 
     def lookup_object(id)
