@@ -5,6 +5,31 @@ require 'rails_helper'
 describe Collection do
   subject { collection }
 
+  describe 'setting creators' do
+    before { Person.destroy_all }
+
+    let(:collection) do
+      described_class.new do |c|
+        c.title = ['asdf']
+        c.apply_depositor_metadata('asdf')
+      end
+    end
+
+    # Record for Lucy already exists
+    let!(:lucy) { create(:person, first_name: 'Lucy', last_name: 'Lee') }
+    let(:fred_attrs) { { first_name: 'Fred', last_name: 'Jones' } }
+
+    it 'finds or creates the Person records' do
+      expect do
+        collection.creators = [lucy, fred_attrs]
+        collection.save!
+      end.to change { Person.count }.by(1)
+
+      expect(collection.creators).to include lucy
+      expect(collection.creators.map(&:first_name)).to contain_exactly('Fred', 'Lucy')
+    end
+  end
+
   context 'with no attached files' do
     let(:collection) { build(:collection) }
 

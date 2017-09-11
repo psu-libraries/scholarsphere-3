@@ -8,6 +8,37 @@ require 'rspec/rails'
 require 'equivalent-xml/rspec_matchers'
 require 'byebug' unless ENV['TRAVIS']
 
+# For feature testing with JS
+require 'capybara/rails'
+require 'capybara-screenshot/rspec'
+require 'capybara/poltergeist'
+require 'selenium-webdriver'
+
+poltergeist_options = {
+  js_errors: true,
+  timeout: 30,
+  logger: false,
+  debug: false,
+  phantomjs_logger: StringIO.new,
+  phantomjs_options: [
+    '--load-images=no',
+    '--ignore-ssl-errors=yes'
+  ]
+}
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
+end
+
+Capybara.register_driver :chrome do |app|
+  profile = Selenium::WebDriver::Chrome::Profile.new
+  profile['extensions.password_manager_enabled'] = false
+  Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
+end
+
+Capybara.javascript_driver = :poltergeist
+Capybara.default_driver = :rack_test
+
 def travis?
   ENV.fetch('TRAVIS', false)
 end

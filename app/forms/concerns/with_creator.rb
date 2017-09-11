@@ -3,18 +3,26 @@
 module WithCreator
   extend ActiveSupport::Concern
 
+  def creators
+    model.creators.build(current_creator_attributes) if model.creators.blank?
+    model.creators.to_a
+  end
+
   included do
-    def initialize_field(key)
-      if key == :creator
-        self[key] = creator
-      else
-        super
-      end
+    # Auto-fill the creator field with the currently logged-in user's name.
+    def current_creator_attributes
+      return @current_creator_attributes if @current_creator_attributes
+      parsed_name = Namae::Name.parse(current_ability.current_user.display_name)
+      @current_creator_attributes = {
+        first_name: parsed_name.given,
+        last_name: parsed_name.family
+      }
     end
 
-    def creator
-      @creator ||= [Namae::Name.parse(current_ability.current_user.name).sort_order]
-      @creator
+    def self.build_permitted_params
+      permitted = super
+      permitted << { creators: [:id, :first_name, :last_name, :_destroy] }
+      permitted
     end
   end
 end

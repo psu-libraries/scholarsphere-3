@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class WorkIndexer < Sufia::WorkIndexer
+  include IndexesCreator
+
   def generate_solr_document
     super.tap do |solr_doc|
       solr_doc[Solrizer.solr_name('file_set_ids', :symbol)] = solr_doc[Solrizer.solr_name('member_ids', :symbol)]

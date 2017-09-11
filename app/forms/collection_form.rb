@@ -5,6 +5,8 @@ class CollectionForm < Sufia::Forms::CollectionForm
 
   self.required_fields = [:title, :description, :keyword]
 
+  include WithCreator
+
   # @param [Collection] model
   # @param [Ability] current_ability
   # @param [ActionDispatch::Request] request
@@ -13,6 +15,10 @@ class CollectionForm < Sufia::Forms::CollectionForm
     @current_ability = current_ability
     @request = request
     super(model)
+  end
+
+  def model_class_name
+    'collection'
   end
 
   # @return [Array<WorkShowPresenter>]

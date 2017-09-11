@@ -42,6 +42,7 @@ RSpec/AnyInstance:
     - 'spec/lib/scholarsphere/role_mapper_spec.rb'
     - 'spec/rake/share_notify_spec.rb'
     - 'spec/services/generic_work_to_share_json_service_spec.rb'
+    - 'spec/controllers/persons_controller.rb'
 
 # Offense count: 12
 RSpec/BeEql:
@@ -247,6 +248,7 @@ Rails/HttpPositionalArguments:
     - 'spec/controllers/qa/terms_controller_spec.rb'
     - 'spec/controllers/sufia/batch_uploads_controller_spec.rb'
     - 'spec/controllers/zotero_controller_spec.rb'
+    - 'spec/controllers/persons_controller.rb'
 
 # Offense count: 2
 Rails/OutputSafety:

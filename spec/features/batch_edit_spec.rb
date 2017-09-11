@@ -4,8 +4,9 @@ require 'feature_spec_helper'
 
 describe 'Batch management of works', type: :feature do
   let(:current_user) { create(:user) }
-  let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
-  let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
+  let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login, creators: [creator]) }
+  let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login, creators: [creator]) }
+  let(:creator) { create(:creator) }
 
   before do
     sign_in_with_named_js(:batch_edit, current_user, disable_animations: true)
@@ -19,6 +20,7 @@ describe 'Batch management of works', type: :feature do
     end
 
     it 'edits a field and displays the changes', js: true do
+      expect(page).to have_content 'Changes will be applied to the following'
       batch_edit_fields.each do |field|
         fill_in_batch_edit_field(field, with: "Updated batch #{field}")
       end
@@ -38,7 +40,8 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
       expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
       expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
-      expect(page).to have_css "input#batch_edit_item_creator[value*='creatorcreator']"
+      expect(find_field(id: 'batch_edit_item[creators][0][first_name]').value).to eq creator.first_name
+      expect(find_field(id: 'batch_edit_item[creators][0][last_name]').value).to eq creator.last_name
       expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
