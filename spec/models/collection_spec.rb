@@ -16,8 +16,8 @@ describe Collection do
     end
 
     # Record for Lucy already exists
-    let!(:lucy) { create(:person, first_name: 'Lucy', last_name: 'Lee') }
-    let(:fred_attrs) { { first_name: 'Fred', last_name: 'Jones' } }
+    let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
+    let(:fred_attrs) { { given_name: 'Fred', sur_name: 'Jones' } }
 
     it 'finds or creates the Person records' do
       expect do
@@ -26,7 +26,7 @@ describe Collection do
       end.to change { Person.count }.by(1)
 
       expect(collection.creators).to include lucy
-      expect(collection.creators.map(&:first_name)).to contain_exactly('Fred', 'Lucy')
+      expect(collection.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
     end
   end
 

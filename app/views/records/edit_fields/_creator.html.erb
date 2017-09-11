@@ -1,12 +1,12 @@
 <h3>Creators</h3>
 <div class="creator_container">
  <div class="find_creator_container">
-  <label for="find_creator">Find Creator</label>  
-  <input type="text" name="find_creator" id="find_creator" class="form-control string" placeholder="Search for an existing creator" />  
+  <label for="find_creator">Find Creator</label>
+  <input type="text" name="find_creator" id="find_creator" class="form-control string" placeholder="Search for an existing creator" />
 </div>
 <% @form.creators.each_with_index do |creator, index| %>
   <% id_base = "#{@form.model_class_name}[creators][#{index}]"%>
-  
+
   <div class="well creator_inputs">
     <button type="button" class="btn btn-link remove remove-creator"><span class="glyphicon glyphicon-remove"></span><span class="controls-remove-text">Remove</span></button>
 
@@ -14,24 +14,24 @@
      <%= hidden_field_tag "#{id_base}[id]", creator.id %>
      <% is_readonly = true %>
   <% end %>
- 
-  <% first_name_id = "#{id_base}[first_name]" %>
-  <%= label_tag first_name_id, 'Given Name' %>
-  <%= text_field_tag first_name_id,
-    creator.first_name,
+
+  <% given_name_id = "#{id_base}[given_name]" %>
+  <%= label_tag given_name_id, 'Given Name' %>
+  <%= text_field_tag given_name_id,
+    creator.given_name,
     required: false,
-    readonly: is_readonly, 
-    id: first_name_id,
+    readonly: is_readonly,
+    id: given_name_id,
     class: 'form-control string required creator-first-name creator' %>
 
-  <% last_name_id = "#{id_base}[last_name]" %>
-  <%= label_tag last_name_id, 'Last Name' %>
-  <%= text_field_tag last_name_id,
-    creator.last_name,
+  <% sur_name_id = "#{id_base}[sur_name]" %>
+  <%= label_tag sur_name_id, 'Last Name' %>
+  <%= text_field_tag sur_name_id,
+    creator.sur_name,
     required: false,
-    readonly: is_readonly,  
-    options: [readonly: true], 
-    id: last_name_id,
+    readonly: is_readonly,
+    options: [readonly: true],
+    id: sur_name_id,
       class: 'form-control string required creator-last-name creator' %>
   </div>
 <% end %>

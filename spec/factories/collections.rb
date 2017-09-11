@@ -15,7 +15,7 @@ FactoryGirl.define do
       collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
 
       if attrs.creators.blank?
-        collection.creators.build(first_name: 'creatorcreator')
+        collection.creators.build(given_name: 'creatorcreator')
       end
     end
 

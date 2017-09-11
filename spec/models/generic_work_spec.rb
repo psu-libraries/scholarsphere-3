@@ -16,8 +16,8 @@ describe GenericWork do
 
     context 'with existing Person records' do
       let(:work) { build(:work, creators: [frodo, sam]) }
-      let!(:frodo) { create(:person, first_name: 'Frodo') }
-      let!(:sam) { create(:person, first_name: 'Sam') }
+      let!(:frodo) { create(:person, given_name: 'Frodo') }
+      let!(:sam) { create(:person, given_name: 'Sam') }
 
       it 'sets the creators' do
         expect { work.save! }
@@ -31,29 +31,29 @@ describe GenericWork do
       let(:work) { build(:work) }
 
       it 'creates a Person record' do
-        work.creators.build(first_name: 'Frodo')
+        work.creators.build(given_name: 'Frodo')
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Person.count }.by(1)
-        expect(work.creators.map(&:first_name)).to eq ['Frodo']
-        expect(Person.first.first_name).to eq 'Frodo'
+        expect(work.creators.map(&:given_name)).to eq ['Frodo']
+        expect(Person.first.given_name).to eq 'Frodo'
       end
     end
 
     context 'with hash inputs' do
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
-        [{ 'first_name' => 'Fred', 'last_name' => 'Jones' },
-         { 'first_name' => 'Lucy', 'last_name' => 'Lee' }]
+        [{ 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+         { 'given_name' => 'Lucy', 'sur_name' => 'Lee' }]
       end
-      let!(:lucy) { create(:person, first_name: 'Lucy', last_name: 'Lee') } # Record for Lucy already exists
+      let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') } # Record for Lucy already exists
 
       it 'finds or creates the Person record' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Person.count }.by(1)
         expect(work.creators).to include lucy
-        expect(work.creators.map(&:first_name)).to contain_exactly('Fred', 'Lucy')
+        expect(work.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
       end
     end
 
@@ -62,25 +62,25 @@ describe GenericWork do
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
         {
-          '0' => { 'first_name' => 'Fred', 'last_name' => 'Jones' },
-          '1' => { 'first_name' => 'Lucy', 'last_name' => 'Lee' }
+          '0' => { 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+          '1' => { 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
         }
       end
-      let!(:lucy) { create(:person, first_name: 'Lucy', last_name: 'Lee') } # Record for Lucy already exists
+      let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') } # Record for Lucy already exists
 
       it 'finds or creates the Person record' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Person.count }.by(1)
         expect(work.creators).to include lucy
-        expect(work.creators.map(&:first_name)).to contain_exactly('Fred', 'Lucy')
+        expect(work.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
       end
     end
 
     # When we changed the work's creators to be a Person model instead of a String, the name of the method to find the work's creators also changed.  It is now 'work.creators' (with an 's') instead of 'work.creator'.  But, there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method, so we need to make sure that method exists.  So we just aliased the method 'creator' to 'creators'.
     context 'calling "creator" method' do
       let(:work) { create(:work, creators: [frodo]) }
-      let!(:frodo) { create(:person, first_name: 'Frodo') }
+      let!(:frodo) { create(:person, given_name: 'Frodo') }
 
       it 'returns the creators with no error' do
         expect(work.creators).to eq [frodo]

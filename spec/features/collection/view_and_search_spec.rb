@@ -7,7 +7,7 @@ include Selectors::Dashboard
 
 describe Collection, type: :feature do
   let(:creator) { FactoryGirl.create(:person) }
-  let(:creator_name) { [creator.first_name, creator.last_name].join(' ') }
+  let(:creator_name) { [creator.given_name, creator.sur_name].join(' ') }
 
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
                               creators: [creator],

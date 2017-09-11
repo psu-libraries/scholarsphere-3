@@ -7,8 +7,8 @@ describe 'Editing a work', js: true do
   let(:proxy) { create(:first_proxy) }
   let(:user)  { create(:user, :with_proxy, proxy_for: proxy) }
   let(:work)  { create(:public_work, :with_required_metadata, depositor: user.user_key, creators: [sally, yuki]) }
-  let(:sally) { create(:creator, first_name: 'Sally', last_name: 'Henry') }
-  let(:yuki) { create(:creator, first_name: 'Yuki', last_name: 'Matsumoto') }
+  let(:sally) { create(:creator, given_name: 'Sally', sur_name: 'Henry') }
+  let(:yuki) { create(:creator, given_name: 'Yuki', sur_name: 'Matsumoto') }
 
   before { login_as user }
 
@@ -29,8 +29,8 @@ describe 'Editing a work', js: true do
 
     # The index should be 'generic_work[creators][2]' because
     # '0' and '1' were already used by Sally and Yuki.
-    fill_in 'generic_work[creators][2][first_name]', with: 'Verity'
-    fill_in 'generic_work[creators][2][last_name]', with: 'Brown'
+    fill_in 'generic_work[creators][2][given_name]', with: 'Verity'
+    fill_in 'generic_work[creators][2][sur_name]', with: 'Brown'
     click_button 'Save'
 
     # The updated creator data should appear on the show page
@@ -40,7 +40,7 @@ describe 'Editing a work', js: true do
 
     # The persisted work should have the updated creator data
     work.reload
-    expect(work.creators.map(&:first_name)).to contain_exactly('Verity', 'Yuki')
+    expect(work.creators.map(&:given_name)).to contain_exactly('Verity', 'Yuki')
   end
 
   # Tests the basic outline of the form. This can be expanded later with more detail including

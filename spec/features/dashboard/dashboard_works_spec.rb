@@ -6,7 +6,7 @@ include Selectors::Dashboard
 
 describe 'Dashboard Works', type: :feature do
   let!(:current_user) { create(:user) }
-  let(:creator) { create(:creator, first_name: 'Creator1', last_name: 'Jones') }
+  let(:creator) { create(:creator, given_name: 'Creator1', sur_name: 'Jones') }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,
@@ -15,7 +15,7 @@ describe 'Dashboard Works', type: :feature do
            creators: [create(:creator)],
            date_uploaded: DateTime.now + 1.hour)
   end
-  let(:work1_creator_name) { [work1.creator.first.first_name, work1.creator.first.last_name].join(' ') }
+  let(:work1_creator_name) { [work1.creator.first.given_name, work1.creator.first.sur_name].join(' ') }
 
   let!(:work2) do
     create(:registered_work, depositor: current_user.login, title: ['Registered work'])

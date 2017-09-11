@@ -9,7 +9,7 @@ describe 'Dashboard Collections:', type: :feature do
   let!(:collection)      { create(:collection, depositor: current_user.login) }
 
   let(:creator) { collection.creators.first }
-  let(:creator_name) { [creator.first_name, creator.last_name].join(' ') }
+  let(:creator_name) { [creator.given_name, creator.sur_name].join(' ') }
 
   let(:current_user) { create(:user) }
   let(:jill)         { create(:jill) }

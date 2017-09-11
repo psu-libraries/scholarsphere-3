@@ -5,7 +5,7 @@ require 'rails_helper'
 describe GenericWorkToShareJSONService do
   let(:name_service) { double }
 
-  let(:creator) { FactoryGirl.create(:person, last_name: 'Santy', first_name: 'Lorraine C') }
+  let(:creator) { FactoryGirl.create(:person, sur_name: 'Santy', given_name: 'Lorraine C') }
   let(:creator_name) { 'Santy, Lorraine C' }
 
   before do
@@ -50,7 +50,7 @@ describe GenericWorkToShareJSONService do
     let(:date_uploaded) { '2015-07-30T20:15:08Z' }
 
     context 'when the creator exists in ldap' do
-      let(:creator) { FactoryGirl.create(:person, last_name: 'Cole', first_name: 'Carolyn Ann') }
+      let(:creator) { FactoryGirl.create(:person, sur_name: 'Cole', given_name: 'Carolyn Ann') }
       let(:creator_name) { 'Cole, Carolyn Ann' }
       let(:creator_email) { 'cam156@psu.edu' }
 
@@ -62,7 +62,7 @@ describe GenericWorkToShareJSONService do
     end
 
     context 'when the creator does not exist in ldap' do
-      let(:creator) { FactoryGirl.create(:person, last_name: 'Frog', first_name: 'Kermit The') }
+      let(:creator) { FactoryGirl.create(:person, sur_name: 'Frog', given_name: 'Kermit The') }
       let(:creator_email) {}
 
       it 'formats the json' do
@@ -75,7 +75,7 @@ describe GenericWorkToShareJSONService do
     context 'when deleting the file' do
       subject { JSON.parse(described_class.new(file, delete: true).json) }
 
-      let(:creator) { FactoryGirl.create(:person, last_name: 'Guy', first_name: 'Bad') }
+      let(:creator) { FactoryGirl.create(:person, sur_name: 'Guy', given_name: 'Bad') }
       let(:creator_name) { 'Guy, Bad' }
       let(:creator_email) { 'badguy@trouble.com' }
 

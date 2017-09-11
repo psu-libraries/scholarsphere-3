@@ -29,7 +29,7 @@ FactoryGirl.define do
 
         after(:build) do |work, evaluator|
           if evaluator.creators.blank?
-            work.creators.build(first_name: 'Joe', last_name: 'Contributor')
+            work.creators.build(given_name: 'Joe', sur_name: 'Contributor')
           end
         end
       end
@@ -157,7 +157,7 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(first_name: 'creatorcreator')
+          work.creators.build(given_name: 'creatorcreator')
         end
       end
     end
@@ -171,7 +171,7 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(first_name: 'required creator')
+          work.creators.build(given_name: 'required creator')
         end
       end
     end

@@ -4,9 +4,9 @@
     <button type="button" class="btn btn-link remove remove-creator">
       <span class="glyphicon glyphicon-remove"></span><span class="controls-remove-text">Remove</span>
     </button>
-    <label for="<%= @form.model_class_name %>{{index}}_first_name">Given Name</label>
-    <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][first_name]" id="<%= @form.model_class_name %>[creators][{{index}}][first_name]" class="form-control string required creator-first-name creator" value="{{firstName}}">
-    <label for="<%= @form.model_class_name %>{{index}}_last_name">Last Name</label>
-    <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][last_name]" id="<%= @form.model_class_name %>[creators][{{index}}][last_name]" class="form-control string required creator-last-name creator" value="{{lastName}}">
+    <label for="<%= @form.model_class_name %>{{index}}_given_name">Given Name</label>
+    <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][given_name]" id="<%= @form.model_class_name %>[creators][{{index}}][given_name]" class="form-control string required creator-first-name creator" value="{{firstName}}">
+    <label for="<%= @form.model_class_name %>{{index}}_sur_name">Last Name</label>
+    <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" id="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" class="form-control string required creator-last-name creator" value="{{lastName}}">
   </div>
 </script>

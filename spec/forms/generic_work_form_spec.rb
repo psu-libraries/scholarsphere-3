@@ -13,8 +13,8 @@ describe CurationConcerns::GenericWorkForm do
       it 'inits to the name of the current user' do
         expect(form.creators.count).to eq 1
         current_creator = form.creators.first
-        expect(current_creator.first_name).to eq 'Test A'
-        expect(current_creator.last_name).to eq 'User'
+        expect(current_creator.given_name).to eq 'Test A'
+        expect(current_creator.sur_name).to eq 'User'
       end
     end
 
@@ -25,8 +25,8 @@ describe CurationConcerns::GenericWorkForm do
       it 'inits blank fields for the creator' do
         expect(form.creators.count).to eq 1
         current_creator = form.creators.first
-        expect(current_creator.first_name).to eq nil
-        expect(current_creator.last_name).to eq nil
+        expect(current_creator.given_name).to eq nil
+        expect(current_creator.sur_name).to eq nil
       end
     end
   end

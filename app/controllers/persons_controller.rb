@@ -5,7 +5,7 @@ class PersonsController < ApplicationController
 
   def name_query
     authorize! :name_query, Person
-    query = "has_model_ssim:Person AND (first_name_tesim:#{params['q']}* OR last_name_tesim:#{params['q']}*)"
+    query = "has_model_ssim:Person AND (given_name_tesim:#{params['q']}* OR sur_name_tesim:#{params['q']}*)"
     render json: ActiveFedora::SolrService.query(query)
   end
 end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Person < ActiveFedora::Base
-  property :first_name, predicate: ::RDF::Vocab::FOAF.firstName, multiple: false do |index|
+  property :given_name, predicate: ::RDF::Vocab::FOAF.firstName, multiple: false do |index|
     index.as :stored_searchable, :symbol
   end
 
-  property :last_name, predicate: ::RDF::Vocab::FOAF.lastName, multiple: false do |index|
+  property :sur_name, predicate: ::RDF::Vocab::FOAF.lastName, multiple: false do |index|
     index.as :stored_searchable, :symbol
   end
 
@@ -15,8 +15,8 @@ class Person < ActiveFedora::Base
     attributes.delete(:id) if attributes[:id].blank?
     query_attrs = if attributes[:id].blank?
                     {
-                      first_name_ssim: attributes[:first_name],
-                      last_name_ssim: attributes[:last_name]
+                      given_name_ssim: attributes[:given_name],
+                      sur_name_ssim: attributes[:sur_name]
                     }
                   else
                     { id: attributes[:id] }

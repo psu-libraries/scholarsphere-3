@@ -16,7 +16,7 @@ describe GenericWork, type: :feature do
                depositor: current_user.login,
                description: ['Description http://example.org/TheDescriptionLink/'])
       end
-      let(:work1_creator_name) { [work1.creator.first.first_name, work1.creator.first.last_name].compact.join(' ') }
+      let(:work1_creator_name) { [work1.creator.first.given_name, work1.creator.first.sur_name].compact.join(' ') }
 
       specify 'I can see all the correct information' do
         visit(root_path)
