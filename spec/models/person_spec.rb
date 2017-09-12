@@ -55,4 +55,12 @@ describe Person do
 
     its(:orcid_id) { is_expected.to eq('000111222') }
   end
+
+  describe '#display_name' do
+    subject { person }
+
+    let(:person) { build(:person, display_name: 'John Doe') }
+
+    its(:display_name) { is_expected.to eq('John Doe') }
+  end
 end

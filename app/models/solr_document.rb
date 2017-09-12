@@ -62,6 +62,10 @@ class SolrDocument
     Array(self[Solrizer.solr_name(:orcid_id, :symbol)]).first
   end
 
+  def display_name
+    Array(self[Solrizer.solr_name(:display_name, :symbol)]).first
+  end
+
   private
 
     def ul_start_tags

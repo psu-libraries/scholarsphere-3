@@ -44,5 +44,6 @@ describe SolrDocument do
     its(:sur_name) { is_expected.to eq('Metadata') }
     its(:psu_id) { is_expected.to eq('jqm123') }
     its(:orcid_id) { is_expected.to eq('123456789') }
+    its(:display_name) { is_expected.to eq('The Right Honorable John Q. Metadata, Earl of Libraryland') }
   end
 end

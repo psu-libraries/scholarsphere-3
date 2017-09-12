@@ -10,6 +10,7 @@ FactoryGirl.define do
       sur_name 'Metadata'
       psu_id 'jqm123'
       orcid_id '123456789'
+      display_name 'The Right Honorable John Q. Metadata, Earl of Libraryland'
     end
   end
 end
