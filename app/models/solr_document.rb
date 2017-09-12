@@ -46,6 +46,22 @@ class SolrDocument
     self[Solrizer.solr_name('subtitle')]
   end
 
+  def given_name
+    Array(self[Solrizer.solr_name(:given_name, :symbol)]).first
+  end
+
+  def sur_name
+    Array(self[Solrizer.solr_name(:sur_name, :symbol)]).first
+  end
+
+  def psu_id
+    Array(self[Solrizer.solr_name(:psu_id, :symbol)]).first
+  end
+
+  def orcid_id
+    Array(self[Solrizer.solr_name(:orcid_id, :symbol)]).first
+  end
+
   private
 
     def ul_start_tags
