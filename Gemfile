@@ -45,6 +45,7 @@ gem 'whenever'
 gem 'yaml_db'
 
 group :development, :test do
+  gem 'coveralls', require: false
   gem 'fcrepo_wrapper'
   gem 'faker'
   gem 'rspec'
