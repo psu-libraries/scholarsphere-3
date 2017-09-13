@@ -21,7 +21,8 @@ class FieldConfigurator
              rights: FieldConfig.new('Rights'),
              identifier: FieldConfig.new('Identifier'),
              description: FieldConfig.new('Description'),
-             subtitle: FieldConfig.new('Subtitle'))
+             subtitle: FieldConfig.new('Subtitle'),
+             display_name: FieldConfig.new('Display Name'))
   end
 
   # Defines what fields are shown in the facets on the search index view

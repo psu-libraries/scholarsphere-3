@@ -15,13 +15,14 @@ module WithCreator
       parsed_name = Namae::Name.parse(current_ability.current_user.display_name)
       @current_creator_attributes = {
         given_name: parsed_name.given,
-        sur_name: parsed_name.family
+        sur_name: parsed_name.family,
+        display_name: Person.display_name
       }
     end
 
     def self.build_permitted_params
       permitted = super
-      permitted << { creators: [:id, :given_name, :sur_name, :_destroy] }
+      permitted << { creators: [:id, :given_name, :sur_name, :display_name, :_destroy] }
       permitted
     end
   end

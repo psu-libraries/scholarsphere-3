@@ -33,6 +33,14 @@
     options: [readonly: true],
     id: sur_name_id,
       class: 'form-control string required creator-last-name creator' %>
+
+    <% display_name_id = "#{id_base}[display_name]" %>
+    <%= label_tag display_name_id, 'Display Name' %>
+    <%= text_field_tag display_name_id,
+                       creator.display_name,
+                       required: false,
+                       id: display_name_id,
+                       class: 'form-control string required creator-display-name creator' %>
   </div>
 <% end %>
 </div>
