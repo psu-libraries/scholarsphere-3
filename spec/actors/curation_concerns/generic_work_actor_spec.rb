@@ -26,17 +26,17 @@ describe CurationConcerns::Actors::GenericWorkActor do
     end
   end
 
-  context 'with an existing Person record' do
-    let!(:existing_person) { create(:person) }
+  context 'with an existing Alias record' do
+    let!(:existing_alias) { create(:alias, :with_person) }
     let(:attributes) do
       {
         title: ['A title'],
-        creators: { '0' => { id: existing_person.id, given_name: 'a' } }
+        creators: { '0' => { id: existing_alias.id } }
       }
     end
 
-    it 'sets creator to existing Person record' do
-      expect(work.creators).to eq [existing_person]
+    it 'sets creator to existing Alias record' do
+      expect(work.creators).to eq [existing_alias]
     end
   end
 
@@ -44,13 +44,12 @@ describe CurationConcerns::Actors::GenericWorkActor do
     let(:attributes) do
       {
         title: ['A title'],
-        creators: { '0' => { id: nil, given_name: 'first', sur_name: 'last' } }
+        creators: { '0' => { id: nil, given_name: 'first', sur_name: 'last', display_name: 'first last' } }
       }
     end
 
     it 'sets the creators' do
-      expect(work.creators.map(&:given_name)).to eq ['first']
-      expect(work.creators.map(&:sur_name)).to eq ['last']
+      expect(work.creators.map(&:display_name)).to eq ['first last']
     end
   end
 

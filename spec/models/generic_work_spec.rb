@@ -12,17 +12,21 @@ describe GenericWork do
   end
 
   describe 'creators' do
-    before { Person.destroy_all }
+    before do
+      Alias.destroy_all
+      Person.destroy_all
+    end
 
-    context 'with existing Person records' do
+    context 'with existing Alias records' do
+      let!(:frodo) { create(:alias, display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+      let!(:sam)   { create(:alias, display_name: 'Sam', person: Person.new(given_name: 'Sam', sur_name: 'Gamgee')) }
+
       let(:work) { build(:work, creators: [frodo, sam]) }
-      let!(:frodo) { create(:person, given_name: 'Frodo') }
-      let!(:sam) { create(:person, given_name: 'Sam') }
 
       it 'sets the creators' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
-          .and change { Person.count }.by(0)
+          .and change { Alias.count }.by(0)
         expect(work.creators).to contain_exactly(frodo, sam)
       end
     end
@@ -30,57 +34,63 @@ describe GenericWork do
     context 'building a creator' do
       let(:work) { build(:work) }
 
-      it 'creates a Person record' do
-        work.creators.build(given_name: 'Frodo')
+      it 'creates an Alias record' do
+        work.creators.build(display_name: 'Frodo')
         expect { work.save! }
           .to change { described_class.count }.by(1)
-          .and change { Person.count }.by(1)
-        expect(work.creators.map(&:given_name)).to eq ['Frodo']
-        expect(Person.first.given_name).to eq 'Frodo'
+          .and change { Alias.count }.by(1)
+        expect(work.creators.map(&:display_name)).to eq ['Frodo']
+        expect(Alias.first.display_name).to eq 'Frodo'
       end
     end
 
     context 'with hash inputs' do
+      let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
+
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
-        [{ 'given_name' => 'Fred', 'sur_name' => 'Jones' },
-         { 'given_name' => 'Lucy', 'sur_name' => 'Lee' }]
+        [
+          { 'display_name' => 'Fred Jones', 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+          { 'display_name' => 'Lucy Lee', 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
+        ]
       end
-      let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') } # Record for Lucy already exists
 
-      it 'finds or creates the Person record' do
+      it 'finds or creates the Alias record' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
-          .and change { Person.count }.by(1)
+          .and change { Alias.count }.by(1)
         expect(work.creators).to include lucy
-        expect(work.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
+        expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
       end
     end
 
-    # This style of inputs comes from the form
-    context 'with nested hash inputs' do
+    context 'with ordered, nested-style hash inputs that come from the form' do
+      let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
+
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
         {
-          '0' => { 'given_name' => 'Fred', 'sur_name' => 'Jones' },
-          '1' => { 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
+          '0' => { 'display_name' => 'Fred Jones', 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+          '1' => { 'display_name' => 'Lucy Lee', 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
         }
       end
-      let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') } # Record for Lucy already exists
 
       it 'finds or creates the Person record' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
-          .and change { Person.count }.by(1)
+          .and change { Alias.count }.by(1)
         expect(work.creators).to include lucy
-        expect(work.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
+        expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
       end
     end
 
     # When we changed the work's creators to be a Person model instead of a String, the name of the method to find the work's creators also changed.  It is now 'work.creators' (with an 's') instead of 'work.creator'.  But, there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method, so we need to make sure that method exists.  So we just aliased the method 'creator' to 'creators'.
     context 'calling "creator" method' do
+      let!(:frodo) { create(:alias, display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+
       let(:work) { create(:work, creators: [frodo]) }
-      let!(:frodo) { create(:person, given_name: 'Frodo') }
 
       it 'returns the creators with no error' do
         expect(work.creators).to eq [frodo]

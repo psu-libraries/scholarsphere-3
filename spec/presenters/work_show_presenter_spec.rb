@@ -64,7 +64,7 @@ describe WorkShowPresenter do
     subject { presenter.facet_mapping(:creator_name) }
 
     let(:work) { build :work }
-    let!(:joe) { work.creators.build(given_name: 'JOE', sur_name: 'SMITH') }
+    let!(:joe) { work.creators.build(display_name: 'JOE SMITH') }
 
     it { is_expected.to eq('JOE SMITH' => 'Joe Smith') }
   end
