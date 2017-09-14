@@ -31,7 +31,7 @@ describe CurationConcerns::Actors::GenericWorkActor do
     let(:attributes) do
       {
         title: ['A title'],
-        creators: { '0' => { id: existing_person.id, first_name: 'a' } }
+        creators: { '0' => { id: existing_person.id, given_name: 'a' } }
       }
     end
 
@@ -44,13 +44,13 @@ describe CurationConcerns::Actors::GenericWorkActor do
     let(:attributes) do
       {
         title: ['A title'],
-        creators: { '0' => { id: nil, first_name: 'first', last_name: 'last' } }
+        creators: { '0' => { id: nil, given_name: 'first', sur_name: 'last' } }
       }
     end
 
     it 'sets the creators' do
-      expect(work.creators.map(&:first_name)).to eq ['first']
-      expect(work.creators.map(&:last_name)).to eq ['last']
+      expect(work.creators.map(&:given_name)).to eq ['first']
+      expect(work.creators.map(&:sur_name)).to eq ['last']
     end
   end
 

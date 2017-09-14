@@ -14,14 +14,14 @@ module WithCreator
       return @current_creator_attributes if @current_creator_attributes
       parsed_name = Namae::Name.parse(current_ability.current_user.display_name)
       @current_creator_attributes = {
-        first_name: parsed_name.given,
-        last_name: parsed_name.family
+        given_name: parsed_name.given,
+        sur_name: parsed_name.family
       }
     end
 
     def self.build_permitted_params
       permitted = super
-      permitted << { creators: [:id, :first_name, :last_name, :_destroy] }
+      permitted << { creators: [:id, :given_name, :sur_name, :_destroy] }
       permitted
     end
   end

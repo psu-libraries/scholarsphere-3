@@ -40,8 +40,8 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
       expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
       expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
-      expect(find_field(id: 'batch_edit_item[creators][0][first_name]').value).to eq creator.first_name
-      expect(find_field(id: 'batch_edit_item[creators][0][last_name]').value).to eq creator.last_name
+      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq creator.given_name
+      expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq creator.sur_name
       expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"

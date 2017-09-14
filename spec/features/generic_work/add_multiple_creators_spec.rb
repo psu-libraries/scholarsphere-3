@@ -9,7 +9,7 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
 
     before do
       login_as user
-      p = Person.new(first_name: 'Testing', last_name: 'Person')
+      p = Person.new(given_name: 'Testing', sur_name: 'Person')
       p.save!
     end
 

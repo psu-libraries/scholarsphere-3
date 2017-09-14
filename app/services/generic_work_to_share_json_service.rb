@@ -22,7 +22,7 @@ class GenericWorkToShareJSONService
 
     def add_contributors_to_document
       work.creators.each do |creator|
-        creator_name = [creator.last_name, creator.first_name].compact.join(', ')
+        creator_name = [creator.sur_name, creator.given_name].compact.join(', ')
         document.add_contributor(name: creator_name, email: email_for_name(creator_name))
       end
     end

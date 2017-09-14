@@ -46,7 +46,7 @@ describe WorkIndexer do
     end
 
     describe 'a groomed document' do
-      before { work.creators.build(first_name: 'BIG.', last_name: 'Name') }
+      before { work.creators.build(given_name: 'BIG.', sur_name: 'Name') }
 
       it { is_expected.to include('creator_name_sim' => ['Big Name']) }
       it { is_expected.to include('creator_name_tesim' => ['BIG. Name']) }
@@ -55,7 +55,7 @@ describe WorkIndexer do
     end
 
     describe 'creator missing fields' do
-      before { work.creators.build(first_name: 'John', last_name: '') }
+      before { work.creators.build(given_name: 'John', sur_name: '') }
       it { is_expected.to include('creator_name_sim' => ['John']) }
       it { is_expected.to include('creator_name_tesim' => ['John']) }
     end

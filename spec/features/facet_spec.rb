@@ -3,9 +3,9 @@
 require 'feature_spec_helper'
 
 describe 'Catalog facets' do
-  let(:patricia) { { first_name: 'Patricia M', last_name: 'Hswe' } }
-  let(:patricia_with_dot) { { first_name: 'Patricia M.', last_name: 'Hswe' } }
-  let(:patricia_caps) { { first_name: 'PATRICIA M.', last_name: 'HSWE' } }
+  let(:patricia) { { given_name: 'Patricia M', sur_name: 'Hswe' } }
+  let(:patricia_with_dot) { { given_name: 'Patricia M.', sur_name: 'Hswe' } }
+  let(:patricia_caps) { { given_name: 'PATRICIA M.', sur_name: 'HSWE' } }
 
   let(:work1) { build(:public_work, id: '1',
                                     contributor: ['Contri B. Utor'],

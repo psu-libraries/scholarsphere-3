@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe SolrDocumentGroomer do
-  let(:legend)   { create(:creator, first_name: 'I AM', last_name: 'LEGEND') }
-  let(:will)     { create(:creator, first_name: 'Will I.', last_name: 'Am') }
+  let(:legend)   { create(:creator, given_name: 'I AM', sur_name: 'LEGEND') }
+  let(:will)     { create(:creator, given_name: 'Will I.', sur_name: 'Am') }
 
   let(:work)     { create(:work, creators: [legend, will], keyword: ['CAPITAL', 'Title.']) }
   let(:document) { SolrDocument.new(work.to_solr) }

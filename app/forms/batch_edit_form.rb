@@ -6,7 +6,7 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
 
   def self.build_permitted_params
     permitted = super
-    permitted << { creators: [:id, :first_name, :last_name, :_destroy] }
+    permitted << { creators: [:id, :given_name, :sur_name, :_destroy] }
     permitted << :visibility
     permitted
   end
