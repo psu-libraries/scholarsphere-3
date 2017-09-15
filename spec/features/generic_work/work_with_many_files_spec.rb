@@ -42,12 +42,20 @@ describe GenericWork, type: :feature do
       visit('/concern/generic_works/bigwork')
     end
 
-    it 'displays the work page with all the files' do
+    it 'displays the work page with pagination and each page has 10 files' do
       within('dl.attributes') do
         expect(page).to have_selector('dd.total_items', text: '100')
       end
       within('table.related-files') do
-        (1..100).each do |id|
+        (1..10).each do |id|
+          expect(page).to have_link("File #{id}")
+        end
+      end
+      within('div.pager') do
+        click_link('2')
+      end
+      within('table.related-files') do
+        (11..20).each do |id|
           expect(page).to have_link("File #{id}")
         end
       end

@@ -16,6 +16,8 @@ class CurationConcerns::GenericWorksController < ApplicationController
   before_action :delete_from_share, only: [:destroy]
   before_action :redirect_when_uploading, only: [:edit, :update, :destroy]
 
+  before_action :pass_page_to_presenter, only: [:show]
+
   def notify_users_of_permission_changes
     return if @curation_concern.nil?
     previous_permissions = @curation_concern.permissions.map(&:to_hash)
@@ -35,6 +37,10 @@ class CurationConcerns::GenericWorksController < ApplicationController
     return if QueuedFile.where(work_id: params[:id]).blank?
     flash[:notice] = 'Edits or deletes not allowed while files are being uploaded to a work'
     redirect_to polymorphic_path([main_app, curation_concern])
+  end
+
+  def pass_page_to_presenter
+    presenter.file_page(params[:file_page])
   end
 
   protected

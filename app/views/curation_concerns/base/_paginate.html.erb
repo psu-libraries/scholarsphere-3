@@ -1,0 +1,11 @@
+<%# Need to pinch the paginator from
+    https://github.com/samvera/curation_concerns/blob/master/app/views/collections/_paginate.html.erb
+    because the fieldsets for works are ordered and not a solr response. Uses the presenter and a
+    new method of file_page to create pages of objects
+%>
+<% if @presenter.member_presenters.total_pages > 1 %>
+    <div class="pager">
+      <%= paginate @presenter.member_presenters, route_set: main_app, param_name: 'file_page',  outer_window: 2, theme: 'blacklight' %>
+      <div class="clearfix"></div>
+    </div><!-- /pager -->
+<% end %>

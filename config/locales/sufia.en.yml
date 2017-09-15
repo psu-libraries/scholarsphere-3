@@ -91,6 +91,8 @@ en:
       name: "Penn State"
     base:
       back_to_top: 'Back to Top'
+      items:
+        header: 'Items in this Work'
       social_media:
         facebook: 'Share on Facebook'
         twitter: 'Share on Twitter'
