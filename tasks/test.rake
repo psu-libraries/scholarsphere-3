@@ -55,6 +55,14 @@ namespace :scholarsphere do
       end
     end
 
+    desc 'Run all tests on Travis'
+    task all: :environment do
+      Rake::Task['scholarsphere:prep'].invoke
+      with_test_server do
+        Rake::Task['scholarsphere:rspec'].invoke
+      end
+    end
+
     desc 'Run style checker'
     RuboCop::RakeTask.new(:rubocop) do |task|
       task.requires << 'rubocop-rspec'
