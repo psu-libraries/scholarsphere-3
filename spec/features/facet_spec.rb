@@ -3,9 +3,12 @@
 require 'feature_spec_helper'
 
 describe 'Catalog facets' do
-  let(:patricia) { { given_name: 'Patricia M', sur_name: 'Hswe' } }
-  let(:patricia_with_dot) { { given_name: 'Patricia M.', sur_name: 'Hswe' } }
-  let(:patricia_caps) { { given_name: 'PATRICIA M.', sur_name: 'HSWE' } }
+  let(:patricia) { create(:alias, display_name: 'Patricia M Hswe',
+                                  person: Person.new(given_name: 'Patricia M', sur_name: 'Hswe')) }
+  let(:patricia_with_dot) { create(:alias, display_name: 'Patricia M. Hswe',
+                                           person: Person.new(given_name: 'Patricia M.', sur_name: 'Hswe')) }
+  let(:patricia_caps) { create(:alias, display_name: 'PATRICIA M. HSWE',
+                                       person: Person.new(given_name: 'PATRICIA M.', sur_name: 'HSWE')) }
 
   let(:work1) { build(:public_work, id: '1',
                                     contributor: ['Contri B. Utor'],
@@ -21,9 +24,9 @@ describe 'Catalog facets' do
                                     keyword: ['Key Word']) }
 
   before do
-    work1.creators.build(patricia_with_dot)
-    work2.creators.build(patricia_caps)
-    work3.creators.build(patricia)
+    work1.creators = [patricia_with_dot]
+    work2.creators = [patricia_caps]
+    work3.creators = [patricia]
     index_works_and_collections(work1, work2, work3)
     visit '/catalog'
     click_link('Creator')

@@ -35,7 +35,7 @@ describe GenericWork do
       let(:work) { build(:work) }
 
       it 'creates an Alias record' do
-        work.creators.build(display_name: 'Frodo')
+        work.creators.build(display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins'))
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Alias.count }.by(1)

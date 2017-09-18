@@ -14,9 +14,9 @@ FactoryGirl.define do
     after(:build) do |collection, attrs|
       collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
 
-      # Note: This builds an alias for the creator that is not linked to a person
       if attrs.creators.blank?
-        collection.creators.build(display_name: 'creatorcreator')
+        collection.creators.build(display_name: 'creatorcreator',
+                                  person: Person.new(given_name: 'Creator C.', sur_name: 'Creator'))
       end
     end
 

@@ -158,7 +158,8 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(display_name: 'creatorcreator')
+          work.creators.build(display_name: 'creatorcreator',
+                              person: Person.new(given_name: 'Creator C.', sur_name: 'Creator'))
         end
       end
     end
@@ -172,7 +173,8 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(display_name: 'required creator')
+          work.creators.build(display_name: 'required creator',
+                              person: Person.new(given_name: 'Required T.', sur_name: 'Creator'))
         end
       end
     end

@@ -4,7 +4,8 @@ ScholarSphere.creator = {
    */
   id: '',
   firstName: '',
-  lastName: '', displayName: '',
+  lastName: '',
+  displayName: '',
   index: '',
   readonly: ''
 }
