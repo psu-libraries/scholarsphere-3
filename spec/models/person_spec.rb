@@ -29,7 +29,7 @@ describe Person do
       end
     end
 
-    context 'attributes dont match any existing record' do
+    context 'attributes do not match any existing record' do
       let!(:attrs) { { given_name: joe_jones.given_name, sur_name: 'Something Else' } }
 
       it 'creates a new Person record' do
@@ -38,5 +38,29 @@ describe Person do
         expect(person.sur_name).to eq 'Something Else'
       end
     end
+  end
+
+  describe '#psu_id' do
+    subject { person }
+
+    let(:person) { build(:person, psu_id: 'xyz123') }
+
+    its(:psu_id) { is_expected.to eq('xyz123') }
+  end
+
+  describe '#orcid_id' do
+    subject { person }
+
+    let(:person) { build(:person, orcid_id: '000111222') }
+
+    its(:orcid_id) { is_expected.to eq('000111222') }
+  end
+
+  describe '#display_name' do
+    subject { person }
+
+    let(:person) { build(:person, display_name: 'John Doe') }
+
+    its(:display_name) { is_expected.to eq('John Doe') }
   end
 end

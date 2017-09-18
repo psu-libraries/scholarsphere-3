@@ -1,3 +1,4 @@
+<%= presenter.attribute_to_html(:display_name) %>
 <%= presenter.attribute_to_html(:creator, render_as: :translated_facet, mapping: presenter.facet_mapping(:creator_name), search_field: 'creator_name') %>
 <%= presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:admin_set, render_as: :faceted) %>
