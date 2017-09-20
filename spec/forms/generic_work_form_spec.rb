@@ -8,26 +8,32 @@ describe CurationConcerns::GenericWorkForm do
   let(:work)    { build(:work) }
   let(:form)    { described_class.new(work, ability) }
 
-  describe 'initialize creator fields' do
-    context 'with a display name' do
-      it 'inits to the name of the current user' do
-        expect(form.creators.count).to eq 1
-        current_creator = form.creators.first
-        expect(current_creator.given_name).to eq 'Test A'
-        expect(current_creator.sur_name).to eq 'User'
-      end
+  describe '#creators' do
+    subject { form.creators.first }
+
+    context 'without any existing creators' do
+      its(:display_name) { is_expected.to eq('Test A User') }
+      its(:given_name) { is_expected.to eq('Test A') }
+      its(:sur_name) { is_expected.to eq('User') }
     end
 
     context 'without a display name' do
       before { User.destroy_all }
       let(:user) { User.create(login: 'SomeUser') }
 
-      it 'inits blank fields for the creator' do
-        expect(form.creators.count).to eq 1
-        current_creator = form.creators.first
-        expect(current_creator.given_name).to eq nil
-        expect(current_creator.sur_name).to eq nil
-      end
+      # Note: I don't think we will ever encounter this scenario (awead)
+      its(:display_name) { is_expected.to be_nil }
+      its(:given_name) { is_expected.to be_nil }
+      its(:sur_name) { is_expected.to be_nil }
+    end
+
+    context 'with existing creators' do
+      let(:creator) { build(:alias, :with_person) }
+      let(:work) { build(:work, creators: [creator]) }
+
+      its(:display_name) { is_expected.to eq(creator.display_name) }
+      its(:given_name) { is_expected.to eq(creator.person.given_name) }
+      its(:sur_name) { is_expected.to eq(creator.person.sur_name) }
     end
   end
 

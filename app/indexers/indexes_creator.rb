@@ -12,14 +12,7 @@ module IndexesCreator
   private
 
     def index_creator(solr_doc)
-      creator_names = object.creators.map do |creator|
-        first = creator.given_name
-        first = nil if first.blank?
-        last = creator.sur_name
-        last = nil if last.blank?
-        [first, last].compact.join(' ')
-      end
-
+      creator_names = object.creators.map(&:display_name)
       solr_doc[Solrizer.solr_name('creator_name', :facetable)] = creator_names
       solr_doc[Solrizer.solr_name('creator_name', :stored_searchable)] = creator_names
     end

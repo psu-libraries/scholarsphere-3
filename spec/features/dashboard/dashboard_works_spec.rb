@@ -5,25 +5,28 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Works', type: :feature do
-  let!(:current_user) { create(:user) }
-  let(:creator) { create(:creator, given_name: 'Creator1', sur_name: 'Jones') }
+  let(:current_user) { create(:user) }
+  let(:jill) { create(:jill) }
+  let(:work1_creator_name) { 'Work One Creator' }
+
+  let(:creator) { build(:alias, display_name: work1_creator_name,
+                                person: Person.new(given_name: 'Work One', sur_name: 'Creator')) }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,
+           id: 'dashboard-works-work1',
            depositor: current_user.login,
            title: ['little_file.txt'],
-           creators: [create(:creator)],
+           creators: [creator],
            date_uploaded: DateTime.now + 1.hour)
   end
-  let(:work1_creator_name) { [work1.creator.first.given_name, work1.creator.first.sur_name].join(' ') }
 
   let!(:work2) do
-    create(:registered_work, depositor: current_user.login, title: ['Registered work'])
+    create(:registered_work, id: 'dashboard-works-work2', depositor: current_user.login, title: ['Registered work'])
   end
 
-  let(:jill) { create(:jill) }
   let!(:other_collection) do
-    create(:collection, title: ['jill collection'], depositor: jill.login)
+    create(:collection, id: 'dashboard-works-other_collection', title: ['jill collection'], depositor: jill.login)
   end
 
   before do
@@ -299,7 +302,7 @@ describe 'Dashboard Works', type: :feature do
       # Since the work isn't persisted, the relationship doesn't
       # resolve properly for the indexer. Just stub the values
       # so we can avoid saving the work record for this spec.
-      allow(work).to receive(:creators).and_return([creator])
+      allow(work).to receive(:creators).and_return([Alias.new(display_name: 'Creator1 Jones')])
 
       # TODO: how to do we set the work1 format in the objects with build
       hash = work.to_solr

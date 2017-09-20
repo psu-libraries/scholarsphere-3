@@ -5,6 +5,7 @@ class BatchEditsController < ApplicationController
   include FileSetHelper
   include Sufia::BatchEditsControllerBehavior
 
+  # @todo See https://github.com/psu-stewardship/scholarsphere/issues/1038
   def edit
     super
     work = BatchEditItem.new(batch: batch)

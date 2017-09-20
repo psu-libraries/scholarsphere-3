@@ -6,8 +6,7 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
-  let(:creator) { FactoryGirl.create(:person) }
-  let(:creator_name) { [creator.given_name, creator.sur_name].join(' ') }
+  let(:creator) { create(:alias, :with_person) }
 
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
                               creators: [creator],
@@ -34,7 +33,7 @@ describe Collection, type: :feature do
       specify do
         expect(page).to have_content collection.title.first
         expect(page).to have_content collection.description.first
-        expect(page).to have_content creator_name
+        expect(page).to have_content collection.creator.first.display_name
         expect(page).to have_content file1.title.first
         expect(page).to have_content file2.title.first
         expect(page).to have_content 'Total Items 2'
@@ -66,7 +65,7 @@ describe Collection, type: :feature do
         expect(page).not_to have_content file2.title.first
 
         # Should not have Collection Descriptive metadata table
-        expect(page).not_to have_content creator_name
+        expect(page).not_to have_content collection.creator.first.display_name
       end
     end
 

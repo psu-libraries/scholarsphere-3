@@ -6,27 +6,23 @@ describe Collection do
   subject { collection }
 
   describe 'setting creators' do
-    before { Person.destroy_all }
+    let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
+    let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
 
-    let(:collection) do
-      described_class.new do |c|
-        c.title = ['asdf']
-        c.apply_depositor_metadata('asdf')
-      end
+    let(:collection) { create(:collection, creators: attributes) }
+    let(:attributes) do
+      [
+        { 'display_name' => 'Fred Jones', 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+        { 'display_name' => 'Lucy Lee', 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
+      ]
     end
 
-    # Record for Lucy already exists
-    let!(:lucy) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
-    let(:fred_attrs) { { given_name: 'Fred', sur_name: 'Jones' } }
-
-    it 'finds or creates the Person records' do
-      expect do
-        collection.creators = [lucy, fred_attrs]
-        collection.save!
-      end.to change { Person.count }.by(1)
-
+    it 'finds or creates the Alias record' do
+      expect { collection.save! }
+        .to change { described_class.count }.by(1)
+        .and change { Alias.count }.by(1)
       expect(collection.creators).to include lucy
-      expect(collection.creators.map(&:given_name)).to contain_exactly('Fred', 'Lucy')
+      expect(collection.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
     end
   end
 

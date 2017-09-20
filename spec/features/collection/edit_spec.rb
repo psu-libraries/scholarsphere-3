@@ -84,14 +84,15 @@ describe Collection, type: :feature do
       expect(page).to have_no_checked_field('Private')
       fill_in 'Title', with: updated_title
       fill_in 'Description', with: updated_description
-      fill_in 'collection[creators][0][given_name]', with: 'Dorje'
-      fill_in 'collection[creators][0][sur_name]', with: 'Trollo'
+      expect(find('.creator-first-name')['readonly']).to eq('readonly')
+      expect(find('.creator-last-name')['readonly']).to eq('readonly')
+      fill_in 'collection[creators][0][display_name]', with: 'Mdme. Dorje Trollo'
       click_button 'Update Collection'
       expect(page).not_to have_content original_title.first
       expect(page).not_to have_content original_description.first
       expect(page).to have_content updated_title
       expect(page).to have_content updated_description
-      expect(page).to have_content 'Dorje Trollo'
+      expect(page).to have_content 'Mdme. Dorje Trollo'
     end
   end
 

@@ -26,4 +26,8 @@ class BatchEditItem < ActiveFedora::Base
     return nil if range.count > 1
     range.first
   end
+
+  def creators
+    batch.map(&:creator).flatten
+  end
 end

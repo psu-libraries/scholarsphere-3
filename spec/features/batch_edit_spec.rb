@@ -4,9 +4,8 @@ require 'feature_spec_helper'
 
 describe 'Batch management of works', type: :feature do
   let(:current_user) { create(:user) }
-  let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login, creators: [creator]) }
-  let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login, creators: [creator]) }
-  let(:creator) { create(:creator) }
+  let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
+  let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
 
   before do
     sign_in_with_named_js(:batch_edit, current_user, disable_animations: true)
@@ -40,8 +39,9 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
       expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
       expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
-      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq creator.given_name
-      expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq creator.sur_name
+      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq('Creator C.')
+      expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq('Creator')
+      expect(find_field(id: 'batch_edit_item[creators][0][display_name]').value).to eq('creatorcreator')
       expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"

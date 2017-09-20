@@ -3,26 +3,35 @@
 module WithCreator
   extend ActiveSupport::Concern
 
+  # @return [Array<CreatorForm>]
+  # If there are no creators, a new CreatorForm is built using the logged-in user
+  # @todo add Solr search here or in CreatorForm to user existing Alias record for the user
   def creators
-    model.creators.build(current_creator_attributes) if model.creators.blank?
-    model.creators.to_a
+    if model.creators.blank?
+      Array.wrap(CreatorForm.new(Alias.new(display_name: current_display_name)))
+    else
+      model.creators.map { |c| CreatorForm.new(c) }
+    end
   end
 
   included do
-    # Auto-fill the creator field with the currently logged-in user's name.
-    def current_creator_attributes
-      return @current_creator_attributes if @current_creator_attributes
-      parsed_name = Namae::Name.parse(current_ability.current_user.display_name)
-      @current_creator_attributes = {
-        given_name: parsed_name.given,
-        sur_name: parsed_name.family
-      }
-    end
-
     def self.build_permitted_params
       permitted = super
-      permitted << { creators: [:id, :given_name, :sur_name, :_destroy] }
+      permitted << { creators: [:id, :display_name, :given_name, :sur_name, :_destroy] }
       permitted
     end
   end
+
+  private
+
+    # @return [String]
+    # Sometimes current_ability is really a user
+    # @todo See https://github.com/psu-stewardship/scholarsphere/issues/1038
+    def current_display_name
+      if current_ability.is_a?(User)
+        current_ability.display_name
+      else
+        current_ability.current_user.display_name
+      end
+    end
 end
