@@ -31,6 +31,6 @@ class Ability
   end
 
   def registered_users_can_search_persons
-    can :name_query, Person if registered_user?
+    can :name_query, Alias if registered_user?
   end
 end

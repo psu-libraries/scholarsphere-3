@@ -57,7 +57,11 @@ describe 'Generic File uploading and deletion:', type: :feature do
         click_link('Metadata')
         fill_in 'generic_work_title', with: 'Upload test'
         fill_in 'generic_work_keyword', with: 'keyword'
-        fill_in 'generic_work[creators][0][given_name]', with: 'creator'
+        fill_in 'generic_work[creators][0][given_name]', with: 'Joe'
+        fill_in 'generic_work[creators][0][sur_name]', with: 'Creator'
+        fill_in 'generic_work[creators][0][display_name]', with: 'Dr. Joe H. Creator'
+        fill_in 'generic_work[creators][0][psu_id]', with: 'jhc29'
+        fill_in 'generic_work[creators][0][email]', with: 'docjoe@university.edu'
         select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
         fill_in 'generic_work_description', with: 'My description'
         select 'Audio', from: 'generic_work_resource_type'
@@ -154,9 +158,15 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
     context 'user does not need help' do
       context 'with a single file' do
+        let(:new_creator) { Person.where(psu_id: 'jhc29').first }
+
         before { allow(ShareNotifyDeleteJob).to receive(:perform_later) }
 
-        specify 'uploading, deleting and notifications' do
+        it 'uploads the file, sends notification, creates new person records, and deletes the file' do
+          # Verify person does not exist
+          expect(Person.where(psu_id: 'jhc29').first).to be_nil
+
+          # Upload file
           visit '/concern/generic_works/new'
           click_on 'Files'
           attach_file('files[]', test_file_path(filename), visible: false)
@@ -164,7 +174,11 @@ describe 'Generic File uploading and deletion:', type: :feature do
           click_on 'Metadata'
           fill_in 'generic_work_title', with: filename + '_title'
           fill_in 'generic_work_keyword', with: filename + '_keyword'
-          fill_in 'generic_work[creators][0][given_name]', with: filename + '_creator'
+          fill_in 'generic_work[creators][0][given_name]', with: 'Joe'
+          fill_in 'generic_work[creators][0][sur_name]', with: 'Creator'
+          fill_in 'generic_work[creators][0][display_name]', with: 'Dr. Joe H. Creator'
+          fill_in 'generic_work[creators][0][psu_id]', with: 'jhc29'
+          fill_in 'generic_work[creators][0][email]', with: 'docjoe@university.edu'
           fill_in 'generic_work_description', with: filename + '_description'
           select 'Audio', from: 'generic_work_resource_type'
           select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
@@ -181,9 +195,18 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within('table#activity') do
             expect(page).to have_content filename
           end
+
+          # Verify notifications were sent
           within('#notifications') do
             expect(page).to have_content 'little_file.txt was successfully added'
           end
+
+          # Check for the person record
+          expect(new_creator.given_name).to eq('Joe')
+          expect(new_creator.sur_name).to eq('Creator')
+          expect(new_creator.email).to eq('docjoe@university.edu')
+          expect(new_creator.psu_id).to eq('jhc29')
+
           go_to_dashboard_works
           expect(page).to have_content file.title.first
           db_item_actions_toggle(file).click

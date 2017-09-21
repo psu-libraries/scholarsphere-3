@@ -8,9 +8,9 @@ describe 'Editing a work', js: true do
   let(:user)  { create(:user, :with_proxy, proxy_for: proxy) }
   let(:work)  { create(:public_work, :with_required_metadata, depositor: user.user_key, creators: [sally, yuki]) }
   let(:sally) { create(:alias, display_name: 'Sally Henry',
-                               person: Person.new(given_name: 'Sally', sur_name: 'Henry')) }
+                               person: Person.new(given_name: 'Sally', sur_name: 'Henry', email: 'sally@gmail.com')) }
   let(:yuki)  { create(:alias, display_name: 'Yuki Matsumoto',
-                               person: Person.new(given_name: 'Yuki', sur_name: 'Matsumoto')) }
+                               person: Person.new(given_name: 'Yuki', sur_name: 'Matsumoto', email: 'yuki@gmail.com')) }
 
   before { login_as user }
 
@@ -19,6 +19,14 @@ describe 'Editing a work', js: true do
 
     # There are 2 existing creators, "Sally" and "Yuki"
     expect(page).to have_selector('.creator_inputs', count: 2)
+    expect(page).to have_field('generic_work[creators][0][given_name]', readonly: true)
+    expect(page).to have_field('generic_work[creators][1][given_name]', readonly: true)
+    expect(page).to have_field('generic_work[creators][0][sur_name]', readonly: true)
+    expect(page).to have_field('generic_work[creators][1][sur_name]', readonly: true)
+    expect(page).to have_field('generic_work[creators][0][email]', readonly: true)
+    expect(page).to have_field('generic_work[creators][1][email]', readonly: true)
+    expect(page).to have_field('generic_work[creators][0][psu_id]', readonly: true)
+    expect(page).to have_field('generic_work[creators][1][psu_id]', readonly: true)
 
     # Remove existing creator "Sally"
     sally_remove_button = find(:xpath, './/button[../fieldset/input[@value="Sally"]]')
@@ -34,6 +42,8 @@ describe 'Editing a work', js: true do
     fill_in 'generic_work[creators][2][given_name]', with: 'Verity'
     fill_in 'generic_work[creators][2][sur_name]', with: 'Brown'
     fill_in 'generic_work[creators][2][display_name]', with: 'Downtown Verity Brown'
+    fill_in 'generic_work[creators][2][email]', with: 'dvb@gmail.com'
+    fill_in 'generic_work[creators][2][psu_id]', with: 'dvb79'
     click_button 'Save'
 
     # The updated creator data should appear on the show page

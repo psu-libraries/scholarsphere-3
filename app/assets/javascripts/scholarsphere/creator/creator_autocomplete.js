@@ -26,11 +26,11 @@ ScholarSphere.creatorAutocomplete = {
         templates: {
           empty: '<p>  Unable to find any results  </p>',
           suggestion: function (data) {
-            return '<p>' + data.given_name_tesim + ' ' + data.sur_name_tesim + '</p>'
+            return '<p>' + data.display_name_tesim + '</p>'
           }
         },
         display: function (data) {
-          return data.given_name_tesim + ' ' + data.sur_name_tesim
+          return data.display_name_tesim
         }
       })
   },
@@ -39,6 +39,10 @@ ScholarSphere.creatorAutocomplete = {
       var creator = Object.create(ScholarSphere.creator)
       creator.firstName = suggestion.given_name_tesim
       creator.lastName = suggestion.sur_name_tesim
+      creator.displayName = suggestion.display_name_tesim
+      creator.email = suggestion.email_ssim
+      creator.psuId = suggestion.psu_id_ssim
+      creator.orcidId = suggestion.orcid_id_ssim
       creator.index = $('.creator_inputs').length
       creator.id = suggestion.id
       creator.readonly = 'readonly'

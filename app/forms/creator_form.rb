@@ -10,12 +10,12 @@ class CreatorForm
     @person_alias = person_alias
   end
 
-  def read_only_name?
+  def read_only?
     person_alias.person.present?
   end
 
   def sur_name
-    if read_only_name?
+    if read_only?
       person_alias.person.sur_name
     else
       parsed_name.family
@@ -23,11 +23,26 @@ class CreatorForm
   end
 
   def given_name
-    if read_only_name?
+    if read_only?
       person_alias.person.given_name
     else
       parsed_name.given
     end
+  end
+
+  def psu_id
+    return unless read_only?
+    person_alias.person.psu_id
+  end
+
+  def email
+    return unless read_only?
+    person_alias.person.email
+  end
+
+  def orcid_id
+    return unless read_only?
+    person_alias.person.orcid_id
   end
 
   private

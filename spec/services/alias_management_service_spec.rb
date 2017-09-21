@@ -132,12 +132,24 @@ describe AliasManagementService do
   context 'when neither alias nor person exist' do
     before { Alias.destroy_all && Person.destroy_all }
 
-    context 'with all parameters' do
-      let(:attributes) { { display_name: 'Commodore Barbarossa', given_name: 'Geoffrey', sur_name: 'Rush' } }
+    context 'with all the required parameters' do
+      let(:attributes) do
+        {
+          display_name: 'Commodore Barbarossa',
+          given_name: 'Geoffrey',
+          sur_name: 'Rush',
+          email: 'pirate_barbossa@gmail.com',
+          psu_id: 'gr01'
+        }
+      end
+
+      let(:new_person) { Person.where(sur_name: 'Rush').first }
 
       it 'returns a new alias linked to a new person' do
         expect { service }.to change { Alias.count }.by(1).and change { Person.count }.by(1)
         expect(service.display_name).to eq('Commodore Barbarossa')
+        expect(new_person.email).to eq('pirate_barbossa@gmail.com')
+        expect(new_person.psu_id).to eq('gr01')
       end
     end
 

@@ -11,11 +11,11 @@ describe Alias do
 
   describe '#person' do
     let(:person) { create(:person) }
-    let(:aliaz)  { create(:alias, display_name: 'The Real Joe Schmoe', person: person) }
+    let(:person_alias) { create(:alias, display_name: 'The Real Joe Schmoe', person: person) }
 
     it 'links to the person' do
-      expect(aliaz.person.id).to eq(person.id)
-      expect(person.aliases).to contain_exactly(aliaz)
+      expect(person_alias.person.id).to eq(person.id)
+      expect(person.aliases).to contain_exactly(person_alias)
     end
   end
 end
