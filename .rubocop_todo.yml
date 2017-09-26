@@ -24,6 +24,9 @@ Lint/UnifiedInteger:
 Metrics/BlockLength:
   Max: 226
 
+Metrics/ClassLength:
+  Max: 112
+
 # Offense count: 38
 RSpec/AnyInstance:
   Exclude:

@@ -25,7 +25,9 @@ describe UserStatsImporter do
        OpenStruct.new(date: '20170820', pagePath: '/concern/generic_works/39955m9995', pageviews: '3'),
        OpenStruct.new(date: '20170825', pagePath: '/concern/generic_works/39955m9995', pageviews: '1'),
        OpenStruct.new(date: '20170816', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '4'),
-       OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '5')]
+       OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '5'),
+       OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/not_found', pageviews: '1'),
+       OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/gone_baby', pageviews: '1')]
     }
 
     let(:work_downloads) {
@@ -55,6 +57,8 @@ describe UserStatsImporter do
       allow(ActiveFedora::Base).to receive(:find).with('fj67314220').once.and_return(FileSet.new(id: 'fj67314220', depositor: user1.login))
       allow(ActiveFedora::Base).to receive(:find).with('nzs25x853x').once.and_return(FileSet.new(id: 'nzs25x853x', depositor: user2.login))
       allow(ActiveFedora::Base).to receive(:find).with('4f4752g26g').once.and_return(FileSet.new(id: '4f4752g26g', depositor: user1.login))
+      allow(ActiveFedora::Base).to receive(:find).with('not_found').and_raise(ActiveFedora::ObjectNotFoundError)
+      allow(ActiveFedora::Base).to receive(:find).with('gone_baby').and_raise(Ldp::Gone)
     end
 
     describe '#gather_view_stats' do

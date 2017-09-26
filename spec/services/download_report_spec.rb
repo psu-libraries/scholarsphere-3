@@ -39,6 +39,7 @@ describe GoogleAnalytics::DownloadReport do
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/other_missing', totalEvents: '1'),
+       OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/gone_baby', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/19953w999z', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1')]
     }
@@ -52,6 +53,7 @@ describe GoogleAnalytics::DownloadReport do
       allow(ActiveFedora::Base).to receive(:find).with('1vh53wt10').once.and_return(GenericWork.new(id: '1vh53wt10', depositor: user2.login))
       allow(ActiveFedora::Base).to receive(:find).with('19953w999z').once.and_return(FileSet.new(id: '19953w999z', depositor: user1.login))
       allow(ActiveFedora::Base).to receive(:find).with('other_missing').and_raise(ActiveFedora::ObjectNotFoundError)
+      allow(ActiveFedora::Base).to receive(:find).with('gone_baby').and_raise(Ldp::Gone)
     end
 
     describe '#work_downloads' do
