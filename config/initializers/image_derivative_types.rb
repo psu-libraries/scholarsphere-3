@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Override image mime types so we do not process tiff files since these are causing issues
 #   currently the tiff files in the system are geo tiffs which just hang up the derivative generation
 module Hydra::Works::MimeTypes::ClassMethods

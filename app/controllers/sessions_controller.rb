@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SessionsController < ApplicationController
   def destroy
     # make any local additions here (e.g. expiring local sessions, etc.)
@@ -9,10 +10,10 @@ class SessionsController < ApplicationController
   end
 
   def new
-    redirect_url = session["user_return_to"]
-    session["user_return_to"] = nil if redirect_url # clear so we do not get it next time
-    webaccess = Sufia::Engine.config.login_url.split("&")[0]
-    dashboard = Sufia::Engine.config.login_url.split("&")[1]
-    redirect_to webaccess + "&" + (redirect_url.blank? ? dashboard : redirect_url)
+    redirect_url = session['user_return_to']
+    session['user_return_to'] = nil if redirect_url # clear so we do not get it next time
+    webaccess = Sufia::Engine.config.login_url.split('&')[0]
+    dashboard = Sufia::Engine.config.login_url.split('&')[1]
+    redirect_to webaccess + '&' + (redirect_url.blank? ? dashboard : redirect_url)
   end
 end

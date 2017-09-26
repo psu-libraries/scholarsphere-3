@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'my/_sort_and_per_page.html.erb', type: :view do
@@ -10,23 +11,23 @@ RSpec.describe 'my/_sort_and_per_page.html.erb', type: :view do
     allow(view).to receive(:sort_fields).and_return(sort_fields)
   end
 
-  context "on my works page" do
+  context 'on my works page' do
     before do
       allow(view).to receive(:on_my_works?).and_return(true)
       render
     end
-    it "has buttons" do
+    it 'has buttons' do
       expect(rendered).to have_selector('button', text: 'Add to Collection')
       expect(rendered).to have_selector('input[value="Edit Selected"]')
     end
   end
 
-  context "not on my works page (i.e. Works shared with me)" do
+  context 'not on my works page (i.e. Works shared with me)' do
     before do
       allow(view).to receive(:on_my_works?).and_return(false)
       render
     end
-    it "has buttons" do
+    it 'has buttons' do
       expect(rendered).not_to have_selector('button', text: 'Add to Collection')
       expect(rendered).to have_selector('input[value="Edit Selected"]')
     end

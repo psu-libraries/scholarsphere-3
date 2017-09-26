@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Ruby on Rails components
@@ -47,8 +49,8 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.39.0'
-  gem 'rubocop-rspec', '~> 1.4.1'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
   gem 'solr_wrapper'
   gem 'sqlite3'
 end
@@ -57,9 +59,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-# Use Capistrano for deployment
+  # Use Capistrano for deployment
   gem 'capistrano', '~> 3.7', require: false
-  gem 'capistrano-bundler', '~> 1.2',require: false
+  gem 'capistrano-bundler', '~> 1.2', require: false
   gem 'capistrano-rails', '~> 1.2', require: false
   gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
@@ -85,4 +87,3 @@ group :debug do
   gem 'capybara-screenshot'
   gem 'launchy'
 end
-

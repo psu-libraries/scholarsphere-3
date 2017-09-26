@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MailboxController < ApplicationController
   before_action :authenticate_user!
 
@@ -27,7 +28,7 @@ class MailboxController < ApplicationController
         empty_trash(msg.participants[0])
       end
     else
-      flash[:alert] = "You do not have privileges to delete the notification..."
+      flash[:alert] = 'You do not have privileges to delete the notification...'
     end
     redirect_to :back
   end

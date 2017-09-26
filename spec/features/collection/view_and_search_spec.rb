@@ -1,23 +1,24 @@
 
 # frozen_string_literal: true
+
 require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
-                              creator: ["somebody"],
+                              creator: ['somebody'],
                               depositor: current_user.login,
                               members: [file1, file2]) }
 
   let(:current_user) { create(:user) }
 
   let(:file1)        { create(:public_file, :with_one_file_and_size,
-                              title: ["world.png"],
+                              title: ['world.png'],
                               depositor: current_user.login) }
 
   let(:file2)        { create(:private_file, :with_one_file_and_size,
-                              title: ["little_file.txt"],
+                              title: ['little_file.txt'],
                               depositor: current_user.login) }
 
   context 'with a logged in user' do
@@ -33,11 +34,11 @@ describe Collection, type: :feature do
         expect(page).to have_content collection.creator.first
         expect(page).to have_content file1.title.first
         expect(page).to have_content file2.title.first
-        expect(page).to have_content "Total Items 2"
-        expect(page).to have_content "Size 2 Bytes"
+        expect(page).to have_content 'Total Items 2'
+        expect(page).to have_content 'Size 2 Bytes'
 
-        within("dl.metadata-collections") do
-          expect(page).to have_content("Published Date")
+        within('dl.metadata-collections') do
+          expect(page).to have_content('Published Date')
         end
         go_to_dashboard_works
 
@@ -45,8 +46,8 @@ describe Collection, type: :feature do
         # has been completed. Or totally remove the commented test if the ticket is closed.
         # expect(page).to have_content "Is part of: #{collection.title}"
 
-        expect(page).to have_link("My Works")
-        expect(page).to have_link("My Collections")
+        expect(page).to have_link('My Works')
+        expect(page).to have_link('My Collections')
       end
     end
 
@@ -68,24 +69,24 @@ describe Collection, type: :feature do
 
     describe 'adding existing works' do
       specify do
-        click_link("Add existing works")
-        check "check_all"
+        click_link('Add existing works')
+        check 'check_all'
         expect(page).to have_button("Add to #{collection.title.first}")
       end
     end
 
     describe 'adding new works' do
       specify do
-        click_link("Add new works")
-        expect(page).to have_content("Add Multiple New Works")
-        within("ul.nav-tabs") { click_link("Collections") }
-        expect(page).to have_select("batch_upload_item_collection_ids", selected: collection.title.first)
+        click_link('Add new works')
+        expect(page).to have_content('Add Multiple New Works')
+        within('ul.nav-tabs') { click_link('Collections') }
+        expect(page).to have_select('batch_upload_item_collection_ids', selected: collection.title.first)
       end
     end
   end
 
   context 'with a public user' do
-    it "displays the collection and only public files" do
+    it 'displays the collection and only public files' do
       visit "/collections/#{collection.id}"
       expect(page.status_code).to eql(200)
       expect(page).to have_content collection.title.first

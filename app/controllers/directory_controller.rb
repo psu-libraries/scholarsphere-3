@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO: Is this controller even used anymore? See #316
 class DirectoryController < ApplicationController
   # returns true if the user exists and false otherwise
@@ -7,7 +8,7 @@ class DirectoryController < ApplicationController
   end
 
   def user_attribute
-    res = if params[:attribute] == "groups"
+    res = if params[:attribute] == 'groups'
             User.groups(params[:uid])
           else
             User.directory_attributes(params[:uid], params[:attribute])

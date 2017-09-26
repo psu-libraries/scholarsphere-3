@@ -1,11 +1,13 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe API::ZoteroController, type: :controller do
-  let(:user) { create(:user) }
-  routes { Sufia::Engine.routes }
-
   subject { response }
+
+  let(:user) { create(:user) }
+
+  routes { Sufia::Engine.routes }
 
   context 'with an HTTP GET to /api/zotero' do
     context 'with an unauthenticated client' do
@@ -13,7 +15,7 @@ describe API::ZoteroController, type: :controller do
 
       specify do
         expect(subject).to have_http_status(302)
-        expect(subject).to redirect_to("https://webaccess.psu.edu/?cosign-localhost&https://localhost")
+        expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
 
@@ -82,7 +84,7 @@ describe API::ZoteroController, type: :controller do
 
       specify do
         expect(subject).to have_http_status(302)
-        expect(subject).to redirect_to("https://webaccess.psu.edu/?cosign-localhost&https://localhost")
+        expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ResolrizeJob < ActiveJob::Base
   queue_as :resolrize
 

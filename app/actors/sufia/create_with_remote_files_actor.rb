@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides Sufia. Remove this file when we've updated to Sufia 7.3
 module Sufia
   # Attaches remote files to the work
@@ -44,7 +45,7 @@ module Sufia
 
       def log(user)
         CurationConcerns::Operation.create!(user: user,
-                                            operation_type: "Attach Remote File")
+                                            operation_type: 'Attach Remote File')
       end
   end
 end

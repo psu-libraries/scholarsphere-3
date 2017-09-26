@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GenericWork < ActiveFedora::Base
   include ::CurationConcerns::WorkBehavior
   include ::CurationConcerns::BasicMetadata
@@ -12,6 +13,10 @@ class GenericWork < ActiveFedora::Base
 
   property :upload_set, predicate: ::RDF::URI.new('http://scholarsphere.psu.edu/ns#upload_set'), multiple: false
 
+  property :subtitle, predicate: ::RDF::Vocab::EBUCore.subtitle, multiple: false do |index|
+    index.as :stored_searchable
+  end
+
   def self.indexer
     WorkIndexer
   end
@@ -22,9 +27,9 @@ class GenericWork < ActiveFedora::Base
   # @return [Fixnum] size of work in bytes
   # @raise [RuntimeError] unsaved record does not exist in solr
   def bytes
-    return 0 if member_ids.count == 0
-    raise "Work must be saved to query for bytes" if new_record?
-    sizes = member_ids.collect { |fs_id| file_set_size(fs_id) }
+    return 0 if member_ids.count.zero?
+    raise 'Work must be saved to query for bytes' if new_record?
+    sizes = member_ids.map { |fs_id| file_set_size(fs_id) }
     sizes.compact.map { |fs| fs[file_size_field] }.reduce(0, :+)
   end
 

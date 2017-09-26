@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CollectionIndexer < CurationConcerns::CollectionIndexer
   self.thumbnail_path_service = Sufia::CollectionThumbnailPathService
 

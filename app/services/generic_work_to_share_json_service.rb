@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GenericWorkToShareJSONService
   attr_reader :work, :document, :delete
 
@@ -27,6 +28,6 @@ class GenericWorkToShareJSONService
 
     def email_for_name(name)
       value = NameDisambiguationService.new(name).disambiguate
-      value.blank? ? "" : value[0][:email]
+      value.blank? ? '' : value[0][:email]
     end
 end

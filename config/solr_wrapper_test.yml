@@ -1,5 +1,5 @@
 # config/solr_wrapper_test.yml
-version: 6.4.2
+version: 5.3.1
 port: 8985
 instance_dir: tmp/solr-test
 download_dir: tmp

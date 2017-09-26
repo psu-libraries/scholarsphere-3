@@ -1,23 +1,24 @@
 # frozen_string_literal: true
-require "feature_spec_helper"
 
-describe "Batch management of works", type: :feature do
+require 'feature_spec_helper'
+
+describe 'Batch management of works', type: :feature do
   let(:current_user) { create(:user) }
   let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
   let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
 
   before do
     sign_in_with_named_js(:batch_edit, current_user, disable_animations: true)
-    visit "/dashboard/works"
+    visit '/dashboard/works'
   end
 
-  context "when editing and viewing multiple works" do
+  context 'when editing and viewing multiple works' do
     before do
-      check("check_all")
-      click_on("batch-edit")
+      check('check_all')
+      click_on('batch-edit')
     end
 
-    it "edits a field and displays the changes", js: true do
+    it 'edits a field and displays the changes', js: true do
       batch_edit_fields.each do |field|
         fill_in_batch_edit_field(field, with: "Updated batch #{field}")
       end
@@ -30,8 +31,8 @@ describe "Batch management of works", type: :feature do
     end
 
     it "displays the field's existing value" do
-      within("textarea#batch_edit_item_description") do
-        expect(page).to have_content("descriptiondescription")
+      within('textarea#batch_edit_item_description') do
+        expect(page).to have_content('descriptiondescription')
       end
       expect(page).to have_css "input#batch_edit_item_contributor[value*='contributorcontributor']"
       expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
@@ -41,16 +42,17 @@ describe "Batch management of works", type: :feature do
       expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
-      expect(page).to have_no_checked_field("Private")
+      expect(page).to have_no_checked_field('Private')
       expect(page).to have_content(I18n.t('scholarsphere.batch_edit.permissions_warning'))
     end
   end
 
-  context "when selecting multiple works for deletion", js: true do
+  context 'when selecting multiple works for deletion', js: true do
     subject { GenericWork.count }
+
     before do
-      check "check_all"
-      click_button "Delete Selected"
+      check 'check_all'
+      click_button 'Delete Selected'
     end
     it { is_expected.to be_zero }
   end

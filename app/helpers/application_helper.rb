@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper methods unique to Scholarsphere only and not overrides of helpers from included gems
 module ApplicationHelper
   def collection_helper_method(value)
@@ -24,16 +25,16 @@ module ApplicationHelper
   def permission_level_tag(document)
     if document.registered?
       value = t('sufia.institution_name')
-      class_name = "label-info"
+      class_name = 'label-info'
     elsif document.public?
-      value = "Open Access"
-      class_name = "label-success"
+      value = 'Open Access'
+      class_name = 'label-success'
     else
-      value = "Private"
-      class_name = "label-danger"
+      value = 'Private'
+      class_name = 'label-danger'
     end
     path = if can? :edit, document
-             sufia.edit_generic_file_path(document, tab: "permissions")
+             sufia.edit_generic_file_path(document, tab: 'permissions')
            else
              sufia.generic_file_path(document)
            end

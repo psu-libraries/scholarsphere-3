@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FixturesHelper
   def test_file_path(filename)
     path = Dir.glob("spec/fixtures/**/#{filename}").first

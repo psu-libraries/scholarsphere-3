@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ErrorPresenter
   attr_reader :exception, :error
 
@@ -12,11 +13,11 @@ class ErrorPresenter
   end
 
   def title
-    I18n.t("errors.#{error}.title", default: "Error")
+    I18n.t("errors.#{error}.title", default: 'Error')
   end
 
   def message
-    I18n.t("errors.#{error}.message", default: "There was an error with your request")
+    I18n.t("errors.#{error}.message", default: 'There was an error with your request')
   end
 
   def log_exception
@@ -30,7 +31,7 @@ class ErrorPresenter
   private
 
     def error
-      exception_class.to_s.underscore.gsub(/\//, "_")
+      exception_class.to_s.underscore.gsub(/\//, '_')
     end
 
     def exception_class

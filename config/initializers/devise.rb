@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'redirect_to_web_access_failure'
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -6,13 +7,13 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  yaml_config = YAML.load(File.read(File.join(File.dirname(__FILE__), '../devise.yml')))[Rails.env]
+  yaml_config = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../devise.yml')))[Rails.env]
   config.secret_key =  yaml_config['secret_key']
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = "mjg36@psu.edu"
+  config.mailer_sender = 'mjg36@psu.edu'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"

@@ -1,16 +1,15 @@
 <div class="base-terms">
-  <h2>Required Metadata</h2>
+  <h2><%= t('simple_form.headings.base') %></h2>
   <% f.object.primary_terms.each do |term| %>
       <%= render_edit_field_partial(term, f: f) %>
   <% end %>
 </div>
 
 <% if action_name == 'edit' %>
-<div id="work-media">
-  <h2>Media</h2>
-  <p><%= t('scholarsphere.media') %></p>
-  <%= render 'form_media', f: f %>
-</div>
+  <div id="work-media">
+    <h2>Media</h2>
+    <%= render 'form_media', f: f %>
+  </div>
 <% end %>
 
 <p class="hidden-xs">
@@ -26,7 +25,7 @@
             'aria-controls'=> "extended-terms" %>
 
 <div id="extended-terms" class='collapse'>
-  <h2>Additional Metadata</h2>
+  <h2><%= t('simple_form.headings.additional') %></h2>
   <% f.object.secondary_terms.each do |term| %>
       <%= render_edit_field_partial(term, f: f) %>
   <% end %>

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Routes', type: :routing do
@@ -15,11 +16,11 @@ describe 'Routes', type: :routing do
   end
 
   describe 'Sessions' do
-    it "routes to logout" do
+    it 'routes to logout' do
       expect(get: '/logout').to route_to(controller: 'sessions', action: 'destroy')
     end
 
-    it "routes to login" do
+    it 'routes to login' do
       expect(get: '/login').to route_to(controller: 'sessions', action: 'new')
     end
   end
@@ -28,7 +29,7 @@ describe 'Routes', type: :routing do
     before do
       allow(Sufia::StatsAdmin).to receive(:matches?).and_return(true)
     end
-    it "routes to export" do
+    it 'routes to export' do
       expect(get: 'admin/stats/export').to route_to(controller: 'admin/stats', action: 'export')
     end
   end

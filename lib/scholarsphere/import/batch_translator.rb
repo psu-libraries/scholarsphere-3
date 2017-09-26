@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Import
   # Imports a Sufia 6.0-exported GenericFile into a Sufia PCDM GernericWork and FileSet
   class BatchTranslator < Sufia::Import::Translator
@@ -16,7 +17,7 @@ module Import
       end
 
       def default_prefix
-        "batch_"
+        'batch_'
       end
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Sufia::Engine.configure do
   config.logout_url = "https://webaccess.psu.edu/cgi-bin/logout?#{Rails.application.config.virtual_host}"
   config.login_url = "https://webaccess.psu.edu/?cosign-#{Rails.application.config.service_instance}&#{Rails.application.config.virtual_host}dashboard"
@@ -28,7 +29,7 @@ ScholarSphere::Application.configure do
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
-  config.action_dispatch.x_sendfile_header = "X-Sendfile"
+  config.action_dispatch.x_sendfile_header = 'X-Sendfile'
 
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
@@ -79,6 +80,6 @@ ScholarSphere::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js ZeroClipboard.swf bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js ie8-and-down.css ie9-and-down.css)
-  config.assets.precompile += %w( *.jpg *.png *.gif *.ico *.svg )
+  config.assets.precompile += %w(generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js ZeroClipboard.swf bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js ie8-and-down.css ie9-and-down.css)
+  config.assets.precompile += %w(*.jpg *.png *.gif *.ico *.svg)
 end

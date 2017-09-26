@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BatchEditsController < ApplicationController
   include Hydra::BatchEditBehavior
   include FileSetHelper
@@ -13,7 +14,7 @@ class BatchEditsController < ApplicationController
 
   def update
     batch.map { |id| update_document(ActiveFedora::Base.find(id)) }
-    flash[:notice] = "Batch update complete"
+    flash[:notice] = 'Batch update complete'
     after_update
   end
 

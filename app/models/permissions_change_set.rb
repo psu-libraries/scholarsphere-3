@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Create a hash representation of a file's permissions before and after a change:
 #   > file = GenericFile.new
 #   > before = file.permissions.map(&:to_hash)
@@ -51,6 +52,6 @@ class PermissionsChangeSet
     end
 
     def public_group_read
-      { name: "public", type: "group", access: "read" }
+      { name: 'public', type: 'group', access: 'read' }
     end
 end

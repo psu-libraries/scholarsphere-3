@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides Sufia to ensure file set's permissions are reset if needed.
 module Sufia
   class ChangeContentDepositorService

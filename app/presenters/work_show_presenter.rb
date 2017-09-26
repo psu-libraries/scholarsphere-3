@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
   include Sufia::WithEvents
 
-  delegate :bytes, to: :solr_document
+  delegate :bytes, :subtitle, to: :solr_document
 
   self.file_presenter_class = ::FileSetPresenter
 
@@ -56,11 +57,11 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     # Also note: https://github.com/projecthydra-labs/hyrax/issues/352
     def file_set_ids
       @file_set_ids ||= begin
-                          ActiveFedora::SolrService.query("{!field f=has_model_ssim}FileSet",
+                          ActiveFedora::SolrService.query('{!field f=has_model_ssim}FileSet',
                                                           fl: ActiveFedora.id_field,
                                                           rows: 1000,
                                                           fq: "{!join from=ordered_targets_ssim to=id}id:\"#{id}/list_source\"")
-                                                   .flat_map { |x| x.fetch(ActiveFedora.id_field, []) }
+                            .flat_map { |x| x.fetch(ActiveFedora.id_field, []) }
                         end
     end
 

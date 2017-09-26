@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides CurationConcerns::Renderers::AttributeRenderer so we can correctly determines
 # if a key exists instead of attempting to return a false value because I18n no longer
 # interprets these as booleans.

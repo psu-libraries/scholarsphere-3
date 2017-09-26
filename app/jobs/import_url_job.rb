@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+# Overrides the CurationConcerns job to accept the remote file's original name and handle failures.
+#
+# The file is downloaded using its original name and extension, but sanitized with CarrierWave to
+# remove any non-alphanumeric characters. This is the same process that occurs with locally
+# uploaded files (via CarrierWave) and avoids problems later when interacting with filenames
+# that have unsupported characters.
+#
+# Additionally, if the job encounters any issues when downloading the file, such as an expired
+# url or a timeout, the file set's name is changed to reflect the error.
+
 require 'uri'
 require 'tempfile'
 require 'browse_everything/retriever'
@@ -15,28 +25,26 @@ class ImportUrlJob < ActiveJob::Base
   # @param [FileSet] file_set
   # @param [String] file_name
   # @param [CurationConcerns::Operation] log to send messages
-  # Overrides the CurationConcerns job to accept the remote file's original name. The file
-  # is downloaded using its original name and extension, but sanitized with CarrierWave to
-  # remove any non-alphanumeric characters. This is the same process that occurs with locally
-  # uploaded files (via CarrierWave) and avoids problems later when interacting with filenames
-  # that have unsupported characters.
   def perform(file_set, file_name, log)
     log.performing!
     user = User.find_by_user_key(file_set.depositor)
-    File.open(File.join(Dir.tmpdir, CarrierWave::SanitizedFile.new(file_name).filename), "w+") do |f|
-      status = copy_remote_file(file_set, f)
-      unless status
-        file_set.errors.add("Error", "Downloading Content for #{ActionController::Base.helpers.link_to(file_name, Rails.application.routes.url_helpers.curation_concerns_file_set_path(file_set.id))}")
+    File.open(File.join(Dir.tmpdir, CarrierWave::SanitizedFile.new(file_name).filename), 'w+') do |f|
+      importer = UrlImporter.new(file_set.import_url, f)
+
+      unless importer.success?
+        file_set.title = [I18n.t('scholarsphere.import_url.failed_title', file_name: file_name)]
+        file_set.errors.add(
+          'Error:',
+          I18n.t('scholarsphere.import_url.failed_message', link: file_link(file_name, file_set.id),
+                                                            message: importer.error)
+        )
         on_error(log, file_set, user)
         return false
       end
 
-      # reload the FileSet once the data is copied since this is a long running task
       file_set.reload
 
-      # attach downloaded file to FileSet stubbed out
       if CurationConcerns::Actors::FileSetActor.new(file_set, user).create_content(f)
-        # send message to user on download success
         CurationConcerns.config.callback.run(:after_import_url_success, file_set, user)
         log.success!
       else
@@ -52,20 +60,47 @@ class ImportUrlJob < ActiveJob::Base
       log.fail!(file_set.errors.full_messages.join(' '))
     end
 
-    def copy_remote_file(file_set, f)
-      # check the uri to make certain we will get a valid response from the remote host
-      uri = URI(file_set.import_url)
-      head_res = HTTParty.head(uri)
-      return false unless head_res.success?
+    def file_link(file_name, id)
+      ActionController::Base.helpers.link_to(
+        file_name,
+        Rails.application.routes.url_helpers.curation_concerns_file_set_path(id)
+      )
+    end
 
-      f.binmode
+    class UrlImporter
+      attr_reader :url, :file, :error
 
-      # download file from url
-      spec = { 'url' => uri }
-      retriever = BrowseEverything::Retriever.new
-      retriever.retrieve(spec) do |chunk|
-        f.write(chunk)
+      # @param [String] url
+      # @param [File] file
+      def initialize(url, file)
+        @url = url
+        @file = file
       end
-      f.rewind
+
+      def success?
+        return false unless active_url?
+        copy_remote_file
+      end
+
+      # @return [Boolean]
+      # Checks to see if the remote url is active and valid
+      def active_url?
+        status = HTTParty.head(url).success?
+        @error = 'Expired URL' unless status
+        status
+      end
+
+      # @return [Boolean]
+      # Downloads the remote file from the url to the file
+      def copy_remote_file
+        file.binmode
+        retriever = BrowseEverything::Retriever.new
+        retriever.retrieve('url' => url) { |chunk| file.write(chunk) }
+        file.rewind
+        true
+      rescue StandardError => e
+        @error = e.message
+        false
+      end
     end
 end

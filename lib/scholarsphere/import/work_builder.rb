@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Builder for generating a File set incluing permissions and versions
 #
 module Import
@@ -24,7 +25,7 @@ module Import
       work.date_uploaded = DateTime.parse(work.date_uploaded)
       work.date_modified = DateTime.parse(work.date_modified)
       data = gf_metadata.symbolize_keys
-      work.creator = data[:creator].map(&:squish) unless data[:creator].blank?
+      work.creator = data[:creator].map(&:squish) if data[:creator].present?
       time_end = DateTime.now
       Rails.logger.debug "[IMPORT] #{work.id} work build took #{time_end.to_f - time_start.to_f}"
       work

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
-describe "collections/_form_permission.html.erb" do
+describe 'collections/_form_permission.html.erb' do
   let(:collection) { build(:collection) }
   let(:form) { CollectionForm.new(collection, Ability.new(nil), double) }
 
@@ -14,7 +15,7 @@ describe "collections/_form_permission.html.erb" do
 
   before { assign(:collection, collection) }
 
-  it "omits the private visibility option" do
-    expect(page).to have_no_checked_field("Private")
+  it 'omits the private visibility option' do
+    expect(page).to have_no_checked_field('Private')
   end
 end

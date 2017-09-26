@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # @example Running commands manually
@@ -13,8 +14,8 @@
 
 set :output, "#{path}/log/wheneveroutput.log"
 
-every :day, at: "12:00am", roles: [:app] do
-  command "/scholarsphere/bin/whenever_generate_sitemap.sh"
+every :day, at: '12:00am', roles: [:app] do
+  command '/scholarsphere/bin/whenever_generate_sitemap.sh'
 end
 
 # TODO: turn this back on once share notify implementation is back up and working
@@ -22,19 +23,21 @@ end
 #   rake 'share:files'
 # end
 
-every :day, at: "12:20am", roles: [:job] do
-  command "/scholarsphere/bin/whenever_audit_repository.sh"
+every :day, at: '12:20am', roles: [:job] do
+  command '/scholarsphere/bin/whenever_audit_repository.sh'
 end
 
-every :day, at: "1:00 am", roles: [:job] do
+every :day, at: '1:00 am', roles: [:job] do
   command "#{path}/config/cronjobs/compare_solr.bash"
 end
 
-every :day, at: "3:00 am", roles: [:job] do
+# Solr and Fedora are restarted each morning at 2am
+
+every :day, at: '3:00 am', roles: [:job] do
   command "#{path}/config/cronjobs/update_user_stats.bash"
 end
 
-every :monday, at: "6:00 am", roles: [:job] do
+every :monday, at: '6:00 am', roles: [:job] do
   command "#{path}/config/cronjobs/send_weekly_stats.bash"
 end
 

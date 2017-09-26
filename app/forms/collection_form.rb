@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CollectionForm < Sufia::Forms::CollectionForm
   attr_reader :current_ability, :request
 
@@ -43,6 +44,6 @@ class CollectionForm < Sufia::Forms::CollectionForm
 
     def batch_document_ids
       return [] unless request
-      request.filtered_parameters.fetch("batch_document_ids", [])
+      request.filtered_parameters.fetch('batch_document_ids', [])
     end
 end

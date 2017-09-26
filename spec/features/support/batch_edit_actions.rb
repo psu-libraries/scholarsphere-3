@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Features
   module BatchEditActions
     def fill_in_batch_edit_field(id, opts = {})
@@ -14,8 +15,8 @@ module Features
 
     def batch_edit_fields
       [
-        "contributor", "description", "keyword", "publisher", "date_created", "subject",
-        "language", "identifier", "related_url"
+        'contributor', 'description', 'keyword', 'publisher', 'date_created', 'subject',
+        'language', 'identifier', 'related_url'
       ]
     end
   end

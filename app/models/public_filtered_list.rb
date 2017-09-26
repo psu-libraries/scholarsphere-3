@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PublicFilteredList
   attr_reader :generic_files, :filters
 
@@ -8,6 +9,6 @@ class PublicFilteredList
   end
 
   def filter
-    @public_members ||= generic_files.reject { |gf| !gf.public? }
+    @public_members ||= generic_files.select(&:public?)
   end
 end

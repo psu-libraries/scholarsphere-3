@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 # frozen_string_literal: true
+
 class SolrDocument
   # Add Blacklight behaviors to the SolrDocument
   include Blacklight::Solr::Document
@@ -9,6 +10,10 @@ class SolrDocument
   include CurationConcerns::SolrDocumentBehavior
   # Adds Sufia behaviors to the SolrDocument.
   include Sufia::SolrDocumentBehavior
+
+  # Avoid deprecation warning in Blacklight::Document#initialize
+  # Expects a hash-like object responding to :to_hash
+  alias to_hash to_h
 
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
@@ -26,11 +31,15 @@ class SolrDocument
 
   # Remove this once https://github.com/projecthydra/curation_concerns/issues/1055 is resolved
   def file_size
-    Array(self["file_size_lts"]).first
+    Array(self['file_size_lts']).first
   end
 
   def bytes
     Array(self[Solrizer.solr_name(:bytes, CurationConcerns::CollectionIndexer::STORED_LONG)]).first
+  end
+
+  def subtitle
+    self[Solrizer.solr_name('subtitle')]
   end
 
   private
@@ -44,7 +53,7 @@ class SolrDocument
     end
 
     def ul_end_tags
-      "</li></ul>"
+      '</li></ul>'
     end
 
     def person_separator

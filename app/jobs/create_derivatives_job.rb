@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Replaces CurationConcerns job to rescue from derivative creation failures and notify the user.
 class CreateDerivativesJob < ActiveJob::Base
   queue_as CurationConcerns.config.ingest_queue_name

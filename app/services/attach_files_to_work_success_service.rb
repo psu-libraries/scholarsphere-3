@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttachFilesToWorkSuccessService < Sufia::MessageUserService
   attr_reader :user, :filename
 
@@ -12,6 +13,6 @@ class AttachFilesToWorkSuccessService < Sufia::MessageUserService
   end
 
   def subject
-    "File successfully attached"
+    'File successfully attached'
   end
 end

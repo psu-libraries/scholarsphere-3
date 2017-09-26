@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Alters Sufia's API::ZoteroController to add the user_key to the current user.
 # This should be removed once Hyrax has this change
 module PrependedControllers::WithUserKey

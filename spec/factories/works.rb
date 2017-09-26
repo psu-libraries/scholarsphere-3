@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :work, aliases: [:private_file, :file, :private_work], class: GenericWork do
     transient do
@@ -8,9 +9,9 @@ FactoryGirl.define do
       file_name nil
     end
 
-    title ["Sample Title"]
+    title ['Sample Title']
     after(:build) do |file, attrs|
-      file.apply_depositor_metadata((attrs.depositor || "user"))
+      file.apply_depositor_metadata((attrs.depositor || 'user'))
     end
 
     after(:create) do |file, attrs|
@@ -23,9 +24,9 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
       factory :share_file do
-        title ["SHARE Document"]
-        creator ["Joe Contributor"]
-        resource_type ["Dissertation"]
+        title ['SHARE Document']
+        creator ['Joe Contributor']
+        resource_type ['Dissertation']
       end
 
       factory :featured_file do
@@ -55,7 +56,7 @@ FactoryGirl.define do
       after(:create) do |work, attributes|
         fs = FactoryGirl.create(:file_set,
                                 user: User.find_by_login(work.depositor),
-                                title: ["A contained PNG file"],
+                                title: ['A contained PNG file'],
                                 label: 'world.png',
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
@@ -78,12 +79,12 @@ FactoryGirl.define do
       after(:create) do |work, attributes|
         fs = FactoryGirl.create(:file_set,
                                 user: attributes.user,
-                                title: ["A contained MP3 file"],
+                                title: ['A contained MP3 file'],
                                 label: 'scholarsphere_test5.mp3',
                                 visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
         filename = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
-        local_file = File.open(filename, "rb")
+        local_file = File.open(filename, 'rb')
         Hydra::Works::AddFileToFileSet.call(fs, local_file, :original_file, versioning: false)
         fs.save!
         work.ordered_members << fs
@@ -95,7 +96,7 @@ FactoryGirl.define do
       before(:create) do |work, evaluator|
         fs = FactoryGirl.create(:file_set,
                                 user: evaluator.user,
-                                title: (evaluator.file_title || ["A Contained File"]),
+                                title: (evaluator.file_title || ['A Contained File']),
                                 label: (evaluator.file_name || 'filename.pdf'))
         work.ordered_members << fs
         work.thumbnail_id = fs.id
@@ -106,7 +107,7 @@ FactoryGirl.define do
       before(:create) do |work, evaluator|
         fs = FactoryGirl.create(:file_set, :with_file_size,
                                 user: evaluator.user,
-                                title: (evaluator.file_title || ["A Contained File"]),
+                                title: (evaluator.file_title || ['A Contained File']),
                                 label: (evaluator.file_name || 'filename.pdf'))
         work.ordered_members << fs
         work.thumbnail_id = fs.id
@@ -115,7 +116,7 @@ FactoryGirl.define do
 
     trait :with_full_text_content do
       after(:build) do |f|
-        f.full_text.content = "full_textfull_text"
+        f.full_text.content = 'full_textfull_text'
       end
     end
 

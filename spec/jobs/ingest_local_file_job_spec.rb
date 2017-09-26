@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe IngestLocalFileJob do
   let(:user)     { create(:user) }
   let(:file_set) { FileSet.new }
   let(:actor)    { double }
-  let(:path)     { File.join(fixture_path, "world.png") }
+  let(:path)     { File.join(fixture_path, 'world.png') }
   let(:mock_upload_directory) { 'spec/mock_upload_directory' }
 
   before do

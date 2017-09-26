@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe DownloadsController do
@@ -14,90 +15,93 @@ describe DownloadsController do
     allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
   end
 
-  describe "#authorize_download!" do
+  describe '#authorize_download!' do
     subject { controller.send(:authorize_download!) }
 
-    context "with a regular user" do
+    context 'with a regular user' do
       before do
         allow_any_instance_of(User).to receive(:groups).and_return([])
       end
 
-      context "with my own file" do
+      context 'with my own file' do
         before { controller.params[:id] = my_file.id }
         it { is_expected.to eq(my_file.id) }
       end
 
-      context "with a file I do not have read access to" do
+      context 'with a file I do not have read access to' do
         before { controller.params[:id] = other_file.id }
-        it "denies access" do
+        it 'denies access' do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
       end
 
-      context "with my own work" do
+      context 'with my own work' do
         let(:my_work) { create :public_work_with_png, depositor: user.login }
+
         before { controller.params[:id] = my_work.id }
         it { is_expected.to eq(my_work.id) }
       end
     end
 
-    context "with an administrator" do
+    context 'with an administrator' do
       before do
-        allow_any_instance_of(User).to receive(:groups).and_return(["umg/up.dlt.scholarsphere-admin-viewers"])
+        allow_any_instance_of(User).to receive(:groups).and_return(['umg/up.dlt.scholarsphere-admin-viewers'])
       end
 
-      context "with my own file" do
+      context 'with my own file' do
         before { controller.params[:id] = my_file.id }
         it { is_expected.to eq(my_file.id) }
       end
 
-      context "with a file I do not have read access to" do
+      context 'with a file I do not have read access to' do
         before { controller.params[:id] = other_file.id }
         it { is_expected.to eq(other_file.id) }
       end
     end
 
-    context "with no user" do
+    context 'with no user' do
       before do
         allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(nil)
       end
 
-      context "with a public file" do
+      context 'with a public file' do
         before { controller.params[:id] = public_file.id }
         it { is_expected.to eq(public_file.id) }
       end
 
-      context "with a public file" do
+      context 'with a public file' do
         before { controller.params[:id] = other_file.id }
-        it "denies access" do
+        it 'denies access' do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
       end
     end
   end
-  describe "#show" do
+  describe '#show' do
     subject { controller.send(:show) }
+
     before do
       allow_any_instance_of(User).to receive(:groups).and_return([])
     end
 
-    context "with a FileSet" do
+    context 'with a FileSet' do
       before { controller.params[:id] = my_file.id }
-      it "sends content" do
+      it 'sends content' do
         expect(controller).to receive(:send_content)
         subject
       end
     end
 
-    context "with a GenericWork" do
+    context 'with a GenericWork' do
       let(:my_work) { create :public_work_with_png, depositor: user.login }
+
       before do
         # I must save the work again becuase the factory just sends the representative id to solr
         #  This save sends the id to fedora
         my_work.save
         controller.params[:id] = my_work.id
       end
-      it "redirects" do
+      it 'redirects' do
         expect(controller).to receive(:redirect_to).with("/downloads/#{my_work.file_sets[0].id}", status: :moved_permanently)
         subject
       end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RoleMapper
   def self.roles(uid)
     u = User.find_by_login(uid)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class User < ActiveRecord::Base
   extend Deprecation
 
@@ -28,7 +29,7 @@ class User < ActiveRecord::Base
     end
 
     def groups(login)
-      Deprecation.warn(nil, "User.groups has been deprecated, use LdapUser.get_groups instead")
+      Deprecation.warn(nil, 'User.groups has been deprecated, use LdapUser.get_groups instead')
       LdapUser.get_groups(login)
     end
 
@@ -37,7 +38,7 @@ class User < ActiveRecord::Base
       filter = Net::LDAP::Filter.construct("(& (| (uid=#{id_or_name_part}* ) (givenname=#{id_or_name_part}*) (sn=#{id_or_name_part}*)) #{person_filter})")
       users = LdapUser.get_user(filter, ['uid', 'displayname'])
       # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
-      if users.nil? && (Hydra::LDAP.connection.get_operation_result[:message] == "Size Limit Exceeded")
+      if users.nil? && (Hydra::LDAP.connection.get_operation_result[:message] == 'Size Limit Exceeded')
         filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
         users = LdapUser.get_user(filter2, ['uid', 'displayname'])
       end
@@ -100,7 +101,7 @@ class User < ActiveRecord::Base
 
   # Groups that user is a member of
   def groups
-    return group_list.split(";?;") unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
+    return group_list.split(';?;') unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
     update_ldap_groups
   end
 
@@ -134,7 +135,7 @@ class User < ActiveRecord::Base
     end
 
     def get_net_attribute_with_new_lines(entry, attribute_name)
-      attribute = get_net_attribute(entry, attribute_name, "").tr('$', "\n")
+      attribute = get_net_attribute(entry, attribute_name, '').tr('$', "\n")
       attribute.blank? ? nil : attribute
     end
 
@@ -146,7 +147,7 @@ class User < ActiveRecord::Base
       list = LdapUser.get_groups(login).sort!
       return list if list.empty?
       Rails.logger.debug "$#{login}$ groups = #{list}"
-      update_attributes(group_list: list.join(";?;"), groups_last_update: Time.now)
+      update_attributes(group_list: list.join(';?;'), groups_last_update: Time.now)
       list
     end
 

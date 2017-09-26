@@ -5,21 +5,19 @@
 # Scholarsphere::Config::REQUIREMENTS otherwise, the cap deploy will fail.
 #
 development:
-  TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg"
   service_instance: "localhost"
   virtual_host: "http://localhost:3000/"
   stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
   google_analytics_id: "test-id"
-  read_only: false
+  read_only: "false"
 test:
-  TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
   virtual_host: "http://test.com/"
   stats_email: "Test email"
   google_analytics_id: "test-id"
-  read_only: false
+  read_only: "false"
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -28,4 +26,4 @@ production:
   stats_email: "Test email"
   google_analytics_id: "test-id"
   derivatives_path: "path"
-  read_only: false
+  read_only: "false"

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'capybara/poltergeist'
 
 module Features
@@ -43,7 +44,7 @@ module Features
         if user
           "rack_test_authenticated_header_#{user.login}"
         else
-          "rack_test_authenticated_header_anonymous"
+          'rack_test_authenticated_header_anonymous'
         end
       end
 

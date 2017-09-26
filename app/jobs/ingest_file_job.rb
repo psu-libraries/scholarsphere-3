@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Overrides CurationConcerns to update the file set with the file's name
 class IngestFileJob < ActiveJob::Base
   queue_as CurationConcerns.config.ingest_queue_name
@@ -13,7 +14,7 @@ class IngestFileJob < ActiveJob::Base
     relation = opts.fetch(:relation, :original_file).to_sym
 
     # Wrap in an IO decorator to attach passed-in options
-    local_file = Hydra::Derivatives::IoDecorator.new(File.open(filepath, "rb"))
+    local_file = Hydra::Derivatives::IoDecorator.new(File.open(filepath, 'rb'))
     local_file.mime_type = opts.fetch(:mime_type, nil)
     local_file.original_name = opts.fetch(:filename, File.basename(filepath))
 

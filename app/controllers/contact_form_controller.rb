@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ContactFormController < ApplicationController
   include Sufia::ContactFormControllerBehavior
   def after_deliver

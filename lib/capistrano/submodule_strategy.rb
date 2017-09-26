@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Capistrano::Git < Capistrano::SCM
   module SubmoduleStrategy
     include DefaultStrategy

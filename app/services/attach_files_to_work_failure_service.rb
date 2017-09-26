@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttachFilesToWorkFailureService < Sufia::MessageUserService
   attr_reader :user, :filename
 
@@ -12,6 +13,6 @@ class AttachFilesToWorkFailureService < Sufia::MessageUserService
   end
 
   def subject
-    "File failed to attach"
+    'File failed to attach'
   end
 end

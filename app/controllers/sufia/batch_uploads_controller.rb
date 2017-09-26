@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Sufia::BatchUploadsController < ApplicationController
   include Sufia::BatchUploadsControllerBehavior
 
@@ -19,22 +20,22 @@ class Sufia::BatchUploadsController < ApplicationController
       uploaded_files = params.fetch(:uploaded_files, [])
       selected_files = params.fetch(:selected_files, {}).values
       browse_everything_urls = uploaded_files &
-                               selected_files.map { |f| f[:url] }
+        selected_files.map { |f| f[:url] }
 
       # we need the hash of files with url and file_name
       browse_everything_files = selected_files
-                                .select { |v| uploaded_files.include?(v[:url]) }
+        .select { |v| uploaded_files.include?(v[:url]) }
 
       attributes[:remote_files] = browse_everything_files
       # Strip out any BrowseEverthing files from the regular uploads.
       attributes[:uploaded_files] = uploaded_files -
-                                    browse_everything_urls
+        browse_everything_urls
       attributes
     end
 
     def create_update_job
       log = Sufia::BatchCreateOperation.create!(user: current_user,
-                                                operation_type: "Batch Create")
+                                                operation_type: 'Batch Create')
       # ActionController::Parameters are not serializable, so cast to a hash
       BatchCreateJob.perform_later(current_user,
                                    params[:title].permit!.to_h,

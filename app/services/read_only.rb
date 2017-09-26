@@ -14,7 +14,7 @@ class ReadOnly
 
       def homepage_text
         block = ContentBlock.find_by(name: 'annoucement_text')
-        return "" unless block
+        return '' unless block
         block.value.html_safe
       end
 
@@ -26,7 +26,7 @@ class ReadOnly
         config_value = ScholarSphere::Application.config.read_only
         return config_value if config_value.class == TrueClass || @config_value == FalseClass
 
-        config_value.to_s.casecmp("true").zero?
+        config_value.to_s.casecmp('true').zero?
       end
   end
 end

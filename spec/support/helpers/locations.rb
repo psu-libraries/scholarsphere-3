@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Locations
   def go_to_dashboard
     visit '/dashboard'
@@ -8,7 +9,7 @@ module Locations
 
   def go_to_dashboard_works
     visit '/dashboard/works'
-    expect(page).to have_selector('li.active', text: "My Works")
+    expect(page).to have_selector('li.active', text: 'My Works')
   end
 
   def go_to_dashboard_collections

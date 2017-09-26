@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MyController < ApplicationController
   include Sufia::MyControllerBehavior
 

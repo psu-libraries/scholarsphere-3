@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FacetValueCleaningService
   # @param [Array<String>] values
   # @param [FieldConfig] config of the field that we need to process the values
@@ -8,9 +9,9 @@ class FacetValueCleaningService
     return values unless cleaners.present? && values.is_a?(Array)
 
     if cleaners.include?(:titleize)
-      values.map { |name| name.titleize.gsub(/[\.\,]/, "") }
+      values.map { |name| name.titleize.gsub(/[\.\,]/, '') }
     elsif cleaners.include?(:downcase)
-      values.map { |name| name.downcase.gsub(/[\.\,]/, "") }
+      values.map { |name| name.downcase.gsub(/[\.\,]/, '') }
     else
       values
     end
