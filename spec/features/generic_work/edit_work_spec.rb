@@ -21,7 +21,7 @@ describe 'Editing a work', js: true do
     expect(page).to have_selector('.creator_inputs', count: 2)
 
     # Remove existing creator "Sally"
-    sally_remove_button = find(:xpath, './/button[../input[@value="Sally"]]')
+    sally_remove_button = find(:xpath, './/button[../fieldset/input[@value="Sally"]]')
     sally_remove_button.click
     expect(page).to have_selector('.creator_inputs', count: 1)
 
