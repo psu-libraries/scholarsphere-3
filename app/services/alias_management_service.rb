@@ -49,7 +49,7 @@ class AliasManagementService
     end
 
     def all_names_present?
-      display_name.present? && given_name.present? && sur_name.present?
+      display_name.present? && sur_name.present?
     end
 
     def person
