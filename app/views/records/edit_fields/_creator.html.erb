@@ -20,6 +20,8 @@
 
       <%= hidden_field_tag "#{id_base}[id]", creator_form.id unless creator_form.read_only_name? %>
 
+      <fieldset>
+        <legend class="sr-only">Creator Information</legend>
       <% given_name_id = "#{id_base}[given_name]" %>
       <%= label_tag given_name_id, 'Given Name' %>
       <%= text_field_tag given_name_id, creator_form.given_name,
@@ -42,6 +44,21 @@
             required: false,
             id: display_name_id,
             class: 'form-control string required creator-display-name creator' %>
+
+      <% orcid_id = "#{id_base}[orcid_id]" %>
+      <%= label_tag orcid_id, 'ORCID ID' %>
+      <%= text_field_tag orcid_id, "0000-0001-2345-6789",
+                         required: false,
+                         id: orcid_id,
+                         class: 'form-control string creator-orcid-id creator' %>
+
+      <% email_id = "#{id_base}[email_id]" %>
+      <%= label_tag email_id, 'Email' %>
+      <%= email_field_tag email_id, "abc123@psu.edu",
+                         required: false,
+                         id: email_id,
+                         class: 'form-control string creator-email creator' %>
+      </fieldset>
     </div>
   <% end %>
 </div>
