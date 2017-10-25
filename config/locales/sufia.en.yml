@@ -1,7 +1,7 @@
 en:
   sufia:
     institution_name: "Penn State"
-    institution_name_full: "Penn State University"
+    institution_name_full: "The Pennsylvania State University"
     deposit_agreement:  "deposit agreement"
     upload_tooltip:     "Please accept the deposit agreement before you upload."
     bread_crumb:
@@ -112,6 +112,8 @@ en:
         header: 'Collections'
     visibility:
       legend: 'Choose Visibility'
+      authenticated:
+        text: 'Penn State'
   blacklight:
     search:
       fields:
