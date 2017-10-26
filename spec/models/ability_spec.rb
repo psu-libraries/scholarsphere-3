@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+SimpleCov.command_name 'test:units' if ENV['COVERAGE']
 
 require 'rails_helper'
 require 'cancan/matchers'

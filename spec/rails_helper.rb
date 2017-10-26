@@ -11,8 +11,11 @@ if ENV['COVERAGE'] || ENV['TRAVIS']
   SimpleCov.start('rails') do
     add_filter '/spec'
     add_filter '/tasks'
+    add_group "Models", "app/models"
+    add_group "Controllers", "app/controllers"
+    add_group "services", "app/services"
   end
-  SimpleCov.command_name 'spec'
+  SimpleCov.command_name ENV['TEST_SUITE']
 end
 
 require 'rake'

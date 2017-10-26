@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+SimpleCov.command_name 'test:features' if ENV['COVERAGE']
 
 require 'feature_spec_helper'
 

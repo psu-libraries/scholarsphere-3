@@ -13,6 +13,7 @@ jdk:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - COVERALLS_PARALLEL=true
     - JS=true
   matrix:
     - TEST_SUITE=feature
@@ -44,3 +45,5 @@ matrix:
   fast_finish: true
 script:
   - "bundle exec rake scholarsphere:travis:$TEST_SUITE"
+notifications:
+  webhooks: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
