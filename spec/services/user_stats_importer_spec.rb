@@ -159,4 +159,13 @@ describe UserStatsImporter do
       end
     end
   end
+
+  describe '#import' do
+    it 'runs the entire import process' do
+      expect(importer).to receive(:gather_view_stats)
+      expect(importer).to receive(:gather_download_stats)
+      expect(importer).to receive(:tally_user_results)
+      importer.import
+    end
+  end
 end
