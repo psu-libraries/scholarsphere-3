@@ -3,8 +3,8 @@
 <%= render partial: 'uploading', locals: { presenter: presenter } if can?(:edit, presenter.id) %>
 
 <% if presenter.member_presenters.present? %>
-  <table class="table table-striped related-files">
-    <thead>
+    <table class="table table-striped related-files">
+      <thead>
       <tr>
         <th scope="col" aria-hidden="true"><%= t('.thumbnail') %></th>
         <th scope="col"><%= t('.title') %></th>
@@ -12,9 +12,9 @@
         <th scope="col"><%= t('.visibility') %></th>
         <th scope="col"><%= t('.actions') %></th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <%= render partial: 'member', collection: presenter.member_presenters %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 <% end %>

@@ -20,9 +20,14 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     solr_document.fetch('member_ids_ssim', []).length
   end
 
+  def file_page(page)
+    @file_page = page
+  end
+
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
   def member_presenters(ids = ordered_ids, presenter_class = composite_presenter_class)
-    super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
+    members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
+    Kaminari.paginate_array(members).page(@file_page).per(10)
   end
 
   def uploading?
