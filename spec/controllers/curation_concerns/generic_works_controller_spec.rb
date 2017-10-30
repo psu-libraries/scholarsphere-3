@@ -17,9 +17,9 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     end
 
     context "when the work doesn't exist" do
-      it 'redirects to the login' do
+      it 'throws 500 error' do
         get :show, id: 'non-existent-id'
-        expect(response.redirect_url).to eq('http://test.host/login_session')
+        expect(response.code).to eq('500')
       end
     end
 

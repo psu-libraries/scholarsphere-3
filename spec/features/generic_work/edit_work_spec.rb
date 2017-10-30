@@ -6,7 +6,7 @@ include Warden::Test::Helpers
 describe 'Editing a work', js: true do
   let(:proxy) { create(:first_proxy) }
   let(:user)  { create(:user, :with_proxy, proxy_for: proxy) }
-  let(:work)  { create(:public_work, :with_required_metadata, depositor: user.user_key, creators: [sally, yuki]) }
+  let(:work)  { create(:public_work, :with_required_metadata, depositor: user.user_key, creators: [sally, yuki], admin_set: AdminSet.first) }
   let(:sally) { create(:alias, display_name: 'Sally Henry',
                                person: Person.new(given_name: 'Sally', sur_name: 'Henry', email: 'sally@gmail.com')) }
   let(:yuki)  { create(:alias, display_name: 'Yuki Matsumoto',

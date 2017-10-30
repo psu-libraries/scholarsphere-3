@@ -74,7 +74,7 @@ describe Collection, type: :feature do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
-      click_link 'Additional fields'
+      click_link 'Additional Fields'
       expect(page).to have_field 'collection_title', with: original_title.first
       expect(page).to have_field 'collection_description', with: original_description.first
       within('div.collection_date_created') do

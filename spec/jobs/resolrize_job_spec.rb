@@ -8,6 +8,9 @@ describe ResolrizeJob, :clean do
   let(:job) { described_class.new }
 
   describe '#perform' do
+    before do
+      allow(ActiveFedora::Base).to receive(:find).and_call_original
+    end
     it 'Updates the index for all parts of the records' do
       expect(ActiveFedora::Base).to receive(:find).with(file_set.access_control_id).and_return(file_set.access_control).ordered
       expect(file_set.access_control).to receive(:update_index)

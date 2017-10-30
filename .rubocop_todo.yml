@@ -28,7 +28,7 @@ Lint/UnifiedInteger:
 # Offense count: 187
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 189
+  Max: 193
 
 # Offense count: 40
 RSpec/AnyInstance:

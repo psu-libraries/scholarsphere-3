@@ -6,7 +6,6 @@ describe 'Editing permissions on a work' do
   context 'when removing permissions from a work with files' do
     let(:user1) { create(:user, display_name: 'First User') }
     let(:user2) { create(:user, display_name: 'Second User') }
-
     let(:work) do
       create(:public_work, :with_required_metadata, depositor: user1.user_key,
                                                     edit_users: [user1.user_key, user2.user_key])

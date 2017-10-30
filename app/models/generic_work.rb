@@ -10,6 +10,9 @@ class GenericWork < ActiveFedora::Base
 
   self.human_readable_type = 'Work'
 
+  # Change this to restrict which works can be added as a child.
+  # self.valid_child_concerns = []
+
   validates :title, presence: { message: 'Your work must have a title.' }
 
   property :upload_set, predicate: ::RDF::URI.new('http://scholarsphere.psu.edu/ns#upload_set'), multiple: false
