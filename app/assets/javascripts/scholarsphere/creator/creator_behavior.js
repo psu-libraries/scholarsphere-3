@@ -16,7 +16,7 @@ ScholarSphere.creatorBehavior = {
     })
   },
   activateRemoveButton: function () {
-    $('.creator_inputs').on('click', '.remove-creator', function () {
+    $('.creator_container').on('click', '.remove-creator', function () {
         $(this).parent().remove()
     })
   }

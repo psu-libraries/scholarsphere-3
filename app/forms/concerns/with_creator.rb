@@ -17,7 +17,7 @@ module WithCreator
   included do
     def self.build_permitted_params
       permitted = super
-      permitted << { creators: [:id, :display_name, :given_name, :sur_name, :_destroy] }
+      permitted << { creators: [:id, :display_name, :given_name, :sur_name, :psu_id, :email, :orcid_id, :_destroy] }
       permitted
     end
   end

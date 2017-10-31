@@ -15,13 +15,14 @@ class AliasManagementService
     end
   end
 
-  attr_reader :given_name, :display_name, :sur_name, :person_alias
+  attr_reader :given_name, :display_name, :sur_name, :person_alias, :person_attributes
 
   def initialize(attributes)
-    @display_name = attributes.fetch(:display_name, nil)
+    @display_name = attributes.delete(:display_name)
+    @person_alias = attributes.delete(:alias) || find_alias(attributes.delete(:id))
+    @person_attributes = attributes
     @sur_name = attributes.fetch(:sur_name, nil)
     @given_name = attributes.fetch(:given_name, nil)
-    @person_alias = attributes.fetch(:alias, nil) || find_alias(attributes.fetch(:id, nil))
   end
 
   def _alias_
@@ -55,6 +56,6 @@ class AliasManagementService
     def person
       person = Person.where(sur_name_ssim: sur_name, given_name_ssim: given_name).first
       return person if person.present?
-      Person.create(sur_name: sur_name, given_name: given_name)
+      Person.create(person_attributes)
     end
 end

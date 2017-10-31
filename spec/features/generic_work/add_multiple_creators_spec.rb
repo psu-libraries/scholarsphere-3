@@ -9,8 +9,8 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
 
     before do
       login_as user
-      p = Person.new(given_name: 'Testing', sur_name: 'Person')
-      p.save!
+      p = Person.create(given_name: 'Testing', sur_name: 'Person', email: 'person@email.com', psu_id: 'tp01')
+      create(:alias, display_name: 'Testing Person', person: p)
     end
 
     scenario do
@@ -32,6 +32,14 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
       # Add creator field from autocomplete results
       page.execute_script('$(".tt-suggestion").click()')
       expect(page).to have_selector('.creator_inputs', count: 3)
+      expect(page).to have_field('generic_work[creators][2][given_name]', readonly: true)
+      expect(page).to have_field('generic_work[creators][2][sur_name]', readonly: true)
+      expect(page).to have_field('generic_work[creators][2][email]', readonly: true)
+      expect(page).to have_field('generic_work[creators][2][psu_id]', readonly: true)
+
+      # Remove the autocompleted creator field
+      execute_script("$('.remove-creator')[2].click()")
+      expect(page).to have_selector('.creator_inputs', count: 2)
     end
   end
 end

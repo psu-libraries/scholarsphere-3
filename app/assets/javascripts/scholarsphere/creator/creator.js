@@ -6,6 +6,9 @@ ScholarSphere.creator = {
   firstName: '',
   lastName: '',
   displayName: '',
+  email: '',
+  psuId: '',
+  orcidId: '',
   index: '',
   readonly: ''
 }
