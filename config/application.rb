@@ -107,6 +107,8 @@ module ScholarSphere
       AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::ConfiguredMicrodata
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::WithLists
+      Sufia::HomepageController.prepend PrependedControllers::WithRecentPresenters
+      FeaturedWorkList.prepend PrependedModels::WithFeaturedPresenters
     end
   end
 end
