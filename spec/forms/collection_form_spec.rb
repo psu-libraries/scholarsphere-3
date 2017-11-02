@@ -25,7 +25,7 @@ describe CollectionForm do
   describe '#primary_terms' do
     subject { form.primary_terms }
 
-    it { is_expected.to contain_exactly(:title, :description, :keyword) }
+    it { is_expected.to contain_exactly(:title, :subtitle, :description, :keyword) }
   end
 
   describe '#secondary_terms' do

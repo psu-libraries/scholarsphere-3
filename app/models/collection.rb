@@ -6,6 +6,10 @@ class Collection < ActiveFedora::Base
   include HasCreators
   self.indexer = CollectionIndexer
 
+  property :subtitle, predicate: ::RDF::Vocab::EBUCore.subtitle, multiple: false do |index|
+    index.as :stored_searchable
+  end
+
   def private_access?
     super unless new_record?
     false
