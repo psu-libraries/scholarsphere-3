@@ -6,8 +6,6 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   delegate :bytes, :subtitle, to: :solr_document
 
-  self.file_presenter_class = ::FileSetPresenter
-
   def creator_name
     solr_document.fetch('creator_name_tesim', [])
   end
@@ -25,7 +23,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   end
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
-  def member_presenters(ids = ordered_ids, presenter_class = composite_presenter_class)
+  def member_presenters
     members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
     Kaminari.paginate_array(members).page(@file_page).per(10)
   end

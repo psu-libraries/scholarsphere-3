@@ -72,11 +72,11 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Check for additional fields
         expect(page).to have_no_css('#generic_work_contributor')
-        click_link('Additional fields')
+        click_link('Additional Fields')
         expect(page).to have_css('#generic_work_contributor')
         expect(page).to have_css('.collapse.in') # wait for JavaScript to collapse fields
         expect(page).to have_content('Published Date')
-        click_link('Additional fields')
+        click_link('Additional Fields')
         expect(page).to have_no_css('#generic_work_contributor')
 
         # Check for optional metadata
@@ -104,6 +104,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
         allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { 'FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321' }
         allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
+        Sufia::AdminSetCreateService.create_default!
         visit(new_curation_concerns_generic_work_path)
         WebMock.enable!
       end
@@ -160,7 +161,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
       context 'with a single file' do
         let(:new_creator) { Person.where(psu_id: 'jhc29').first }
 
-        before { allow(ShareNotifyDeleteJob).to receive(:perform_later) }
+        before do
+          allow(ShareNotifyDeleteJob).to receive(:perform_later)
+          Sufia::AdminSetCreateService.create_default!
+        end
 
         it 'uploads the file, sends notification, creates new person records, and deletes the file' do
           # Verify person does not exist

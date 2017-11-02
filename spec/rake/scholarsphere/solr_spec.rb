@@ -25,7 +25,7 @@ describe 'scholarsphere:solr' do
       it { is_expected.to be_empty }
     end
 
-    describe 'compare' do
+    describe 'compare', clean: true do
       subject { capture_stdout { Rake::Task['scholarsphere:solr:compare'].invoke } }
 
       it { is_expected.to start_with('Things appear to be OK') }
@@ -34,8 +34,8 @@ describe 'scholarsphere:solr' do
 
         before { ActiveFedora::Cleaner.cleanout_solr }
         it 'raises an error' do
-          # TODO: the active fedora count includes a Hydra::AccessControls::Permission which is a child of Hydra::AccessControls, so it is not at the top level count
-          expect { run_task 'scholarsphere:solr:compare' }.to raise_error(RuntimeError, "Fedora's #{count - 1} objects exceeds Solr's 0")
+          # TODO: the active fedora count includes a Hydra::AccessControls::Permission, and AdminSet Relationships which are a child of Hydra::AccessControls, so they are not at the top level count
+          expect { run_task 'scholarsphere:solr:compare' }.to raise_error(RuntimeError, "Fedora's #{count - 3} objects exceeds Solr's 0")
         end
       end
     end

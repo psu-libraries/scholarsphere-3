@@ -6,6 +6,10 @@ class CatalogController < ApplicationController
   include Sufia::Catalog
   include BlacklightAdvancedSearch::Controller
 
+  def search_builder_class
+    SearchBuilder
+  end
+
   # These before_filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
   skip_before_action :default_html_head
@@ -57,8 +61,6 @@ class CatalogController < ApplicationController
     config.advanced_search[:url_key] ||= 'advanced'
     config.advanced_search[:query_parser] ||= 'dismax'
     config.advanced_search[:form_solr_parameters] ||= {}
-
-    config.search_builder_class = SearchBuilder
 
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {

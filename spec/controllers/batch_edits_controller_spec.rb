@@ -4,6 +4,9 @@ require 'rails_helper'
 
 describe BatchEditsController do
   let(:user) { create(:user) }
+  let(:admin_set) { create(:admin_set) }
+  let!(:workflow) { Sipity::Workflow.create!(name: 'other', label: 'other', allows_access_grant: true) }
+  let!(:permission_template) { Sufia::PermissionTemplate.find_or_create_by(admin_set_id: admin_set.id, workflow_name: 'default') }
 
   before do
     allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
@@ -77,12 +80,12 @@ describe BatchEditsController do
       end
     end
 
-    context 'when permissions are changed' do
+    context 'when group permissions are changed' do
       let(:group_permission) { { '0' => { type: 'group', name: 'newgroop', access: 'edit' } } }
       let(:parameters) do
         {
           update_type:        'update',
-          batch_edit_item:    { permissions_attributes: group_permission },
+          batch_edit_item:    { 'permissions_attributes' => group_permission, admin_set_id: admin_set.id },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -93,6 +96,24 @@ describe BatchEditsController do
         put :update, parameters.as_json
         expect(work1.reload.edit_groups).to contain_exactly('newgroop')
         expect(work2.reload.edit_groups).to contain_exactly('newgroop')
+      end
+    end
+    context 'when user permissions are changed' do
+      let(:user_permission) { { '2' => { 'type' => 'person', 'name' => 'cam156', 'access' => 'edit' } } }
+      let(:parameters) do
+        {
+          update_type:        'update',
+          batch_edit_item:    { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
+          batch_document_ids: [work1.id, work2.id]
+        }
+      end
+
+      it 'updates the permissions on all the works' do
+        expect(VisibilityCopyJob).not_to receive(:perform_later)
+        expect(InheritPermissionsJob).to receive(:perform_later).twice
+        put :update, parameters.as_json
+        expect(work1.reload.edit_users).to contain_exactly('cam156', work1.depositor)
+        expect(work2.reload.edit_users).to contain_exactly('cam156', work2.depositor)
       end
     end
   end

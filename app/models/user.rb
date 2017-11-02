@@ -3,6 +3,7 @@
 class User < ActiveRecord::Base
   extend Deprecation
 
+  include CurationConcerns::User
   include Sufia::User
   include Sufia::UserUsageStats
 

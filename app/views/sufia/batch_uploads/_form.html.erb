@@ -8,6 +8,7 @@
     <% end %>
     <%= render 'curation_concerns/base/guts4form', f: f, tabs: %w[files metadata relationships share] do %>
     <% end %>
+  <%= f.hidden_field :payload_concern, value: @form.payload_concern %>
 <% end %>
 
 <script type="text/javascript">

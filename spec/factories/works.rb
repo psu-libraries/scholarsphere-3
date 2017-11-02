@@ -12,6 +12,10 @@ FactoryGirl.define do
     title ['Sample Title']
     after(:build) do |file, attrs|
       file.apply_depositor_metadata((attrs.depositor || 'user'))
+      if file.admin_set.blank?
+        initialize_default_adminset
+        file.admin_set = AdminSet.first
+      end
     end
 
     after(:create) do |file, attrs|

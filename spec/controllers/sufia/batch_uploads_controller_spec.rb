@@ -3,7 +3,12 @@
 require 'rails_helper'
 
 describe Sufia::BatchUploadsController do
-  its(:form_class) { is_expected.to eq(::BatchUploadForm) }
+  it 'concern type is a GenericWork' do
+    expect(described_class.curation_concern_type).to eq(::BatchUploadItem)
+  end
+  it 'form service is a BatchUploadFormService' do
+    expect(described_class.work_form_service).to eq(::BatchUploadFormService)
+  end
 
   describe '#create' do
     routes { Sufia::Engine.routes }
@@ -24,7 +29,7 @@ describe Sufia::BatchUploadsController do
           title: { '1' => 'foo' },
           resource_type: { '1' => 'Article' },
           uploaded_files: ['1'],
-          batch_upload_item: { keyword: [''], visibility: 'open' }
+          batch_upload_item: { keyword: [''], visibility: 'open', payload_concern: 'GenericWork' }
         )
       end
 
@@ -47,7 +52,7 @@ describe Sufia::BatchUploadsController do
           title: { '1' => 'foo' },
           resource_type: { '1' => 'Article' },
           uploaded_files: ['1'],
-          batch_upload_item: { keyword: [''], visibility: 'open', collection_ids: ['collection-id'] }
+          batch_upload_item: { keyword: [''], visibility: 'open', payload_concern: 'GenericWork', collection_ids: ['collection-id'] }
         )
       end
 

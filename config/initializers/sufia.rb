@@ -53,3 +53,5 @@ Sufia.config do |config|
 
   config.redis_namespace = 'scholarsphere'
 end
+
+CurationConcerns::MemberPresenterFactory.file_presenter_class = ::FileSetPresenter
