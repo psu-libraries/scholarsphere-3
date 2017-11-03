@@ -10,7 +10,7 @@ describe 'Dashboard Works', type: :feature do
   let(:work1_creator_name) { 'Work One Creator' }
 
   let(:creator) { build(:alias, display_name: work1_creator_name,
-                                person: Person.new(given_name: 'Work One', sur_name: 'Creator')) }
+                                agent: Agent.new(given_name: 'Work One', sur_name: 'Creator')) }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,

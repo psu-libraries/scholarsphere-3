@@ -159,16 +159,16 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
     context 'user does not need help' do
       context 'with a single file' do
-        let(:new_creator) { Person.where(psu_id: 'jhc29').first }
+        let(:new_creator) { Agent.where(psu_id: 'jhc29').first }
 
         before do
           allow(ShareNotifyDeleteJob).to receive(:perform_later)
           Sufia::AdminSetCreateService.create_default!
         end
 
-        it 'uploads the file, sends notification, creates new person records, and deletes the file' do
-          # Verify person does not exist
-          expect(Person.where(psu_id: 'jhc29').first).to be_nil
+        it 'uploads the file, sends notification, creates new agent records, and deletes the file' do
+          # Verify agent does not exist
+          expect(Agent.where(psu_id: 'jhc29').first).to be_nil
 
           # Upload file
           visit '/concern/generic_works/new'
@@ -205,7 +205,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
             expect(page).to have_content 'little_file.txt was successfully added'
           end
 
-          # Check for the person record
+          # Check for the agent record
           expect(new_creator.given_name).to eq('Joe')
           expect(new_creator.sur_name).to eq('Creator')
           expect(new_creator.email).to eq('docjoe@university.edu')

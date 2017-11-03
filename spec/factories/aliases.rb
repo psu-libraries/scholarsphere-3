@@ -4,14 +4,14 @@ FactoryGirl.define do
   factory :alias do
     sequence(:display_name) { |n| "Display Name #{n}" }
 
-    trait :with_person do
+    trait :with_agent do
       after(:build) do |resource|
-        resource.person = Person.new(sur_name: 'Sur Name', given_name: 'Given Name')
+        resource.agent = Agent.new(sur_name: 'Sur Name', given_name: 'Given Name')
       end
     end
 
     factory :creator do
-      with_person
+      with_agent
     end
   end
 end

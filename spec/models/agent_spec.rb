@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe Person do
-  subject { build(:person, :with_complete_metadata, aliases: [person_alias]) }
+describe Agent do
+  subject { build(:agent, :with_complete_metadata, aliases: [agent_alias]) }
 
-  let(:person_alias) { build(:alias) }
+  let(:agent_alias) { build(:alias) }
 
   describe '#given_name' do
     its(:given_name) { is_expected.to eq('Johnny C.') }
@@ -16,7 +16,7 @@ describe Person do
   end
 
   describe '#aliases' do
-    its(:aliases) { is_expected.to contain_exactly(person_alias) }
+    its(:aliases) { is_expected.to contain_exactly(agent_alias) }
   end
 
   describe '#psu_id' do

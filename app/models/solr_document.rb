@@ -49,18 +49,18 @@ class SolrDocument
   private
 
     def ul_start_tags
-      "<ul class='creator_list'>#{person_separator}<li>"
+      "<ul class='creator_list'>#{agent_separator}<li>"
     end
 
     def ul_join_tags
-      "</li>#{person_separator}<li> "
+      "</li>#{agent_separator}<li> "
     end
 
     def ul_end_tags
       '</li></ul>'
     end
 
-    def person_separator
+    def agent_separator
       "<span class='glyphicon glyphicon-user'></span>"
     end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Person < ActiveFedora::Base
+class Agent < ActiveFedora::Base
   has_many :aliases
 
   property :given_name, predicate: ::RDF::Vocab::FOAF.firstName, multiple: false do |index|

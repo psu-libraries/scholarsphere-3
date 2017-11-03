@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PersonsController < ApplicationController
+class AgentsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def name_query
@@ -18,12 +18,12 @@ class PersonsController < ApplicationController
         qt: 'select',
         rows: 10
       )
-      aliases.each do |person_alias|
-        person = ActiveFedora::SolrService.query(
-          "id:#{person_alias['name_ssim'].first}",
+      aliases.each do |agent_alias|
+        agent = ActiveFedora::SolrService.query(
+          "id:#{agent_alias['name_ssim'].first}",
           fl: ['given_name_tesim', 'sur_name_tesim', 'email_ssim', 'psu_id_ssim', 'orcid_id_ssim']
         )
-        person_alias.merge!(person.first)
+        agent_alias.merge!(agent.first)
       end
     end
 end
