@@ -1,0 +1,68 @@
+#!/bin/bash
+# ---------------------------------------------------------------------------------------------------------------------
+# Scholarsphere file audit
+#
+# Queries Solr for all the sha256 digests of file sets, parses the output, and then uses it to look in Modeshape
+# to see if the file is actually there. Progress and results are printed to STDOUT.
+# ---------------------------------------------------------------------------------------------------------------------
+
+FEDORA=$1
+SOLR=$2
+
+usage() {
+  echo "
+  audit_files [fedora_path] [solr_host_with_port_and_core]
+
+  Example:
+    audit_files /fcrepo/binary.store http://solr_server:8983/solr/collection1
+
+  Solr defaults to: http://localhost:8983/solr/collection1
+  "
+  exit 0;
+}
+
+audit() {
+  SOLR_URL="${SOLR}/select?q=has_model_ssim%3AFileSet&rows=1000000&fl=digest_ssim&wt=json"
+  SHASUMS=`curl -s ${SOLR_URL} | jq .response.docs | grep urn | awk '{gsub(/\"/,"")}1' | awk -F: '{print $3}'`
+  for sha in ${SHASUMS}
+  do
+    echo -n "Searching for ${sha} ..."
+    result=`find ${FEDORA} -name ${sha}`
+    if [ -z "$result" ]; then
+      echo "NOT FOUND!"
+    else
+      echo "ok."
+    fi
+  done
+  exit 0;
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# main: check Fedora, Solr, and jq, then run audit
+# ---------------------------------------------------------------------------------------------------------------------
+
+if [ -z ${FEDORA} ]; then
+  usage
+fi
+
+if [ -z ${SOLR} ]; then
+  SOLR="http://localhost:8983/solr/collection1"
+fi
+
+if ! [[ -e `which jq` ]]; then
+  echo "jq executable was not found. Please install it"
+  exit 1;
+fi
+
+curl --fail -X GET ${SOLR}/select > /dev/null 2>&1
+if [ $? -gt 0 ]; then
+  echo "There was a problem contacting ${SOLR}"
+  exit 1;
+fi
+
+if [ -d ${FEDORA} ]; then
+  audit
+else
+  echo "${FEDORA} was not found on this system"
+  exit 1;
+fi
