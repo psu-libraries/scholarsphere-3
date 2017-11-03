@@ -188,7 +188,7 @@ Rails/HttpPositionalArguments:
     - 'spec/controllers/curation_concerns/generic_works_controller_spec.rb'
     - 'spec/controllers/directory_controller_spec.rb'
     - 'spec/controllers/my/works_controller_spec.rb'
-    - 'spec/controllers/persons_controller_spec.rb'
+    - 'spec/controllers/agents_controller_spec.rb'
     - 'spec/controllers/qa/terms_controller_spec.rb'
     - 'spec/controllers/sufia/batch_uploads_controller_spec.rb'
     - 'spec/controllers/zotero_controller_spec.rb'

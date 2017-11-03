@@ -69,7 +69,7 @@ en:
       failed_message: "Could not retrieve file for %{link}. Reason: %{message}"
     aliases:
       parameter_error: "Please provide either an alias, id, or display name; or, all of: surname, given name, and display name"
-      person_error: "The provided alias does not have a person associated with it"
+      agent_error: "The provided alias does not have a person associated with it"
 
   statistic:
     report:

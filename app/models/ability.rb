@@ -5,7 +5,7 @@ class Ability
   include CurationConcerns::Ability
   include Sufia::Ability
 
-  self.ability_logic += [:everyone_can_create_curation_concerns, :admins_can_read_solr_documents, :registered_users_can_search_persons]
+  self.ability_logic += [:everyone_can_create_curation_concerns, :admins_can_read_solr_documents, :registered_users_can_search_aliases]
 
   def editor_abilities
     super
@@ -30,7 +30,7 @@ class Ability
     can :read, SolrDocument if admin?
   end
 
-  def registered_users_can_search_persons
+  def registered_users_can_search_aliases
     can :name_query, Alias if registered_user?
   end
 end

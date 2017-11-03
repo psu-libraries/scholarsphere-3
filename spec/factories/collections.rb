@@ -16,7 +16,7 @@ FactoryGirl.define do
 
       if attrs.creators.blank?
         collection.creators.build(display_name: 'creatorcreator',
-                                  person: Person.new(given_name: 'Creator C.', sur_name: 'Creator'))
+                                  agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
       end
     end
 

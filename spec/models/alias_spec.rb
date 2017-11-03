@@ -9,13 +9,13 @@ describe Alias do
     its(:display_name) { is_expected.to eq('Some Name') }
   end
 
-  describe '#person' do
-    let(:person) { create(:person) }
-    let(:person_alias) { create(:alias, display_name: 'The Real Joe Schmoe', person: person) }
+  describe '#agent' do
+    let(:agent) { create(:agent) }
+    let(:agent_alias) { create(:alias, display_name: 'The Real Joe Schmoe', agent: agent) }
 
-    it 'links to the person' do
-      expect(person_alias.person.id).to eq(person.id)
-      expect(person.aliases).to contain_exactly(person_alias)
+    it 'links to the agent' do
+      expect(agent_alias.agent.id).to eq(agent.id)
+      expect(agent.aliases).to contain_exactly(agent_alias)
     end
   end
 end

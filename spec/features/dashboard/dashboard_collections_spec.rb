@@ -8,7 +8,7 @@ describe 'Dashboard Collections:', type: :feature do
   let!(:jill_collection) { create(:collection, title: ["Jill's Collection"], depositor: jill.login) }
   let!(:collection)      { create(:collection, creators: [creator], depositor: current_user.login) }
 
-  let(:creator)      { create(:alias, :with_person) }
+  let(:creator)      { create(:alias, :with_agent) }
   let(:current_user) { create(:user) }
   let(:jill)         { create(:jill) }
 

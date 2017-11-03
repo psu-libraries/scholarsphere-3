@@ -6,8 +6,8 @@ describe Collection do
   subject { collection }
 
   describe 'setting creators' do
-    let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
-    let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
+    let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
+    let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
 
     let(:collection) { create(:collection, creators: attributes) }
     let(:attributes) do

@@ -20,8 +20,8 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
     # properly with an unpersisted record, so we manually load
     # the creator records here.
     if model.new_record? && model.creator_ids.present?
-      person_records = Person.find model.creator_ids
-      model.creators = person_records
+      agent_records = Agent.find model.creator_ids
+      model.creators = agent_records
     end
     super
   end

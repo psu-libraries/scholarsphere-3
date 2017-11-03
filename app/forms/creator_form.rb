@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
 class CreatorForm
-  attr_reader :person_alias
+  attr_reader :agent_alias
 
-  delegate :id, :display_name, to: :person_alias
+  delegate :id, :display_name, to: :agent_alias
 
   # @param [Alias]
-  def initialize(person_alias)
-    @person_alias = person_alias
+  def initialize(agent_alias)
+    @agent_alias = agent_alias
   end
 
   def read_only?
-    person_alias.person.present?
+    agent_alias.agent.present?
   end
 
   def sur_name
     if read_only?
-      person_alias.person.sur_name
+      agent_alias.agent.sur_name
     else
       parsed_name.family
     end
@@ -24,7 +24,7 @@ class CreatorForm
 
   def given_name
     if read_only?
-      person_alias.person.given_name
+      agent_alias.agent.given_name
     else
       parsed_name.given
     end
@@ -32,17 +32,17 @@ class CreatorForm
 
   def psu_id
     return unless read_only?
-    person_alias.person.psu_id
+    agent_alias.agent.psu_id
   end
 
   def email
     return unless read_only?
-    person_alias.person.email
+    agent_alias.agent.email
   end
 
   def orcid_id
     return unless read_only?
-    person_alias.person.orcid_id
+    agent_alias.agent.orcid_id
   end
 
   private

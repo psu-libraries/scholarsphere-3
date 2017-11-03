@@ -14,12 +14,12 @@ describe GenericWork do
   describe 'creators' do
     before do
       Alias.destroy_all
-      Person.destroy_all
+      Agent.destroy_all
     end
 
     context 'with existing Alias records' do
-      let!(:frodo) { create(:alias, display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins')) }
-      let!(:sam)   { create(:alias, display_name: 'Sam', person: Person.new(given_name: 'Sam', sur_name: 'Gamgee')) }
+      let!(:frodo) { create(:alias, display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+      let!(:sam)   { create(:alias, display_name: 'Sam', agent: Agent.new(given_name: 'Sam', sur_name: 'Gamgee')) }
 
       let(:work) { build(:work, creators: [frodo, sam]) }
 
@@ -35,7 +35,7 @@ describe GenericWork do
       let(:work) { build(:work) }
 
       it 'creates an Alias record' do
-        work.creators.build(display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins'))
+        work.creators.build(display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins'))
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Alias.count }.by(1)
@@ -45,8 +45,8 @@ describe GenericWork do
     end
 
     context 'with hash inputs' do
-      let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
-      let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
+      let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
 
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
@@ -66,8 +66,8 @@ describe GenericWork do
     end
 
     context 'with ordered, nested-style hash inputs that come from the form' do
-      let!(:person) { create(:person, given_name: 'Lucy', sur_name: 'Lee') }
-      let!(:lucy)   { create(:alias, display_name: 'Lucy Lee', person: person) }
+      let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
 
       let(:work) { create(:work, creators: attributes) }
       let(:attributes) do
@@ -77,7 +77,7 @@ describe GenericWork do
         }
       end
 
-      it 'finds or creates the Person record' do
+      it 'finds or creates the Alias record' do
         expect { work.save! }
           .to change { described_class.count }.by(1)
           .and change { Alias.count }.by(1)
@@ -86,9 +86,9 @@ describe GenericWork do
       end
     end
 
-    # When we changed the work's creators to be a Person model instead of a String, the name of the method to find the work's creators also changed.  It is now 'work.creators' (with an 's') instead of 'work.creator'.  But, there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method, so we need to make sure that method exists.  So we just aliased the method 'creator' to 'creators'.
+    # When we changed the work's creators to be a Agent model instead of a String, the name of the method to find the work's creators also changed.  It is now 'work.creators' (with an 's') instead of 'work.creator'.  But, there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method, so we need to make sure that method exists.  So we just aliased the method 'creator' to 'creators'.
     context 'calling "creator" method' do
-      let!(:frodo) { create(:alias, display_name: 'Frodo', person: Person.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+      let!(:frodo) { create(:alias, display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins')) }
 
       let(:work) { create(:work, creators: [frodo]) }
 

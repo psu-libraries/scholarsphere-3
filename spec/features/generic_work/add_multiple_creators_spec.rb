@@ -9,8 +9,8 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
 
     before do
       login_as user
-      p = Person.create(given_name: 'Testing', sur_name: 'Person', email: 'person@email.com', psu_id: 'tp01')
-      create(:alias, display_name: 'Testing Person', person: p)
+      p = Agent.create(given_name: 'Testing', sur_name: 'Person', email: 'person@email.com', psu_id: 'tp01')
+      create(:alias, display_name: 'Testing Person', agent: p)
     end
 
     scenario do
@@ -24,7 +24,7 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
       execute_script("$('.remove-creator')[0].click()")
       expect(page).to have_selector('.creator_inputs', count: 2)
 
-      # Autocomplete returns a result from Persons
+      # Autocomplete returns a result from Agents
       page.execute_script "$('#find_creator').unbind('blur')"
       fill_in('Find Creator', with: 'Testing')
       expect(page).to have_selector('.tt-suggestion')

@@ -13,8 +13,8 @@ module HasCreators
 
     def creators=(values)
       values = values.values if values.is_a? Hash
-      person_records = values.map { |v| AliasManagementService.call(v) }
-      super(person_records)
+      agent_records = values.map { |v| AliasManagementService.call(v) }
+      super(agent_records)
     end
   end
 end

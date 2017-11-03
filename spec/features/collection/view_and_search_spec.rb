@@ -6,7 +6,7 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
-  let(:creator) { create(:alias, :with_person) }
+  let(:creator) { create(:alias, :with_agent) }
 
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
                               creators: [creator],

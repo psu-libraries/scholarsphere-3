@@ -27,7 +27,7 @@ describe CurationConcerns::Actors::GenericWorkActor do
   end
 
   context 'with an existing Alias record' do
-    let!(:existing_alias) { create(:alias, :with_person) }
+    let!(:existing_alias) { create(:alias, :with_agent) }
     let(:attributes) do
       {
         title: ['A title'],
