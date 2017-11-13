@@ -31,19 +31,6 @@ describe GenericWork do
       end
     end
 
-    context 'building a creator' do
-      let(:work) { build(:work) }
-
-      it 'creates an Alias record' do
-        work.creators.build(display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins'))
-        expect { work.save! }
-          .to change { described_class.count }.by(1)
-          .and change { Alias.count }.by(1)
-        expect(work.creators.map(&:display_name)).to eq ['Frodo']
-        expect(Alias.first.display_name).to eq 'Frodo'
-      end
-    end
-
     context 'with hash inputs' do
       let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
       let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
@@ -86,7 +73,10 @@ describe GenericWork do
       end
     end
 
-    # When we changed the work's creators to be a Agent model instead of a String, the name of the method to find the work's creators also changed.  It is now 'work.creators' (with an 's') instead of 'work.creator'.  But, there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method, so we need to make sure that method exists.  So we just aliased the method 'creator' to 'creators'.
+    # When we changed the work's creators to be an Alias model instead of a String, the name of the method to find the
+    # work's creators also changed. It is now 'work.creators' (with an 's') instead of 'work.creator'.
+    # Because there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method,
+    # we just aliased the method 'creator' to 'creators'.
     context 'calling "creator" method' do
       let!(:frodo) { create(:alias, display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins')) }
 

@@ -64,7 +64,9 @@ describe WorkShowPresenter do
     subject { presenter.facet_mapping(:creator_name) }
 
     let(:work) { build :work }
-    let!(:joe) { work.creators.build(display_name: 'JOE SMITH') }
+    let(:creator_alias) { build(:alias, display_name: 'JOE SMITH') }
+
+    before { allow(work).to receive(:creators).and_return([creator_alias]) }
 
     it { is_expected.to eq('JOE SMITH' => 'Joe Smith') }
   end
