@@ -58,9 +58,9 @@ module ApplicationHelper
   # @return [String] used to render link that switches to the batch create page with any included collections
   def switch_to_batch_upload_path
     if params.key?(:collection_ids)
-      sufia.new_batch_upload_path(collection_ids: params.fetch(:collection_ids))
+      sufia.new_batch_upload_path(collection_ids: params.fetch(:collection_ids), payload_concern: 'GenericWork')
     else
-      sufia.new_batch_upload_path
+      sufia.new_batch_upload_path(payload_concern: 'GenericWork')
     end
   end
 end

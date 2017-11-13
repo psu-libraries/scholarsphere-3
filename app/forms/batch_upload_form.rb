@@ -18,4 +18,10 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   def model_class_name
     'batch_upload_item'
   end
+
+  # I am setting this to the default since we are not using admin sets
+  #  If this is not present you get an error saving
+  def admin_set_id
+    AdminSet::DEFAULT_ID
+  end
 end
