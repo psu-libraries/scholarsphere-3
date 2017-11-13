@@ -66,7 +66,7 @@ class CollectionsController < ApplicationController
     # for better decoupling.
     def after_create_path
       if params.fetch(:create_collection_and_upload_works, nil)
-        sufia.new_batch_upload_path(collection_ids: [@collection])
+        sufia.new_batch_upload_path(collection_ids: [@collection], payload_concern: 'GenericWork')
       elsif params.fetch(:create_collection_and_add_existing_works, nil)
         sufia.dashboard_works_path(add_files_to_collection: @collection)
       else

@@ -24,13 +24,13 @@ describe 'curation_concerns/base/_form.html.erb' do
     context 'without no collection id parameters' do
       let(:params) { {} }
 
-      it { is_expected.to include('href="/batch_uploads/new"') }
+      it { is_expected.to include('href="/batch_uploads/new?payload_concern=GenericWork"') }
     end
 
     context 'with collection ids' do
       let(:params) { { collection_ids: ['collection-id'] } }
 
-      it { is_expected.to include('href="/batch_uploads/new?collection_ids%5B%5D=collection-id"') }
+      it { is_expected.to include('href="/batch_uploads/new?collection_ids%5B%5D=collection-id&amp;payload_concern=GenericWork"') }
     end
   end
 end
