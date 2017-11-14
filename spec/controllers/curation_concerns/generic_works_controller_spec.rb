@@ -79,6 +79,57 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     end
   end
 
+  describe '#update' do
+    before do
+      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+    end
+
+    let!(:work) { create(:work, depositor: user.login) }
+
+    it 'allows updates' do
+      post :update, id: work.id, generic_work: { title: 'new_title' }
+      expect(response.status).to eq(302)
+      expect(work.reload.title.first).to eq('new_title')
+    end
+
+    context 'replacing with a bad creator' do
+      let(:creators) { { '1' => { 'id' => '', 'given_name' => 'sdfsdf', 'sur_name' => '', 'display_name' => '', 'email' => '', 'psu_id' => '', 'orcid_id' => '' } } }
+
+      it 'fails to update' do
+        post :update, id: work.id, generic_work: { creators: creators }
+        expect(response.status).to eq(422)
+        expect(flash[:error]).to contain_exactly('Field: creator, Error: Please provide either an alias, id, or display name; or, all of: surname, given name, and display name')
+      end
+    end
+  end
+
+  describe '#create' do
+    before do
+      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+      initialize_default_adminset
+      post :create, generic_work: work.attributes.merge('creators' => creators)
+    end
+
+    let(:creators) { { '1' => { 'id' => '', 'given_name' => 'Kermit', 'sur_name' => 'The Frog', 'display_name' => 'Kermit the little green Frog', 'email' => '', 'psu_id' => '', 'orcid_id' => '' } } }
+    let(:work) { build(:work, depositor: user.login) }
+
+    it 'allows creates' do
+      expect(response.status).to eq(302)
+      expect(assigns[:curation_concern].creator.map(&:display_name)).to contain_exactly('Kermit the little green Frog')
+    end
+
+    context 'replacing with a bad creator' do
+      let(:creators) { { '1' => { 'id' => '', 'given_name' => 'sdfsdf', 'sur_name' => '', 'display_name' => '', 'email' => '', 'psu_id' => '', 'orcid_id' => '' } } }
+
+      it 'fails to create' do
+        expect(response.status).to eq(422)
+        expect(flash[:error]).to contain_exactly('Field: creator, Error: Please provide either an alias, id, or display name; or, all of: surname, given name, and display name')
+      end
+    end
+  end
+
   context 'when work is private' do
     let(:work) { create(:private_work, id: '1234') }
 

@@ -45,6 +45,13 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   protected
 
+    def build_form
+      super
+      if curation_concern.errors.present?
+        flash[:error] = curation_concern.errors.messages.map { |k, v| "Field: #{k}, Error: #{v.join(', ')}" }
+      end
+    end
+
     # TODO: Ticketed new feature in Sufia to make this configurable or change
     # See https://github.com/projecthydra/curation_concerns/issues/1052
     # closes https://github.com/projecthydra/sufia/issues/2447
