@@ -29,12 +29,14 @@ describe 'Editing a work', js: true do
     expect(page).to have_field('generic_work[creators][1][psu_id]', readonly: true)
 
     # Remove existing creator "Sally"
+    expect(page).not_to have_text('Enter required metadata')
     sally_remove_button = find(:xpath, './/button[../fieldset/input[@value="Sally"]]')
     sally_remove_button.click
     expect(page).to have_selector('.creator_inputs', count: 1)
 
     # Add a new creator "Verity".
     click_button 'Add another Creator'
+    expect(page).to have_text('Enter required metadata')
     expect(page).to have_selector('.creator_inputs', count: 2)
 
     # The index should be 'generic_work[creators][2]' because
@@ -42,6 +44,7 @@ describe 'Editing a work', js: true do
     fill_in 'generic_work[creators][2][given_name]', with: 'Verity'
     fill_in 'generic_work[creators][2][sur_name]', with: 'Brown'
     fill_in 'generic_work[creators][2][display_name]', with: 'Downtown Verity Brown'
+    expect(page).not_to have_text('Enter required metadata')
     fill_in 'generic_work[creators][2][email]', with: 'dvb@gmail.com'
     fill_in 'generic_work[creators][2][psu_id]', with: 'dvb79'
     click_button 'Save'
