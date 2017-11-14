@@ -20,15 +20,38 @@ describe 'Batch management of works', type: :feature do
 
     it 'edits a field and displays the changes', js: true do
       expect(page).to have_content 'Changes will be applied to the following'
+
+      # Update standard fields
       batch_edit_fields.each do |field|
         fill_in_batch_edit_field(field, with: "Updated batch #{field}")
       end
+
+      # Update creators
+      first('.remove-creator').click
+      fill_in 'batch_edit_item[creators][1][display_name]', with: 'Dr. Creator C. Creator, MD'
+      click_button('Add another Creator')
+      fill_in 'batch_edit_item[creators][2][display_name]', with: 'Another Creator'
+      fill_in 'batch_edit_item[creators][2][given_name]', with: 'Another'
+      fill_in 'batch_edit_item[creators][2][sur_name]', with: 'Creator'
+      click_button('creator_save')
+      within '#form_creator' do
+        sleep 0.1 until page.text.include?('Changes Saved')
+        expect(page).to have_content 'Changes Saved', wait: Capybara.default_max_wait_time * 4
+      end
+
+      # Verify changes
       work1.reload
       work2.reload
       batch_edit_fields.each do |field|
         expect(work1.send(field)).to contain_exactly("Updated batch #{field}")
         expect(work2.send(field)).to contain_exactly("Updated batch #{field}")
       end
+      expect(work1.creators.map(&:display_name)).to contain_exactly('Dr. Creator C. Creator, MD', 'Another Creator')
+      expect(work1.creators.map(&:agent).map(&:sur_name)).to contain_exactly('Creator', 'Creator')
+      expect(work1.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Creator C.')
+      expect(work2.creators.map(&:display_name)).to contain_exactly('Dr. Creator C. Creator, MD', 'Another Creator')
+      expect(work2.creators.map(&:agent).map(&:sur_name)).to contain_exactly('Creator', 'Creator')
+      expect(work2.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Creator C.')
     end
 
     it "displays the field's existing value" do

@@ -4,26 +4,8 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
   include WithCreator
   include WithCleanerAttributes
 
-  def self.build_permitted_params
-    permitted = super
-    permitted << { creators: [:id, :display_name, :given_name, :sur_name, :_destroy] }
-    permitted << :visibility
-    permitted
-  end
-
   def model_class_name
     'batch_edit_item'
-  end
-
-  def creators
-    # The model.creators association doesn't seem to work
-    # properly with an unpersisted record, so we manually load
-    # the creator records here.
-    if model.new_record? && model.creator_ids.present?
-      agent_records = Agent.find model.creator_ids
-      model.creators = agent_records
-    end
-    super
   end
 
   def initialize_combined_fields
