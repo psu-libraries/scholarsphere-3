@@ -23,6 +23,10 @@ class AliasManagementService
     @agent_attributes = attributes
     @sur_name = attributes.fetch(:sur_name, nil)
     @given_name = attributes.fetch(:given_name, nil)
+    if @sur_name.blank? && @given_name.blank? && @display_name.present?
+      @sur_name = @display_name
+      @agent_attributes[:sur_name] = @sur_name
+    end
   end
 
   def _alias_

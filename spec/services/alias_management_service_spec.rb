@@ -8,6 +8,7 @@ describe AliasManagementService do
   let(:missing_parameter) { I18n.t('scholarsphere.aliases.parameter_error') }
   let(:johnny_depp) { Agent.where(given_name: 'Johnny', sur_name: 'Depp').first }
   let(:depp) { Agent.where(given_name: nil, sur_name: 'Depp').first }
+  let(:college_of_agriculture) { Agent.where(given_name: nil, sur_name: 'College of Agriculture').first }
 
   # Ensure that we have only one agent record for "Johnny Depp" with both first
   # and last names, and one agent record for "Depp" with only the last name.
@@ -125,6 +126,17 @@ describe AliasManagementService do
 
       it 'raises an error' do
         expect { service }.to raise_error(AliasManagementService::Error, missing_parameter)
+      end
+    end
+
+    context 'with only a display name' do
+      let(:attributes) { { display_name: 'College of Agriculture' } }
+      let(:new_alias)  { Alias.where(display_name: 'College of Agriculture').first }
+
+      it 'returns a new alias for the agent' do
+        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(1)
+        expect(service.display_name).to eq('College of Agriculture')
+        expect(new_alias.agent).to eq(college_of_agriculture)
       end
     end
   end
