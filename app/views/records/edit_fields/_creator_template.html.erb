@@ -11,7 +11,7 @@
       <label for="<%= @form.model_class_name %>{{index}}_sur_name">Last Name</label>
       <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" id="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" class="form-control string required creator-last-name creator" value="{{lastName}}">
       <label for="{{index}}_display_name">Display Name</label>
-      <input type="text" name="<%= @form.model_class_name %>[creators][{{index}}][display_name]" id="<%= @form.model_class_name %>[creators][{{index}}][display_name]" class="form-control string required creator-display-name creator" value="{{displayName}}">
+      <input type="text" name="<%= @form.model_class_name %>[creators][{{index}}][display_name]" id="<%= @form.model_class_name %>[creators][{{index}}][display_name]" class="form-control string required creator-display-name creator" value="{{displayName}}" required="required">
       <label for="{{index}}_display_name">Email</label>
       <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][email]" id="<%= @form.model_class_name %>[creators][{{index}}][email]" class="form-control string required creator-email creator" value="{{email}}">
       <label for="{{index}}_display_name">PSU ID</label>

@@ -13,6 +13,7 @@ ScholarSphere.creatorBehavior = {
       var render = Mustache.render(template, creator)
       $('.creator_container').append(render)
       ScholarSphere.creatorBehavior.activateRemoveButton()
+      $('.creator_container').trigger("managed_field:add")
     })
   },
   activateRemoveButton: function () {
