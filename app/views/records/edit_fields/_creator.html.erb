@@ -9,11 +9,18 @@
            placeholder="Search for an existing creator" />
   </div>
 
+  <% if @form.creators.count == 1
+       remove_button_style = 'display: none'
+     else
+       remove_button_style = ''
+     end
+  %>
+
   <% @form.creators.each_with_index do |creator_form, index| %>
     <% id_base = "#{@form.model_class_name}[creators][#{index}]"%>
 
     <div class="well creator_inputs">
-      <button type="button" class="btn btn-link remove remove-creator">
+      <button type="button" class="btn btn-link remove remove-creator" style="<%= remove_button_style %>" >
         <span class="glyphicon glyphicon-remove"></span>
         <span class="controls-remove-text">Remove</span>
       </button>
