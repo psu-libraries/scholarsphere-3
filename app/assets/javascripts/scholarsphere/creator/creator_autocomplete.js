@@ -5,7 +5,7 @@ ScholarSphere.creatorAutocomplete = {
   nameQuery: {},
   initBloodhound: function () {
     this.nameQuery = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('given_name_tesim','sur_name_tesim'),
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('given_name','sur_name'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 10,
       remote: {
@@ -21,28 +21,27 @@ ScholarSphere.creatorAutocomplete = {
     },
       {
         name: 'creators',
-        display: 'given_name_tesim',
         source: this.nameQuery,
         templates: {
           empty: '<p>  Unable to find any results  </p>',
           suggestion: function (data) {
-            return '<p>' + data.display_name_tesim + '</p>'
+            return '<p>' + data.display_name + '</p>'
           }
         },
         display: function (data) {
-          return data.display_name_tesim
+          return data.display_name
         }
       })
   },
   typeaheadSelect: function (index) {
     $('#find_creator').bind('typeahead:select', function (ev, suggestion) {
       var creator = Object.create(ScholarSphere.creator)
-      creator.firstName = suggestion.given_name_tesim
-      creator.lastName = suggestion.sur_name_tesim
-      creator.displayName = suggestion.display_name_tesim
-      creator.email = suggestion.email_ssim
-      creator.psuId = suggestion.psu_id_ssim
-      creator.orcidId = suggestion.orcid_id_ssim
+      creator.firstName = suggestion.given_name
+      creator.lastName = suggestion.sur_name
+      creator.displayName = suggestion.display_name
+      creator.email = suggestion.email
+      creator.psuId = suggestion.psu_id
+      creator.orcidId = suggestion.orcid_id
       creator.index = $('.creator_inputs').length
       creator.id = suggestion.id
       creator.readonly = 'readonly'
