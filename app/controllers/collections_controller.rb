@@ -4,6 +4,8 @@ class CollectionsController < ApplicationController
   include CurationConcerns::CollectionsControllerBehavior
   include Sufia::CollectionsControllerBehavior
 
+  before_action :migrate_creator, only: :edit
+
   self.presenter_class = ::CollectionPresenter
   self.form_class = ::CollectionForm
 
@@ -72,5 +74,9 @@ class CollectionsController < ApplicationController
       else
         collection_path(@collection)
       end
+    end
+
+    def migrate_creator
+      Migration::SolrListMigrator.update(@collection, {})
     end
 end
