@@ -24,12 +24,12 @@ RSpec.describe AgentsController do
         get :name_query, q: 'Jam'
         results = JSON.parse(response.body)
         expect(results.count).to eq(3)
-        expect(results.map { |x| x['display_name_tesim'] }.flatten).to contain_exactly('Jamie Test', 'Dr. James T. Test', 'Sally James')
-        expect(results.map { |x| x['given_name_tesim'] }.flatten).to contain_exactly('Jamie', 'Jamie', 'Sally')
-        expect(results.map { |x| x['sur_name_tesim'] }.flatten).to contain_exactly('Test', 'Test', 'James')
-        expect(results.map { |x| x['email_ssim'] }.flatten).to contain_exactly('james@gmail.com', 'james@gmail.com', nil)
-        expect(results.map { |x| x['psu_id_ssim'] }.flatten).to contain_exactly('jtt01', 'jtt01', nil)
-        expect(results.map { |x| x['orcid_id_ssim'] }.flatten).to contain_exactly('1234', '1234', nil)
+        expect(results.map { |x| x['display_name'] }.flatten).to contain_exactly('Jamie Test', 'Dr. James T. Test', 'Sally James')
+        expect(results.map { |x| x['given_name'] }.flatten).to contain_exactly('Jamie', 'Jamie', 'Sally')
+        expect(results.map { |x| x['sur_name'] }.flatten).to contain_exactly('Test', 'Test', 'James')
+        expect(results.map { |x| x['email'] }.flatten).to contain_exactly('james@gmail.com', 'james@gmail.com', nil)
+        expect(results.map { |x| x['psu_id'] }.flatten).to contain_exactly('jtt01', 'jtt01', nil)
+        expect(results.map { |x| x['orcid_id'] }.flatten).to contain_exactly('1234', '1234', nil)
       end
     end
   end
