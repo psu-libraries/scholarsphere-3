@@ -61,9 +61,9 @@
               id: psu_id_id,
               class: 'form-control string required creator-psu-id creator' %>
 
-        <% orcid_id = "#{id_base}[orcid_id]" %>
-        <%= label_tag orcid_id, 'ORCID ID' %>
-        <%= text_field_tag orcid_id, creator_form.orcid_id,
+        <%# orcid_id = "#{id_base}[orcid_id]" %>
+        <%#= label_tag orcid_id, 'ORCID ID' %>
+        <%#= text_field_tag orcid_id, creator_form.orcid_id,
               required: false,
               readonly: creator_form.read_only?,
               id: orcid_id,
