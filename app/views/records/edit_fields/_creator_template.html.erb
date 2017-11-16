@@ -1,7 +1,8 @@
 <script type="text/template" id="creator_template">
   <div class="well creator_inputs">
     <button type="button" class="btn btn-link remove remove-creator">
-      <span class="glyphicon glyphicon-remove"></span><span class="controls-remove-text">Remove</span>
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
     </button>
     <input type="hidden" name="<%= @form.model_class_name %>[creators][{{index}}][id]" id="<%= @form.model_class_name %>{{index}}_id" value="{{id}}">
     <fieldset>
