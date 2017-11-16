@@ -6,7 +6,7 @@ module Migration
 
     def initialize(object_class)
       @object_class = object_class
-      @objects = ActiveFedora::SolrService.query(filter, fl: 'id,depositor_tesim', rows: 1000).map(&:id)
+      @objects = ActiveFedora::SolrService.query(filter, fl: 'id,depositor_tesim', rows: 100000).map(&:id)
     end
 
     def each_with_load
@@ -15,6 +15,8 @@ module Migration
           yield(load_object(id))
         rescue ActiveFedora::ObjectNotFoundError => error
           logger.warn "error finding object to migrate: #{id}; #{error}"
+        rescue StandardError => error
+          logger.warn "error migrating object: #{id}; #{error}"
         end
       end
     end
