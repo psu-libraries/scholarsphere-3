@@ -9,8 +9,8 @@ describe 'Dashboard Works', type: :feature do
   let(:jill) { create(:jill) }
   let(:work1_creator_name) { 'Work One Creator' }
 
-  let(:creator) { build(:alias, display_name: work1_creator_name,
-                                agent: Agent.new(given_name: 'Work One', sur_name: 'Creator')) }
+  let(:creator) { create(:alias, display_name: work1_creator_name,
+                                 agent: Agent.new(given_name: 'Work One', sur_name: 'Creator')) }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,
@@ -289,25 +289,21 @@ describe 'Dashboard Works', type: :feature do
     end
   end
 
-  def create_works(_user, number_of_works)
+  def create_works(user, number_of_works)
     number_of_works.times do |t|
       work = build(:public_work, id: "199#{t}",
                                  title: ["Sample Work #{t}"],
                                  date_uploaded: (Time.now - (t + 1).hours),
-                                 depositor: current_user.login, resource_type: ['Video'],
+                                 depositor: user.login, resource_type: ['Video'],
                                  keyword: ['Keyword1'],
                                  subject: ['Subject1'], language: ['Language1'],
-                                 based_near: ['Location1'], publisher: ['Publisher1'])
+                                 based_near: ['Location1'], publisher: ['Publisher1'],
+                                 representative: build(:file_set, :with_file_format))
 
-      # Since the work isn't persisted, the relationship doesn't
-      # resolve properly for the indexer. Just stub the values
-      # so we can avoid saving the work record for this spec.
+      # Stub ordered creators because we haven't persisted any data
       allow(work).to receive(:creators).and_return([Alias.new(display_name: 'Creator1 Jones')])
 
-      # TODO: how to do we set the work1 format in the objects with build
-      hash = work.to_solr
-      hash[Solrizer.solr_name('file_format', :facetable)] = 'plain ()'
-      conn.add hash
+      conn.add(work.to_solr)
     end
     conn.commit
   end

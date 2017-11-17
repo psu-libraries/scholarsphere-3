@@ -33,8 +33,8 @@ FactoryGirl.define do
 
         after(:build) do |work, evaluator|
           if evaluator.creators.blank?
-            work.creators.build(display_name: 'Joe Contributor',
-                                agent: Agent.new(sur_name: 'Contributor', given_name: 'Joe'))
+            creator = create(:alias, display_name: 'Joe Contributor', agent: Agent.new(sur_name: 'Contributor', given_name: 'Joe'))
+            work.creators = [creator]
           end
         end
       end
@@ -162,8 +162,8 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(display_name: 'creatorcreator',
-                              agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+          creator = create(:alias, display_name: 'creatorcreator', agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+          work.creators = [creator]
         end
       end
     end
@@ -177,8 +177,8 @@ FactoryGirl.define do
 
       after(:build) do |work, evaluator|
         if evaluator.creators.blank?
-          work.creators.build(display_name: 'required creator',
-                              agent: Agent.new(given_name: 'Required T.', sur_name: 'Creator'))
+          creator = create(:alias, display_name: 'required creator', agent: Agent.new(given_name: 'Required T.', sur_name: 'Creator'))
+          work.creators = [creator]
         end
       end
     end

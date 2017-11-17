@@ -25,8 +25,10 @@ describe Migration::SolrListMigrator do
       save_work_to_solr_and_fake_fedora(work2, creator2)
       save_work_to_solr_and_fake_fedora(work3, creator3)
     end
+
+    # @note The second test fails unless it is run separately. Cleaning out both Fedora and Solr seems to fix this.
     after do
-      ActiveFedora::Cleaner.cleanout_solr
+      ActiveFedora::Cleaner.clean!
       FileUtils.rm_f(cache_name)
     end
 

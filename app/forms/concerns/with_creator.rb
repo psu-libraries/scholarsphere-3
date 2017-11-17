@@ -7,7 +7,7 @@ module WithCreator
   # If there are no creators, a new CreatorForm is built using the logged-in user
   # @todo add Solr search here or in CreatorForm to user existing Alias record for the user
   def creators
-    if model.creators.blank?
+    if model.creators.empty?
       Array.wrap(CreatorForm.new(Alias.new(display_name: current_display_name)))
     else
       model.creators.map { |c| CreatorForm.new(c) }

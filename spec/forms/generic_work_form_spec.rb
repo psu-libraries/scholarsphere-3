@@ -28,8 +28,8 @@ describe CurationConcerns::GenericWorkForm do
     end
 
     context 'with existing creators' do
-      let(:creator) { build(:alias, :with_agent) }
-      let(:work) { build(:work, creators: [creator]) }
+      let(:creator) { create(:alias, :with_agent) }
+      let(:work) { create(:work, creators: [creator]) }
 
       its(:display_name) { is_expected.to eq(creator.display_name) }
       its(:given_name) { is_expected.to eq(creator.agent.given_name) }

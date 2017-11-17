@@ -15,8 +15,8 @@ FactoryGirl.define do
       collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
 
       if attrs.creators.blank?
-        collection.creators.build(display_name: 'creatorcreator',
-                                  agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+        creator = create(:alias, display_name: 'creatorcreator', agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+        collection.creators = [creator]
       end
     end
 
