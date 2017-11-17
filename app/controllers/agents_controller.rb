@@ -11,7 +11,9 @@ class AgentsController < ApplicationController
   private
 
     def search_results(query)
-      solr_search_results(query)
+      ldap_results = ldap_search_results(query)
+      solr_results = solr_search_results(query)
+      merge_results(solr_results, ldap_results)
     end
 
     # returns solr results in the following format
@@ -30,9 +32,63 @@ class AgentsController < ApplicationController
       end
     end
 
+    # returns ldap results in the following format
+    # [{"id"=>nil,
+    #   "display_name"=>["Cole Carolyn Ann"],
+    #   "given_name"=>["CAROLYN ANN"],
+    #   "sur_name"=>["COLE"],
+    #   "psu_id"=>["cam156"],
+    #   "email"=>["cam156@psu.edu"]}]
+    def ldap_search_results(query)
+      name = Namae::Name.parse(query.upcase)
+
+      email_items = LdapDisambiguate::LdapUser.query_ldap_by_mail(query + '@psu.edu', ldap_attrs) || []
+      name_items = LdapDisambiguate::LdapUser.query_ldap_by_name(name.given, "#{name.family}*", ldap_attrs) || []
+
+      # each item looks like {:id=>"jwr108", :given_name=>"JAMES W.", :surname=>"ROUNCE", :email=>"jwr108@psu.edu", :affiliation=>["STAFF"], :displayname=>"JAMES W. ROUNCE"}
+      (email_items + name_items).map do |ldap_entry|
+        {
+          'id' => nil,
+          'given_name' => ldap_entry[:given_name],
+          'sur_name' => ldap_entry[:surname],
+          'email' => ldap_entry[:mail],
+          'psu_id' => ldap_entry[:id],
+          'orcid_id' => nil,
+          'display_name' => ldap_entry[:displayname]
+        }
+      end
+    end
+
+    def merge_results(main_results, additional_results)
+      main_result_hash = {}
+      main_results.each { |result| main_result_hash[hash_key(result)] = result }
+      additional_results.each do |result|
+        if main_result_hash[hash_key(result)].blank?
+          main_results << result
+          main_result_hash[hash_key(result)] = result
+        end
+      end
+
+      main_results.sort { |x, y| hash_key(y) <=> hash_key(x) }
+    end
+
+    def hash_key(result)
+      display_name = hash_part(result['display_name'])
+      email = hash_part(result['email'])
+      "#{display_name}; #{email}"
+    end
+
+    def hash_part(result_item)
+      result_item = result_item.first if result_item.is_a?(Array)
+      result_item = result_item.downcase if result_item.present?
+      result_item
+    end
+
     def solr_aliases(query)
+      query_parts = query.split(' ').map { |q_part| "display_name_tesim:#{q_part}" }
+
       ActiveFedora::SolrService.query(
-        "display_name_tesim:#{query}*",
+        "#{query_parts.join(' AND ')}*",
           fq: 'has_model_ssim:Alias',
           fl: ['id', 'display_name_tesim', 'name_ssim'],
           qt: 'select',
@@ -55,5 +111,9 @@ class AgentsController < ApplicationController
       agent_alias['psu_id'] = agent_alias.delete('psu_id_ssim')
       agent_alias['orcid_id'] = agent_alias.delete('orcid_id_ssim')
       agent_alias['display_name'] = agent_alias.delete('display_name_tesim')
+    end
+
+    def ldap_attrs
+      [:uid, :givenname, :sn, :mail, :eduPersonPrimaryAffiliation, :displayname]
     end
 end
