@@ -19,6 +19,8 @@ module Migration
       private
 
         def already_migrated?(object)
+          return true if object.creator_ids.blank? || object.creator_ids[0].blank?
+
           object.creator_ids[0].match(/^[0-9A-F]{8}-[0-9A-F]{4}/i)
         end
 
@@ -27,6 +29,8 @@ module Migration
           object = clear_creators(object)
           object.creators = creators
           object.save
+        rescue MissingCreator => error
+          Rails.logger.error "Creator alias could not be found for #{error} skipping translation of #{object.id}"
         end
 
         def translate_creators(creators, creator_alias_hash)
@@ -34,7 +38,7 @@ module Migration
           creators.each do |creator|
             creator_alias = lookup_creator(creator, creator_alias_hash)
             if creator_alias.blank?
-              logger.error "Creator alias could not be found for #{creator}"
+              raise MissingCreator.new(creator)
             else
               alias_list << creator_alias
             end
@@ -48,7 +52,11 @@ module Migration
           return creator_alias if creator_alias.present?
 
           cleaner_creator = clean_creator.gsub(',', '')
-          creator_alias_hash[cleaner_creator]
+          cleaner_creator = cleaner_creator.gsub('.', '')
+          creator_alias = creator_alias_hash[cleaner_creator]
+          return creator_alias if creator_alias.present?
+
+          Alias.where(display_name: cleaner_creator).first
         end
 
         def clear_creators(object)
@@ -58,5 +66,8 @@ module Migration
           object.reload
         end
     end
+  end
+
+  class MissingCreator < StandardError
   end
 end
