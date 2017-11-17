@@ -8,7 +8,7 @@ def save_collection_to_solr(collection, creator)
   allow(Collection).to receive(:find).with(collection.id).and_return(collection)
   allow(collection).to receive(:creator_ids).and_return([creator])
   hash = collection.to_solr
-  hash['creator_sim'] = creator
+  hash['creator_tesim'] = creator
   conn.add hash
   conn.commit
 end
@@ -18,7 +18,7 @@ def save_work_to_solr_and_fake_fedora(work, creator)
   allow(work).to receive(:creator_ids).and_return([creator])
   allow(work).to receive(:reload).and_return(work)
   hash = work.to_solr
-  hash['creator_sim'] = creator
+  hash['creator_tesim'] = creator
   conn.add hash
   conn.commit
 end

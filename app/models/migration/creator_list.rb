@@ -15,8 +15,9 @@ module Migration
     private
 
       def find_uniq_system_creators
-        creator_facet_resp = ActiveFedora::SolrService.instance.conn.get 'select', params: { rows: 0, 'facet.limit' => 10000, 'facet.field' => 'creator_sim' }
-        creator_facet_resp['facet_counts']['facet_fields']['creator_sim'].select { |creator_or_count| creator_or_count.class == String }.reject { |name_or_url| name_or_url.starts_with?('Http') }
+        creator_docs = ActiveFedora::SolrService.query('*:*', fq: 'has_model_ssim:GenericWork OR has_model_ssim:Collection', fl: 'creator_tesim', rows: 10000)
+        creators = creator_docs.map { |doc| doc['creator_tesim'] }
+        creators.flatten.uniq.reject(&:blank?).sort
       end
 
       def convert_to_aliases
