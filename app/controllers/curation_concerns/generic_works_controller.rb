@@ -17,6 +17,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
   before_action :redirect_when_uploading, only: [:edit, :update, :destroy]
 
   before_action :pass_page_to_presenter, only: [:show]
+  before_action :migrate_creator, only: :edit
 
   def notify_users_of_permission_changes
     return if @curation_concern.nil?
@@ -67,5 +68,11 @@ class CurationConcerns::GenericWorksController < ApplicationController
     def permissions_changed?
       curation_concern.reload
       @saved_permissions != curation_concern.permissions.map(&:to_hash)
+    end
+
+    # using the migration code to run a migration on the creators
+    # for the case where the migration has yet to be run
+    def migrate_creator
+      Migration::SolrListMigrator.update(curation_concern, {})
     end
 end
