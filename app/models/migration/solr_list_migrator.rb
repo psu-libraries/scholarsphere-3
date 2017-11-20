@@ -10,22 +10,19 @@ module Migration
       end
 
       def update(object, creator_alias_hash)
-        return if object.creator_ids.empty?
+        return if object.creator.empty?
         return if already_migrated?(object)
-
         update_creators(object, creator_alias_hash)
       end
 
       private
 
         def already_migrated?(object)
-          return true if object.creator_ids.blank? || object.creator_ids[0].blank?
-
-          object.creator_ids[0].match(/^[0-9A-F]{8}-[0-9A-F]{4}/i)
+          object.creator[0].is_a?(Alias)
         end
 
         def update_creators(object, creator_alias_hash)
-          creators = translate_creators(object.creator_ids, creator_alias_hash)
+          creators = translate_creators(object.creator, creator_alias_hash)
           object = clear_creators(object)
           object.creators = creators
           object.save
