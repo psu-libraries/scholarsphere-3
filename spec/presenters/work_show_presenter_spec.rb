@@ -90,5 +90,25 @@ describe WorkShowPresenter do
     end
   end
 
+  describe '#creator' do
+    context 'verify that the new creator is an alias' do
+      let(:solr_doc) { SolrDocument.new('creator_name_tesim' => ['Thomas Jefferson']) }
+
+      its(:creator_name) { is_expected.to eq(['Thomas Jefferson']) }
+    end
+
+    context 'verify that the old creator works with the alias' do
+      let(:solr_doc) { SolrDocument.new('creator_tesim' => ['Jefferson, Thomas']) }
+
+      its(:creator_name) { is_expected.to eq(['Jefferson, Thomas']) }
+    end
+
+    context 'verify that the old creator still exists' do
+      let(:solr_doc) { SolrDocument.new('creator_tesim' => ['Jefferson, Thomas']) }
+
+      its(:creator) { is_expected.to eq(['Jefferson, Thomas']) }
+    end
+  end
+
   its(:event_class) { is_expected.to eq(GenericWork) }
 end

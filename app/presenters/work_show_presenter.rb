@@ -6,8 +6,12 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   delegate :bytes, :subtitle, to: :solr_document
 
+  def creator
+    creator_name
+  end
+
   def creator_name
-    solr_document.fetch('creator_name_tesim', [])
+    solr_document.fetch('creator_name_tesim', nil) || solr_document.fetch('creator_tesim', [])
   end
 
   def size
