@@ -37,5 +37,11 @@ describe Migration::LocalUserLookup, type: :model do
 
       it { is_expected.to contain_exactly('Abc two 123') }
     end
+
+    context 'with the name mixed around and punctuation' do
+      let(:search_name) { '123, abc t.' }
+
+      it { is_expected.to contain_exactly('Abc two 123') }
+    end
   end
 end

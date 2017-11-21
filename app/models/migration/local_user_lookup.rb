@@ -30,7 +30,8 @@ module Migration
         end
 
         def name_to_parts(name)
-          name.split(' ').map(&:upcase)
+          name_parts = name.split(' ').map(&:upcase)
+          name_parts.map { |part| part.gsub(',', '').gsub('.', '') }
         end
 
         def handle_initial(part)
