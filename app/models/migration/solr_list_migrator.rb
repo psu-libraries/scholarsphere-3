@@ -25,6 +25,7 @@ module Migration
           creators = translate_creators(solr_creators(object), creator_alias_hash)
           object = clear_creators(object)
           object.creators = creators
+          object.admin_set ||= default_admin_set
           object.save
         rescue MissingCreator => error
           Rails.logger.error "Creator alias could not be found for #{error} skipping translation of #{object.id}"
@@ -66,6 +67,10 @@ module Migration
           update_uri = object.uri.to_s
           ActiveFedora::SparqlInsert.new(creator_uri => RDF::Graph.new).execute(update_uri)
           object.reload
+        end
+
+        def default_admin_set
+          @default_admin_set ||= AdminSet.find(AdminSet::DEFAULT_ID)
         end
     end
   end
