@@ -10,7 +10,7 @@ describe Migration::SolrListMigrator do
 
   let(:creator1) { 'Bugs Bunny' }
   let(:creator2) { 'Bunny, Bugs' }
-  let(:creator3) { 'Tweey E Bird' }
+  let(:creator3) { ['Tweey E Bird', 'Cat, Sylvester', 'Chicken Hawk', 'Wile E Coyote'] }
   let(:alias_hash) { Migration::CreatorList.new(cache_name).to_alias_hash }
   let(:sparql_insert) { instance_double(ActiveFedora::SparqlInsert) }
   let(:cache_name) { 'tmp/my_cahce' }
@@ -39,7 +39,7 @@ describe Migration::SolrListMigrator do
       migrator
       expect(work1.creators).to contain_exactly(alias_hash[creator1])
       expect(work2.creators).to contain_exactly(alias_hash[creator2])
-      expect(work3.creators).to contain_exactly(alias_hash[creator3])
+      expect(work3.creators).to eq(creator3.map { |creator| alias_hash[creator] })
     end
 
     context 'missing creator' do
@@ -58,7 +58,7 @@ describe Migration::SolrListMigrator do
         described_class.migrate_creators(Migration::SolrWorkList.new, local_alias_hash)
         expect(work1.creators).to contain_exactly(alias_hash[creator1])
         expect(work2.creators).to contain_exactly(alias_hash[creator2])
-        expect(work3.creators).to contain_exactly(alias_hash[creator3])
+        expect(work3.creators).to eq(creator3.map { |creator| alias_hash[creator] })
       end
     end
   end
