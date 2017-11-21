@@ -65,7 +65,7 @@ describe 'Dashboard Collections:', type: :feature do
         click_link('Object Type')
         expect(page).to have_content('Collection (1)')
         click_link('Creator')
-        expect(page).to have_content(creator.display_name)
+        expect(page).to have_content('Given Name Sur Name')
       end
     end
   end

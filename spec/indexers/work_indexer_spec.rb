@@ -45,24 +45,21 @@ describe WorkIndexer do
       end
     end
 
-    context 'with creators' do
-      before { allow(work).to receive(:creators).and_return([creator_alias]) }
+    describe 'a groomed document' do
+      let(:creator) { build(:alias, display_name: 'BIG. DISPLAY Name') }
+      let(:agent)   { Agent.new(given_name: 'BIG.', sur_name: 'Name') }
 
-      describe 'a groomed document' do
-        let(:creator_alias) { build(:alias, display_name: 'BIG. Name') }
-
-        it { is_expected.to include('creator_name_sim' => ['Big Name']) }
-        it { is_expected.to include('creator_name_tesim' => ['BIG. Name']) }
-        it { is_expected.to include('keyword_sim' => ['bird']) }
-        it { is_expected.to include('keyword_tesim' => ['Bird']) }
+      before do
+        allow(work).to receive(:creators).and_return([creator])
+        allow(creator).to receive(:agent).and_return(agent)
       end
 
-      describe 'creator missing fields' do
-        let(:creator_alias) { build(:alias, display_name: 'John') }
+      it { is_expected.to include('creator_name_sim' => ['Big Name'],
+                                  'creator_name_tesim' => ['BIG. DISPLAY Name'],
+                                  'keyword_sim' => ['bird'],
+                                  'keyword_tesim' => ['Bird']) }
 
-        it { is_expected.to include('creator_name_sim' => ['John']) }
-        it { is_expected.to include('creator_name_tesim' => ['John']) }
-      end
+      it { is_expected.not_to include('creator_name_sim' => ['BIG. Name'], 'creator_name_tesim' => ['Big Display Name']) }
     end
   end
 end

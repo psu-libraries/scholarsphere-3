@@ -40,7 +40,7 @@ RSpec/BeEql:
     - 'spec/controllers/my/works_controller_spec.rb'
     - 'spec/features/collection/view_and_search_spec.rb'
 
-# Offense count: 2
+# Offense count: 4
 RSpec/BeforeAfterAll:
   Exclude:
     - 'spec/spec_helper.rb'
@@ -48,6 +48,7 @@ RSpec/BeforeAfterAll:
     - 'spec/support/**/*.rb'
     - 'spec/models/user_mailer_spec.rb'
     - 'spec/services/zotero_subscription_spec.rb'
+    - 'spec/indexers/with_creators_spec.rb'
 
 # Offense count: 86
 # Configuration parameters: Max.
