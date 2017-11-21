@@ -22,12 +22,17 @@ module Migration
         end
 
         def update_creators(object, creator_alias_hash)
-          creators = translate_creators(object.creator, creator_alias_hash)
+          creators = translate_creators(solr_creators(object), creator_alias_hash)
           object = clear_creators(object)
           object.creators = creators
           object.save
         rescue MissingCreator => error
           Rails.logger.error "Creator alias could not be found for #{error} skipping translation of #{object.id}"
+        end
+
+        def solr_creators(object)
+          solr_response = ActiveFedora::SolrService.query("id:#{object.id}", fl: 'creator_tesim').first
+          solr_response[:creator_tesim]
         end
 
         def translate_creators(creators, creator_alias_hash)

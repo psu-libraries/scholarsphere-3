@@ -20,7 +20,7 @@ end
 # @note allows you to save a work to Solr using a creator as a string
 def save_work_to_solr_and_fake_fedora(work, creator)
   allow(GenericWork).to receive(:find).with(work.id).and_return(work)
-  allow(work).to receive(:creator).and_return([creator])
+  allow(work).to receive(:creator).and_return(Array(creator).shuffle)
   allow(work).to receive(:reload).and_return(work)
   conn.add document_with_original_creator(work.to_solr, creator)
   conn.commit
