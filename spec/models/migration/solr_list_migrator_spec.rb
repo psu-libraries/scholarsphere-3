@@ -69,9 +69,12 @@ describe Migration::SolrListMigrator do
     end
 
     it 'sets the creators' do
+      work1.admin_set = nil
       alias_hash
+      expect(work1.admin_set).to be_nil
       described_class.update(work1, {})
       expect(work1.creators).to contain_exactly(alias_hash[creator1])
+      expect(work1.admin_set.id).to eq(AdminSet::DEFAULT_ID)
     end
   end
 end
