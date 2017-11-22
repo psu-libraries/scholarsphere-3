@@ -90,5 +90,20 @@ describe Migration::SolrListMigrator do
         expect(collection.creators).to contain_exactly(alias_hash[creator1])
       end
     end
+
+    context 'for creators that are similar' do
+      before do
+        save_work_to_solr_and_fake_fedora(work2, creator2)
+      end
+
+      let(:creator1) { 'C Dawn Childress' }
+      let(:creator2) { 'Dawn Childress' }
+
+      it 'sets the correct creators' do
+        alias_hash
+        described_class.update(work2, {})
+        expect(work2.creators).to contain_exactly(alias_hash[creator2])
+      end
+    end
   end
 end
