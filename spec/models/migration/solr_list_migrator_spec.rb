@@ -76,5 +76,19 @@ describe Migration::SolrListMigrator do
       expect(work1.creators).to contain_exactly(alias_hash[creator1])
       expect(work1.admin_set.id).to eq(AdminSet::DEFAULT_ID)
     end
+
+    context 'for a collection' do
+      let(:collection) { build :collection, id: '999collection' }
+
+      before do
+        save_collection_to_solr(collection, creator1)
+      end
+
+      it 'sets the creators' do
+        alias_hash
+        described_class.update(collection, {})
+        expect(collection.creators).to contain_exactly(alias_hash[creator1])
+      end
+    end
   end
 end
