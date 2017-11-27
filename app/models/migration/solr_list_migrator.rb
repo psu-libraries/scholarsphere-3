@@ -25,7 +25,7 @@ module Migration
           creators = translate_creators(solr_creators(object), creator_alias_hash)
           object = clear_creators(object)
           object.creators = creators
-          object.admin_set ||= default_admin_set
+          assign_default_admin_set(object)
           object.save
         rescue MissingCreator => error
           Rails.logger.error "Creator alias could not be found for #{error} skipping translation of #{object.id}"
@@ -34,6 +34,11 @@ module Migration
         def solr_creators(object)
           solr_response = ActiveFedora::SolrService.query("id:#{object.id}", fl: 'creator_tesim').first
           solr_response[:creator_tesim]
+        end
+
+        def assign_default_admin_set(object)
+          return unless object.respond_to?(:admin_set)
+          object.admin_set ||= default_admin_set
         end
 
         def translate_creators(creators, creator_alias_hash)

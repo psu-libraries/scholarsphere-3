@@ -9,8 +9,8 @@ end
 # @note allows you to save a collection to Solr using a creator as a string
 def save_collection_to_solr(collection, creator)
   allow(Collection).to receive(:find).with(collection.id).and_return(collection)
-  allow(collection).to receive(:creator_ids).and_return([creator])
-  allow(collection).to receive(:creators).and_return([])
+  allow(collection).to receive(:creator).and_return(Array(creator).shuffle)
+  allow(collection).to receive(:reload).and_return(collection)
   conn.add document_with_original_creator(collection.to_solr, creator)
   conn.commit
 end
