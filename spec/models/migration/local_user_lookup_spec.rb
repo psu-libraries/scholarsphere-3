@@ -43,5 +43,33 @@ describe Migration::LocalUserLookup, type: :model do
 
       it { is_expected.to contain_exactly('Abc two 123') }
     end
+
+    context 'with only an initial' do
+      before do
+        User.create!(login: 'miss_piggy@pong.log', display_name: 'Miss Wonderful Piggy')
+      end
+      let(:search_name) { 'W. Piggy' }
+
+      it { is_expected.to be_empty }
+    end
+
+    context 'with only an initial' do
+      before do
+        User.create!(login: 'miss_piggy@pong.log', display_name: 'Miss Wonderful Piggy')
+      end
+      let(:search_name) { 'M. Wonderful Piggy' }
+
+      it { is_expected.to contain_exactly('Miss Wonderful Piggy') }
+    end
+
+    context 'with an name that includes the initial' do
+      before do
+        User.create!(login: 'HaveAInitial@in.my.name', display_name: 'Have A Initial')
+      end
+
+      let(:search_name) { 'A Name' }
+
+      it { is_expected.to be_empty }
+    end
   end
 end

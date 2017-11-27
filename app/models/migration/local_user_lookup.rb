@@ -19,9 +19,14 @@ module Migration
         end
 
         def name_to_query_parts(name)
-          name_to_parts(name).map do |part|
-            "%#{handle_initial(part)}%"
+          name_parts = name_to_parts(name)
+          name_query_parts = name_parts.map do |part|
+            "%#{handle_initial(part, (name_parts.count < 3))}%"
           end
+          if name_query_parts.first.start_with?('% ')
+            name_query_parts[0] = name_query_parts[0].sub('% ', '%')
+          end
+          name_query_parts
         end
 
         def name_query(query_parts_count)
@@ -34,9 +39,11 @@ module Migration
           name_parts.map { |part| part.gsub(',', '').gsub('.', '') }
         end
 
-        def handle_initial(part)
+        def handle_initial(part, ending_space)
           return part if part.length > 1
-          " #{part}"
+          part = " #{part}"
+          part += ' ' if ending_space
+          part
         end
       end
   end
