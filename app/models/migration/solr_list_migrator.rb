@@ -64,7 +64,7 @@ module Migration
           creator_alias = creator_alias_hash[cleaner_creator]
           return creator_alias if creator_alias.present?
 
-          Alias.where(display_name_ssim: cleaner_creator).first
+          Alias.where(display_name_ssim: creator).first
         end
 
         def clear_creators(object)
