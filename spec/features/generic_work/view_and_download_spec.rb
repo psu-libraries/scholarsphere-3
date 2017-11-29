@@ -50,7 +50,7 @@ describe GenericWork, type: :feature do
 
         within('dl.generic_work') do
           expect(page).to have_link work1.related_url.first
-          expect(page).to have_link work1.creator.first
+          expect(page).to have_link work1.creator.first.display_name
           expect(page).to have_link work1.contributor.first
           expect(page).to have_link work1.keyword.first
           expect(page).to have_link work1.subject.first

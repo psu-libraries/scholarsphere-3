@@ -1,0 +1,89 @@
+<h3>Creators</h3>
+<div class="form-group multi_value creator_container">
+  <div class="find_creator_container">
+    <label for="find_creator">Find Creator</label>
+    <input type="text"
+           name="find_creator"
+           id="find_creator"
+           class="form-control string"
+           placeholder="Search for an existing creator" />
+  </div>
+
+  <% if @form.creators.count == 1
+       remove_button_style = 'display: none'
+     else
+       remove_button_style = ''
+     end
+  %>
+
+  <% @form.creators.each_with_index do |creator_form, index| %>
+    <% id_base = "#{@form.model_class_name}[creators][#{index}]"%>
+
+    <div class="well creator_inputs">
+      <button type="button" class="btn btn-link remove remove-creator" style="<%= remove_button_style %>" >
+        <span class="glyphicon glyphicon-remove"></span>
+        <span class="controls-remove-text">Remove</span>
+      </button>
+
+      <%= hidden_field_tag "#{id_base}[id]", creator_form.id unless creator_form.read_only? %>
+
+      <fieldset>
+        <legend class="sr-only">Creator Information</legend>
+        <% given_name_id = "#{id_base}[given_name]" %>
+        <%= label_tag given_name_id, 'Given Name' %>
+        <%= text_field_tag given_name_id, creator_form.given_name,
+              required: false,
+              readonly: creator_form.read_only?,
+              id: given_name_id,
+              class: 'form-control string required creator-first-name creator' %>
+
+        <% sur_name_id = "#{id_base}[sur_name]" %>
+        <%= label_tag sur_name_id, 'Last Name' %>
+        <%= text_field_tag sur_name_id, creator_form.sur_name,
+              required: false,
+              readonly: creator_form.read_only?,
+              id: sur_name_id,
+              class: 'form-control string required creator-last-name creator' %>
+
+        <% display_name_id = "#{id_base}[display_name]" %>
+        <%= label_tag display_name_id, 'Display Name' %>
+        <%= text_field_tag display_name_id, creator_form.display_name,
+              required: false,
+              id: display_name_id,
+              class: 'form-control string required creator-display-name creator' %>
+
+        <% email_id = "#{id_base}[email]" %>
+        <%= label_tag email_id, 'Email' %>
+        <%= text_field_tag email_id, creator_form.email,
+              required: false,
+              readonly: creator_form.read_only?,
+              id: email_id,
+              class: 'form-control string required creator-email creator' %>
+
+        <% psu_id_id = "#{id_base}[psu_id]" %>
+        <%= label_tag psu_id_id, 'PSU ID' %>
+        <%= text_field_tag psu_id_id, creator_form.psu_id,
+              required: false,
+              readonly: creator_form.read_only?,
+              id: psu_id_id,
+              class: 'form-control string required creator-psu-id creator' %>
+
+        <%# orcid_id = "#{id_base}[orcid_id]" %>
+        <%#= label_tag orcid_id, 'ORCID ID' %>
+        <%#= text_field_tag orcid_id, creator_form.orcid_id,
+              required: false,
+              readonly: creator_form.read_only?,
+              id: orcid_id,
+              class: 'form-control string creator-orcid-id creator' %>
+
+      </fieldset>
+    </div>
+  <% end %>
+</div>
+
+<button type="button" id="add-creator" class="btn btn-link add add-creator">
+  <span class="glyphicon glyphicon-plus"></span>
+  <span class="controls-add-text">Add another Creator</span>
+</button>
+
+<%= render partial: 'records/edit_fields/creator_template' %>

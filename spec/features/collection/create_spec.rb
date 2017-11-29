@@ -5,8 +5,9 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe Collection, type: :feature do
-  let(:current_user) { create(:user) }
+  let(:current_user) { create(:user, display_name: 'Jill User') }
   let(:title)        { 'Test Collection Title' }
+  let(:subtitle)     { 'Machu Picchu' }
 
   before { sign_in_with_js(current_user) }
 
@@ -17,6 +18,7 @@ describe Collection, type: :feature do
       expect(page).to have_content('Create New Collection')
       within('div#descriptions_display') do
         expect(page).to have_selector('label', class: 'required', text: 'Title')
+        expect(page).to have_selector('label', text: 'Subtitle')
         expect(page).to have_selector('label', class: 'required', text: 'Description')
         expect(page).to have_selector('label', class: 'required', text: 'Keyword')
       end
@@ -30,6 +32,7 @@ describe Collection, type: :feature do
     before do
       visit(new_collection_path)
       fill_in 'Title', with: title
+      fill_in 'Subtitle', with: subtitle
       fill_in 'Description', with: 'description'
       fill_in 'Keyword', with: 'keyword'
     end
@@ -39,6 +42,12 @@ describe Collection, type: :feature do
         click_button 'Create Empty Collection'
         expect(page).to have_content('Collection was successfully created.')
         expect(page).to have_content(title)
+        expect(page).to have_content(subtitle)
+
+        # The link to the creator search should look like this
+        # with the correct solr key 'creator_name_sim':
+        # catalog?f[creator_name_sim][]=Jill+User
+        expect(find_link('Jill User')[:href]).to match /catalog\?f%5Bcreator_name_sim%5D%5B%5D=Jill\+User/
       end
     end
 
@@ -84,6 +93,7 @@ describe Collection, type: :feature do
       click_button 'Add to Collection'
       db_create_populated_collection_button.click
       fill_in 'Title', with: title
+      fill_in 'Subtitle', with: subtitle
       fill_in 'Description', with: 'description'
       fill_in 'Keyword', with: 'keyword'
       within('div.primary-actions') do

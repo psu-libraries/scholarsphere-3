@@ -2,10 +2,7 @@
 
 class Sufia::BatchUploadsController < ApplicationController
   include Sufia::BatchUploadsControllerBehavior
-
-  def self.form_class
-    BatchUploadForm
-  end
+  include WithLocalWorkFormService
 
   protected
 
@@ -33,7 +30,7 @@ class Sufia::BatchUploadsController < ApplicationController
       attributes
     end
 
-    def create_update_job
+    def create_update_job(_klass)
       log = Sufia::BatchCreateOperation.create!(user: current_user,
                                                 operation_type: 'Batch Create')
       # ActionController::Parameters are not serializable, so cast to a hash

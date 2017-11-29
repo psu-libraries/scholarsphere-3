@@ -1,0 +1,23 @@
+.btn-link.add-creator {
+  padding:0;
+  margin-bottom: 2.5em;
+  text-decoration: underline;
+}
+
+.btn-link.remove-creator {
+  float:right;
+  text-decoration: underline;
+  color: #d9534f;
+  padding:0;
+}
+  
+.twitter-typeahead {
+  float:none;
+}
+
+.find_creator_container {
+  margin-top:1em;
+  margin-bottom:1em;
+}
+
+input.creator { margin-bottom: 1rem; }

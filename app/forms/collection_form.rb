@@ -3,7 +3,10 @@
 class CollectionForm < Sufia::Forms::CollectionForm
   attr_reader :current_ability, :request
 
+  self.terms += [:subtitle]
   self.required_fields = [:title, :description, :keyword]
+
+  include WithCreator
 
   # @param [Collection] model
   # @param [Ability] current_ability
@@ -13,6 +16,28 @@ class CollectionForm < Sufia::Forms::CollectionForm
     @current_ability = current_ability
     @request = request
     super(model)
+  end
+
+  def self.multiple?(field)
+    if field.to_sym == :title
+      false
+    else
+      super
+    end
+  end
+
+  def self.model_attributes(_)
+    attrs = super
+    attrs[:title] = Array(attrs[:title]) if attrs[:title]
+    attrs
+  end
+
+  def model_class_name
+    'collection'
+  end
+
+  def title
+    super.first || ''
   end
 
   # @return [Array<WorkShowPresenter>]
@@ -30,7 +55,7 @@ class CollectionForm < Sufia::Forms::CollectionForm
   end
 
   def primary_terms
-    self.class.required_fields
+    [:title, :subtitle, :description, :keyword]
   end
 
   def secondary_terms

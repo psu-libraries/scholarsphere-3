@@ -1,0 +1,24 @@
+<script type="text/template" id="creator_template">
+  <div class="well creator_inputs">
+    <button type="button" class="btn btn-link remove remove-creator">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </button>
+    <input type="hidden" name="<%= @form.model_class_name %>[creators][{{index}}][id]" id="<%= @form.model_class_name %>{{index}}_id" value="{{id}}">
+    <fieldset>
+      <legend class="sr-only">Creator Information</legend>
+      <label for="<%= @form.model_class_name %>{{index}}_given_name">Given Name</label>
+      <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][given_name]" id="<%= @form.model_class_name %>[creators][{{index}}][given_name]" class="form-control string required creator-first-name creator" value="{{firstName}}">
+      <label for="<%= @form.model_class_name %>{{index}}_sur_name">Last Name</label>
+      <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" id="<%= @form.model_class_name %>[creators][{{index}}][sur_name]" class="form-control string required creator-last-name creator" value="{{lastName}}">
+      <label for="{{index}}_display_name">Display Name</label>
+      <input type="text" name="<%= @form.model_class_name %>[creators][{{index}}][display_name]" id="<%= @form.model_class_name %>[creators][{{index}}][display_name]" class="form-control string required creator-display-name creator" value="{{displayName}}" required="required">
+      <label for="{{index}}_display_name">Email</label>
+      <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][email]" id="<%= @form.model_class_name %>[creators][{{index}}][email]" class="form-control string required creator-email creator" value="{{email}}">
+      <label for="{{index}}_display_name">PSU ID</label>
+      <input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][psu_id]" id="<%= @form.model_class_name %>[creators][{{index}}][psu_id]" class="form-control string required creator-psu_id creator" value="{{psuId}}">
+      <!--<label for="{{index}}_orcid_id">ORCID ID</label>-->
+      <!--<input type="text" {{readonly}} name="<%= @form.model_class_name %>[creators][{{index}}][orcid_id]" id="<%= @form.model_class_name %>[creators][{{index}}][orcid_id]" class="form-control string required creator-orcid_id creator" value="{{orcidId}}">-->
+    </fieldset>
+  </div>
+</script>

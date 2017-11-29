@@ -5,7 +5,7 @@ class Ability
   include CurationConcerns::Ability
   include Sufia::Ability
 
-  self.ability_logic += [:everyone_can_create_curation_concerns, :admins_can_read_solr_documents]
+  self.ability_logic += [:everyone_can_create_curation_concerns, :admins_can_read_solr_documents, :registered_users_can_search_aliases]
 
   def editor_abilities
     super
@@ -28,5 +28,9 @@ class Ability
   # Remove if/when projecthydra/curation_concerns#1118 is resolved
   def admins_can_read_solr_documents
     can :read, SolrDocument if admin?
+  end
+
+  def registered_users_can_search_aliases
+    can :name_query, Alias if registered_user?
   end
 end

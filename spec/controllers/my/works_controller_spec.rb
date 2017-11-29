@@ -101,7 +101,7 @@ describe My::WorksController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template('my/index')
         expect(assigns(:document_list).count).to eql(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('creator'))[0]).to eql('creatorcreator')
+        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('creatorcreator')
       end
       it 'finds a file by contributor' do
         xhr :get, :index, q: 'contributorcontributor'

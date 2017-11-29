@@ -16,6 +16,9 @@ class CurationConcerns::GenericWorksController < ApplicationController
   before_action :delete_from_share, only: [:destroy]
   before_action :redirect_when_uploading, only: [:edit, :update, :destroy]
 
+  before_action :pass_page_to_presenter, only: [:show]
+  before_action :migrate_creator, only: :edit
+
   def notify_users_of_permission_changes
     return if @curation_concern.nil?
     previous_permissions = @curation_concern.permissions.map(&:to_hash)
@@ -37,7 +40,18 @@ class CurationConcerns::GenericWorksController < ApplicationController
     redirect_to polymorphic_path([main_app, curation_concern])
   end
 
+  def pass_page_to_presenter
+    presenter.file_page(params[:file_page])
+  end
+
   protected
+
+    def build_form
+      super
+      if curation_concern.errors.present?
+        flash[:error] = curation_concern.errors.messages.map { |k, v| "Field: #{k}, Error: #{v.join(', ')}" }
+      end
+    end
 
     # TODO: Ticketed new feature in Sufia to make this configurable or change
     # See https://github.com/projecthydra/curation_concerns/issues/1052
@@ -54,5 +68,11 @@ class CurationConcerns::GenericWorksController < ApplicationController
     def permissions_changed?
       curation_concern.reload
       @saved_permissions != curation_concern.permissions.map(&:to_hash)
+    end
+
+    # using the migration code to run a migration on the creators
+    # for the case where the migration has yet to be run
+    def migrate_creator
+      Migration::SolrListMigrator.update(curation_concern, {})
     end
 end

@@ -8,21 +8,24 @@ FactoryGirl.define do
 
     sequence(:title)       { |n| ["Title #{n}"] }
     sequence(:description) { |n| ["Description #{n}"] }
-    sequence(:creator)     { |n| ["Creator #{n}"] }
+
     visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
     after(:build) do |collection, attrs|
       collection.apply_depositor_metadata((attrs.depositor || attrs.user.user_key))
+
+      if attrs.creators.blank?
+        creator = create(:alias, display_name: 'creatorcreator', agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+        collection.creators = [creator]
+      end
     end
 
     factory :my_collection do
       title ['My collection']
       description 'My incredibly detailed description of the collection'
-      creator ['The Collector']
     end
 
     trait :with_complete_metadata do
-      creator ['Joe Contributor']
       resource_type ['Dissertation aaa']
       publisher ['publisher bbb']
       contributor ['contrib ccc']

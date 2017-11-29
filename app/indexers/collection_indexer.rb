@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CollectionIndexer < CurationConcerns::CollectionIndexer
+  include IndexesCreator
+
   self.thumbnail_path_service = Sufia::CollectionThumbnailPathService
 
   def generate_solr_document

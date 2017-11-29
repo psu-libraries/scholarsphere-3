@@ -10,7 +10,7 @@ namespace :scholarsphere do
                      Date.parse(args[:start_date])
                    end
       puts "importing stats from google for #{start_date} to #{1.day.ago}"
-      importer = UserStatsImporter.new(start_date, 1.day.ago, verbose: true, logging: true, delay_secs: 1.0, number_of_retries: 5)
+      importer = UserStatsImporter.new(start_date, 1.day.ago)
       importer.import
     end
   end

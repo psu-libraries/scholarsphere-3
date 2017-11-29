@@ -35,7 +35,7 @@ describe CatalogController, type: :controller do
                                           'resource_type_tesim',
                                           'subject_tesim',
                                           'has_model_ssim',
-                                          'creator_tesim')
+                                          'creator_name_tesim')
       }
     end
     describe 'show_fields' do
@@ -44,7 +44,7 @@ describe CatalogController, type: :controller do
       it { is_expected.to contain_exactly('depositor_tesim', 'based_near_tesim', 'date_modified_dtsi', 'date_uploaded_dtsi',
                                           'description_tesim', 'identifier_tesim', 'keyword_tesim',
                                           'language_tesim', 'publisher_tesim', 'resource_type_tesim', 'rights_tesim',
-                                          'subject_tesim', 'contributor_tesim', 'creator_tesim', 'date_created_tesim',
+                                          'subject_tesim', 'contributor_tesim', 'creator_name_tesim', 'date_created_tesim',
                                           'subtitle_tesim')
       }
     end
@@ -54,7 +54,7 @@ describe CatalogController, type: :controller do
       it { is_expected.to contain_exactly('based_near_sim', 'collection_sim', 'has_model_ssim',
                                           'file_format_sim', 'keyword_sim',
                                           'language_sim', 'publisher_sim', 'resource_type_sim',
-                                          'subject_sim', 'creator_sim')
+                                          'subject_sim', 'creator_name_sim')
       }
     end
   end
@@ -101,7 +101,7 @@ describe CatalogController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('creator'))[0]).to eql('creatorcreator')
+        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('creatorcreator')
       end
       it 'finds a file by contributor' do
         xhr :get, :index, q: 'contributorcontributor'

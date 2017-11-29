@@ -8,6 +8,7 @@ require 'sprockets'
 require 'resolv'
 require 'uri'
 require 'sufia/version'
+require 'rdf/rdfxml'
 require 'webmock' unless Rails.env.production?
 
 WebMock.disable! if Rails.env.development?
@@ -107,6 +108,9 @@ module ScholarSphere
       AttachFilesToWorkJob.prepend PrependedJobs::WithNotification
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::ConfiguredMicrodata
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::WithLists
+      Sufia::HomepageController.prepend PrependedControllers::WithRecentPresenters
+      FeaturedWorkList.prepend PrependedModels::WithFeaturedPresenters
+      CurationConcerns::MemberPresenterFactory.file_presenter_class = FileSetPresenter
     end
   end
 end

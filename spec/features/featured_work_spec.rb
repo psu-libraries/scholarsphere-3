@@ -5,7 +5,7 @@ require 'feature_spec_helper'
 describe 'Featured works on the home page', type: :feature do
   let!(:user)         { create(:user) }
   let!(:jill_user)    { create(:jill) }
-  let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title']) }
+  let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title'], keyword: ["'55 Chet Atkins"]) }
   let!(:file2)        { create(:featured_file, :with_required_metadata, depositor: user.login) }
   let!(:private_file) { create(:private_file, depositor: jill_user.login, title: ['private_document']) }
 
@@ -17,11 +17,13 @@ describe 'Featured works on the home page', type: :feature do
       visit('/')
     end
 
-    it 'appears as a featured work', js: true do
+    it 'appears as a featured work with translated facets', js: true do
       expect(page).to have_content 'Featured Works'
       within('#featured_container') do
         expect(page).to have_content(file1.title[0])
+        click_link(file1.keyword.first)
       end
+      expect(page).to have_content(file1.title[0])
     end
 
     it 'only public documents appear as recently uploaded files' do

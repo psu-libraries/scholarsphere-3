@@ -1,11 +1,13 @@
 .attribute-term,
 dd.attribute {
   float: left;
+  line-height: 1.5em;
 }
 
 .attribute-term {
   clear: left;
-  width: 8em;
+  min-width: 8em;
+  width: 35%;
 }
 
 dd.attribute + dd.attribute::before {

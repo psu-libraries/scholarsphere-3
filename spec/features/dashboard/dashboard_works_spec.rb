@@ -5,23 +5,28 @@ require 'feature_spec_helper'
 include Selectors::Dashboard
 
 describe 'Dashboard Works', type: :feature do
-  let!(:current_user) { create(:user) }
+  let(:current_user) { create(:user) }
+  let(:jill) { create(:jill) }
+  let(:work1_creator_name) { 'Work One Creator' }
+
+  let(:creator) { create(:alias, display_name: work1_creator_name,
+                                 agent: Agent.new(given_name: 'Work One', sur_name: 'Creator')) }
 
   let!(:work1) do
     create(:public_work, :with_complete_metadata,
+           id: 'dashboard-works-work1',
            depositor: current_user.login,
            title: ['little_file.txt'],
-           creator: ['little_file.txt_creator'],
+           creators: [creator],
            date_uploaded: DateTime.now + 1.hour)
   end
 
   let!(:work2) do
-    create(:registered_work, depositor: current_user.login, title: ['Registered work'])
+    create(:registered_work, id: 'dashboard-works-work2', depositor: current_user.login, title: ['Registered work'])
   end
 
-  let(:jill) { create(:jill) }
   let!(:other_collection) do
-    create(:collection, title: ['jill collection'], depositor: jill.login)
+    create(:collection, id: 'dashboard-works-other_collection', title: ['jill collection'], depositor: jill.login)
   end
 
   before do
@@ -41,7 +46,7 @@ describe 'Dashboard Works', type: :feature do
 
       # Additional metadata about the work1 is hidden
       expect(page).not_to have_content 'Edit Access'
-      expect(page).not_to have_content work1.creator.first
+      expect(page).not_to have_content work1_creator_name
 
       # A return controller is specified
       expect(page).to have_css('input#return_controller', visible: false)
@@ -56,7 +61,7 @@ describe 'Dashboard Works', type: :feature do
 
       # Displays additional metadata about that work1
       first('span.glyphicon-chevron-right').click
-      expect(page).to have_content work1.creator.first
+      expect(page).to have_content work1_creator_name
       expect(page).to have_content work1.depositor
       expect(page).to have_content 'Edit Access'
 
@@ -166,8 +171,8 @@ describe 'Dashboard Works', type: :feature do
         expect(page).not_to have_content 'You searched for:'
 
         # When I search by Creator it displays the correct results
-        search_my_files_by_term(work1.creator.first.to_s)
-        expect(page).to have_content "You searched for: #{work1.creator.first}"
+        search_my_files_by_term(work1_creator_name)
+        expect(page).to have_content "You searched for: #{work1_creator_name}"
         page_should_only_list work1
       end
     end
@@ -176,7 +181,7 @@ describe 'Dashboard Works', type: :feature do
       specify 'Displays the correct totals for facet' do
         {
           'Resource Type' => 'Video (10)',
-          'Creator'       => 'Creator1 (10)',
+          'Creator'       => 'Creator1 Jones (10)',
           'Keyword'       => 'keyword1 (10)',
           'Subject'       => 'Subject1 (10)',
           'Language'      => 'Language1 (10)',
@@ -284,20 +289,21 @@ describe 'Dashboard Works', type: :feature do
     end
   end
 
-  def create_works(_user, number_of_works)
+  def create_works(user, number_of_works)
     number_of_works.times do |t|
       work = build(:public_work, id: "199#{t}",
                                  title: ["Sample Work #{t}"],
                                  date_uploaded: (Time.now - (t + 1).hours),
-                                 depositor: current_user.login, resource_type: ['Video'],
-                                 creator: ['Creator1'], keyword: ['Keyword1'],
+                                 depositor: user.login, resource_type: ['Video'],
+                                 keyword: ['Keyword1'],
                                  subject: ['Subject1'], language: ['Language1'],
-                                 based_near: ['Location1'], publisher: ['Publisher1'])
+                                 based_near: ['Location1'], publisher: ['Publisher1'],
+                                 representative: build(:file_set, :with_file_format))
 
-      # TODO: how to do we set the work1 format in the objects with build
-      hash = work.to_solr
-      hash[Solrizer.solr_name('file_format', :facetable)] = 'plain ()'
-      conn.add hash
+      # Stub ordered creators because we haven't persisted any data
+      allow(work).to receive(:creators).and_return([Alias.new(display_name: 'Creator1 Jones')])
+
+      conn.add(work.to_solr)
     end
     conn.commit
   end

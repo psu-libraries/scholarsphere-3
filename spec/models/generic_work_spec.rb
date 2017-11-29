@@ -11,6 +11,84 @@ describe GenericWork do
     expect(subject.id.length).to eq 10
   end
 
+  describe 'creators' do
+    before do
+      Alias.destroy_all
+      Agent.destroy_all
+    end
+
+    context 'with existing Alias records' do
+      let!(:frodo) { create(:alias, display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+      let!(:sam)   { create(:alias, display_name: 'Sam', agent: Agent.new(given_name: 'Sam', sur_name: 'Gamgee')) }
+
+      let(:work) { build(:work, creators: [frodo, sam]) }
+
+      it 'sets the creators' do
+        expect { work.save! }
+          .to change { described_class.count }.by(1)
+          .and change { Alias.count }.by(0)
+        expect(work.creators).to contain_exactly(frodo, sam)
+      end
+    end
+
+    context 'with hash inputs' do
+      let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
+
+      let(:work) { create(:work, creators: attributes) }
+      let(:attributes) do
+        [
+          { 'display_name' => 'Fred Jones', 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+          { 'display_name' => 'Lucy Lee', 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
+        ]
+      end
+
+      it 'finds or creates the Alias record' do
+        expect { work.save! }
+          .to change { described_class.count }.by(1)
+          .and change { Alias.count }.by(1)
+        expect(work.creators).to include lucy
+        expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
+      end
+    end
+
+    context 'with ordered, nested-style hash inputs that come from the form' do
+      let!(:agent) { create(:agent, given_name: 'Lucy', sur_name: 'Lee') }
+      let!(:lucy) { create(:alias, display_name: 'Lucy Lee', agent: agent) }
+
+      let(:work) { create(:work, creators: attributes) }
+      let(:attributes) do
+        {
+          '0' => { 'display_name' => 'Fred Jones', 'given_name' => 'Fred', 'sur_name' => 'Jones' },
+          '1' => { 'display_name' => 'Lucy Lee', 'given_name' => 'Lucy', 'sur_name' => 'Lee' }
+        }
+      end
+
+      it 'finds or creates the Alias record' do
+        expect { work.save! }
+          .to change { described_class.count }.by(1)
+          .and change { Alias.count }.by(1)
+        expect(work.creators).to include lucy
+        expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
+      end
+    end
+
+    # When we changed the work's creators to be an Alias model instead of a String, the name of the method to find the
+    # work's creators also changed. It is now 'work.creators' (with an 's') instead of 'work.creator'.
+    # Because there are many places in in scholarsphere, sufia, and curation_concerns that call the 'creator' method,
+    # we just aliased the method 'creator' to 'creators'.
+    context 'calling "creator" method' do
+      let!(:frodo) { create(:alias, display_name: 'Frodo', agent: Agent.new(given_name: 'Frodo', sur_name: 'Baggins')) }
+
+      let(:work) { create(:work, creators: [frodo]) }
+
+      it 'returns the creators with no error' do
+        expect(work.creators).to eq [frodo]
+        expect(work.creator).to eq [frodo]
+      end
+    end
+  end
+
   describe '#time_uploaded' do
     context 'with a blank date_uploaded' do
       its(:time_uploaded) { is_expected.to be_blank }

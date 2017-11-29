@@ -33,6 +33,9 @@ namespace :dev do
     ActiveFedora::Cleaner.clean!
     cleanout_redis
     clear_directories
+    Rake::Task['db:reset'].invoke
+    Rake::Task['sufia:default_admin_set:create'].invoke
+    Rake::Task['curation_concerns:workflow:load'].invoke
   end
 
   def clear_directories

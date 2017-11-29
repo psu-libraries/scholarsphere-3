@@ -61,13 +61,14 @@ describe Collection, type: :feature do
   end
 
   describe "editing a collection's metadata" do
-    let!(:collection)           { create(:collection, depositor: current_user.login, description: ['original description']) }
+    let!(:collection)           { create(:collection, depositor: current_user.login, subtitle: 'Vimana', description: ['original description']) }
     let!(:original_title)       { collection.title }
+    let!(:original_subtitle)    { collection.subtitle }
     let!(:original_description) { collection.description }
 
     let(:updated_title)         { 'Updated Title' }
-    let(:updated_description)   { 'Updtaed description text.' }
-    let(:updated_creators)      { ['Dorje Trollo', 'Vajrayogini'] }
+    let(:updated_subtitle)      { 'Updated Vimana2' }
+    let(:updated_description)   { 'Updated description text.' }
 
     before { sign_in(current_user) }
 
@@ -75,8 +76,9 @@ describe Collection, type: :feature do
       visit '/dashboard/collections'
       db_item_actions_toggle(collection).click
       click_link 'Edit Collection'
-      click_link 'Additional fields'
+      click_link 'Additional Fields'
       expect(page).to have_field 'collection_title', with: original_title.first
+      expect(page).to have_field 'collection_subtitle', with: original_subtitle
       expect(page).to have_field 'collection_description', with: original_description.first
       within('div.collection_date_created') do
         expect(page).to have_content('Published Date')
@@ -84,14 +86,18 @@ describe Collection, type: :feature do
       expect(page).to have_checked_field('Public')
       expect(page).to have_no_checked_field('Private')
       fill_in 'Title', with: updated_title
+      fill_in 'Subtitle', with: updated_subtitle
       fill_in 'Description', with: updated_description
-      fill_in 'Creator', with: updated_creators.first
+      expect(find('.creator-first-name')['readonly']).to eq('readonly')
+      expect(find('.creator-last-name')['readonly']).to eq('readonly')
+      fill_in 'collection[creators][0][display_name]', with: 'Mdme. Dorje Trollo'
       click_button 'Update Collection'
       expect(page).not_to have_content original_title.first
       expect(page).not_to have_content original_description.first
       expect(page).to have_content updated_title
+      expect(page).to have_content updated_subtitle
       expect(page).to have_content updated_description
-      expect(page).to have_content updated_creators.first
+      expect(page).to have_content 'Mdme. Dorje Trollo'
     end
   end
 

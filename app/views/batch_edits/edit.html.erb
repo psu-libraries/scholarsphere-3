@@ -31,6 +31,7 @@
         <%= simple_form_for @form.model, url: batch_edits_path, method: :put, remote: true, html: { id: "form_permissions", class: "ajax-form"} do |f| %>
           <%= hidden_field_tag('update_type', 'update') %>
           <%= hidden_field_tag('key', 'permissions') %>
+          <%= hidden_field_tag('batch_edit_item[admin_set_id]', @form.model.admin_set_id) %>
           <%= render "curation_concerns/base/form_permission", f: f %>
           <%= render "curation_concerns/base/form_share", f: f %>
           <div class="row">

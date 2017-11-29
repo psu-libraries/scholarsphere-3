@@ -1,0 +1,1 @@
+var ScholarSphere = ScholarSphere || {}

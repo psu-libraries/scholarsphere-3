@@ -2,12 +2,16 @@
 
 class GenericWork < ActiveFedora::Base
   include ::CurationConcerns::WorkBehavior
-  include ::CurationConcerns::BasicMetadata
+  include ::BasicMetadata
   include Sufia::WorkBehavior
   include ShareNotify::Metadata
   include AdditionalMetadata
+  include HasCreators
 
   self.human_readable_type = 'Work'
+
+  # Change this to restrict which works can be added as a child.
+  # self.valid_child_concerns = []
 
   validates :title, presence: { message: 'Your work must have a title.' }
 

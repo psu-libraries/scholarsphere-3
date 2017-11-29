@@ -7,6 +7,7 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
   let(:collection) { build :collection, id: 'collection_id' }
   let(:collection2) { build :collection, id: 'collection_id2' }
   let(:form) { CurationConcerns::GenericWorkForm.new(work, Ability.new(nil)) }
+  let(:admin_service) { instance_double Sufia::AdminSetService, select_options: [] }
 
   let(:page) {
     view.simple_form_for(form) do |f|
@@ -17,6 +18,7 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
 
   before do
     allow(view).to receive(:available_collections).and_return([collection, collection2])
+    allow(Sufia::AdminSetService).to receive(:new).and_return(admin_service)
   end
 
   it 'lists the available collections' do

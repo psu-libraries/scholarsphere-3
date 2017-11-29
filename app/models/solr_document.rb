@@ -15,6 +15,10 @@ class SolrDocument
   # Expects a hash-like object responding to :to_hash
   alias to_hash to_h
 
+  def creator
+    fetch(Solrizer.solr_name('creator_name', :stored_searchable), [])
+  end
+
   def collections
     return nil if self[Solrizer.solr_name(:collection)].blank?
     collections_in = Array(self[Solrizer.solr_name(:collection)])
@@ -45,18 +49,18 @@ class SolrDocument
   private
 
     def ul_start_tags
-      "<ul class='creator_list'>#{person_separator}<li>"
+      "<ul class='creator_list'>#{agent_separator}<li>"
     end
 
     def ul_join_tags
-      "</li>#{person_separator}<li> "
+      "</li>#{agent_separator}<li> "
     end
 
     def ul_end_tags
       '</li></ul>'
     end
 
-    def person_separator
+    def agent_separator
       "<span class='glyphicon glyphicon-user'></span>"
     end
 end

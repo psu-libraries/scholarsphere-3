@@ -21,8 +21,9 @@ class GenericWorkToShareJSONService
   private
 
     def add_contributors_to_document
-      work.creator.each do |creator|
-        document.add_contributor(name: creator, email: email_for_name(creator))
+      work.creators.each do |creator|
+        creator_name = [creator.agent.sur_name, creator.agent.given_name].compact.join(', ')
+        document.add_contributor(name: creator_name, email: email_for_name(creator_name))
       end
     end
 

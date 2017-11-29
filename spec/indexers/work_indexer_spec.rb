@@ -7,7 +7,6 @@ describe WorkIndexer do
 
   let(:file_set) { build(:file_set) }
   let(:work)     { build(:work, representative: file_set,
-                                creator: ['BIG. Name'],
                                 keyword: ['Bird']) }
   let(:indexer)  { described_class.new(work) }
 
@@ -47,10 +46,20 @@ describe WorkIndexer do
     end
 
     describe 'a groomed document' do
-      it { is_expected.to include('creator_sim' => ['Big Name']) }
-      it { is_expected.to include('creator_tesim' => ['BIG. Name']) }
-      it { is_expected.to include('keyword_sim' => ['bird']) }
-      it { is_expected.to include('keyword_tesim' => ['Bird']) }
+      let(:creator) { build(:alias, display_name: 'BIG. DISPLAY Name') }
+      let(:agent)   { Agent.new(given_name: 'BIG.', sur_name: 'Name') }
+
+      before do
+        allow(work).to receive(:creators).and_return([creator])
+        allow(creator).to receive(:agent).and_return(agent)
+      end
+
+      it { is_expected.to include('creator_name_sim' => ['Big Name'],
+                                  'creator_name_tesim' => ['BIG. DISPLAY Name'],
+                                  'keyword_sim' => ['bird'],
+                                  'keyword_tesim' => ['Bird']) }
+
+      it { is_expected.not_to include('creator_name_sim' => ['BIG. Name'], 'creator_name_tesim' => ['Big Display Name']) }
     end
   end
 end

@@ -34,6 +34,10 @@ Metrics/PerceivedComplexity:
     - 'app/models/generic_file.rb'
     - 'app/helpers/catalog_helper.rb'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/features/dashboard/dashboard_works_spec.rb'
+
 Style/ClassVars:
   Exclude:
     - 'spec/support/user_login.rb'
@@ -90,3 +94,6 @@ RSpec/DescribeClass:
     - 'spec/models/batch_spec.rb'
     - 'spec/features/**/*'
     - 'spec/support/**/*'
+
+RSpec/LetSetup:
+  Enabled: false

@@ -12,6 +12,10 @@ FactoryGirl.define do
     title ['Sample Title']
     after(:build) do |file, attrs|
       file.apply_depositor_metadata((attrs.depositor || 'user'))
+      if file.admin_set.blank?
+        initialize_default_adminset
+        file.admin_set = AdminSet.first
+      end
     end
 
     after(:create) do |file, attrs|
@@ -25,8 +29,14 @@ FactoryGirl.define do
 
       factory :share_file do
         title ['SHARE Document']
-        creator ['Joe Contributor']
         resource_type ['Dissertation']
+
+        after(:build) do |work, evaluator|
+          if evaluator.creators.blank?
+            creator = create(:alias, display_name: 'Joe Contributor', agent: Agent.new(sur_name: 'Contributor', given_name: 'Joe'))
+            work.creators = [creator]
+          end
+        end
       end
 
       factory :featured_file do
@@ -141,7 +151,6 @@ FactoryGirl.define do
       keyword       ['tagtag']
       based_near    ['based_nearbased_near']
       language      ['languagelanguage']
-      creator       ['creatorcreator']
       contributor   ['contributorcontributor']
       publisher     ['publisherpublisher']
       subject       ['subjectsubject']
@@ -150,15 +159,28 @@ FactoryGirl.define do
       related_url   ['http://example.org/TheRelatedURLLink/']
       rights        ['http://creativecommons.org/licenses/by/3.0/us/']
       date_created  ['two days after the day before yesterday']
+
+      after(:build) do |work, evaluator|
+        if evaluator.creators.blank?
+          creator = create(:alias, display_name: 'creatorcreator', agent: Agent.new(given_name: 'Creator C.', sur_name: 'Creator'))
+          work.creators = [creator]
+        end
+      end
     end
 
     trait :with_required_metadata do
       title         ['a required title']
       description   ['a required description']
       keyword       ['required keyword']
-      creator       ['required creator']
       rights        ['https://creativecommons.org/licenses/by/4.0/']
       resource_type ['Article']
+
+      after(:build) do |work, evaluator|
+        if evaluator.creators.blank?
+          creator = create(:alias, display_name: 'required creator', agent: Agent.new(given_name: 'Required T.', sur_name: 'Creator'))
+          work.creators = [creator]
+        end
+      end
     end
   end
 end

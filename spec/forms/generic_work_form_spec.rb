@@ -8,10 +8,33 @@ describe CurationConcerns::GenericWorkForm do
   let(:work)    { build(:work) }
   let(:form)    { described_class.new(work, ability) }
 
-  describe '#initialize_field' do
-    subject { form[:creator] }
+  describe '#creators' do
+    subject { form.creators.first }
 
-    it { is_expected.to eq(['User, Test A']) }
+    context 'without any existing creators' do
+      its(:display_name) { is_expected.to eq('Test A User') }
+      its(:given_name) { is_expected.to eq('Test A') }
+      its(:sur_name) { is_expected.to eq('User') }
+    end
+
+    context 'without a display name' do
+      before { User.destroy_all }
+      let(:user) { User.create(login: 'SomeUser') }
+
+      # Note: I don't think we will ever encounter this scenario (awead)
+      its(:display_name) { is_expected.to be_nil }
+      its(:given_name) { is_expected.to be_nil }
+      its(:sur_name) { is_expected.to be_nil }
+    end
+
+    context 'with existing creators' do
+      let(:creator) { create(:alias, :with_agent) }
+      let(:work) { create(:work, creators: [creator]) }
+
+      its(:display_name) { is_expected.to eq(creator.display_name) }
+      its(:given_name) { is_expected.to eq(creator.agent.given_name) }
+      its(:sur_name) { is_expected.to eq(creator.agent.sur_name) }
+    end
   end
 
   describe '::model_attributes' do

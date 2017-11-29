@@ -7,11 +7,9 @@ gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
-gem 'active-fedora', '~> 10.3.0.rc2'
-gem 'sufia', github: 'projecthydra/sufia', branch: '7.2-migration'
-gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
-gem 'curation_concerns', github: 'projecthydra/curation_concerns', ref: 'b073550'
-gem 'hydra-works', github: 'projecthydra/hydra-works', ref: 'f948eb0'
+gem 'active-fedora', '~> 11.1.3'
+gem 'sufia', '7.4.1'
+gem 'blacklight_advanced_search', '~> 6.0'
 
 # Use patched version of mail. Remove this once 2.6.6 is officially out
 gem 'mail', '= 2.6.6.rc1'
@@ -30,7 +28,7 @@ gem 'nest'
 gem 'newrelic_rpm'
 gem 'rack-maintenance'
 gem 'rainbow'
-gem 'rdf', '~> 1.99'
+gem 'rdf'
 gem 'resque-pool'
 gem 'rsolr'
 gem 'sass-rails'
@@ -45,7 +43,9 @@ gem 'whenever'
 gem 'yaml_db'
 
 group :development, :test do
+  gem 'coveralls', require: false
   gem 'fcrepo_wrapper'
+  gem 'faker'
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
@@ -53,6 +53,7 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'solr_wrapper'
   gem 'sqlite3'
+  gem 'capybara-screenshot'
 end
 
 group :development do
@@ -78,12 +79,12 @@ group :test do
   gem 'factory_girl_rails', '~> 4.1'
   gem 'poltergeist', '~> 1.9'
   gem 'rspec-activemodel-mocks'
+  gem 'selenium-webdriver'
   gem 'vcr'
   gem 'webmock'
 end
 
 group :debug do
   gem 'byebug', require: false
-  gem 'capybara-screenshot'
   gem 'launchy'
 end

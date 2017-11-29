@@ -61,9 +61,12 @@ describe WorkShowPresenter do
   end
 
   describe '#facet_mapping' do
-    subject { presenter.facet_mapping(:creator) }
+    subject { presenter.facet_mapping(:creator_name) }
 
-    let(:work) { build(:work, creator: ['JOE SMITH']) }
+    let(:work) { build :work }
+    let(:creator_alias) { build(:alias, display_name: 'JOE SMITH') }
+
+    before { allow(work).to receive(:creators).and_return([creator_alias]) }
 
     it { is_expected.to eq('JOE SMITH' => 'Joe Smith') }
   end
@@ -84,6 +87,26 @@ describe WorkShowPresenter do
       end
 
       its(:events) { is_expected.to contain_exactly('event1', 'event2') }
+    end
+  end
+
+  describe '#creator' do
+    context 'verify that the new creator is an alias' do
+      let(:solr_doc) { SolrDocument.new('creator_name_tesim' => ['Thomas Jefferson']) }
+
+      its(:creator_name) { is_expected.to eq(['Thomas Jefferson']) }
+    end
+
+    context 'verify that the old creator works with the alias' do
+      let(:solr_doc) { SolrDocument.new('creator_tesim' => ['Jefferson, Thomas']) }
+
+      its(:creator_name) { is_expected.to eq(['Jefferson, Thomas']) }
+    end
+
+    context 'verify that the old creator still exists' do
+      let(:solr_doc) { SolrDocument.new('creator_tesim' => ['Jefferson, Thomas']) }
+
+      its(:creator) { is_expected.to eq(['Jefferson, Thomas']) }
     end
   end
 

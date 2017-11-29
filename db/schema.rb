@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110142323) do
+ActiveRecord::Schema.define(version: 20171031110604) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       limit: 4,   null: false
@@ -183,6 +183,29 @@ ActiveRecord::Schema.define(version: 20170110142323) do
 
   add_index "minter_states", ["namespace"], name: "index_minter_states_on_namespace", unique: true, using: :btree
 
+  create_table "permission_template_accesses", force: :cascade do |t|
+    t.integer  "permission_template_id", limit: 4
+    t.string   "agent_type",             limit: 255
+    t.string   "agent_id",               limit: 255
+    t.string   "access",                 limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permission_template_accesses", ["permission_template_id"], name: "fk_rails_9c1ccdc6d5", using: :btree
+
+  create_table "permission_templates", force: :cascade do |t|
+    t.string   "admin_set_id",   limit: 255
+    t.string   "visibility",     limit: 255
+    t.string   "workflow_name",  limit: 255, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "release_date"
+    t.string   "release_period", limit: 255
+  end
+
+  add_index "permission_templates", ["admin_set_id"], name: "index_permission_templates_on_admin_set_id", using: :btree
+
   create_table "proxy_deposit_requests", force: :cascade do |t|
     t.string   "work_id",           limit: 255,                       null: false
     t.integer  "sending_user_id",   limit: 4,                         null: false
@@ -222,7 +245,7 @@ ActiveRecord::Schema.define(version: 20170110142323) do
     t.string   "uri",                limit: 255
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.string   "lower_label",        limit: 175
+    t.string   "lower_label",        limit: 256
   end
 
   add_index "qa_local_authority_entries", ["local_authority_id"], name: "index_qa_local_authority_entries_on_local_authority_id", using: :btree
@@ -255,6 +278,177 @@ ActiveRecord::Schema.define(version: 20170110142323) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "sipity_agents", force: :cascade do |t|
+    t.string   "proxy_for_id",   limit: 255, null: false
+    t.string   "proxy_for_type", limit: 255, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "sipity_agents", ["proxy_for_id", "proxy_for_type"], name: "sipity_agents_proxy_for", unique: true, using: :btree
+
+  create_table "sipity_comments", force: :cascade do |t|
+    t.integer  "entity_id",  limit: 4,     null: false
+    t.integer  "agent_id",   limit: 4,     null: false
+    t.text     "comment",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "sipity_comments", ["agent_id"], name: "index_sipity_comments_on_agent_id", using: :btree
+  add_index "sipity_comments", ["created_at"], name: "index_sipity_comments_on_created_at", using: :btree
+  add_index "sipity_comments", ["entity_id"], name: "index_sipity_comments_on_entity_id", using: :btree
+
+  create_table "sipity_entities", force: :cascade do |t|
+    t.string   "proxy_for_global_id", limit: 255, null: false
+    t.integer  "workflow_id",         limit: 4,   null: false
+    t.integer  "workflow_state_id",   limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "sipity_entities", ["proxy_for_global_id"], name: "sipity_entities_proxy_for_global_id", unique: true, using: :btree
+  add_index "sipity_entities", ["workflow_id"], name: "index_sipity_entities_on_workflow_id", using: :btree
+  add_index "sipity_entities", ["workflow_state_id"], name: "index_sipity_entities_on_workflow_state_id", using: :btree
+
+  create_table "sipity_entity_specific_responsibilities", force: :cascade do |t|
+    t.integer  "workflow_role_id", limit: 4,   null: false
+    t.string   "entity_id",        limit: 255, null: false
+    t.integer  "agent_id",         limit: 4,   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "sipity_entity_specific_responsibilities", ["agent_id"], name: "sipity_entity_specific_responsibilities_agent", using: :btree
+  add_index "sipity_entity_specific_responsibilities", ["entity_id"], name: "sipity_entity_specific_responsibilities_entity", using: :btree
+  add_index "sipity_entity_specific_responsibilities", ["workflow_role_id", "entity_id", "agent_id"], name: "sipity_entity_specific_responsibilities_aggregate", unique: true, using: :btree
+  add_index "sipity_entity_specific_responsibilities", ["workflow_role_id"], name: "sipity_entity_specific_responsibilities_role", using: :btree
+
+  create_table "sipity_notifiable_contexts", force: :cascade do |t|
+    t.integer  "scope_for_notification_id",   limit: 4,   null: false
+    t.string   "scope_for_notification_type", limit: 255, null: false
+    t.string   "reason_for_notification",     limit: 255, null: false
+    t.integer  "notification_id",             limit: 4,   null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "sipity_notifiable_contexts", ["notification_id"], name: "sipity_notifiable_contexts_notification_id", using: :btree
+  add_index "sipity_notifiable_contexts", ["scope_for_notification_id", "scope_for_notification_type", "reason_for_notification", "notification_id"], name: "sipity_notifiable_contexts_concern_surrogate", unique: true, using: :btree
+  add_index "sipity_notifiable_contexts", ["scope_for_notification_id", "scope_for_notification_type", "reason_for_notification"], name: "sipity_notifiable_contexts_concern_context", using: :btree
+  add_index "sipity_notifiable_contexts", ["scope_for_notification_id", "scope_for_notification_type"], name: "sipity_notifiable_contexts_concern", using: :btree
+
+  create_table "sipity_notification_recipients", force: :cascade do |t|
+    t.integer  "notification_id",    limit: 4,   null: false
+    t.integer  "role_id",            limit: 4,   null: false
+    t.string   "recipient_strategy", limit: 255, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "sipity_notification_recipients", ["notification_id", "role_id", "recipient_strategy"], name: "sipity_notifications_recipients_surrogate", using: :btree
+  add_index "sipity_notification_recipients", ["notification_id"], name: "sipity_notification_recipients_notification", using: :btree
+  add_index "sipity_notification_recipients", ["recipient_strategy"], name: "sipity_notification_recipients_recipient_strategy", using: :btree
+  add_index "sipity_notification_recipients", ["role_id"], name: "sipity_notification_recipients_role", using: :btree
+
+  create_table "sipity_notifications", force: :cascade do |t|
+    t.string   "name",              limit: 255, null: false
+    t.string   "notification_type", limit: 255, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "sipity_notifications", ["name"], name: "index_sipity_notifications_on_name", unique: true, using: :btree
+  add_index "sipity_notifications", ["notification_type"], name: "index_sipity_notifications_on_notification_type", using: :btree
+
+  create_table "sipity_roles", force: :cascade do |t|
+    t.string   "name",        limit: 255,   null: false
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "sipity_roles", ["name"], name: "index_sipity_roles_on_name", unique: true, using: :btree
+
+  create_table "sipity_workflow_actions", force: :cascade do |t|
+    t.integer  "workflow_id",                 limit: 4,   null: false
+    t.integer  "resulting_workflow_state_id", limit: 4
+    t.string   "name",                        limit: 255, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "sipity_workflow_actions", ["resulting_workflow_state_id"], name: "sipity_workflow_actions_resulting_workflow_state", using: :btree
+  add_index "sipity_workflow_actions", ["workflow_id", "name"], name: "sipity_workflow_actions_aggregate", unique: true, using: :btree
+  add_index "sipity_workflow_actions", ["workflow_id"], name: "sipity_workflow_actions_workflow", using: :btree
+
+  create_table "sipity_workflow_methods", force: :cascade do |t|
+    t.string   "service_name",       limit: 255, null: false
+    t.integer  "weight",             limit: 4,   null: false
+    t.integer  "workflow_action_id", limit: 4,   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "sipity_workflow_methods", ["workflow_action_id"], name: "index_sipity_workflow_methods_on_workflow_action_id", using: :btree
+
+  create_table "sipity_workflow_responsibilities", force: :cascade do |t|
+    t.integer  "agent_id",         limit: 4, null: false
+    t.integer  "workflow_role_id", limit: 4, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "sipity_workflow_responsibilities", ["agent_id", "workflow_role_id"], name: "sipity_workflow_responsibilities_aggregate", unique: true, using: :btree
+
+  create_table "sipity_workflow_roles", force: :cascade do |t|
+    t.integer  "workflow_id", limit: 4, null: false
+    t.integer  "role_id",     limit: 4, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "sipity_workflow_roles", ["workflow_id", "role_id"], name: "sipity_workflow_roles_aggregate", unique: true, using: :btree
+
+  create_table "sipity_workflow_state_action_permissions", force: :cascade do |t|
+    t.integer  "workflow_role_id",         limit: 4, null: false
+    t.integer  "workflow_state_action_id", limit: 4, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "sipity_workflow_state_action_permissions", ["workflow_role_id", "workflow_state_action_id"], name: "sipity_workflow_state_action_permissions_aggregate", unique: true, using: :btree
+
+  create_table "sipity_workflow_state_actions", force: :cascade do |t|
+    t.integer  "originating_workflow_state_id", limit: 4, null: false
+    t.integer  "workflow_action_id",            limit: 4, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "sipity_workflow_state_actions", ["originating_workflow_state_id", "workflow_action_id"], name: "sipity_workflow_state_actions_aggregate", unique: true, using: :btree
+
+  create_table "sipity_workflow_states", force: :cascade do |t|
+    t.integer  "workflow_id", limit: 4,   null: false
+    t.string   "name",        limit: 255, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "sipity_workflow_states", ["name"], name: "index_sipity_workflow_states_on_name", using: :btree
+  add_index "sipity_workflow_states", ["workflow_id", "name"], name: "sipity_type_state_aggregate", unique: true, using: :btree
+
+  create_table "sipity_workflows", force: :cascade do |t|
+    t.string   "name",                limit: 255,   null: false
+    t.string   "label",               limit: 255
+    t.text     "description",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "allows_access_grant"
+  end
+
+  add_index "sipity_workflows", ["name"], name: "index_sipity_workflows_on_name", unique: true, using: :btree
 
   create_table "sufia_features", force: :cascade do |t|
     t.string   "key",        limit: 255,                 null: false
@@ -346,6 +540,7 @@ ActiveRecord::Schema.define(version: 20170110142323) do
     t.string   "arkivo_subscription",    limit: 255
     t.binary   "zotero_token",           limit: 65535
     t.string   "zotero_userid",          limit: 255
+    t.boolean  "guest",                                default: false
   end
 
   add_index "users", ["login"], name: "index_users_on_login", unique: true, using: :btree
@@ -376,6 +571,7 @@ ActiveRecord::Schema.define(version: 20170110142323) do
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_development"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_development"
+  add_foreign_key "permission_template_accesses", "permission_templates"
   add_foreign_key "qa_local_authority_entries", "qa_local_authorities", column: "local_authority_id"
   add_foreign_key "uploaded_files", "users"
 end

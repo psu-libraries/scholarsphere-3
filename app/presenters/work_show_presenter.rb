@@ -6,7 +6,13 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   delegate :bytes, :subtitle, to: :solr_document
 
-  self.file_presenter_class = ::FileSetPresenter
+  def creator
+    creator_name
+  end
+
+  def creator_name
+    solr_document.fetch('creator_name_tesim', nil) || solr_document.fetch('creator_tesim', [])
+  end
 
   def size
     number_to_human_size(bytes)
@@ -16,9 +22,14 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     solr_document.fetch('member_ids_ssim', []).length
   end
 
+  def file_page(page)
+    @file_page = page
+  end
+
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
-  def member_presenters(ids = ordered_ids, presenter_class = composite_presenter_class)
-    super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
+  def member_presenters
+    members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
+    Kaminari.paginate_array(members).page(@file_page).per(10)
   end
 
   def uploading?

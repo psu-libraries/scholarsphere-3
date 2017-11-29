@@ -47,5 +47,11 @@ FactoryGirl.define do
         allow(fs).to receive(:file_size).and_return('1234')
       end
     end
+
+    trait :with_file_format do
+      after(:build) do |fs|
+        allow(fs).to receive(:file_format).and_return('plain ()')
+      end
+    end
   end
 end

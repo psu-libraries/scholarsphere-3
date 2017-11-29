@@ -18,13 +18,20 @@ RSpec.configure do |config|
 
   # Only clean Fedora and Solr unless explicitly requested
   config.before :each do |example|
-    ActiveFedora::Cleaner.clean! if example.metadata.fetch(:clean, nil)
+    if example.metadata.fetch(:clean, nil)
+      ActiveFedora::Cleaner.clean!
+      DatabaseCleaner.clean_with(:truncation)
+    end
   end
 
   # Use typical Rails database cleaning procedures before each test
   config.before :each do |_example|
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
+    Sipity::Workflow.destroy_all
+    Sufia::PermissionTemplate.destroy_all
+    AdminSet.destroy_all
+    initialize_default_adminset
   end
 
   config.after do

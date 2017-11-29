@@ -18,23 +18,38 @@ describe CurationConcerns::Actors::GenericWorkActor do
 
   context 'with ordered attributes' do
     let(:attributes) do
-      {
-        creator: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-        title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
-      }
+      { title: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] }
     end
 
     it 'keeps the correct order' do
-      expect(work.creator).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
       expect(work.title).to eq(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     end
   end
 
-  context 'creator nil' do
-    let(:attributes) { { creator: nil } }
+  context 'with an existing Alias record' do
+    let!(:existing_alias) { create(:alias, :with_agent) }
+    let(:attributes) do
+      {
+        title: ['A title'],
+        creators: { '0' => { id: existing_alias.id } }
+      }
+    end
 
-    it 'does not error' do
-      expect(work.creator).to eq([])
+    it 'sets creator to existing Alias record' do
+      expect(work.creators).to eq [existing_alias]
+    end
+  end
+
+  context 'creator id nil' do
+    let(:attributes) do
+      {
+        title: ['A title'],
+        creators: { '0' => { id: nil, given_name: 'first', sur_name: 'last', display_name: 'first last' } }
+      }
+    end
+
+    it 'sets the creators' do
+      expect(work.creators.map(&:display_name)).to eq ['first last']
     end
   end
 

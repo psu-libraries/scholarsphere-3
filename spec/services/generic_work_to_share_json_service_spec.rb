@@ -4,15 +4,18 @@ require 'rails_helper'
 
 describe GenericWorkToShareJSONService do
   let(:name_service) { double }
+  let(:agent) { create(:agent, sur_name: 'Santy', given_name: 'Lorraine C') }
+  let(:creator) { create(:alias, display_name: creator_name, agent: agent) }
+  let(:creator_name) { 'Santy, Lorraine C' }
 
   before do
     allow_any_instance_of(GenericWork).to receive(:current_host).and_return('https://scholarsphere.psu.edu')
-    allow(NameDisambiguationService).to receive(:new).with(creator).and_return(name_service)
+    allow(NameDisambiguationService).to receive(:new).with(creator_name).and_return(name_service)
   end
+
   context 'when checking the fixture file' do
-    let(:file) { build(:file, id: 'x346f017s', title: ['Set9 ShamR 1.tif'], creator: ['Santy, Lorraine C'], date_modified: DateTime.parse('2015-07-30T20:15:08.528+00:00')) }
+    let(:file) { build(:file, id: 'x346f017s', title: ['Set9 ShamR 1.tif'], creators: [creator], date_modified: DateTime.parse('2015-07-30T20:15:08.528+00:00')) }
     let(:json) { JSON.parse(File.open(fixture_path + '/ss-share.json', 'rb').read) }
-    let(:creator) { 'Santy, Lorraine C' }
 
     it 'generates valid json' do
       pending('See issue #277')
@@ -29,7 +32,7 @@ describe GenericWorkToShareJSONService do
         \"jsonData\": {
           \"title\": \"#{title}\",
           \"contributors\": [{
-              \"name\": \"#{creator}\",
+              \"name\": \"#{creator_name}\",
               \"email\": \"#{creator_email}\"
             }],
           \"uris\": {
@@ -41,13 +44,15 @@ describe GenericWorkToShareJSONService do
       }"
     end
     let(:json)    { JSON.parse(json_template) }
-    let(:file)    { build(:file, id: id, title: [title], creator: [creator], date_modified: DateTime.parse(date_uploaded)) }
+    let(:file)    { create(:file, id: id, title: [title], creators: [creator], date_modified: DateTime.parse(date_uploaded)) }
     let(:title)   { 'abc123' }
     let(:id) { 'zzzzz' }
     let(:date_uploaded) { '2015-07-30T20:15:08Z' }
 
     context 'when the creator exists in ldap' do
-      let(:creator) { ' Cole, Carolyn Ann' }
+      let(:agent) { create(:agent, sur_name: 'Cole', given_name: 'Carolyn Ann') }
+      let(:creator) { create(:alias, agent: agent) }
+      let(:creator_name) { 'Cole, Carolyn Ann' }
       let(:creator_email) { 'cam156@psu.edu' }
 
       it 'formats the json' do
@@ -58,7 +63,7 @@ describe GenericWorkToShareJSONService do
     end
 
     context 'when the creator does not exist in ldap' do
-      let(:creator) { ' Frog, Kermit The' }
+      let(:creator) { FactoryGirl.create(:agent, sur_name: 'Frog', given_name: 'Kermit The') }
       let(:creator_email) {}
 
       it 'formats the json' do
@@ -71,7 +76,9 @@ describe GenericWorkToShareJSONService do
     context 'when deleting the file' do
       subject { JSON.parse(described_class.new(file, delete: true).json) }
 
-      let(:creator) { 'Guy, Bad' }
+      let(:agent) { create(:agent, sur_name: 'Guy', given_name: 'Bad') }
+      let(:creator) { create(:alias, display_name: creator_name, agent: agent) }
+      let(:creator_name) { 'Guy, Bad' }
       let(:creator_email) { 'badguy@trouble.com' }
 
       before { allow(name_service).to receive(:disambiguate).and_return([{ email: creator_email }]) }

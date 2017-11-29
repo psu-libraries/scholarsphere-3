@@ -12,7 +12,6 @@ ScholarSphere::Application.routes.draw do
   mount BrowseEverything::Engine => '/browse'
   mount Blacklight::Engine => '/'
   mount HydraEditor::Engine => '/'
-  mount CurationConcerns::Engine, at: '/'
   mount Qa::Engine => '/authorities'
 
   curation_concerns_collections
@@ -78,7 +77,11 @@ ScholarSphere::Application.routes.draw do
 
   get 'about' => 'static#about', id: 'about_page'
 
+  # Routes for looking up Agent records
+  get '/creators/name_query', to: 'agents#name_query'
+
   # This must be the very last route in the file because it has a catch-all route for 404 errors.
   # This behavior seems to show up only in production mode.
   mount Sufia::Engine => '/'
+  mount CurationConcerns::Engine, at: '/'
 end
