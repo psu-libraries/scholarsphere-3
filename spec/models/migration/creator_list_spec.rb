@@ -114,8 +114,19 @@ describe Migration::CreatorList do
 
       context 'display name is a partial name match' do
         let(:sur_name) { 'Frog' }
-        let(:given_name) { 'T' }
+        let(:given_name) { 'T.' }
         let(:display_name) { "#{given_name} #{sur_name}" }
+
+        it { is_expected.to eq('blarg institution for the insane' => alias1,
+                               user.login => alias3,
+                               'Kermit The Frog' => alias2,
+                               display_name => alias_test) }
+      end
+
+      context 'display name is a partial name match' do
+        let(:sur_name) { 'Frog' }
+        let(:given_name) {}
+        let(:display_name) { sur_name }
 
         it { is_expected.to eq('blarg institution for the insane' => alias1,
                                user.login => alias3,
