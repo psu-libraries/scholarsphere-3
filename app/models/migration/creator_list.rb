@@ -116,7 +116,9 @@ module Migration
           name = parse_name(user.display_name)
           agent = Agent.create(given_name: name.given, sur_name: name.family, psu_id: user.login, email: user.email)
         end
-        Alias.create(display_name: creator, agent: agent)
+        agent_alias = Alias.where(display_name: creator, name_ssim: agent.id).first
+        agent_alias ||= Alias.create(display_name: creator, agent: agent)
+        agent_alias
       end
 
       def cache_separator

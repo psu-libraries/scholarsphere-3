@@ -37,15 +37,15 @@ describe Migration::CreatorList do
     let(:alias1) { Alias.new(id: 'alias1', display_name: 'blarg institution for the insane', agent: agent1) }
     let(:agent2) { Agent.new(sur_name: 'Frog', given_name: 'Kermit The') }
     let(:alias2) { Alias.new(id: 'alias2', display_name: 'Kermit The Frog', agent: agent2) }
-    let(:alias3) { Alias.new(id: 'alias3', display_name: 'Kermit The Frog', agent: agent2) }
+    let(:alias3) { Alias.new(id: 'alias3', display_name: user.login, agent: agent2) }
 
     before do
       user
       allow(Agent).to receive(:create).with(sur_name: 'blarg institution for the insane', given_name: nil).and_return(agent1)
       allow(Agent).to receive(:create).with(sur_name: 'Frog', given_name: 'Kermit The', psu_id: user.login, email: user.email).and_return(agent2)
-      allow(Alias).to receive(:create).with(display_name: 'blarg institution for the insane', agent: agent1).and_return(alias1)
-      allow(Alias).to receive(:create).with(display_name: 'Kermit The Frog', agent: agent2).and_return(alias2)
-      allow(Alias).to receive(:create).with(display_name: user.login, agent: agent2).and_return(alias3)
+      allow(Alias).to receive(:create).with(display_name: 'blarg institution for the insane', agent: agent1).and_return(alias1).once
+      allow(Alias).to receive(:create).with(display_name: 'Kermit The Frog', agent: agent2).and_return(alias2).once
+      allow(Alias).to receive(:create).with(display_name: user.login, agent: agent2).and_return(alias3).once
       save_work_to_solr_and_fake_fedora(work, 'blarg institution for the insane')
       save_work_to_solr_and_fake_fedora(work4, 'Kermit The Frog')
       save_work_to_solr_and_fake_fedora(work5, user.login)
@@ -58,6 +58,27 @@ describe Migration::CreatorList do
     it { is_expected.to eq('blarg institution for the insane' => alias1,
                            user.login => alias3,
                            'Kermit The Frog' => alias2) }
+
+    context 'Alias Exists' do
+      before do
+        alias1.save
+        alias2.save
+        alias3.save
+      end
+
+      after do
+        alias1.delete(eradicate: true)
+        alias2.delete(eradicate: true)
+        alias3.delete(eradicate: true)
+      end
+
+      it 'is not created again' do
+        expect(Alias).not_to receive(:create).with(display_name: 'blarg institution for the insane', agent: agent1)
+        expect(Alias).not_to receive(:create).with(display_name: 'Kermit The Frog', agent: agent2)
+        expect(Alias).not_to receive(:create).with(display_name: user.login, agent: agent2)
+        creator_list
+      end
+    end
 
     it 'creates a cache and loads it' do
       creator_list
