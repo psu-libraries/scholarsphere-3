@@ -78,15 +78,15 @@ module Migration
         return true if creator == user.login
 
         logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
-        user_name = parse_name(user.display_name)
+        valid_given_and_sur_name?(user.display_name, creator) || (comparable_name(creator) == comparable_name(user.display_name))
+      end
+
+      def valid_given_and_sur_name?(user_display_name, creator)
+        # family name match is valid and the given name initial is at the start
+        user_name = parse_name(user_display_name)
         creator_name = parse_name(creator)
-        user_name.family.downcase!
-        creator_name.family.downcase!
-
-        # family name match is valid
-        return true if user_name.family == creator_name.family
-
-        comparable_name(creator) == comparable_name(user.display_name)
+        user_name.family.casecmp(creator_name.family.downcase).zero? &&
+          (creator_name.given.size > 1 || user_name.given.downcase.start_with?(creator_name.given.downcase))
       end
 
       def comparable_name(name)
