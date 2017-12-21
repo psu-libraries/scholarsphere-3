@@ -41,7 +41,8 @@ describe GoogleAnalytics::DownloadReport do
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/other_missing', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/gone_baby', totalEvents: '1'),
        OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/19953w999z', totalEvents: '1'),
-       OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1')]
+       OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1'),
+       OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z?abc=123', totalEvents: '1')]
     }
 
     let(:generic_file_with_fileset) { GenericWork.new(id: '3xs55m950', depositor: user2.login) }
@@ -69,7 +70,8 @@ describe GoogleAnalytics::DownloadReport do
       subject { report.file_set_downloads }
 
       it { is_expected.to eq([OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/19953w999z', totalEvents: '1'),
-                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1')])
+                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1'),
+                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z?abc=123', totalEvents: '1')])
       }
     end
   end

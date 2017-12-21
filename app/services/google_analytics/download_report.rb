@@ -65,7 +65,7 @@ module GoogleAnalytics
       end
 
       def path_to_id(page_path)
-        page_path.split('/').last
+        page_path.split('/').last.split('?').first
       end
 
       def lookup_object(id)
