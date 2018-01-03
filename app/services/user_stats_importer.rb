@@ -51,7 +51,7 @@ class UserStatsImporter
     end
 
     def path_to_id(page_path)
-      page_path.split('/').last
+      page_path.split('/').last.split('?').first
     end
 
     def safe_method_call(error_message, method, *method_args)
