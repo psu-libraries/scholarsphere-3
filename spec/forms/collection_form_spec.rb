@@ -25,14 +25,13 @@ describe CollectionForm do
   describe '#primary_terms' do
     subject { form.primary_terms }
 
-    it { is_expected.to contain_exactly(:title, :subtitle, :description, :keyword) }
+    it { is_expected.to contain_exactly(:title, :subtitle, :creator, :description, :keyword) }
   end
 
   describe '#secondary_terms' do
     subject { form.secondary_terms }
 
-    it { is_expected.to contain_exactly(:creator,
-                                        :contributor,
+    it { is_expected.to contain_exactly(:contributor,
                                         :rights,
                                         :publisher,
                                         :date_created,

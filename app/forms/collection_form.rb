@@ -55,12 +55,12 @@ class CollectionForm < Sufia::Forms::CollectionForm
   end
 
   def primary_terms
-    [:title, :subtitle, :description, :keyword]
+    [:title, :subtitle, :creator, :description, :keyword]
   end
 
   def secondary_terms
     [
-      :creator, :contributor, :rights, :publisher, :date_created, :subject, :language, :identifier,
+      :contributor, :rights, :publisher, :date_created, :subject, :language, :identifier,
       :based_near, :related_url, :resource_type
     ]
   end
