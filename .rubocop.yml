@@ -52,7 +52,7 @@ Style/GlobalVars:
     - 'config/initializers/active_fedora_base_redis.rb'
     - 'config/environment.rb'
 
-Style/VariableName:
+Naming/VariableName:
   Exclude:
     - 'lib/share_notify/push_document.rb'
 
@@ -60,11 +60,11 @@ Style/BracesAroundHashParameters:
   Exclude:
     - 'config/deploy.rb'
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Exclude:
     - 'config/application.rb'
 
-Style/PredicateName:
+Naming/PredicateName:
   Exclude:
     - 'app/controllers/application_controller.rb'
 

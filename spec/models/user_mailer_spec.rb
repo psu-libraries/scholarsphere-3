@@ -35,8 +35,8 @@ describe UserMailer do
       expect(message['to'].to_s).to include('Test email')
       expect(message.parts.count).to eq(2) # attachment & body
       expect(message.parts[0].body).to include('Report for')
-      expect(message.parts[0].attachment?).to be_falsey
-      expect(message.parts[1].attachment?).to be_truthy
+      expect(message.parts[0]).not_to be_attachment
+      expect(message.parts[1]).to be_attachment
       expect(message.parts[1].body).to include(csv)
     end
   end

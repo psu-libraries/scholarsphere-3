@@ -82,7 +82,7 @@ describe Migration::CreatorList do
 
     it 'creates a cache and loads it' do
       creator_list
-      expect(File.exist?(cache_name)).to be_truthy
+      expect(File).to be_exist(cache_name)
       expect(Alias).to receive(:find).with(alias1.id).and_return(alias1)
       expect(Alias).to receive(:find).with(alias2.id).and_return(alias2)
       expect(Alias).to receive(:find).with(alias3.id).and_return(alias3)

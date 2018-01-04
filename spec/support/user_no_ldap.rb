@@ -5,7 +5,7 @@ require 'active_fedora/cleaner'
 # clean up after ourselves here.
 RSpec.configure do |config|
   unless :need_ldap
-    config.before(:each) do
+    config.before do
       allow(Hydra::LDAP).to receive(:groups_for_user).and_return([])
       allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: 'Success'))
     end

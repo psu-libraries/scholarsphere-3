@@ -3,7 +3,7 @@
 require 'rails_helper'
 include Warden::Test::Helpers
 
-RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true do
+RSpec.describe 'Create a Generic Work with multiple Creators', :clean, js: true do
   context 'a logged in user' do
     let(:user) { create(:user, display_name: 'First User') }
     let(:name) { 'Testing' }
@@ -24,7 +24,7 @@ RSpec.feature 'Create a Generic Work with multiple Creators', :clean, js: true d
       create(:alias, display_name: 'Testing Person', agent: p)
     end
 
-    scenario do
+    it do
       expect_ldap(:query_ldap_by_name, response, 'TESTING', '*', ldap_fields)
 
       expect_ldap(:query_ldap_by_mail, response, 'Testing@psu.edu', ldap_fields)
