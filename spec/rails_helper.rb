@@ -95,7 +95,7 @@ RSpec.configure do |config|
   #   describe "problem test", verify_partial_doubles: false do
   #     ...
   #   end
-  config.before :each do |example|
+  config.before do |example|
     config.mock_with :rspec do |mocks|
       mocks.verify_partial_doubles = example.metadata.fetch(:verify_partial_doubles, true)
     end
