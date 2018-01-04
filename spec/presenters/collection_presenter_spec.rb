@@ -6,7 +6,9 @@ describe CollectionPresenter do
   describe '#terms' do
     subject { described_class.terms }
 
-    it { is_expected.to include(:date_modified, :date_uploaded) }
+    it { is_expected.to include(:creator, :keyword, :size, :total_items, :resource_type, :contributor,
+                                :rights, :publisher, :date_created, :subject, :language, :identifier,
+                                :based_near, :related_url, :date_modified, :date_uploaded) }
   end
 
   describe '#size' do
