@@ -146,6 +146,16 @@ FactoryGirl.define do
       after(:create, &:characterize)
     end
 
+    trait :with_public_embargo do
+      after(:build) do |work, evaluator|
+        work.embargo = FactoryGirl.create(:public_embargo, embargo_release_date: evaluator.embargo_release_date)
+      end
+    end
+
+    trait :with_public_lease do
+      lease { FactoryGirl.create(:public_lease, lease_expiration_date: (Time.zone.today + 14.days)) }
+    end
+
     trait :with_complete_metadata do
       title         ['titletitle']
       keyword       ['tagtag']
