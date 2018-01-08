@@ -16,6 +16,22 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
     model.permissions_attributes = combinator.permissions
   end
 
+  # Copies the single value code from the generic work form to be used exclusively for rights in batch edit
+  # https://github.com/samvera/sufia/wiki/Customizing-Metadata#making-a-default-property-non-repeatable
+  def self.multiple?(field)
+    if [:rights].include? field.to_sym
+      false
+    else
+      super
+    end
+  end
+
+  def self.model_attributes(_)
+    attrs = super
+    attrs[:rights] = Array(attrs[:rights]) if attrs[:rights]
+    attrs
+  end
+
   private
 
     # Assigns each of the combined attributes to {model}, creating an empty array for null attributes.
