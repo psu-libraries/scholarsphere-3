@@ -68,6 +68,7 @@ describe 'Editing a work', js: true do
     within('.base-terms') do
       expect(page).to have_selector('h2', text: 'Basic Metadata')
       expect(page).to have_selector('label', text: 'Subtitle')
+      expect(page).to have_selector('label', text: 'Display Name required')
     end
 
     within('#work-media') do
