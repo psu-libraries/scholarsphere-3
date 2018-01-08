@@ -24,13 +24,13 @@ class BatchEditsController < ApplicationController
   # Note: Permissions and visibility are *always* copied down to any contained FileSet objects.
   #       There is no UI option presented to the user to prevent this, unlike the option that
   #       is present when changing permissions on a single work.
-  def update_document(obj)
-    visibility_changed = visibility_status(obj)
-    obj.attributes = work_params
-    obj.date_modified = Time.current.ctime
-    obj.save
-    VisibilityCopyJob.perform_later(obj) if visibility_changed
-    InheritPermissionsJob.perform_later(obj) if work_params.fetch(:permissions_attributes, nil)
+  def update_document(curation_concern)
+    visibility_changed = visibility_status(curation_concern)
+    actor = CurationConcerns::CurationConcern.actor(curation_concern, current_user)
+    actor.update(work_params)
+    save_changes(curation_concern)
+    VisibilityCopyJob.perform_later(curation_concern) if visibility_changed
+    InheritPermissionsJob.perform_later(curation_concern) if work_params.fetch(:permissions_attributes, nil)
   end
 
   # The HTML form is being stupid and for some unknown reason, the array of batch ids being
@@ -58,9 +58,14 @@ class BatchEditsController < ApplicationController
       form_class.model_attributes(work_params)
     end
 
-    def visibility_status(object)
+    def visibility_status(curation_concern)
       selected_visibility = work_params.fetch(:visibility, nil)
       return false unless selected_visibility
-      object.visibility != selected_visibility
+      curation_concern.visibility != selected_visibility
+    end
+
+    def save_changes(curation_concern)
+      curation_concern.embargo&.save
+      curation_concern.lease&.save
     end
 end
