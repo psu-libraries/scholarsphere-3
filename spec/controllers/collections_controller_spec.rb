@@ -69,5 +69,23 @@ describe CollectionsController, type: :controller do
       end
       it { is_expected.to redirect_to('/dashboard/collections') }
     end
+
+    describe '#create' do
+      let(:collection) { assigns[:collection] }
+      let(:permissions) { collection.permissions.map(&:to_hash) }
+
+      let(:user) { create(:user) }
+
+      before do
+        allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+        allow_any_instance_of(User).to receive(:groups).and_return([])
+        post :create, collection: { 'title' => 'Test', 'subtitle' => '', 'creators' => { '0' => { 'id' => '', 'given_name' => 'Lorraine C', 'sur_name' => 'Santy', 'display_name' => 'Lorraine C Santy', 'email' => '', 'psu_id' => '' } }, 'description' => ['Test Description'], 'keyword' => ['test'], 'contributor' => [''], 'rights' => '', 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'resource_type' => [''], 'visibility' => 'open', 'permissions_attributes' => { '0' => { 'type' => 'group', 'name' => 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', 'access' => 'edit' } } }
+      end
+
+      it 'applies the persmissions' do
+        collection.reload # doing a reload to make sure the permissions made it all the way to fedora
+        expect(permissions).to contain_exactly({ name: 'public', type: 'group', access: 'read' }, { name: user.login, type: 'person', access: 'edit' }, name: 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', type: 'group', access: 'edit')
+      end
+    end
   end
 end

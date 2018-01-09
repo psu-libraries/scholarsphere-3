@@ -60,6 +60,31 @@ describe Collection, type: :feature do
     end
   end
 
+  describe "editing a collection's edit groups" do
+    let!(:collection)           { create(:collection, depositor: current_user.login, subtitle: 'Vimana', description: ['original description']) }
+    let!(:original_title)       { collection.title }
+    let!(:original_subtitle)    { collection.subtitle }
+    let!(:original_description) { collection.description }
+
+    let(:updated_title)         { 'Updated Title' }
+    let(:updated_subtitle)      { 'Updated Vimana2' }
+    let(:updated_description)   { 'Updated description text.' }
+
+    before { sign_in_with_js(current_user) }
+    specify do
+      visit "/collections/#{collection.id}/edit"
+      expect(page).to have_field 'collection_title', with: original_title.first
+      expect(page).to have_field 'collection_subtitle', with: original_subtitle
+      expect(page).to have_field 'collection_description', with: original_description.first
+      within('div#share') do
+        select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
+        select 'Edit', from: 'new_group_permission_skel'
+        page.find('#add_new_group_skel').click
+        expect(page).to have_selector("input[value='umg/up.dlt.scholarsphere-users']", visible: false)
+      end
+    end
+  end
+
   describe "editing a collection's metadata" do
     let!(:collection)           { create(:collection, depositor: current_user.login, subtitle: 'Vimana', description: ['original description']) }
     let!(:original_title)       { collection.title }

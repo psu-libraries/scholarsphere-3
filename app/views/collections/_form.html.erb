@@ -30,6 +30,10 @@
     <%= render 'form_permission', f: f %>
   </div>
 
+  <div id="share" class="collection_form_sharing" data-param-key="collection">
+    <%= render 'curation_concerns/base/form_share', f: f %>
+  </div>
+
   <div class="primary-actions">
     <% if params[:action] == "new" %>
       <%# Overrides Sufia to display different sets of buttons for creating collections %>

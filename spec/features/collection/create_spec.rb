@@ -39,6 +39,12 @@ describe Collection, type: :feature do
 
     context 'without any files' do
       it 'creates an empty collection' do
+        within('div#share') do
+          select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
+          select 'Edit', from: 'new_group_permission_skel'
+          click_button 'Add Group'
+          expect(page).to have_selector("input[value='umg/up.dlt.scholarsphere-users']", visible: false)
+        end
         click_button 'Create Empty Collection'
         expect(page).to have_content('Collection was successfully created.')
         expect(page).to have_content(title)

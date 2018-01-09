@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class CollectionForm < Sufia::Forms::CollectionForm
+  delegate :depositor, :permissions, to: :model
+
   attr_reader :current_ability, :request
 
   self.terms += [:subtitle]
   self.required_fields = [:title, :description, :keyword]
 
   include WithCreator
+  include HydraEditor::Form::Permissions
 
   # @param [Collection] model
   # @param [Ability] current_ability
