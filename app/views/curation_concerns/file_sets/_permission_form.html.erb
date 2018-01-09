@@ -1,0 +1,20 @@
+<% depositor = f.object.depositor %>
+<% public_perm = f.object.permissions.map { |perm| perm.access if perm.agent_name == "public"}.compact.first %>
+<% public_perm = true if params[:controller] == 'batch' %>
+<% registered_perm = f.object.permissions.map { |perm| perm.access if perm.agent_name == "registered"}.compact.first %>
+
+<h2 id="permissions_display"><% if params[:controller] == 'batch' %>Bulk <% end %>Permissions <% if params[:controller] == 'batch' %>
+      <small>(applied to all files just uploaded)</small><% end %>
+</h2>
+
+<div class="alert alert-info hidden" id="save_perm_note">Permissions are <strong>not</strong> saved until the &quot;Save&quot; button is pressed at the bottom of the page.</div>
+
+<div class="alert alert-warning hidden" role="alert" id="permissions_error">
+  <span id="permissions_error_text"></span>
+</div>
+
+<%= render 'curation_concerns/base/form_permission', f: f %>
+<%= render 'curation_concerns/base/share_with' %>
+<div id="share" data-param-key="<%= f.object.model_name.param_key %>">
+  <%= render 'curation_concerns/base/form_share', f: f, object_type: 'file' %>
+</div>

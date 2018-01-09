@@ -1,0 +1,15 @@
+<h3>Permission Definitions</h3>
+<dl>
+  <dt>View/Download</dt>
+  <dd>this file (both contents and metadata) is accessible from within <%= application_name %>.</dd>
+  <dt>Edit</dt>
+  <dd>this file (both contents and metadata) can be edited. You may only grant this permission
+    to <%= institution_name %> users and/or groups.</dd>
+</dl>
+
+<p>You may grant &ldquo;View/Download&rdquo; or &ldquo;Edit&rdquo; access for specific users and/or groups to files.
+  Enter a valid <%=t('sufia.account_name') %>, one at a time, select the access level for that user and click
+  "Add User."
+</p>
+
+<%= render 'curation_concerns/file_sets/groups_description' %>
