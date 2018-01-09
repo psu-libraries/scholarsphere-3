@@ -39,6 +39,14 @@ describe 'Batch management of works', type: :feature do
         expect(page).to have_content 'Changes Saved', wait: Capybara.default_max_wait_time * 4
       end
 
+      # Update rights for all works to a single value
+      select 'GNU General Public License', from: 'batch_edit_item_rights'
+      click_button('rights_save')
+      within '#form_rights' do
+        sleep 0.1 until page.text.include?('Changes Saved')
+        expect(page).to have_content 'Changes Saved', wait: Capybara.default_max_wait_time * 4
+      end
+
       # Verify changes
       work1.reload
       work2.reload
