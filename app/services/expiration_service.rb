@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'byebug'
+
 class ExpirationService
   attr_reader :expiration_date
 
@@ -14,37 +16,40 @@ class ExpirationService
   end
 
   def run
-    expire_embargoes
-    expire_leases
+    expire_generic_works(embargo_expirations, :expire_generic_work_embargo )
+    expire_generic_works(lease_expirations, :expire_generic_work_lease)
   end
 
-  def expire_embargoes
-    embargo_expirations.each do |expiration|
-      next unless expiration.embargo.active?
-      expiration.visibility = expiration.embargo.visibility_after_embargo
-      expiration.deactivate_embargo!
-      expiration.embargo.save
-      expiration.save
-      VisibilityCopyJob.perform_later(expiration)
+  private
+  
+    def expire_generic_works(expired_works, expiration_method)
+      expired_works.each do |expired_generic_work|
+        send(expiration_method, expired_generic_work)
+        expired_generic_work.save
+        VisibilityCopyJob.perform_later(expired_generic_work)
+      end
     end
-  end
 
-  def expire_leases
-    lease_expirations.each do |expiration|
-      next unless expiration.lease.active?
-      expiration.visibility = expiration.lease.visibility_after_lease
-      expiration.deactivate_lease!
-      expiration.lease.save
-      expiration.save
-      VisibilityCopyJob.perform_later(expiration)
+
+    def expire_generic_work_embargo( expired_generic_work )
+      expired_generic_work.visibility = expired_generic_work.embargo.visibility_after_embargo
+      expired_generic_work.deactivate_embargo!
+      expired_generic_work.embargo.save
     end
-  end
 
-  def embargo_expirations
-    GenericWork.where("embargo_release_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
-  end
+    def expire_generic_work_lease( expired_generic_work)
+      expired_generic_work.visibility = expired_generic_work.lease.visibility_after_lease
+      expired_generic_work.deactivate_lease!
+      expired_generic_work.lease.save
+    end
 
-  def lease_expirations
-    GenericWork.where("lease_expiration_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
-  end
+    def embargo_expirations
+      generic_works_needing_embargo = GenericWork.where("embargo_release_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
+      generic_works_needing_embargo.select {|gw| gw.embargo.active?}
+    end
+
+    def lease_expirations
+      generic_works_needing_lease = GenericWork.where("lease_expiration_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
+      generic_works_needing_lease.select {|gw| gw.lease.active?}
+    end
 end
