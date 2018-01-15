@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   include Sufia::UsersControllerBehavior
 
   before_action :linkedin_url, only: :show
+  after_action :copy_orcid_id, only: :update
 
   def linkedin_url
     @linkedin_url ||= format_linkedin_url
@@ -23,6 +24,14 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       format.json { render json: users.first(20).to_json }
+    end
+  end
+
+  def copy_orcid_id
+    agent = Agent.where(psu_id: @user.login).first
+    if @user.orcid.present? && agent.present?
+      agent.orcid_id = @user.orcid
+      agent.save
     end
   end
 
