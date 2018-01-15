@@ -1,5 +1,6 @@
 <h2>Sharing With</h2>
 <% depositor = f.object.depositor %>
+<% object_name = I18n.t("scholarsphere.model_display_name.#{f.object_name}") %>
 
 <div class="alert alert-info hidden" id="save_perm_note">Permissions are
   <strong>not</strong> saved until the &quot;Save&quot; button is pressed at the bottom of the page.</div>
@@ -43,7 +44,7 @@
 </table>
 
 
-<h2>Share work with other users</h2>
+<h2>Share <%= object_name %> with other users</h2>
   <ol class="list-inline help-block">
     <li>Search by name or <%= t('sufia.account_label') %>.</li>
     <li>Select the access level you wish to grant</li>
@@ -67,7 +68,7 @@
   </div>
 </div>
 
-<h2>Share work with groups of users</h2>
+<h2>Share <%= object_name %> with groups of users</h2>
 <ol class="list-inline help-block">
   <li>Select the group.</li>
   <li>Select the access level you wish to grant</li>

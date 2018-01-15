@@ -55,6 +55,10 @@ en:
           label: 'Filter your results by'
 
   scholarsphere:
+    model_display_name:
+          generic_work: 'work'
+          file_set: 'file'
+          collection: 'collection'
     upload:
       restrictions_html: "<h3>Maximum Upload Restrictions</h3><ul><li>Individual File Size: 500 MB</li><li>Up to 100 files and totaling less than 1GB in size</li></ul><p><a href='/contact'>Need to upload a larger file? Contact us for support.</a></p>"
       content_policy_html: "<h3>Content Policy</h3><p class='content-policy'>Please review <a href='/about#Content_Policy'>ScholarSphere’s Content Policy</a> to make sure you are not depositing materials that are sensitive.</p>"
