@@ -59,5 +59,13 @@ module CurationConcerns
       end
       Hash[available_files.map { |file| [file.to_s, file.id] }]
     end
+
+    def create_doi
+      model.doi.present?
+    end
+
+    def show_doi_form?
+      true
+    end
   end
 end

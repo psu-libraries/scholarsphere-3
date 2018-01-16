@@ -46,6 +46,21 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   protected
 
+    def after_update_response
+      super
+      create_doi
+    end
+
+    def after_create_response
+      super
+      create_doi
+    end
+
+    def create_doi
+      return if params[:generic_work][:create_doi] != '1'
+      doi_service.run(curation_concern)
+    end
+
     def build_form
       super
       if curation_concern.errors.present?
@@ -74,5 +89,9 @@ class CurationConcerns::GenericWorksController < ApplicationController
     # for the case where the migration has yet to be run
     def migrate_creator
       Migration::SolrListMigrator.update(curation_concern, {})
+    end
+
+    def doi_service
+      @doi_service ||= DOIService.new
     end
 end
