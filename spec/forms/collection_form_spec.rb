@@ -48,4 +48,16 @@ describe CollectionForm do
 
     it { is_expected.to contain_exactly(:title, :description, :keyword) }
   end
+
+  describe '#depositor' do
+    subject { form.depositor }
+
+    it { is_expected.to eq(collection.depositor) }
+  end
+
+  describe '#permissions' do
+    subject { form.permissions.to_a }
+
+    it { is_expected.to eq(collection.permissions.to_a) }
+  end
 end

@@ -7,7 +7,7 @@ gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
-gem 'active-fedora', '~> 11.1.3'
+gem 'active-fedora', '~> 11.5'
 gem 'sufia', '7.4.1'
 gem 'blacklight_advanced_search', '~> 6.0'
 
