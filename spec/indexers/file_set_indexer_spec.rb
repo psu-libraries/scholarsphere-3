@@ -33,5 +33,36 @@ describe FileSetIndexer do
       it { is_expected.to include('file_size_lts' => nil) }
       its(:keys) { is_expected.not_to include('file_size_is') }
     end
+
+    context 'with all_text' do
+      let(:text) { instance_double(String) }
+      let(:extracted) { instance_double(Hydra::PCDM::File, content: text) }
+
+      before do
+        allow(file_set).to receive(:extracted_text).and_return(extracted)
+      end
+      it 'forces utf8' do
+        expect(text).to receive(:force_encoding).with('UTF-8').and_return('abc123')
+        subject
+      end
+
+      it 'handles errors with forcing utf8' do
+        expect(text).to receive(:force_encoding).with('UTF-8').and_raise(StandardError.new('blarg'))
+        subject
+      end
+    end
+
+    context 'without all_text' do
+      let(:text) { instance_double(String, blank?: true) }
+      let(:extracted) { instance_double(Hydra::PCDM::File, content: text) }
+
+      before do
+        allow(file_set).to receive(:extracted_text).and_return(extracted)
+      end
+      it 'does not force utf8' do
+        expect(text).not_to receive(:force_encoding)
+        subject
+      end
+    end
   end
 end
