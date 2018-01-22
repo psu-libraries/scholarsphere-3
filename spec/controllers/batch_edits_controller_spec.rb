@@ -118,6 +118,41 @@ describe BatchEditsController do
       end
     end
 
+    context 'when permissions are removed' do
+      let(:work1) { create(:private_work, title: ['Work 1'], depositor: user.login, edit_users: ['cam156']) }
+      let(:work2) { create(:private_work, title: ['Work 2'], depositor: user.login, edit_users: ['cam156']) }
+
+      # Returns the id for a specific permission. The permissions edit form will have this information.
+      let(:permission_id) do
+        work1.permissions.map { |p| { p.id => p.to_hash } }.select do |h|
+          h.values.include?(name: 'cam156', type: 'person', access: 'edit')
+        end.first.keys.first
+      end
+
+      let(:user_permission) do
+        {
+          '0' => { 'access' => 'edit', 'type' => 'person', 'name' => 'mat141' },
+          '1' => { 'access' => 'edit', 'type' => 'person', 'name' => 'cam156', '_destroy' => 'true', 'id' => permission_id }
+        }
+      end
+
+      let(:parameters) do
+        {
+          update_type:        'update',
+          batch_edit_item:    { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
+          batch_document_ids: [work1.id, work2.id]
+        }
+      end
+
+      it 'removes the permission from each work' do
+        expect(VisibilityCopyJob).not_to receive(:perform_later)
+        expect(InheritPermissionsJob).to receive(:perform_later).twice
+        put :update, parameters.as_json
+        expect(work1.reload.edit_users).to contain_exactly('mat141', work1.depositor)
+        expect(work2.reload.edit_users).to contain_exactly('mat141', work2.depositor)
+      end
+    end
+
     context 'when adding an embargo' do
       let(:parameters) do
         {
