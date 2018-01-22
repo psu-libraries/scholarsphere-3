@@ -27,8 +27,10 @@ class BatchEditItem < ActiveFedora::Base
     range.first
   end
 
-  # Creators are ActiveTriples::Relation which must be cast to arrays before they can be flattened
+  # @return [Array<Alias>] with duplicates removed.
+  # @note Creators are ActiveTriples::Relation which must be cast to arrays before they can be flattened.
   def creators
-    batch.map(&:creators).map(&:to_a).flatten
+    creators = batch.map(&:creators).map(&:to_a).flatten
+    creators.uniq(&:id)
   end
 end

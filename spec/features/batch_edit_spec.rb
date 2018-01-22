@@ -4,8 +4,26 @@ require 'feature_spec_helper'
 
 describe 'Batch management of works', type: :feature do
   let(:current_user) { create(:user) }
-  let!(:work1)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
-  let!(:work2)       { create(:public_work, :with_complete_metadata, depositor: current_user.login) }
+
+  let(:first_creator) do
+    create(:alias, display_name: 'First Creator', agent: Agent.new(given_name: 'First', sur_name: 'Creator'))
+  end
+
+  let(:second_creator) do
+    create(:alias, display_name: 'Second Creator', agent: Agent.new(given_name: 'Second', sur_name: 'Creator'))
+  end
+
+  let!(:work1) do
+    create(:public_work, :with_complete_metadata,
+           creators: [first_creator, second_creator],
+           depositor: current_user.login)
+  end
+
+  let!(:work2) do
+    create(:public_work, :with_complete_metadata,
+           creators: [first_creator, second_creator],
+           depositor: current_user.login)
+  end
 
   before do
     sign_in_with_named_js(:batch_edit, current_user, disable_animations: true)
@@ -56,10 +74,10 @@ describe 'Batch management of works', type: :feature do
       end
       expect(work1.creators.map(&:display_name)).to contain_exactly('Dr. Creator C. Creator, MD', 'Another Creator')
       expect(work1.creators.map(&:agent).map(&:sur_name)).to contain_exactly('Creator', 'Creator')
-      expect(work1.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Creator C.')
+      expect(work1.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Second')
       expect(work2.creators.map(&:display_name)).to contain_exactly('Dr. Creator C. Creator, MD', 'Another Creator')
       expect(work2.creators.map(&:agent).map(&:sur_name)).to contain_exactly('Creator', 'Creator')
-      expect(work2.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Creator C.')
+      expect(work2.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Second')
     end
 
     it "displays the field's existing value" do
@@ -70,9 +88,12 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
       expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
       expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
-      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq('Creator C.')
+      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq('First')
       expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq('Creator')
-      expect(find_field(id: 'batch_edit_item[creators][0][display_name]').value).to eq('creatorcreator')
+      expect(find_field(id: 'batch_edit_item[creators][0][display_name]').value).to eq('First Creator')
+      expect(find_field(id: 'batch_edit_item[creators][1][given_name]').value).to eq('Second')
+      expect(find_field(id: 'batch_edit_item[creators][1][sur_name]').value).to eq('Creator')
+      expect(find_field(id: 'batch_edit_item[creators][1][display_name]').value).to eq('Second Creator')
       expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
       expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
