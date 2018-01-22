@@ -68,6 +68,14 @@ class CollectionForm < Sufia::Forms::CollectionForm
     ]
   end
 
+  def create_doi
+    model.doi.present?
+  end
+
+  def show_doi_form?
+    true
+  end
+
   private
 
     def batch_document_ids

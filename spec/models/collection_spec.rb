@@ -27,9 +27,17 @@ describe Collection do
   end
 
   context 'with no attached files' do
-    let(:collection) { build(:collection) }
+    let(:collection) { build(:collection, identifier: identifier) }
+    let(:identifier) { ['abc123'] }
 
     its(:bytes) { is_expected.to eq(0) }
+    its(:doi)   { is_expected.to eq([]) }
+
+    context 'with doi' do
+      let(:identifier) { ['doi:abc123'] }
+
+      its(:doi) { is_expected.to eq(identifier) }
+    end
   end
 
   context 'with attached files' do
@@ -43,6 +51,7 @@ describe Collection do
 
     before { allow(ActiveFedora::SolrService).to receive(:query).and_return(resp) }
     its(:bytes) { is_expected.to eq(40) }
+    its(:url)   { is_expected.to eq("http://test.com/collections/#{collection.id}") }
   end
 
   describe '::indexer' do

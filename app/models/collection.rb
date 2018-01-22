@@ -4,6 +4,7 @@ class Collection < ActiveFedora::Base
   include ::CurationConcerns::CollectionBehavior
   include ::BasicMetadata
   include HasCreators
+  include DoiIdentifier
   self.indexer = CollectionIndexer
 
   property :subtitle, predicate: ::RDF::Vocab::EBUCore.subtitle, multiple: false do |index|
@@ -20,7 +21,19 @@ class Collection < ActiveFedora::Base
     true
   end
 
+  def url
+    "#{current_host}#{path}"
+  end
+
   private
+
+    def current_host
+      Rails.application.config.virtual_host.chomp('/')
+    end
+
+    def path
+      Rails.application.routes.url_helpers.collection_path(self)
+    end
 
     # Field name to look up when locating the size of each file in Solr.
     def file_size_field
