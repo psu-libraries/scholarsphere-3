@@ -11,6 +11,8 @@ development:
   stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
   google_analytics_id: "test-id"
   read_only: "false"
+  doi_user: 'ss1'
+  doi_password: '0912_schsph'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"

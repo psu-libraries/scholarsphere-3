@@ -86,6 +86,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
     end
 
     let!(:work) { create(:work, depositor: user.login) }
+    let(:doi_service) { instance_double(DOIService, run: 'doi:sholder/abc123') }
 
     it 'allows updates' do
       post :update, id: work.id, generic_work: { title: 'new_title' }
@@ -101,6 +102,13 @@ describe CurationConcerns::GenericWorksController, type: :controller do
         expect(response.status).to eq(422)
         expect(flash[:error]).to contain_exactly('Field: creator, Error: Please provide either an alias, id, or display name; or, all of: surname, given name, and display name')
       end
+    end
+
+    it 'creates doi on update' do
+      expect(DOIService).to receive(:new).and_return(doi_service)
+      expect(doi_service).to receive(:run)
+      post :update, id: work.id, generic_work: { create_doi: '1' }
+      expect(response.status).to eq(302)
     end
   end
 

@@ -104,6 +104,7 @@ en:
         google: 'Share on Google+'
       form_progress:
         legend_required: 'Requirements'
+        legend_doi: 'DOI'
         metadata_required: 'Enter required metadata'
         metadata_required_complete: 'Required metadata complete'
         files_required: 'Add files'

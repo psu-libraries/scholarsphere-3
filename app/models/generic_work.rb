@@ -7,6 +7,7 @@ class GenericWork < ActiveFedora::Base
   include ShareNotify::Metadata
   include AdditionalMetadata
   include HasCreators
+  include DoiIdentifier
 
   self.human_readable_type = 'Work'
 

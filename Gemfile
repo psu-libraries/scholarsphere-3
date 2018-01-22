@@ -41,6 +41,7 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'ezid-client'
 
 group :development, :test do
   gem 'coveralls', require: false
