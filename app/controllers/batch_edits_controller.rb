@@ -10,7 +10,7 @@ class BatchEditsController < ApplicationController
     super
     work = BatchEditItem.new(batch: batch)
     work.depositor = current_user.user_key
-    @form = form_class.new(work, current_user, batch)
+    @form = form_class.new(work, current_ability, batch)
   end
 
   def update
