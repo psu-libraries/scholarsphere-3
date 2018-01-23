@@ -11,7 +11,6 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
   def initialize_combined_fields
     assign_combined_attributes_to_model
     @names = combinator.names
-    model.creators = combinator.creators
     model.admin_set_id = AdminSet::DEFAULT_ID
     model.permissions_attributes = combinator.permissions
   end
@@ -45,6 +44,7 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
       @combinator ||= Combinator.new(batch_document_ids, model_class)
     end
 
+    # @note creator is managed in BatchEditItem
     def combined_attributes
       @combined_attributes ||= combinator.attributes(terms - [:creator])
     end
@@ -67,10 +67,6 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
           results[key] = works.map { |work| work[key].to_a }.flatten.uniq
         end
         results
-      end
-
-      def creators
-        works.map(&:creators).flatten
       end
 
       def names
