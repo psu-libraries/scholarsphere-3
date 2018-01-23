@@ -5,6 +5,13 @@ require 'rails_helper'
 describe CollectionsController, type: :controller do
   subject { response }
 
+  let(:user) { create(:user) }
+
+  before do
+    allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
+    allow_any_instance_of(User).to receive(:groups).and_return([])
+  end
+
   context "when the Collection doesn't exist" do
     before { get :show, id: 'non-existent-collection' }
     its(:status) { is_expected.to eq(302) }
@@ -26,14 +33,10 @@ describe CollectionsController, type: :controller do
   end
 
   context 'when editing an existing collection' do
-    let(:user) { create(:user) }
     let(:work1)       { create(:public_work, depositor: user.login) }
     let(:work2)       { create(:public_work, depositor: user.login) }
     let!(:collection) { create(:public_collection, members: [work1, work2], depositor: user.login) }
 
-    before do
-      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
-    end
     it 'runs the migration' do
       expect(Migration::SolrListMigrator).to receive(:update).and_call_original
       get :edit, id: collection.id
@@ -48,13 +51,7 @@ describe CollectionsController, type: :controller do
   end
 
   describe '#delete' do
-    let(:user) { create(:user) }
     let(:collection) { create(:collection, depositor: user.login) }
-
-    before do
-      allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
-      allow_any_instance_of(User).to receive(:groups).and_return([])
-    end
 
     context 'when the collection is successfully deleted' do
       before { delete :destroy, id: collection }
@@ -69,23 +66,37 @@ describe CollectionsController, type: :controller do
       end
       it { is_expected.to redirect_to('/dashboard/collections') }
     end
+  end
 
-    describe '#create' do
-      let(:collection) { assigns[:collection] }
-      let(:permissions) { collection.permissions.map(&:to_hash) }
+  describe '#create' do
+    let(:collection) { assigns[:collection] }
+    let(:permissions) { collection.permissions.map(&:to_hash) }
 
-      let(:user) { create(:user) }
+    it 'applies the persmissions' do
+      post :create, collection: { 'title' => 'Test', 'subtitle' => '', 'creators' => { '0' => { 'id' => '', 'given_name' => 'Lorraine C', 'sur_name' => 'Santy', 'display_name' => 'Lorraine C Santy', 'email' => '', 'psu_id' => '' } }, 'description' => ['Test Description'], 'keyword' => ['test'], 'contributor' => [''], 'rights' => '', 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'resource_type' => [''], 'visibility' => 'open', 'permissions_attributes' => { '0' => { 'type' => 'group', 'name' => 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', 'access' => 'edit' } } }
+      collection.reload # doing a reload to make sure the permissions made it all the way to fedora
+      expect(permissions).to contain_exactly({ name: 'public', type: 'group', access: 'read' }, { name: user.login, type: 'person', access: 'edit' }, name: 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', type: 'group', access: 'edit')
+    end
 
-      before do
-        allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
-        allow_any_instance_of(User).to receive(:groups).and_return([])
-        post :create, collection: { 'title' => 'Test', 'subtitle' => '', 'creators' => { '0' => { 'id' => '', 'given_name' => 'Lorraine C', 'sur_name' => 'Santy', 'display_name' => 'Lorraine C Santy', 'email' => '', 'psu_id' => '' } }, 'description' => ['Test Description'], 'keyword' => ['test'], 'contributor' => [''], 'rights' => '', 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'resource_type' => [''], 'visibility' => 'open', 'permissions_attributes' => { '0' => { 'type' => 'group', 'name' => 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', 'access' => 'edit' } } }
-      end
+    context 'when doi is requested' do
+      let(:doi_service) { instance_double(DOIService, run: 'doi:sholder/abc123') }
 
       it 'applies the persmissions' do
-        collection.reload # doing a reload to make sure the permissions made it all the way to fedora
-        expect(permissions).to contain_exactly({ name: 'public', type: 'group', access: 'read' }, { name: user.login, type: 'person', access: 'edit' }, name: 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', type: 'group', access: 'edit')
+        expect(DOIService).to receive(:new).and_return(doi_service)
+        expect(doi_service).to receive(:run)
+        post :create, collection: { 'title' => 'Test', 'subtitle' => '', 'creators' => { '0' => { 'id' => '', 'given_name' => 'Lorraine C', 'sur_name' => 'Santy', 'display_name' => 'Lorraine C Santy', 'email' => '', 'psu_id' => '' } }, 'description' => ['Test Description'], 'keyword' => ['test'], 'contributor' => [''], 'rights' => '', 'publisher' => [''], 'date_created' => [''], 'subject' => [''], 'language' => [''], 'identifier' => [''], 'based_near' => [''], 'related_url' => [''], 'resource_type' => [''], 'visibility' => 'open', 'permissions_attributes' => { '0' => { 'type' => 'group', 'name' => 'umg/course.1479EEE5-988A-3A80-6BF2-45421CAAB5C3', 'access' => 'edit' } }, 'create_doi' => '1' }
       end
+    end
+  end
+
+  describe '#update' do
+    let(:collection)  { create :collection, depositor: user.login }
+    let(:doi_service) { instance_double(DOIService, run: 'doi:sholder/abc123') }
+
+    it 'applies the persmissions' do
+      expect(DOIService).to receive(:new).and_return(doi_service)
+      expect(doi_service).to receive(:run)
+      post :update, collection: { 'create_doi' => '1' }, id: collection.id
     end
   end
 end

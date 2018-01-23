@@ -43,6 +43,7 @@ class CollectionsController < ApplicationController
       format.html { redirect_to after_create_path, notice: 'Collection was successfully created.' }
       format.json { render json: @collection, status: :created, location: @collection }
     end
+    create_doi
   end
 
   # Overrides CurationConcerns::CollectionsControllerBehavior
@@ -61,6 +62,16 @@ class CollectionsController < ApplicationController
       format.html { redirect_to sufia.dashboard_collections_path, notice: 'Collection could not be deleted.' }
       format.json { render json: { id: id }, status: :destroy_error, location: @collection }
     end
+  end
+
+  def after_update
+    super
+    create_doi
+  end
+
+  def create_doi
+    return if params[:collection][:create_doi] != '1'
+    doi_service.run(collection)
   end
 
   protected
@@ -86,5 +97,9 @@ class CollectionsController < ApplicationController
 
     def migrate_creator
       Migration::SolrListMigrator.update(@collection, {})
+    end
+
+    def doi_service
+      @doi_service ||= DOIService.new
     end
 end
