@@ -252,6 +252,7 @@ Rails/HttpPositionalArguments:
     - 'spec/controllers/qa/terms_controller_spec.rb'
     - 'spec/controllers/sufia/batch_uploads_controller_spec.rb'
     - 'spec/controllers/zotero_controller_spec.rb'
+    - 'spec/controllers/users_controller_spec.rb'
 
 # Offense count: 2
 Rails/OutputSafety:
