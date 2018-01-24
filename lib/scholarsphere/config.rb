@@ -18,7 +18,9 @@ class Scholarsphere::Config
         'stats_email',
         'google_analytics_id',
         'derivatives_path',
-        'read_only'
+        'read_only',
+        'doi_user',
+        'doi_password'
       ]
     }.freeze
 
@@ -31,7 +33,7 @@ class Scholarsphere::Config
     end
 
     def validate
-      return true if required_keys.empty? || required_keys.uniq.sort == keys.uniq.sort
+      return true if required_keys.empty? || (required_keys - keys).empty?
       raise Error, "Config file #{File.basename(file)} requires #{required_keys} but has #{keys}"
     end
 
