@@ -24,4 +24,8 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   def admin_set_id
     AdminSet::DEFAULT_ID
   end
+
+  def show_doi_form?
+    false
+  end
 end

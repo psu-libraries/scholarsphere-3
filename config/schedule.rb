@@ -23,6 +23,10 @@ end
 #   rake 'share:files'
 # end
 
+every :day, at: '7:00am', roles: [:job] do
+  rake 'scholarsphere:expire:leases_and_embargoes'
+end
+
 every :day, at: '12:20am', roles: [:job] do
   command '/scholarsphere/bin/whenever_audit_repository.sh'
 end

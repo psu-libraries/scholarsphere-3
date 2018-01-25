@@ -2,6 +2,7 @@
 <div class="form-group multi_value creator_container">
   <div class="find_creator_container">
     <label for="find_creator">Find Creator</label>
+    <p class="help-block"><%= t('scholarsphere.creators.search_text') %></p>
     <input type="text"
            name="find_creator"
            id="find_creator"
@@ -35,7 +36,7 @@
               required: false,
               readonly: creator_form.read_only?,
               id: given_name_id,
-              class: 'form-control string required creator-first-name creator' %>
+              class: 'form-control string creator-first-name creator' %>
 
         <% sur_name_id = "#{id_base}[sur_name]" %>
         <%= label_tag sur_name_id, 'Last Name' %>
@@ -43,12 +44,14 @@
               required: false,
               readonly: creator_form.read_only?,
               id: sur_name_id,
-              class: 'form-control string required creator-last-name creator' %>
+              class: 'form-control string creator-last-name creator' %>
 
         <% display_name_id = "#{id_base}[display_name]" %>
-        <%= label_tag display_name_id, 'Display Name' %>
+        <%= label_tag display_name_id do  %>
+            Display Name <span class="label label-info required-tag">required</span>
+        <% end %>
         <%= text_field_tag display_name_id, creator_form.display_name,
-              required: false,
+              required: true,
               id: display_name_id,
               class: 'form-control string required creator-display-name creator' %>
 
@@ -58,7 +61,7 @@
               required: false,
               readonly: creator_form.read_only?,
               id: email_id,
-              class: 'form-control string required creator-email creator' %>
+              class: 'form-control string creator-email creator' %>
 
         <% psu_id_id = "#{id_base}[psu_id]" %>
         <%= label_tag psu_id_id, 'PSU ID' %>
@@ -66,7 +69,7 @@
               required: false,
               readonly: creator_form.read_only?,
               id: psu_id_id,
-              class: 'form-control string required creator-psu-id creator' %>
+              class: 'form-control string creator-psu-id creator' %>
 
         <%# orcid_id = "#{id_base}[orcid_id]" %>
         <%#= label_tag orcid_id, 'ORCID ID' %>

@@ -17,6 +17,6 @@ describe ImportVersionJob do
   it 'characterizes the file and then deletes it' do
     expect(CharacterizeJob).to receive(:perform_now).once
     described_class.perform_now(file_set, file)
-    expect(File.exist?(file)).to be_falsey
+    expect(File).not_to be_exist(file)
   end
 end

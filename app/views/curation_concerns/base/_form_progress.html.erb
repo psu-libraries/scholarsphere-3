@@ -42,6 +42,11 @@
       </fieldset>
     </div>
 
+    <% if f.object.show_doi_form? %>
+      <div class="set-doi-controls list-group-item">
+        <%= render 'form_doi_component', f: f %>
+      </div>
+    <% end %>
     <div class="set-access-controls list-group-item">
       <%= render 'form_visibility_component', f: f %>
     </div>

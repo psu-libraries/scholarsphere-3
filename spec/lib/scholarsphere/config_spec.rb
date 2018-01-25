@@ -18,5 +18,13 @@ describe Scholarsphere::Config do
         expect { described_class.check }.to raise_error(Scholarsphere::Config::Error, start_with('Config file'))
       end
     end
+
+    context 'with another sample config file' do
+      before { allow(Dir).to receive(:glob).and_return([File.join(fixture_path, 'application_more.yml')]) }
+
+      it 'allows for additional non required keys' do
+        expect { described_class.check }.not_to raise_error(Scholarsphere::Config::Error)
+      end
+    end
   end
 end

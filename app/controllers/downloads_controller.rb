@@ -19,7 +19,7 @@ class DownloadsController < ApplicationController
 
     # Remove if/when projecthydra/curation_concerns#1118 is resolved
     def authorize_download!
-      return params[:id] if current_user && current_user.administrator?
+      return params[:id] if current_user&.administrator?
       authorize! :read, params[asset_param_key]
     end
 end

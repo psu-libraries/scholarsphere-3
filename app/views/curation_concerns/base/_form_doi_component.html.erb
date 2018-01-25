@@ -1,0 +1,5 @@
+<fieldset>
+  <legend class="legend-save-work"><%= t("curation_concerns.base.form_progress.legend_doi") %></legend>
+  <%= f.label :create_doi, "Create a DOI for this #{I18n.t("scholarsphere.model_display_name.#{f.object_name}")}", class: :doi_label%>
+  <%= f.check_box :create_doi, disabled: f.object.create_doi %>
+</fieldset>

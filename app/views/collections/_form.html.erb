@@ -26,8 +26,18 @@
     <% end %>
   <% end %>
 
+  <% if f.object.show_doi_form? %>
+    <div class="collection_doi_controls">
+      <%= render 'curation_concerns/base/form_doi_component', f: f %>
+    </div>
+  <% end %>
+
   <div class="collection_form_visibility">
     <%= render 'form_permission', f: f %>
+  </div>
+
+  <div id="share" class="collection_form_sharing" data-param-key="collection">
+    <%= render 'curation_concerns/base/form_share', f: f %>
   </div>
 
   <div class="primary-actions">

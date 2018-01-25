@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
     end
 
     def has_access?
-      return if current_user && current_user.ldap_exist? && !ReadOnly.read_only?
+      return if current_user&.ldap_exist? && !ReadOnly.read_only?
       if ReadOnly.read_only?
         @announcement = ReadOnly.announcement_text
         render template: '/error/read_only', layout: 'homepage', formats: [:html], status: 503

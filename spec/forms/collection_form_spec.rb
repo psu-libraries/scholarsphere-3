@@ -25,14 +25,13 @@ describe CollectionForm do
   describe '#primary_terms' do
     subject { form.primary_terms }
 
-    it { is_expected.to contain_exactly(:title, :subtitle, :description, :keyword) }
+    it { is_expected.to contain_exactly(:title, :subtitle, :creator, :description, :keyword) }
   end
 
   describe '#secondary_terms' do
     subject { form.secondary_terms }
 
-    it { is_expected.to contain_exactly(:creator,
-                                        :contributor,
+    it { is_expected.to contain_exactly(:contributor,
                                         :rights,
                                         :publisher,
                                         :date_created,
@@ -48,5 +47,17 @@ describe CollectionForm do
     subject { described_class.required_fields }
 
     it { is_expected.to contain_exactly(:title, :description, :keyword) }
+  end
+
+  describe '#depositor' do
+    subject { form.depositor }
+
+    it { is_expected.to eq(collection.depositor) }
+  end
+
+  describe '#permissions' do
+    subject { form.permissions.to_a }
+
+    it { is_expected.to eq(collection.permissions.to_a) }
   end
 end

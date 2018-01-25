@@ -16,6 +16,7 @@ describe CatalogController, type: :controller do
   before do
     allow_any_instance_of(User).to receive(:groups).and_return([])
     allow(file_set).to receive(:extracted_text).and_return(text)
+    allow(text).to receive(:force_encoding).and_return(text)
     allow(file_set).to receive(:original_file).and_return(file)
     allow(work3).to receive(:representative).and_return(file_set)
   end

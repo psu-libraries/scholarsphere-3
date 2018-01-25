@@ -32,12 +32,15 @@ module ScholarSphere
     config.virtual_host = ENV.fetch('virtual_host', "https://#{Socket.gethostname}")
     config.google_analytics_id = ENV.fetch('google_analytics_id', nil)
     config.stats_email = ENV.fetch('stats_email', 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>')
+    config.doi_handle = ENV.fetch('doi_handle', 'doi:10.5072/FK2') # '10.18113/s1')
+    config.doi_user = ENV.fetch('doi_user', '')
+    config.doi_password = ENV.fetch('doi_password', '')
 
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = 'v3.2'
-    config.scholarsphere_release_date = 'December 1, 2017'
+    config.scholarsphere_version = 'v3.3'
+    config.scholarsphere_release_date = 'January 24, 2018'
     config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page

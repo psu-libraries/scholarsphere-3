@@ -25,6 +25,7 @@ describe Collection, type: :feature do
       within('div.collection_form_visibility') do
         expect(find('input#visibility_open')).to be_checked
       end
+      expect(page).to have_content('Create a DOI for this collection')
     end
   end
 
@@ -38,11 +39,28 @@ describe Collection, type: :feature do
     end
 
     context 'without any files' do
+      let(:doi)      { 'doi:abc123' }
+      let(:client)   { instance_double(Ezid::Client) }
+      let(:response) { instance_double(Ezid::MintIdentifierResponse, id: doi) }
+
+      before do
+        allow(Ezid::Client).to receive(:new).and_return(client)
+        allow(client).to receive(:mint_identifier).and_return(response)
+      end
+
       it 'creates an empty collection' do
+        within('div#share') do
+          select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
+          select 'Edit', from: 'new_group_permission_skel'
+          click_button 'Add Group'
+          expect(page).to have_selector("input[value='umg/up.dlt.scholarsphere-users']", visible: false)
+        end
+        check 'collection_create_doi'
         click_button 'Create Empty Collection'
         expect(page).to have_content('Collection was successfully created.')
         expect(page).to have_content(title)
         expect(page).to have_content(subtitle)
+        expect(page).to have_content('doi:')
 
         # The link to the creator search should look like this
         # with the correct solr key 'creator_name_sim':

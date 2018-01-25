@@ -3,6 +3,7 @@
 class CollectionsController < ApplicationController
   include CurationConcerns::CollectionsControllerBehavior
   include Sufia::CollectionsControllerBehavior
+  prepend_before_action :remove_and_store_permissions, only: :create
 
   before_action :migrate_creator, only: :edit
 
@@ -21,6 +22,10 @@ class CollectionsController < ApplicationController
     flash[:notice] = nil
   end
 
+  def remove_and_store_permissions
+    @create_permissions = params[:collection].delete('permissions_attributes')
+  end
+
   # Overrides CurationConcerns::CollectionsControllerBehavior
   # Redirects either to:
   #   1) collection view page of the newly created collection
@@ -29,12 +34,16 @@ class CollectionsController < ApplicationController
   #   3) dashboard work page with newly created collection selected so that user may add
   #      existing works to the collection.
   def after_create
-    form
+    if @create_permissions.present?
+      @collection.update_attributes('permissions_attributes' => @create_permissions)
+    end
+    form # assigns the form attribute for use in the views
     respond_to do |format|
       ActiveFedora::SolrService.instance.conn.commit
       format.html { redirect_to after_create_path, notice: 'Collection was successfully created.' }
       format.json { render json: @collection, status: :created, location: @collection }
     end
+    create_doi
   end
 
   # Overrides CurationConcerns::CollectionsControllerBehavior
@@ -53,6 +62,16 @@ class CollectionsController < ApplicationController
       format.html { redirect_to sufia.dashboard_collections_path, notice: 'Collection could not be deleted.' }
       format.json { render json: { id: id }, status: :destroy_error, location: @collection }
     end
+  end
+
+  def after_update
+    super
+    create_doi
+  end
+
+  def create_doi
+    return if params[:collection][:create_doi] != '1'
+    doi_service.run(collection)
   end
 
   protected
@@ -78,5 +97,9 @@ class CollectionsController < ApplicationController
 
     def migrate_creator
       Migration::SolrListMigrator.update(@collection, {})
+    end
+
+    def doi_service
+      @doi_service ||= DOIService.new
     end
 end

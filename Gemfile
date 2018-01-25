@@ -7,7 +7,7 @@ gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.3.17' unless ENV['CI']
 
 # Hydra gems
-gem 'active-fedora', '~> 11.1.3'
+gem 'active-fedora', '~> 11.5'
 gem 'sufia', '7.4.1'
 gem 'blacklight_advanced_search', '~> 6.0'
 
@@ -41,6 +41,7 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'ezid-client'
 
 group :development, :test do
   gem 'coveralls', require: false
@@ -49,8 +50,8 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
+  gem 'rubocop', '0.50.0'
+  gem 'rubocop-rspec', '1.18.0'
   gem 'solr_wrapper'
   gem 'sqlite3'
   gem 'capybara-screenshot'
