@@ -6,7 +6,9 @@ describe DOIService do
   subject(:run_service) { service.run(work) }
 
   let(:service) { described_class.new('testhandle', 'testuser', 'testpassword') }
-  let(:work) { create(:work, identifier: identifier) }
+  let(:first_creator) { create(:alias, display_name: 'First Creator', agent: Agent.new(given_name: 'First', sur_name: 'Creator')) }
+  let(:second_creator) { create(:alias, display_name: 'Second Creator', agent: Agent.new(given_name: 'Second', sur_name: 'Creator')) }
+  let(:work) { create(:work, title: ['DOI Title'], creators: [first_creator, second_creator], identifier: identifier) }
 
   context 'existing doi' do
     let(:identifier) { ['doi:10.5072/FK2VT1Q90B'] }
@@ -20,8 +22,8 @@ describe DOIService do
     let(:response_body) { 'success: doi:10.5072/FK2VT1Q90B | ark:/b5072/fk2vt1q90b' }
     let(:client) { instance_double(Ezid::Client) }
     let(:response) { instance_double(Ezid::MintIdentifierResponse, id: doi) }
-    let(:metadata) { { 'datacite.creator' => work.creator,
-                       'datacite.title' => work.title,
+    let(:metadata) { { 'datacite.creator' => 'Creator, First; Creator, Second',
+                       'datacite.title' => 'DOI Title',
                        'datacite.publisher' => 'ScholarSphere',
                        'datacite.publicationyear' => '2018',
                        target: work.url } }
