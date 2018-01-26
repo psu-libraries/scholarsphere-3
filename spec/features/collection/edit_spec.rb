@@ -48,6 +48,7 @@ describe Collection, type: :feature do
         visit '/dashboard/collections'
         db_item_actions_toggle(collection).click
         click_link 'Edit Collection'
+        expect(page).to have_content "Edit Collection: #{collection.title.first}"
         expect(page).to have_content work1.title.first
         expect(page).to have_content work2.title.first
         check 'check_all'
