@@ -12,7 +12,7 @@
 
       <%# Overrides Sufia adding button link to the batch upload form with this collection selected %>
       <%= link_to t('sufia.collection.actions.add_new_works.label'),
-                  sufia.new_batch_upload_path(collection_ids: [presenter.id]),
+                  sufia.new_batch_upload_path(collection_ids: [presenter.id], payload_concern: 'GenericWork'),
                   title: t('sufia.collection.actions.add_new_works.desc'),
                   class: 'btn btn-default' %>
     <% end %>
