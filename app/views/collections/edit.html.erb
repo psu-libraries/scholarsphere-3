@@ -1,7 +1,7 @@
-<% provide :page_title, "Edit Collection | #{@form.title.first} | Collection ID: #{@collection.id} | ScholarSphere" %>
+<% provide :page_title, "Edit Collection | #{@form.title} | Collection ID: #{@collection.id} | ScholarSphere" %>
 
 <%= provide :page_header do %>
-    <h1>Edit Collection: <%= @form.title.first %></h1>
+    <h1>Edit Collection: <%= @form.title %></h1>
 <% end %>
 
 <% unless has_collection_search_parameters? %>
