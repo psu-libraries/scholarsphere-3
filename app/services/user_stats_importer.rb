@@ -26,8 +26,12 @@ class UserStatsImporter
 
   def tally_user_results
     User.find_each do |user|
-      test_stats = GoogleAnalytics::UserStatisticReport.new(user).call
-      create_or_update_user_stats(test_stats, user)
+      begin
+        test_stats = GoogleAnalytics::UserStatisticReport.new(user).call
+        create_or_update_user_stats(test_stats, user)
+      rescue StandardError => e
+
+      end
     end
   end
 
@@ -57,7 +61,7 @@ class UserStatsImporter
     def safe_method_call(error_message, method, *method_args)
       object = send(method, *method_args)
       yield object if block_given?
-    rescue ActiveFedora::ObjectNotFoundError, Ldp::Gone, Errno::ECONNREFUSED => e
+    rescue StandardError, Errno::ECONNREFUSED => e
       puts "#{error_message} #{e.inspect}"
     end
 
