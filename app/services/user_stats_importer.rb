@@ -30,7 +30,7 @@ class UserStatsImporter
         test_stats = GoogleAnalytics::UserStatisticReport.new(user).call
         create_or_update_user_stats(test_stats, user)
       rescue StandardError => e
-
+        puts "Error with User: #{e.inspect}"
       end
     end
   end
@@ -61,7 +61,7 @@ class UserStatsImporter
     def safe_method_call(error_message, method, *method_args)
       object = send(method, *method_args)
       yield object if block_given?
-    rescue StandardError, Errno::ECONNREFUSED => e
+    rescue StandardError => e
       puts "#{error_message} #{e.inspect}"
     end
 
