@@ -1,0 +1,7 @@
+<% renderer = TranslatedDoiAttributeRenderer.new(:identifier, record.identifier) %>
+<% record.identifier.each do |identifier| %>
+  <span itemprop="identifier" itemscope itemtype=" http://schema.org/identifier">
+    <%=   renderer.li_value(identifier) %>
+  </span>
+  <br/>
+<% end %>

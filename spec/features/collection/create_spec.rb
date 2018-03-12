@@ -60,7 +60,7 @@ describe Collection, type: :feature do
         expect(page).to have_content('Collection was successfully created.')
         expect(page).to have_content(title)
         expect(page).to have_content(subtitle)
-        expect(page).to have_content('doi:')
+        expect(page).to have_content('https://doi.org')
 
         # The link to the creator search should look like this
         # with the correct solr key 'creator_name_sim':

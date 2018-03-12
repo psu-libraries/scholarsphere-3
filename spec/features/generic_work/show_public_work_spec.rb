@@ -7,7 +7,7 @@ describe GenericWork do
 
   context 'without files' do
     let(:work) do
-      build(:public_work, :with_complete_metadata, id: 'public-work', depositor: current_user.login)
+      build(:public_work, :with_complete_metadata, id: 'public-work', depositor: current_user.login, identifier: ['doi:blah-blah'])
     end
 
     let(:thumbnail_source) { page.find('.canonical-image')['src'] }
@@ -20,6 +20,7 @@ describe GenericWork do
     it 'displays properly' do
       expect(page).to have_content(work.title.first)
       expect(thumbnail_source).to match(/nope/)
+      expect(page).to have_selector("a[href='https://doi.org/blah-blah']")
       sign_in(current_user)
       go_to_dashboard_works
       within('#document_public-work') do
