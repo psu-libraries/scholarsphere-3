@@ -48,7 +48,7 @@
 
         <% display_name_id = "#{id_base}[display_name]" %>
         <%= label_tag display_name_id do  %>
-            Display Name <span class="label label-info required-tag">required</span>
+          <%= t('simple_form.labels.display_name') %> <span class="label label-info required-tag">required</span>
         <% end %>
         <%= text_field_tag display_name_id, creator_form.display_name,
               required: true,

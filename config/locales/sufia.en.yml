@@ -74,6 +74,7 @@ en:
         date_created: "Published Date"
       generic_work:
         date_created: "Published Date"
+      display_name: 'Display Name'
     hints:
       generic_work:
         creator: "The person or group responsible for the work. Usually this is the author of the content. This makes sure that this item can be searched on all the creators' names. Personal names should be entered with the last name first, e.g. &quot;Smith, John.&quot;."
