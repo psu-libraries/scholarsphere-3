@@ -571,6 +571,8 @@ GEM
       rdf (>= 2.2, < 4.0)
     rdf-xsd (2.2.0)
       rdf (~> 2.1)
+    recaptcha (4.6.6)
+      json
     redic (1.5.0)
       hiredis
     redis (3.3.2)
@@ -843,6 +845,7 @@ DEPENDENCIES
   rails (= 4.2.7.1)
   rainbow
   rdf
+  recaptcha
   resque-pool
   rsolr
   rspec
@@ -871,4 +874,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
