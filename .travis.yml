@@ -32,6 +32,7 @@ before_install:
   - "ls -l dep_cache"
   - "cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml"
   - "cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml"
+  - "cp config/sample/application.yml config/application.yml"
 services:
   - redis-server
 before_script:

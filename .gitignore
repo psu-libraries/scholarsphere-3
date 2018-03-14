@@ -109,3 +109,4 @@ report.json
 migration_report
 user_emails.txt
 public/uploads
+config/application.yml

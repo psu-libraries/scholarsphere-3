@@ -39,6 +39,8 @@ describe 'Contact form:', type: :feature do
     fill_in 'sufia_contact_form_message', with: 'I am contacting you regarding ScholarSphere.'
     fill_in 'sufia_contact_form_subject', with: email_subject
     select 'Depositing content', from: 'sufia_contact_form_category'
+    expect(page).to have_content('ReCAPTCHA')
+    expect(page).to have_selector('div.g-recaptcha')
     click_button 'Send'
     expect(page).to have_content('Thank you for your message!')
     expect(admin_message.subject).to eq("ScholarSphere Contact Form - #{email_subject}")
