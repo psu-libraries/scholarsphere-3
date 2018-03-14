@@ -80,6 +80,26 @@ FactoryGirl.define do
       end
     end
 
+    factory :public_work_with_pdf do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: User.find_by_login(work.depositor),
+                                title: ['A full-text pdf file'],
+                                label: 'test.pdf',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/test.pdf"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+        work.representative_id = fs.id
+        work.update_index
+      end
+    end
+
     # Does not call IngestFileJob directly. Because this is a mp3, ffmpeg is required for derivatives.
     # Travis does not have ffmpeg, so only add the file to the fileset and do not run characterization
     # or create any derivatives.
