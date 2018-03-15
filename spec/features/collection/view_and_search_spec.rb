@@ -11,6 +11,7 @@ describe Collection, type: :feature do
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
                               creators: [creator],
                               depositor: current_user.login,
+                              identifier: ['doi:blah-blah'],
                               members: [file1, file2]) }
 
   let(:current_user) { create(:user) }
@@ -34,6 +35,7 @@ describe Collection, type: :feature do
         expect(page).to have_content collection.title.first
         expect(page).to have_content collection.description.first
         expect(page).to have_content collection.creator.first.display_name
+        expect(page).to have_selector("a[href='https://doi.org/blah-blah']")
         expect(page).to have_content file1.title.first
         expect(page).to have_content file2.title.first
         expect(page).to have_content 'Total Items 2'
