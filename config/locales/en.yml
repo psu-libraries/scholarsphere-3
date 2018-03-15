@@ -82,6 +82,9 @@ en:
     aliases:
       parameter_error: "Please provide either an alias, id, or display name; or, all of: surname, given name, and display name"
       agent_error: "The provided alias does not have a person associated with it"
+    generic_work:
+      readme_heading: 'README'
+      readme_text: 'How about adding a README file? We currently accept plain text (README.txt) and markdown (README.md) files.'
 
   statistic:
     report:

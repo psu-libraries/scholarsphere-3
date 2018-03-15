@@ -96,6 +96,26 @@ FactoryGirl.define do
       end
     end
 
+    factory :public_work_with_readme do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: User.find_by_login(work.depositor),
+                                title: ['README'],
+                                label: 'readme.md',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/readme.md"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+        work.representative_id = fs.id
+        work.save
+      end
+    end
+
     # Does not call IngestFileJob directly. Because this is a mp3, ffmpeg is required for derivatives.
     # Travis does not have ffmpeg, so only add the file to the fileset and do not run characterization
     # or create any derivatives.

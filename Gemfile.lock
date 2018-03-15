@@ -593,6 +593,7 @@ GEM
       rdf (~> 2.1)
     recaptcha (4.6.6)
       json
+    redcarpet (3.4.0)
     redic (1.5.0)
       hiredis
     redis (3.3.2)
@@ -852,6 +853,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   clamav
+  coderay
   coffee-rails
   coveralls
   database_cleaner
@@ -878,6 +880,7 @@ DEPENDENCIES
   rainbow
   rdf
   recaptcha
+  redcarpet
   resque-pool
   rsolr
   rspec

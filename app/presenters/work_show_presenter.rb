@@ -26,6 +26,16 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     @file_page = page
   end
 
+  def readme
+    readme_file = file_set_presenters.select { |presenter| presenter.label =~ /^readme/i }.first
+    return if readme_file.blank?
+    file_set = FileSet.find(readme_file.id)
+    content = file_set.original_file.content
+    renderer = Redcarpet::Render::HTML.new(safe_links_only: true, hard_wrap: true)
+    markdown = Redcarpet::Markdown.new(renderer)
+    markdown.render(content)
+  end
+
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
   def member_presenters
     members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
