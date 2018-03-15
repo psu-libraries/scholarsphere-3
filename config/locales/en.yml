@@ -29,6 +29,11 @@ en:
         copy: "Copy link id %{link} to clipboard"
         delete: "Delete link id %{link}"
 
+  curation_concerns:
+    show:
+      downloadable_content:
+        work_zip_link: 'Download Work as Zip'
+
 
   hydra:
     metadata_help:

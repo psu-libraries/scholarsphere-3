@@ -32,6 +32,7 @@
     <%= render "show_actions", presenter: @presenter %>
     Last modified: <%= @presenter.date_modified %>
     <%= render 'representative_media', presenter: @presenter %>
+    <%= render 'download_work', presenter: @presenter %>
     <%= render 'social_media' %>
     <%= render 'citations', presenter: @presenter %>
   </div>

@@ -66,6 +66,10 @@ describe GenericWork, type: :feature do
           end
           expect(page).to have_content('Published Date')
         end
+
+        within('div.show-download') do
+          expect(page).to have_content('Download Work as Zip')
+        end
       end
 
       describe 'external services' do
