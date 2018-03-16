@@ -14,34 +14,53 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - JS=true
+    - CC_TEST_REPORTER_ID=802998950fae0776e395faeba91482d57cff99af801728c71d7d0abc79f0d707
+    - secure: "r/1A96TVGqorCSEVw1E0L727V626MIKG7FSVsE4nFYm5+89CTUPwuF1cew71gWqhL1aDACrzbw9iUcGnYvIclaU0li2fVd+YKbUA3xkTb+Aa8pHWC9tmxWtO/Hu+z9ej2Q0bIWnuQEYY3VEMq9Mvf0TqqePpHcjqAqB3RvST2os="
+    - secure: "IqfEX7SSwGtcB73dOF5rYhPJvwvp3/WG8XKacTsWA5qrJK4CQaNb3OdLYup3KJfrfSLbVkZmHzgAI2HfD+Jo7UX/iXTiHlnCQ+HRfkCo5MezM07E4FaVaGTnFZj6/qrbINGulORzSrTF3qZYm0wX/6kgM8wLzWHeRfzmQ60pmlg="
+    - secure: "G2snfK/GK8rk8emiy3a0wqe+rLJkM0abaPIktgjv0P3SDreQzeDNLyy5GsVG4LhM/QCur3qznlDl5c8/fXQpSrzZb9lsJmu/HX4yjiF+5FtAgPlAnfw0H6Dy1N14E4KhBktHS/EZzv7NLhyzn/ADFSiETHiDHWMQuQvWs8w8iJI="
+    - secure: "jLLPH2btu/jQog37DK4TbU/x7wrE/bYpY14fhxuysHousEemJ2hAFl2uK86v3K4ZdpgPBMBznubvgKihXT5JOEm+PGfmi6kKTPZFCp0+M88F/42eruna9Zl15rl1TwgarGdSadCB8ZAq4iCGXVxiIgvQEq7X1rUlpOpj32jBPUk="
   matrix:
     - TEST_SUITE=feature
     - TEST_SUITE=unit
-    - TEST_SUITE=rubocop
 before_install:
-  - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
-  - "which phantomjs"
-  - "phantomjs --version"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
-  - "phantomjs --version"
-  - export PATH="$PATH:$(pwd)/fits"
-  - "mkdir -p dep_cache"
-  - "pwd"
-  - "ls -l dep_cache"
-  - "cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml"
-  - "cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml"
-  - "cp config/sample/application.yml config/application.yml"
+  - pip install awscli --upgrade --user
+  - export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
+  - which phantomjs
+  - phantomjs --version
+  - if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi
+  - if [ $(phantomjs --version) != '2.1.1' ]; then wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi
+  - if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi
+  - phantomjs --version
+  - export PATH=$PATH:$(pwd)/fits
+  - mkdir -p dep_cache
+  - pwd
+  - ls -l dep_cache
+  - cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml
+  - cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml
+  - cp config/sample/application.yml config/application.yml
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 services:
   - redis-server
 before_script:
-  - "cp config/sample/database.yml config/database.yml"
-  - "cp config/sample/hydra-ldap.yml config/hydra-ldap.yml"
-  - "cp config/sample/share_notify.yml config/share_notify.yml"
-  - "cp config/sample/initializers/qa.rb config/initializers/qa.rb"
+  - cp config/sample/database.yml config/database.yml
+  - cp config/sample/hydra-ldap.yml config/hydra-ldap.yml
+  - cp config/sample/share_notify.yml config/share_notify.yml
+  - cp config/sample/initializers/qa.rb config/initializers/qa.rb
   - redis-cli info
 matrix:
   fast_finish: true
 script:
-  - "bundle exec rake scholarsphere:travis:$TEST_SUITE"
+  - bundle exec rake scholarsphere:travis:$TEST_SUITE
+after_script:
+  - ./cc-test-reporter format-coverage --output coverage/codeclimate.$TRAVIS_BUILD_ID.$TEST_SUITE.json
+  - aws s3 sync coverage/ s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER
+jobs:
+  include:
+    - stage: coverage
+      install: skip
+      script:
+        - aws s3 sync s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER coverage/
+        - ./cc-test-reporter sum-coverage --output - --parts 2 coverage/codeclimate.*.json | ./cc-test-reporter upload-coverage --input -
+
