@@ -56,10 +56,6 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
 
-    factory :public_work_without_filesets do
-      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-    end
-
     factory :public_work_with_png do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
@@ -142,28 +138,6 @@ FactoryGirl.define do
         work.ordered_members << fs
         work.thumbnail_id = fs.id
       end
-    end
-
-    trait :with_full_text_content do
-      after(:build) do |f|
-        f.full_text.content = 'full_textfull_text'
-      end
-    end
-
-    trait :with_png do
-      after(:build) do |f|
-        f.add_file(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), path: 'content')
-      end
-    end
-
-    trait :with_pdf do
-      before(:create) do |work, evaluator|
-        work.ordered_members << FactoryGirl.create(:file_set, :pdf, user: evaluator.user)
-      end
-    end
-
-    trait :characterized do
-      after(:create, &:characterize)
     end
 
     trait :with_public_embargo do

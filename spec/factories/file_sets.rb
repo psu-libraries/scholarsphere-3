@@ -35,13 +35,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :pdf do
-      title ['fake_document.pdf']
-      before(:create) do |fs|
-        fs.title = ['Fake PDF Title']
-      end
-    end
-
     trait :with_file_size do
       after(:build) do |fs|
         allow(fs).to receive(:file_size).and_return('1234')
