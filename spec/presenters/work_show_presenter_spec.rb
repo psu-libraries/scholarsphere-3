@@ -110,5 +110,56 @@ describe WorkShowPresenter do
     end
   end
 
+  describe '#readme' do
+    include FactoryHelpers
+    subject { presenter.readme }
+
+    context "when there isn't a readme" do
+      it { is_expected.to be_nil }
+    end
+
+    context 'when there is a text file' do
+      let(:file_set) { create(:file_set, :public, label: 'README.txt') }
+      let(:file_set_presenters) { [FileSetPresenter.new(SolrDocument.new(file_set.to_solr), nil)] }
+      let(:file) { mock_file_factory(mime_type: 'text/plain', content: 'some readme content for the test') }
+
+      before do
+        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
+        allow(file_set).to receive(:original_file).and_return(file)
+        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
+      end
+
+      it { is_expected.to include '<p>some readme content for the test</p>' }
+    end
+
+    context 'when there is a markdown file' do
+      let(:file_set) { create(:file_set, :public, label: 'README.md') }
+      let(:file_set_presenters) { [FileSetPresenter.new(SolrDocument.new(file_set.to_solr), nil)] }
+      let(:file) { mock_file_factory(mime_type: 'text/markdown', content: 'other readme content that is in a markdown file') }
+
+      before do
+        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
+        allow(file_set).to receive(:original_file).and_return(file)
+        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
+      end
+
+      it { is_expected.to include '<p>other readme content that is in a markdown file</p>' }
+    end
+
+    context 'when there is a blank readme file' do
+      let(:file_set) { create(:file_set, :public, label: 'ReadMe.txt') }
+      let(:file_set_presenters) { [FileSetPresenter.new(SolrDocument.new(file_set.to_solr), nil)] }
+      let(:file) { mock_file_factory(content: '') }
+
+      before do
+        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
+        allow(file_set).to receive(:original_file).and_return(file)
+        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
+      end
+
+      it { is_expected.to include '' }
+    end
+  end
+
   its(:event_class) { is_expected.to eq(GenericWork) }
 end
