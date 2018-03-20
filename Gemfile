@@ -43,6 +43,7 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
+gem 'rubyzip'
 
 group :development, :test do
   gem 'capybara-screenshot'

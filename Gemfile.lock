@@ -886,6 +886,7 @@ DEPENDENCIES
   rspec-rails
   rubocop (= 0.50.0)
   rubocop-rspec (= 1.18.0)
+  rubyzip
   sass-rails
   select2-rails
   selenium-webdriver
