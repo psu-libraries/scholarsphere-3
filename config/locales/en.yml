@@ -21,6 +21,7 @@ en:
         add_new_works:
           label: "Add new works"
           desc: "Add new works to this Collection"
+        collection_zip_link: "Download Collection as Zip"
     single_use_links:
       button: "Create Single-Use Link"
       expiration_message: "Link id %{link} expires %{time}"

@@ -41,6 +41,10 @@ describe Collection, type: :feature do
         expect(page).to have_content 'Total Items 2'
         expect(page).to have_content 'Size 2 Bytes'
 
+        within('div.actions-controls-collections') do
+          expect(page).to have_content('Download Collection as Zip')
+        end
+
         within('dl.metadata-collections') do
           expect(page).to have_content('Published Date')
         end
