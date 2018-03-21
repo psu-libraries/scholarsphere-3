@@ -32,7 +32,7 @@ class WorkZipService
   def call
     zipfile_name = File.join(zip_directory, "#{work.title.first.parameterize('_')}.zip")
 
-    Zip::File.open(zipfile_name, Zip::File::CREATE) do |_zipfile|
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zip_file|
       work.file_sets.each do |file_set|
         add_file_set_to_zip(zip_file, file_set)
       end

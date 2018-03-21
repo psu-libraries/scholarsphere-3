@@ -15,9 +15,7 @@ class DownloadsController < ApplicationController
     end
 
     def load_file
-      super unless asset.is_a? GenericWork
-
-      zip_service = WorkZipService.new(asset, current_ability, work_directory)
+      return super if params['file'] == 'thumbnail' || asset.is_a?(FileSet)
       zip_service.call
     end
 
@@ -25,5 +23,11 @@ class DownloadsController < ApplicationController
       directory = File.dirname CurationConcerns::DerivativePath.derivative_path_for_reference(asset.id, 'zip')
       FileUtils.mkpath directory
       directory
+    end
+
+  private
+
+    def zip_service
+      WorkZipService.new(asset, current_ability, work_directory)
     end
 end

@@ -77,6 +77,7 @@ describe DownloadsController do
       end
     end
   end
+
   describe '#show' do
     subject { controller.send(:show) }
 
@@ -88,6 +89,7 @@ describe DownloadsController do
       before { controller.params[:id] = my_file.id }
       it 'sends content' do
         expect(controller).to receive(:send_content)
+        expect(WorkZipService).not_to receive(:new)
         subject
       end
     end
@@ -97,7 +99,7 @@ describe DownloadsController do
       let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
-        # I must save the work again becuase the factory just sends the representative id to solr
+        # I must save the work again because the factory just sends the representative id to solr
         #  This save sends the id to fedora
         my_work.save
         controller.params[:id] = my_work.id
