@@ -58,8 +58,14 @@ describe Collection, type: :feature do
         check 'collection_create_doi'
         click_button 'Create Empty Collection'
         expect(page).to have_content('Collection was successfully created.')
-        expect(page).to have_content(title)
-        expect(page).to have_content(subtitle)
+        within('header') do
+          within('h1') do
+            expect(page).to have_content(title)
+          end
+          within('p') do
+            expect(page).to have_content(subtitle)
+          end
+        end
         expect(page).to have_content('https://doi.org')
 
         # The link to the creator search should look like this
