@@ -35,6 +35,7 @@ module ScholarSphere
     config.doi_handle = ENV.fetch('doi_handle', 'doi:10.5072/FK2') # '10.18113/s1')
     config.doi_user = ENV.fetch('doi_user', '')
     config.doi_password = ENV.fetch('doi_password', '')
+    config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
 
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)

@@ -52,3 +52,8 @@ end
 every 10.minutes, roles: [:job] do
   command "#{path}/config/cronjobs/resque-cleanup.bash"
 end
+
+# yearly
+every '0 0 1 1 *', at: '6:00 am', roles: [:job] do
+  command "#{path}/config/cronjobs/dump_and_truncate_searches.bash"
+end
