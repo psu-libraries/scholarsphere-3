@@ -5,11 +5,8 @@ require 'rails_helper'
 describe 'Download requests', type: :request do
   subject { response }
 
-  let(:collection) { create(:collection) }
-
-  # Tests public/404.html.erb which is required by Hydra::Controller::DownloadBehavior#render_404
   context 'with a missing image' do
-    before { get "/downloads/#{collection.id}" }
-    it { is_expected.to be_not_found }
+    before { get '/downloads/1234' }
+    its(:status) { is_expected.to eq(500) }
   end
 end

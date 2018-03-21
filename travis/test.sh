@@ -49,7 +49,10 @@ redis-cli info
 echo -e "\n\n\033[1;33mPrepare coverage report and run the RSpec test\033[0m"
 cc-test-reporter before-build
 bundle exec rake scholarsphere:travis:$TEST_SUITE
+RSPEC_EXIT_CODE=$?
 
 echo -e "\n\n\033[1;33mUpload coverage results to AWS\033[0m"
 cc-test-reporter format-coverage --output coverage/codeclimate.$TRAVIS_BUILD_ID.$TEST_SUITE.json
 aws s3 sync coverage/ s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER
+
+exit $RSPEC_EXIT_CODE
