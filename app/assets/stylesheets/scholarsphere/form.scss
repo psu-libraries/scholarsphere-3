@@ -20,3 +20,6 @@ html > body .form-progress .radio input[type="radio"] {
 .remove-creator {
   padding:0;
 }
+
+/* Removes some extra markup from 3 gems and a different setting for the labels and radio buttons */
+html > body .permission-label { padding-left: 0; }

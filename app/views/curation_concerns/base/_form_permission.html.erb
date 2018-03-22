@@ -9,30 +9,39 @@
   <%= render 'form_permission_under_lease', f: f %>
 <% else %>
   <fieldset class="set-access-controls">
-    <legend>
-      Visibility
-      <small>Who should be able to view or download this content?</small>
+    <legend id="choose_visibility">
+      <%= t('curation_concerns.visibility.legend') %>
     </legend>
-
-    <p>If this is or becomes your representative media, this may impact the display of your work in search results.</p>
-
-    <div class="form-group">
-      <label class="radio">
+    <p class="help-block"><%= t('scholarsphere.file_set.permission_help') %></p>
+    <p><%= t('scholarsphere.file_set.representative_media') %></p>
+    <%# Using the unordered list to match the UI from edit works and explicitly sets label 'for' attribute %>
+    <ul role="radiogroup" aria-labelledby="choose_visibility">
+      <li class="radio">
         <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC %>
-        <%= t('curation_concerns.visibility.open.label_html', type: 'work') %>
-      </label>
-      <label class="radio">
+        <label class="permission-label" for="file_set_visibility_open">
+          <%= t('curation_concerns.visibility.open.label_html', type: 'work') %>
+        </label>
+      </li>
+      <li class="radio">
         <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED %>
-        <%= t('curation_concerns.visibility.authenticated.label_html', institution: t('curation_concerns.institution.name')) %>
-      </label>
-      <label class="radio">
+        <label class="permission-label" for="file_set_visibility_authenticated">
+          <%= t('curation_concerns.visibility.authenticated.label_html', institution: t('curation_concerns.institution.name')) %>
+        </label>
+      </li>
+      <li class="radio">
         <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO %>
-        <%= render "form_permission_embargo", f: f %>
-      </label>
-      <label class="radio">
+        <label class="permission-label" for="file_set_visibility_embargo">
+          <%= t('curation_concerns.visibility.embargo.label_html') %>
+        </label>
+        <%= render 'form_permission_embargo', f: f %>
+      </li>
+      <li class="radio">
         <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_LEASE %>
-        <%= render "form_permission_lease", f: f %>
-      </label>
-    </div>
+        <label class="permission-label" for="file_set_visibility_lease">
+          <%= t('curation_concerns.visibility.lease.label_html') %>
+        </label>
+        <%= render 'form_permission_lease', f: f %>
+      </li>
+    </ul>
   </fieldset>
 <% end %>
