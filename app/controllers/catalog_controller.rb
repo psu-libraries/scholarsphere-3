@@ -112,7 +112,7 @@ class CatalogController < ApplicationController
       all_names = search_fields.join(' ')
       title_name = solr_name('title', :stored_searchable)
       field.solr_parameters = {
-        qf: "#{all_names} id all_text_timv",
+        qf: "#{all_names} id all_text_timv agent_name_tesim",
         pf: title_name.to_s
       }
     end
