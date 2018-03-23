@@ -5,6 +5,6 @@
     </p>
   <div class="form-group">
     <input type="hidden" name="<%= f.object_name %>[visibility]" value="<%= Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO %>" />
-    <%= render "form_permission_embargo", f: f %>
+    <%= render 'form_permission_embargo', f: f %>
   </div>
 </fieldset>

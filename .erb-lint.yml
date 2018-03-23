@@ -1,0 +1,51 @@
+---
+# Uses File.fnmatch? for comparison
+exclude:
+  - '*vendor/*'
+linters:
+  ClosingErbTagIndent:
+    enabled: true
+  FinalNewline:
+    enabled: false
+  ExtraNewline:
+    enabled: true
+  FinalNewline:
+    enabled: true
+  HardCodedString:
+    enabled: false
+  RightTrim:
+    enabled: true
+    enforced_style: '-'
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_gem:
+        niftany:
+          - niftany_rubocop_ruby.yml
+          - niftany_rubocop_rails.yml
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/TrailingBlankLines:
+        Enabled: false
+      Layout/TrailingWhitespace:
+        Enabled: false
+      Naming/FileName:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
+      Metrics/LineLength:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Rails/OutputSafety:
+        Enabled: false
+  SelfClosingTag:
+    enabled: true
+  SpaceAroundErbTag:
+    enabled: true
+  SpaceInHtmlTag:
+    enabled: true
+  SpaceIndentation:
+    enabled: true
+  TrailingWhitespace:
+    enabled: true

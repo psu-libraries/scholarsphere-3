@@ -22,7 +22,7 @@ env:
 services:
   - redis-server
 stages:
-  - rubocop
+  - niftany
   - test
   - coverage
 jobs:
@@ -34,6 +34,6 @@ jobs:
     - stage: coverage
       install: skip
       script: ./travis/coverage.sh
-    - stage: rubocop
-      script: bundle exec rake scholarsphere:travis:rubocop
+    - stage: niftany
+      script: ./travis/niftany.sh
 

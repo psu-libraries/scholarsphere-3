@@ -14,7 +14,7 @@ describe 'shared/_twitter.html.erb' do
       render 'shared/twitter', presenter: presenter
     end
 
-    it { is_expected.to include('<meta property="og:title" content="Sample Title"/>') }
+    it { is_expected.to include('<meta property="og:title" content="Sample Title" />') }
   end
 
   context 'with a file set' do
@@ -27,6 +27,6 @@ describe 'shared/_twitter.html.erb' do
       render 'shared/twitter', presenter: presenter
     end
 
-    it { is_expected.to include('<meta property="og:image" content="http://test.host/downloads/citation-download?file=thumbnail"/>') }
+    it { is_expected.to include('<meta property="og:image" content="http://test.host/downloads/citation-download?file=thumbnail" />') }
   end
 end

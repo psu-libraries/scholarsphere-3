@@ -3,10 +3,10 @@
 <p><b>Please note you are accessing each file so the export may take some time if you select a large date range or
   many files were deposited during your selected range</b></p>
 <p>The system defaults to a report from yesterday if no dates are selected</p>
-<%= form_for "export", url: admin_stats_export_path(format: "csv"), method: "GET"  do |f| %>
-<%= f.label "Start" %>
-<input type="date" name="start_datetime"  placeholder="yyyy-mm-dd hh:mm" ></input>
-<%= f.label "End" %>
-<input type="date" name="end_datetime" placeholder="yyyy-mm-dd hh:mm" ></input>
-<%= f.submit "Export File Metadata" %>
+<%= form_for 'export', url: admin_stats_export_path(format: 'csv'), method: 'GET'  do |f| %>
+<%= f.label 'Start' %>
+<input type="date" name="start_datetime" placeholder="yyyy-mm-dd hh:mm" /><input />
+<%= f.label 'End' %>
+<input type="date" name="end_datetime" placeholder="yyyy-mm-dd hh:mm" /><input />
+<%= f.submit 'Export File Metadata' %>
 <%- end %>

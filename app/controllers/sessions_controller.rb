@@ -14,6 +14,6 @@ class SessionsController < ApplicationController
     session['user_return_to'] = nil if redirect_url # clear so we do not get it next time
     webaccess = Sufia::Engine.config.login_url.split('&')[0]
     dashboard = Sufia::Engine.config.login_url.split('&')[1]
-    redirect_to webaccess + '&' + (redirect_url.blank? ? dashboard : redirect_url)
+    redirect_to webaccess + '&' + (redirect_url.presence || dashboard)
   end
 end

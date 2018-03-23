@@ -1,31 +1,29 @@
 <aside id="form-progress" class="form-progress panel panel-default">
   <div class="panel-heading">
     <a name="savework" class="anchor">
-      <h3 class="panel-title"><%= t("sufia.works.progress.header") %></h3>
+      <h3 class="panel-title"><%= t('sufia.works.progress.header') %></h3>
     </a>
   </div>
   <div class="list-group">
     <div class="list-group-item">
       <fieldset>
-        <legend class="legend-save-work"><%= t("curation_concerns.base.form_progress.legend_required") %></legend>
+        <legend class="legend-save-work"><%= t('curation_concerns.base.form_progress.legend_required') %></legend>
         <ul class="requirements" role="group">
-          <%= content_tag :li, id: "required-metadata", role: "listitem", class: "incomplete", data: {
-                complete: t("curation_concerns.base.form_progress.metadata_required_complete"),
-                incomplete: t("curation_concerns.base.form_progress.metadata_required")
-              } do
-          %>
+          <%= content_tag :li, id: 'required-metadata', role: 'listitem', class: 'incomplete', data: {
+                complete: t('curation_concerns.base.form_progress.metadata_required_complete'),
+                incomplete: t('curation_concerns.base.form_progress.metadata_required')
+              } do %>
             <a href="#metadata" class="tabfaker" aria-controls="metadata" role="tab" data-toggle="tab">
-              <%= t("curation_concerns.base.form_progress.metadata_required") %>
+              <%= t('curation_concerns.base.form_progress.metadata_required') %>
             </a>
           <% end %>
           <% if Sufia.config.work_requires_files %>
-            <%= content_tag :li, id: "required-files", role: "listitem", class: "incomplete", data: {
-                  complete: t("curation_concerns.base.form_progress.files_required_complete"),
-                  incomplete: t("curation_concerns.base.form_progress.files_required")
-                } do
-            %>
+            <%= content_tag :li, id: 'required-files', role: 'listitem', class: 'incomplete', data: {
+                  complete: t('curation_concerns.base.form_progress.files_required_complete'),
+                  incomplete: t('curation_concerns.base.form_progress.files_required')
+                } do %>
               <a href="#files" class="tabfaker" aria-controls="files" role="tab" data-toggle="tab">
-                <%= t("curation_concerns.base.form_progress.files_required") %>
+                <%= t('curation_concerns.base.form_progress.files_required') %>
               </a>
             <% end %>
           <% end %>
@@ -35,9 +33,9 @@
         <legend class="legend-save-work">Optional</legend>
         <ul class="optional-list" role="group">
           <li role="listitem"><a href="#relationships" class="tabfaker" aria-controls="relationships" role="tab" data-toggle="tab">
-            <%= t("sufia.works.edit.tab.relationships") %></a></li>
+            <%= t('sufia.works.edit.tab.relationships') %></a></li>
           <li role="listitem"><a href="#share" class="tabfaker" aria-controls="share" role="tab" data-toggle="tab">
-            <%= t("sufia.works.edit.tab.share") %></a></li>
+            <%= t('sufia.works.edit.tab.share') %></a></li>
         </ul>
       </fieldset>
     </div>
@@ -54,7 +52,7 @@
       <div class="list-group-item">
         <label for="generic_work_on_behalf_of"><%= t('curation_concerns.base.form_progress.on_behalf_of') %></label>
         <p class="help-block"><%= t('curation_concerns.base.form_progress.on_behalf_of_help') %></p>
-        <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: "Yourself" %>
+        <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: 'Yourself' %>
       </div>
     <% end %>
   </div>
@@ -62,22 +60,22 @@
     <% if Sufia.config.active_deposit_agreement_acceptance %>
         <label>
           <%= check_box_tag 'agreement', 1, f.object.agreement_accepted, required: true %>
-          <%= t('sufia.active_consent_to_agreement') %><br>
+          <%= t('sufia.active_consent_to_agreement') %><br />
           <%= link_to t('sufia.deposit_agreement'),
                       sufia.agreement_path,
                       target: '_blank' %>
         </label>
     <% else %>
-        <%= t('sufia.passive_consent_to_agreement') %><br>
+        <%= t('sufia.passive_consent_to_agreement') %><br />
         <%= link_to t('sufia.deposit_agreement'),
                     sufia.agreement_path,
                     target: '_blank' %>
     <% end %>
-    <br>
+    <br />
     <%= link_to t(:'helpers.action.cancel'),
                 sufia.dashboard_index_path,
                 class: 'btn btn-default' %>
-    <%= f.submit 'Save', class: 'btn btn-primary', onclick: "confirmation_needed = false;", id: "with_files_submit", name: "save_with_files" %>
+    <%= f.submit 'Save', class: 'btn btn-primary', onclick: 'confirmation_needed = false;', id: 'with_files_submit', name: 'save_with_files' %>
 
   </div>
 
@@ -86,7 +84,7 @@
     <div class="progress">
       <div class="progress-bar progress-bar-striped active" style="width: 100%">
         <span id="form-feedback" aria-live="assertive">
-          <%= t("scholarsphere.upload.progress") %>
+          <%= t('scholarsphere.upload.progress') %>
         </span>
       </div>
     </div>

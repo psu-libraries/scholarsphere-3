@@ -5,6 +5,6 @@
 
   <% unless paginator.last_page? || params[:action] == "facet" %>
     <li class="more_facets_link"><%= link_to 'more ' + facet_field.label.pluralize + '»',
-       more_facets_link_path(solr_field), class: "more_facets_link" %></li>
+       more_facets_link_path(solr_field), class: 'more_facets_link' %></li>
   <% end %>
 </ul>
