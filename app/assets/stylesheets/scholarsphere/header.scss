@@ -1,16 +1,16 @@
 @media screen and (min-width: 400px) {
 
   a .user-util-text {
-    color: #fff;
+    color: $primary-white;
     text-decoration: none;
   }
 
-  li.open a .user-util-text {
-    color: #000
+  .open .user-util-text {
+    color: $primary-black;
   }
 
   a:hover .user-util-text {
-    color: #000;
+    color: $primary-black;
   }
 
   .lion-logo {
@@ -18,17 +18,19 @@
     width: 125px;
   }
 
-  /* Needs to be very specific to override code from 3 gems */
+  // Needs to be very specific to override code from 3 gems
+  // scss-lint:disable IdSelector, SelectorDepth
   #masthead .navbar-header > .logo-padding-fix {
-    padding-left: 0;
     margin-left: -5px;
+    padding-left: 0;
   }
 
-  /* Needs to be very specific to override code from 3 gems */
+  // Needs to be very specific to override code from 3 gems
   #masthead .navbar-nav > li > a {
-    color: #fff;
+    color: $primary-white;
     text-decoration: none;
   }
+  // scss-lint:enable IdSelector
 
   .navbar-default .navbar-nav {
     margin-top: 0;
@@ -37,20 +39,20 @@
   .navbar-default .navbar-nav > li > a {
     text-align: center;
   }
-
+  // scss-lint:enable SelectorDepth
   .navbar-header {
-    background-color: #036;
+    background-color: $psu-dark-blue;
   }
 
   .ss-logo a:link,
   .ss-logo a:visited,
   .ss-logo a:hover {
+    color: $primary-white;
     display: block;
-    color: #fff;
-    padding-top: .5em;
-    padding-left: .75em;
     font-size: 1.25em;
     font-weight: 300;
+    padding-left: .75em;
+    padding-top: .5em;
     text-decoration: none;
   }
 
@@ -60,7 +62,7 @@
   }
 
   .ss-toolbar {
-    background-color: #2c76c7;
+    background-color: $toolbar-blue;
   }
 }
 
@@ -71,20 +73,22 @@
 }
 
 @media screen and (max-width: 767px) {
-  /* Needs to be very specific to override code from 3 gems */
+  // Needs to be very specific to override code from 3 gems
+  // scss-lint:disable IdSelector, SelectorDepth
   #masthead .navbar-nav .open .dropdown-menu {
-    background-color: #fff;
+    background-color: $primary-white;
   }
 
-  /* Needs to be very specific to override code from 3 gems */
+  // Needs to be very specific to override code from 3 gems
   #masthead .navbar-nav .open .dropdown-menu > li > a {
-    color: #333;
+    color: $gray-dark;
   }
 
-  /* Needs to be very specific to override code from 3 gems */
+  // Needs to be very specific to override code from 3 gems
   #masthead .navbar-nav .open .dropdown-menu > li > a:hover {
-    background-color: #f5f5f5;
+    background-color: $primary-white;
   }
+  // scss-lint:enable IdSelector, SelectorDepth
 }
 
 @media screen and (min-width: 768px) {
@@ -99,8 +103,8 @@
   .ss-logo a:link,
   .ss-logo a:visited,
   .ss-logo a:hover {
-    padding-top: .5em;
     font-size: 1.5em;
+    padding-top: .5em;
   }
 }
 
@@ -116,7 +120,7 @@
   .ss-logo a:link,
   .ss-logo a:visited,
   .ss-logo a:hover {
-    padding-top: .5em;
     font-size: 1.75em;
+    padding-top: .5em;
   }
 }

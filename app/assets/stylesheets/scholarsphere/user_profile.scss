@@ -1,13 +1,13 @@
 .highlighted-works {
   margin-top: 1em;
-}
 
-.highlighted-works td {
-  padding: .5em .5em .35em .25em;
+  td {
+    padding: .5em .5em .35em .25em;
+  }
 }
 
 .profile dd {
-  color: #a3a3a3;
+  color: $gray-light;
 }
 
 .panel-user h2 {

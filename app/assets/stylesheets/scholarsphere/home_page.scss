@@ -1,40 +1,49 @@
-/* Override styles coming from Sufia for better contrast */
+// Override styles coming from Sufia for better contrast
+// scss-lint:disable IdSelector, SelectorDepth
 html > body .navbar-default .navbar-nav > li > a {
-  color: #686868;
+  color: $gray-middle;
   text-decoration: none;
 }
+// scss-lint:enable IdSelector, SelectorDepth
 
+// Overrides style coming from Sufia
+// scss-lint:disable ImportantRule, SelectorFormat
 .marketing {
   margin-bottom: 1.5em;
-}
-/* Overrides style coming from Sufia */
-.marketing > .home_marketing_text {
-  text-shadow: none !important;
-}
 
-.home_marketing_text p {
-  font-size: 1.5em;
-}
+  .home_marketing_text {
+    text-shadow: none !important;
 
-/* Overrides style coming from Sufia */
+    p { font-size: 1.5em; }
+  }
+}
+// scss-lint:enable ImportantRule, SelectorFormat
+
+// Overrides style coming from Sufia
 .marketing-share > .home-share-work {
+  background-color: $marketing-white;
+  border-radius: 4px;
   margin-bottom: 0;
   padding: 1em 0;
-  background-color: #ece6d8;
-  border-radius: 4px;
 }
 
 .home-share-work .btn {
-  border: 2px solid #fff;
+  border: 2px solid $primary-white;
   font-size: 1.4em;
 }
 
-.home-tabs .nav a:link { text-decoration: none; }
+.home-tabs {
+  background-color: $tab-background-color;
+
+  .nav a:link {
+    text-decoration: none;
+  }
+}
 
 .home-share-work p a:link,
 .home-tabs .nav a:link,
 .collection-highlights a:link {
-  color: #2d699e;
+  color: $home-blue;
 }
 
 .home-search {
@@ -42,44 +51,51 @@ html > body .navbar-default .navbar-nav > li > a {
 }
 
 .home-content {
+  margin-bottom: 2em;
   margin-top: 1.5em;
+
+  .tab-content {
+    background-color: $primary-white;
+    border-bottom: 1px solid $tab-border-color;
+    border-left: 1px solid $tab-border-color;
+    border-right: 1px solid $tab-border-color;
+    padding: 1em .75em;
+  }
 }
 
-/* Override Very specific set of declarations coming from Sufia */
-
+// Override Very specific set of declarations coming from Sufia
+// scss-lint:disable IdSelector, QualifyingElement
 div#announcement.container-fluid {
-  font-size: 1.25em;
-  text-align: left;
-  color: black;
-  background-color: #00948a;
-  border: none;
-  padding-top: 0;
+  background-color: $home-green;
+  border: 0;
   border-radius: 0;
+  color: $primary-black;
+  font-size: 1.25em;
+  padding-top: 0;
+  text-align: left;
 }
+// scss-lint:enable IdSelector, QualifyingElement
 
 .announcement {
   padding-bottom: 1em;
+
+  h2 {
+    color: $primary-white;
+    display: inline-block;
+    padding-left: .35em;
+    padding-right: .35em;
+  }
+
+  p {
+    color: $primary-white;
+    font-size: 1.4em;
+    font-weight: 300;
+    padding: 0 .5em .5em;
+  }
 }
 
-.announcement h2 {
-  display: inline-block;
-  color: #fff;
-  padding-left: .35em;
-  padding-right: .35em;
-}
-
-.announcement p {
-  color: #fff;
-  font-size: 1.4em;
-  font-weight: 300;
-  padding: 0 .5em .5em .5em;
-}
-
-.home-tabs {
-  background-color: whitesmoke;
-}
-
-/* Overrides specific styles coming from Sufia */
+// Overrides specific styles coming from Sufia
+// scss-lint:disable IdSelector
 html > body #content-wrapper {
   padding-bottom: 2em;
 }
@@ -87,15 +103,4 @@ html > body #content-wrapper {
 #content-wrapper.home-tabs ul {
   margin-bottom: 0;
 }
-
-.home-content {
-  margin-bottom: 2em;
-}
-
-.home-content .tab-content {
-  padding: 1em .75em;
-  background-color: #fff;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
+// scss-lint:enable IdSelector

@@ -1,60 +1,64 @@
-/* Inputfile and label are used to style the input like a button, but use the label as the functional element.
-The Bootstrap btn classes interfere with the input functioning like a button, especially when
-tabbing through the interface, so we replicated the look of the Bootstrap button here. The goal of the whole thing
-was to make the input button with type file be accessible to keyboard users and users of assistive technology and
-visually have a focus just like the other form elements.
-*/
+// Inputfile and label are used to style the input like a button, but use the label as the functional element.
+// The Bootstrap btn classes interfere with the input functioning like a button, especially when
+// tabbing through the interface, so we replicated the look of the Bootstrap button here. The goal of the whole thing
+// was to make the input button with type file be accessible to keyboard users and users of assistive technology and
+// visually have a focus just like the other form elements.
 
 .inputfile {
-  position: absolute;
-  z-index: -1;
-  width: .1px;
   height: .1px;
   opacity: 0;
   overflow: hidden;
+  position: absolute;
+  width: .1px;
+  z-index: -1;
+
+  + label {
+    background-color: $btn-upload-color;
+    border: 1px solid $btn-upload-color-border;
+    border-radius: 4px;
+    color: $primary-white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.04em;
+    font-weight: normal;
+    line-height: 1.4em;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
 }
 
-.inputfile + label {
-  display: inline-block;
-  color: white;
-  font-size: 1.04em;
-  font-weight: normal;
-  line-height: 1.4em;
-  text-align: center;
-  vertical-align: middle;
-  background-color: #387f38;
-  border: 1px solid #4cae4c;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 0;
-  padding: 6px 12px;
-}
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-  background-color: #449d44;
-  border-color: #398439;
+  background-color: $btn-upload-color-hover;
+  border-color: $btn-upload-color-hover-border;
 }
 
 .inputfile:focus + label,
 .inputfile.has-focus + label {
-  border-color: #66aFe9;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+  border-color: $focus-color-border;
+  box-shadow: inset 0 1px 1px $focus-shadow-color-inset, 0 0 8px $focus-shadow-color;
   outline: 2px;
   outline: -webkit-focus-ring-color auto 5px;
 }
 
-/* Needs specific override for form-control and only target the permissions select */
+// Needs specific override for form-control and only target the permissions select //
+// scss-lint:disable QualifyingElement, SelectorFormat
 select.form-control.select_perm {
   display: inline-block;
   width: auto;
 }
+// scss-lint:enable QualifyingElement, SelectorFormat
 
 .name,
 .filename {
   word-break: break-all;
 }
 
+// scss-lint:disable QualifyingElement, SelectorFormat
 form fieldset .doi_label {
   font-weight: normal;
 }
+// scss-lint:enable QualifyingElement, SelectorFormat

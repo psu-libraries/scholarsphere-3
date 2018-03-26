@@ -1,13 +1,13 @@
 .footer-wrapper {
-  padding: 1em;
+  background: $psu-dark-blue;
+  color: $primary-white;
   min-height: 4em;
-  background: #036;
-  color: #fff;
+  padding: 1em;
 }
 
 .footer-wrapper a:link,
 .footer-wrapper a:visited {
-  color: #fff;
+  color: $primary-white;
 }
 
 .footer-logo {
@@ -21,10 +21,10 @@
 
 .footer-version {
   padding: .5em;
-}
 
-.footer-version a:link {
-  text-decoration: underline;
+  a:link {
+    text-decoration: underline;
+  }
 }
 
 .footer-service {
@@ -37,8 +37,8 @@
 
 .footer-text-links-list {
   padding-left: 0;
-}
 
-.footer-text-links-list li {
-  display: inline;
+  li {
+    display: inline;
+  }
 }
