@@ -1,8 +1,9 @@
 <%# Moves help text to _form_files and uses #target_selector method on form %>
-<%= button_tag(t("sufia.upload.browse_everything.browse_files_button"),
-      type: "button", class: "btn btn-success",
-      id: "browse-btn",
+<%= button_tag(t('sufia.upload.browse_everything.browse_files_button'),
+      type: 'button', class: 'btn btn-success',
+      id: 'browse-btn',
       data: {
-        toggle: "browse-everything",
+        toggle: 'browse-everything',
         route: browse_everything_engine.root_path,
-        target: f.object.target_selector } ) %>
+        target: f.object.target_selector
+      }) %>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="<%= t("sufia.document_language") %>">
+<html lang="<%= t('sufia.document_language') %>">
 <head>
-  <%= render "layouts/head_tag_content"%>
+  <%= render 'layouts/head_tag_content' %>
 </head>
 
 <body>
@@ -11,10 +11,10 @@
     <div class="row">
       <ul class="nav navbar-nav col-sm-5 col-md-6">
         <li <%= 'class=active' if current_page?(sufia.root_path) %>>
-          <%= link_to t(:'sufia.controls.home'), sufia.root_path, :'data-no-turbolink'=>"true" %></li>
+          <%= link_to t(:'sufia.controls.home'), sufia.root_path, 'data-no-turbolink': 'true' %></li>
         <li <%= 'class=active' if current_page?(sufia.about_path) %>>
-          <%= link_to t(:'sufia.controls.about'), sufia.about_path, :'data-no-turbolink'=>"true" %></li>
-        <li <%= 'class=active' if action_name == "help" %>>
+          <%= link_to t(:'sufia.controls.about'), sufia.about_path, 'data-no-turbolink': 'true' %></li>
+        <li <%= 'class=active' if action_name == 'help' %>>
           <%= link_to t(:'sufia.controls.help'), sufia.help_path %></li>
         <li <%= 'class=active' if current_page?(sufia.contact_path) %>>
           <%= link_to t(:'sufia.controls.contact'), sufia.contact_path %></li>
@@ -26,10 +26,10 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 col-sm-8 marketing">
-      <%= render "sufia/homepage/marketing" if controller_name == 'homepage' %>
+      <%= render 'sufia/homepage/marketing' if controller_name == 'homepage' %>
     </div>
     <div class="col-xs-12 col-sm-4 marketing-share">
-      <%= render "sufia/homepage/share" if controller_name == 'homepage' %>
+      <%= render 'sufia/homepage/share' if controller_name == 'homepage' %>
     </div>
   </div>
   <div class="row">

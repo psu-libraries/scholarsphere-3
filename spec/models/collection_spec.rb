@@ -19,8 +19,8 @@ describe Collection do
 
     it 'finds or creates the Alias record' do
       expect { collection.save! }
-        .to change { described_class.count }.by(1)
-        .and change { Alias.count }.by(1)
+        .to change(described_class, :count).by(1)
+        .and change(Alias, :count).by(1)
       expect(collection.creators).to include lucy
       expect(collection.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
     end

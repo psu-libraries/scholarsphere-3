@@ -137,7 +137,7 @@ class User < ActiveRecord::Base
 
     def get_net_attribute_with_new_lines(entry, attribute_name)
       attribute = get_net_attribute(entry, attribute_name, '').tr('$', "\n")
-      attribute.blank? ? nil : attribute
+      attribute.presence
     end
 
     def ldap_user_exist?

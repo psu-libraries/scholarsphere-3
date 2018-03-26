@@ -25,8 +25,8 @@ describe GenericWork do
 
       it 'sets the creators' do
         expect { work.save! }
-          .to change { described_class.count }.by(1)
-          .and change { Alias.count }.by(0)
+          .to change(described_class, :count).by(1)
+          .and change(Alias, :count).by(0)
         expect(work.creators).to contain_exactly(frodo, sam)
       end
     end
@@ -45,8 +45,8 @@ describe GenericWork do
 
       it 'finds or creates the Alias record' do
         expect { work.save! }
-          .to change { described_class.count }.by(1)
-          .and change { Alias.count }.by(1)
+          .to change(described_class, :count).by(1)
+          .and change(Alias, :count).by(1)
         expect(work.creators).to include lucy
         expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
       end
@@ -66,8 +66,8 @@ describe GenericWork do
 
       it 'finds or creates the Alias record' do
         expect { work.save! }
-          .to change { described_class.count }.by(1)
-          .and change { Alias.count }.by(1)
+          .to change(described_class, :count).by(1)
+          .and change(Alias, :count).by(1)
         expect(work.creators).to include lucy
         expect(work.creators.map(&:display_name)).to contain_exactly('Fred Jones', 'Lucy Lee')
       end

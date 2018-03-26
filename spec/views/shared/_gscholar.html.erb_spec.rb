@@ -14,7 +14,7 @@ describe 'shared/_gscholar.html.erb' do
       render 'shared/gscholar', presenter: presenter
     end
 
-    it { is_expected.to include('<meta name="citation_title" content="Sample Title"/>') }
+    it { is_expected.to include('<meta name="citation_title" content="Sample Title" />') }
   end
 
   context 'with a file set' do
@@ -27,6 +27,6 @@ describe 'shared/_gscholar.html.erb' do
       render 'shared/gscholar', presenter: presenter
     end
 
-    it { is_expected.to include('<meta name="citation_pdf_url" content="http://test.host/downloads/citation-download"/>') }
+    it { is_expected.to include('<meta name="citation_pdf_url" content="http://test.host/downloads/citation-download" />') }
   end
 end

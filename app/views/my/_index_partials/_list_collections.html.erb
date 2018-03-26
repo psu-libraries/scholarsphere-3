@@ -7,12 +7,12 @@
       <div class="media-body">
         <div class="media-heading">
           <%= link_to document, id: "src_copy_link#{id}" do %>
-              <span class="sr-only"><%= t("sufia.dashboard.my.sr.show_label") %> </span>
+              <span class="sr-only"><%= t('sufia.dashboard.my.sr.show_label') %> </span>
               <%= document.title_or_label %>
           <% end %>
           <a href="#" class="small" title="Click for more details">
             <span id="expand_<%= id %>" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only"> <%= "#{t("sufia.dashboard.my.sr.detail_label")} #{document.title_or_label}" %></span>
+            <span class="sr-only"> <%= "#{t('sufia.dashboard.my.sr.detail_label')} #{document.title_or_label}" %></span>
           </a>
         </div>
       </div>
@@ -33,13 +33,13 @@
         <dd class="col-xs-9 col-lg-10"><%= document.creator.to_a.to_sentence %></dd>
       <dt class="col-xs-3 col-lg-2">Depositor:</dt>
         <dd class="col-xs-9 col-lg-10"><%= link_to_profile document.depositor %></dd>
-      <dt class="col-xs-3 col-lg-2"><%= t("sufia.dashboard.my.collection_list.edit_access") %></dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.collection_list.edit_access') %></dt>
         <dd class="col-xs-9 col-lg-10">
           <% if document.edit_groups.present? %>
-            <%= t("sufia.dashboard.my.collection_list.groups") %> <%= document.edit_groups.join(', ') %>
-            <br/>
+            <%= t('sufia.dashboard.my.collection_list.groups') %> <%= document.edit_groups.join(', ') %>
+            <br />
           <% end %>
-          <%= t("sufia.dashboard.my.collection_list.users") %> <%= document.edit_people.join(', ') %>
+          <%= t('sufia.dashboard.my.collection_list.users') %> <%= document.edit_people.join(', ') %>
         </dd>
     </dl>
   </td>

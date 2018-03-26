@@ -10,18 +10,17 @@
            placeholder="Search for an existing creator" />
   </div>
 
-  <% if @form.creators.count == 1
-       remove_button_style = 'display: none'
-     else
-       remove_button_style = ''
-     end
-  %>
+  <% remove_button_style = if @form.creators.count == 1
+                             'display: none'
+                           else
+                             ''
+                           end %>
 
   <% @form.creators.each_with_index do |creator_form, index| %>
-    <% id_base = "#{@form.model_class_name}[creators][#{index}]"%>
+    <% id_base = "#{@form.model_class_name}[creators][#{index}]" %>
 
     <div class="well creator_inputs">
-      <button type="button" class="btn btn-link remove remove-creator" style="<%= remove_button_style %>" >
+      <button type="button" class="btn btn-link remove remove-creator" style="<%= remove_button_style %>">
         <span class="glyphicon glyphicon-remove"></span>
         <span class="controls-remove-text">Remove</span>
       </button>
@@ -47,7 +46,7 @@
               class: 'form-control string creator-last-name creator' %>
 
         <% display_name_id = "#{id_base}[display_name]" %>
-        <%= label_tag display_name_id do  %>
+        <%= label_tag display_name_id do %>
           <%= t('simple_form.labels.display_name') %> <span class="label label-info required-tag">required</span>
         <% end %>
         <%= text_field_tag display_name_id, creator_form.display_name,
@@ -72,8 +71,8 @@
               class: 'form-control string creator-psu-id creator' %>
 
         <%# orcid_id = "#{id_base}[orcid_id]" %>
-        <%#= label_tag orcid_id, 'ORCID ID' %>
-        <%#= text_field_tag orcid_id, creator_form.orcid_id,
+        <%# = label_tag orcid_id, 'ORCID ID' %>
+        <%# = text_field_tag orcid_id, creator_form.orcid_id,
               required: false,
               readonly: creator_form.read_only?,
               id: orcid_id,

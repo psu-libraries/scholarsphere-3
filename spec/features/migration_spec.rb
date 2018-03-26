@@ -35,7 +35,7 @@ describe 'Migration', type: :feature do
     subject(:migrator) { Migration::CreatorMigrator.run(cache_file) }
 
     it 'Calls runs the migration' do
-      expect { migrator }.to change { Alias.count }.by(2).and change { Agent.count }.by(2)
+      expect { migrator }.to change(Alias, :count).by(2).and change(Agent, :count).by(2)
     end
   end
 end

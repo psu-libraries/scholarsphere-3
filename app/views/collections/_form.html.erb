@@ -10,9 +10,9 @@
             '#extended-terms',
             class: 'btn btn-default additional-fields',
             data: { toggle: 'collapse' },
-            role: "button",
-            'aria-expanded'=> "false",
-            'aria-controls'=> "extended-terms" %>
+            role: 'button',
+            'aria-expanded' => 'false',
+            'aria-controls' => 'extended-terms' %>
     <div id="extended-terms" class='collapse'>
       <% f.object.secondary_terms.each do |term| %>
         <%= render_edit_field_partial(term, f: f) %>
@@ -22,7 +22,7 @@
   <%= hidden_field_tag :type, params[:type] %>
   <% if params[:batch_document_ids].present? %>
     <% params[:batch_document_ids].each do |batch_item| %>
-      <input type="hidden" name="batch_document_ids[]" value="<%= batch_item %>"/>
+      <input type="hidden" name="batch_document_ids[]" value="<%= batch_item %>" />
     <% end %>
   <% end %>
 
@@ -43,13 +43,13 @@
   <div class="primary-actions">
     <% if params[:action] == "new" %>
       <%# Overrides Sufia to display different sets of buttons for creating collections %>
-      <%= render "new_collection_options", f: f %>
+      <%= render 'new_collection_options', f: f %>
     <% else %>
       <%= f.submit 'Update Collection',
           class: 'btn btn-primary',
-          onclick: "confirmation_needed = false;",
-          id: "update_submit",
-          name: "update_collection" %>
+          onclick: 'confirmation_needed = false;',
+          id: 'update_submit',
+          name: 'update_collection' %>
     <% end %>
     <%= link_to t(:'helpers.action.cancel'), main_app.root_path, class: 'btn btn-link' %>
   </div>

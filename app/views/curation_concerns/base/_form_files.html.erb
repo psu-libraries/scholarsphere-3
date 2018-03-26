@@ -2,10 +2,10 @@
         make span an label
         Add aria-hidden to empty spans
         Put help text above the file list
-#%>
+# %>
 <div id="fileupload">
   <div class="alert alert-success">
-    <%= t("sufia.upload.cloud_timeout_message_html", contact_href: link_to(t("sufia.upload.alert.contact_href_text"), sufia.contact_form_index_path)) %>
+    <%= t('sufia.upload.cloud_timeout_message_html', contact_href: link_to(t('sufia.upload.alert.contact_href_text'), sufia.contact_form_index_path)) %>
   </div>
 
   <!-- The fileupload-buttonbar contains buttons to add/delete files -->
@@ -17,7 +17,7 @@
       <label for="inputfiles">Add files</label>
       <% if browser_supports_directory_upload? %>
         <input type="file" name="files[]" id="inputfolder"
-               class="inputfile" multiple directory webkitdirectory>
+               class="inputfile" multiple directory webkitdirectory />
         <label for="inputfolder">Add folder</label>
       <% end %>
     </div>
@@ -66,6 +66,6 @@
 </div>
 
 <!-- Redirect browsers with JavaScript disabled to the origin page -->
-<noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
+<noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>" /></noscript>
 
 <%= render 'sufia/uploads/js_templates' %>

@@ -1,20 +1,20 @@
-<meta name="twitter:card" content="product">
-<meta name="twitter:site" content="<%= t('sufia.product_twitter_handle') %>"/>
-<meta name="twitter:creator" content="<%= presenter.tweeter %>"/>
-<meta property="og:site_name" content="<%= application_name %>"/>
-<meta property="og:type" content="object"/>
-<meta property="og:title" content="<%= presenter.title.first %>"/>
+<meta name="twitter:card" content="product" />
+<meta name="twitter:site" content="<%= t('sufia.product_twitter_handle') %>" />
+<meta name="twitter:creator" content="<%= presenter.tweeter %>" />
+<meta property="og:site_name" content="<%= application_name %>" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="<%= presenter.title.first %>" />
 
 <% unless presenter.description.empty? %>
-  <meta property="og:description" content="<%= presenter.description.first.truncate(200) %>"/>
+  <meta property="og:description" content="<%= presenter.description.first.truncate(200) %>" />
 <% end %>
 
 <% if presenter.representative_presenter.display_download_link? %>
-  <meta property="og:image" content="<%= main_app.download_url(presenter.representative_presenter, file: 'thumbnail') %>"/>
+  <meta property="og:image" content="<%= main_app.download_url(presenter.representative_presenter, file: 'thumbnail') %>" />
 <% end %>
 
-<meta property="og:url" content="<%= polymorphic_path([main_app, presenter]) %>"/>
-<meta name="twitter:data1" content="<%= presenter.keyword.join(', ') %>"/>
-<meta name="twitter:label1" content="Keywords"/>
-<meta name="twitter:data2" content="<%= presenter.rights %>"/>
-<meta name="twitter:label2" content="Rights"/>
+<meta property="og:url" content="<%= polymorphic_path([main_app, presenter]) %>" />
+<meta name="twitter:data1" content="<%= presenter.keyword.join(', ') %>" />
+<meta name="twitter:label1" content="Keywords" />
+<meta name="twitter:data2" content="<%= presenter.rights %>" />
+<meta name="twitter:label2" content="Rights" />

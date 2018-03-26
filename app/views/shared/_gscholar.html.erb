@@ -1,11 +1,11 @@
-<meta name="citation_title" content="<%= presenter.title.first %>"/>
+<meta name="citation_title" content="<%= presenter.title.first %>" />
 
 <% presenter.creator.each do |creator| %>
-  <meta name="citation_author" content="<%= creator %>"/>
+  <meta name="citation_author" content="<%= creator %>" />
 <% end %>
 
-<meta name="citation_publication_date" content="<%= presenter.date_created.first %>"/>
+<meta name="citation_publication_date" content="<%= presenter.date_created.first %>" />
 
 <% if presenter.representative_presenter.display_download_link? %>
-  <meta name="citation_pdf_url" content="<%= main_app.download_url(presenter.representative_presenter) %>"/>
+  <meta name="citation_pdf_url" content="<%= main_app.download_url(presenter.representative_presenter) %>" />
 <% end %>

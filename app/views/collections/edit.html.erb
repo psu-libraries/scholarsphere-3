@@ -24,6 +24,6 @@
 </div>
 <%= render 'my/did_you_mean' %>
 <%= render 'my/facet_selected' %>
-<%= render 'collections/sort_and_per_page', collection: @collection if @response.response['numFound'] > 0 %>
-<%= render 'document_list', documents: @member_docs, document_list_format: "dashboard" %>
+<%= render 'collections/sort_and_per_page', collection: @collection if @response.response['numFound'].positive? %>
+<%= render 'document_list', documents: @member_docs, document_list_format: 'dashboard' %>
 <%= render 'paginate' %>

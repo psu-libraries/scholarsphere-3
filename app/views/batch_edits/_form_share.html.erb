@@ -29,14 +29,13 @@
       <% next if ['public', 'registered', depositor].include? permission_fields.object.agent_name.downcase %>
       <tr>
         <td>
-          <%= permission_fields.label :agent_name, class: "control-label" do %>
+          <%= permission_fields.label :agent_name, class: 'control-label' do %>
               <%= user_display_name_and_key(permission_fields.object.agent_name) %>
           <% end %>
         </td>
         <td>
           <%= permission_fields.select :access, Sufia.config.permission_levels, {}, class: 'form-control select_perm' %>
           <button class="btn close remove_perm" data-index="<%= permission_fields.index %>">&times;</button>
-
 
         </td>
         <td>
@@ -54,12 +53,11 @@
   </tbody>
 </table>
 
-
 <h2>Share work with other users</h2>
   <ol class="list-inline help-block">
     <li>Search by name or <%= t('sufia.account_label') %>.</li>
     <li>Select the access level you wish to grant</li>
-    <li>Click on "Add <%= t('sufia.account_label') %>" to give access to one <%=t('sufia.account_label') %> at a time.</li>
+    <li>Click on "Add <%= t('sufia.account_label') %>" to give access to one <%= t('sufia.account_label') %> at a time.</li>
   </ol>
 <div class="form-group row">
   <div class="col-sm-5">
@@ -88,7 +86,7 @@
 <div class="form-group row">
   <div class="col-sm-5">
     <label for="new_group_name_skel" class="sr-only">Group</label>
-    <%= select_tag 'new_group_name_skel', options_for_select(["Select a group"] + current_user.groups), class: 'form-control' %>
+    <%= select_tag 'new_group_name_skel', options_for_select(['Select a group'] + current_user.groups), class: 'form-control' %>
   </div>
   <div class="col-sm-4">
     <label for="new_group_permission_skel" class="sr-only">Access type to grant</label>

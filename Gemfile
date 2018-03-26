@@ -52,11 +52,10 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'faker'
   gem 'fcrepo_wrapper'
+  gem 'niftany', github: 'psu-libraries/niftany', branch: 'master'
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop', '0.50.0'
-  gem 'rubocop-rspec', '1.18.0'
   gem 'solr_wrapper'
   gem 'sqlite3'
 end

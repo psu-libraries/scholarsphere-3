@@ -6,32 +6,31 @@
           <% classification.each do |concern| %>
               <%= link_to(new_polymorphic_path([main_app, concern]),
                           class: "item-option contextual-quick-classify #{dom_class(concern, 'new').gsub('_', '-')}",
-                          role: 'menuitem'
-                  ) do %>
+                          role: 'menuitem') do %>
                   <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-                  <%= I18n.t("sufia.dashboard.create_work", work_type: concern.human_readable_type) %>
+                  <%= I18n.t('sufia.dashboard.create_work', work_type: concern.human_readable_type) %>
               <% end %>
           <% end %>
         </div>
     <% end %>
     <% if can?(:create, Collection) %>
         <div class="col-xs-6 col-sm-3 heading-tile">
-          <%= link_to new_collection_path, id: "hydra-collection-add" do %>
+          <%= link_to new_collection_path, id: 'hydra-collection-add' do %>
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-              <%= t("sufia.dashboard.create_collection") %>
+              <%= t('sufia.dashboard.create_collection') %>
           <% end %>
         </div>
-    <% end  %>
+    <% end %>
     <div class="col-xs-6 col-sm-3 heading-tile">
-      <%= link_to sufia.dashboard_collections_path, id: "hydra-collection-view" do %>
+      <%= link_to sufia.dashboard_collections_path, id: 'hydra-collection-view' do %>
           <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-          <%= t("sufia.dashboard.view_collections") %>
+          <%= t('sufia.dashboard.view_collections') %>
       <% end %>
     </div>
     <div class="col-xs-6 col-sm-3 heading-tile">
       <%= link_to sufia.dashboard_works_path  do %>
           <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-          <%= t("sufia.dashboard.view_works") %>
+          <%= t('sufia.dashboard.view_works') %>
       <% end %>
     </div>
   </div>
