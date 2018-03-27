@@ -15,6 +15,7 @@ gem 'blacklight_advanced_search', '~> 6.0'
 gem 'mail', '= 2.6.6.rc1'
 
 # Other components
+gem 'bootsnap', require: false
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coderay'
 gem 'coffee-rails'
