@@ -46,6 +46,7 @@ describe CatalogController, type: :controller do
     let(:work1)    { build(:public_work, title: ['Test 1 Document'], id: '1') }
     let(:work2)    { build(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'], id: '2') }
     let(:work3)    { build(:public_work, :with_complete_metadata, id: '3', members: [file_set]) }
+    let(:work4)    { build(:public_work, title: ['TAXgg_Xerumbrepts_100m.tif'], id: '4') }
     let(:user)     { 'user' }
     let(:file)     { mock_file_factory(format_label: ['format_labelformat_label'], mime_type: 'application/pdf') }
 
@@ -67,6 +68,7 @@ describe CatalogController, type: :controller do
       index_work(work1)
       index_work(work2)
       index_work(work3)
+      index_work(work4)
     end
 
     describe 'term search' do
@@ -83,6 +85,13 @@ describe CatalogController, type: :controller do
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('titletitle')
+      end
+      it 'finds a file by partial title' do
+        xhr :get, :index, q: 'xerumbrepts'
+        expect(response).to be_success
+        expect(response).to render_template('catalog/index')
+        expect(assigns(:document_list).count).to be(1)
+        expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('TAXgg_Xerumbrepts_100m.tif')
       end
       it 'finds a file by keyword' do
         xhr :get, :index, q: 'tagtag'
@@ -165,13 +174,13 @@ describe CatalogController, type: :controller do
         xhr :get, :index, q: user
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
-        expect(assigns(:document_list).count).to be(3)
+        expect(assigns(:document_list).count).to be(4)
       end
       it 'finds a file by depositor in advanced search' do
         xhr :get, :index, depositor: user, search_field: 'advanced'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
-        expect(assigns(:document_list).count).to be(3)
+        expect(assigns(:document_list).count).to be(4)
       end
     end
     describe 'facet search' do

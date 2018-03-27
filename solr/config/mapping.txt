@@ -1,0 +1,11 @@
+# Performs pattern replacement on strings prior to tokenization, filtering, and indexing.
+#
+# Transform delimiters to spaces to improve search results.
+#
+# Example:
+#   A work title: "Sample_file.txt" will be separated and indexed as "Sample file txt"
+
+"_" => " "
+"-" => " "
+"\." => " "
+"\/" => " "
