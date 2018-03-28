@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema name="Scholarsphere" version="1.5">
-	<copyField source="*_tesim" dest="suggest"/>
-	<copyField source="*_ssim" dest="suggest"/>
+	<copyField source="*_tesim" dest="all_text_timv"/>
+	<copyField source="*_ssim" dest="all_text_timv"/>
 	<fields>
 		<field name="_version_" type="long" indexed="true" stored="true"/>
 		<field name="id" type="string" stored="true" indexed="true" multiValued="false" required="true"/>
@@ -131,6 +131,7 @@
 		<fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees"/>
 		<fieldType name="text" class="solr.TextField" omitNorms="false">
 			<analyzer>
+				<charFilter class="solr.MappingCharFilterFactory" mapping="mapping.txt"/>
 				<tokenizer class="solr.ICUTokenizerFactory"/>
 				<filter class="solr.ICUFoldingFilterFactory"/>
 				<filter class="solr.TrimFilterFactory"/>
