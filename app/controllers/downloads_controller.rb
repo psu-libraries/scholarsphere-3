@@ -28,6 +28,15 @@ class DownloadsController < ApplicationController
   private
 
     def zip_service
-      WorkZipService.new(asset, current_ability, work_directory)
+      case asset
+      when GenericWork
+        WorkZipService.new(asset, current_ability, work_directory)
+      when Collection
+        CollectionZipService.new(asset, current_ability, work_directory)
+      else
+        raise ZipServiceError, "#{asset.class} cannot be downloaded as a zip file"
+      end
     end
+
+    class ZipServiceError < StandardError; end
 end
