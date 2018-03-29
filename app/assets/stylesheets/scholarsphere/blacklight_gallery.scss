@@ -1,13 +1,14 @@
-/* These styles are very specific to override the thumbnails from blacklight gallery */
-
+// These styles are very specific to override the thumbnails from blacklight gallery
+// scss-lint:disable IdSelector, SelectorDepth
 #documents .grid .document .thumbnail {
   padding: 0;
-}
 
-#documents .grid .document .thumbnail > a > img {
-  position: absolute;
-  left: 0;
-  top: 0;
-  max-width: 100%;
-  max-height: none;
+  > a > img {
+    left: 0;
+    max-height: none;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+  }
 }
+// scss-lint:enable IdSelector, SelectorDepth

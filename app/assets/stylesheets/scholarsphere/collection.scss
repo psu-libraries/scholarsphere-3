@@ -1,12 +1,14 @@
 .collection-icon,
+.collection-icon-small,
 .collection-icon-search {
-  color: #0072bc;
-}
-.collection_doi_controls legend {
-  border: 0;
-  border-bottom: 1px solid #e5e5e5
+  color: $collection-icon-color;
 }
 
-.collection_doi_controls {
+.collection-doi-controls {
   padding-bottom: 1em;
+
+  legend {
+    border: 0;
+    border-bottom: 1px solid $gray-light;
+  }
 }
