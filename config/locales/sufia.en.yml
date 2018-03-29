@@ -26,6 +26,11 @@ en:
       transfer_files_link: "Select files to transfer"
       my:
         shares: 'Shared with Me'
+        creator: 'Creator'
+        depositor: 'Depositor'
+        collection: 'Collection'
+        collection_list:
+          edit_access: 'Edit Access'
     homepage:
       recently_uploaded:
         tab_label: 'Recent Additions'
