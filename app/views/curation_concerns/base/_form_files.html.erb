@@ -2,8 +2,9 @@
         make span an label
         Add aria-hidden to empty spans
         Put help text above the file list
+        Add total upload limit data element in bytes
 # %>
-<div id="fileupload">
+<div id="fileupload" data-limit="<%= Rails.application.config.upload_limit %>">
   <div class="alert alert-success">
     <%= t('sufia.upload.cloud_timeout_message_html', contact_href: link_to(t('sufia.upload.alert.contact_href_text'), sufia.contact_form_index_path)) %>
   </div>
@@ -52,8 +53,20 @@
 
   <!-- The table listing the files available for upload/download -->
   <h2><%= t('scholarsphere.upload.available') %></h2>
+  <h3><%= t('scholarsphere.upload.limit.heading') %></h3>
+  <div class="progress">
+    <div id="sizeprogress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+      0 bytes
+    </div>
+  </div>
+  <div id="sizealert" class="alert alert-danger hidden" role="alert" aria-live="assertive">
+    <%= t('scholarsphere.upload.limit.warning') %>
+  </div>
   <table class="table table-striped" aria-live="assertive">
-    <caption><%= t('scholarsphere.upload.caption') %></caption>
+    <caption>
+      <%= t('scholarsphere.upload.caption',
+          upload_limit: number_to_human_size(Rails.application.config.upload_limit)) %>
+      </caption>
     <thead>
       <tr>
         <th scope="col">File</th>

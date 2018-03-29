@@ -73,8 +73,11 @@ en:
       content_policy_html: "<h3>Content Policy</h3><p class='content-policy'>Please review <a href='/about#Content_Policy'>ScholarSphere’s Content Policy</a> to make sure you are not depositing materials that are sensitive.</p>"
       progress: "Saving your work. This may take a few moments"
       available: "Files Available for Upload"
-      caption: "Listing of files ready to be uploaded"
+      caption: "Listing of files ready to be uploaded. Total size for all combined files is restricted to %{upload_limit}."
       local: "Files must be added before they can be uploaded"
+      limit:
+        heading: 'Total Upload Size'
+        warning: "Selected size exceeds the maximum allowed for upload. Please remove some files before continuing."
     batch_edit:
       permissions_warning: "Warning! Making changes to visibility or sharing permissions will remove any existing permissions on the files in this batch and replace them with the ones specified here."
     import_url:
