@@ -43,9 +43,12 @@ describe CatalogController, type: :controller do
 
   describe '#index' do
     let(:file_set) { build(:file_set, id: 'fs') }
-    let(:work1)    { build(:public_work, title: ['Test 1 Document'], id: '1') }
-    let(:work2)    { build(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'], id: '2') }
-    let(:work3)    { build(:public_work, :with_complete_metadata, id: '3', members: [file_set]) }
+    let(:creator1) { create(:creator, display_name: 'Sam') }
+    let(:creator2) { create(:alias, display_name: 'Gus', agent: creator1.agent) }
+    let(:creator3) { create(:alias, display_name: 'Bob', agent: creator1.agent) }
+    let(:work1)    { build(:public_work, title: ['Test 1 Document'], id: '1', creators: [creator1]) }
+    let(:work2)    { build(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'], id: '2', creators: [creator2]) }
+    let(:work3)    { build(:public_work, :with_complete_metadata, id: '3', members: [file_set], creators: [creator3]) }
     let(:work4)    { build(:public_work, title: ['TAXgg_Xerumbrepts_100m.tif'], id: '4') }
     let(:user)     { 'user' }
     let(:file)     { mock_file_factory(format_label: ['format_labelformat_label'], mime_type: 'application/pdf') }
@@ -108,11 +111,11 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field('subject'))[0]).to eql('subjectsubject')
       end
       it 'finds a file by creator' do
-        xhr :get, :index, q: 'creatorcreator'
+        xhr :get, :index, q: 'gus'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('creatorcreator')
+        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('Gus')
       end
       it 'finds a file by contributor' do
         xhr :get, :index, q: 'contributorcontributor'
@@ -181,6 +184,12 @@ describe CatalogController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(4)
+      end
+      it 'finds a file by creator in advanced search' do
+        xhr :get, :index, q: creator1.agent.sur_name, search_field: 'all_fields'
+        expect(response).to be_success
+        expect(response).to render_template('catalog/index')
+        expect(assigns(:document_list).count).to be(3)
       end
     end
     describe 'facet search' do

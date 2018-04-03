@@ -23,4 +23,14 @@ class SearchBuilder < Sufia::CatalogSearchBuilder
     return [] if ability.current_user.administrator?
     super
   end
+
+  # the {!lucene} gives us the OR syntax
+  def new_query
+    "{!lucene}#{interal_query(dismax_query)} #{interal_query(join_for_works_from_files)} #{interal_query(join_for_works_from_agents)}"
+  end
+
+  # join from file id to work relationship solrized file_set_ids_ssim
+  def join_for_works_from_agents
+    "{!join from=#{ActiveFedora.id_field} to=creator_list_ssim}#{dismax_query}"
+  end
 end
