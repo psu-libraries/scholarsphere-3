@@ -35,5 +35,5 @@ jobs:
       install: skip
       script: ./travis/coverage.sh
     - stage: niftany
-      script: ./travis/niftany.sh
+      script: bundle exec niftany
 

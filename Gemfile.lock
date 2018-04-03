@@ -96,7 +96,7 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    better_html (1.0.6)
+    better_html (1.0.7)
       actionview (>= 4.0)
       activesupport (>= 4.0)
       ast (~> 2.0)
@@ -294,9 +294,9 @@ GEM
       sxp (~> 1.0)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
-    erb_lint (0.0.22)
+    erb_lint (0.0.23)
       activesupport
-      better_html (~> 1.0.6)
+      better_html (~> 1.0.7)
       colorize
       html_tokenizer
       rubocop (~> 0.51)
@@ -323,7 +323,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     fcrepo_wrapper (0.6.0)
       ruby-progressbar
-    ffi (1.9.18)
+    ffi (1.9.23)
     figaro (1.1.1)
       thor (~> 0.14)
     flipflop (2.3.1)
@@ -509,7 +509,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     newrelic_rpm (3.17.1.326)
-    niftany (0.0.1)
+    niftany (0.0.2)
       erb_lint (~> 0.0.22)
       rubocop (~> 0.51, <= 0.52.1)
       rubocop-rspec (~> 1.22, <= 1.22.2)
