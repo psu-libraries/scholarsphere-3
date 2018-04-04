@@ -46,7 +46,7 @@ describe CollectionZipService do
 
       it 'creates a zip and filters the files we do not have access to read' do
         is_expected.to eq('tmp/collection_with_works.zip')
-        expect(zip_file.entries.map(&:name)).to contain_exactly(work1.title.first, work2.title.first)
+        expect(zip_file.entries.map(&:name)).to contain_exactly('First Work.zip', 'Second Work.zip')
       end
     end
 
