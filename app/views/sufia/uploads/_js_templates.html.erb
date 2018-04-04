@@ -53,7 +53,7 @@
               {% if (file.error) { %}
                   <div><span class="label label-danger">Error</span> {%=file.error%}</div>
               {% } %}
-              <span class="size">{%=o.formatFileSize(file.size)%}</span>
+              <span class="size" data-size="{%=file.size%}">{%=o.formatFileSize(file.size)%}</span>
               <button class="btn btn-danger delete pull-right" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                   <i class="glyphicon glyphicon-trash"></i>
                   <span>Delete</span>
@@ -106,7 +106,7 @@
             {% } %}
         </td>
         <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            <span class="size" data-size="{%=file.size%}">{%=o.formatFileSize(file.size)%}</span>
         </td>
         <td>
             <button class="btn btn-danger delete" aria-label="Delete file from uploads"
