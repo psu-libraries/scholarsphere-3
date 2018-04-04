@@ -15,6 +15,7 @@ development:
   doi_password: 'password'
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
+  backup_directory: 'backups'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -24,6 +25,7 @@ test:
   read_only: "false"
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
+  backup_directory: 'backups_test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
