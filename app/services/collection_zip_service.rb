@@ -10,7 +10,7 @@ class CollectionZipService < WorkZipService
     def add_files_to_zip(zipfile, work)
       return unless ability.can? :read, work.id
 
-      zipfile.add(work.title.first, WorkZipService.new(work, ability, zip_directory).call) do
+      zipfile.add("#{work.title.first}.zip", WorkZipService.new(work, ability, zip_directory).call) do
         true
       end
     end
