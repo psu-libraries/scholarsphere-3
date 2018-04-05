@@ -23,10 +23,6 @@
           <a href="#" class="small" title="Click for more details">
             <span id="expand_<%= document.id %>" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           </a>
-
-          <br />
-          <%= render_collection_links(document) %>
-
         </div>
       </div>
     </div>
@@ -46,11 +42,11 @@
   </td>
 </tr>
 <tr id="detail_<%= document.id %>">
-  <td colspan="6">
+  <td colspan="5">
     <dl class="expanded-details row">
-      <dt class="col-xs-3 col-lg-2">Creator:</dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.creator') %></dt>
       <dd class="col-xs-9 col-lg-10"><%= document.creator.to_a.to_sentence %></dd>
-      <dt class="col-xs-3 col-lg-2">Depositor:</dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.depositor') %></dt>
       <dd class="col-xs-9 col-lg-10"><%= link_to_profile document.depositor %></dd>
       <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.collection_list.edit_access') %></dt>
       <dd class="col-xs-9 col-lg-10">
@@ -60,6 +56,7 @@
         <% end %>
         <%= t('sufia.dashboard.my.collection_list.users') %> <%= document.edit_people.join(', ') %>
       </dd>
+        <%= render 'my/part_of_collection', collection_presenters: presenter.collection_presenters %>
     </dl>
   </td>
 </tr>
