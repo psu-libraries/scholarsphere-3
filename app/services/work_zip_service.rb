@@ -12,6 +12,8 @@
 #
 #   zip_file_name = service.call
 #
+require 'zip'
+
 class WorkZipService
   attr_reader :resource, :ability, :zip_directory
 
