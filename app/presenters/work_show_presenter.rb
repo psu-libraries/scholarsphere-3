@@ -30,6 +30,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     readme_file = file_set_presenters.select { |presenter| presenter.label =~ /^readme/i }.first
     return if readme_file.blank?
     file_set = FileSet.find(readme_file.id)
+    return unless file_set.original_file.respond_to?(:content)
     content = file_set.original_file.content
     renderer = Redcarpet::Render::HTML.new(safe_links_only: true, hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer)
