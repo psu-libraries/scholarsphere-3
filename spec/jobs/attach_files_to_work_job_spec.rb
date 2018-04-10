@@ -18,7 +18,7 @@ describe AttachFilesToWorkJob do
     it 'sends a success message' do
       expect(AttachFilesToWorkSuccessService).to receive(:new).with(user, kind_of(File)).and_call_original
       expect(CharacterizeJob).to receive(:perform_later).once
-      expect { job.perform_now }.to change { QueuedFile.count }.by(-1)
+      expect { job.perform_now }.to change(QueuedFile, :count).by(-1)
     end
   end
 

@@ -21,6 +21,7 @@ en:
         add_new_works:
           label: "Add new works"
           desc: "Add new works to this Collection"
+        collection_zip_link: "Download Collection as Zip"
     single_use_links:
       button: "Create Single-Use Link"
       expiration_message: "Link id %{link} expires %{time}"
@@ -28,6 +29,11 @@ en:
         no_links: "No links present. To create a new link, click Create Single-Use Link"
         copy: "Copy link id %{link} to clipboard"
         delete: "Delete link id %{link}"
+
+  curation_concerns:
+    show:
+      downloadable_content:
+        work_zip_link: 'Download Work as Zip'
 
 
   hydra:
@@ -67,8 +73,11 @@ en:
       content_policy_html: "<h3>Content Policy</h3><p class='content-policy'>Please review <a href='/about#Content_Policy'>ScholarSphere’s Content Policy</a> to make sure you are not depositing materials that are sensitive.</p>"
       progress: "Saving your work. This may take a few moments"
       available: "Files Available for Upload"
-      caption: "Listing of files ready to be uploaded"
+      caption: "Listing of files ready to be uploaded. Total size for all combined files is restricted to %{upload_limit}."
       local: "Files must be added before they can be uploaded"
+      limit:
+        heading: 'Total Upload Size'
+        warning: "Selected size exceeds the maximum allowed for upload. Please remove some files before continuing."
     batch_edit:
       permissions_warning: "Warning! Making changes to visibility or sharing permissions will remove any existing permissions on the files in this batch and replace them with the ones specified here."
     import_url:
@@ -77,6 +86,12 @@ en:
     aliases:
       parameter_error: "Please provide either an alias, id, or display name; or, all of: surname, given name, and display name"
       agent_error: "The provided alias does not have a person associated with it"
+    generic_work:
+      readme_heading: 'README'
+      readme_text: 'How about adding a README file? We currently accept plain text (README.txt) and markdown (README.md) files.  Note: You may need to refresh to see an README file you just uploaded.'
+    file_set:
+      permission_help: 'Who should be able to view or download this content?'
+      representative_media: 'If this is or becomes your representative media, this may impact the display of your work in search results.'
 
   statistic:
     report:

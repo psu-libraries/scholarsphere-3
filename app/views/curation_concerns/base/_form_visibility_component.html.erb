@@ -8,7 +8,7 @@
         <p class="help-block">Who should be able to view or download this content?</p>
       <ul class="visibility" role="radiogroup" aria-labelledby="choose_visibility">
         <li class="radio">
-          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, data: { 'target': '#collapsePublic' }  %>
+          <%= f.radio_button :visibility, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, data: { 'target': '#collapsePublic' } %>
           <label for="generic_work_visibility_open">
             <%= t('curation_concerns.visibility.open.label_html') %>
           </label>

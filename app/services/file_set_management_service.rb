@@ -5,7 +5,7 @@ class FileSetManagementService
   attr_writer :errors
 
   def initialize(ids = nil)
-    @ids = ids.present? ? ids : all_ids
+    @ids = ids.presence || all_ids
   end
 
   def create_derivatives

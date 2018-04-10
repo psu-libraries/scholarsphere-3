@@ -5,12 +5,10 @@ FactoryGirl.define do
     "user#{n}"
   end
 
-  factory :ladp_user, class: User do
-    factory :ldap_jill do
-      login 'jilluser'
-      display_name 'Jill Z. User'
-      title 'LDAP User'
-    end
+  factory :ldap_jill, class: User do
+    login 'jilluser'
+    display_name 'Jill Z. User'
+    title 'LDAP User'
   end
 
   factory :user do
@@ -55,12 +53,6 @@ FactoryGirl.define do
     factory :archivist do
       login 'archivist1'
       title 'Archivist'
-    end
-
-    factory :curator do
-      login 'curator1'
-      title 'Curator'
-      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
     end
 
     factory :random_user do

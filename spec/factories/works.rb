@@ -56,10 +56,6 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
 
-    factory :public_work_without_filesets do
-      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-    end
-
     factory :public_work_with_png do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
@@ -77,6 +73,46 @@ FactoryGirl.define do
         work.thumbnail_id = fs.id
         work.representative_id = fs.id
         work.update_index
+      end
+    end
+
+    factory :public_work_with_pdf do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: User.find_by_login(work.depositor),
+                                title: ['A full-text pdf file'],
+                                label: 'test.pdf',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/test.pdf"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+        work.representative_id = fs.id
+        work.update_index
+      end
+    end
+
+    factory :public_work_with_readme do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+
+      after(:create) do |work, attributes|
+        fs = FactoryGirl.create(:file_set,
+                                user: User.find_by_login(work.depositor),
+                                title: ['README'],
+                                label: 'readme.md',
+                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+
+        file_path = "#{Rails.root}/spec/fixtures/readme.md"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+
+        work.ordered_members << fs
+        work.thumbnail_id = fs.id
+        work.representative_id = fs.id
+        work.save
       end
     end
 
@@ -122,28 +158,6 @@ FactoryGirl.define do
         work.ordered_members << fs
         work.thumbnail_id = fs.id
       end
-    end
-
-    trait :with_full_text_content do
-      after(:build) do |f|
-        f.full_text.content = 'full_textfull_text'
-      end
-    end
-
-    trait :with_png do
-      after(:build) do |f|
-        f.add_file(File.open("#{Rails.root}/spec/fixtures/world.png", 'rb'), path: 'content')
-      end
-    end
-
-    trait :with_pdf do
-      before(:create) do |work, evaluator|
-        work.ordered_members << FactoryGirl.create(:file_set, :pdf, user: evaluator.user)
-      end
-    end
-
-    trait :characterized do
-      after(:create, &:characterize)
     end
 
     trait :with_public_embargo do

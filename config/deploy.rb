@@ -63,7 +63,6 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/sufia6.rb',
   'config/newrelic.yml',
   'config/redis.yml',
-  'config/scholarsphere.yml',
   'config/secrets.yml',
   'config/share_notify.yml',
   'config/solr.yml',

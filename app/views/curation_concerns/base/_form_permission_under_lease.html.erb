@@ -5,6 +5,6 @@
     </p>
   <div class="form-group">
     <input type="hidden" name="<%= f.object_name %>[visibility]" value="<%= Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_LEASE %>" />
-    <%= render "form_permission_lease", f: f %>
+    <%= render 'form_permission_lease', f: f %>
   </div>
 </fieldset>

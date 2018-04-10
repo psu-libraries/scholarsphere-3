@@ -1,5 +1,4 @@
-/* Needs to be overly specific to override Bootstrap styles coming from 3 gems */
-
+// Needs to be overly specific to override Bootstrap styles coming from 3 gems
 html > body h1,
 html > body h2,
 html > body h3 {
@@ -7,12 +6,12 @@ html > body h3 {
 }
 
 html > body a {
-  color: #2d699e;
+  color: $home-blue;
   text-decoration: underline;
 }
 
-/* Overrides that hop onto existing classes where the UI convention is enough */
-a.btn,
+// Overrides that hop onto existing classes where the UI convention is enough
+.btn,
 .breadcrumb a,
 .dropdown-menu > li > a,
 .facets h3 a,
@@ -22,22 +21,33 @@ a.btn,
 .no-underline,
 .visibility-link { text-decoration: none; }
 
-/* Overrides the heavy default underline on H2 titles in the search */
+// Overrides the heavy default underline on H2 titles in the search
 .blacklight-genericwork h3 > a {
-  text-decoration: none;
-  text-shadow: 0 2px #fff;
   border-bottom: 1px solid;
+  text-decoration: none;
+  text-shadow: 0 2px $primary-white;
 }
 
-/* Label and Button overrides for better contrast ratio */
+// Label and Button overrides for better contrast ratio
 html > body .label { font-weight: normal; }
+
 html > body .label-success,
-html > body .btn-success { background-color: #387f38; }
+html > body .btn-success { background-color: $btn-success-color; }
+
 html > body .label-danger,
-html > body .btn-danger { background-color: #d33a35; }
+html > body .btn-danger { background-color: $btn-danger-color; }
+
 html > body .label-info,
-html > body .btn-info { background-color: #2c76c7; }
+html > body .btn-info { background-color: $btn-info-color; }
+
 html > body .label-warning,
-html > body .btn-warning { background-color: #F0AD1B; }
+html > body .btn-warning { background-color: $btn-warning-color; }
 
 .anchor { text-decoration: none; }
+
+.subtitle {
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-top: 20px;
+}

@@ -1,4 +1,5 @@
 @media (min-width: 768px) {
+  // scss-lint:disable VendorPrefix
   .fixedsticky {
     position: -webkit-sticky;
     position: -moz-sticky;
@@ -6,17 +7,20 @@
     position: -o-sticky;
     position: static;
   }
+  // scss-lint:enable VendorPrefix
 
-  /* When position: sticky is supported but native behavior is ignored */
+  // When position: sticky is supported but native behavior is ignored
   .fixedsticky-withoutfixedfixed .fixedsticky-off,
   .fixed-supported .fixedsticky-off {
     position: static;
   }
 
+  // scss-lint:disable ImportantRule
   .fixedsticky-withoutfixedfixed .fixedsticky-on,
   .fixed-supported .fixedsticky-on {
     position: static !important;
   }
+  // scss-lint:enable ImportantRule
 
   .fixedsticky-dummy {
     display: none;

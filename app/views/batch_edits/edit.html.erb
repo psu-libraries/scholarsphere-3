@@ -1,10 +1,10 @@
-<% provide :page_title, "Batch Edit" %>
+<% provide :page_title, 'Batch Edit' %>
 <% provide :page_header do %>
   <h1>Batch Edit</h1>
 <% end %>
 
 <p>Changes will be applied to the following <%= @form.names.size %> works:</p>
-<%= @form.names.join(", ").html_safe %>
+<%= @form.names.join(', ').html_safe %>
 
 <div class="alert alert-warning"><%= t('scholarsphere.batch_edit.permissions_warning') %></div>
 
@@ -14,28 +14,28 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li id="edit_descriptions_link" class="active">
-        <a href="#descriptions_display" data-toggle="tab"><%= t("sufia.works.edit.tab.metadata") %></a>
+        <a href="#descriptions_display" data-toggle="tab"><%= t('sufia.works.edit.tab.metadata') %></a>
       </li>
       <li id="edit_permissions_link">
-        <a href="#share" data-toggle="tab"><%= t("sufia.works.edit.tab.share") %></a>
+        <a href="#share" data-toggle="tab"><%= t('sufia.works.edit.tab.share') %></a>
       </li>
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="descriptions_display">
         <p>Click on labels below to edit the values for the field in all the works.</p>
-        <%= render "form_descriptions" %>
+        <%= render 'form_descriptions' %>
       </div>
 
       <div class="tab-pane" id="share" data-param-key="batch_edit_item">
-        <%= simple_form_for @form.model, url: batch_edits_path, method: :put, remote: true, html: { id: "form_permissions", class: "ajax-form"} do |f| %>
+        <%= simple_form_for @form.model, url: batch_edits_path, method: :put, remote: true, html: { id: 'form_permissions', class: 'ajax-form' } do |f| %>
           <%= hidden_field_tag('update_type', 'update') %>
           <%= hidden_field_tag('key', 'permissions') %>
           <%= hidden_field_tag('batch_edit_item[admin_set_id]', @form.model.admin_set_id) %>
-          <%= render "curation_concerns/base/form_permission", f: f %>
-          <%= render "form_share", f: f %>
+          <%= render 'curation_concerns/base/form_permission', f: f %>
+          <%= render 'form_share', f: f %>
           <div class="row">
-            <%= f.submit "Save changes", class: 'btn btn-primary updates-batches', id: 'permissions_save' %>
+            <%= f.submit 'Save changes', class: 'btn btn-primary updates-batches', id: 'permissions_save' %>
             <div id="status_permissions" class="status fleft"></div>
           </div>
         <% end %>
@@ -43,7 +43,7 @@
     </div>
 
     <!-- Ajax call to clear the batch before page uload. -->
-    <%= button_to "Clear Batch", { controller: :batch_edits, action: :clear },
+    <%= button_to 'Clear Batch', { controller: :batch_edits, action: :clear },
         form_class: 'hidden', remote: true, id: 'clear_batch' %>
   </div>
 </div>

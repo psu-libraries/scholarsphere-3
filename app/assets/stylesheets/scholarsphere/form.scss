@@ -1,10 +1,12 @@
-/* Needs to be overly specific to override Bootstrap styles coming from 3 gems */
+// Needs to be overly specific to override Bootstrap styles coming from 3 gems
+// scss-lint:disable QualifyingElement, SelectorDepth
 html > body .form-progress .radio input[type="radio"] {
   margin-left: 0;
 }
+// scss-lint:enable QualifyingElement, SelectorDepth
 
 .switch-upload-type {
-  padding: 0.5em 0;
+  padding: .5em 0;
 }
 
 .optional-list {
@@ -13,10 +15,13 @@ html > body .form-progress .radio input[type="radio"] {
 }
 
 .add-creator {
-  padding:0;
-  margin-bottom:2.5em;
+  margin-bottom: 2.5em;
+  padding: 0;
  }
 
 .remove-creator {
-  padding:0;
+  padding: 0;
 }
+
+// Removes some extra markup from 3 gems and a different setting for the labels and radio buttons
+html > body .permission-label { padding-left: 0; }

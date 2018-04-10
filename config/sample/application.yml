@@ -13,6 +13,9 @@ development:
   read_only: "false"
   doi_user: 'ss1'
   doi_password: 'password'
+  RECAPTCHA_SITE_KEY: 'site-key'
+  RECAPTCHA_SECRET_KEY: 'secret-key'
+  backup_directory: 'backups'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -20,6 +23,9 @@ test:
   stats_email: "Test email"
   google_analytics_id: "test-id"
   read_only: "false"
+  RECAPTCHA_SITE_KEY: 'site-key'
+  RECAPTCHA_SECRET_KEY: 'secret-key'
+  backup_directory: 'backups_test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -31,3 +37,5 @@ production:
   read_only: "false"
   doi_user: 'ss1'
   doi_password: 'password'
+  RECAPTCHA_SITE_KEY: 'site-key'
+  RECAPTCHA_SECRET_KEY: 'secret-key'

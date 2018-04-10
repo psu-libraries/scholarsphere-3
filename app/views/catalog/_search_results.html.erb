@@ -1,4 +1,4 @@
-<% provide :page_title, "Search Results | ScholarSphere" %>
+<% provide :page_title, 'Search Results | ScholarSphere' %>
 
 <h1 class="sr-only"><%= t('blacklight.search.search_results_header') %></h1>
 
@@ -12,13 +12,12 @@
     <%= render 'constraints' %>
 <% end %>
 
-
 <%= render 'search_header' %>
 
 <h2 class="sr-only"><%= t('blacklight.search.search_results') %></h2>
 
 <%- if @response.empty? %>
-    <%= render "zero_results" %>
+    <%= render 'zero_results' %>
 <%- elsif render_grouped_response? %>
     <%= render_grouped_document_index %>
 <%- else %>

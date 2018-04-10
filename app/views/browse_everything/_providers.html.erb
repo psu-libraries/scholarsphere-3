@@ -3,7 +3,7 @@
   <select class="form-control" id="provider-select">
     <% browser.providers.each_pair do |key, provider| %>
       <% next if key == 'file_system' && !current_user.administrator? %>
-      <option value="<%=browse_everything_engine.contents_path(key)%>">
+      <option value="<%= browse_everything_engine.contents_path(key) %>">
         <%= provider.name %>
       </option>
     <% end %>

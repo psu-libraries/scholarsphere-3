@@ -5,9 +5,9 @@
 %>
 
 <div class="batch-toggle">
-  <% session[:batch_edit_state] = "on" %>
-  <%= radio_button_tag "id", presenter.id, true, class: "collection-selector hidden" %>
-  <%= render "/collections/button_for_update_collection",
+  <% session[:batch_edit_state] = 'on' %>
+  <%= radio_button_tag 'id', presenter.id, true, class: 'collection-selector hidden' %>
+  <%= render '/collections/button_for_update_collection',
              label: "Add to #{presenter.title.first}",
-             collection_id: 'collection_replace_id'  %>
+             collection_id: 'collection_replace_id' %>
 </div>

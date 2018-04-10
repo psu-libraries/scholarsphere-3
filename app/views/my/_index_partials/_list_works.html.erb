@@ -1,14 +1,14 @@
 <tr id="document_<%= document.id %>">
 
   <td>
-    <label for="batch_document_<%= document.id %>" class="sr-only"><%=t("sufia.dashboard.my.sr.batch_checkbox")%></label>
+    <label for="batch_document_<%= document.id %>" class="sr-only"><%= t('sufia.dashboard.my.sr.batch_checkbox') %></label>
     <%= render '/batch_select/add_button', document: document %>&nbsp;
   </td>
 
   <td>
     <div class='media'>
       <%= link_to document, class: 'media-left', 'aria-hidden' => true do %>
-        <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+        <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, suppress_link: true %>
       <% end %>
 
       <div class='media-body'>
@@ -16,17 +16,13 @@
 
           <%= link_to document, id: "src_copy_link#{document.id}", class: 'document-title' do %>
             <span class="sr-only">
-              <%= t("sufia.dashboard.my.sr.show_label") %>
+              <%= t('sufia.dashboard.my.sr.show_label') %>
             </span>
             <%= document.title_or_label %>
           <% end %>
           <a href="#" class="small" title="Click for more details">
             <span id="expand_<%= document.id %>" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
           </a>
-
-          <br />
-          <%= render_collection_links(document) %>
-
         </div>
       </div>
     </div>
@@ -38,7 +34,7 @@
   <td class='text-center'>
     <%# Override Sufia to only display edit button for works shared with current user %>
     <% if controller_name == "shares" %>
-      <%= link_to t("sufia.dashboard.my.action.edit_work"), edit_polymorphic_path([main_app, document]),
+      <%= link_to t('sufia.dashboard.my.action.edit_work'), edit_polymorphic_path([main_app, document]),
           class: 'btn btn-default btn-sm' %>
     <% else %>
       <%= render 'work_action_menu', document: document %>
@@ -46,20 +42,21 @@
   </td>
 </tr>
 <tr id="detail_<%= document.id %>">
-  <td colspan="6">
+  <td colspan="5">
     <dl class="expanded-details row">
-      <dt class="col-xs-3 col-lg-2">Creator:</dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.creator') %></dt>
       <dd class="col-xs-9 col-lg-10"><%= document.creator.to_a.to_sentence %></dd>
-      <dt class="col-xs-3 col-lg-2">Depositor:</dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.depositor') %></dt>
       <dd class="col-xs-9 col-lg-10"><%= link_to_profile document.depositor %></dd>
-      <dt class="col-xs-3 col-lg-2"><%= t("sufia.dashboard.my.collection_list.edit_access") %></dt>
+      <dt class="col-xs-3 col-lg-2"><%= t('sufia.dashboard.my.collection_list.edit_access') %></dt>
       <dd class="col-xs-9 col-lg-10">
         <% if document.edit_groups.present? %>
-            <%= t("sufia.dashboard.my.collection_list.groups") %> <%= document.edit_groups.join(', ') %>
-            <br/>
+            <%= t('sufia.dashboard.my.collection_list.groups') %> <%= document.edit_groups.join(', ') %>
+            <br />
         <% end %>
-        <%= t("sufia.dashboard.my.collection_list.users") %> <%= document.edit_people.join(', ') %>
+        <%= t('sufia.dashboard.my.collection_list.users') %> <%= document.edit_people.join(', ') %>
       </dd>
+        <%= render 'my/part_of_collection', collection_presenters: presenter.collection_presenters %>
     </dl>
   </td>
 </tr>

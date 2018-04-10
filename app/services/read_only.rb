@@ -7,7 +7,7 @@ class ReadOnly
     end
 
     def announcement_text
-      homepage_text.blank? ? default_read_only_announcement : homepage_text
+      homepage_text.presence || default_read_only_announcement
     end
 
     private

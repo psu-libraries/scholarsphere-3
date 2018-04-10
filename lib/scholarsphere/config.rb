@@ -20,7 +20,9 @@ class Scholarsphere::Config
         'derivatives_path',
         'read_only',
         'doi_user',
-        'doi_password'
+        'doi_password',
+        'RECAPTCHA_SITE_KEY',
+        'RECAPTCHA_SECRET_KEY'
       ]
     }.freeze
 

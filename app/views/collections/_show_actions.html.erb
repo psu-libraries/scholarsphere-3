@@ -25,4 +25,10 @@
                   data: { confirm: t('sufia.collection.actions.delete.confirmation'),
                           method: :delete } %>
     <% end %>
+  <%= link_to main_app.download_path(presenter),
+              target: :_blank,
+              data: { turbolinks: false },
+              class: 'btn btn-default' do %>
+    <%= t('sufia.collection.actions.collection_zip_link') %>
+  <% end %>
 </div>

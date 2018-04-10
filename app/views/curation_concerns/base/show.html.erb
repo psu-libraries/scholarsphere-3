@@ -5,11 +5,11 @@
 %>
 
 <% content_for(:twitter_meta) do %>
-  <%= render "shared/twitter", presenter: @presenter %>
+  <%= render 'shared/twitter', presenter: @presenter %>
 <% end %>
 
 <% content_for(:gscholar_meta) do %>
-  <%= render "shared/gscholar", presenter: @presenter %>
+  <%= render 'shared/gscholar', presenter: @presenter %>
 <% end %>
 
 <% provide :page_title, "Work | #{@presenter.title.first} | Work ID: #{@presenter.id} | ScholarSphere" %>
@@ -23,15 +23,17 @@
   </div>
   <div class="col-sm-8">
     <%= render 'work_description', presenter: @presenter %>
+    <%= render 'work_readme', presenter: @presenter %>
     <div class="row">
       <%= render 'metadata', presenter: @presenter %>
       <%= render 'relationships', presenter: @presenter %>
     </div>
   </div>
   <div class="col-sm-4">
-    <%= render "show_actions", presenter: @presenter %>
+    <%= render 'show_actions', presenter: @presenter %>
     Last modified: <%= @presenter.date_modified %>
     <%= render 'representative_media', presenter: @presenter %>
+    <%= render 'download_work', presenter: @presenter %>
     <%= render 'social_media' %>
     <%= render 'citations', presenter: @presenter %>
   </div>
@@ -42,7 +44,7 @@
     <%= render 'items', presenter: @presenter %>
     <%= render 'paginate' %>
     <%# TODO: we may consider adding these partials in the future %>
-    <%#= render 'sharing_with', presenter: @presenter %>
+    <%# = render 'sharing_with', presenter: @presenter %>
     <%= render 'users/activity', presenter: @presenter %>
   </div>
 </div>

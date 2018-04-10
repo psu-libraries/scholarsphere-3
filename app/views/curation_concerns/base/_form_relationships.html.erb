@@ -6,15 +6,14 @@
 <h2><%= t("sufia.works.#{action_name}.in_collections") %></h2>
 <div id="collection-widget">
   <%= f.input :collection_ids, as: :select, selected: params.fetch(:collection_ids, f.object.collection_ids),
-              collection: available_collections(nil),
-              input_html: { class: 'form-control', multiple: true } %>
+                               collection: available_collections(nil),
+                               input_html: { class: 'form-control', multiple: true } %>
 
   <%# Doing this so the javascript will be happy becuase it needs an admin_set_id selector %>
   <div style="display: none">
     <%= f.input :admin_set_id, as: :select,
-                collection: Sufia::AdminSetService.new(controller).select_options(:deposit),
-                include_blank: true,
-                input_html: { class: 'form-control' } %>
+                               collection: Sufia::AdminSetService.new(controller).select_options(:deposit),
+                               include_blank: true,
+                               input_html: { class: 'form-control' } %>
   </div>
 </div>
-

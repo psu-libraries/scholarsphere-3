@@ -4,12 +4,12 @@
 </h3>
 <div>
   <span class="sr-only">Depositor</span>
-  <%= link_to_profile featured.depositor("no depositor value") %>
+  <%= link_to_profile featured.depositor('no depositor value') %>
 </div>
 <div>
   <%= featured.attribute_to_html(:resource_type, render_as: :faceted) %>
 </div>
 <div>
 <%= featured.attribute_to_html(:keyword, render_as: :translated_facet,
-            mapping: featured.facet_mapping(:keyword)) %>
+                                         mapping: featured.facet_mapping(:keyword)) %>
 </div>

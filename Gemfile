@@ -15,9 +15,12 @@ gem 'blacklight_advanced_search', '~> 6.0'
 gem 'mail', '= 2.6.6.rc1'
 
 # Other components
+gem 'bootsnap', require: false
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
+gem 'coderay'
 gem 'coffee-rails'
 gem 'devise', '~> 4.2'
+gem 'ezid-client'
 gem 'figaro'
 gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails', '~> 4.2'
@@ -29,6 +32,8 @@ gem 'newrelic_rpm'
 gem 'rack-maintenance'
 gem 'rainbow'
 gem 'rdf'
+gem 'recaptcha', require: 'recaptcha/rails'
+gem 'redcarpet'
 gem 'resque-pool'
 gem 'rsolr'
 gem 'sass-rails'
@@ -41,20 +46,19 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
 gem 'yaml_db'
-gem 'ezid-client'
+gem 'rubyzip'
 
 group :development, :test do
+  gem 'capybara-screenshot'
   gem 'coveralls', require: false
-  gem 'fcrepo_wrapper'
   gem 'faker'
+  gem 'fcrepo_wrapper'
+  gem 'niftany'
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop', '0.50.0'
-  gem 'rubocop-rspec', '1.18.0'
   gem 'solr_wrapper'
   gem 'sqlite3'
-  gem 'capybara-screenshot'
 end
 
 group :development do
@@ -69,6 +73,7 @@ group :development do
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
 
+  gem 'travis', require: false
   gem 'unicorn-rails'
   gem 'xray-rails'
 end

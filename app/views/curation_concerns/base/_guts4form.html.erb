@@ -1,4 +1,4 @@
-<% # we will yield to content_for for each tab, e.g. :files_tab %>
+<%# we will yield to content_for for each tab, e.g. :files_tab %>
 <% tabs ||= %w[metadata files relationships share] # default tab order %>
 <div class="row">
   <div class="col-xs-12 col-sm-8" role="main">
@@ -35,7 +35,7 @@
 
       <div role="tabpanel" class="tab-pane" id="share" data-param-key="<%= f.object.model_name.param_key %>">
         <div class="form-tab-content">
-          <%= render "form_share", f: f %>
+          <%= render 'form_share', f: f %>
         </div>
       </div>
       </div>

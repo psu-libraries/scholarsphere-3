@@ -1,6 +1,6 @@
 <%
-  # Overrides Sufia app > views > curation_concerns > file_sets > edit.html.erb
-  # hard code string with interpolated values to skip title helper from CC
+# Overrides Sufia app > views > curation_concerns > file_sets > edit.html.erb
+# hard code string with interpolated values to skip title helper from CC
 %>
 <% provide :page_title, "Edit File | #{curation_concern} | File ID: #{curation_concern.to_param} | ScholarSphere" %>
 <% provide :page_header do %>
@@ -14,7 +14,7 @@
   <div class="col-xs-12 col-sm-8">
     <ul class="nav nav-tabs" role="tablist">
       <li id="edit_descriptions_link" class="active">
-        <a href="#descriptions_display" data-toggle="tab"><%= t("sufia.works.edit.tab.metadata") %></a>
+        <a href="#descriptions_display" data-toggle="tab"><%= t('sufia.works.edit.tab.metadata') %></a>
       </li>
       <li id="edit_versioning_link">
         <a href="#versioning_display" data-toggle="tab">Versions</a>
@@ -26,10 +26,10 @@
     <div class="tab-content">
       <div id="descriptions_display" class="tab-pane active">
         <h2>Descriptions </h2>
-        <%= render "form" %>
+        <%= render 'form' %>
       </div>
-      <%= render "permission", file_set: curation_concern %>
-      <%= render "versioning", file_set: curation_concern %>
+      <%= render 'permission', file_set: curation_concern %>
+      <%= render 'versioning', file_set: curation_concern %>
     </div>
   </div>
 </div>

@@ -10,17 +10,17 @@
   </div>
 
   <div class="list-group">
-    <%= render "users/vitals", user: user %>
+    <%= render 'users/vitals', user: user %>
   </div>
 
   <div class="panel-footer clearfix">
     <% unless current_page? sufia.profile_path(user) %>
-        <%= link_to t("sufia.view_profile"), sufia.profile_path(user), class: "btn btn-default" %>
+        <%= link_to t('sufia.view_profile'), sufia.profile_path(user), class: 'btn btn-default' %>
     <% end %>
 
     <% if can? :edit, user %>
-        <%= link_to sufia.edit_profile_path(user), class: "btn btn-default pull-right" do %>
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <%= t("sufia.edit_profile") %>
+        <%= link_to sufia.edit_profile_path(user), class: 'btn btn-default pull-right' do %>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <%= t('sufia.edit_profile') %>
         <% end %>
     <% end %>
   </div>

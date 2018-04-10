@@ -1,0 +1,8 @@
+<h2><%= t('scholarsphere.generic_work.readme_heading') %></h2>
+<section class="readme">
+  <% if presenter.readme %>
+    <%= raw(presenter.readme) %>
+  <% else %>
+    <p><%= t('scholarsphere.generic_work.readme_text') %></p>
+  <% end %>
+</section>

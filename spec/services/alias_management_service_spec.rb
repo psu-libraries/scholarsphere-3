@@ -64,7 +64,7 @@ describe AliasManagementService do
       let(:attributes) { alias_with_agent }
 
       it 'returns the alias' do
-        expect { service }.to change { Alias.count }.by(0)
+        expect { service }.to change(Alias, :count).by(0)
         expect(service.display_name).to eq('Don Juan')
       end
     end
@@ -73,7 +73,7 @@ describe AliasManagementService do
       let(:attributes) { { id: alias_with_agent.id } }
 
       it 'returns the alias' do
-        expect { service }.to change { Alias.count }.by(0)
+        expect { service }.to change(Alias, :count).by(0)
         expect(service.display_name).to eq('Don Juan')
       end
     end
@@ -82,7 +82,7 @@ describe AliasManagementService do
       let(:attributes) { { display_name: alias_with_agent.display_name } }
 
       it 'returns the alias' do
-        expect { service }.to change { Alias.count }.by(0)
+        expect { service }.to change(Alias, :count).by(0)
         expect(service.display_name).to eq('Don Juan')
       end
     end
@@ -97,7 +97,7 @@ describe AliasManagementService do
       let(:attributes) { { display_name: 'Capt. Jack Sparrow', given_name: 'Johnny', sur_name: 'Depp' } }
 
       it 'returns a new alias for the agent' do
-        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(0)
+        expect { service }.to change(Alias, :count).by(1).and change(Agent, :count).by(0)
         expect(service.display_name).to eq('Capt. Jack Sparrow')
         expect(new_alias.agent).to eq(johnny_depp)
       end
@@ -107,7 +107,7 @@ describe AliasManagementService do
       let(:attributes) { { display_name: 'Capt. Jack Sparrow', sur_name: 'Depp' } }
 
       it 'returns a new alias for the agent' do
-        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(0)
+        expect { service }.to change(Alias, :count).by(1).and change(Agent, :count).by(0)
         expect(service.display_name).to eq('Capt. Jack Sparrow')
         expect(new_alias.agent).to eq(depp)
       end
@@ -134,7 +134,7 @@ describe AliasManagementService do
       let(:new_alias)  { Alias.where(display_name: 'College of Agriculture').first }
 
       it 'returns a new alias for the agent' do
-        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(1)
+        expect { service }.to change(Alias, :count).by(1).and change(Agent, :count).by(1)
         expect(service.display_name).to eq('College of Agriculture')
         expect(new_alias.agent).to eq(college_of_agriculture)
       end
@@ -158,7 +158,7 @@ describe AliasManagementService do
       let(:new_agent) { Agent.where(sur_name: 'Rush').first }
 
       it 'returns a new alias linked to a new agent' do
-        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(1)
+        expect { service }.to change(Alias, :count).by(1).and change(Agent, :count).by(1)
         expect(service.display_name).to eq('Commodore Barbarossa')
         expect(new_agent.email).to eq('pirate_barbossa@gmail.com')
         expect(new_agent.psu_id).to eq('gr01')
@@ -169,7 +169,7 @@ describe AliasManagementService do
       let(:attributes) { { display_name: 'Commodore Barbarossa', sur_name: 'Rush' } }
 
       it 'returns a new alias linked to a new agent' do
-        expect { service }.to change { Alias.count }.by(1).and change { Agent.count }.by(1)
+        expect { service }.to change(Alias, :count).by(1).and change(Agent, :count).by(1)
         expect(service.display_name).to eq('Commodore Barbarossa')
       end
     end

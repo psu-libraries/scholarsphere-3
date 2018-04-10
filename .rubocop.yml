@@ -1,7 +1,7 @@
-require: rubocop-rspec
+inherit_gem:
+  niftany: niftany_rubocop.yml
 
 inherit_from:
-  - https://raw.githubusercontent.com/psu-stewardship/guides/master/style/ruby/.rubocop.yml
   - .rubocop_todo.yml
 
 AllCops:
@@ -81,7 +81,7 @@ Lint/UselessAssignment:
   Exclude:
     - 'config/compass.rb'
 
-Lint/LiteralInCondition:
+Lint/LiteralAsCondition:
   Exclude:
     - 'spec/support/user_no_ldap.rb'
 

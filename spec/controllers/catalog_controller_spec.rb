@@ -5,25 +5,6 @@ require 'rails_helper'
 describe CatalogController, type: :controller do
   include FactoryHelpers
 
-  let!(:file_set) { build(:file_set, id: 'fs') }
-  let!(:work1)    { build(:public_work, :with_pdf, title: ['Test Document PDF'], id: '1') }
-  let!(:work2)    { build(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'], id: '2') }
-  let!(:work3)    { build(:public_work, :with_complete_metadata, id: '3', members: [file_set]) }
-
-  let(:text) { mock_file_factory(content: 'full_textfull_text') }
-  let(:file) { mock_file_factory(format_label: ['format_labelformat_label']) }
-
-  before do
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-    allow(file_set).to receive(:extracted_text).and_return(text)
-    allow(text).to receive(:force_encoding).and_return(text)
-    allow(file_set).to receive(:original_file).and_return(file)
-    allow(work3).to receive(:representative).and_return(file_set)
-  end
-
-  # Default depositor if none is supplied
-  let(:user) { 'user' }
-
   describe 'config' do
     describe 'index_fields' do
       subject { described_class.blacklight_config.index_fields.keys }
@@ -61,20 +42,45 @@ describe CatalogController, type: :controller do
   end
 
   describe '#index' do
+    let(:file_set) { build(:file_set, id: 'fs') }
+    let(:creator1) { create(:creator, display_name: 'Sam') }
+    let(:creator2) { create(:alias, display_name: 'Gus', agent: creator1.agent) }
+    let(:creator3) { create(:alias, display_name: 'Bob', agent: creator1.agent) }
+    let(:work1)    { build(:public_work, title: ['Test 1 Document'], id: '1', creators: [creator1]) }
+    let(:work2)    { build(:public_work, title: ['Test 2 Document'], contributor: ['Contrib2'], id: '2', creators: [creator2]) }
+    let(:work3)    { build(:public_work, :with_complete_metadata, id: '3', members: [file_set], creators: [creator3]) }
+    let(:work4)    { build(:public_work, title: ['TAXgg_Xerumbrepts_100m.tif'], id: '4') }
+    let(:user)     { 'user' }
+    let(:file)     { mock_file_factory(format_label: ['format_labelformat_label'], mime_type: 'application/pdf') }
+
+    # Create a list source record that links the file set to the work
+    let(:list_source) do
+      HashWithIndifferentAccess.new(ActiveFedora::Aggregation::ListSource.new.to_solr)
+        .merge(id: "#{work1.id}/list_source")
+        .merge(proxy_in_ssi: work3.id.to_s)
+        .merge(ordered_targets_ssim: [file_set.id])
+    end
+
     before do
       ActiveFedora::Cleaner.cleanout_solr
-      index_file_set(file_set)
+      allow_any_instance_of(User).to receive(:groups).and_return([])
+      allow(file_set).to receive(:original_file).and_return(file)
+      allow(work3).to receive(:representative).and_return(file_set)
+      index_document(file_set.to_solr.merge('all_text_timv' => 'the quick brown fox jumped over the lazy dog.'))
+      index_document(list_source)
       index_work(work1)
       index_work(work2)
       index_work(work3)
+      index_work(work4)
     end
+
     describe 'term search' do
       it 'finds pdf files' do
         xhr :get, :index, q: 'pdf'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('Test Document PDF')
+        expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('titletitle')
       end
       it 'finds a file by title' do
         xhr :get, :index, q: 'titletitle'
@@ -82,6 +88,13 @@ describe CatalogController, type: :controller do
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('titletitle')
+      end
+      it 'finds a file by partial title' do
+        xhr :get, :index, q: 'xerumbrepts'
+        expect(response).to be_success
+        expect(response).to render_template('catalog/index')
+        expect(assigns(:document_list).count).to be(1)
+        expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('TAXgg_Xerumbrepts_100m.tif')
       end
       it 'finds a file by keyword' do
         xhr :get, :index, q: 'tagtag'
@@ -98,11 +111,11 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field('subject'))[0]).to eql('subjectsubject')
       end
       it 'finds a file by creator' do
-        xhr :get, :index, q: 'creatorcreator'
+        xhr :get, :index, q: 'gus'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('creatorcreator')
+        expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('Gus')
       end
       it 'finds a file by contributor' do
         xhr :get, :index, q: 'contributorcontributor'
@@ -144,7 +157,7 @@ describe CatalogController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
-        expect(assigns(:document_list)[0].fetch(solr_field('file_format'))[0]).to eql('plain (format_labelformat_label)')
+        expect(assigns(:document_list)[0].fetch(solr_field('file_format'))[0]).to eql('pdf (format_labelformat_label)')
       end
       it 'finds a file by description' do
         xhr :get, :index, q: 'descriptiondescription'
@@ -154,19 +167,26 @@ describe CatalogController, type: :controller do
         expect(assigns(:document_list)[0].fetch(solr_field('description'))[0]).to eql('descriptiondescription')
       end
       it 'finds a file by full_text' do
-        xhr :get, :index, q: 'full_textfull_text'
+        xhr :get, :index, q: 'brown fox', search_field: 'all_fields'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(1)
+        expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('titletitle')
       end
       it 'finds a file by depositor' do
         xhr :get, :index, q: user
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
-        expect(assigns(:document_list).count).to be(3)
+        expect(assigns(:document_list).count).to be(4)
       end
       it 'finds a file by depositor in advanced search' do
         xhr :get, :index, depositor: user, search_field: 'advanced'
+        expect(response).to be_success
+        expect(response).to render_template('catalog/index')
+        expect(assigns(:document_list).count).to be(4)
+      end
+      it 'finds a file by creator in advanced search' do
+        xhr :get, :index, q: creator1.agent.sur_name, search_field: 'all_fields'
         expect(response).to be_success
         expect(response).to render_template('catalog/index')
         expect(assigns(:document_list).count).to be(3)

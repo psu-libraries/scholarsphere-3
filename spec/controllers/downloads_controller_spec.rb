@@ -77,6 +77,7 @@ describe DownloadsController do
       end
     end
   end
+
   describe '#show' do
     subject { controller.send(:show) }
 
@@ -88,22 +89,63 @@ describe DownloadsController do
       before { controller.params[:id] = my_file.id }
       it 'sends content' do
         expect(controller).to receive(:send_content)
+        expect(WorkZipService).not_to receive(:new)
         subject
       end
     end
 
     context 'with a GenericWork' do
       let(:my_work) { create :public_work_with_png, depositor: user.login }
+      let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
-        # I must save the work again becuase the factory just sends the representative id to solr
+        # I must save the work again because the factory just sends the representative id to solr
         #  This save sends the id to fedora
         my_work.save
         controller.params[:id] = my_work.id
+        allow(controller).to receive(:response).and_return(response)
       end
-      it 'redirects' do
-        expect(controller).to receive(:redirect_to).with("/downloads/#{my_work.file_sets[0].id}", status: :moved_permanently)
+      it 'downloads a zip' do
+        expect(WorkZipService).to receive(:new).with(my_work, anything, anything).and_call_original
+        expect(controller).to receive(:send_file)
         subject
+      end
+    end
+
+    context 'with a Collection' do
+      let(:my_collection) { create :public_collection, depositor: user.login }
+      let(:response) { instance_double ActionDispatch::Response, headers: {} }
+
+      before do
+        # I must save the work again because the factory just sends the representative id to solr
+        #  This save sends the id to fedora
+        my_collection.save
+        controller.params[:id] = my_collection.id
+        allow(controller).to receive(:response).and_return(response)
+      end
+      it 'downloads a zip' do
+        expect(CollectionZipService).to receive(:new).with(my_collection, anything, anything).and_call_original
+        expect(controller).to receive(:send_file)
+        subject
+      end
+    end
+
+    context 'with an unsupported class' do
+      let(:unsupported_class) { BogusClass.create }
+      let(:response) { instance_double ActionDispatch::Response, headers: {} }
+
+      before do
+        class BogusClass < ActiveFedora::Base; end
+        controller.params[:id] = unsupported_class.id
+        allow(controller).to receive(:response).and_return(response)
+      end
+
+      after do
+        ActiveSupport::Dependencies.remove_constant('BogusClass')
+      end
+
+      it 'raises an error' do
+        expect { subject }.to raise_error(DownloadsController::ZipServiceError, 'BogusClass cannot be downloaded as a zip file')
       end
     end
   end

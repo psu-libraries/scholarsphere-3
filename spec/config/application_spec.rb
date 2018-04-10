@@ -40,4 +40,10 @@ describe 'Application configuration' do
 
     it { is_expected.to eq('test-id') }
   end
+
+  describe 'Upload limit' do
+    subject { config.upload_limit }
+
+    it { is_expected.to eq('10737418240') }
+  end
 end
