@@ -49,15 +49,6 @@ Install gems
 
     bundle install
 
-Copy config samples
-
-    cp config/devise.yml.sample config/devise.yml
-    cp config/database.yml.sample config/database.yml
-    cp config/fedora.yml.sample config/fedora.yml
-    cp config/solr.yml.sample config/solr.yml
-    cp config/redis.yml.sample config/redis.yml
-    cp config/hydra-ldap.yml.sample config/hydra-ldap.yml
-
 If you're using SQLite, a vanilla Redis installation, and the
 Hydra-Jetty Solr and Fedora components (see below), you should not
 need to tweak the database.yml, fedora.yml, solr.yml, or redis.yml
