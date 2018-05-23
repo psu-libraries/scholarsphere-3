@@ -16,6 +16,12 @@ RSpec.configure do |config|
     ActiveFedora::Cleaner.clean!
   end
 
+  # Ensure we end with a blank slate
+  config.after :suite do
+    DatabaseCleaner.clean_with(:truncation)
+    ActiveFedora::Cleaner.clean!
+  end
+
   # Only clean Fedora and Solr unless explicitly requested
   config.before do |example|
     if example.metadata.fetch(:clean, nil)

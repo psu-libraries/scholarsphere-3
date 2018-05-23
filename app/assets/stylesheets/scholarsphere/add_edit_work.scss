@@ -62,3 +62,11 @@ form fieldset .doi_label {
   font-weight: normal;
 }
 // scss-lint:enable QualifyingElement, SelectorFormat
+
+// Overrides the form-control styles that javascript adds since there is already an input box with border
+// scss-lint:disable SelectorFormat
+.generic_work_collection_ids .form-control {
+  border: 0;
+  box-shadow: none;
+}
+// scss-lint:enable SelectorFormat
