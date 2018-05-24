@@ -116,6 +116,11 @@ module ScholarSphere
       Sufia::HomepageController.prepend PrependedControllers::WithRecentPresenters
       FeaturedWorkList.prepend PrependedModels::WithFeaturedPresenters
       CurationConcerns::MemberPresenterFactory.file_presenter_class = FileSetPresenter
+
+      # Prepending class methods
+      if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
+        CurationConcerns::WorkingDirectory.singleton_class.send(:prepend, PrependedServices::WithExternalFileSupport)
+      end
     end
   end
 end

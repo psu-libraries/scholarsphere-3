@@ -51,7 +51,12 @@ class WorkIndexer < Sufia::WorkIndexer
       end
 
       def content
-        file.original_file.content
+        case file.original_file.content
+        when String
+          file.original_file.content
+        when StringIO
+          file.original_file.content.read
+        end
       end
     end
 end
