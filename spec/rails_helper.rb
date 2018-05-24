@@ -69,6 +69,11 @@ FactoryGirl::SyntaxRunner.class_eval do
   include RSpec::Mocks::ExampleMethods
 end
 
+# Settings for using external files
+ENV['REPOSITORY_FILESTORE'] = Rails.root.join('public', 'repository').to_s
+ENV['REPOSITORY_FILESTORE_HOST'] = 'http://localhost:4000/repository'
+# ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

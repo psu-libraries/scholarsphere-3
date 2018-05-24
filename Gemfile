@@ -59,6 +59,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'solr_wrapper'
   gem 'sqlite3'
+  gem 'unicorn-rails'
 end
 
 group :development do
@@ -72,9 +73,7 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
-
   gem 'travis', require: false
-  gem 'unicorn-rails'
   gem 'xray-rails'
 end
 

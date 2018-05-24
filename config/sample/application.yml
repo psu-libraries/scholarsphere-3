@@ -16,6 +16,10 @@ development:
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups'
+  REPOSITORY_FILESTORE: <%= Rails.root.join('public', 'repository').to_s %>
+  REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
+  REPOSITORY_EXTERNAL_FILES: 'true'
+
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -26,6 +30,9 @@ test:
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups_test'
+  REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'repository').to_s %>
+  REPOSITORY_FILESTORE_HOST: 'http://localhost:4000/repository'
+  REPOSITORY_EXTERNAL_FILES: 'true'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -39,3 +46,6 @@ production:
   doi_password: 'password'
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
+  REPOSITORY_FILESTORE: '/opt/heracles/binaries'
+  REPOSITORY_FILESTORE_HOST: 'https://dce-fedora.vmhost.psu.edu/binaries'
+  REPOSITORY_EXTERNAL_FILES: 'true'
