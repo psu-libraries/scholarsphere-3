@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'new_relic/recipes'
+after 'deploy:updated', 'newrelic:notice_deployment'
+
 # lock '3.6'
 
 # Set assets roles to occur on jobs as well as web
