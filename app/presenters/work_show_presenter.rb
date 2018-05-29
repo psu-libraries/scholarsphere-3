@@ -4,7 +4,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
   include Sufia::WithEvents
 
-  delegate :bytes, :subtitle, to: :solr_document
+  delegate :bytes, :subtitle, :readme_file, to: :solr_document
 
   def creator
     creator_name
@@ -27,19 +27,9 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   end
 
   def readme
-    readme_file = file_set_presenters.select { |presenter| presenter.label =~ /^readme/i }.first
-    return if readme_file.blank?
-    file_set = FileSet.find(readme_file.id)
-    return unless file_set.original_file.respond_to?(:content)
-    content = file_set.original_file.content
-    begin
-      content = content.encode('UTF-8')
-    rescue Encoding::UndefinedConversionError => e
-      return "#{I18n.t('scholarsphere.generic_work.readme_error')}: #{e}"
-    end
+    return if readme_file.nil?
     renderer = Redcarpet::Render::HTML.new(safe_links_only: true, hard_wrap: true)
-    markdown = Redcarpet::Markdown.new(renderer)
-    markdown.render(content)
+    Redcarpet::Markdown.new(renderer).render(readme_file)
   end
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
