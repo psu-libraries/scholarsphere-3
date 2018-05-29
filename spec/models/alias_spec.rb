@@ -23,5 +23,17 @@ describe Alias do
       expect(agent_alias.agent.id).to eq(agent.id)
       expect(agent.aliases).to contain_exactly(agent_alias)
     end
+
+    context 'agent has additional aliases' do
+      let(:other_alias) { create(:alias, display_name: 'Jane Doe too', agent: agent) }
+
+      before { other_alias }
+
+      it 'links to the agent' do
+        expect(agent_alias.agent.id).to eq(agent.id)
+        expect(agent.aliases).to contain_exactly(agent_alias, other_alias)
+        expect(described_class.where(Solrizer.solr_name('agent_name') => agent.display_name)).to contain_exactly(agent_alias, other_alias)
+      end
+    end
   end
 end

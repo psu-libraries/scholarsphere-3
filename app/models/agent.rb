@@ -22,4 +22,8 @@ class Agent < ActiveFedora::Base
   property :orcid_id, predicate: ::RDF::URI('http://dbpedia.org/ontology/orcidId'), multiple: false do |index|
     index.as :stored_searchable, :symbol
   end
+
+  def display_name
+    "#{given_name} #{sur_name}"
+  end
 end
