@@ -14,7 +14,7 @@
   <div class="col-sm-2">
     <%= render 'collections/media_display', presenter: @presenter %>
     <% unless has_collection_search_parameters? %>
-        <%= render 'collections/show_actions', presenter: @presenter %>
+        <%= render 'collections/show_actions', presenter: @presenter, member_docs: @member_docs %>
     <% end %>
   </div>
 </div>

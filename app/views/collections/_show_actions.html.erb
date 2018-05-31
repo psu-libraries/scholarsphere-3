@@ -1,34 +1,36 @@
 <h2 class="sr-only"><%= t('sufia.collection.actions.header') %></h2>
 <div class="actions-controls-collections">
-    <% if can? :edit, presenter.solr_document %>
-      <%= link_to t('sufia.collection.actions.edit.label'),
-                  edit_collection_path(presenter),
-                  title: t('sufia.collection.actions.edit.desc'),
-                  class: 'btn btn-default' %>
-      <%= link_to t('sufia.collection.actions.add_works.label'),
-                  sufia.dashboard_works_path(add_files_to_collection: presenter.id),
-                  title: t('sufia.collection.actions.add_works.desc'),
-                  class: 'btn btn-default' %>
+  <% if can? :edit, presenter.solr_document %>
+    <%= link_to t('sufia.collection.actions.edit.label'),
+                edit_collection_path(presenter),
+                title: t('sufia.collection.actions.edit.desc'),
+                class: 'btn btn-default' %>
+    <%= link_to t('sufia.collection.actions.add_works.label'),
+                sufia.dashboard_works_path(add_files_to_collection: presenter.id),
+                title: t('sufia.collection.actions.add_works.desc'),
+                class: 'btn btn-default' %>
 
-      <%# Overrides Sufia adding button link to the batch upload form with this collection selected %>
-      <%= link_to t('sufia.collection.actions.add_new_works.label'),
-                  sufia.new_batch_upload_path(collection_ids: [presenter.id], payload_concern: 'GenericWork'),
-                  title: t('sufia.collection.actions.add_new_works.desc'),
-                  class: 'btn btn-default' %>
-    <% end %>
+    <%# Overrides Sufia adding button link to the batch upload form with this collection selected %>
+    <%= link_to t('sufia.collection.actions.add_new_works.label'),
+                sufia.new_batch_upload_path(collection_ids: [presenter.id], payload_concern: 'GenericWork'),
+                title: t('sufia.collection.actions.add_new_works.desc'),
+                class: 'btn btn-default' %>
+  <% end %>
 
-    <% if can? :destroy, presenter.solr_document %>
-      <%= link_to t('sufia.collection.actions.delete.label'),
-                  collection_path(presenter),
-                  title: t('sufia.collection.actions.delete.desc'),
-                  class: 'btn btn-danger',
-                  data: { confirm: t('sufia.collection.actions.delete.confirmation'),
-                          method: :delete } %>
-    <% end %>
-  <%= link_to main_app.download_path(presenter),
-              target: :_blank,
-              data: { turbolinks: false },
-              class: 'btn btn-default' do %>
-    <%= t('sufia.collection.actions.collection_zip_link') %>
+  <% if can? :destroy, presenter.solr_document %>
+    <%= link_to t('sufia.collection.actions.delete.label'),
+                collection_path(presenter),
+                title: t('sufia.collection.actions.delete.desc'),
+                class: 'btn btn-danger',
+                data: { confirm: t('sufia.collection.actions.delete.confirmation'),
+                        method: :delete } %>
+  <% end %>
+
+  <% if member_docs.present? %>
+    <%= link_to t('sufia.collection.actions.collection_zip_link'),
+                main_app.download_path(presenter),
+                target: :_blank,
+                data: { turbolinks: false },
+                class: 'btn btn-default' %>
   <% end %>
 </div>
