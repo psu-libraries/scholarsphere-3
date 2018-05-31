@@ -30,31 +30,31 @@ class User < ActiveRecord::Base
     end
 
     def groups(login)
-      Deprecation.warn(nil, 'User.groups has been deprecated, use LdapUser.get_groups instead')
-      LdapUser.get_groups(login)
+      Deprecation.warn(nil, 'User.groups has been deprecated, use PsuDir::LdapUser.get_groups instead')
+      PsuDir::LdapUser.get_groups(login)
     end
 
     def query_ldap_by_name_or_id(id_or_name_part)
-      person_filter = LdapUser.filter_for(:student, :faculty, :staff, :employee)
+      person_filter = PsuDir::LdapUser.filter_for(:student, :faculty, :staff, :employee)
       filter = Net::LDAP::Filter.construct("(& (| (uid=#{id_or_name_part}* ) (givenname=#{id_or_name_part}*) (sn=#{id_or_name_part}*)) #{person_filter})")
-      users = LdapUser.get_user(filter, ['uid', 'displayname'])
+      users = PsuDir::LdapUser.get_users(filter, ['uid', 'displayname'])
       # handle the issue that searching with a few letters returns more than 1000 items wich causes an error in the system
       if users.nil? && (Hydra::LDAP.connection.get_operation_result[:message] == 'Size Limit Exceeded')
         filter2 = Net::LDAP::Filter.construct("(& (uid=#{id_or_name_part}* ) #{person_filter})")
-        users = LdapUser.get_user(filter2, ['uid', 'displayname'])
+        users = PsuDir::LdapUser.get_users(filter2, ['uid', 'displayname'])
       end
       users.map { |u| { id: u[:uid].first, text: "#{u[:displayname].first} (#{u[:uid].first})" } }
     end
 
     def directory_attributes(login, attrs = [])
-      LdapUser.get_user(Net::LDAP::Filter.eq('uid', login), attrs)
+      PsuDir::LdapUser.get_users(Net::LDAP::Filter.eq('uid', login), attrs)
     end
 
     def from_url_component(component)
       user = super(component)
       return user unless user.nil?
       user = User.new(login: component, email: component, system_created: true, logged_in: false)
-      if LdapUser.check_ldap_exist!(user.login)
+      if PsuDir::LdapUser.check_ldap_exist!(user.login)
         user.populate_attributes
       else
         user = nil
@@ -141,11 +141,11 @@ class User < ActiveRecord::Base
     end
 
     def ldap_user_exist?
-      LdapUser.check_ldap_exist!(login)
+      PsuDir::LdapUser.check_ldap_exist!(login)
     end
 
     def update_ldap_groups
-      list = LdapUser.get_groups(login).sort!
+      list = PsuDir::LdapUser.get_groups(login).sort!
       return list if list.empty?
       Rails.logger.debug "$#{login}$ groups = #{list}"
       update_attributes(group_list: list.join(';?;'), groups_last_update: Time.now)

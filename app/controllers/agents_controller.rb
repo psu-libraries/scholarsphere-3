@@ -42,8 +42,8 @@ class AgentsController < ApplicationController
     def ldap_search_results(query)
       name = Namae::Name.parse(query.upcase)
 
-      email_items = LdapDisambiguate::LdapUser.query_ldap_by_mail(query + '@psu.edu', ldap_attrs) || []
-      name_items = LdapDisambiguate::LdapUser.query_ldap_by_name(name.given, "#{name.family}*", ldap_attrs) || []
+      email_items = PsuDir::Disambiguate::User.query_ldap_by_mail(query + '@psu.edu', ldap_attrs) || []
+      name_items = PsuDir::Disambiguate::User.query_ldap_by_name(name.given, "#{name.family}*", ldap_attrs) || []
 
       # each item looks like {:id=>"jwr108", :given_name=>"JAMES W.", :surname=>"ROUNCE", :email=>"jwr108@psu.edu", :affiliation=>["STAFF"], :displayname=>"JAMES W. ROUNCE"}
       (email_items + name_items).map do |ldap_entry|

@@ -14,9 +14,9 @@ module Migration
         begin
           yield(load_object(id))
         rescue ActiveFedora::ObjectNotFoundError => error
-          logger.warn "error finding object to migrate: #{id}; #{error}"
+          Rails.logger.warn "error finding object to migrate: #{id}; #{error}"
         rescue StandardError => error
-          logger.warn "error migrating object: #{id}; #{error}"
+          Rails.logger.warn "error migrating object: #{id}; #{error}"
         end
       end
     end
