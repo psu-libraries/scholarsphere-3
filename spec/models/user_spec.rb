@@ -16,11 +16,11 @@ describe User, type: :model do
     subject { user.ldap_exist? }
 
     context 'when the user exists' do
-      before { allow(LdapUser).to receive(:check_ldap_exist!).and_return(true) }
+      before { allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).and_return(true) }
       it { is_expected.to be true }
     end
     context 'when the user does not exist' do
-      before { allow(LdapUser).to receive(:check_ldap_exist!).and_return(false) }
+      before { allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).and_return(false) }
       it { is_expected.to be false }
     end
     context 'when LDAP misbehaves' do
@@ -32,7 +32,7 @@ describe User, type: :model do
       it "returns true after LDAP returns 'unwilling' first, then sleeps and returns true on the second call" do
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 53, message: 'Unwilling'))
         expect(Hydra::LDAP.connection).to receive(:get_operation_result).once.and_return(OpenStruct.new(code: 0, message: 'sucess'))
-        expect(LdapUser).to receive(:sleep).with(Rails.application.config.ldap_unwilling_sleep)
+        expect(PsuDir::LdapUser).to receive(:sleep).with(0)
         expect(user.ldap_exist?).to eq(true)
       end
     end
@@ -79,8 +79,8 @@ describe User, type: :model do
 
     context 'when user exists' do
       before do
-        allow(LdapUser).to receive(:check_ldap_exist!).and_return(true)
-        allow(LdapUser).to receive(:group_response_from_ldap).and_return([])
+        allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).and_return(true)
+        allow(PsuDir::LdapUser).to receive(:group_response_from_ldap).and_return([])
         allow(Hydra::LDAP).to receive(:get_user).and_return([entry])
       end
 

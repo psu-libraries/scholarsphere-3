@@ -16,6 +16,7 @@ development:
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups'
+  ldap_unwilling_sleep: "2"
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -26,6 +27,7 @@ test:
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups_test'
+  ldap_unwilling_sleep: "0"
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -39,3 +41,4 @@ production:
   doi_password: 'password'
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
+  ldap_unwilling_sleep: "2"

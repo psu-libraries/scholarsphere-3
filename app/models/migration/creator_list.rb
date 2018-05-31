@@ -58,14 +58,14 @@ module Migration
           user = users[0]
           # validate creator against user
           # todo Not really sure what to do here
-          # logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
+          # Rails.logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
           #
           # user_to_alias(user, creator)
           if validate_user(creator, user)
-            logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
+            Rails.logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
             user_to_alias(user, creator)
           else
-            logger.warn("No match #{creator} with #{user.display_name} #{user.login} did not validate.  Creating new agent")
+            Rails.logger.warn("No match #{creator} with #{user.display_name} #{user.login} did not validate.  Creating new agent")
             name_to_alias(creator)
           end
         else
@@ -77,7 +77,7 @@ module Migration
         # id match is valid
         return true if creator == user.login
 
-        logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
+        Rails.logger.warn("Matching #{creator} with #{user.display_name} #{user.login}")
         valid_given_and_sur_name?(parse_name(user.display_name), parse_name(creator)) ||
           (comparable_name(creator) == comparable_name(user.display_name))
       end
