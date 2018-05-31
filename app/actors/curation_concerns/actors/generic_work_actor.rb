@@ -9,14 +9,16 @@ module CurationConcerns
   module Actors
     class GenericWorkActor < CurationConcerns::Actors::BaseActor
       def create(attributes)
+        encoded_attributes = EncodedAttributeHash.new(attributes).encoded_hash
         capture_alias_errors do
-          super
+          super(encoded_attributes)
         end
       end
 
       def update(attributes)
+        encoded_attributes = EncodedAttributeHash.new(attributes).encoded_hash
         capture_alias_errors do
-          super
+          super(encoded_attributes)
         end
       end
 
@@ -38,6 +40,27 @@ module CurationConcerns
         rescue AliasManagementService::Error => error
           curation_concern.errors.add(:creator, :invalid, message: error.message)
           return false
+        end
+
+        class EncodedAttributeHash < ActiveSupport::HashWithIndifferentAccess
+          def encoded_hash
+            (keys.map(&:to_sym) & encodable_keys).map do |key|
+              self[key] = encoded_value(self[key])
+            end
+            self
+          end
+
+          def encoded_value(value)
+            if value.is_a?(Array)
+              value.map { |v| EncodingService.call(v) }
+            else
+              EncodingService.call(value)
+            end
+          end
+
+          def encodable_keys
+            [:title, :description, :subtitle]
+          end
         end
     end
   end

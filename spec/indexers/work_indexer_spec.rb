@@ -97,15 +97,5 @@ describe WorkIndexer do
         expect(solr_doc['readme_file_ss']).to include('incorrect dashes ��� are replaced with default characters.')
       end
     end
-
-    context 'with an invalid README file' do
-      let(:readme_file) { build(:file_set) }
-
-      before do
-        allow(readme_file).to receive(:original_file).and_raise(StandardError, 'bad encoding')
-      end
-
-      it { is_expected.to eq('Error encoding readme as UTF-8: bad encoding') }
-    end
   end
 end

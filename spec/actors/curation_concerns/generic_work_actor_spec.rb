@@ -61,4 +61,14 @@ describe CurationConcerns::Actors::GenericWorkActor do
 
     its(:depositor) { is_expected.to eq(other_user.login) }
   end
+
+  context 'with non-UTF-8 encoding' do
+    let(:string) { "# Sample readme with bad characters\n\nincorrect dashes ��� are replaced with default characters.\n" }
+    let(:attributes) { { description: [File.open(File.join(fixture_path, 'bad_readme.md'), 'rb').read] } }
+
+    it 'converts the content to UTF-8' do
+      expect(work.description).to contain_exactly(string)
+      expect(work.description.first.encoding.name).to eq('UTF-8')
+    end
+  end
 end
