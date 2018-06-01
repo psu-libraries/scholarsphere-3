@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'new_relic/recipes'
+
 # lock '3.6'
 
 # Set assets roles to occur on jobs as well as web
@@ -109,7 +111,7 @@ namespace :deploy do
       end
     end
   end
-  after :updated, :check_configs
+  after :updated, :check_configs, 'newrelic:notice_deployment'
 
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
