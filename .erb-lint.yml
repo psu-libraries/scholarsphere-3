@@ -3,6 +3,8 @@
 exclude:
   - '*vendor/*'
 linters:
+  AllowedScriptType:
+    enabled: false
   ClosingErbTagIndent:
     enabled: true
   FinalNewline:
