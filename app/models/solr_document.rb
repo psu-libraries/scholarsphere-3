@@ -46,6 +46,10 @@ class SolrDocument
     self[Solrizer.solr_name('subtitle')]
   end
 
+  def readme_file
+    self['readme_file_ss']
+  end
+
   private
 
     def ul_start_tags

@@ -38,6 +38,11 @@ class GenericWork < ActiveFedora::Base
     sizes.compact.map { |fs| fs[file_size_field] }.reduce(0, :+)
   end
 
+  # @return [FileSet]
+  def readme_file
+    file_sets.select { |file| file.label =~ /^readme/i }.first
+  end
+
   private
 
     def file_set_size(fs_id)
