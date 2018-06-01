@@ -8,7 +8,7 @@ class NameDisambiguationService
   end
 
   def disambiguate
-    return LdapDisambiguate::Name.disambiguate(name)
+    return PsuDir::Disambiguate::Name.disambiguate(name)
   rescue RuntimeError, Mail::Field::ParseError, Net::LDAP::FilterSyntaxInvalidError => e
     Rails.logger.warn "Error processing #{name}  #{e}"
     return []

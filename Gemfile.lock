@@ -454,11 +454,6 @@ GEM
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    ldap_disambiguate (0.0.5)
-      hydra-ldap
-      mail (~> 2.6)
-      namae (= 0.9.3)
-      net-ldap (~> 0.16.0)
     ldp (0.7.0)
       deprecation
       faraday
@@ -498,7 +493,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
-    namae (0.9.3)
+    namae (1.0.1)
     nest (2.1.0)
       redic
     net-http-persistent (3.0.0)
@@ -545,6 +540,11 @@ GEM
     posix-spawn (0.3.13)
     power_converter (0.1.2)
     powerpack (0.1.1)
+    psu_dir (0.2.0)
+      hydra-ldap
+      mail (~> 2.6)
+      namae (~> 1.0)
+      net-ldap (~> 0.16.0)
     public_suffix (3.0.0)
     pusher-client (0.6.2)
       json
@@ -905,14 +905,14 @@ DEPENDENCIES
   jquery-rails (~> 4.2)
   kaminari_route_prefix
   launchy
-  ldap_disambiguate
   mail (= 2.6.6.rc1)
   mysql2 (~> 0.3.17)
-  namae (= 0.9.3)
+  namae (~> 1.0)
   nest
   newrelic_rpm
   niftany
   poltergeist (~> 1.9)
+  psu_dir
   rack-maintenance
   rails (= 4.2.7.1)
   rainbow
