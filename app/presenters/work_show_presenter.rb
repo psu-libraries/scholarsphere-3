@@ -52,7 +52,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   # @example { original_value => cleaned_value }
   def facet_mapping(field)
     config = FieldConfigurator.facet_fields[field]
-    send(field).zip(FacetValueCleaningService.call(send(field), config)).to_h
+    send(field).zip(FacetValueCleaningService.call(send(field), config, solr_document)).to_h
   end
 
   def permission_badge_class

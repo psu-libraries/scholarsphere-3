@@ -64,11 +64,33 @@ describe WorkShowPresenter do
     subject { presenter.facet_mapping(:creator_name) }
 
     let(:work) { build :work }
-    let(:creator_alias) { build(:alias, display_name: 'JOE SMITH') }
+    let(:creator_alias1) { build(:alias, display_name: 'JOE SMITH', agent: sally) }
+    let(:creator_alias2) { build(:alias, display_name: 'JANE SMITH', agent: sally) }
+    let(:creator_alias3) { build(:alias, display_name: 'JOHN JACOB SMITH', agent: john) }
+    let(:sally) { create(:agent, given_name: 'Sally', sur_name: 'James') }
+    let(:john) { create(:agent, given_name: 'John', sur_name: 'Smith') }
 
-    before { allow(work).to receive(:creators).and_return([creator_alias]) }
+    before do
+      allow(work).to receive(:creators).and_return([creator_alias1, creator_alias2, creator_alias3])
+    end
 
-    it { is_expected.to eq('JOE SMITH' => 'Joe Smith') }
+    it { is_expected.to eq('JOE SMITH' => 'Sally James', 'JANE SMITH' => 'Sally James', 'JOHN JACOB SMITH' => 'John Smith') }
+
+    context 'for a keyword' do
+      subject { presenter.facet_mapping(:keyword) }
+
+      let(:work) { build :work, keyword: ['ABC'] }
+
+      it { is_expected.to eq('ABC' => 'abc') }
+    end
+
+    context 'for a publisher' do
+      subject { presenter.facet_mapping(:publisher) }
+
+      let(:work) { build :work, publisher: ['PUBLISHER'] }
+
+      it { is_expected.to eq('PUBLISHER' => 'Publisher') }
+    end
   end
 
   describe '#events' do

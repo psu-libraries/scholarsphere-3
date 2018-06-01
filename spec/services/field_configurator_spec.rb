@@ -55,7 +55,7 @@ describe FieldConfigurator do
     describe 'creator facet' do
       subject { described_class.facet_fields.fetch(:creator_name) }
 
-      its(:opts) { is_expected.to include(facet_cleaners: [:titleize]) }
+      its(:opts) { is_expected.to include(facet_cleaners: [:creator]) }
     end
 
     describe 'publisher facet' do
