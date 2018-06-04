@@ -3,7 +3,7 @@
 HTTP_PORT = '4000'
 
 test_instance_pid = fork do
-  exec "unicorn_rails -E test -p #{HTTP_PORT}"
+  exec "unicorn_rails -E test -p #{HTTP_PORT} -c #{Rails.root.join('config', 'unicorn.rb')}"
 end
 
 at_exit do
