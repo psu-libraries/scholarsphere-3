@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'net/http'
 require 'open-uri'
 
@@ -17,9 +18,7 @@ describe GenericWork, type: :feature do
   it 'displays the contents of the readme' do
     visit(polymorphic_path(work))
     click_on 'Download'
-
-
     downloaded_file = open("http://localhost:4000/downloads/#{work.file_sets.first.id}").read
-    expect(downloaded_file.size).to eq(4096)
+    expect(downloaded_file.size).to eq(4218)
   end
 end
