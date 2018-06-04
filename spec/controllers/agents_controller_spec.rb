@@ -67,8 +67,8 @@ RSpec.describe AgentsController do
         allow_any_instance_of(User).to receive(:groups).and_return(['registered'])
       end
       it 'returns JSON search based on the first name & last name' do
-        expect(LdapDisambiguate::LdapUser).to receive(:query_ldap_by_name).with('JAM', '*', ldap_attrs).and_return(name_results)
-        expect(LdapDisambiguate::LdapUser).to receive(:query_ldap_by_mail).with('Jam@psu.edu', ldap_attrs).and_return(mail_results)
+        expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_name).with('JAM', '*', ldap_attrs).and_return(name_results)
+        expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_mail).with('Jam@psu.edu', ldap_attrs).and_return(mail_results)
         get :name_query, q: 'Jam'
         results = JSON.parse(response.body)
         expect(results.count).to eq(6)
@@ -80,8 +80,8 @@ RSpec.describe AgentsController do
         expect(results.map { |x| x['orcid_id'] }.flatten).to contain_exactly(nil, nil, '1234', nil, nil, '1234')
       end
       it 'returns JSON results when queried with spaces' do
-        expect(LdapDisambiguate::LdapUser).to receive(:query_ldap_by_name).and_return(jamie_t_name_results)
-        expect(LdapDisambiguate::LdapUser).to receive(:query_ldap_by_mail).and_return(jamie_t_mail_results)
+        expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_name).and_return(jamie_t_name_results)
+        expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_mail).and_return(jamie_t_mail_results)
         get :name_query, q: 'Jamie T'
         results = JSON.parse(response.body)
         expect(results.count).to eq(2)

@@ -40,7 +40,7 @@ class FieldConfigurator
   def self.common_fields
     {
       resource_type: FieldConfig.new('Resource Type'),
-      creator_name: FieldConfig.new(label: 'Creator', facet_cleaners: [:titleize]),
+      creator_name: FieldConfig.new(label: 'Creator', facet_cleaners: [:creator]),
       keyword:  FieldConfig.new(label: 'Keyword', facet_cleaners: [:downcase]),
       subject: FieldConfig.new('Subject'),
       language: FieldConfig.new('Language'),

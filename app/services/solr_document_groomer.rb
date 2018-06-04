@@ -18,7 +18,7 @@ class SolrDocumentGroomer
 
   def groom
     FieldConfigurator.facet_fields.each do |field, config|
-      cleaned_fields = FacetValueCleaningService.call(document.fetch(Solrizer.solr_name(field.to_s, :facetable), []), config)
+      cleaned_fields = FacetValueCleaningService.call(document.fetch(Solrizer.solr_name(field.to_s, :facetable), []), config, SolrDocument.new(document))
       document[Solrizer.solr_name(field.to_s, :facetable)] = cleaned_fields
     end
   end

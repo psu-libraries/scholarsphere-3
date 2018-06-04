@@ -10,7 +10,7 @@ class FileSetIndexer < CurationConcerns::FileSetIndexer
         begin
           solr_doc['all_text_timv'].force_encoding('UTF-8')
         rescue StandardError => e
-          logger.warn "could not convert File Set content to UTF8 #{object.id} #{e}"
+          Rails.logger.warn "could not convert File Set content to UTF8 #{object.id} #{e}"
         end
       end
     end

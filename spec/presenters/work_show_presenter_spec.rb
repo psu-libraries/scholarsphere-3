@@ -64,11 +64,33 @@ describe WorkShowPresenter do
     subject { presenter.facet_mapping(:creator_name) }
 
     let(:work) { build :work }
-    let(:creator_alias) { build(:alias, display_name: 'JOE SMITH') }
+    let(:creator_alias1) { build(:alias, display_name: 'JOE SMITH', agent: sally) }
+    let(:creator_alias2) { build(:alias, display_name: 'JANE SMITH', agent: sally) }
+    let(:creator_alias3) { build(:alias, display_name: 'JOHN JACOB SMITH', agent: john) }
+    let(:sally) { create(:agent, given_name: 'Sally', sur_name: 'James') }
+    let(:john) { create(:agent, given_name: 'John', sur_name: 'Smith') }
 
-    before { allow(work).to receive(:creators).and_return([creator_alias]) }
+    before do
+      allow(work).to receive(:creators).and_return([creator_alias1, creator_alias2, creator_alias3])
+    end
 
-    it { is_expected.to eq('JOE SMITH' => 'Joe Smith') }
+    it { is_expected.to eq('JOE SMITH' => 'Sally James', 'JANE SMITH' => 'Sally James', 'JOHN JACOB SMITH' => 'John Smith') }
+
+    context 'for a keyword' do
+      subject { presenter.facet_mapping(:keyword) }
+
+      let(:work) { build :work, keyword: ['ABC'] }
+
+      it { is_expected.to eq('ABC' => 'abc') }
+    end
+
+    context 'for a publisher' do
+      subject { presenter.facet_mapping(:publisher) }
+
+      let(:work) { build :work, publisher: ['PUBLISHER'] }
+
+      it { is_expected.to eq('PUBLISHER' => 'Publisher') }
+    end
   end
 
   describe '#events' do
@@ -111,62 +133,30 @@ describe WorkShowPresenter do
   end
 
   describe '#readme' do
-    include FactoryHelpers
     subject { presenter.readme }
 
-    let(:file_set_presenters) { [FileSetPresenter.new(SolrDocument.new(file_set.to_solr), nil)] }
+    before { allow(presenter).to receive(:readme_file).and_return(readme_content) }
 
-    context "when there isn't a readme" do
-      it { is_expected.to be_nil }
-    end
-
-    context 'when there is a text file' do
-      let(:file_set) { create(:file_set, :public, label: 'README.txt') }
-      let(:file) { mock_file_factory(mime_type: 'text/plain', content: 'some readme content for the test') }
-
-      before do
-        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
-        allow(file_set).to receive(:original_file).and_return(file)
-        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
-      end
+    context 'when there is text' do
+      let(:readme_content) { 'some readme content for the test' }
 
       it { is_expected.to include '<p>some readme content for the test</p>' }
     end
 
-    context 'when there is a markdown file' do
-      let(:file_set) { create(:file_set, :public, label: 'README.md') }
-      let(:file) { mock_file_factory(mime_type: 'text/markdown', content: 'other readme content that is in a markdown file') }
+    context 'when there is markdown' do
+      let(:readme_content) { '# other readme content that is in a markdown file' }
 
-      before do
-        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
-        allow(file_set).to receive(:original_file).and_return(file)
-        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
-      end
-
-      it { is_expected.to include '<p>other readme content that is in a markdown file</p>' }
+      it { is_expected.to include '<h1>other readme content that is in a markdown file</h1>' }
     end
 
     context 'when there is a blank readme file' do
-      let(:file_set) { create(:file_set, :public, label: 'ReadMe.txt') }
-      let(:file) { mock_file_factory(content: '') }
-
-      before do
-        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
-        allow(file_set).to receive(:original_file).and_return(file)
-        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
-      end
+      let(:readme_content) { '' }
 
       it { is_expected.to include '' }
     end
 
     context 'when there is no content in the readme file' do
-      let(:file_set) { create(:file_set, :public, label: 'ReadMe.txt') }
-
-      before do
-        allow(presenter).to receive(:file_set_presenters).and_return(file_set_presenters)
-        allow(file_set).to receive(:original_file).and_return(nil)
-        allow(FileSet).to receive(:find).with(file_set.id).and_return(file_set)
-      end
+      let(:readme_content) { nil }
 
       it { is_expected.to be_nil }
     end

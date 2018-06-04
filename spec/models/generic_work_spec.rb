@@ -127,4 +127,17 @@ describe GenericWork do
   describe '#upload_set' do
     its(:upload_set) { is_expected.to be_blank }
   end
+
+  describe '#readme_file' do
+    context 'with a readme file' do
+      let(:file_set) { build(:file_set, label: 'README') }
+
+      before { allow(work).to receive(:file_sets).and_return([file_set]) }
+      its(:readme_file) { is_expected.to eq(file_set) }
+    end
+
+    context 'with no file sets' do
+      its(:readme_file) { is_expected.to be_nil }
+    end
+  end
 end
