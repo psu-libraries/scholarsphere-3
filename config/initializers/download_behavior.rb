@@ -15,6 +15,7 @@ module Hydra
         if file.new_record?
           render_404
         else
+          binding.pry
           send_data file.content.read, type: file.mime_type, filename: file_name
         end
       end

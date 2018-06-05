@@ -15,7 +15,7 @@ module ActiveFedora
       @content ||= ensure_fetch ? remote_content : @ds_content
       @content.rewind if behaves_like_io?(@content)
       return @content if @content.nil?
-      @content = redirect_content #if content_empty?
+      @content = redirect_content # if content_empty?
       @content
     end
 
@@ -25,7 +25,5 @@ module ActiveFedora
       return true if @content.class == String && @content.empty?
       false
     end
-
-
   end
 end
