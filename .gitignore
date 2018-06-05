@@ -74,6 +74,7 @@ log/*
 
 public/plugin_assets
 public/plugin_assets/
+public/repository
 
 .project
 .buildpath
