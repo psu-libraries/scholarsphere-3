@@ -22,7 +22,7 @@
                 collection_path(presenter),
                 title: t('sufia.collection.actions.delete.desc'),
                 class: 'btn btn-danger',
-                data: { confirm: t('sufia.collection.actions.delete.confirmation'),
+                data: { confirm: t('sufia.dashboard.my.action.collection_confirmation', application_name: application_name),
                         method: :delete } %>
   <% end %>
 
