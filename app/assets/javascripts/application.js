@@ -20,5 +20,6 @@
 //= require scholarsphere/creator/creator_index
 //= require scholarsphere/creator/creator_autocomplete
 //= require scholarsphere/creator/creator_behavior
+//= require scholarsphere/work_relationships.js
 //= require mustache
 //= require sufia
