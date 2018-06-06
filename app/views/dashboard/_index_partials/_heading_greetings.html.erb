@@ -2,10 +2,5 @@
   <h1><%= t('sufia.dashboard.title') %></h1>
 </div>
 <div class="col-xs-9">
-  <h2><%= t('sufia.dashboard.greeting') + ' ' + current_user.name %>
-    <span class="small"><%= if can? :admin_stats, current_user
-                              link_to('System Statistics', sufia.admin_stats_path,
-                    class: 'admin_stats_link')
-                            end %></span>
-  </h2>
+  <h2><%= t('sufia.dashboard.greeting') + ' ' + current_user.name %></h2>
 </div>

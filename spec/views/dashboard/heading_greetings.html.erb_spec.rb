@@ -18,7 +18,6 @@ describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do
       render
       page = Capybara::Node::Simple.new(rendered)
       expect(page).to have_content('Hello')
-      expect(page).to have_selector('a.admin_stats_link', text: 'System Statistics')
     end
   end
 
@@ -30,7 +29,6 @@ describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do
       render
       page = Capybara::Node::Simple.new(rendered)
       expect(page).to have_content('Hello')
-      expect(page).not_to have_selector('a.admin_stats_link', text: 'System Statistics')
     end
   end
 end
