@@ -52,7 +52,7 @@
       <div class="list-group-item">
         <label for="generic_work_on_behalf_of"><%= t('curation_concerns.base.form_progress.on_behalf_of') %></label>
         <p class="help-block"><%= t('curation_concerns.base.form_progress.on_behalf_of_help') %></p>
-        <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: 'Yourself' %>
+        <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map { |proxy| [proxy.name, proxy.user_key] }, prompt: 'Yourself' %>
       </div>
     <% end %>
   </div>
