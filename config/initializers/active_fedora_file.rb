@@ -6,7 +6,14 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
   module ActiveFedora
     class File
       def redirect_content
-        StringIO.new(open(uri).read)
+        fedora_config = Rails.application.config_for(:fedora)
+        StringIO.new(
+          open(
+            uri,
+            http_basic_authentication: [fedora_config['user'], fedora_config['password']],
+            allow_redirections: :all
+          ).read
+        )
       end
 
       # If the object's content is empty, assume it is Fedora external
