@@ -115,6 +115,7 @@ module ScholarSphere
       CurationConcerns::Renderers::AttributeRenderer.prepend PrependedRenderers::WithLists
       Sufia::HomepageController.prepend PrependedControllers::WithRecentPresenters
       FeaturedWorkList.prepend PrependedModels::WithFeaturedPresenters
+      CurationConcerns::CollectionSearchBuilder.prepend PrependedSearchBuilders::WithMoreRows
       CurationConcerns::MemberPresenterFactory.file_presenter_class = FileSetPresenter
     end
   end
