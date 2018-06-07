@@ -89,10 +89,11 @@ en:
     generic_work:
       readme_heading: 'README'
       readme_text: 'How about adding a README file? We currently accept plain text (README.txt) and markdown (README.md) files.  Note: You may need to refresh to see an README file you just uploaded.'
-      readme_error: 'Error encoding readme as UTF-8'
     file_set:
       permission_help: 'Who should be able to view or download this content?'
       representative_media: 'If this is or becomes your representative media, this may impact the display of your work in search results.'
+    encoding:
+      error: 'Error encoding readme as UTF-8'
 
   statistic:
     report:
