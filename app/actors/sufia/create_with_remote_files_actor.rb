@@ -4,12 +4,16 @@
 module Sufia
   # Attaches remote files to the work
   class CreateWithRemoteFilesActor < CurationConcerns::Actors::AbstractActor
+    attr_reader :visibility_attributes
+
     def create(attributes)
+      register_visibility_attributes(attributes)
       remote_files = attributes.delete(:remote_files)
       next_actor.create(attributes) && attach_files(remote_files)
     end
 
     def update(attributes)
+      register_visibility_attributes(attributes)
       remote_files = attributes.delete(:remote_files)
       next_actor.update(attributes) && attach_files(remote_files)
     end
@@ -32,7 +36,7 @@ module Sufia
       def create_file_from_url(url, file_name)
         ::FileSet.new(import_url: url, label: file_name) do |fs|
           actor = CurationConcerns::Actors::FileSetActor.new(fs, user)
-          actor.create_metadata(curation_concern, visibility: curation_concern.visibility)
+          actor.create_metadata(curation_concern, visibility_attributes)
           fs.save!
           uri = URI.parse(URI.encode(url))
           if uri.scheme == 'file'
@@ -46,6 +50,17 @@ module Sufia
       def log(user)
         CurationConcerns::Operation.create!(user: user,
                                             operation_type: 'Attach Remote File')
+      end
+
+    private
+
+      # The attributes used for visibility - used to send as initial params to
+      # created FileSets.
+      def register_visibility_attributes(attributes)
+        @visibility_attributes = attributes.slice(:visibility, :visibility_during_lease,
+                                                    :visibility_after_lease, :lease_expiration_date,
+                                                    :embargo_release_date, :visibility_during_embargo,
+                                                    :visibility_after_embargo)
       end
   end
 end
