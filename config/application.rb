@@ -117,6 +117,11 @@ module ScholarSphere
       FeaturedWorkList.prepend PrependedModels::WithFeaturedPresenters
       CurationConcerns::CollectionSearchBuilder.prepend PrependedSearchBuilders::WithMoreRows
       CurationConcerns::MemberPresenterFactory.file_presenter_class = FileSetPresenter
+
+      # Prepending class methods
+      if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
+        CurationConcerns::WorkingDirectory.singleton_class.send(:prepend, PrependedServices::WithExternalFileSupport)
+      end
     end
   end
 end

@@ -481,6 +481,7 @@ GEM
       carrierwave (>= 0.5.8)
       rails (>= 4.2.0)
     memoist (0.16.0)
+    method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -524,6 +525,7 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
+    open_uri_redirections (0.2.1)
     openseadragon (0.4.0)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
@@ -540,6 +542,12 @@ GEM
     posix-spawn (0.3.13)
     power_converter (0.1.2)
     powerpack (0.1.1)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.4.3)
+      byebug (>= 9.0, < 9.1)
+      pry (~> 0.10)
     psu_dir (0.2.0)
       hydra-ldap
       mail (~> 2.6)
@@ -911,7 +919,10 @@ DEPENDENCIES
   nest
   newrelic_rpm
   niftany
+  open_uri_redirections
   poltergeist (~> 1.9)
+  pry
+  pry-byebug
   psu_dir
   rack-maintenance
   rails (= 4.2.7.1)
@@ -947,4 +958,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

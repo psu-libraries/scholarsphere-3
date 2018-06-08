@@ -88,7 +88,7 @@ describe DownloadsController do
     context 'with a FileSet' do
       before { controller.params[:id] = my_file.id }
       it 'sends content' do
-        expect(controller).to receive(:send_content)
+        expect(controller).to receive(:send_data)
         expect(WorkZipService).not_to receive(:new)
         subject
       end

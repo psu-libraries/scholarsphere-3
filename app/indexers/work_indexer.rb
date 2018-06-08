@@ -45,7 +45,13 @@ class WorkIndexer < Sufia::WorkIndexer
 
       def content
         return unless content?
-        EncodingService.call(file.original_file.content)
+        retrieved_content = case file.original_file.content
+                            when String
+                              file.original_file.content
+                            when StringIO
+                              file.original_file.content.read
+                            end
+        EncodingService.call(retrieved_content)
       end
     end
 end
