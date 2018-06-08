@@ -8,7 +8,8 @@ describe Scholarsphere::Pairtree do
     let(:user)     { create(:user) }
     let(:file_set) { create(:file_set, :with_png, depositor: user.login, id: 'mst3kabc') }
     let(:filepath) { File.join(fixture_path, 'world.png') }
-    let!(:pairtree) { described_class.new(file_set) }
+    let(:bagger) { Scholarsphere::Bagger }
+    let!(:pairtree) { described_class.new(file_set, bagger) }
 
     before do
       ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
