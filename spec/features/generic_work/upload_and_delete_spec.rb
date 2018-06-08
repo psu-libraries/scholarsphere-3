@@ -94,6 +94,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
         find('#new_user_permission_skel').find(:xpath, 'option[2]').select_option
         click_on('add_new_user_skel')
         within('#share') { expect(page).to have_content(other_user.user_key) }
+
+        # Test Collections tab for select2 container
+        within('ul.nav-tabs') { click_link('Collections') }
+        expect(page).to have_css('.select2-container-multi')
       end
     end
 

@@ -9,7 +9,7 @@ class WorkIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name('resource_type', :facetable)] = object.resource_type
       solr_doc[Solrizer.solr_name('file_format', :stored_searchable)] = representative.file_format
       solr_doc[Solrizer.solr_name('file_format', :facetable)] = representative.file_format
-      solr_doc['readme_file_ss'] = readme_content
+      solr_doc['readme_file_ss'] = readme_file.content
       solr_doc[Solrizer.solr_name(:bytes, CurationConcerns::CollectionIndexer::STORED_LONG)] = object.bytes
       SolrDocumentGroomer.call(solr_doc)
     end
@@ -23,13 +23,6 @@ class WorkIndexer < Sufia::WorkIndexer
 
     def readme_file
       @readme_file ||= ReadmeFile.new(object.readme_file)
-    end
-
-    def readme_content
-      return unless readme_file.content?
-      readme_file.content.encode('utf-8', invalid: :replace, undef: :replace)
-    rescue StandardError => e
-      "#{I18n.t('scholarsphere.generic_work.readme_error')}: #{e}"
     end
 
     # Use the naught gem if this gets bigger
@@ -51,12 +44,14 @@ class WorkIndexer < Sufia::WorkIndexer
       end
 
       def content
-        case file.original_file.content
-        when String
-          file.original_file.content
-        when StringIO
-          file.original_file.content.read
-        end
+        return unless content?
+        retrieved_content = case file.original_file.content
+                            when String
+                              file.original_file.content
+                            when StringIO
+                              file.original_file.content.read
+                            end
+        EncodingService.call(retrieved_content)
       end
     end
 end
