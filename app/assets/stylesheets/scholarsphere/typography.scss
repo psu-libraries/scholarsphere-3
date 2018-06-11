@@ -43,6 +43,8 @@ html > body .btn-info { background-color: $btn-info-color; }
 html > body .label-warning,
 html > body .btn-warning { background-color: $btn-warning-color; }
 
+.select2-container .select2-choice > .select2-chosen { color: $gray-middle; }
+
 .anchor { text-decoration: none; }
 
 .subtitle {
