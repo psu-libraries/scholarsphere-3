@@ -2,3 +2,9 @@
 .heading-tile a:hover {
   text-decoration: none;
 }
+
+// Overrides the badges from Bootstrap and Sufia for better color contrast
+.panel-user .badge {
+  background-color: $gray-middle;
+  border-radius: 8px;
+}
