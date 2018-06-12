@@ -20,6 +20,7 @@ development:
   REPOSITORY_FILESTORE: <%= Rails.root.join('public', 'repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
   REPOSITORY_EXTERNAL_FILES: 'true'
+  timing_enabled: 'false'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -34,6 +35,7 @@ test:
   REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:4000/repository'
   REPOSITORY_EXTERNAL_FILES: 'true'
+  timing_enabled: 'false'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -51,3 +53,4 @@ production:
   REPOSITORY_FILESTORE: '/opt/heracles/binaries'
   REPOSITORY_FILESTORE_HOST: 'https://dce-fedora.vmhost.psu.edu/binaries'
   REPOSITORY_EXTERNAL_FILES: 'true'
+  timing_enabled: 'false'

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe TranslatedFacetAttributeRenderer do
+describe TranslatedFacetRenderer do
   let(:field)   { :name }
   let(:mapping) { { 'BOB' => 'Bob', 'JESSICA' => 'Jessica' } }
 

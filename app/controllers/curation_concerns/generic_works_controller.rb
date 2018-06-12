@@ -44,6 +44,18 @@ class CurationConcerns::GenericWorksController < ApplicationController
     presenter.file_page(params[:file_page])
   end
 
+  def update
+    start = Time.now
+    super
+    timing_logger.log(action: 'update generic work', start_time: start)
+  end
+
+  def show
+    start = Time.now.to_f
+    super
+    timing_logger.log(action: 'show generic work', start_time: start)
+  end
+
   protected
 
     def after_update_response

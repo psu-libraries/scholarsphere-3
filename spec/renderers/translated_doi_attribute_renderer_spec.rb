@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe TranslatedDoiAttributeRenderer do
+describe TranslatedDoiRenderer do
   let(:field) { :identifier }
 
   describe '#attribute_to_html' do
