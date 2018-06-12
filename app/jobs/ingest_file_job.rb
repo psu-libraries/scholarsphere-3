@@ -23,7 +23,7 @@ class IngestFileJob < ActiveJob::Base
     local_file[:original_name] = File.basename(@filepath)
 
     if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-      Scholarsphere::Pairtree.new(@file_set).create_repository_files(@filepath)
+      Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).create_repository_files(@filepath)
     end
 
     # Wrap in an IO decorator to attach passed-in options
@@ -58,10 +58,10 @@ class IngestFileJob < ActiveJob::Base
     def add_file(relation, local_file)
       if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
         Hydra::Works::AddExternalFileToFileSet.call(@file_set,
-                                                  Scholarsphere::Pairtree.new(@file_set).http_path(@filepath),
+                                                  Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).http_path(@filepath),
                                                   relation,
                                                   versioning: false)
-        Scholarsphere::Pairtree.new(@file_set).http_path(@filepath)
+        Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).http_path(@filepath)
       else
         Hydra::Works::AddFileToFileSet.call(@file_set,
                                           local_file,

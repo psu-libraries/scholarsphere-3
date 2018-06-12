@@ -91,6 +91,9 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     backports (3.11.1)
+    bagit (0.4.1)
+      docopt (~> 0.5.0)
+      validatable (~> 1.6)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -254,6 +257,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    docopt (0.5.0)
     dropbox-sdk (1.6.5)
       json
     dry-configurable (0.7.0)
@@ -855,6 +859,7 @@ GEM
     unicorn-rails (2.2.1)
       rack
       unicorn
+    validatable (1.6.7)
     vcr (3.0.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -884,6 +889,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (~> 11.5)
+  bagit
   better_errors
   binding_of_caller
   blacklight_advanced_search (~> 6.0)

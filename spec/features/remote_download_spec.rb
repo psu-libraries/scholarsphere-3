@@ -19,6 +19,6 @@ describe GenericWork, type: :feature do
     visit(polymorphic_path(work))
     click_on 'Download'
     downloaded_file = open("http://localhost:4000/downloads/#{work.file_sets.first.id}").read
-    expect(downloaded_file.size).to eq(4218)
+    expect(downloaded_file.size).to eq(4219)
   end
 end
