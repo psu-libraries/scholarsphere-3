@@ -25,3 +25,10 @@ html > body .form-progress .radio input[type="radio"] {
 
 // Removes some extra markup from 3 gems and a different setting for the labels and radio buttons
 html > body .permission-label { padding-left: 0; }
+
+.progress .size-progress {
+  background-color: $size-progress-bg;
+  color: $primary-black;
+  font-size: 1.35rem;
+  margin-left: .5rem;
+}
