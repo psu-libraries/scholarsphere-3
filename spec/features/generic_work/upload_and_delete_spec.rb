@@ -193,9 +193,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within('#savewidget') do
             choose 'generic_work_visibility_authenticated'
           end
-          sleep(1.second)
+          sleep(2.seconds)
           check 'agreement'
-          sleep(1.second)
+          sleep(2.seconds)
           click_on 'Save'
           expect(page).to have_css('h1', filename + '_title')
           click_link 'My Dashboard'
