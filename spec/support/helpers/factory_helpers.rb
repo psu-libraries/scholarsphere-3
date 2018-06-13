@@ -76,7 +76,7 @@ module FactoryHelpers
     work.save
   end
 
-  def add_public_mp3
+  def add_public_mp3(work, attributes)
     fs = FactoryGirl.create(:file_set,
                             user: attributes.user,
                             title: ['A contained MP3 file'],

@@ -88,6 +88,16 @@ FactoryGirl.define do
       end
     end
 
+    factory :public_work_with_lots_of_versions do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      after(:create) do |work, attributes|
+        FactoryHelpers.add_public_png(work, attributes)
+        FactoryHelpers.add_another_version(work, attributes)
+        FactoryHelpers.add_public_pdf(work, attributes)
+        FactoryHelpers.add_public_readme(work, attributes)
+      end
+    end
+
     # Does not call IngestFileJob directly. Because this is a mp3, ffmpeg is required for derivatives.
     # Travis does not have ffmpeg, so only add the file to the fileset and do not run characterization
     # or create any derivatives.
