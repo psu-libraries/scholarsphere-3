@@ -20,6 +20,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'equivalent-xml/rspec_matchers'
 require 'byebug' unless ENV['TRAVIS']
+require File.expand_path('../factory_helpers.rb', __FILE__)
 
 # For feature testing with JS
 require 'capybara/rails'
