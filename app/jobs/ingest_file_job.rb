@@ -23,13 +23,17 @@ class IngestFileJob < ActiveJob::Base
     local_file[:original_name] = File.basename(@filepath)
 
     if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-      Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).create_repository_files(@filepath)
+      # Whenever you upload a version, the filename option is set
+      # if you upload new file it is not set
+      local_file_name = opts.fetch(:filename, nil) || local_file[:original_name]
+
+      @filepath = Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).create_repository_files(@filepath, local_file_name)
     end
 
     # Wrap in an IO decorator to attach passed-in options
     local_file = Hydra::Derivatives::IoDecorator.new(File.open(filepath, 'rb'))
     local_file.mime_type = opts.fetch(:mime_type, nil)
-    local_file.original_name = opts.fetch(:filename, File.basename(filepath))
+    local_file.original_name = opts.fetch(:filename, File.basename(@filepath))
 
     add_file(relation, local_file)
 

@@ -41,11 +41,12 @@ module Scholarsphere
       FileUtils::mkdir_p ENV['REPOSITORY_FILESTORE'] + new_path
     end
 
-    def create_repository_files(filepath)
+    def create_repository_files(filepath, local_file_name)
       ensure_object_directory_exists
-      FileUtils::cp filepath, full_path
-      @bagger.new(full_path: full_path, working_file: File.basename(filepath))
-      remove_file_outside_bag(filepath)
+      FileUtils::cp filepath, full_path + "/#{local_file_name}"
+      @bagger.new(full_path: full_path, working_file: local_file_name)
+      remove_file_outside_bag(local_file_name)
+      full_path + "/#{local_file_name}"
     end
 
     private
