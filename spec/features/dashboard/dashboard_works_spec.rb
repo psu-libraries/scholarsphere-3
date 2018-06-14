@@ -235,7 +235,7 @@ describe 'Dashboard Works', type: :feature do
       conn.commit
     end
 
-    it 'allows pagination and sorting to be toggeled' do
+    it 'allows pagination and sorting to be toggled' do
       select('100', from: 'per_page')
       find_button('Refresh').click
       first('input.batch_document_selector').click
@@ -248,6 +248,28 @@ describe 'Dashboard Works', type: :feature do
         expect(page).to have_content 'Sort By'
         expect(page).not_to have_content 'Add to Collection'
       end
+    end
+  end
+
+  context 'Changing the number per page on other pages of My Works redirects to page 1' do
+    before do
+      create_works(current_user, 90)
+      go_to_dashboard_works
+    end
+
+    it 'changes the number per page and ' do
+      select('20', from: 'per_page')
+      find_button('Refresh').click
+      expect(GenericWork.count).to eq(92)
+      within('.pagination') do
+        click_link('5')
+      end
+      within('.per_page') do
+        expect(page).not_to have_selector("input[name='page'][value='5']", visible: false)
+      end
+      select('100', from: 'per_page')
+      find_button('Refresh').click
+      expect(page).not_to have_css('.pagination')
     end
   end
 
