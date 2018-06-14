@@ -10,8 +10,26 @@ class FileSet < ActiveFedora::Base
   end
 
   # @return [String, nil]
-  # Field value is constructed at index time in CurationConcerns::FileSetIndexer
+  # Copied from file_set_indexer for efficiency
   def file_format
-    to_solr.fetch('file_format_sim', nil)
+    return unless mime_type.present? || format_label.present?
+
+    formatted = format_mime_type_and_label
+    formatted ||= format_mime_type
+    formatted ||= format_label
+
+    formatted
+  end
+
+  def format_mime_type_and_label
+    return unless mime_type.present? && format_label.present?
+
+    "#{format_mime_type} (#{format_label.join(', ')})"
+  end
+
+  def format_mime_type
+    return if mime_type.blank?
+
+    mime_type.split('/').last
   end
 end
