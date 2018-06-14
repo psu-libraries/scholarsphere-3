@@ -67,6 +67,13 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     super(size)
   end
 
+  # override curation concerns to return immediatly if the field is blank
+  def attribute_to_html(field, options = {})
+    value = send(field)
+    return if value.blank?
+    super
+  end
+
   private
 
     # Override to add rows parameter
@@ -86,5 +93,17 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
       selected_presenters = member_presenters.select { |presenter| presenter.id == representative_id }
       return NullRepresentativePresenter.new(current_ability, request) if selected_presenters.empty?
       selected_presenters.first
+    end
+
+    # cache the know renderes so we do not need to search for the class, whcih can be slow
+    def find_renderer_class(name)
+      @cache ||= { translated_facet: TranslatedFacetRenderer,
+                   translated_doi: TranslatedDoiRenderer,
+                   faceted: CurationConcerns::Renderers::FacetedAttributeRenderer,
+                   date: CurationConcerns::Renderers::DateAttributeRenderer,
+                   linked: CurationConcerns::Renderers::LinkedAttributeRenderer,
+                   external_link: CurationConcerns::Renderers::ExternalLinkAttributeRenderer }
+      return @cache[name] if @cache.include?(name)
+      @cache[name] = super
     end
 end

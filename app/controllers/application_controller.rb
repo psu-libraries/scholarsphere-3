@@ -94,6 +94,12 @@ class ApplicationController < ActionController::Base
     new_id
   end
 
+  def render(*args)
+    start = Time.now
+    super(*args)
+    timing_logger.log(action: "#{self.class} render", start_time: start)
+  end
+
   protected
 
     def user_logged_in?
@@ -121,5 +127,9 @@ class ApplicationController < ActionController::Base
     def nil_request
       logger.warn('Request is Nil, how weird!!!')
       nil
+    end
+
+    def timing_logger
+      @timing_logger ||= TimingLogger.new
     end
 end

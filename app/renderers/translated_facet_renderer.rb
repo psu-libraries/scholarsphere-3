@@ -4,7 +4,7 @@
 # for facets. This allows us to display a faceted search link using the text that the user
 # originally entered while using the normalized text that was created when the facet was
 # "cleaned" using the SolrDocumentGroomer.
-class TranslatedFacetAttributeRenderer < CurationConcerns::Renderers::FacetedAttributeRenderer
+class TranslatedFacetRenderer < CurationConcerns::Renderers::FacetedAttributeRenderer
   private
 
     def li_value(value)
