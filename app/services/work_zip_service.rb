@@ -61,7 +61,7 @@ class WorkZipService
     end
 
     def add_internal_files_to_zip(zipfile, file_set)
-      return unless add_to_zip?
+      return unless add_to_zip?(file_set)
       zipfile.get_output_stream(file_set.title.first) do |outfile|
         file_set.original_file.stream.each { |buffer| outfile.write(buffer) }
       end
