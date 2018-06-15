@@ -9,7 +9,7 @@ module Scholarsphere
       @bag.add_file(working_file) do |io|
         io.puts File.open(working_file).read
       end
-      @bag.manifest!
+      @bag.manifest!(algo: 'sha256')
       Dir.chdir(current_directory)
     end
   end

@@ -15,7 +15,7 @@ gem 'blacklight_advanced_search', '~> 6.0'
 gem 'mail', '= 2.6.6.rc1'
 
 # Other components
-gem 'bagit'
+gem 'bagit', '~> 0.4.2'
 gem 'bootsnap', require: false
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coderay'
