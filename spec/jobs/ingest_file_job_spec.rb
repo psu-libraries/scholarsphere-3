@@ -4,13 +4,12 @@ require 'rails_helper'
 require 'fileutils'
 
 describe IngestFileJob do
-  context 'when adding a new version' do
+  context 'when adding a new version', unless: external_files? do
     let(:user)     { create(:user) }
     let(:file_set) { create(:file_set, :with_png, depositor: user.login) }
     let(:filepath) { File.join(fixture_path, 'world.png') }
 
     before do
-      ENV['REPOSITORY_EXTERNAL_FILES'] = 'false'
       allow(CharacterizeJob).to receive(:perform_later)
     end
 
@@ -21,13 +20,12 @@ describe IngestFileJob do
     end
   end
 
-  context 'fedora external content' do
+  context 'fedora external content', if: external_files? do
     let(:user)     { create(:user) }
     let(:file_set) { create(:file_set, :with_png, depositor: user.login, id: 'mst3kabc') }
     let(:filepath) { File.join(fixture_path, 'world.png') }
 
     before do
-      ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
       allow(CharacterizeJob).to receive(:perform_later)
       described_class.perform_now(file_set, filepath, user)
     end
