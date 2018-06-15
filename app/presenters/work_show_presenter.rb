@@ -34,8 +34,9 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
   def member_presenters
+    return @member_presenters if @member_presenters.present?
     members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
-    Kaminari.paginate_array(members).page(@file_page).per(10)
+    @member_presenters = Kaminari.paginate_array(members).page(@file_page).per(10)
   end
 
   def uploading?
