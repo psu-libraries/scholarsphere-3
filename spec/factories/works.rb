@@ -58,21 +58,8 @@ FactoryGirl.define do
 
     factory :public_work_with_png do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-
       after(:create) do |work, attributes|
-        fs = FactoryGirl.create(:file_set,
-                                user: User.find_by_login(work.depositor),
-                                title: ['A contained PNG file'],
-                                label: 'world.png',
-                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-
-        file_path = "#{Rails.root}/spec/fixtures/world.png"
-        IngestFileJob.perform_now(fs, file_path, attributes.user)
-
-        work.ordered_members << fs
-        work.thumbnail_id = fs.id
-        work.representative_id = fs.id
-        work.update_index
+        FactoryHelpers.add_public_png(work, attributes)
       end
     end
 
@@ -80,19 +67,7 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
       after(:create) do |work, attributes|
-        fs = FactoryGirl.create(:file_set,
-                                user: User.find_by_login(work.depositor),
-                                title: ['A full-text pdf file'],
-                                label: 'test.pdf',
-                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-
-        file_path = "#{Rails.root}/spec/fixtures/test.pdf"
-        IngestFileJob.perform_now(fs, file_path, attributes.user)
-
-        work.ordered_members << fs
-        work.thumbnail_id = fs.id
-        work.representative_id = fs.id
-        work.update_index
+        FactoryHelpers.add_public_pdf(work, attributes)
       end
     end
 
@@ -100,19 +75,26 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
       after(:create) do |work, attributes|
-        fs = FactoryGirl.create(:file_set,
-                                user: User.find_by_login(work.depositor),
-                                title: ['README'],
-                                label: 'readme.md',
-                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+        FactoryHelpers.add_public_readme(work, attributes)
+      end
+    end
 
-        file_path = "#{Rails.root}/spec/fixtures/readme.md"
-        IngestFileJob.perform_now(fs, file_path, attributes.user)
+    factory :public_work_with_lots_of_files do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      after(:create) do |work, attributes|
+        FactoryHelpers.add_public_png(work, attributes)
+        FactoryHelpers.add_public_pdf(work, attributes)
+        FactoryHelpers.add_public_readme(work, attributes)
+      end
+    end
 
-        work.ordered_members << fs
-        work.thumbnail_id = fs.id
-        work.representative_id = fs.id
-        work.save
+    factory :public_work_with_lots_of_versions do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      after(:create) do |work, attributes|
+        FactoryHelpers.add_public_png(work, attributes)
+        FactoryHelpers.add_another_version(work, attributes)
+        FactoryHelpers.add_public_pdf(work, attributes)
+        FactoryHelpers.add_public_readme(work, attributes)
       end
     end
 
@@ -123,18 +105,7 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
       after(:create) do |work, attributes|
-        fs = FactoryGirl.create(:file_set,
-                                user: attributes.user,
-                                title: ['A contained MP3 file'],
-                                label: 'scholarsphere_test5.mp3',
-                                visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-
-        filename = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
-        local_file = File.open(filename, 'rb')
-        Hydra::Works::AddFileToFileSet.call(fs, local_file, :original_file, versioning: false)
-        fs.save!
-        work.ordered_members << fs
-        work.thumbnail_id = fs.id
+        FactoryHelpers.add_public_mp3(work, attributes)
       end
     end
 
