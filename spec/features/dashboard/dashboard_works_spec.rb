@@ -25,10 +25,6 @@ describe 'Dashboard Works', type: :feature do
     create(:registered_work, id: 'dashboard-works-work2', depositor: current_user.login, title: ['Registered work'])
   end
 
-  let!(:other_collection) do
-    create(:collection, id: 'dashboard-works-other_collection', title: ['jill collection'], depositor: jill.login)
-  end
-
   before do
     sign_in_with_js(current_user)
     go_to_dashboard_works
@@ -73,12 +69,12 @@ describe 'Dashboard Works', type: :feature do
 
       # TODO: This part of the test won't pass until this Sufia
       #       ticket has been closed: https://github.com/projecthydra/sufia/issues/2049
-      go_to_dashboard_works
+      go_back
       db_visibility_link(work1).trigger('click')
       expect(page).to have_content('Sharing With')
 
       # Clicking Transfer Ownership loads the transfer ownership page
-      go_to_dashboard_works
+      go_back
       db_item_actions_toggle(work1).click
       click_link 'Transfer Ownership of Work'
       expect(page).to have_content "Transfer ownership of \"#{filename}\""
@@ -131,20 +127,29 @@ describe 'Dashboard Works', type: :feature do
       conn.commit
     end
 
-    describe 'Pagination:' do
-      specify 'The files should be listed on multiple pages' do
-        expect(page).to have_css('.pagination')
-
-        # Increasing Show per page beyond my current number of works and I should not see a page
-        expect(GenericWork.count).to eq(12)
-        select('20', from: 'per_page')
-        find_button('Refresh').click
-        expect(page).not_to have_css('.pager')
-      end
-    end
-
-    describe 'Search:' do
+    describe 'Facet: & Search: ' do
       it 'shows the correct results' do
+        # It displays the correct totals for facet
+        {
+          'Resource Type' => 'Video (10)',
+          'Creator'       => 'Creator1 Jones (10)',
+          'Keyword'       => 'keyword1 (10)',
+          'Subject'       => 'Subject1 (10)',
+          'Language'      => 'Language1 (10)',
+          'Location'      => 'Location1 (10)',
+          'Publisher'     => 'Publisher1 (10)',
+          'Format'        => 'plain () (10)'
+        }.each do |facet, value|
+          within('#facets') do
+            # open facet
+            click_link(facet)
+            expect(page).to have_content(value, wait: Capybara.default_max_wait_time * 2)
+
+            # for some reason the page needs to settle before we can click the next link in the list
+            sleep(0.1.seconds)
+          end
+        end
+
         # When I search by partial title it does not display any results
         search_my_files_by_term('title')
         expect(page).to have_content 'You searched for: title'
@@ -177,30 +182,6 @@ describe 'Dashboard Works', type: :feature do
       end
     end
 
-    describe 'Facets:' do
-      specify 'Displays the correct totals for facet' do
-        {
-          'Resource Type' => 'Video (10)',
-          'Creator'       => 'Creator1 Jones (10)',
-          'Keyword'       => 'keyword1 (10)',
-          'Subject'       => 'Subject1 (10)',
-          'Language'      => 'Language1 (10)',
-          'Location'      => 'Location1 (10)',
-          'Publisher'     => 'Publisher1 (10)',
-          'Format'        => 'plain () (10)'
-        }.each do |facet, value|
-          within('#facets') do
-            # open facet
-            click_link(facet)
-            expect(page).to have_content(value, wait: Capybara.default_max_wait_time * 2)
-
-            # for some reason the page needs to settle before we can click the next link in the list
-            sleep(1.second)
-          end
-        end
-      end
-    end
-
     describe 'Sorting:' do
       specify 'Items are sorted correctly' do
         select('date uploaded ▼', from: 'sort')
@@ -213,6 +194,10 @@ describe 'Dashboard Works', type: :feature do
     end
 
     context 'with collection of other users' do
+      let!(:other_collection) do
+        create(:collection, id: 'dashboard-works-other_collection', title: ['jill collection'], depositor: jill.login)
+      end
+
       it "does not show other user's collection" do
         first('input.batch_document_selector').click
         click_button 'Add to Collection'
@@ -222,22 +207,41 @@ describe 'Dashboard Works', type: :feature do
     end
   end
 
-  context 'Many works (more than max_batch, which is currently set to 80)' do
+  context 'Many Works' do
     before do
-      create_works(current_user, 90)
+      create_works(current_user, 30)
       go_to_dashboard_works
     end
 
     after do
-      90.times do |t|
+      30.times do |t|
         conn.delete_by_id "199#{t}"
       end
       conn.commit
     end
 
-    it 'allows pagination and sorting to be toggled' do
+    it 'Changing the number per page on other pages of My Works redirects to page 1' do
+      # Changes to make sure we do not end up off the last page when changing page size
+      #
+      expect(GenericWork.count).to eq(32)
+      within('.pagination') do
+        click_link('3')
+      end
+      within('.per_page') do
+        expect(page).not_to have_selector("input[name='page'][value='5']", visible: false)
+      end
+      expect(page).to have_css('.batch_document_selector_all')
       select('100', from: 'per_page')
       find_button('Refresh').click
+      expect(page).not_to have_css('.pagination')
+      expect(page).not_to have_css('.pager')
+
+      # TODO what is the maximum batch?  Do we still need to remove the select all?
+      # expect(page).not_to have_css('.batch_document_selector_all')
+
+      # check to make sure clicking a check box toggles
+      # collection addition/work edit & deletion or Sort By
+      #
       first('input.batch_document_selector').click
       within('.batch-info') do
         expect(page).to have_content 'Add to Collection'
@@ -248,28 +252,6 @@ describe 'Dashboard Works', type: :feature do
         expect(page).to have_content 'Sort By'
         expect(page).not_to have_content 'Add to Collection'
       end
-    end
-  end
-
-  context 'Changing the number per page on other pages of My Works redirects to page 1' do
-    before do
-      create_works(current_user, 90)
-      go_to_dashboard_works
-    end
-
-    it 'changes the number per page and ' do
-      select('20', from: 'per_page')
-      find_button('Refresh').click
-      expect(GenericWork.count).to eq(92)
-      within('.pagination') do
-        click_link('5')
-      end
-      within('.per_page') do
-        expect(page).not_to have_selector("input[name='page'][value='5']", visible: false)
-      end
-      select('100', from: 'per_page')
-      find_button('Refresh').click
-      expect(page).not_to have_css('.pagination')
     end
   end
 
