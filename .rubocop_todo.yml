@@ -120,6 +120,8 @@ RSpec/MessageSpies:
 # Configuration parameters: AggregateFailuresByDefault.
 RSpec/MultipleExpectations:
   Max: 25
+  Exclude:
+  - 'spec/features/generic_work/upload_and_delete_spec.rb'
 
 # Offense count: 87
 RSpec/NamedSubject:
