@@ -16,6 +16,7 @@ module CurationConcerns
       end
 
       def update(attributes)
+        update_depositor(attributes.delete(:depositor))
         encoded_attributes = EncodedAttributeHash.new(attributes).encoded_hash
         capture_alias_errors do
           super(encoded_attributes)
@@ -40,6 +41,16 @@ module CurationConcerns
         rescue AliasManagementService::Error => error
           curation_concern.errors.add(:creator, :invalid, message: error.message)
           return false
+        end
+
+        def update_depositor(new_depositor)
+          return unless new_depositor && user.administrator?
+          current_depositor = curation_concern.depositor
+          curation_concern.depositor = new_depositor
+          edit_users = curation_concern.edit_users
+          edit_users.delete(current_depositor)
+          edit_users << new_depositor
+          curation_concern.edit_users = edit_users
         end
 
         class EncodedAttributeHash < ActiveSupport::HashWithIndifferentAccess

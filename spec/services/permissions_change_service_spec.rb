@@ -14,7 +14,7 @@ describe PermissionsChangeService do
 
   before do
     allow(User).to receive(:find_by_user_key).and_return(user)
-    allow(User).to receive(:batchuser).and_return(batch_user)
+    allow(User).to receive(:batch_user).and_return(batch_user)
     allow(service).to receive(:unshareable?).and_return(true)
   end
 
