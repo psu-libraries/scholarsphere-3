@@ -55,11 +55,7 @@
         <%= f.input :on_behalf_of, label: false, collection: current_user.can_make_deposits_for.map { |proxy| [proxy.name, proxy.user_key] }, prompt: 'Yourself' %>
       </div>
     <% elsif current_user.administrator? && action_name == "edit" %>
-      <div class="list-group-item">
-        <label for="generic_work_depositor"><%= t('curation_concerns.base.form_progress.depositor') %></label>
-        <p class="bg-danger"><%= t('curation_concerns.base.form_progress.depositor_admin') %></p>
-        <%= f.input :depositor, label: false %>
-      </div>
+      <%= render 'form_progress_admin_edit', f: f, on_behalf_of: curation_concern.on_behalf_of %>
     <% end %>
   </div>
   <div class="panel-footer text-center">

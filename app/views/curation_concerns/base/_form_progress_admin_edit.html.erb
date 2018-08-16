@@ -1,0 +1,13 @@
+<% if on_behalf_of.present? %>
+  <div class="list-group-item">
+    <label for="generic_work_on_behalf_of"><%= t('curation_concerns.base.form_progress.on_behalf_of') %></label>
+    <p class="bg-danger"><%= t('curation_concerns.base.form_progress.on_behalf_of_admin') %></p>
+    <%= f.input :on_behalf_of, label: false %>
+  </div>
+<% else %>
+  <div class="list-group-item">
+    <label for="generic_work_depositor"><%= t('curation_concerns.base.form_progress.depositor') %></label>
+    <p class="bg-danger"><%= t('curation_concerns.base.form_progress.depositor_admin') %></p>
+    <%= f.input :depositor, label: false %>
+  </div>
+<% end %>
