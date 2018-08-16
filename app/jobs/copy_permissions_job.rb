@@ -29,6 +29,9 @@ class CopyPermissionsJob < ActiveJob::Base
         end
       end
 
+      # Copy depositor from the work to the fileset
+      file.depositor = work.depositor unless work.depositor == file.depositor
+
       # Apply the new and deleted attributes to the file
       file.permissions_attributes = attribute_map
       file.save!
