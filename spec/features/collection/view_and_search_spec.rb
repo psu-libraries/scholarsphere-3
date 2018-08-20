@@ -35,6 +35,7 @@ describe Collection, type: :feature do
         expect(page).to have_content collection.title.first
         expect(page).to have_content collection.description.first
         expect(page).to have_content collection.creator.first.display_name
+        expect(page).to have_selector("a[href='/catalog?f%5Bcreator_name_sim%5D%5B%5D=Given+Name+Sur+Name']")
         expect(page).to have_selector("a[href='https://doi.org/blah-blah']")
         expect(page).to have_content file1.title.first
         expect(page).to have_content file2.title.first
