@@ -1,5 +1,9 @@
 # .solr_wrapper
-version: 7.1.0
+# Note: If you're updating this file, it must be updated in a total of three places:
+#   - .solr_wrapper
+#   - config/solr_wrapper_test.yml
+#   - config/travis/solr_wrapper_test.yml
+version: 7.4.0
 port: 8983
 instance_dir: tmp/solr-development
 download_dir: tmp
