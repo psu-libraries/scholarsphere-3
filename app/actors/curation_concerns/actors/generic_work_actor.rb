@@ -29,9 +29,10 @@ module CurationConcerns
         # if the user is depositing on behalf of someone else.
         def apply_save_data_to_curation_concern(attributes)
           if attributes.fetch('on_behalf_of', nil).present?
-            depositor = ::User.find_by_user_key(attributes.fetch('on_behalf_of'))
-            curation_concern.apply_depositor_metadata(depositor)
-            curation_concern.edit_users += [depositor, user.user_key]
+            current_depositor = curation_concern.depositor
+            new_depositor = ::User.find_by_user_key(attributes.fetch('on_behalf_of'))
+            curation_concern.apply_depositor_metadata(new_depositor)
+            curation_concern.edit_users = update_edit_users_for_curation_concern(current_depositor, new_depositor)
           end
           super
         end
@@ -51,6 +52,14 @@ module CurationConcerns
           edit_users.delete(current_depositor)
           edit_users << new_depositor
           curation_concern.edit_users = edit_users
+        end
+
+        def update_edit_users_for_curation_concern(current_depositor, new_depositor)
+          edit_users = curation_concern.edit_users
+          edit_users.delete(current_depositor)
+          edit_users + [new_depositor, curation_concern.proxy_depositor]
+          edit_users << user.user_key unless user.administrator?
+          edit_users.uniq
         end
 
         class EncodedAttributeHash < ActiveSupport::HashWithIndifferentAccess

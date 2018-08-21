@@ -117,6 +117,7 @@ en:
         files_required_complete: 'Required files complete'
         on_behalf_of: 'On behalf of'
         on_behalf_of_help: 'Remember to correct the creator field if you are depositing on behalf of someone else.'
+        on_behalf_of_admin: 'Warning! You are changing the proxy information.'
         depositor: 'Depositor Info'
         depositor_admin: 'Warning! You are changing the depositor information.'
       form_files:
