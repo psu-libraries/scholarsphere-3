@@ -118,6 +118,7 @@ module ScholarSphere
       CurationConcerns::CollectionSearchBuilder.prepend PrependedSearchBuilders::WithMoreRows
       CurationConcerns::MemberPresenterFactory.file_presenter_class = FileSetPresenter
       Sufia::CreateWithFilesActor.prepend PrependedActors::WithVisibilityAttributes
+      Sufia::Statistics::TermQuery.prepend PrependedServices::WithNullTermQuery
 
       # Prepending class methods
       if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'

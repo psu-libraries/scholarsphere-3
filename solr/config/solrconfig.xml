@@ -144,6 +144,17 @@
 			<str name="q">{!raw f=id v=$id}</str>
 		</lst>
 	</requestHandler>
+
+  <searchComponent name="termsComponent" class="solr.TermsComponent" />
+  <requestHandler name="/terms" class="solr.SearchHandler">
+    <lst name="defaults">
+      <bool name="terms">true</bool>
+    </lst>
+    <arr name="components">
+      <str>termsComponent</str>
+    </arr>
+  </requestHandler>
+
 	<searchComponent name="spellcheck" class="solr.SpellCheckComponent">
 		<str name="queryAnalyzerFieldType">textSpell</str>
 		<lst name="spellchecker">
