@@ -1,6 +1,8 @@
-<% record.creator.each do |creator| %>
+<% record.creator.each_with_index do |creator, i| %>
   <span itemprop="creator" itemscope itemtype="http://schema.org/Person">
-    <span itemprop="name"><%= link_to_facet(creator, Solrizer.solr_name('creator_name', :facetable)) %></span>
+  <span itemprop="name">
+    <%= link_to(creator, @presenter.creator_facet_path(i)) %>
+  </span>
   </span>
   <br />
 <% end %>
