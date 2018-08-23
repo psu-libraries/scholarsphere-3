@@ -3,24 +3,40 @@
 require 'fileutils'
 
 class ExternalFilesConversion
-  attr_reader :work_class, :user
+  attr_reader :work_class, :user, :opts
 
-  def initialize(work_class)
+  def initialize(work_class, opts = {})
     @work_class = work_class
     @user = User.batch_user
+    @opts = opts
   end
 
-  def convert
-    @work_class.all.each do |work|
+  # If we receive a work ID, only convert that one item
+  # Otherwise, convert all instances of the given class
+  # @param [String] id
+  def convert(id = nil)
+    if id
+      convert_work(@work_class.find(id))
+    else
+      convert_class
+    end
+  end
+
+  private
+
+    def convert_class
+      @work_class.all.each do |work|
+        convert_work(work)
+      end
+    end
+
+    def convert_work(work)
       work.file_sets.each do |file_set|
         file_set.files.each do |file|
           convert_file(work, file_set, file)
         end
       end
     end
-  end
-
-  private
 
     def convert_file(work, file_set, file)
       # This slug must be prefixed with auto_ so that it will not appear in versions.all
