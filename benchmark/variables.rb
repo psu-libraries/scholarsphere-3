@@ -2,8 +2,8 @@
 
 RSpec.configure do |config|
   config.before(:context) do
-    @scholarsphere_url = 'https://dce-fedora.vmhost.psu.edu/'
-    @headless = true
+    @scholarsphere_url = 'https://scholarsphere-qa.libraries.psu.edu/'
+    @headless = false
     @implicit_wait_time = 180
     @samples_directory = Pathname.pwd.join('samples').to_s
     @sample_files = Pathname.pwd.join('samples').children.map(&:basename).map(&:to_s)

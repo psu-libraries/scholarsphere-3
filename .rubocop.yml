@@ -94,6 +94,7 @@ RSpec/DescribeClass:
     - 'spec/models/batch_spec.rb'
     - 'spec/features/**/*'
     - 'spec/support/**/*'
+    - 'benchmark/spec/**/*'
 
 RSpec/LetSetup:
   Enabled: false
