@@ -42,12 +42,12 @@ describe FileSetIndexer do
         allow(file_set).to receive(:extracted_text).and_return(extracted)
       end
       it 'forces utf8' do
-        expect(text).to receive(:force_encoding).with('UTF-8').and_return('abc123')
+        expect(text).to receive(:encode).with('utf-8', invalid: :replace, undef: :replace).and_return('abc123')
         subject
       end
 
       it 'handles errors with forcing utf8' do
-        expect(text).to receive(:force_encoding).with('UTF-8').and_raise(StandardError.new('blarg'))
+        expect(text).to receive(:encode).with('utf-8', invalid: :replace, undef: :replace).and_raise(StandardError.new('blarg'))
         subject
       end
     end
