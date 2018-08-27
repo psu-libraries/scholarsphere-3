@@ -14,13 +14,16 @@ class ExternalFilesConversion
   end
 
   # If we receive a work ID, only convert that one item
+  # If we receive a file of IDs, convert that list
   # Otherwise, convert all instances of the given class
-  # @param [String] id
-  def convert(id = nil)
+  # @param [Hash] opts optional parameters. Valid values are :id and :file
+  def convert(opts = {})
     start_time = Time.now
     @logger.info "Starting conversion process at #{start_time}"
-    if id
-      convert_work(@work_class.find(id))
+    if opts[:id]
+      convert_work(opts[:id])
+    elsif opts[:file]
+      convert_from_file(opts[:file])
     else
       convert_class
     end
@@ -33,22 +36,40 @@ class ExternalFilesConversion
   private
 
     def convert_class
-      all_objects = @work_class.all
+      all_objects = ActiveFedora::SolrService.query("has_model_ssim:#{@work_class}", fl: 'id', rows: 1000000).map(&:id)
       all_objects_count = all_objects.count
       @logger.info "Converting #{all_objects_count} objects of type #{@work_class}"
-      all_objects.each do |work|
-        convert_work(work)
+      all_objects.each do |work_id|
+        convert_work(work_id)
       end
     end
 
-    def convert_work(work)
-      @logger.info "Starting to convert work #{work.id}"
-      work.file_sets.each do |file_set|
-        file_set.files.each do |file|
-          convert_file(work, file_set, file)
-        end
+    def convert_from_file(file)
+      @logger.error "Unable to find file #{file}" unless File.exists?(file)
+      work_array = File.readlines(file).each(&:chomp!)
+      @logger.info "Converting contents of file #{file}"
+      @logger.info "Converting #{work_array.count} objects of type #{@work_class}"
+      work_array.each do |work_id|
+        convert_work(work_id)
       end
-      @logger.info "Finished converting work #{work.id}"
+    end
+
+    # param [String] work_id the id of the work to convert
+    def convert_work(work_id)
+      @logger.info "Starting to convert work #{work_id}"
+      begin
+        work = ActiveFedora::Base.find(work_id)
+        work.file_sets.each do |file_set|
+          file_set.files.each do |file|
+            convert_file(work, file_set, file)
+          end
+        end
+      rescue ActiveFedora::ObjectNotFoundError => error
+        @logger.error "error finding object to migrate: #{work_id}; #{error}"
+      rescue StandardError => error
+        @logger.error "error migrating object: #{work_id}; #{error}"
+      end
+      @logger.info "Finished converting work #{work_id}"
     end
 
     def convert_file(work, file_set, file)
@@ -68,10 +89,6 @@ class ExternalFilesConversion
         end
       end
       ActiveFedora.fedora.connection.delete(file.uri + '/fcr:versions/auto_placeholder')
-    rescue OpenURI::HTTPError
-      Rails.logger.warn "Problem accessing the URI for GenericWork: #{work.id}"
-    rescue Ldp::HttpError
-      Rails.logger.warn "Problem accessing the Fedora URI for GenericWork #{work.id}"
     end
 
     def write_version_content(version_uri)
