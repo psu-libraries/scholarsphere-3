@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fileutils'
+require 'logger'
 
 class ExternalFilesConversion
   attr_reader :work_class, :user
@@ -8,33 +9,46 @@ class ExternalFilesConversion
   def initialize(work_class)
     @work_class = work_class
     @user = User.batch_user
+    @logger = Logger.new(ENV['REPOSITORY_MIGRATION_LOG'])
+    @logger.level = Logger::DEBUG
   end
 
   # If we receive a work ID, only convert that one item
   # Otherwise, convert all instances of the given class
   # @param [String] id
   def convert(id = nil)
+    start_time = Time.now
+    @logger.info "Starting conversion process at #{start_time}"
     if id
       convert_work(@work_class.find(id))
     else
       convert_class
     end
+    end_time = Time.now
+    elapsed_time = end_time - start_time
+    @logger.info "Finished conversion process at #{end_time}"
+    @logger.info "Elapsed time: #{elapsed_time}"
   end
 
   private
 
     def convert_class
-      @work_class.all.each do |work|
+      all_objects = @work_class.all
+      all_objects_count = all_objects.count
+      @logger.info "Converting #{all_objects_count} objects of type #{@work_class}"
+      all_objects.each do |work|
         convert_work(work)
       end
     end
 
     def convert_work(work)
+      @logger.info "Starting to convert work #{work.id}"
       work.file_sets.each do |file_set|
         file_set.files.each do |file|
           convert_file(work, file_set, file)
         end
       end
+      @logger.info "Finished converting work #{work.id}"
     end
 
     def convert_file(work, file_set, file)

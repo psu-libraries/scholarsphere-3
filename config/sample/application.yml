@@ -19,6 +19,7 @@ development:
   ldap_unwilling_sleep: "2"
   REPOSITORY_FILESTORE: <%= Rails.root.join('public', 'repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
+  REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "dev_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
 test:
@@ -34,6 +35,7 @@ test:
   ldap_unwilling_sleep: "0"
   REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:4000/repository'
+  REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "test_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
 production:
@@ -51,6 +53,7 @@ production:
   RECAPTCHA_SECRET_KEY: 'secret-key'
   ldap_unwilling_sleep: "2"
   REPOSITORY_FILESTORE: '/opt/heracles/binaries'
-  REPOSITORY_FILESTORE_HOST: 'https://dce-fedora.vmhost.psu.edu/binaries'
+  REPOSITORY_FILESTORE_HOST: 'http://dce-fedora.vmhost.psu.edu/binaries'
+  REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "dce_fedora_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
