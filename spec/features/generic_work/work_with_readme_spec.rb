@@ -16,4 +16,22 @@ describe GenericWork do
     visit(polymorphic_path(work))
     expect(page).to have_content('This is a readme for testing.')
   end
+
+  context 'work readme with prompt' do
+    let!(:work) { create(:public_work, title: ['Work with out README'], depositor: current_user.login, resource_type: ['Audio']) }
+
+    it 'displays the contents of the prompt' do
+      visit(polymorphic_path(work))
+      expect(page).to have_content('How about adding a README file?')
+    end
+  end
+
+  context 'work without readme with prompt' do
+    let!(:work) { create(:public_work, title: ['Work with out README'], depositor: current_user.login, resource_type: ['Book']) }
+
+    it 'displays the contents of the prompt' do
+      visit(polymorphic_path(work))
+      expect(page).not_to have_content('How about adding a README file?')
+    end
+  end
 end
