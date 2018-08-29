@@ -19,6 +19,7 @@ Metrics/ClassLength:
   Exclude:
     - 'app/models/user.rb'
     - 'app/controllers/catalog_controller.rb'
+    - 'app/services/external_files_conversion.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'fileutils'
 
 describe ExternalFilesConversion do
   context 'running a conversion from internal to external file storage' do
@@ -63,9 +64,6 @@ describe ExternalFilesConversion do
 
       it 'converts the ids in a file' do
         ENV['REPOSITORY_EXTERNAL_FILES'] = 'false'
-        file_set1
-        file_set2
-        file_set3
         response = Net::HTTP.get_response(URI(file_set1.files.first.uri.to_s))
         expect(response.to_s).to match(/OK/)
         ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
@@ -74,6 +72,33 @@ describe ExternalFilesConversion do
         expect(response['content-disposition']).to match(/world.png/)
         expect(file_set1.original_file.original_name).to eq('world.png')
         expect(response.to_s).to match(/HTTPTemporaryRedirect/)
+      end
+      it "adds any ids it can't convert to an error file" do
+        converter = described_class.new(GenericWork)
+        expect(converter.error_file).to match(/error/)
+        work3_id = work3.id
+        work3.delete
+        converter.convert(file: pidfile)
+        expect(File.readlines(converter.error_file).each(&:chomp!).first).to eq work3_id
+      end
+      it 'makes files with all the pids' do
+        ENV['REPOSITORY_EXTERNAL_FILES'] = 'false'
+        FileUtils.rm_rf Rails.root.join('tmp', 'external_files_conversion')
+        converter = described_class.new(GenericWork)
+        expect(converter.pid_lists).to be_empty
+        converter.convert(lists: true)
+        expect(converter.pid_lists).not_to be_empty
+        expect(File.exists?(converter.pid_lists.first)).to eq true
+      end
+      it 'will not convert an object if its files are already stored externally' do
+        ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
+        converter = described_class.new(GenericWork)
+        converter.convert(file: pidfile)
+        expect(File.exist?(converter.error_file)).to eq false
+        converter.convert(file: pidfile)
+        # If it tried to convert the objects again, their PIDs would
+        # be in the error file
+        expect(File.exist?(converter.error_file)).to eq false
       end
     end
   end
