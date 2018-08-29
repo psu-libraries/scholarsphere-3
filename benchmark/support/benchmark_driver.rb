@@ -1,25 +1,30 @@
 # frozen_string_literal: true
 
 module BenchmarkDriver
-  def chrome_driver
-    @chrome_driver ||= driver(:chrome)
+  DEFAULT_BROWSER = 'chrome'
+
+  def driver
+    @driver ||= init_driver
   end
 
-  def firefox_driver
-    @firefox_driver ||= driver(:firefox)
+  def browser_name
+    @browser_name ||= ENV.fetch('BENCHMARK_BROWSER', DEFAULT_BROWSER)
   end
 
   private
 
-    def driver(type)
-      driver = Selenium::WebDriver.for type, options: options(type)
-      driver.manage.timeouts.implicit_wait = implicit_wait_time
-      driver.manage.window.maximize
-      driver
+    def init_driver
+      web_driver = Selenium::WebDriver.for(browser_name.to_sym, http_client: client, options: options)
+      web_driver.manage.timeouts.implicit_wait = implicit_wait_time
+      web_driver
     end
 
-    def options(type)
-      if type == :chrome
+    def client
+      Selenium::WebDriver::Remote::Http::Default.new(read_timeout: 360)
+    end
+
+    def options
+      if browser_name == DEFAULT_BROWSER
         Selenium::WebDriver::Chrome::Options.new(args: args)
       else
         Selenium::WebDriver::Firefox::Options.new(args: args)
@@ -27,7 +32,7 @@ module BenchmarkDriver
     end
 
     def args
-      return [] unless headless
+      return [] unless headless?
       ['--headless']
     end
 end
