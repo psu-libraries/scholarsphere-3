@@ -19,6 +19,7 @@ describe 'Dashboard Collections:', type: :feature do
 
   specify 'tab title and buttons' do
     expect(page).to have_content('My Collections')
+    expect(page).not_to have_content('Object Type')
     expect(page).to have_link('New Work', visible: false) # link is there (even if collapsed)
     expect(page).to have_link('New Collection', visible: false) # link is there (even if collapsed)
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
@@ -62,8 +63,6 @@ describe 'Dashboard Collections:', type: :feature do
   describe 'facets,' do
     specify 'displays the correct totals for each facet' do
       within('#facets') do
-        click_link('Object Type')
-        expect(page).to have_content('Collection (1)')
         click_link('Creator')
         expect(page).to have_content('Given Name Sur Name')
       end

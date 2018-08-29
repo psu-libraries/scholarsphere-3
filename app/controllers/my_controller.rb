@@ -3,6 +3,8 @@
 class MyController < ApplicationController
   include Sufia::MyControllerBehavior
 
+  blacklight_config.facet_fields.delete 'has_model_ssim'
+
   private
 
     # Overrides Sufia::MyControllerBehavior to build a presenter for the collection to which we

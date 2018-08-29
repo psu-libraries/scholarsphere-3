@@ -24,6 +24,7 @@ describe 'Dashboard Shares', type: :feature do
 
   it 'displays only shared files' do
     expect(page).to have_content('Shared with Me')
+    expect(page).to have_content('Object Type')
     expect(page).to have_link('New Work', visible: false)
     expect(page).to have_link('New Collection', visible: false)
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")

@@ -36,6 +36,7 @@ describe 'Dashboard Works', type: :feature do
     specify 'interactions are wired correctly' do
       # tab title and buttons
       expect(page).to have_content('My Works')
+      expect(page).not_to have_content('Object Type')
       expect(page).to have_selector('h2.sr-only', text: 'Works listing')
       expect(page).to have_link('New Work', visible: false) # link is there (even if collapsed)
       expect(page).to have_link('New Collection', visible: false) # link is there (even if collapsed)
