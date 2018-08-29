@@ -14,4 +14,4 @@ export PATH=$PATH:$(pwd)/dep_cache
 
 echo -e "\n\n\033[1;33mSending combined report to Code Climate\033[0m"
 aws s3 sync s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER coverage/
-cc-test-reporter sum-coverage --output - --parts 2 coverage/codeclimate.*.json | cc-test-reporter upload-coverage --input -
+cc-test-reporter sum-coverage --output - --parts 4 coverage/codeclimate.*.json | cc-test-reporter upload-coverage --input -

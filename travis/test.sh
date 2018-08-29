@@ -59,7 +59,10 @@ bundle exec rake scholarsphere:travis:$TEST_SUITE
 RSPEC_EXIT_CODE=$?
 
 echo -e "\n\n\033[1;33mUpload coverage results to AWS\033[0m"
-cc-test-reporter format-coverage --output coverage/codeclimate.$TRAVIS_BUILD_ID.$TEST_SUITE.json
+echo "Filename: codeclimate.$TRAVIS_BUILD_ID.external-$EXTERNAL_FILES.$TEST_SUITE.json"
+cc-test-reporter format-coverage --output coverage/codeclimate.$TRAVIS_BUILD_ID.external-$EXTERNAL_FILES.$TEST_SUITE.json
+echo -n "Coverage contents:"
+ls -l coverage
 aws s3 sync coverage/ s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER
 
 exit $RSPEC_EXIT_CODE
