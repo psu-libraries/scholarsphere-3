@@ -13,10 +13,13 @@ module PrependedServices::WithNullTermQuery
                                                   'json.nl' => 'map',
                                                   omitHeader: 'true' }
     if json.blank?
-      Rails.logger.error 'Unable to reach TermsComponent via Solr connection. Is it enabled in your solr config?'
+      Rails.logger.error "Solr returned an empty response for term query #{term}. Is it configured correctly?"
       return []
     end
 
     Sufia::Statistics::TermQuery::Result.build(json['terms'][term])
+  rescue StandardError => exception
+    Rails.logger.error "Unable to query Solr for the term #{term}: #{exception}"
+    return []
   end
 end
