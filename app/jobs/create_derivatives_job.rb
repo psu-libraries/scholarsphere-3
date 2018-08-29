@@ -26,7 +26,7 @@ class CreateDerivativesJob < ActiveJob::Base
   # then the parent also needs to be reindexed.
   def parent_needs_reindex?(file_set)
     return false unless file_set.parent
-    file_set.parent.thumbnail_id == file_set.id
+    file_set.parent.thumbnail_id == file_set.id || file_set.label =~ /^readme/i
   end
 
   private
