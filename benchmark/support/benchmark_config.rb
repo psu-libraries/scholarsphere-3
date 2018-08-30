@@ -5,7 +5,7 @@ module BenchmarkConfig
     ENV.fetch('BENCHMARK_URL', 'https://scholarsphere-qa.libraries.psu.edu/')
   end
 
-  def headless
+  def headless?
     return false if ENV.fetch('BENCHMARK_HEADLESS', true) == 'false'
     true
   end

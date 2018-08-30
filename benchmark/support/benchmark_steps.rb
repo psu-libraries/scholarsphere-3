@@ -113,6 +113,23 @@ module BenchmarkSteps
     sleep 2
   end
 
+  def refresh_until_complete
+    logger.info('Detecting when the page has changed to the new work')
+    browser.find_element(:xpath, '/html/body/div[1][@class="alert alert-success alert-dismissable"]')
+
+    logger.info('Waiting until work elements are present')
+    refresh_until_element_present(
+      element_path: '/html/body/div[1]/div/div[2]/div/table/tbody/tr[NUMBER]/td[1]/a/img',
+      browser: browser
+    )
+
+    logger.info('Waiting until resque jobs are complete')
+    refresh_until_resque_complete(
+      element_path: '/html/body/div[1]/div/div[2]/div/table/tbody/tr[NUMBER]/td[1]/a/img',
+      browser: browser
+    )
+  end
+
   def element_visibility
     style = browser.find_element(:id, 'browse-everything').style('display')
     style =~ /block/ ? true : false
@@ -120,6 +137,7 @@ module BenchmarkSteps
 
   def refresh_until_element_present(element_path:, browser:)
     logger.info('Refreshing page until element is present')
+    sleep(2)
     browser.manage.timeouts.implicit_wait = 1
     sample_files.each_with_index do |_filename, index|
       element_path_iteration = element_path.sub(/NUMBER/, (index + 1).to_s)
@@ -136,6 +154,7 @@ module BenchmarkSteps
 
   def refresh_until_resque_complete(element_path:, browser:)
     logger.info('Refreshing page until Resque jobs are finished')
+    sleep(2)
     sample_files.each_with_index do |_filename, index|
       element_path_iteration = element_path.sub(/NUMBER/, (index + 1).to_s)
       if browser.find_element(:xpath, element_path_iteration).attribute('src').include?('/assets')
