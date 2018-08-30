@@ -63,8 +63,13 @@ describe UserStatsImporter do
     end
 
     describe '#gather_view_stats' do
-      it 'creates view entries in cache' do
+      it 'creates view entries in cache and cleans out old zeros' do
         expect(WorkViewStat.count).to eq(0)
+        WorkViewStat.create(date: Date.parse('2017-08-16'), work_id: '39955m9995', user_id: user1.id, work_views: 0)
+        WorkViewStat.create(date: Date.parse('2017-08-17'), work_id: '39955m9995', user_id: user1.id, work_views: 0)
+        WorkViewStat.create(date: Date.parse('2017-08-18'), work_id: '39955m9995', user_id: user1.id, work_views: 0)
+        FileViewStat.create(date: Date.parse('2017-08-16'), file_id: 'fj67314220', user_id: user1.id, views: 0)
+        FileViewStat.create(date: Date.parse('2017-08-17'), file_id: 'fj67314220', user_id: user1.id, views: 0)
         importer.gather_view_stats
         expect(WorkViewStat.count).to eq(5)
         expect(FileViewStat.count).to eq(7)

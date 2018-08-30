@@ -44,10 +44,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
           click_on 'Add cloud files'
           expect(page).to have_css '#provider-select'
           select 'Dropbox', from: 'provider-select'
-          sleep(0.5.seconds)
+          sleep(1.second)
           expect(page).to have_content 'Getting Started.pdf'
           click_on('Writer')
-          sleep(0.5.seconds)
+          sleep(1.second)
           expect(page).to have_content 'Writer FAQ.txt'
           expect(page).not_to have_css 'a', text: 'Writer FAQ.txt'
           expect(page).to have_content 'Markdown Test.txt'
@@ -60,7 +60,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within('#savewidget') do
             choose 'generic_work_visibility_authenticated'
           end
-          sleep(0.1.seconds)
+          sleep(1.second)
           check 'agreement'
           click_on 'Metadata'
           fill_in 'generic_work_title', with: 'Markdown Test'
@@ -69,7 +69,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
           fill_in 'generic_work_description', with: 'My description'
           select 'Audio', from: 'generic_work_resource_type'
-          sleep(0.5.seconds)
+          sleep(2.seconds)
           click_on 'Save'
           expect(page).to have_content 'Your files are being processed'
           within('#activity_log') do
