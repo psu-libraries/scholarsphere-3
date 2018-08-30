@@ -7,7 +7,7 @@ module Scholarsphere
       Dir.chdir(full_path)
       @bag = BagIt::Bag.new(full_path)
       @bag.add_file(working_file) do |io|
-        io.puts File.open(working_file).read
+        IO.foreach(working_file).each { |line| io.puts line }
       end
       @bag.manifest!(algo: 'sha256')
       Dir.chdir(current_directory)
