@@ -1,0 +1,41 @@
+<!-- Override sufia to remove avatar section -->
+<%= form_for @user, url: sufia.profile_path(@user.to_param), html: { multipart: true, class: 'form-horizontal' } do |f| %>
+  <% if Sufia.config.arkivo_api %>
+    <%= render partial: 'zotero', locals: { f: f, user: @user } %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :orcid, class: 'col-xs-4 control-label' do %>
+      <%= orcid_label %>
+    <% end %>
+    <div class="col-xs-8">
+      <%= f.text_field :orcid, class: 'form-control' %>
+    </div>
+  </div><!-- .form-group -->
+
+  <div class="form-group">
+    <%= f.label :twitter_handle, '<i class="fa fa-twitter"></i> Twitter Handle'.html_safe, class: 'col-xs-4 control-label' %>
+    <div class="col-xs-8">
+      <%= f.text_field :twitter_handle, class: 'form-control' %>
+    </div>
+  </div><!-- .form-group -->
+
+  <div class="form-group">
+    <%= f.label :facebook_handle, '<i class="fa fa-facebook"></i> Facebook Handle'.html_safe, class: 'col-xs-4 control-label' %>
+    <div class="col-xs-8">
+      <%= f.text_field :facebook_handle, class: 'form-control' %>
+    </div>
+  </div><!-- .form-group -->
+
+  <div class="form-group">
+    <%= f.label :googleplus_handle, '<i class="fa fa-google-plus"></i> Google+ Handle'.html_safe, class: 'col-xs-4 control-label' %>
+    <div class="col-xs-8">
+      <%= f.text_field :googleplus_handle, class: 'form-control' %>
+    </div>
+  </div><!-- .form-group -->
+
+  <%= render 'trophy_edit', trophies: @trophies %>
+
+  <%= f.button '<i class="glyphicon glyphicon-save"></i> Save Profile'.html_safe, type: 'submit', class: 'btn btn-primary' %>
+<% end %>
+<%= render 'dashboard/_index_partials/proxy_rights', user: @user %>

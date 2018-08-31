@@ -1,0 +1,7 @@
+<!-- Override sufia to remove avatar section -->
+<tr>
+  <td><%= link_to user.name, sufia.profile_path(user) %></td>
+  <td><%= link_to user.user_key, sufia.profile_path(user) %></td>
+  <td><%= user.department %></td>
+  <td><%= number_of_works(user) %></td>
+</tr>
