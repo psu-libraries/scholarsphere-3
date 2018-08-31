@@ -19,6 +19,12 @@ describe 'Administrative Statistics', type: :feature do
 
   it 'displays the administrative statistics and emails reports' do
     visit '/admin/stats'
+    within('#sidebar') do
+      expect(page).to have_link('Statistics')
+      expect(page).to have_link('Settings')
+      expect(page).to have_link('Administrative Sets')
+      expect(page).to have_link('Workflows')
+    end
     expect(page).to have_selector('h2', text: 'Statistics By Date')
     expect(page).to have_selector('h3', text: 'Work Statistics')
     expect(page).to have_selector('h4', text: 'Total Works: 3')
