@@ -17,7 +17,7 @@ class ExternalFilesConversion
   end
 
   def timestamp
-    @timestamp ||= Time.now.strftime('%Y-%m-%e-%H-%M-%S')
+    @timestamp ||= Time.now.strftime('%Y-%m-%d-%H-%M-%S')
   end
 
   # If we receive a work ID, only convert that one item
