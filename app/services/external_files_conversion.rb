@@ -121,6 +121,7 @@ class ExternalFilesConversion
     end
 
     def convert_file(work, file_set, file)
+      checksums = exisiting_checksums
       # This slug must be prefixed with auto_ so that it will not appear in versions.all
       ActiveFedora.fedora.connection.post(file.uri + '/fcr:versions', nil, slug: 'auto_placeholder')
       version_contents = []
@@ -142,6 +143,10 @@ class ExternalFilesConversion
         ActiveFedora.fedora.connection.delete(file.uri + '/fcr:versions/auto_placeholder')
       rescue StandardError
       end
+
+      if disk_checksums != checksums
+        logger.error "There was a checksum mismatch when converting the work with ID: #{work.id}"
+      end
     end
 
     def write_version_content(version_uri)
@@ -158,5 +163,13 @@ class ExternalFilesConversion
 
     def filename_from_content_disposition(content_disposition)
       content_disposition.split(';')[1].split('filename=')[1].split('"')[1]
+    end
+
+    def exisiting_checksums
+      Checksummer.new(work).fedora_checksums unless ENV['TRAVIS'] == 'true'
+    end
+
+    def disk_checksums
+      Checksummer.new(work).disk_checksums unless ENV['TRAVIS'] == 'true'
     end
 end
