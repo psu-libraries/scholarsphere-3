@@ -150,7 +150,7 @@ class ExternalFilesConversion
       FileUtils.mkdir_p(Rails.root.join('tmp', 'external_internal_conversion', time_stamp))
 
       file = File.new(Rails.root.join('tmp', 'external_internal_conversion', time_stamp, version_file_name), 'wb+')
-      file.write open(version_uri).read
+      open(version_uri) { |f| f.each_line { |line| file.write(line) } }
       file_path = File.absolute_path(file.path)
       file.close
       file_path
