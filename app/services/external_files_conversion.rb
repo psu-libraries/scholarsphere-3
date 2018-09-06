@@ -122,7 +122,11 @@ class ExternalFilesConversion
 
     def convert_file(work, file_set, file)
       # This slug must be prefixed with auto_ so that it will not appear in versions.all
-      ActiveFedora.fedora.connection.post(file.uri + '/fcr:versions', nil, slug: 'auto_placeholder')
+      begin
+        ActiveFedora.fedora.connection.post(file.uri + '/fcr:versions', nil, slug: 'auto_placeholder')
+      rescue Ldp::Conflict
+        logger.warn "Work #{work.id} already had a version called 'auto_placeholder'. Perhaps it was previously converted?"
+      end
       version_contents = []
       file.versions.all.each do |version|
         version_content = write_version_content(version.uri)
