@@ -106,4 +106,11 @@ class CurationConcerns::GenericWorksController < ApplicationController
     def doi_service
       @doi_service ||= DOIService.new
     end
+
+    def default_trail
+      if user_signed_in?
+        add_breadcrumb I18n.t('sufia.dashboard.title'), sufia.dashboard_index_path
+        add_breadcrumb I18n.t('sufia.dashboard.my.works'), sufia.dashboard_works_path
+      end
+    end
 end
