@@ -56,10 +56,6 @@ class WorkZipService
       resource.file_sets
     end
 
-    def external_file_set_steam(file_set)
-      open(file_set.original_file.uri).read
-    end
-
     def add_internal_files_to_zip(zipfile, file_set)
       return unless add_to_zip?(file_set)
       zipfile.get_output_stream(file_set.title.first) do |outfile|
@@ -70,7 +66,7 @@ class WorkZipService
     def add_external_files_to_zip(zipfile, file_set)
       return unless add_to_zip?(file_set)
       zipfile.get_output_stream(file_set.title.first) do |outfile|
-        external_file_set_steam(file_set).each_line { |buffer| outfile.write(buffer) }
+        open_remote_file(file_set).each { |buffer| outfile.write(buffer) }
       end
     end
 
@@ -79,6 +75,14 @@ class WorkZipService
     end
 
     def redirect_object?(file_set)
-      open(file_set.original_file.uri).status[0] == '200' && (ability.can? :read, file_set.id)
+      open_remote_file(file_set).status[0] == '200' && (ability.can? :read, file_set.id)
+    end
+
+    def open_remote_file(file_set)
+      open(
+        file_set.original_file.uri,
+          http_basic_authentication: [ActiveFedora.fedora_config.credentials['user'], ActiveFedora.fedora_config.credentials['password']],
+          allow_redirections: :all
+      )
     end
 end
