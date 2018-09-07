@@ -2,21 +2,26 @@
 
 require 'rails_helper'
 require 'fileutils'
+require 'digest'
 
 describe ExternalFilesConversion do
   context 'running a conversion from internal to external file storage' do
     let(:full_conversion) { described_class.new(GenericWork).convert }
     let(:single_work_conversion) { described_class.new(GenericWork).convert(id: work.id) }
     let(:user) { create(:user) }
-    let(:work) { create(:public_work_with_png, depositor: user.login) }
+    let(:work) { create(:public_work_with_pdf, depositor: user.login) }
     let(:file_set) { work.file_sets.first }
-    let(:filepath) { File.join(fixture_path, 'world.png') }
+    let(:filepath) { File.join(fixture_path, 'test.pdf') }
+    let(:fedora_sha1) { 'urn:sha1:ad13c5e7cc6d8198f25e003bd2965b3544e52a32' }
+    let(:fedora_sha1_without_urn) { 'ad13c5e7cc6d8198f25e003bd2965b3544e52a32' }
+    let(:empty_string_fedora_sha1) { 'urn:sha1:da39a3ee5e6b4b0d3255bfef95601890afd80709' }
+    let(:sha1) { Digest::SHA1.new }
 
     before do
       allow(CharacterizeJob).to receive(:perform_later)
     end
 
-    it 'converts all works of a given Class' do
+    it 'converts all works of a given Class and has the correct checksums' do
       ENV['REPOSITORY_EXTERNAL_FILES'] = 'false'
       file_set
       response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
@@ -24,8 +29,22 @@ describe ExternalFilesConversion do
       ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
       full_conversion
       response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
-      expect(response['content-disposition']).to match(/world.png/)
-      expect(file_set.original_file.original_name).to eq('world.png')
+      expect(response['content-disposition']).to match(/test.pdf/)
+      expect(file_set.original_file.original_name).to eq('test.pdf')
+
+      # Test the fixity service checksum
+      fs = ActiveFedora::FixityService.new(file_set.files.first.uri)
+      expect(fs.expected_message_digest).to eq(empty_string_fedora_sha1)
+
+      # Check the checksum of the temp file
+      latest_file_directory = Dir.entries(Rails.root.join('tmp', 'external_internal_conversion')).sort.last
+      world_png = Rails.root.join('tmp', 'external_internal_conversion', latest_file_directory, 'test.pdf')
+      world_png_file = File.read(world_png)
+      expect(sha1.hexdigest(File.read(world_png_file))).to eq(fedora_sha1_without_urn)
+      world_png_file.close
+
+      # Check the checksum of the redirect repository file
+      expect(sha1.hexdigest(open(response.uri).read)).to eq(fedora_sha1_without_urn)
       expect(response.to_s).to match(/HTTPTemporaryRedirect/)
     end
     it 'converts a single work of a given Class' do
@@ -36,8 +55,8 @@ describe ExternalFilesConversion do
       ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
       single_work_conversion
       response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
-      expect(response['content-disposition']).to match(/world.png/)
-      expect(file_set.original_file.original_name).to eq('world.png')
+      expect(response['content-disposition']).to match(/test.pdf/)
+      expect(file_set.original_file.original_name).to eq('test.pdf')
       expect(response.to_s).to match(/HTTPTemporaryRedirect/)
     end
     it 'will not raise an error if it already has an auto_placeholder version' do
@@ -82,8 +101,8 @@ describe ExternalFilesConversion do
         ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
         described_class.new(GenericWork).convert(file: pidfile)
         response = Net::HTTP.get_response(URI(file_set1.files.first.uri.to_s))
-        expect(response['content-disposition']).to match(/world.png/)
-        expect(file_set1.original_file.original_name).to eq('world.png')
+        expect(response['content-disposition']).to match(/test.pdf/)
+        expect(file_set1.original_file.original_name).to eq('test.pdf')
         expect(response.to_s).to match(/HTTPTemporaryRedirect/)
       end
       it "adds any ids it can't convert to an error file" do
