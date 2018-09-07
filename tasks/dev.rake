@@ -43,6 +43,8 @@ namespace :dev do
     FileUtils.mkdir_p(Sufia.config.derivatives_path)
     FileUtils.rm_rf(Sufia.config.upload_path.call)
     FileUtils.mkdir_p(Sufia.config.upload_path.call)
+    FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
+    FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
   end
 
   def cleanout_redis
