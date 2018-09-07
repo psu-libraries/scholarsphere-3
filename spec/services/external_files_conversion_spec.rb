@@ -40,6 +40,19 @@ describe ExternalFilesConversion do
       expect(file_set.original_file.original_name).to eq('world.png')
       expect(response.to_s).to match(/HTTPTemporaryRedirect/)
     end
+    it 'will not raise an error if it already has an auto_placeholder version' do
+      ENV['REPOSITORY_EXTERNAL_FILES'] = 'false'
+      file_set
+      response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
+      expect(response.to_s).to match(/OK/)
+      ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
+      ActiveFedora.fedora.connection.post(file_set.files.first.uri + '/fcr:versions', nil, slug: 'auto_placeholder')
+      single_work_conversion
+      response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
+      expect(response['content-disposition']).to match(/world.png/)
+      expect(file_set.original_file.original_name).to eq('world.png')
+      expect(response.to_s).to match(/HTTPTemporaryRedirect/)
+    end
     context 'running from a file' do
       let(:work1) { create(:public_work_with_png, depositor: user.login) }
       let(:file_set1) { work1.file_sets.first }
