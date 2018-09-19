@@ -8,7 +8,7 @@ class FileSetIndexer < CurationConcerns::FileSetIndexer
       solr_doc[Solrizer.solr_name(:file_size, CurationConcerns::CollectionIndexer::STORED_LONG)] = object.file_size[0]
       if solr_doc['all_text_timv'].present?
         begin
-          solr_doc['all_text_timv'] = EncodingService.call(solr_doc['all_text_timv'])
+          solr_doc['all_text_timv'] = EncodingService.call(solr_doc['all_text_timv'].read)
         rescue StandardError => e
           Rails.logger.warn "could not convert File Set content to UTF8 #{object.id} #{e}"
         end
