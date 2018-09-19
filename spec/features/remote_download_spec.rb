@@ -20,10 +20,6 @@ describe GenericWork, type: :feature do
     click_on 'Download'
     downloaded_file = open("http://localhost:4000/downloads/#{work.file_sets.first.id}").read
 
-    if external_files?
-      expect(downloaded_file.size).to eq(4219)
-    else
-      expect(downloaded_file.size).to eq(4218)
-    end
+    expect(downloaded_file.size).to eq(4218)
   end
 end

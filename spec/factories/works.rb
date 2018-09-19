@@ -88,6 +88,14 @@ FactoryGirl.define do
       end
     end
 
+    factory :public_png_with_versions do
+      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      after(:create) do |work, attributes|
+        FactoryHelpers.add_public_png(work, attributes)
+        FactoryHelpers.add_another_version(work, attributes)
+      end
+    end
+
     factory :public_work_with_lots_of_versions do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       after(:create) do |work, attributes|

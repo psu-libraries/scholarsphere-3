@@ -2,15 +2,22 @@
 
 module Scholarsphere
   class Bagger
-    def initialize(full_path: base_path, working_file: file)
-      current_directory = Dir.pwd
-      Dir.chdir(full_path)
+    def initialize(full_path: base_path, working_file: nil, movable_file: nil, string_data: nil, file_name: nil)
       @bag = BagIt::Bag.new(full_path)
-      @bag.add_file(working_file) do |io|
-        IO.foreach(working_file).each { |line| io.puts line }
+      if movable_file.present?
+        filename = movable_file
+        filename = File.join(full_path, filename) if File.basename(filename) == filename
+        FileUtils.mv(filename, File.join(full_path, '/data'))
+      elsif string_data.present?
+        @bag.add_file(file_name) do |io|
+          io.write string_data.force_encoding('utf-8')
+        end
+      else
+        @bag.add_file(File.basename(working_file)) do |io|
+          IO.foreach(working_file).each { |line| io.write line }
+        end
       end
       @bag.manifest!(algo: 'sha256')
-      Dir.chdir(current_directory)
     end
   end
 end
