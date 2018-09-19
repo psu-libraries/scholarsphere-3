@@ -34,6 +34,7 @@ describe 'User Profile', type: :feature do
       fill_in 'user_twitter_handle', with: 'curatorOfData'
       fill_in 'user_orcid', with: '0000-0000-0000-0000'
       expect(page).not_to have_content 'Change picture'
+      expect(page).to have_content 'Refresh directory'
       click_button 'Save Profile'
       expect(page).to have_content 'Your profile has been updated'
       expect(page).to have_content 'curatorOfData'
