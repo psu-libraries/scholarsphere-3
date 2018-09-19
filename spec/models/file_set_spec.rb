@@ -50,4 +50,22 @@ describe FileSet, type: :model do
   describe '#url' do
     its(:url) { is_expected.to end_with('/concern/file_sets/fixturepng') }
   end
+
+  context 'file with text', unless: travis? do
+    let(:user) { create(:user) }
+    let(:work) { create(:public_work_with_pdf, depositor: user.login) }
+    let(:file_set) { work.file_sets.first }
+
+    describe '#.to_solr' do
+      let(:solr_data) { file_set.reload.to_solr }
+
+      it 'contains the extracted text' do
+        file_set.reload
+        expect(file_set.extracted_text).not_to be_nil
+        expect(file_set.extracted_text).to be_present
+        expect(solr_data).to include(Solrizer.solr_name('label') => 'test.pdf')
+        expect(solr_data).to include('all_text_timv' => "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntest.pdf\nThe quick brown fox jumped over the lazy dog.")
+      end
+    end
+  end
 end
