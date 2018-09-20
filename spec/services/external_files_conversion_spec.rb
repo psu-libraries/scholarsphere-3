@@ -104,7 +104,8 @@ describe ExternalFilesConversion do
       end
 
       it 'converts the ids in a file' do
-        local_file(file_set.files.first.uri.to_s)
+        work # inititalize a work that will not be converted
+        local_file(file_set1.files.first.uri.to_s)
         ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
         converter = described_class.new(GenericWork)
         expect(converter.error_file).to match(/error/)
@@ -118,6 +119,11 @@ describe ExternalFilesConversion do
 
         # it adds any ids it can't convert to an error file
         expect(File.readlines(converter.error_file).each(&:chomp!).first).to eq work3_id
+
+        converter.validate
+        # no additional logged errors
+        expect(File.readlines(converter.error_file).count).to eq(2)
+        expect(File.readlines(converter.error_file).each(&:chomp!).last).to eq work.id
       end
       it 'makes files with all the pids' do
         FileUtils.rm_rf Rails.root.join('tmp', 'external_files_conversion')

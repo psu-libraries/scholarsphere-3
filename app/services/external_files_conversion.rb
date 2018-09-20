@@ -45,6 +45,13 @@ class ExternalFilesConversion
     logger.info "Elapsed time: #{elapsed_time}"
   end
 
+  def validate
+    all_objects.map(&:id).each do |object_id|
+      object = work_class.find(object_id)
+      File.open(@error_file, 'a') { |e| e.puts(object_id) } unless already_converted?(object)
+    end
+  end
+
   private
 
     def small_objects
@@ -138,6 +145,7 @@ class ExternalFilesConversion
     # @param [ActiveFedora::Base] work
     # @return [Boolean]
     def already_converted?(work)
+      return true if work.file_sets.first.blank? || work.file_sets.first.original_file.blank?
       ldp_response = ActiveFedora.fedora.connection.head(work.file_sets.first.original_file.uri.to_s)
       ldp_response.response.status == 307 # Temporary Redirect
     end
