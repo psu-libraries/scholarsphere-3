@@ -67,6 +67,8 @@ class ExternalFilesConversion
     def create_lists
       pid_files_dir = Rails.root.join('tmp', 'external_files_conversion', timestamp)
       FileUtils.mkdir_p pid_files_dir
+      file_path = "#{pid_files_dir}/large_objects.txt"
+      File.open(file_path, 'w') { |file| file.puts(large_objects) }
       lists_of_pids = small_objects.each_slice(NUMBER_OF_PIDS_PER_FILE).to_a
       lists_of_pids.each_with_index do |list, index|
         file_path = "#{pid_files_dir}/#{index}.txt"
@@ -117,11 +119,7 @@ class ExternalFilesConversion
           return true
         end
         work.file_sets.each do |file_set|
-          # convert original file
-          convert_file(work, file_set, file_set.original_file)
-
-          # convert extracted text
-          convert_extracted_text_file(work, file_set, file_set.extracted_text) if file_set.extracted_text.present?
+          convert_fileset(work, file_set)
         end
         logger.info "Finished converting work #{work_id}"
       rescue ActiveFedora::ObjectNotFoundError => error
@@ -140,8 +138,18 @@ class ExternalFilesConversion
     # @param [ActiveFedora::Base] work
     # @return [Boolean]
     def already_converted?(work)
-      ldp_response = ActiveFedora.fedora.connection.head(work.file_sets.first.files.first.uri.to_s)
+      ldp_response = ActiveFedora.fedora.connection.head(work.file_sets.first.original_file.uri.to_s)
       ldp_response.response.status == 307 # Temporary Redirect
+    end
+
+    def convert_fileset(work, file_set)
+      if file_set.extracted_text.present?
+        file_set.extracted_text.destroy
+        file_set.reload
+      end
+
+      # convert original file
+      convert_file(work, file_set, file_set.original_file)
     end
 
     def convert_file(work, file_set, file)
@@ -173,24 +181,6 @@ class ExternalFilesConversion
         rescue StandardError
           logger.warn("could not delete #{content}")
         end
-      end
-    end
-
-    def convert_extracted_text_file(work, file_set, file)
-      checksum = ActiveFedora::FixityService.new(file.uri).expected_message_digest.gsub('urn:sha1:', '')
-
-      pairtree = Scholarsphere::Pairtree.new(file_set, Scholarsphere::Bagger)
-      filepath = pairtree.create_repository_files_from_string(file.content.read, 'extracted_text.txt')
-
-      disk_checksum = Digest::SHA1.file(filepath)
-      external_url = pairtree.http_path(filepath)
-      file.destroy
-      file_set.reload
-      Hydra::Works::AddExternalFileToFileSet.call(file_set, external_url,
-                                                  :extracted_text,
-                                                  versioning: false)
-      if disk_checksum.to_s != checksum
-        raise "There was a checksum mismatch when converting the work with ID: #{work.id}, File: #{file.id}, Original Checksums #{checksum}, New Checksums #{disk_checksum}"
       end
     end
 
