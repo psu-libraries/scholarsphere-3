@@ -5,6 +5,8 @@ class FileSet < ActiveFedora::Base
   include Sufia::FileSetBehavior
   include AdditionalMetadata
 
+  Hydra::Derivatives::FullTextExtract.output_file_service = PersistRemoteContainedOutputFileService
+
   def self.indexer
     FileSetIndexer
   end

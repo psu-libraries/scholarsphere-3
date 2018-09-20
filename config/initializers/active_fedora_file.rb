@@ -7,12 +7,10 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
     class File
       def redirect_content
         fedora_config = Rails.application.config_for(:fedora)
-        StringIO.new(
-          open(
-            uri,
-            http_basic_authentication: [fedora_config['user'], fedora_config['password']],
-            allow_redirections: :all
-          ).read
+        open(
+          uri,
+          http_basic_authentication: [fedora_config['user'], fedora_config['password']],
+          allow_redirections: :all
         )
       end
 
@@ -26,6 +24,18 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
         return @content if @content.nil?
         @content = redirect_content # if content_empty?
         @content
+      end
+
+      def persisted_size
+        if remote?
+          ActiveFedora.fedora.connection.head(ldp_source.head.response.headers['location']).response['content-length'].to_f
+        else
+          ldp_source.head.content_length unless new_record?
+        end
+      end
+
+      def remote?
+        ldp_source.head.response.status == 307
       end
 
       # Check to see if the object's content is empty

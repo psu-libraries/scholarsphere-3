@@ -27,7 +27,7 @@ class IngestFileJob < ActiveJob::Base
       # if you upload new file it is not set
       local_file_name = opts.fetch(:filename, nil) || local_file[:original_name]
 
-      @filepath = Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).create_repository_files(@filepath, local_file_name)
+      @filepath = bagger.create_repository_files(@filepath, local_file_name)
     end
 
     # Wrap in an IO decorator to attach passed-in options
@@ -61,16 +61,20 @@ class IngestFileJob < ActiveJob::Base
     # VersionCommitter when necessary during save_characterize_and_record_committer.
     def add_file(relation, local_file)
       if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-        Hydra::Works::AddExternalFileToFileSet.call(@file_set,
-                                                  Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).http_path(@filepath),
+        external_url = bagger.http_path(@filepath)
+        Hydra::Works::AddExternalFileToFileSet.call(@file_set, external_url,
                                                   relation,
                                                   versioning: false)
-        Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger).http_path(@filepath)
+        external_url
       else
         Hydra::Works::AddFileToFileSet.call(@file_set,
                                           local_file,
                                           relation,
                                           versioning: false)
       end
+    end
+
+    def bagger
+      @bagger ||= Scholarsphere::Pairtree.new(@file_set, Scholarsphere::Bagger)
     end
 end

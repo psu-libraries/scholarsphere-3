@@ -5,15 +5,18 @@ require 'logger'
 
 class ExternalFilesConversion
   NUMBER_OF_PIDS_PER_FILE = 1000
-  attr_reader :work_class, :user, :pid_lists, :error_file, :logger
+  attr_reader :work_class, :user, :pid_lists, :error_file, :logger, :large_object_limit, :retry_time
 
-  def initialize(work_class)
+  def initialize(work_class, large_object_limit = 3.gigabytes, retry_time = 1.second)
     @work_class = work_class
     @user = User.batch_user
     @logger = Logger.new(ENV['REPOSITORY_MIGRATION_LOG'] || Rails.root.join('log', "external_files_conversion_#{timestamp}.log").to_s)
     logger.level = Logger::DEBUG
     @pid_lists = []
     @error_file = ENV['REPOSITORY_MIGRATION_ERROR_LOG'] || Rails.root.join('log', "external_files_conversion_errors_#{timestamp}.log").to_s
+    @large_object_limit = large_object_limit
+    @retry_time = retry_time
+    ActiveFedora.fedora.connection.http.options[:timeout] = 500
   end
 
   def timestamp
@@ -44,10 +47,18 @@ class ExternalFilesConversion
 
   private
 
+    def small_objects
+      @small_results ||= all_objects.reject { |item| item['bytes_lts'] > large_object_limit }.map(&:id)
+    end
+
+    def large_objects
+      @large_results ||= all_objects.reject { |item| item['bytes_lts'] <= large_object_limit }.map(&:id)
+    end
+
     # Get a list of all of the objects of type @work_class from solr
     # return [Array]
     def all_objects
-      @all_objects ||= ActiveFedora::SolrService.query("has_model_ssim:#{@work_class}", fl: 'id', rows: 1000000).map(&:id)
+      @all_objects ||= ActiveFedora::SolrService.query('has_model_ssim:GenericWork', fl: 'id,bytes_lts', rows: GenericWork.count + 100)
     end
 
     # Create lists of PIDs for conversion, so that we can break the full export
@@ -56,7 +67,7 @@ class ExternalFilesConversion
     def create_lists
       pid_files_dir = Rails.root.join('tmp', 'external_files_conversion', timestamp)
       FileUtils.mkdir_p pid_files_dir
-      lists_of_pids = all_objects.each_slice(NUMBER_OF_PIDS_PER_FILE).to_a
+      lists_of_pids = small_objects.each_slice(NUMBER_OF_PIDS_PER_FILE).to_a
       lists_of_pids.each_with_index do |list, index|
         file_path = "#{pid_files_dir}/#{index}.txt"
         File.open(file_path, 'w') { |file| file.puts(list) }
@@ -74,6 +85,11 @@ class ExternalFilesConversion
       pid_lists.each do |list|
         convert_from_file(list)
         sleep 10.minutes if Rails.env.production?
+      end
+
+      large_objects.each do |work_id|
+        convert_work(work_id)
+        sleep 1.minute if Rails.env.production?
       end
     end
 
@@ -96,10 +112,16 @@ class ExternalFilesConversion
           logger.info "#{work_id} was previously converted"
           return true
         end
+        if work.file_sets.blank?
+          logger.warn "#{work_id} contains no files"
+          return true
+        end
         work.file_sets.each do |file_set|
-          file_set.files.each do |file|
-            convert_file(work, file_set, file)
-          end
+          # convert original file
+          convert_file(work, file_set, file_set.original_file)
+
+          # convert extracted text
+          convert_extracted_text_file(work, file_set, file_set.extracted_text) if file_set.extracted_text.present?
         end
         logger.info "Finished converting work #{work_id}"
       rescue ActiveFedora::ObjectNotFoundError => error
@@ -107,6 +129,8 @@ class ExternalFilesConversion
         File.open(@error_file, 'a') { |e| e.puts(work_id) }
       rescue StandardError => error
         logger.error "error migrating object: #{work_id}; #{error}"
+        logger.error error.backtrace
+
         File.open(@error_file, 'a') { |e| e.puts(work_id) }
       end
     end
@@ -116,12 +140,11 @@ class ExternalFilesConversion
     # @param [ActiveFedora::Base] work
     # @return [Boolean]
     def already_converted?(work)
-      response = Net::HTTP.get_response(URI(work.file_sets.first.files.first.uri.to_s))
-      response.to_s =~ /HTTPTemporaryRedirect/
+      ldp_response = ActiveFedora.fedora.connection.head(work.file_sets.first.files.first.uri.to_s)
+      ldp_response.response.status == 307 # Temporary Redirect
     end
 
     def convert_file(work, file_set, file)
-      checksums = exisiting_checksums
       # This slug must be prefixed with auto_ so that it will not appear in versions.all
       begin
         ActiveFedora.fedora.connection.post(file.uri + '/fcr:versions', nil, slug: 'auto_placeholder')
@@ -129,37 +152,56 @@ class ExternalFilesConversion
         logger.warn "Work #{work.id} already had a version called 'auto_placeholder'. Perhaps it was previously converted?"
       end
       version_contents = []
-      file.versions.all.each do |version|
-        version_content = write_version_content(version.uri)
-        version_contents << version_content
-        ActiveFedora.fedora.connection.delete(version.uri)
+      version_checksums = []
+
+      download_versions(file: file, version_contents: version_contents, version_checksums: version_checksums)
+
+      delete_versions(file: file)
+
+      upload_versions(file: file, file_set: file_set, version_contents: version_contents)
+
+      disk_checksums = calculate_disk_checksums(file: file)
+
+      if disk_checksums != version_checksums
+        raise "There was a checksum mismatch when converting the work with ID: #{work.id}, File: #{file.id}, Original Checksums #{version_checksums}, New Checksums #{disk_checksums}, output files #{version_contents}"
       end
 
-      version_contents.each do |version_content|
-        file_set.reload
-        if work.file_sets.first.original_file.nil? == false
-          IngestFileJob.perform_now(file_set, version_content, @user)
+      # clean up the contents
+      version_contents.each do |content|
+        begin
+          File.delete(content)
+        rescue StandardError
+          logger.warn("could not delete #{content}")
         end
       end
-      # Try to delete the auto_placeholder snapshot, but if it is the only version snapshot
-      # it will raise an error. Ignore these.
-      begin
-        ActiveFedora.fedora.connection.delete(file.uri + '/fcr:versions/auto_placeholder')
-      rescue StandardError
-      end
+    end
 
-      if disk_checksums != checksums
-        logger.error "There was a checksum mismatch when converting the work with ID: #{work.id}"
+    def convert_extracted_text_file(work, file_set, file)
+      checksum = ActiveFedora::FixityService.new(file.uri).expected_message_digest.gsub('urn:sha1:', '')
+
+      pairtree = Scholarsphere::Pairtree.new(file_set, Scholarsphere::Bagger)
+      filepath = pairtree.create_repository_files_from_string(file.content.read, 'extracted_text.txt')
+
+      disk_checksum = Digest::SHA1.file(filepath)
+      external_url = pairtree.http_path(filepath)
+      file.destroy
+      file_set.reload
+      Hydra::Works::AddExternalFileToFileSet.call(file_set, external_url,
+                                                  :extracted_text,
+                                                  versioning: false)
+      if disk_checksum.to_s != checksum
+        raise "There was a checksum mismatch when converting the work with ID: #{work.id}, File: #{file.id}, Original Checksums #{checksum}, New Checksums #{disk_checksum}"
       end
     end
 
     def write_version_content(version_uri)
-      version_file_name = filename_from_content_disposition(open(version_uri).meta['content-disposition'])
-      time_stamp = Time.now.to_i.to_s
-      FileUtils.mkdir_p(Rails.root.join('tmp', 'external_internal_conversion', time_stamp))
+      version_file_name = filename_from_content_disposition(get_head(version_uri).headers['content-disposition'])
+      time_stamp = Time.now.to_f.to_s
+      file_path = Rails.root.join('tmp', 'external_internal_conversion', version_uri.split('/').last, time_stamp)
+      FileUtils.mkdir_p(file_path)
 
-      file = File.new(Rails.root.join('tmp', 'external_internal_conversion', time_stamp, version_file_name), 'wb+')
-      open(version_uri) { |f| f.each_line { |line| file.write(line) } }
+      file = File.new(file_path.join(version_file_name), 'wb+')
+      ActiveFedora.fedora.connection.open(version_uri) { |f| f.each_line { |line| file.write(line) } }
       file_path = File.absolute_path(file.path)
       file.close
       file_path
@@ -169,11 +211,85 @@ class ExternalFilesConversion
       content_disposition.split(';')[1].split('filename=')[1].split('"')[1]
     end
 
-    def exisiting_checksums
-      Checksummer.new(work).fedora_checksums unless ENV['TRAVIS'] == 'true'
+    def get_head(uri)
+      ActiveFedora.fedora.connection.head(uri).response
     end
 
-    def disk_checksums
-      Checksummer.new(work).disk_checksums unless ENV['TRAVIS'] == 'true'
+    def get_file_name_from_metdata(uri)
+      response = ActiveFedora.fedora.connection.get(uri + '/fcr:metadata')
+      version_uri = ''
+      response.each_statement { |statement| version_uri = statement.object if statement.predicate == 'http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#filename' }
+      file_name = version_uri.to_s.gsub(ENV['REPOSITORY_FILESTORE_HOST'], ENV['REPOSITORY_FILESTORE'])
+      file_name
+    end
+
+    def get_version(version)
+      check_sum = ActiveFedora::FixityService.new(version.uri).expected_message_digest.gsub('urn:sha1:', '')
+      version_content = write_version_content(version.uri)
+
+      { check_sum: check_sum, version_content: version_content }
+    end
+
+    def download_versions(file:, version_contents:, version_checksums:)
+      # download all versions and gather fixity
+      file.versions.all.each do |version|
+        tries = 0
+        status = false
+        while !status
+          begin
+            tries += 1
+            result = get_version(version)
+            version_checksums << result[:check_sum]
+            version_contents << result[:version_content]
+            status = true
+          rescue StandardError => error
+            if tries < 5
+              logger.warn("Getting version on try # #{tries} issue: #{error.class} #{error}")
+              sleep(tries * 5 * retry_time)
+            else
+              raise
+            end
+          end
+        end
+      end
+    end
+
+    def upload_versions(file:, file_set:, version_contents:)
+      version_contents.each do |version_content|
+        tries = 0
+        status = false
+        while !status
+          begin
+            tries += 1
+            file_set.reload
+            IngestFileJob.perform_now(file_set, version_content, @user)
+            status = true
+          rescue StandardError => error
+            if tries < 5
+              logger.warn("Issue saving version on try # #{tries} issue: #{error.class} #{error}")
+              sleep(tries * 5 * retry_time)
+            else
+              raise
+            end
+          end
+        end
+      end
+      ActiveFedora.fedora.connection.delete(file.uri + '/fcr:versions/auto_placeholder')
+    end
+
+    def delete_versions(file:)
+      # delete all versions after we have gathered the data successfully
+      file.versions.all.each do |version|
+        ActiveFedora.fedora.connection.delete(version.uri)
+      end
+    end
+
+    def calculate_disk_checksums(file:)
+      disk_checksums = []
+      reloaded_file = Hydra::PCDM::File.find(file.id)
+      reloaded_file.versions.all.each do |version|
+        disk_checksums << Digest::SHA1.file(get_file_name_from_metdata(version.uri)).hexdigest
+      end
+      disk_checksums
     end
 end

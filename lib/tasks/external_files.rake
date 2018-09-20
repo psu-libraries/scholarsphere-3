@@ -34,5 +34,12 @@ namespace :scholarsphere do
         puts 'You didn\'t reply with (y) so this rake task is exiting'
       end
     end
+
+    desc 'Convert a list of pids stored internally in Fedora to externally on the filesystem'
+    task 'convert_pid_file', [:pid_file] => :environment do |_cmd, args|
+      pid_file = args[:pid_file]
+      converter = ExternalFilesConversion.new(GenericWork)
+      converter.convert(file: pid_file)
+    end
   end
 end

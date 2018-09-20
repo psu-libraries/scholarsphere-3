@@ -30,7 +30,7 @@ module Scholarsphere
 
     def new_path
       identifier = @object.id
-      "/#{identifier[0, 2]}/#{identifier[2, 2]}/#{identifier[4, 2]}/#{identifier[6, 2]}/#{identifier}/#{Time.now.to_i}/"
+      "/#{identifier[0, 2]}/#{identifier[2, 2]}/#{identifier[4, 2]}/#{identifier[6, 2]}/#{identifier}/#{Time.now.to_f}/"
     end
 
     def ensure_repository_filestore_exists
@@ -43,9 +43,15 @@ module Scholarsphere
 
     def create_repository_files(filepath, local_file_name)
       ensure_object_directory_exists
-      FileUtils::cp filepath, full_path + "/#{local_file_name}"
-      @bagger.new(full_path: full_path, working_file: local_file_name)
-      remove_file_outside_bag(local_file_name)
+      clean_name = clean_file_name(local_file_name)
+      FileUtils::cp filepath, full_path + "/#{clean_name}"
+      @bagger.new(full_path: full_path, movable_file: clean_name)
+      full_path + "/#{clean_name}"
+    end
+
+    def create_repository_files_from_string(stream, local_file_name)
+      ensure_object_directory_exists
+      @bagger.new(full_path: full_path, string_data: stream, file_name: local_file_name)
       full_path + "/#{local_file_name}"
     end
 
@@ -55,8 +61,8 @@ module Scholarsphere
         Dir["#{ENV['REPOSITORY_FILESTORE']}/#{@object.id[0, 2]}/#{@object.id[2, 2]}/#{@object.id[4, 2]}/#{@object.id[6, 2]}/#{@object.id}/*"].sort.last
       end
 
-      def remove_file_outside_bag(filepath)
-        File.unlink(full_path.gsub('/data', '') + '/' + File.basename(filepath))
+      def clean_file_name(file_name)
+        file_name.gsub(/[^0-9A-Za-z.\-]/, '_')
       end
   end
 end

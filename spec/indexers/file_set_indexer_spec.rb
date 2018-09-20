@@ -35,11 +35,13 @@ describe FileSetIndexer do
     end
 
     context 'with all_text' do
+      let(:text_io) { instance_double(StringIO) }
       let(:text) { instance_double(String) }
-      let(:extracted) { instance_double(Hydra::PCDM::File, content: text) }
+      let(:extracted) { instance_double(Hydra::PCDM::File, content: text_io) }
 
       before do
         allow(file_set).to receive(:extracted_text).and_return(extracted)
+        allow(text_io).to receive(:read).and_return(text)
       end
       it 'forces utf8' do
         expect(text).to receive(:encode).with('utf-8', invalid: :replace, undef: :replace).and_return('abc123')
