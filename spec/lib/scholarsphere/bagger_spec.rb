@@ -49,6 +49,7 @@ describe Scholarsphere::Bagger do
         described_class.new(full_path: Rails.root.join('tmp', 'test_bag'), movable_file: temp_file)
         expect(File.directory?(Rails.root.join('tmp', 'test_bag'))).to eq(true)
         expect(File.readlines(Rails.root.join('tmp', 'test_bag', 'manifest-sha256.txt')).grep(/#{bin_sum}/)).not_to be_empty
+        expect(File.stat(Rails.root.join('tmp', 'test_bag', 'data', '4-20.png'))).to be_world_readable
       end
     end
   end
