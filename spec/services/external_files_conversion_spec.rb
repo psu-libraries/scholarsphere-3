@@ -6,10 +6,6 @@ require 'fileutils'
 describe ExternalFilesConversion do
   let(:user) { create(:user) }
 
-  before do
-    allow(CharacterizeJob).to receive(:perform_later)
-  end
-
   context 'running a conversion from internal to external file storage' do
     let(:full_conversion) { described_class.new(GenericWork).convert }
     let(:single_work_conversion) { described_class.new(GenericWork).convert(id: work.id) }
@@ -226,11 +222,13 @@ describe ExternalFilesConversion do
       work_with_versions = create(:public_work_with_lots_of_versions, depositor: user.login)
       work_with_versions.reload
       expect(work_with_versions.file_sets.first.files).not_to be_blank
-      CharacterizeJob.perform_now(work_with_versions.file_sets[2], 'blah', File.join(fixture_path, 'test.pdf'))
+      CharacterizeJob.perform_now(work_with_versions.file_sets[2].reload, 'blah', File.join(fixture_path, 'test.pdf'))
       local_file(work_with_versions.file_sets.first.files.first.uri.to_s)
       ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
+      expect(CreateDerivativesJob).to receive(:perform_later).exactly(5).times
       converter = described_class.new(GenericWork)
       converter.convert(id: work_with_versions.id)
+      work_with_versions.reload
       expect(File).not_to be_exists(converter.error_file)
       work_with_versions.file_sets.each do |file_set|
         file_set.files.each do |file|
