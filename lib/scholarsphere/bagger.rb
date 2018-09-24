@@ -8,6 +8,7 @@ module Scholarsphere
         filename = movable_file
         filename = File.join(full_path, filename) if File.basename(filename) == filename
         FileUtils.mv(filename, File.join(full_path, '/data'))
+        FileUtils.chmod 'g+r,a+r', File.join(full_path, '/data', File.basename(filename))
       elsif string_data.present?
         @bag.add_file(file_name) do |io|
           io.write string_data.force_encoding('utf-8')
