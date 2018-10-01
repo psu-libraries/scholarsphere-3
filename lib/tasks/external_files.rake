@@ -47,5 +47,11 @@ namespace :scholarsphere do
       converter = ExternalFilesConversion.new(GenericWork)
       converter.validate
     end
+
+    desc 'Validate that every files has been converted'
+    task 'validate_files' => :environment do
+      converter = ExternalFilesConversion.new(GenericWork)
+      converter.validate_files
+    end
   end
 end
