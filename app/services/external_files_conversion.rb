@@ -273,7 +273,9 @@ class ExternalFilesConversion
             IngestFileJob.perform_now(file_set, version_content, @user)
             status = true
           rescue StandardError => error
-            if tries < 5
+            if error.message == '404 Not Found'
+              raise
+            elsif tries < 5
               logger.warn("Issue saving version on try # #{tries} issue: #{error.class} #{error}")
               sleep(tries * 5 * retry_time)
             else
