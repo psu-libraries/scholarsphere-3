@@ -52,6 +52,16 @@ class ExternalFilesConversion
     end
   end
 
+  def validate_files
+    File.open(@error_file, 'a') do |e|
+      file_set_ids = ActiveFedora::SolrService.query('has_model_ssim:FileSet', fl: 'id', rows: FileSet.count + 100)
+      file_set_ids.each do |id|
+        fs = FileSet.find(id['id'])
+        fs.files.each { |file| e.puts(file.uri) if ActiveFedora.fedora.connection.head(file.uri).response.status == 200 }
+      end
+    end
+  end
+
   private
 
     def small_objects
