@@ -161,7 +161,7 @@ class ExternalFilesConversion
     end
 
     def convert_fileset(work, file_set)
-      if file_set.extracted_text.present?
+      unless file_set.extracted_text.nil?
         file_set.extracted_text.destroy
         file_set.reload
       end
