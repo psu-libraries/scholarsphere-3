@@ -39,7 +39,7 @@ Lint/UriEscapeUnescape:
 # Offense count: 227
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 220
+  Max: 222
 
 # Offense count: 280
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.

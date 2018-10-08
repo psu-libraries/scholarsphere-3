@@ -105,12 +105,17 @@ describe ExternalFilesConversion do
 
       it 'converts the ids in a file' do
         work # inititalize a work that will not be converted
+        file_set2
         local_file(file_set1.files.first.uri.to_s)
         ENV['REPOSITORY_EXTERNAL_FILES'] = 'true'
         converter = described_class.new(GenericWork)
         expect(converter.error_file).to match(/error/)
         work3_id = work3.id
         work3.destroy
+
+        # add a file set with no original file
+        work2.members += [FileSet.create!]
+        work2.save
 
         converter.convert(file: pidfile)
 
