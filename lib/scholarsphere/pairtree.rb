@@ -55,10 +55,14 @@ module Scholarsphere
       full_path + "/#{local_file_name}"
     end
 
+    def storage_path(url)
+      url.gsub(ENV['REPOSITORY_FILESTORE_HOST'], ENV['REPOSITORY_FILESTORE'])
+    end
+
     private
 
       def storage_dir
-        Dir["#{ENV['REPOSITORY_FILESTORE']}/#{@object.id[0, 2]}/#{@object.id[2, 2]}/#{@object.id[4, 2]}/#{@object.id[6, 2]}/#{@object.id}/*"].sort.last
+        Dir["#{ENV['REPOSITORY_FILESTORE']}/#{@object.id[0, 2]}/#{@object.id[2, 2]}/#{@object.id[4, 2]}/#{@object.id[6, 2]}/#{@object.id}/*"].sort.last || ''
       end
 
       def clean_file_name(file_name)
