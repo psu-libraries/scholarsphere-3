@@ -8,7 +8,12 @@ module ExternalDownloadBehavior
     if af_file && file.new_record?
       render_404
     else
-      file.mime_type ||= 'text/plain' if af_file
+      if af_file
+        file.mime_type ||= 'text/plain'
+        if response
+          response.headers['Content-Length'] = file.size.to_i.to_s
+        end
+      end
       super
     end
   end
