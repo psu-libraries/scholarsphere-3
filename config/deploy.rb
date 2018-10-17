@@ -194,4 +194,4 @@ namespace :rbenv_custom_ruby_cleanup do
   after 'deploy:finishing', 'rbenv_custom_ruby_cleanup:purge_old_versions'
 end
 
-after "deploy:updated", "newrelic:notice_deployment"
+after 'deploy:updated', 'newrelic:notice_deployment'
