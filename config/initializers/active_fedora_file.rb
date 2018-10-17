@@ -52,6 +52,18 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
           super
         end
       end
+
+      def destroy
+        result = super
+        file_path = Scholarsphere::Pairtree.new(self, nil).storage_path(file_location)
+        bag_directory = Pathname(file_path).parent.parent
+        FileUtils.rm_rf(bag_directory)
+        result
+      end
+
+      def file_location
+        metadata.attributes['http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#hasMimeType'].first.split('url="')[1][0..-2]
+      end
     end
   end
 end

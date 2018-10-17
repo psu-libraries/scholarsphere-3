@@ -51,6 +51,9 @@ describe Scholarsphere::Pairtree do
 
         # returns the http path to the object
         expect(pairtree.http_path(pairtree.full_path + '/' + filepath)).to eq(ENV['REPOSITORY_FILESTORE_HOST'] + pairtree.path + '/' + filepath)
+
+        # returns the path to the object
+        expect(pairtree.storage_path(ENV['REPOSITORY_FILESTORE_HOST'] + pairtree.path + '/' + filepath)).to eq(pairtree.full_path + '/' + filepath)
       end
     end
 

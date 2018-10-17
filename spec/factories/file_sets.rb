@@ -46,5 +46,12 @@ FactoryGirl.define do
         allow(fs).to receive(:file_format).and_return('plain ()')
       end
     end
+
+    trait :with_original_file do
+      after(:create) do |fs, attributes|
+        file_path = "#{Rails.root}/spec/fixtures/world.png"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+      end
+    end
   end
 end

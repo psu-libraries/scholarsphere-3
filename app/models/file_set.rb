@@ -34,4 +34,15 @@ class FileSet < ActiveFedora::Base
 
     mime_type.split('/').last
   end
+
+  def destroy
+    result = super
+    # destroy the external files to
+    file_set_data_path = Scholarsphere::Pairtree.new(self, nil).full_path
+    return if file_set_data_path.blank?
+
+    file_set_path = Pathname(file_set_data_path).parent.parent
+    FileUtils.rm_rf(file_set_path)
+    result
+  end
 end

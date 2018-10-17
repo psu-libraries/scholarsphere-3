@@ -68,4 +68,20 @@ describe FileSet, type: :model do
       end
     end
   end
+
+  describe '#destroy' do
+    let(:file) { create(:file_set, :with_original_file) }
+    let(:original_file_url) { file.original_file.file_location }
+    let(:pair_tree) { Scholarsphere::Pairtree.new(file, nil) }
+    let(:file_path) { pair_tree.storage_path(original_file_url) }
+
+    it 'deletes the external file' do
+      Hydra::PCDM::File
+      expect(File).to be_exist(file_path)
+      file.original_file.destroy
+      expect(File).not_to be_exist(file_path)
+      expect(File).not_to be_exist(Pathname(file_path).parent.parent)
+      expect(File).to be_exist(Pathname(file_path).parent.parent.parent)
+    end
+  end
 end
