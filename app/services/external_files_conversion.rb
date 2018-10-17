@@ -128,6 +128,7 @@ class ExternalFilesConversion
       begin
         work = ActiveFedora::Base.find(work_id)
         if already_converted?(work)
+          puts 'converted qlready'
           logger.info "#{work_id} was previously converted"
           return true
         end
@@ -155,19 +156,24 @@ class ExternalFilesConversion
     # @param [ActiveFedora::Base] work
     # @return [Boolean]
     def already_converted?(work)
-      return true if work.file_sets.first.blank? || work.file_sets.first.original_file.blank?
-      ldp_response = ActiveFedora.fedora.connection.head(work.file_sets.first.original_file.uri.to_s)
+      file_set = work.file_sets.reject { |fs| fs.original_file.blank? }.first
+      return true if file_set.blank?
+      ldp_response = ActiveFedora.fedora.connection.head(file_set.original_file.uri.to_s)
       ldp_response.response.status == 307 # Temporary Redirect
     end
 
     def convert_fileset(work, file_set)
-      if file_set.extracted_text.present?
+      unless file_set.extracted_text.nil?
         file_set.extracted_text.destroy
         file_set.reload
       end
 
       # convert original file
-      convert_file(work, file_set, file_set.original_file)
+      if file_set.original_file.present?
+        convert_file(work, file_set, file_set.original_file)
+      else
+        logger.warn "Original File is missing #{file_set.id}"
+      end
     end
 
     def convert_file(work, file_set, file)
