@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['NEW_RELIC_APP_NAME'] = 'ss-prod-ruby'
+
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
