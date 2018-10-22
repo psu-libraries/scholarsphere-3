@@ -9,13 +9,14 @@ module Scholarsphere
         filename = File.join(full_path, filename) if File.basename(filename) == filename
         FileUtils.mv(filename, File.join(full_path, '/data'))
         FileUtils.chmod 'g+r,a+r', File.join(full_path, '/data', File.basename(filename))
-      elsif string_data.present?
-        @bag.add_file(file_name) do |io|
-          io.write string_data.force_encoding('utf-8')
-        end
-      else
+      elsif working_file.present?
         @bag.add_file(File.basename(working_file)) do |io|
           IO.foreach(working_file).each { |line| io.write line }
+        end
+      else
+        string_data ||= ''
+        @bag.add_file(file_name) do |io|
+          io.write string_data.force_encoding('utf-8')
         end
       end
       @bag.manifest!(algo: 'sha256')
