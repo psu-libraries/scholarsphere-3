@@ -54,10 +54,18 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
       end
 
       def destroy
+        # store off attributes before the record is deleted
+        is_remote = remote?
+        file_path = Scholarsphere::Pairtree.new(self, nil).storage_path(file_location) if is_remote
+
+        # delete the record
         result = super
-        file_path = Scholarsphere::Pairtree.new(self, nil).storage_path(file_location)
-        bag_directory = Pathname(file_path).parent.parent
-        FileUtils.rm_rf(bag_directory)
+
+        # delete the binary store directory for the file if it is remote
+        if is_remote
+          bag_directory = Pathname(file_path).parent.parent
+          FileUtils.rm_rf(bag_directory)
+        end
         result
       end
 
