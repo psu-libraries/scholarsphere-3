@@ -215,7 +215,12 @@ class ExternalFilesConversion
       FileUtils.mkdir_p(file_path)
 
       file = File.new(file_path.join(version_file_name), 'wb+')
-      ActiveFedora.fedora.connection.open(version_uri) { |f| f.each_line { |line| file.write(line) } }
+      fedora_config = Rails.application.config_for(:fedora)
+
+      open(
+        version_uri, http_basic_authentication: [fedora_config['user'], fedora_config['password']]
+      ) { |f| f.each_line { |line| file.write(line) } }
+
       file_path = File.absolute_path(file.path)
       file.close
       file_path
