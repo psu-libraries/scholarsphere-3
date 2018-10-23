@@ -26,8 +26,10 @@ class IngestFileJob < ActiveJob::Base
       # Whenever you upload a version, the filename option is set
       # if you upload new file it is not set
       local_file_name = opts.fetch(:filename, nil) || local_file[:original_name]
+      raise StandardError.new('Failed to verify uploaded file is not a virus') if Hydra::Works::VirusCheckerService.file_has_virus?(@filepath)
 
       @filepath = bagger.create_repository_files(@filepath, local_file_name)
+      Rails.logger.warn("File path in ingest job = #{@filepath} exists? #{File.exist?(@filepath)}")
     end
 
     # Wrap in an IO decorator to attach passed-in options

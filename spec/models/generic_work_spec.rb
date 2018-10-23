@@ -14,7 +14,7 @@ describe GenericWork do
   describe 'destroy' do
     let(:user) { create :user }
     let(:work) { create :public_work_with_png, depositor: user.login }
-    let(:original_file_url) { work.file_sets.first.original_file.file_location }
+    let(:original_file_url) { work.file_sets.first.original_file.file_path }
     let(:pair_tree) { Scholarsphere::Pairtree.new(work.file_sets.first, nil) }
     let(:content_path) { pair_tree.storage_path(original_file_url) }
     let(:bag_directory) { Pathname(content_path).parent.parent }
