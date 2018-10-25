@@ -53,5 +53,12 @@ FactoryGirl.define do
         IngestFileJob.perform_now(fs, file_path, attributes.user)
       end
     end
+
+    trait :with_virus_file do
+      after(:build) do |fs, attributes|
+        file_path = "#{Rails.root}/spec/fixtures/eicar.com"
+        IngestFileJob.perform_now(fs, file_path, attributes.user)
+      end
+    end
   end
 end
