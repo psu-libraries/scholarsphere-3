@@ -14,6 +14,7 @@ class IngestFileJob < ActiveJob::Base
   # @option opts [String] mime_type
   # @option opts [String] filename
   # @option opts [String] relation, ex. :original_file
+  # @option opts [String] skip_virus_scan
   def perform(file_set, filepath, user, opts = {})
     @file_set = file_set
     @filepath = filepath
@@ -26,7 +27,12 @@ class IngestFileJob < ActiveJob::Base
       # Whenever you upload a version, the filename option is set
       # if you upload new file it is not set
       local_file_name = opts.fetch(:filename, nil) || local_file[:original_name]
-      raise StandardError.new('Failed to verify uploaded file is not a virus') if Hydra::Works::VirusCheckerService.file_has_virus?(@filepath)
+
+      skip_virus_scan = opts.fetch(:skip_virus_scan, false)
+      unless skip_virus_scan
+        puts 'virus checking!!'
+        raise StandardError.new('Failed to verify uploaded file is not a virus') if Hydra::Works::VirusCheckerService.file_has_virus?(@filepath)
+      end
 
       @filepath = bagger.create_repository_files(@filepath, local_file_name)
       Rails.logger.warn("File path in ingest job = #{@filepath} exists? #{File.exist?(@filepath)}")

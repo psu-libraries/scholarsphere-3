@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'fileutils'
 
 describe IngestFileJob do
-  context 'when adding a new version', unless: external_files? do
+  context 'when adding a new version' do
     let(:user)     { create(:user) }
     let(:file_set) { create(:file_set, :with_png, depositor: user.login) }
     let(:filepath) { File.join(fixture_path, 'world.png') }
@@ -39,8 +39,11 @@ describe IngestFileJob do
     end
 
     it 'redirects to the url of the binary payload' do
-      response = Net::HTTP.get_response(URI(file_set.files.first.uri.to_s))
-      expect(response.to_s).to match(/HTTPTemporaryRedirect/)
+      uri = file_set.files.first.uri
+      Net::HTTP.start(uri.host, uri.port) { |http|
+        response = http.head(uri.path)
+        expect(response.to_s).to match(/HTTPTemporaryRedirect/)
+      }
     end
 
     it 'checks to make sure that the file_set content is a PNG' do

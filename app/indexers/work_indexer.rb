@@ -52,7 +52,7 @@ class WorkIndexer < Sufia::WorkIndexer
         retrieved_content = case file.original_file.content
                             when String
                               file.original_file.content
-                            when StringIO
+                            when StringIO, File
                               file.original_file.content.read
                             end
         EncodingService.call(retrieved_content)
