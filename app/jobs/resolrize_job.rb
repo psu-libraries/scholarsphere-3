@@ -6,6 +6,7 @@ class ResolrizeJob < ActiveJob::Base
   def perform
     # set the timeout on the faraday connection to something huge so we can get access to the entire graph even if Fedora is being slow
     connection = Faraday.new(ActiveFedora.fedora.host + ActiveFedora.fedora.base_path, request: { timeout: 800 })
+    connection.basic_auth(ActiveFedora.fedora_config.credentials['user'], ActiveFedora.fedora_config.credentials['password'])
     ldp_client = Ldp::Client.new(connection)
     resource = Ldp::Resource::RdfSource.new(ldp_client, ActiveFedora.fedora.host + ActiveFedora.fedora.base_path)
 
