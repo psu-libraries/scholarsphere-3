@@ -6,31 +6,29 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
   module ActiveFedora
     class File
       def redirect_content
-        fedora_config = Rails.application.config_for(:fedora)
-        open(
-          uri,
-          http_basic_authentication: [fedora_config['user'], fedora_config['password']],
-          allow_redirections: :all
-        )
+        @redirect_content ||= ::File.new(file_path, 'rb')
       end
 
       # If the object's content is empty, assume it is Fedora external
       # content and use the Fedora redirect
       def local_or_remote_content(ensure_fetch = true)
-        if new_record?
-          if @content.present? && (@content.respond_to? :path)
-            return @content
-          else
-            path = file_path
-            return ::File.new(path)
-          end
-        end
+        return new_record_content if new_record?
 
-        @content ||= ensure_fetch ? remote_content : @ds_content
-        @content.rewind if behaves_like_io?(@content)
-        return @content if @content.nil?
-        @content = redirect_content # if content_empty?
+        return @content if @ds_content.nil? && !ensure_fetch
+
+        if remote?
+          @content = redirect_content
+        else
+          @content ||= ensure_fetch ? remote_content : @ds_content
+          @content.rewind if behaves_like_io?(@content)
+        end
         @content
+      end
+
+      def new_record_content
+        return @content if @content.present? && ((@content.respond_to? :path) || (@content.is_a? Hydra::Derivatives::IoDecorator))
+
+        ::File.new(file_path, 'rb')
       end
 
       def persisted_size
@@ -79,7 +77,7 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
 
       def file_path
         return unless remote?
-        Scholarsphere::Pairtree.new(self, nil).storage_path(file_url)
+        @file_path ||= Scholarsphere::Pairtree.new(self, nil).storage_path(file_url)
       end
 
       def file_url
