@@ -2,7 +2,7 @@
 
 require 'feature_spec_helper'
 
-describe 'Editing permissions on a work' do
+describe 'Editing permissions on a work', js: true do
   context 'when removing permissions from a work with files' do
     let(:user1) { create(:user, display_name: 'First User') }
     let(:user2) { create(:user, display_name: 'Second User') }
@@ -16,7 +16,7 @@ describe 'Editing permissions on a work' do
     before do
       work.members << file_set
       work.save
-      sign_in_with_js(user1)
+      login_as user1
     end
 
     it 'copies the permissions to the file set' do

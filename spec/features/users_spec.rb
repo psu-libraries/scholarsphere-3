@@ -10,9 +10,9 @@ describe 'User Profile', type: :feature do
 
   let(:event_text)  { 'Text profile event' }
 
-  context 'with any user' do
+  context 'with any user', js: true do
     specify do
-      sign_in_with_js(admin_user)
+      login_as admin_user
       visit("/users/#{admin_user}\#contributions")
 
       # allows to view profile with highlighted works

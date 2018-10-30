@@ -12,14 +12,13 @@ describe GenericWork, type: :feature do
   before do
     described_class.all.map(&:update_index)
     FileSet.all.map(&:update_index)
-    sign_in(current_user)
+    login_as(current_user)
   end
 
   it 'displays the contents of the readme' do
     visit(polymorphic_path(work))
     click_on 'Download'
-    downloaded_file = open("http://localhost:4000/downloads/#{work.file_sets.first.id}").read
-
-    expect(downloaded_file.size).to eq(4218)
+    expect(page.response_headers['Content-Length']).to eq('4339') # size of the image zipped
+    expect(page.response_headers['Content-Disposition']).to eq('inline; filename="work_for_testing_external_files.zip"')
   end
 end

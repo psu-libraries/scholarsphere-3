@@ -27,7 +27,9 @@ describe 'Migration', type: :feature do
   end
 
   after do
-    ActiveFedora::Cleaner.cleanout_solr
+    ActiveFedora::SolrService.instance.conn.delete_by_id 'work_123abc'
+    ActiveFedora::SolrService.instance.conn.delete_by_id 'collection_123abc'
+    ActiveFedora::SolrService.commit
     FileUtils.rm_f(cache_file)
   end
 

@@ -26,7 +26,7 @@ describe GenericWork, type: :feature do
       expect(page).to have_content('Total size for all combined files is restricted to 30 Bytes.')
 
       # Attach a file larger than the limit
-      attach_file('files[]', test_file_path('readme.md'), visible: false)
+      attach_file('inputfiles', test_file_path('readme.md'), visible: false)
       check 'agreement'
       click_on 'Upload all local files'
       sleep(5)
@@ -46,7 +46,7 @@ describe GenericWork, type: :feature do
       within('#required-files') do
         expect(page).to have_link('Add files')
       end
-      attach_file('files[]', test_file_path('little_file.txt'), visible: false)
+      attach_file('inputfiles', test_file_path('little_file.txt'), visible: false)
       click_on 'Upload all local files'
       sleep(5)
 

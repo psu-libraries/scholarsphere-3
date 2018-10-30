@@ -10,12 +10,11 @@ RSpec.describe 'Create a Generic Work with multiple Creators', :clean, js: true 
     let(:ldap_fields) { %i[uid givenname sn mail eduPersonPrimaryAffiliation displayname] }
 
     let(:response) do
-      resp1 = format_name_response('cjs999', 'TESTING 3', 'CHRIS')
-      resp2 = format_name_response('cjs998', 'TESTING 2', 'CHRIS')
-      resp3 = format_name_response('cjs997', 'TESTING 1', 'CHRIS')
-      resp4 = format_name_response('utstrans', 'TESTING TRANSFR', 'UNIV')
+      resp1 = format_name_response('cjs997', 'TESTING 1', 'CHRIS')
+      resp2 = format_name_response('utstrans', 'TESTING TRANSFR', 'UNIV')
+      resp3 = format_name_response('jlt37', 'Jeffrey L', 'Tate')
 
-      resp1 + resp2 + resp3 + resp4
+      resp1 + resp2 + resp3
     end
 
     before do
@@ -31,6 +30,7 @@ RSpec.describe 'Create a Generic Work with multiple Creators', :clean, js: true 
       visit '/concern/generic_works/new'
       # Adding a blank creator field
       click_button 'add-creator'
+      expect(page).to have_selector('.creator_inputs', count: 2)
       click_button 'add-creator'
       expect(page).to have_selector('.creator_inputs', count: 3)
 
@@ -40,12 +40,15 @@ RSpec.describe 'Create a Generic Work with multiple Creators', :clean, js: true 
 
       # Autocomplete returns a result from Agents
       page.execute_script "$('#find_creator').unbind('blur')"
-      fill_in('Find Creator', with: 'Testing')
-      expect(page).to have_selector('.tt-suggestion')
+      0..4.times do |count|
+        fill_in('Find Creator', with: 'Testing')
+        expect(page).to have_selector('.tt-suggestion')
+        page.execute_script("$(\".tt-suggestion\")[#{count}].click()")
+        expect(page).to have_selector('.creator_inputs', count: count + 3)
+      end
 
       # Add creator field from autocomplete results
-      page.execute_script('$(".tt-suggestion").click()')
-      expect(page).to have_selector('.creator_inputs', count: 7)
+      expect(page).to have_selector('.creator_inputs', count: 6)
       expect(page).to have_field('generic_work[creators][2][given_name]', readonly: true)
       expect(page).to have_field('generic_work[creators][2][sur_name]', readonly: true)
       expect(page).to have_field('generic_work[creators][2][email]', readonly: true)
@@ -53,12 +56,11 @@ RSpec.describe 'Create a Generic Work with multiple Creators', :clean, js: true 
       expect(page).to have_selector("input[value='Testing Person']")
       expect(page).to have_selector("input[value='TESTING TRANSFR UNIV']")
       expect(page).to have_selector("input[value='TESTING 1 CHRIS']")
-      expect(page).to have_selector("input[value='TESTING 2 CHRIS']")
-      expect(page).to have_selector("input[value='TESTING 3 CHRIS']")
+      expect(page).to have_selector("input[value='Jeffrey L Tate']")
 
       # Remove the autocompleted creator field
       execute_script("$('.remove-creator')[2].click()")
-      expect(page).to have_selector('.creator_inputs', count: 6)
+      expect(page).to have_selector('.creator_inputs', count: 5)
     end
   end
 end

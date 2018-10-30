@@ -5,7 +5,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe Collection, type: :feature do
+describe Collection, type: :feature, js: true do
   let(:creator) { create(:alias, :with_agent) }
 
   let!(:collection)  { create(:public_collection, :with_complete_metadata,
@@ -26,7 +26,7 @@ describe Collection, type: :feature do
 
   context 'with a logged in user' do
     before do
-      sign_in_with_js(current_user)
+      login_as(current_user)
       visit("/collections/#{collection.id}")
     end
 
@@ -97,7 +97,6 @@ describe Collection, type: :feature do
   context 'with a public user' do
     it 'displays the collection and only public files' do
       visit "/collections/#{collection.id}"
-      expect(page.status_code).to eql(200)
       expect(page).to have_content collection.title.first
       expect(page).to have_content file1.title.first
       expect(page).not_to have_content file2.title.first

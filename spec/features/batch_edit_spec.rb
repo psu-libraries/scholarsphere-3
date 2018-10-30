@@ -45,6 +45,7 @@ describe 'Batch management of works', type: :feature do
       end
 
       # Update creators
+      click_link 'expand_link_creator'
       first('.remove-creator').click
       fill_in 'batch_edit_item[creators][1][display_name]', with: 'Dr. Creator C. Creator, MD'
       click_button('Add another Creator')
@@ -58,6 +59,7 @@ describe 'Batch management of works', type: :feature do
       end
 
       # Update rights for all works to a single value
+      click_link 'expand_link_rights'
       select 'GNU General Public License', from: 'batch_edit_item_rights'
       click_button('rights_save')
       within '#form_rights' do
@@ -81,6 +83,8 @@ describe 'Batch management of works', type: :feature do
     end
 
     it "displays the field's existing value" do
+      @original_value = Capybara.ignore_hidden_elements
+      Capybara.ignore_hidden_elements = false
       within('textarea#batch_edit_item_description') do
         expect(page).to have_content('descriptiondescription')
       end
@@ -99,16 +103,18 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
       expect(page).to have_no_checked_field('Private')
       expect(page).to have_content(I18n.t('scholarsphere.batch_edit.permissions_warning'))
+      Capybara.ignore_hidden_elements = @original_value
     end
   end
 
   context 'when selecting multiple works for deletion', js: true do
-    subject { GenericWork.count }
-
     before do
       check 'check_all'
-      click_button 'Delete Selected'
+      accept_confirm { click_button('Delete Selected') }
     end
-    it { is_expected.to be_zero }
+    it 'deletes all the works' do
+      expect(page).to have_content('Batch delete complete')
+      expect(GenericWork.count).to be_zero
+    end
   end
 end
