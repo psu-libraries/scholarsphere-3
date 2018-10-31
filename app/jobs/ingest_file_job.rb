@@ -30,7 +30,6 @@ class IngestFileJob < ActiveJob::Base
 
       skip_virus_scan = opts.fetch(:skip_virus_scan, false)
       unless skip_virus_scan
-        puts 'virus checking!!'
         raise StandardError.new('Failed to verify uploaded file is not a virus') if Hydra::Works::VirusCheckerService.file_has_virus?(@filepath)
       end
 

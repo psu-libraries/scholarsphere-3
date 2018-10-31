@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 describe WorkZipService do
+  before do
+    allow(CharacterizeJob).to receive(:perform_later)
+  end
+
   describe '#call' do
     subject(:zip_file_name) { service.call }
 
@@ -43,7 +47,6 @@ describe WorkZipService do
       let(:user2) { create(:user) }
 
       before do
-        mp3_file
         work.ordered_members << my_file
         work.ordered_members << unreadble_file
         work.save
