@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '4.2.7.1'
-gem 'mysql2', '~> 0.3.17' unless ENV['CI']
+gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 
 # Hydra gems
 gem 'active-fedora', '~> 11.5'

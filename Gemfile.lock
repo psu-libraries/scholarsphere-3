@@ -499,7 +499,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    mysql2 (0.3.21)
+    mysql2 (0.4.10)
     namae (1.0.1)
     nest (2.1.0)
       redic
@@ -924,7 +924,7 @@ DEPENDENCIES
   kaminari_route_prefix
   launchy
   mail (= 2.6.6.rc1)
-  mysql2 (~> 0.3.17)
+  mysql2 (~> 0.4.10)
   namae (~> 1.0)
   nest
   newrelic_rpm
@@ -968,4 +968,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   1.16.3
+   1.16.4
