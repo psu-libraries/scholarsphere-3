@@ -54,11 +54,11 @@ class ExpirationService
 
     def works_with_expired_active_embargo
       works_expired_embargo = GenericWork.where("embargo_release_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
-      works_expired_embargo.select { |gw| gw.embargo.active? }
+      works_expired_embargo.select { |gw| gw.embargo.embargo_release_date.present? }
     end
 
     def works_with_expired_active_lease
       generic_works_needing_lease = GenericWork.where("lease_expiration_date_dtsi:#{RSolr.solr_escape(expiration_date)}")
-      generic_works_needing_lease.select { |gw| gw.lease.active? }
+      generic_works_needing_lease.select { |gw| gw.lease.lease_expiration_date.present? }
     end
 end
