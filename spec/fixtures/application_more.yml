@@ -7,7 +7,8 @@ production:
   google_analytics_id: "test-id"
   derivatives_path: "path"
   read_only: "false"
-  doi_user: 'ss1'
-  doi_password: 'password'
-  doi_handle: 'not required'
+  EZID_USER: 'ezid_user'
+  EZID_PASSWORD: 'ezid_password'
+  EZID_HOST: 'ezid_host'
+  doi_handle: 'handle'
   other_key: 'can be here'

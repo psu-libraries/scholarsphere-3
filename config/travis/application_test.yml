@@ -11,8 +11,10 @@ development:
   stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
   google_analytics_id: "test-id"
   read_only: "false"
-  doi_user: 'ss1'
-  doi_password: 'password'
+  EZID_USER: 'ezid_user'
+  EZID_PASSWORD: 'ezid_password'
+  EZID_HOST: 'ezid_host'
+  doi_handle: 'handle'
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups'
@@ -45,8 +47,10 @@ production:
   google_analytics_id: "test-id"
   derivatives_path: "path"
   read_only: "false"
-  doi_user: 'ss1'
-  doi_password: 'password'
+  EZID_USER: 'ezid_user'
+  EZID_PASSWORD: 'ezid_password'
+  EZID_HOST: 'ezid_host'
+  doi_handle: 'handle'
   RECAPTCHA_SITE_KEY: 'site-key'
   RECAPTCHA_SECRET_KEY: 'secret-key'
   ldap_unwilling_sleep: "2"

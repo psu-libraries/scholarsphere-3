@@ -19,8 +19,10 @@ class Scholarsphere::Config
         'google_analytics_id',
         'derivatives_path',
         'read_only',
-        'doi_user',
-        'doi_password',
+        'EZID_USER',
+        'EZID_PASSWORD',
+        'EZID_HOST',
+        'doi_handle',
         'RECAPTCHA_SITE_KEY',
         'RECAPTCHA_SECRET_KEY'
       ]
