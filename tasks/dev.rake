@@ -33,7 +33,7 @@ namespace :filestore do
     system(
       "cd #{Rails.root.join('public')} && "\
       "python -m SimpleHTTPServer #{URI(ENV['REPOSITORY_FILESTORE_HOST']).port} &> "\
-      "../log/filestore_#{Rails.env.downcase}.log &"
+      '../log/filestore.log &'
     )
   end
 
