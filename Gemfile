@@ -55,6 +55,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'faker'
   gem 'fcrepo_wrapper'
+  gem 'launchy'
   gem 'niftany'
   gem 'pry'
   gem 'pry-byebug'
@@ -67,7 +68,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'better_errors'
+  gem 'better_errors', '~> 2.4.0'
   gem 'binding_of_caller'
 
   # Use Capistrano for deployment
@@ -92,9 +93,4 @@ group :test do
   gem 'selenium-webdriver'
   gem 'vcr'
   gem 'webmock'
-end
-
-group :debug do
-  gem 'byebug', require: false
-  gem 'launchy'
 end
