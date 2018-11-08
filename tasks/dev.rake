@@ -69,3 +69,23 @@ namespace :dev do
     Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
   end
 end
+
+namespace :coveralls do
+  desc 'Report line count statistics from Coveralls'
+  task line_report: :environment do
+    report = Rails.root.join('coverage/.resultset.json')
+    unless report.exist?
+      raise ArgumentError, 'No coveralls report found. Run `bundle exec coveralls report` to generate'
+    end
+
+    results = JSON.parse(File.read(report))
+
+    CSV.open(Rails.root.join('coverage/line_report.csv'), 'w') do |csv|
+      csv << ['Test', 'Max', 'Average']
+      results['spec']['coverage'].each do |key, values|
+        values.compact!
+        csv << [Pathname.new(key).basename, values.max, (values.sum / values.length)]
+      end
+    end
+  end
+end
