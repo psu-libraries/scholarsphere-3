@@ -17,34 +17,38 @@ describe 'Dashboard Collections:', type: :feature do
     go_to_dashboard_collections
   end
 
-  specify 'tab title and buttons' do
+  it 'checks the page' do
+    # tab title and buttons
     expect(page).to have_content('My Collections')
+    expect(page).not_to have_content('Object Type')
     expect(page).to have_link('New Work', visible: false) # link is there (even if collapsed)
     expect(page).to have_link('New Collection', visible: false) # link is there (even if collapsed)
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
-  end
 
-  specify 'collections are displayed in the Collections list' do
+    # collections are displayed in the Collections list
     expect(page).to have_content collection.title.first
     expect(page).not_to have_content jill_collection.title
-  end
 
-  specify 'toggle displays additional information' do
+    # displays the correct totals for each facet
+    within('#facets') do
+      click_link('Creator')
+      expect(page).to have_content('Given Name Sur Name')
+    end
+
+    # additional information is hidden by default
+    expect(page).not_to have_content(creator.display_name)
+    expect(page).not_to have_content(collection.depositor)
+    expect(page).not_to have_content 'Edit Access'
+    expect(page).not_to have_content(current_user)
+
+    # toggle displays additional information
     first('span.glyphicon-chevron-right').click
     expect(page).to have_content(creator.display_name)
     expect(page).to have_content(collection.depositor)
     expect(page).to have_content 'Edit Access'
     expect(page).to have_content(current_user)
-  end
 
-  specify 'additional information is hidden' do
-    expect(page).not_to have_content(creator.display_name)
-    expect(page).not_to have_content(collection.depositor)
-    expect(page).not_to have_content 'Edit Access'
-    expect(page).not_to have_content(current_user)
-  end
-
-  specify 'toggle addtitional actions' do
+    # toggle additional actions
     expect(page).not_to have_content('Edit Collection')
     expect(page).not_to have_content('Delete Collection')
     within('#documents') do
@@ -52,21 +56,9 @@ describe 'Dashboard Collections:', type: :feature do
     end
     expect(page).to have_content('Edit Collection')
     expect(page).to have_content('Delete Collection')
-  end
 
-  specify 'collections are not displayed in the Works list' do
+    # collections are not displayed in the Works list
     go_to_dashboard_works
     expect(page).not_to have_content collection.title
-  end
-
-  describe 'facets,' do
-    specify 'displays the correct totals for each facet' do
-      within('#facets') do
-        click_link('Object Type')
-        expect(page).to have_content('Collection (1)')
-        click_link('Creator')
-        expect(page).to have_content('Given Name Sur Name')
-      end
-    end
   end
 end

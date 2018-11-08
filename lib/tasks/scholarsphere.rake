@@ -221,22 +221,4 @@ namespace :scholarsphere do
     result = work.save
     puts "Work #{work_id} marked as private: #{result}"
   end
-
-  desc 'Convert files stored internally in Fedora to externally on the filesystem'
-  task 'internal_to_external_files' => :environment do
-    unless ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-      puts 'You must set the REPOSITORY_EXTERNAL_FILES environment variable to true'
-      puts 'before running this task'
-      exit
-    end
-    puts 'This task will create a new version of all the works.'
-    puts "The process will place the content in the #{ENV['REPOSITORY_FILESTORE']} directory."
-    puts 'Are you sure you want to do this? (y/n)'
-
-    if STDIN.gets.strip == 'y'
-      ExternalFilesConversion.new(GenericWork).convert
-    else
-      puts 'You didn\'t reply with (y) so this rake task is exiting'
-    end
-  end
 end

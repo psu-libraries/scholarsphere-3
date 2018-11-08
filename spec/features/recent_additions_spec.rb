@@ -10,8 +10,8 @@ describe 'Showing recent additions', type: :feature do
     sign_in_with_js(current_user)
     visit '/'
     click_link 'Recent Additions'
-    expect(page).to have_content(gf.title.first)
+    expect(page).to have_selector('h3', gf.title.first)
     click_link(gf.keyword.first)
-    expect(page).to have_content(gf.title.first)
+    expect(page).to have_selector('h1', gf.title.first)
   end
 end

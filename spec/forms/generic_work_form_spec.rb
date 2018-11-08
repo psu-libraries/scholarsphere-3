@@ -105,4 +105,10 @@ describe CurationConcerns::GenericWorkForm do
 
     its(:select_files) { is_expected.to eq('Public File' => 'public-fileset') }
   end
+
+  describe '::terms' do
+    subject { described_class.terms }
+
+    it { is_expected.to include(:depositor) }
+  end
 end

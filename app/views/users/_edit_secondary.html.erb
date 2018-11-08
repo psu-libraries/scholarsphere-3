@@ -3,7 +3,9 @@
 
 <hr />
 
-<h3><span class="glyphicon glyphicon-group" aria-hidden="true"></span> User Managed Groups Info (UMG) <%= link_to 'Manage UMG', 'http://umg.its.psu.edu/', class: 'btn btn-xs btn-primary' %> </h3>
+<h3><span class="glyphicon glyphicon-group" aria-hidden="true"></span> User Managed Groups Info (UMG)
+  <%= link_to 'Manage UMG', 'https://accounts.psu.edu/account-management-ui/', class: 'btn btn-xs btn-primary' %>
+</h3>
 <% current_user.groups.each do |g| %>
   <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <%= g %><br />
 <% end %>

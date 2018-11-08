@@ -113,4 +113,50 @@ describe CopyPermissionsJob do
       end
     end
   end
+
+  context 'when work is embargoed' do
+    let(:work)     { create(:public_work, :with_public_embargo, edit_users: ['user1']) }
+
+    let(:file_set) { create(:file_set) }
+    let(:date) { Date.tomorrow }
+
+    before do
+      work.ordered_members = [file_set]
+      work.save
+    end
+
+    it 'copies embargo to its contained files' do
+      # files have the depositor as the edit user to begin with
+      expect(work.file_sets.first.embargo).to be_nil
+
+      described_class.perform_now(work)
+      work.reload.file_sets.each do |file|
+        expect(file.embargo.visibility_after_embargo).to eq 'open'
+        expect(file.embargo.visibility_during_embargo).to eq 'restricted'
+      end
+    end
+  end
+
+  context 'when work is leased' do
+    let(:work)     { create(:public_work, :with_public_lease, edit_users: ['user1']) }
+
+    let(:file_set) { create(:file_set) }
+    let(:date) { Date.tomorrow }
+
+    before do
+      work.ordered_members = [file_set]
+      work.save
+    end
+
+    it 'copies embargo to its contained files' do
+      # files have the depositor as the edit user to begin with
+      expect(work.file_sets.first.lease).to be_nil
+
+      described_class.perform_now(work)
+      work.reload.file_sets.each do |file|
+        expect(file.lease.visibility_after_lease).to eq 'restricted'
+        expect(file.lease.visibility_during_lease).to eq 'open'
+      end
+    end
+  end
 end

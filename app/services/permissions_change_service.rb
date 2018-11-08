@@ -46,7 +46,7 @@ class PermissionsChangeService
 
     def send_message(access, recipient = nil)
       return if recipient.nil?
-      User.batchuser.send_message(
+      User.batch_user.send_message(
         recipient,
         "You can now #{access} file #{generic_work.title}",
         'Permission change notification'

@@ -4,7 +4,12 @@ class ResolrizeJob < ActiveJob::Base
   queue_as :resolrize
 
   def perform
-    resource = Ldp::Resource::RdfSource.new(ActiveFedora.fedora.connection, ActiveFedora.fedora.host + ActiveFedora.fedora.base_path)
+    # set the timeout on the faraday connection to something huge so we can get access to the entire graph even if Fedora is being slow
+    connection = Faraday.new(ActiveFedora.fedora.host + ActiveFedora.fedora.base_path, request: { timeout: 800 })
+    connection.basic_auth(ActiveFedora.fedora_config.credentials['user'], ActiveFedora.fedora_config.credentials['password'])
+    ldp_client = Ldp::Client.new(connection)
+    resource = Ldp::Resource::RdfSource.new(ldp_client, ActiveFedora.fedora.host + ActiveFedora.fedora.base_path)
+
     # GET could be slow if it's a big resource, we're using HEAD to avoid this problem,
     # but this causes more requests to Fedora.
     return [] unless resource.head.rdf_source?
@@ -16,7 +21,7 @@ class ResolrizeJob < ActiveJob::Base
 
     # models have the 10 digit ids fron AF Noid so remove the longer ones
     model_ids = descendant_ids.reject { |id| id.length > model_id_length }
-    model_ids.sort { |a, b| [b.size, b] <=> [a.size, a] }
+    model_ids = model_ids.sort { |a, b| [b.size, b] <=> [a.size, a] }
 
     # permissions have the longer ids
     permission_ids = descendant_ids.reject { |id| id.length <= model_id_length }
@@ -25,11 +30,8 @@ class ResolrizeJob < ActiveJob::Base
     update_group(permission_ids)
     puts permission_ids
 
-    # run update index on the permissions of the models
+    # run update index on the permissions of the models and the model
     update_permissions(model_ids)
-
-    # run the models
-    update_group(model_ids)
 
     # run the models a second time to make sure any relationships between the models get assigned correctly
     update_group(model_ids)
@@ -56,10 +58,12 @@ class ResolrizeJob < ActiveJob::Base
       ids.each do |id|
         logger.debug "Re-index everything permissions ... #{id}"
         begin
-          ActiveFedora::Base.find(id).permissions.each do |perm|
+          model = ActiveFedora::Base.find(id)
+          model.permissions.each do |perm|
             puts perm.id
             ActiveFedora::Base.find(perm.id).update_index
           end
+          model.update_index
         rescue StandardError => error
           logger.error "error processing #{id}: #{error}"
         end

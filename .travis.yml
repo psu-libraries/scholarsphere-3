@@ -35,17 +35,10 @@ jobs:
       env:
         - TEST_SUITE=unit
         - EXTERNAL_FILES=true
-    - script: ./travis/test.sh
-      env:
-        - TEST_SUITE=feature
-        - EXTERNAL_FILES=false
-    - script: ./travis/test.sh
-      env:
-        - TEST_SUITE=unit
-        - EXTERNAL_FILES=false
     - stage: coverage
       install: skip
       script: ./travis/coverage.sh
     - stage: niftany
       script: bundle exec niftany
-
+after_failure:
+  - cat log/test.log

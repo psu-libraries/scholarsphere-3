@@ -4,20 +4,17 @@
 # external content in Fedora.
 module ExternalDownloadBehavior
   def show
-    case file
-    when ActiveFedora::File
-      if file.new_record?
-        render_404
-      else
-        send_data file.content.read, type: file.mime_type, filename: file_name
-      end
-    when String
-      # For derivatives stored on the local file system
-      response.headers['Accept-Ranges'] = 'bytes'
-      response.headers['Content-Length'] = File.size(file).to_s
-      send_file file, derivative_download_options
-    else
+    af_file = file.is_a?(ActiveFedora::File)
+    if af_file && file.new_record?
       render_404
+    else
+      if af_file
+        file.mime_type ||= 'text/plain'
+        if response
+          response.headers['Content-Length'] = file.size.to_i.to_s
+        end
+      end
+      super
     end
   end
 

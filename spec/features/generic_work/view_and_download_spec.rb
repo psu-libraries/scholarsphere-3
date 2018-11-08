@@ -11,21 +11,14 @@ describe GenericWork, type: :feature do
     before { sign_in_with_js(current_user) }
 
     context 'with a public work' do
-      let!(:work1) do
+      let(:work1) do
         create(:public_work, :with_one_file_and_size, :with_complete_metadata,
                depositor: current_user.login,
                description: ['Description http://example.org/TheDescriptionLink/'])
       end
 
-      specify 'I can see all the correct information' do
-        visit(root_path)
-
-        # Work is listed under Recently Uploaded
-        click_link('Recent Additions')
-        within('#recent_docs') do
-          expect(page).to have_link(work1.keyword.first)
-          click_link(work1.title.first)
-        end
+      it 'displays all the correct information' do
+        visit(curation_concerns_generic_work_path(work1))
 
         # View the work's show page
         expect(page).to have_content work1.title.first
@@ -70,25 +63,20 @@ describe GenericWork, type: :feature do
         within('div.show-download') do
           expect(page).to have_content('Download Work as Zip')
         end
-      end
 
-      describe 'external services' do
-        before { visit(curation_concerns_generic_work_path(work1)) }
+        # I can download an Endnote reference do
+        click_link 'EndNote'
+        expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
+        go_back
 
-        specify 'I can download an Endnote reference' do
-          visit(find_link('EndNote')[:href])
-          expect(page.response_headers['Content-Type']).to eq('application/x-endnote-refer')
-        end
+        # I can see the Mendeley modal
+        click_link 'Mendeley'
+        expect(page).to have_css('.modal-header')
+        go_back
 
-        specify 'I can see the Mendeley modal' do
-          click_link 'Mendeley'
-          expect(page).to have_css('.modal-header')
-        end
-
-        specify 'I can see the Zotero modal' do
-          click_link 'Zotero'
-          expect(page).to have_css('.modal-header')
-        end
+        # I can see the Zotero modal
+        click_link 'Zotero'
+        expect(page).to have_css('.modal-header')
       end
     end
 

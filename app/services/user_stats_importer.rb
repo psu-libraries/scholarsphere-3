@@ -15,8 +15,10 @@ class UserStatsImporter
   end
 
   def gather_view_stats
-    process_statistic_list(view_report.work_page_views, WorkViewStat)
-    process_statistic_list(view_report.file_set_page_views, FileViewStat)
+    works = process_statistic_list(view_report.work_page_views, WorkViewStat).uniq
+    remove_zeros(works, WorkViewStat, 'work_id', view_field: :work_views)
+    file_sets = process_statistic_list(view_report.file_set_page_views, FileViewStat).uniq
+    remove_zeros(file_sets, FileViewStat, 'file_id', view_field: :views)
   end
 
   def gather_download_stats
@@ -38,14 +40,21 @@ class UserStatsImporter
   private
 
     def process_statistic_list(list, stat_class, object_lookup_method = :lookup_object)
-      return if list.blank?
-
-      list.each do |event|
+      return [] if list.blank?
+      list.map do |event|
         safe_method_call("Error finding object for event #{event}", :find_event_object, event, object_lookup_method) do |object|
-          object = find_event_object(event, object_lookup_method)
           create_or_update_object_stat(event, translate_user_login_to_db_id(object.depositor),
                                        object, stat_class)
         end
+      end
+    end
+
+    def remove_zeros(object_ids, stat_class, id_field, view_field:)
+      object_ids.each do |object_id|
+        stats = stat_class.where(id_field => object_id).order(:date)
+        stats = stats.drop(1)
+        middle_zeros = stats[0...-1].select { |stat| stat.send(view_field).zero? }
+        middle_zeros.each(&:destroy)
       end
     end
 
@@ -61,6 +70,7 @@ class UserStatsImporter
     def safe_method_call(error_message, method, *method_args)
       object = send(method, *method_args)
       yield object if block_given?
+      object.id
     rescue StandardError => e
       puts "#{error_message} #{e.inspect}"
     end

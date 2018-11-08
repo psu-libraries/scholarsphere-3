@@ -23,7 +23,7 @@ describe UserMailer do
     let(:message)      { described_class.stats_email(1.day.ago, DateTime.now) }
     let(:mock_service) { double }
     let(:csv)          { "a,b,c\nd,e,f\n" }
-    let!(:generic_work) { create :work }
+    let!(:generic_work) { create :work, date_uploaded: 2.hours.ago }
 
     before do
       allow(GenericWorkListToCSVService).to receive(:new).with([generic_work]).and_return(mock_service)

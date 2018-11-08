@@ -15,19 +15,80 @@ describe 'Generic File uploading and deletion:', type: :feature do
     let(:file)                  { work }
     let(:work)                  { find_work_by_title 'little_file.txt_title' }
 
-    before { sign_in_with_named_js(:upload_and_delete, current_user, disable_animations: true) }
+    before do
+      sign_in_with_named_js(:upload_and_delete, current_user, disable_animations: true)
+      allow(CharacterizeJob).to receive(:perform_later)
+      allow(ShareNotifyDeleteJob).to receive(:perform_later)
+      Sufia::AdminSetCreateService.create_default!
+      visit(new_curation_concerns_generic_work_path)
+    end
 
-    describe "Sufia's default user agreement" do
-      before { visit new_generic_work_path }
-      it 'is not shown' do
-        expect(page).not_to have_content("Sufia's Deposit Agreement")
+    context 'cloud providers' do
+      before do
+        allow(BrowseEverything).to receive(:config) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298', max_upload_file_size: 20 * 1024 } } }
+        allow(Sufia.config).to receive(:browse_everything) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298' } } }
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { 'FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321' }
+        allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
+        WebMock.enable!
+      end
+
+      after do
+        WebMock.disable!
+      end
+      specify 'I can click on cloud providers' do
+        expect(ShareNotifyJob).to receive(:perform_later)
+        VCR.use_cassette('dropbox', record: :none) do
+          click_link 'Files'
+          expect(page).to have_content 'Add cloud files'
+          click_on 'Add cloud files'
+          expect(page).to have_css '#provider-select'
+          select 'Dropbox', from: 'provider-select'
+          sleep(1.second)
+          expect(page).to have_content 'Getting Started.pdf'
+          click_on('Writer')
+          sleep(1.second)
+          expect(page).to have_content 'Writer FAQ.txt'
+          expect(page).not_to have_css 'a', text: 'Writer FAQ.txt'
+          expect(page).to have_content 'Markdown Test.txt'
+          check('writer-markdown-test-txt')
+          expect(page).to have_content '1 file selected'
+          click_on('Submit')
+          within 'tr.template-download' do
+            expect(page).to have_content 'Markdown Test.txt'
+          end
+          within('#savewidget') do
+            choose 'generic_work_visibility_authenticated'
+          end
+          sleep(1.second)
+          check 'agreement'
+          click_on 'Metadata'
+          fill_in 'generic_work_title', with: 'Markdown Test'
+          fill_in 'generic_work_keyword', with: 'keyword'
+          fill_in 'generic_work[creators][0][given_name]', with: 'creator'
+          select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
+          fill_in 'generic_work_description', with: 'My description'
+          select 'Audio', from: 'generic_work_resource_type'
+          sleep(2.seconds)
+          click_on 'Save'
+          expect(page).to have_content 'Your files are being processed'
+          within('#activity_log') do
+            expect(page).to have_content("User #{current_user.display_name} has deposited Markdown Test")
+          end
+          expect(page).to have_css('h1', 'Markdown Test')
+          click_on 'Notifications'
+          expect(page).to have_content 'The file (Markdown Test.txt) was successfully imported'
+        end
       end
     end
 
-    describe 'uploading a new work' do
-      before { visit new_generic_work_path }
+    context 'with a single local file' do
+      let(:new_creator) { Agent.where(psu_id: 'jhc29').first }
 
-      it 'enforces a workflow' do
+      it 'uploads the file, sends notification, creates new agent records, and deletes the file' do
+        # Verify agent does not exist
+        expect(Agent.where(psu_id: 'jhc29').first).to be_nil
+
         within('div#savewidget') do
           expect(page).to have_link 'deposit agreement'
           expect(page).to have_content 'I have read and agree to the deposit agreement'
@@ -35,9 +96,13 @@ describe 'Generic File uploading and deletion:', type: :feature do
           expect(page).to have_link('Add files')
         end
 
+        # Sufia's default user agreement does not show
+        expect(page).not_to have_content("Sufia's Deposit Agreement")
+
         # Add files
+        click_on 'Files'
         attach_file('files[]', test_file_path(filename), visible: false)
-        check 'agreement'
+        click_on 'Start'
 
         # Check visibility
         within('#savewidget') do
@@ -55,16 +120,16 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Enter required metadata
         click_link('Metadata')
-        fill_in 'generic_work_title', with: 'Upload test'
-        fill_in 'generic_work_keyword', with: 'keyword'
+        fill_in 'generic_work_title', with: filename + '_title'
+        fill_in 'generic_work_keyword', with: filename + '_keyword'
         fill_in 'generic_work[creators][0][given_name]', with: 'Joe'
         fill_in 'generic_work[creators][0][sur_name]', with: 'Creator'
         fill_in 'generic_work[creators][0][display_name]', with: 'Dr. Joe H. Creator'
         fill_in 'generic_work[creators][0][psu_id]', with: 'jhc29'
         fill_in 'generic_work[creators][0][email]', with: 'docjoe@university.edu'
-        select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
-        fill_in 'generic_work_description', with: 'My description'
+        fill_in 'generic_work_description', with: filename + '_description'
         select 'Audio', from: 'generic_work_resource_type'
+        select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
 
         within('#metadata')      { expect(page).to have_link('Licenses') }
         within('#metadata')      { expect(page).not_to have_css('#work-media') }
@@ -98,129 +163,37 @@ describe 'Generic File uploading and deletion:', type: :feature do
         # Test Collections tab for select2 container
         within('ul.nav-tabs') { click_link('Collections') }
         expect(page).to have_css('.select2-container-multi')
-      end
-    end
 
-    context 'cloud providers' do
-      before do
-        allow(BrowseEverything).to receive(:config) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298', max_upload_file_size: 20 * 1024 } } }
-        allow(Sufia.config).to receive(:browse_everything) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298' } } }
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { 'FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321' }
-        allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
-        Sufia::AdminSetCreateService.create_default!
-        visit(new_curation_concerns_generic_work_path)
-        WebMock.enable!
-      end
-
-      after do
-        WebMock.disable!
-      end
-      specify 'I can click on cloud providers' do
-        expect(ShareNotifyJob).to receive(:perform_later)
-        VCR.use_cassette('dropbox', record: :none) do
-          click_link 'Files'
-          expect(page).to have_content 'Add cloud files'
-          click_on 'Add cloud files'
-          expect(page).to have_css '#provider-select'
-          select 'Dropbox', from: 'provider-select'
-          sleep 10
-          expect(page).to have_content 'Getting Started.pdf'
-          click_on('Writer')
-          expect(page).to have_content 'Writer FAQ.txt'
-          expect(page).not_to have_css 'a', text: 'Writer FAQ.txt'
-          expect(page).to have_content 'Markdown Test.txt'
-          check('writer-markdown-test-txt')
-          expect(page).to have_content '1 file selected'
-          click_on('Submit')
-          within 'tr.template-download' do
-            expect(page).to have_content 'Markdown Test.txt'
-          end
-          within('#savewidget') do
-            choose 'generic_work_visibility_authenticated'
-          end
-          sleep(1.second)
-          check 'agreement'
-          click_on 'Metadata'
-          fill_in 'generic_work_title', with: 'Markdown Test'
-          fill_in 'generic_work_keyword', with: 'keyword'
-          fill_in 'generic_work[creators][0][given_name]', with: 'creator'
-          select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
-          fill_in 'generic_work_description', with: 'My description'
-          select 'Audio', from: 'generic_work_resource_type'
-          sleep(1.second)
-          click_on 'Save'
-          expect(page).to have_content 'Your files are being processed'
-          within('#activity_log') do
-            expect(page).to have_content("User #{current_user.display_name} has deposited Markdown Test")
-          end
-          expect(page).to have_css('h1', 'Markdown Test')
-          click_on 'Notifications'
-          expect(page).to have_content 'The file (Markdown Test.txt) was successfully imported'
+        within('#savewidget') do
+          choose 'generic_work_visibility_authenticated'
         end
-      end
-    end
-
-    context 'user does not need help' do
-      context 'with a single file' do
-        let(:new_creator) { Agent.where(psu_id: 'jhc29').first }
-
-        before do
-          allow(ShareNotifyDeleteJob).to receive(:perform_later)
-          Sufia::AdminSetCreateService.create_default!
+        sleep(2.seconds)
+        check 'agreement'
+        sleep(2.seconds)
+        click_on 'Save'
+        expect(page).to have_css('h1', filename + '_title')
+        click_link 'My Dashboard'
+        expect(page).to have_css 'table#activity'
+        within('table#activity') do
+          expect(page).to have_content filename
         end
 
-        it 'uploads the file, sends notification, creates new agent records, and deletes the file' do
-          # Verify agent does not exist
-          expect(Agent.where(psu_id: 'jhc29').first).to be_nil
-
-          # Upload file
-          visit '/concern/generic_works/new'
-          click_on 'Files'
-          attach_file('files[]', test_file_path(filename), visible: false)
-          click_on 'Start'
-          click_on 'Metadata'
-          fill_in 'generic_work_title', with: filename + '_title'
-          fill_in 'generic_work_keyword', with: filename + '_keyword'
-          fill_in 'generic_work[creators][0][given_name]', with: 'Joe'
-          fill_in 'generic_work[creators][0][sur_name]', with: 'Creator'
-          fill_in 'generic_work[creators][0][display_name]', with: 'Dr. Joe H. Creator'
-          fill_in 'generic_work[creators][0][psu_id]', with: 'jhc29'
-          fill_in 'generic_work[creators][0][email]', with: 'docjoe@university.edu'
-          fill_in 'generic_work_description', with: filename + '_description'
-          select 'Audio', from: 'generic_work_resource_type'
-          select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
-          within('#savewidget') do
-            choose 'generic_work_visibility_authenticated'
-          end
-          sleep(2.seconds)
-          check 'agreement'
-          sleep(2.seconds)
-          click_on 'Save'
-          expect(page).to have_css('h1', filename + '_title')
-          click_link 'My Dashboard'
-          expect(page).to have_css 'table#activity'
-          within('table#activity') do
-            expect(page).to have_content filename
-          end
-
-          # Verify notifications were sent
-          within('#notifications') do
-            expect(page).to have_content 'little_file.txt was successfully added'
-          end
-
-          # Check for the agent record
-          expect(new_creator.given_name).to eq('Joe')
-          expect(new_creator.sur_name).to eq('Creator')
-          expect(new_creator.email).to eq('docjoe@university.edu')
-          expect(new_creator.psu_id).to eq('jhc29')
-
-          go_to_dashboard_works
-          expect(page).to have_content file.title.first
-          db_item_actions_toggle(file).click
-          click_link 'Delete Work'
-          expect(page).to have_content "Deleted #{file.title.first}"
+        # Verify notifications were sent
+        within('#notifications') do
+          expect(page).to have_content 'little_file.txt was successfully added'
         end
+
+        # Check for the agent record
+        expect(new_creator.given_name).to eq('Joe')
+        expect(new_creator.sur_name).to eq('Creator')
+        expect(new_creator.email).to eq('docjoe@university.edu')
+        expect(new_creator.psu_id).to eq('jhc29')
+
+        go_to_dashboard_works
+        expect(page).to have_content file.title.first
+        db_item_actions_toggle(file).click
+        click_link 'Delete Work'
+        expect(page).to have_content "Deleted #{file.title.first}"
       end
     end
   end

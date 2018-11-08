@@ -11,6 +11,23 @@ describe GenericWork do
     expect(subject.id.length).to eq 10
   end
 
+  describe 'destroy' do
+    let(:user) { create :user }
+    let(:work) { create :public_work_with_png, depositor: user.login }
+    let(:original_file_url) { work.file_sets.first.original_file.file_path }
+    let(:pair_tree) { Scholarsphere::Pairtree.new(work.file_sets.first, nil) }
+    let(:content_path) { pair_tree.storage_path(original_file_url) }
+    let(:bag_directory) { Pathname(content_path).parent.parent }
+
+    it 'deletes the files in the binary store' do
+      expect(File).to be_exist(content_path)
+      work.destroy
+      expect(File).not_to be_exist(content_path)
+      expect(File).not_to be_exist(bag_directory.parent)
+      expect(File).to be_exist(bag_directory.parent.parent)
+    end
+  end
+
   describe 'creators' do
     before do
       Alias.destroy_all

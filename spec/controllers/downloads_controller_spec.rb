@@ -88,11 +88,7 @@ describe DownloadsController do
     context 'with a FileSet' do
       before { controller.params[:id] = my_file.id }
       it 'sends content' do
-        if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-          expect(controller).to receive(:send_data)
-        else
-          expect(controller).to receive(:send_content)
-        end
+        expect(controller).to receive(:send_content)
         expect(WorkZipService).not_to receive(:new)
         subject
       end

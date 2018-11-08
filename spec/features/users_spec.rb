@@ -33,6 +33,8 @@ describe 'User Profile', type: :feature do
       click_link 'Edit Profile'
       fill_in 'user_twitter_handle', with: 'curatorOfData'
       fill_in 'user_orcid', with: '0000-0000-0000-0000'
+      expect(page).not_to have_content 'Change picture'
+      expect(page).to have_content 'Refresh directory'
       click_button 'Save Profile'
       expect(page).to have_content 'Your profile has been updated'
       expect(page).to have_content 'curatorOfData'
@@ -41,6 +43,7 @@ describe 'User Profile', type: :feature do
       # displays other users
       click_link 'View Users'
       expect(page).to have_xpath("//td/a[@href='/users/#{admin_user.login}']")
+      expect(page).not_to have_content('Avatar')
 
       # should allow searching through all users
       expect(page).to have_xpath("//td/a[@href='/users/archivist1']")

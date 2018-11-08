@@ -19,8 +19,9 @@ describe ResolrizeJob, :clean do
         expect(ActiveFedora::Base).to receive(:find).with(perm.id).and_return(perm).ordered
         expect(perm).to receive(:update_index)
       end
-      expect(ActiveFedora::Base).to receive(:find).twice.with(file_set.id).and_return(file_set).ordered
-      expect(file_set).to receive(:update_index).twice
+      expect(file_set).to receive(:update_index)
+      expect(ActiveFedora::Base).to receive(:find).with(file_set.id).and_return(file_set).ordered
+      expect(file_set).to receive(:update_index)
       job.perform_now
     end
   end

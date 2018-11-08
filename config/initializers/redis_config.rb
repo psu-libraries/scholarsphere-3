@@ -10,6 +10,6 @@ if defined?(PhusionPassenger)
     Redis.current.disconnect!
     Redis.current = Redis.new(config.merge(thread_safe: true))
   end
-else
-  Redis.current = Redis.new(config.merge(thread_safe: true))
 end
+
+Redis.current = Redis.new(config.merge(thread_safe: true))

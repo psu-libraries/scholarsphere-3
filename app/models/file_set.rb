@@ -4,6 +4,9 @@ class FileSet < ActiveFedora::Base
   include ::CurationConcerns::FileSetBehavior
   include Sufia::FileSetBehavior
   include AdditionalMetadata
+  include Hydra::Works::VirusCheck
+
+  Hydra::Derivatives::FullTextExtract.output_file_service = PersistRemoteContainedOutputFileService
 
   def self.indexer
     FileSetIndexer
@@ -31,5 +34,16 @@ class FileSet < ActiveFedora::Base
     return if mime_type.blank?
 
     mime_type.split('/').last
+  end
+
+  def destroy
+    result = super
+    # destroy the external files to
+    file_set_data_path = Scholarsphere::Pairtree.new(self, nil).full_path
+    return if file_set_data_path.blank?
+
+    file_set_path = Pathname(file_set_data_path).parent.parent
+    FileUtils.rm_rf(file_set_path)
+    result
   end
 end

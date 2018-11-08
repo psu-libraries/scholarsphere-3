@@ -31,6 +31,10 @@ module Features
       { extensions: ["#{Rails.root}/spec/features/support/disable_animations.js"] }
     end
 
+    def go_back
+      page.evaluate_script('window.history.back()')
+    end
+
     private
 
       # Poltergeist will append HTTP_ to headers variables, but since we check for

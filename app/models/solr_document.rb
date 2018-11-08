@@ -19,20 +19,6 @@ class SolrDocument
     fetch(Solrizer.solr_name('creator_name', :stored_searchable), [])
   end
 
-  def collections
-    return nil if self[Solrizer.solr_name(:collection)].blank?
-    collections_in = Array(self[Solrizer.solr_name(:collection)])
-    collections = []
-    collections_in.each do |pid|
-      begin
-        collections << Collection.load_instance_from_solr(pid)
-      rescue
-        logger.warn("Error loading Collection: #{pid} from solr")
-      end
-    end
-    collections
-  end
-
   # Remove this once https://github.com/projecthydra/curation_concerns/issues/1055 is resolved
   def file_size
     Array(self['file_size_lts']).first

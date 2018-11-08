@@ -11,4 +11,12 @@ class CollectionPresenter < Sufia::CollectionPresenter
   def permission_badge_class
     PublicPermissionBadge
   end
+
+  def creator_facet_path(index)
+    Rails.application.routes.url_helpers.search_catalog_path(:"f[#{:creator_name_sim}][]" => cleaned_creators[index])
+  end
+
+  def cleaned_creators
+    @cleaned_creators ||= FacetValueCleaningService.call(creator, FieldConfig.new(facet_cleaners: [:creator]), solr_document)
+  end
 end

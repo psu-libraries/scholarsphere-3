@@ -51,12 +51,12 @@ Install gems
 
 Copy config samples
 
-    cp config/devise.yml.sample config/devise.yml
-    cp config/database.yml.sample config/database.yml
-    cp config/fedora.yml.sample config/fedora.yml
-    cp config/solr.yml.sample config/solr.yml
-    cp config/redis.yml.sample config/redis.yml
-    cp config/hydra-ldap.yml.sample config/hydra-ldap.yml
+    cp config/sample/application.yml config
+    cp config/sample/browse_everything_providers.yml config
+    cp config/sample/share_notify.yml config
+
+Edit `config/browse_everything_providers.yml` and ensure there is a file on your
+local filesystem that matches the location in the `file_system` setting there.
 
 If you're using SQLite, a vanilla Redis installation, and the
 Hydra-Jetty Solr and Fedora components (see below), you should not
@@ -97,6 +97,21 @@ Run the app server (the bundled app server is Unicorn)
 Browse to http://localhost:3000/ and you should see ScholarSphere!
 
 ## Usage Notes
+
+### Enabling external file storage
+
+To enable storing files outside fedora, edit `config/application.yml` and ensure
+`REPOSITORY_EXTERNAL_FILES` is set to `true`.
+
+Once files are being stored externally, you'll need to serve them out from your local environment.
+In a new terminal window from the root of the project directory:
+
+    cd public
+    python -m SimpleHTTPServer 8000
+
+This will serve out the files in the repository directory via an HTTP process on port 8000. This should
+correspond to the default settings in `config/application.yml`.
+
 
 ### Enabling Zotero integration
 

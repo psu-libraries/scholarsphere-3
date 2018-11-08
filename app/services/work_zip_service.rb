@@ -45,10 +45,9 @@ class WorkZipService
   private
 
     def add_files_to_zip(zipfile, file_set)
-      if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-        add_external_files_to_zip(zipfile, file_set)
-      else
-        add_internal_files_to_zip(zipfile, file_set)
+      return unless add_to_zip?(file_set)
+      zipfile.get_output_stream(file_set.title.first) do |outfile|
+        file_set.original_file.stream.each { |buffer| outfile.write(buffer) }
       end
     end
 
@@ -56,29 +55,7 @@ class WorkZipService
       resource.file_sets
     end
 
-    def external_file_set_steam(file_set)
-      open(file_set.original_file.uri).read
-    end
-
-    def add_internal_files_to_zip(zipfile, file_set)
-      return unless add_to_zip?(file_set)
-      zipfile.get_output_stream(file_set.title.first) do |outfile|
-        file_set.original_file.stream.each { |buffer| outfile.write(buffer) }
-      end
-    end
-
-    def add_external_files_to_zip(zipfile, file_set)
-      return unless add_to_zip?(file_set)
-      zipfile.get_output_stream(file_set.title.first) do |outfile|
-        external_file_set_steam(file_set).each_line { |buffer| outfile.write(buffer) }
-      end
-    end
-
     def add_to_zip?(file_set)
-      file_set.original_file.present? && (ability.can? :read, file_set.id) ? true : redirect_object?(file_set)
-    end
-
-    def redirect_object?(file_set)
-      open(file_set.original_file.uri).status[0] == '200' && (ability.can? :read, file_set.id)
+      file_set.original_file.present? && (ability.can? :read, file_set.id)
     end
 end

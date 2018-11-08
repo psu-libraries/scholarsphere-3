@@ -5,10 +5,11 @@ require 'feature_spec_helper'
 describe GenericWork, type: :feature do
   context 'when viewing a work with many files' do
     let(:current_user) { create(:user) }
+    let(:number_of_files) { 21 }
 
-    # Build 100 file sets
+    # Build 21 file sets
     let(:file_sets) do
-      (1..100).map do |id|
+      (1..number_of_files).map do |id|
         build(:file_set, :with_file_size,
               id: "multifile#{id}",
               title: ["File #{id}"],
@@ -21,7 +22,7 @@ describe GenericWork, type: :feature do
       build(:work, :with_complete_metadata,
             id: 'bigwork',
             depositor: current_user.login,
-            representative_id: 'multifile50',
+            representative_id: 'multifile20',
             members: file_sets)
     end
 
@@ -35,8 +36,8 @@ describe GenericWork, type: :feature do
 
     # Index everything in solr as opposed to creating it, which would take a very long time!
     before do
-      file_sets.each { |fs| index_file_set(fs) }
-      index_document(list_source)
+      file_sets.each { |fs| index_file_set(fs, commit_now: false) }
+      index_document(list_source, commit_now: false)
       index_work(work)
       sign_in_with_js(current_user)
       visit('/concern/generic_works/bigwork')
@@ -44,7 +45,7 @@ describe GenericWork, type: :feature do
 
     it 'displays the work page with pagination and each page has 10 files' do
       within('dl.attributes') do
-        expect(page).to have_selector('dd.total_items', text: '100')
+        expect(page).to have_selector('dd.total_items', text: number_of_files.to_s)
       end
       within('table.related-files') do
         (1..10).each do |id|
