@@ -128,7 +128,7 @@ class ExternalFilesConversion
       begin
         work = ActiveFedora::Base.find(work_id)
         if already_converted?(work)
-          puts 'converted qlready'
+          puts 'converted already'
           logger.info "#{work_id} was previously converted"
           return true
         end
@@ -144,7 +144,7 @@ class ExternalFilesConversion
         logger.error "error finding object to migrate: #{work_id}; #{error}"
         File.open(@error_file, 'a') { |e| e.puts(work_id) }
       rescue StandardError => error
-        logger.error "error migrating object: #{work_id}; #{error}"
+        logger.error "error migrating object: #{work_id}; #{error.inspect}"
         logger.error error.backtrace
 
         File.open(@error_file, 'a') { |e| e.puts(work_id) }
@@ -158,6 +158,7 @@ class ExternalFilesConversion
     def already_converted?(work)
       file_set = work.file_sets.reject { |fs| fs.original_file.blank? }.first
       return true if file_set.blank?
+
       ldp_response = ActiveFedora.fedora.connection.head(file_set.original_file.uri.to_s)
       ldp_response.response.status == 307 # Temporary Redirect
     end
@@ -215,7 +216,12 @@ class ExternalFilesConversion
       FileUtils.mkdir_p(file_path)
 
       file = File.new(file_path.join(version_file_name), 'wb+')
-      ActiveFedora.fedora.connection.open(version_uri) { |f| f.each_line { |line| file.write(line) } }
+      fedora_config = Rails.application.config_for(:fedora)
+
+      open(
+        version_uri, http_basic_authentication: [fedora_config['user'], fedora_config['password']]
+      ) { |f| f.each_line { |line| file.write(line) } }
+
       file_path = File.absolute_path(file.path)
       file.close
       file_path
@@ -276,7 +282,7 @@ class ExternalFilesConversion
           begin
             tries += 1
             file_set.reload
-            IngestFileJob.perform_now(file_set, version_content, @user)
+            IngestFileJob.perform_now(file_set, version_content, @user, skip_virus_scan: true)
             status = true
           rescue StandardError => error
             if error.message == '404 Not Found'

@@ -71,9 +71,7 @@ describe FileSet, type: :model do
 
   describe '#destroy' do
     let(:file) { create(:file_set, :with_original_file) }
-    let(:original_file_url) { file.original_file.file_location }
-    let(:pair_tree) { Scholarsphere::Pairtree.new(file, nil) }
-    let(:file_path) { pair_tree.storage_path(original_file_url) }
+    let(:file_path) { file.original_file.file_path }
 
     it 'deletes the external file' do
       Hydra::PCDM::File
@@ -82,6 +80,23 @@ describe FileSet, type: :model do
       expect(File).not_to be_exist(file_path)
       expect(File).not_to be_exist(Pathname(file_path).parent.parent)
       expect(File).to be_exist(Pathname(file_path).parent.parent.parent)
+    end
+  end
+
+  describe '#valid?' do
+    let(:infected_file) { build(:file_set, :with_virus_file, id: '123456789') }
+    let(:file_path) { Rails.root.join('spec/fixtures/eicar.com').to_s }
+    let(:repo_path) { File.join(ENV['REPOSITORY_FILESTORE'], '12/34/56/78/123456789').to_s }
+
+    it 'catches it at the job level' do
+      expect(Hydra::Works.default_system_virus_scanner).to receive(:infected?).with(file_path).and_return(true)
+      expect { infected_file }.to raise_error(StandardError)
+    end
+
+    it 'catches it at the save level' do
+      expect(Hydra::Works.default_system_virus_scanner).to receive(:infected?).with(file_path).and_return(false)
+      expect(Hydra::Works.default_system_virus_scanner).to receive(:infected?).twice.with(/12\/34\/56\/78\/123456789\/.{15,}\/data\/eicar\.com/).and_return(true)
+      expect { infected_file }.to raise_error(ActiveFedora::RecordInvalid)
     end
   end
 end

@@ -4,6 +4,7 @@ class FileSet < ActiveFedora::Base
   include ::CurationConcerns::FileSetBehavior
   include Sufia::FileSetBehavior
   include AdditionalMetadata
+  include Hydra::Works::VirusCheck
 
   Hydra::Derivatives::FullTextExtract.output_file_service = PersistRemoteContainedOutputFileService
 
