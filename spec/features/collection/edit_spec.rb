@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe Collection, type: :feature do
+describe Collection, type: :feature, js: true do
   let(:current_user) { create(:user) }
   let(:work1)        { create(:work, depositor: current_user.login, title: ['world.png']) }
   let(:work2)        { create(:work, depositor: current_user.login, title: ['little_file.txt']) }
@@ -13,7 +13,7 @@ describe Collection, type: :feature do
     let!(:collection) { create(:collection, depositor: current_user.login, members: [work1, work2], description: ['my description']) }
     let!(:work3)      { create(:work, title: ['scholarsphere_test5.txt'], depositor: current_user.login) }
 
-    before { sign_in_with_js(current_user) }
+    before { login_as(current_user) }
 
     describe 'adding an additional file' do
       specify do
@@ -71,7 +71,7 @@ describe Collection, type: :feature do
     let(:updated_subtitle)      { 'Updated Vimana2' }
     let(:updated_description)   { 'Updated description text.' }
 
-    before { sign_in_with_js(current_user) }
+    before { login_as(current_user) }
     specify do
       visit "/collections/#{collection.id}/edit"
       expect(page).to have_field 'collection_title', with: original_title.first
@@ -131,7 +131,7 @@ describe Collection, type: :feature do
     let(:collection) { create(:collection, depositor: current_user.login, title: ['Special collection']) }
 
     before do
-      sign_in_with_js(current_user)
+      login_as(current_user)
       visit("/collections/#{collection.id}/edit")
     end
 

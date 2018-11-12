@@ -4,12 +4,12 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe Collection, type: :feature do
+describe Collection, type: :feature, js: true do
   let(:current_user) { create(:user, display_name: 'Jill User') }
   let(:title)        { 'Test Collection Title' }
   let(:subtitle)     { 'Machu Picchu' }
 
-  before { sign_in_with_js(current_user) }
+  before { login_as(current_user) }
 
   describe 'creating a new collection from the dashboard' do
     it 'displays the new collection page' do
@@ -50,6 +50,7 @@ describe Collection, type: :feature do
 
       it 'creates an empty collection' do
         within('div#share') do
+          expect(page).to have_content('Add Group')
           select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
           select 'Edit', from: 'new_group_permission_skel'
           click_button 'Add Group'

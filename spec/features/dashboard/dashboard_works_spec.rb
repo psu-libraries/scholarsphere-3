@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Works', type: :feature do
+describe 'Dashboard Works', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let(:jill) { create(:jill) }
   let(:work1_creator_name) { 'Work One Creator' }
@@ -26,13 +26,16 @@ describe 'Dashboard Works', type: :feature do
   end
 
   before do
-    sign_in_with_js(current_user)
-    go_to_dashboard_works
+    login_as(current_user)
   end
 
   let(:filename) { work1.title.first }
 
   context 'with two works' do
+    before do
+      go_to_dashboard_works
+    end
+
     specify 'interactions are wired correctly' do
       # tab title and buttons
       expect(page).to have_content('My Works')
@@ -71,7 +74,7 @@ describe 'Dashboard Works', type: :feature do
       # TODO: This part of the test won't pass until this Sufia
       #       ticket has been closed: https://github.com/projecthydra/sufia/issues/2049
       go_back
-      db_visibility_link(work1).trigger('click')
+      db_visibility_link(work1).click
       expect(page).to have_content('Sharing With')
 
       # Clicking Transfer Ownership loads the transfer ownership page
@@ -87,7 +90,7 @@ describe 'Dashboard Works', type: :feature do
         click_link 'Highlight Work on Profile'
         db_item_actions_toggle(work1).click
         expect(page).to have_content 'Unhighlight Work'
-        db_item_actions_toggle(work1).trigger('click')
+        db_item_actions_toggle(work1).click
       end
       specify 'It is highlighted' do
         # It is highlighted on my profile
@@ -131,6 +134,8 @@ describe 'Dashboard Works', type: :feature do
     describe 'Facet: & Search: ' do
       it 'shows the correct results' do
         # It displays the correct totals for facet
+        @original_value = Capybara.ignore_hidden_elements
+        Capybara.ignore_hidden_elements = false
         {
           'Resource Type' => 'Video (10)',
           'Creator'       => 'Creator1 Jones (10)',
@@ -140,16 +145,13 @@ describe 'Dashboard Works', type: :feature do
           'Location'      => 'Location1 (10)',
           'Publisher'     => 'Publisher1 (10)',
           'Format'        => 'plain () (10)'
-        }.each do |facet, value|
+        }.each_value do |value|
           within('#facets') do
             # open facet
-            click_link(facet)
             expect(page).to have_content(value, wait: Capybara.default_max_wait_time * 2)
-
-            # for some reason the page needs to settle before we can click the next link in the list
-            sleep(0.1.seconds)
           end
         end
+        Capybara.ignore_hidden_elements = @original_value
 
         # When I search by partial title it does not display any results
         search_my_files_by_term('title')
@@ -174,7 +176,7 @@ describe 'Dashboard Works', type: :feature do
 
         # allows me to remove constraints
         find('span.glyphicon-remove').click
-        expect(page).not_to have_content 'You searched for:'
+        expect(page).to have_no_content 'You searched for:'
 
         # When I search by Creator it displays the correct results
         search_my_files_by_term(work1_creator_name)
@@ -233,9 +235,10 @@ describe 'Dashboard Works', type: :feature do
       end
       expect(page).to have_css('.batch_document_selector_all')
       select('100', from: 'per_page')
+      select('100', from: 'per_page')
       find_button('Refresh').click
-      expect(page).not_to have_css('.pagination')
-      expect(page).not_to have_css('.pager')
+      expect(page).to have_no_css('.pagination')
+      expect(page).to have_no_css('.pager')
 
       # TODO what is the maximum batch?  Do we still need to remove the select all?
       # expect(page).not_to have_css('.batch_document_selector_all')

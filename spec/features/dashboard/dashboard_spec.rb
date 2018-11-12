@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'The Dashboard', type: :feature do
+describe 'The Dashboard', type: :feature, js: true do
   let(:user) { create(:user) }
 
   describe 'a user who has files and collections' do
@@ -47,7 +47,7 @@ describe 'The Dashboard', type: :feature do
     let!(:second_proxy) { create(:second_proxy) }
 
     before do
-      sign_in_with_js(user)
+      login_as(user)
       go_to_dashboard
       create_proxy_using_partial(first_proxy, second_proxy)
     end

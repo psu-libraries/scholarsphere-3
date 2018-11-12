@@ -2,12 +2,12 @@
 
 require 'feature_spec_helper'
 
-describe GenericWork do
+describe 'work with readme', type: :feature do
   let(:current_user) { create(:user) }
   let(:work) { create(:public_work_with_readme, title: ['Work with README'], depositor: current_user.login) }
 
   before do
-    sign_in(current_user)
+    login_as(current_user)
   end
 
   it 'displays the contents of the readme' do

@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Collections:', type: :feature do
+describe 'Dashboard Collections:', type: :feature, js: true do
   let!(:jill_collection) { create(:collection, title: ["Jill's Collection"], depositor: jill.login) }
   let!(:collection)      { create(:collection, creators: [creator], depositor: current_user.login) }
 
@@ -13,7 +13,7 @@ describe 'Dashboard Collections:', type: :feature do
   let(:jill)         { create(:jill) }
 
   before do
-    sign_in_with_js(current_user)
+    login_as(current_user)
     go_to_dashboard_collections
   end
 

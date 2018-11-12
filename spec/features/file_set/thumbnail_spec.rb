@@ -10,7 +10,7 @@ describe 'FileSet Thumbnail Creation:', type: :feature do
   let(:thumbnail_path) { main_app.download_path(file_set, file: 'thumbnail') }
 
   before do
-    sign_in(current_user)
+    login_as(current_user)
     visit "/concern/file_sets/#{file_set.id}"
   end
 

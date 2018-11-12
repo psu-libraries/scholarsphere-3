@@ -101,7 +101,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Add files
         click_on 'Files'
-        attach_file('files[]', test_file_path(filename), visible: false)
+        attach_file('inputfiles', test_file_path(filename), visible: false)
         click_on 'Start'
 
         # Check visibility
@@ -192,16 +192,16 @@ describe 'Generic File uploading and deletion:', type: :feature do
         go_to_dashboard_works
         expect(page).to have_content file.title.first
         db_item_actions_toggle(file).click
-        click_link 'Delete Work'
+        accept_confirm { click_link 'Delete Work' }
         expect(page).to have_content "Deleted #{file.title.first}"
       end
     end
   end
 
-  context 'When logged in as a non-PSU user' do
+  context 'When logged in as a non-PSU user', js: true do
     let(:current_user) { create(:non_psu_user) }
 
-    before { sign_in_with_js(current_user) }
+    before { login_as current_user }
 
     specify 'I cannot access the upload page' do
       visit new_generic_work_path

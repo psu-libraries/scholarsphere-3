@@ -3,6 +3,7 @@
 module Features
   module BatchEditActions
     def fill_in_batch_edit_field(id, opts = {})
+      click_link "expand_link_#{id}"
       within "#form_#{id}" do
         fill_in "batch_edit_item_#{id}", with: opts.fetch(:with, "NEW #{id}")
         click_button "#{id}_save"

@@ -67,6 +67,8 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     almond-rails (0.0.3)
       rails (>= 4.2, < 6)
+    archive-zip (0.11.0)
+      io-like (~> 0.3.0)
     arel (6.0.4)
     ast (2.4.0)
     autoprefixer-rails (7.1.6)
@@ -192,11 +194,13 @@ GEM
       mime-types (>= 1.16)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (2.1.0)
+      archive-zip (~> 0.10)
+      nokogiri (~> 1.8)
     chronic (0.10.2)
     clamav (0.4.1)
     clipboard-rails (1.7.1)
-    cliver (0.3.2)
-    coderay (1.1.2)
+    coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -430,6 +434,7 @@ GEM
     i18n (0.8.1)
     ice_nine (0.11.2)
     inflecto (0.0.2)
+    io-like (0.3.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -541,10 +546,6 @@ GEM
       ast (~> 2.4.0)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
-    poltergeist (1.11.0)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     posix-spawn (0.3.13)
     power_converter (0.1.2)
     powerpack (0.1.2)
@@ -873,9 +874,6 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     websocket (1.2.5)
-    websocket-driver (0.6.4)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
     xml-simple (1.1.5)
@@ -906,6 +904,7 @@ DEPENDENCIES
   capistrano-resque (~> 0.2.1)
   capybara
   capybara-screenshot
+  chromedriver-helper
   clamav
   coderay
   coffee-rails
@@ -929,7 +928,6 @@ DEPENDENCIES
   newrelic_rpm
   niftany
   open_uri_redirections
-  poltergeist (~> 1.9)
   pry
   pry-byebug
   psu_dir

@@ -44,9 +44,9 @@ describe 'Editing a work', js: true do
     fill_in 'generic_work[creators][2][given_name]', with: 'Verity'
     fill_in 'generic_work[creators][2][sur_name]', with: 'Brown'
     fill_in 'generic_work[creators][2][display_name]', with: 'Downtown Verity Brown'
-    expect(page).not_to have_text('Enter required metadata')
     fill_in 'generic_work[creators][2][email]', with: 'dvb@gmail.com'
     fill_in 'generic_work[creators][2][psu_id]', with: 'dvb79'
+    expect(page).not_to have_text('Enter required metadata')
     click_button 'Save'
 
     # The updated creator data should appear on the show page
