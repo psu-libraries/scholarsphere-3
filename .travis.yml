@@ -6,8 +6,6 @@ cache:
   directories:
     - "dep_cache"
 bundler_args: --without development debug
-before_install:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 sudo: false
 rvm:
   - 2.3.3
@@ -33,11 +31,9 @@ jobs:
     - script: ./travis/test.sh
       env:
         - TEST_SUITE=feature
-        - EXTERNAL_FILES=true
     - script: ./travis/test.sh
       env:
         - TEST_SUITE=unit
-        - EXTERNAL_FILES=true
     - stage: coverage
       install: skip
       script: ./travis/coverage.sh
