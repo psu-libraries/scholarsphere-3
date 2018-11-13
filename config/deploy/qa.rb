@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['NEW_RELIC_APP_NAME'] = 'ss-qa-ruby'
+
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
@@ -15,9 +17,9 @@
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
-server 'ss1qa.dlt.psu.edu', user: 'deploy', roles: %w(web app db), primary: true
-server 'ss2qa.dlt.psu.edu', user: 'deploy', roles: %w(web app)
-server 'ssjobs1qa.dlt.psu.edu:1855', user: 'deploy', roles: %w(app job)
+server 'ssweb1qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
+server 'ssweb2qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
+server 'ssjobs1qa-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options
