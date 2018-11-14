@@ -2,9 +2,6 @@
 
 class DownloadsController < ApplicationController
   include CurationConcerns::DownloadBehavior
-  if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
-    include ExternalDownloadBehavior
-  end
 
   prepend_before_action only: [:show] do
     handle_legacy_url_prefix { |new_id| redirect_to main_app.download_path(new_id), status: :moved_permanently }
