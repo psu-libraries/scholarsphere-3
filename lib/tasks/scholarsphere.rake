@@ -133,56 +133,6 @@ namespace :scholarsphere do
     end
   end
 
-  # Start date must be in format 'yyyy/MM/dd'
-  desc 'Prints to stdout a list of failed jobs in resque'
-  task 'get_failed_jobs', [:start_date, :details] => :environment do |_cmd, args|
-    # todo Not sure we can do this with the new Active Job based records
-    details = (args[:details] == 'true')
-    start_date = args[:start_date] || Date.today.to_s.tr('-', '/')
-    log = ''
-    puts "Getting failed jobs from: #{start_date}"
-    Resque::Failure.each do |i, job|
-      job_failed_at = job['failed_at']
-      if job_failed_at >= start_date
-        payload = job['payload']
-        job_args64 = payload['args']
-        job_args = Base64.decode64(job_args64[0])
-        prefix_at = job_args.index('scholarsphere:')
-        if prefix_at.nil?
-          log += "Unexpected job arguments found: #{job_args}\r\n"
-        else
-          sufix_at = job_args.index(':', prefix_at + 14)
-          pid = job_args[prefix_at, sufix_at - prefix_at - 1].chomp
-          if details
-
-            exception = job['exception']
-            error = job['error']
-            backtrace = job['backtrace'][0]
-            log += "PID: #{pid}\r\n"
-            log += "Failed at: #{job_failed_at}\r\n"
-            log += "Exception: #{exception} - #{error}\r\n"
-            log += "Backtrace: #{backtrace}\r\n"
-            begin
-              gf = GenericFile.find(pid)
-              log += "File name: #{gf[:filename]}\r\n"
-              log += "Mime type: #{gf[:mime_type]}\r\n"
-            rescue Exception => e
-              log += "File name: (could not be determined) #{e}\r\n"
-            end
-            log += "---------------\r\n"
-          else
-            log += "#{pid}\r\n"
-          end
-        end
-        puts i if (i % 100).zero?
-      end
-    end
-
-    puts 'Writting log...'
-    File.write('find_failed_jobs.log', log)
-    puts 'Done.'
-  end
-
   def id_list_from_file(file_name)
     abort 'Must provide a file name to read the PIDs' if file_name.nil?
     puts "Processing file #{file_name}"

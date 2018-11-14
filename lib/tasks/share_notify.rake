@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :share do
-  desc 'Push all available GenericFiles to SHARE Notify'
+  desc 'Push all available GenericWorks to SHARE Notify'
   task files: :environment do
     shareable_files.each do |file|
       puts "Sending #{file.id} to SHARE Notify"
