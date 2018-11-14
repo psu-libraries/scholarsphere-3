@@ -11,8 +11,17 @@ describe Collection, type: :feature, js: true do
 
   before { login_as(current_user) }
 
-  describe 'creating a new collection from the dashboard' do
-    it 'displays the new collection page' do
+  context 'without any files' do
+    let(:doi)      { 'doi:abc123' }
+    let(:client)   { instance_double(Ezid::Client) }
+    let(:response) { instance_double(Ezid::MintIdentifierResponse, id: doi) }
+
+    before do
+      allow(Ezid::Client).to receive(:new).and_return(client)
+      allow(client).to receive(:mint_identifier).and_return(response)
+    end
+
+    it 'creates an empty collection' do
       go_to_dashboard
       db_create_empty_collection_button.click
       expect(page).to have_content('Create New Collection')
@@ -26,89 +35,80 @@ describe Collection, type: :feature, js: true do
         expect(find('input#visibility_open')).to be_checked
       end
       expect(page).to have_content('Create a DOI for this collection')
+
+      fill_in 'Title', with: title
+      fill_in 'Subtitle', with: subtitle
+      fill_in 'Description', with: 'description'
+      fill_in 'Keyword', with: 'keyword'
+      within('div#share') do
+        expect(page).to have_content('Add Group')
+        select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
+        select 'Edit', from: 'new_group_permission_skel'
+        click_button 'Add Group'
+        expect(page).to have_selector("input[value='umg/up.dlt.scholarsphere-users']", visible: false)
+      end
+      check 'collection_create_doi'
+      click_button 'Create Empty Collection'
+      expect(page).to have_content('Collection was successfully created.')
+      within('header') do
+        within('h1') do
+          expect(page).to have_content(title)
+        end
+        within('p') do
+          expect(page).to have_content(subtitle)
+        end
+      end
+      expect(page).to have_content('https://doi.org')
+
+      # The link to the creator search should look like this
+      # with the correct solr key 'creator_name_sim':
+      # catalog?f[creator_name_sim][]=Jill+User
+      expect(find_link('Jill User')[:href]).to match /catalog\?f%5Bcreator_name_sim%5D%5B%5D=Jill\+User/
     end
   end
 
-  describe 'creating new collections' do
-    before do
+  context 'with existing works' do
+    let!(:file1) { create(:file, title: ['First file'], depositor: current_user.login) }
+    let!(:file2) { create(:file, title: ['Second file'], depositor: current_user.login) }
+
+    it 'adds existing works after the collection is created' do
       visit(new_collection_path)
       fill_in 'Title', with: title
       fill_in 'Subtitle', with: subtitle
       fill_in 'Description', with: 'description'
       fill_in 'Keyword', with: 'keyword'
-    end
-
-    context 'without any files' do
-      let(:doi)      { 'doi:abc123' }
-      let(:client)   { instance_double(Ezid::Client) }
-      let(:response) { instance_double(Ezid::MintIdentifierResponse, id: doi) }
-
-      before do
-        allow(Ezid::Client).to receive(:new).and_return(client)
-        allow(client).to receive(:mint_identifier).and_return(response)
+      click_button 'Create Collection and Add Existing Works'
+      expect(page).to have_content('Collection was successfully created.')
+      check 'check_all'
+      click_button "Add to #{title}"
+      expect(page).to have_content(title)
+      within('dl.metadata-collections') do
+        expect(page).to have_content('Total Items')
+        expect(page).to have_content('2')
       end
-
-      it 'creates an empty collection' do
-        within('div#share') do
-          expect(page).to have_content('Add Group')
-          select 'umg/up.dlt.scholarsphere-users', from: 'new_group_name_skel'
-          select 'Edit', from: 'new_group_permission_skel'
-          click_button 'Add Group'
-          expect(page).to have_selector("input[value='umg/up.dlt.scholarsphere-users']", visible: false)
-        end
-        check 'collection_create_doi'
-        click_button 'Create Empty Collection'
-        expect(page).to have_content('Collection was successfully created.')
-        within('header') do
-          within('h1') do
-            expect(page).to have_content(title)
-          end
-          within('p') do
-            expect(page).to have_content(subtitle)
-          end
-        end
-        expect(page).to have_content('https://doi.org')
-
-        # The link to the creator search should look like this
-        # with the correct solr key 'creator_name_sim':
-        # catalog?f[creator_name_sim][]=Jill+User
-        expect(find_link('Jill User')[:href]).to match /catalog\?f%5Bcreator_name_sim%5D%5B%5D=Jill\+User/
-      end
-    end
-
-    context 'when adding existing works' do
-      let!(:file1) { create(:file, title: ['First file'], depositor: current_user.login) }
-      let!(:file2) { create(:file, title: ['Second file'], depositor: current_user.login) }
-
-      it 'adds existing works after the collection is created' do
-        click_button 'Create Collection and Add Existing Works'
-        expect(page).to have_content('Collection was successfully created.')
-        check 'check_all'
-        click_button "Add to #{title}"
-        expect(page).to have_content(title)
-        within('dl.metadata-collections') do
-          expect(page).to have_content('Total Items')
-          expect(page).to have_content('2')
-        end
-        within('table.table-striped') do
-          expect(page).to have_content('First file')
-          expect(page).to have_content('Second file')
-        end
-      end
-    end
-
-    context 'when adding new works' do
-      it 'creates new works after the collection is created' do
-        click_button 'Create Collection and Upload Works'
-        expect(page).to have_content('Collection was successfully created.')
-        expect(page).to have_content('Add Multiple New Works')
-        within('ul.nav-tabs') { click_link('Collections') }
-        expect(page).to have_select('batch_upload_item_collection_ids', selected: title)
+      within('table.table-striped') do
+        expect(page).to have_content('First file')
+        expect(page).to have_content('Second file')
       end
     end
   end
 
-  describe 'selecting files from the dashboard' do
+  context 'with new works' do
+    it 'creates new works after the collection is created' do
+      visit(new_collection_path)
+      fill_in 'Title', with: title
+      fill_in 'Subtitle', with: subtitle
+      fill_in 'Description', with: 'description'
+      fill_in 'Keyword', with: 'keyword'
+      click_button 'Create Collection and Upload Works'
+      expect(page).to have_content('Collection was successfully created.')
+      expect(page).to have_content('Add Multiple New Works')
+      within('ul.nav-tabs') { click_link('Collections') }
+      expect(page).to have_select('batch_upload_item_collection_ids', selected: title)
+    end
+  end
+
+  context 'when selecting files from the dashboard' do
     let!(:file1) { create(:file, title: ['First file'], depositor: current_user.login) }
     let!(:file2) { create(:file, title: ['Second file'], depositor: current_user.login) }
 
