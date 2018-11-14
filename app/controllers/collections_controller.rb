@@ -5,8 +5,6 @@ class CollectionsController < ApplicationController
   include Sufia::CollectionsControllerBehavior
   prepend_before_action :remove_and_store_permissions, only: :create
 
-  before_action :migrate_creator, only: :edit
-
   self.presenter_class = ::CollectionPresenter
   self.form_class = ::CollectionForm
 
@@ -93,10 +91,6 @@ class CollectionsController < ApplicationController
       else
         collection_path(@collection)
       end
-    end
-
-    def migrate_creator
-      Migration::SolrListMigrator.update(@collection, {})
     end
 
     def doi_service

@@ -32,18 +32,6 @@ describe CollectionsController, type: :controller do
     it { is_expected.to be_success }
   end
 
-  context 'when editing an existing collection' do
-    let(:work1)       { create(:public_work, depositor: user.login) }
-    let(:work2)       { create(:public_work, depositor: user.login) }
-    let!(:collection) { create(:public_collection, members: [work1, work2], depositor: user.login) }
-
-    it 'runs the migration' do
-      expect(Migration::SolrListMigrator).to receive(:update).and_call_original
-      get :edit, id: collection.id
-      expect(response).to be_success
-    end
-  end
-
   describe '::form_class' do
     subject { described_class }
 
