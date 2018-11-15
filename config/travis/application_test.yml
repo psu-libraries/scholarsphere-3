@@ -33,7 +33,7 @@ test:
   backup_directory: 'backups_test'
   ldap_unwilling_sleep: "0"
   REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'repository').to_s %>
-  REPOSITORY_FILESTORE_HOST: 'http://localhost:4000/repository'
+  REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
 production:
