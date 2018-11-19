@@ -194,4 +194,13 @@ namespace :rbenv_custom_ruby_cleanup do
   after 'deploy:finishing', 'rbenv_custom_ruby_cleanup:purge_old_versions'
 end
 
+# newrelic deployment markers
 after 'deploy:updated', 'newrelic:notice_deployment'
+
+desc 'send newrelic java deployment markers'
+task :nrdm_java do
+  on roles(:web) do
+    execute 'java -jar /opt/heracles/newrelic/newrelic.jar deployment'
+  end
+end
+after 'newrelic:notice_deployment', :nrdm_java
