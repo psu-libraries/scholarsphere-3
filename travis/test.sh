@@ -30,6 +30,11 @@ cp config/travis/application_test.yml config/application.yml
 echo -e "\n\n\033[1;33mListing Redis information\033[0m"
 redis-cli info
 
+echo -e "\n\n\033[1;33mStart python for testing\033[0m"
+cd public
+python -m SimpleHTTPServer 8000 &
+cd ..
+
 echo -e "\n\n\033[1;33mStart Chrome for headless testing\033[0m"
 google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
