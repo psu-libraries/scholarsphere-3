@@ -57,6 +57,12 @@ describe 'Dashboard Collections:', type: :feature, js: true do
     expect(page).to have_content('Edit Collection')
     expect(page).to have_content('Delete Collection')
 
+    # Click and cancel delete
+    dismiss_confirm { click_link 'Delete Collection' }
+
+    click_link 'Edit Collection'
+    expect(page).to have_field 'collection_title', with: collection.title.first
+
     # collections are not displayed in the Works list
     go_to_dashboard_works
     expect(page).not_to have_content collection.title
