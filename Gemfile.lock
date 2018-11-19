@@ -477,7 +477,7 @@ GEM
       slop
     legato (0.7.0)
       multi_json
-    libv8 (3.16.14.17)
+    libv8 (6.7.288.46.1)
     link_header (0.0.8)
     little-plugger (1.1.4)
     logging (2.2.2)
@@ -498,6 +498,8 @@ GEM
     mime-types-data (3.2016.0521)
     mini_magick (4.8.0)
     mini_portile2 (2.3.0)
+    mini_racer (0.2.4)
+      libv8 (>= 6.3)
     minitest (5.11.3)
     mono_logger (1.1.0)
     msgpack (1.2.4)
@@ -644,7 +646,6 @@ GEM
       redis (~> 3.0, >= 3.0.4)
     redlock (0.1.8)
       redis (~> 3, >= 3.0.0)
-    ref (2.0.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -821,9 +822,6 @@ GEM
     temple (0.8.0)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -922,6 +920,7 @@ DEPENDENCIES
   kaminari_route_prefix
   launchy
   mail (= 2.6.6.rc1)
+  mini_racer
   mysql2 (~> 0.4.10)
   namae (~> 1.0)
   nest
@@ -953,7 +952,6 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   sufia (= 7.4.1)
-  therubyracer
   travis
   turbolinks
   uglifier
