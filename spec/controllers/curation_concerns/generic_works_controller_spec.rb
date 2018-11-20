@@ -170,8 +170,7 @@ describe CurationConcerns::GenericWorksController, type: :controller do
         expect(response.status).to eq(200)
       end
 
-      it 'allows edits and migrates creators' do
-        expect(Migration::SolrListMigrator).to receive(:update).and_call_original
+      it 'allows edits' do
         get :edit, id: work.id
         expect(response.status).to eq(200)
       end
