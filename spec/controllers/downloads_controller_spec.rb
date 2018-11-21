@@ -95,19 +95,24 @@ describe DownloadsController do
     end
 
     context 'with a GenericWork' do
-      let(:my_work) { create :public_work_with_png, depositor: user.login }
+      let(:my_work) { create :public_work, depositor: user.login }
       let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
-        # I must save the work again because the factory just sends the representative id to solr
-        #  This save sends the id to fedora
-        my_work.save
         controller.params[:id] = my_work.id
         allow(controller).to receive(:response).and_return(response)
       end
       it 'downloads a zip' do
         expect(WorkZipService).to receive(:new).with(my_work, anything, anything).and_call_original
-        expect(controller).to receive(:send_file)
+        expect(controller).to receive(:send_file).with(
+          Rails.root.join('tmp/derivatives',
+                          my_work.id[0, 2],
+                          my_work.id[2, 2],
+                          my_work.id[4, 2],
+                          my_work.id[6, 2],
+                          'sample_title.zip').to_s,
+                                        type: 'application/zip', disposition: 'inline'
+        )
         subject
       end
     end
