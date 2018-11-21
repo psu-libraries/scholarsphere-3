@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 # Notice that with Sufia 7 we generate thumbnails at the FileSets level
 # in a similar way to what we did in Sufia 6 for GenericFiles.
-describe 'FileSet Thumbnail Creation:', type: :feature do
+describe 'FileSet Thumbnail Creation:', type: :feature, normal_characterize: true do
   let(:current_user)   { create(:user) }
   let(:file_set)       { work.file_sets.first }
   let(:thumbnail_path) { main_app.download_path(file_set, file: 'thumbnail') }

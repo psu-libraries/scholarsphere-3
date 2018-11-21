@@ -34,7 +34,6 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     Sipity::Workflow.destroy_all
     Sufia::PermissionTemplate.destroy_all
-    AdminSet.destroy_all
     initialize_default_adminset
   end
 

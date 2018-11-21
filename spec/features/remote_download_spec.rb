@@ -18,7 +18,7 @@ describe GenericWork, type: :feature do
   it 'displays the contents of the readme' do
     visit(polymorphic_path(work))
     click_on 'Download'
-    expect(page.response_headers['Content-Length']).to eq('4339') # size of the image zipped
-    expect(page.response_headers['Content-Disposition']).to eq('inline; filename="work_for_testing_external_files.zip"')
+    expect(page.response_headers['Content-Length']).to eq('4218') # size of the image zipped
+    expect(page.response_headers['Content-Disposition']).to eq('inline; filename="world.png"')
   end
 end
