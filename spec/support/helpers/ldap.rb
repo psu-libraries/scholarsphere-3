@@ -4,7 +4,7 @@
 # otherwise it allows the connection to ldap to make this more of an integration test
 def expect_ldap(method, response, *args)
   return unless travis?
-  expect(PsuDir::Disambiguate::User).to receive(method).with(*args).and_return(response)
+  expect(PsuDir::Disambiguate::User).to receive(method).with(*args).and_return(response).at_least(:once)
 end
 
 def format_name_response(id, first_name, last_name, affiliation = 'STAFF')

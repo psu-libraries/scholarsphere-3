@@ -66,8 +66,9 @@ end
 RSpec.configure do |config|
   config.include Features::SessionHelpers, type: :feature
 
-  config.before(:each, type: :feature) do
+  config.before(:each, type: :feature) do |example|
     initialize_default_adminset
+    allow(CharacterizeJob).to receive(:perform_later) unless example.metadata[:normal_characterize]
   end
 
   config.after(:each, type: :feature) do

@@ -77,13 +77,14 @@ describe GenericWork do
               id: 'public-work',
               depositor: current_user.login,
               representative_id: 'public-fileset',
-              members: file_sets)
+              members: file_sets, resource_type: ['Audio'])
       end
 
       it 'displays properly' do
         expect(page).to have_content(work.title.first)
         expect(page).to have_link('Download file')
         expect(thumbnail_source).to eq(CurationConcerns::ThumbnailPathService.send(:default_image))
+        expect(page).to have_content('How about adding a README file?')
         sign_in(current_user)
         go_to_dashboard_works
         within('#document_public-work') do

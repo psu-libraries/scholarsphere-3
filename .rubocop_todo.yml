@@ -110,7 +110,9 @@ RSpec/MessageSpies:
 # Offense count: 296
 # Configuration parameters: AggregateFailuresByDefault.
 RSpec/MultipleExpectations:
-  Max: 37
+  Exclude:
+    - 'spec/features/**/*'
+  Max: 16
 
 # Offense count: 87
 RSpec/NamedSubject:
