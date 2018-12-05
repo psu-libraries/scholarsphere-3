@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'capybara/poltergeist'
-
 module Features
   module SessionHelpers
     def sign_in(user = nil)
@@ -14,17 +12,20 @@ module Features
       Capybara.current_driver = driver
     end
 
-    def sign_in_with_js(user = nil, opts = {})
-      sign_in_with_named_js(:poltergeist, user, opts)
-    end
-
     def sign_in_with_named_js(name, user = nil, opts = {})
       opts.merge!(disable_animations) if opts.delete(:disable_animations)
-      Capybara.register_driver name do |app|
-        Capybara::Poltergeist::Driver.new(app, defaults.merge(opts))
+      unless Capybara.drivers.include?(name)
+        Capybara.register_driver name do |app|
+          window_size = opts[:window_size] || 'window-size=1024,768'
+          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu', window_size, 'single-process'] })
+          Capybara::Selenium::Driver.new(app,
+                                           browser: :chrome,
+                                           desired_capabilities: capabilities)
+        end
       end
       Capybara.current_driver = name
-      page.driver.headers = request_headers(user)
+
+      login_as user
     end
 
     def disable_animations
@@ -44,11 +45,11 @@ module Features
         { 'REMOTE_USER' => user.login }
       end
 
-      def driver_name(user = nil)
+      def driver_name(user = nil, driver_name = 'rack_test_authenticated_header')
         if user
-          "rack_test_authenticated_header_#{user.login}"
+          "#{driver_name}_#{user.login}"
         else
-          'rack_test_authenticated_header_anonymous'
+          "#{driver_name}_anonymous"
         end
       end
 
@@ -64,4 +65,13 @@ end
 
 RSpec.configure do |config|
   config.include Features::SessionHelpers, type: :feature
+
+  config.before(:each, type: :feature) do |example|
+    initialize_default_adminset
+    allow(CharacterizeJob).to receive(:perform_later) unless example.metadata[:normal_characterize]
+  end
+
+  config.after(:each, type: :feature) do
+    Capybara.use_default_driver
+  end
 end

@@ -7,7 +7,6 @@ describe 'Showing recent additions', type: :feature do
   let!(:gf)          { create(:public_file, depositor: current_user.login, keyword: ["'55 Chet Atkins"]) }
 
   it 'shows the correct links to facets' do
-    sign_in_with_js(current_user)
     visit '/'
     click_link 'Recent Additions'
     expect(page).to have_selector('h3', gf.title.first)

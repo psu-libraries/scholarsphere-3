@@ -43,9 +43,9 @@ describe 'unified search', type: :feature do
       expect(page).to have_link('Back to search results')
     end
   end
-  context 'known user' do
+  context 'known user', js: true do
     before do
-      sign_in_with_js(user)
+      login_as user
       visit('/')
     end
     it 'searches all' do

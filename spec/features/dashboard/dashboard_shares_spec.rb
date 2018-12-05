@@ -4,7 +4,7 @@ require 'feature_spec_helper'
 
 include Selectors::Dashboard
 
-describe 'Dashboard Shares', type: :feature do
+describe 'Dashboard Shares', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let(:jill)         { create(:jill) }
 
@@ -18,7 +18,7 @@ describe 'Dashboard Shares', type: :feature do
   end
 
   before do
-    sign_in_with_js(current_user)
+    login_as(current_user)
     go_to_dashboard_shares
   end
 

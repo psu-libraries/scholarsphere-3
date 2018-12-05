@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # Ruby on Rails components
 gem 'rails', '4.2.7.1'
-gem 'mysql2', '~> 0.3.17' unless ENV['CI']
+gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 
 # Hydra gems
 gem 'active-fedora', '~> 11.5'
@@ -26,6 +26,7 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails', '~> 4.2'
 gem 'kaminari_route_prefix'
+gem 'mini_racer'
 gem 'namae', '~> 1.0'
 gem 'nest'
 gem 'newrelic_rpm'
@@ -44,7 +45,6 @@ gem 'select2-rails'
 gem 'share_notify'
 gem 'sitemap'
 gem 'sprockets-rails'
-gem 'therubyracer'
 gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever'
@@ -55,6 +55,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'faker'
   gem 'fcrepo_wrapper'
+  gem 'launchy'
   gem 'niftany'
   gem 'pry'
   gem 'pry-byebug'
@@ -67,7 +68,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'better_errors'
+  gem 'better_errors', '~> 2.4.0'
   gem 'binding_of_caller'
 
   # Use Capistrano for deployment
@@ -87,14 +88,9 @@ group :test do
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
-  gem 'poltergeist', '~> 1.9'
+  gem 'chromedriver-helper'
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'vcr'
   gem 'webmock'
-end
-
-group :debug do
-  gem 'byebug', require: false
-  gem 'launchy'
 end

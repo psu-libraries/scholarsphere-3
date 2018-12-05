@@ -10,22 +10,6 @@ ls -l dep_cache
 echo -e "\n\n\033[1;33mInstalling AWS command line tools\033[0m"
 pip install awscli --upgrade --user
 
-echo -e "\n\n\033[1;33mInstalling PhantomJS\033[0m"
-export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
-echo -n "Path: "
-which phantomjs
-echo -n "Installed version: "
-phantomjs --version
-if [ $(phantomjs --version) != '2.1.1' ]; then
-  echo "Updating PhantomJS..."
-  rm -rf $PWD/travis_phantomjs
-  mkdir -p $PWD/travis_phantomjs
-  wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs
-  echo -n "Updated version: "
-  phantomjs --version
-fi
-
 echo -e "\n\n\033[1;33mInstalling Code Climate test reporting tool\033[0m"
 if [ ! -f dep_cache/cc-test-reporter ]; then
   curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./dep_cache/cc-test-reporter
@@ -41,17 +25,18 @@ cp config/sample/database.yml config/database.yml
 cp config/sample/hydra-ldap.yml config/hydra-ldap.yml
 cp config/sample/share_notify.yml config/share_notify.yml
 cp config/sample/initializers/qa.rb config/initializers/qa.rb
-
-if [ "$EXTERNAL_FILES" = "false" ]; then
-  echo -e "\n\n\033[1;33mTesting without external files enabled\033[0m"
-  cp config/travis/application_without_external_files.yml config/application.yml
-else
-  echo -e "\n\n\033[1;33mTesting with external files enabled\033[0m"
-  cp config/travis/application_with_external_files.yml config/application.yml
-fi
+cp config/travis/application_test.yml config/application.yml
 
 echo -e "\n\n\033[1;33mListing Redis information\033[0m"
 redis-cli info
+
+echo -e "\n\n\033[1;33mStart python for testing\033[0m"
+cd public
+python -m SimpleHTTPServer 8000 &
+cd ..
+
+echo -e "\n\n\033[1;33mStart Chrome for headless testing\033[0m"
+google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 echo -e "\n\n\033[1;33mPrepare coverage report and run the RSpec test\033[0m"
 cc-test-reporter before-build

@@ -27,6 +27,22 @@ namespace :solr do
   end
 end
 
+namespace :filestore do
+  desc 'Starts up the server for the remote file store'
+  task start: :environment do
+    system(
+      "cd #{Rails.root.join('public')} && "\
+      "python -m SimpleHTTPServer #{URI(ENV['REPOSITORY_FILESTORE_HOST']).port} &> "\
+      '../log/filestore.log &'
+    )
+  end
+
+  desc 'Stops all instances of the remote file store'
+  task stop: :environment do
+    system("ps -ax | grep SimpleHTTPServer | awk '{print $1}' | xargs kill -s KILL &> /dev/null")
+  end
+end
+
 namespace :dev do
   desc "Cleans out everything. Everything. Don't try this at home."
   task clean: :environment do
@@ -51,5 +67,25 @@ namespace :dev do
     Redis.current.keys.map { |key| Redis.current.del(key) }
   rescue => e
     Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
+  end
+end
+
+namespace :coveralls do
+  desc 'Report line count statistics from Coveralls'
+  task line_report: :environment do
+    report = Rails.root.join('coverage/.resultset.json')
+    unless report.exist?
+      raise ArgumentError, 'No coveralls report found. Run `bundle exec coveralls report` to generate'
+    end
+
+    results = JSON.parse(File.read(report))
+
+    CSV.open(Rails.root.join('coverage/line_report.csv'), 'w') do |csv|
+      csv << ['Test', 'Max', 'Average']
+      results['spec']['coverage'].each do |key, values|
+        values.compact!
+        csv << [Pathname.new(key).basename, values.max, (values.sum / values.length)]
+      end
+    end
   end
 end

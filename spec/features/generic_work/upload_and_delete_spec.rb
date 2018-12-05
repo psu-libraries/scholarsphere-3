@@ -15,12 +15,26 @@ describe 'Generic File uploading and deletion:', type: :feature do
     let(:file)                  { work }
     let(:work)                  { find_work_by_title 'little_file.txt_title' }
 
+    let(:response) do
+      resp1 = format_name_response('cjs997', 'TESTING 1', 'CHRIS')
+      resp2 = format_name_response('utstrans', 'TESTING TRANSFR', 'UNIV')
+      resp3 = format_name_response('jlt37', 'Jeffrey L', 'Tate')
+
+      resp1 + resp2 + resp3
+    end
+
+    let(:user) { create(:user, display_name: 'First User') }
+    let(:name) { 'Testing' }
+    let(:ldap_fields) { %i[uid givenname sn mail eduPersonPrimaryAffiliation displayname] }
+
     before do
       sign_in_with_named_js(:upload_and_delete, current_user, disable_animations: true)
       allow(CharacterizeJob).to receive(:perform_later)
       allow(ShareNotifyDeleteJob).to receive(:perform_later)
       Sufia::AdminSetCreateService.create_default!
       visit(new_curation_concerns_generic_work_path)
+      p = Agent.create(given_name: 'Testing', sur_name: 'Person', email: 'person@email.com', psu_id: 'tp01')
+      create(:alias, display_name: 'Testing Person', agent: p)
     end
 
     context 'cloud providers' do
@@ -86,6 +100,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
       let(:new_creator) { Agent.where(psu_id: 'jhc29').first }
 
       it 'uploads the file, sends notification, creates new agent records, and deletes the file' do
+        expect_ldap(:query_ldap_by_name, response, 'TESTING', '*', ldap_fields)
+
+        expect_ldap(:query_ldap_by_mail, response, 'Testing@psu.edu', ldap_fields)
+
         # Verify agent does not exist
         expect(Agent.where(psu_id: 'jhc29').first).to be_nil
 
@@ -101,7 +119,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Add files
         click_on 'Files'
-        attach_file('files[]', test_file_path(filename), visible: false)
+        attach_file('inputfiles', test_file_path(filename), visible: false)
         click_on 'Start'
 
         # Check visibility
@@ -134,6 +152,42 @@ describe 'Generic File uploading and deletion:', type: :feature do
         within('#metadata')      { expect(page).to have_link('Licenses') }
         within('#metadata')      { expect(page).not_to have_css('#work-media') }
         within('div#savewidget') { expect(page).to have_link('Required metadata complete') }
+
+        # Adding a blank creator field
+        click_button 'add-creator'
+        expect(page).to have_selector('.creator_inputs', count: 2)
+        click_button 'add-creator'
+        expect(page).to have_selector('.creator_inputs', count: 3)
+
+        # Remove a creator field
+        execute_script("$('.remove-creator')[1].click()")
+        expect(page).to have_selector('.creator_inputs', count: 2)
+        execute_script("$('.remove-creator')[1].click()")
+        expect(page).to have_selector('.creator_inputs', count: 1)
+
+        # Autocomplete returns a result from Agents
+        page.execute_script "$('#find_creator').unbind('blur')"
+        0..4.times do |count|
+          fill_in('Find Creator', with: 'Testing')
+          expect(page).to have_selector('.tt-suggestion')
+          page.execute_script("$(\".tt-suggestion\")[#{count}].click()")
+          expect(page).to have_selector('.creator_inputs', count: count + 2)
+        end
+
+        # Add creator field from autocomplete results
+        expect(page).to have_selector('.creator_inputs', count: 5)
+        expect(page).to have_field('generic_work[creators][2][given_name]', readonly: true)
+        expect(page).to have_field('generic_work[creators][2][sur_name]', readonly: true)
+        expect(page).to have_field('generic_work[creators][2][email]', readonly: true)
+        expect(page).to have_field('generic_work[creators][2][psu_id]', readonly: true)
+        expect(page).to have_selector("input[value='Testing Person']")
+        expect(page).to have_selector("input[value='TESTING TRANSFR UNIV']")
+        expect(page).to have_selector("input[value='TESTING 1 CHRIS']")
+        expect(page).to have_selector("input[value='Jeffrey L Tate']")
+
+        # Remove the autocompleted creator field
+        execute_script("$('.remove-creator')[2].click()")
+        expect(page).to have_selector('.creator_inputs', count: 4)
 
         # Check for additional fields
         expect(page).to have_no_css('#generic_work_contributor')
@@ -192,16 +246,16 @@ describe 'Generic File uploading and deletion:', type: :feature do
         go_to_dashboard_works
         expect(page).to have_content file.title.first
         db_item_actions_toggle(file).click
-        click_link 'Delete Work'
+        accept_confirm { click_link 'Delete Work' }
         expect(page).to have_content "Deleted #{file.title.first}"
       end
     end
   end
 
-  context 'When logged in as a non-PSU user' do
+  context 'When logged in as a non-PSU user', js: true do
     let(:current_user) { create(:non_psu_user) }
 
-    before { sign_in_with_js(current_user) }
+    before { login_as current_user }
 
     specify 'I cannot access the upload page' do
       visit new_generic_work_path

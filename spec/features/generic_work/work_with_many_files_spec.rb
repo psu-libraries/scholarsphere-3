@@ -2,7 +2,7 @@
 
 require 'feature_spec_helper'
 
-describe GenericWork, type: :feature do
+describe GenericWork, type: :feature, js: true do
   context 'when viewing a work with many files' do
     let(:current_user) { create(:user) }
     let(:number_of_files) { 21 }
@@ -39,8 +39,15 @@ describe GenericWork, type: :feature do
       file_sets.each { |fs| index_file_set(fs, commit_now: false) }
       index_document(list_source, commit_now: false)
       index_work(work)
-      sign_in_with_js(current_user)
+      login_as(current_user)
       visit('/concern/generic_works/bigwork')
+    end
+
+    after do
+      file_sets.each { |fs| ActiveFedora::SolrService.instance.conn.delete_by_id fs.id }
+      ActiveFedora::SolrService.instance.conn.delete_by_id "#{work.id}/list_source"
+      ActiveFedora::SolrService.instance.conn.delete_by_id work.id
+      ActiveFedora::SolrService.commit
     end
 
     it 'displays the work page with pagination and each page has 10 files' do

@@ -24,24 +24,7 @@ require 'byebug' unless ENV['TRAVIS']
 # For feature testing with JS
 require 'capybara/rails'
 require 'capybara-screenshot/rspec'
-require 'capybara/poltergeist'
 require 'selenium-webdriver'
-
-poltergeist_options = {
-  js_errors: true,
-  timeout: 30,
-  logger: false,
-  debug: false,
-  phantomjs_logger: StringIO.new,
-  phantomjs_options: [
-    '--load-images=no',
-    '--ignore-ssl-errors=yes'
-  ]
-}
-
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
-end
 
 Capybara.register_driver :chrome do |app|
   profile = Selenium::WebDriver::Chrome::Profile.new
@@ -49,7 +32,16 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.register_driver(:chrome_new) do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu', 'single-process'] }
+  )
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities)
+end
+
+Capybara.javascript_driver = :chrome_new
 Capybara.default_driver = :rack_test
 
 def travis?

@@ -32,11 +32,13 @@ module FactoryHelpers
 
     file_path = "#{Rails.root}/spec/fixtures/world.png"
     IngestFileJob.perform_now(fs, file_path, attributes.user)
+    fs.original_file.mime_type = 'image/png'
+    fs.original_file.save
 
     work.ordered_members << fs
     work.thumbnail_id = fs.id
     work.representative_id = fs.id
-    work.update_index
+    work.save
   end
 
   def add_another_version(work, attributes)
@@ -57,24 +59,34 @@ module FactoryHelpers
     work.ordered_members << fs
     work.thumbnail_id = fs.id
     work.representative_id = fs.id
-    work.update_index
+    work.save
   end
 
   def add_public_readme(work, attributes)
-    fs1 = FactoryGirl.create(:file_set)
+    fs = FactoryGirl.create(:file_set,
+                            user: attributes.user,
+                            title: ['A small file'],
+                            label: 'little_file.txt',
+                            visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+    file_path = "#{Rails.root}/spec/fixtures/little_file.txt"
+    IngestFileJob.perform_now(fs, file_path, attributes.user)
+    work.ordered_members << fs
+    work.members << fs
+    work.thumbnail_id = fs.id
+    work.representative_id = fs.id
 
-    actor = CurationConcerns::Actors::FileSetActor.new(fs1, attributes.user)
-    actor.create_metadata(work, visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-    file_path = "#{Rails.root}/spec/fixtures/small_file.txt"
-    local_file = File.open(file_path, 'rb')
-    actor.create_content(local_file)
-
-    fs2 = FactoryGirl.create(:file_set)
-    actor = CurationConcerns::Actors::FileSetActor.new(fs2, attributes.user)
-    actor.create_metadata(work, visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+    fs2 = FactoryGirl.create(:file_set,
+                             user: attributes.user,
+                             title: ['readme.md'],
+                             label: 'readme.md',
+                             visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
     file_path = "#{Rails.root}/spec/fixtures/readme.md"
-    local_file = File.open(file_path, 'rb')
-    actor.create_content(local_file)
+    IngestFileJob.perform_now(fs2, file_path, attributes.user)
+    work.ordered_members << fs2
+    work.members << fs2
+    work.save
+
+    GenericWork.find(work.id).update_index
   end
 
   def add_public_mp3(work, attributes)
@@ -90,5 +102,6 @@ module FactoryHelpers
     fs.save!
     work.ordered_members << fs
     work.thumbnail_id = fs.id
+    work.save
   end
 end

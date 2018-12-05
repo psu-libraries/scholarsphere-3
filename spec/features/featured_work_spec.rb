@@ -2,7 +2,7 @@
 
 require 'feature_spec_helper'
 
-describe 'Featured works on the home page', type: :feature do
+describe 'Featured works on the home page', type: :feature, js: true do
   let!(:user)         { create(:user) }
   let!(:jill_user)    { create(:jill) }
   let!(:file1)        { create(:featured_file, depositor: user.login, title: ['file title'], keyword: ["'55 Chet Atkins"]) }
@@ -13,7 +13,7 @@ describe 'Featured works on the home page', type: :feature do
 
   context 'as a normal user' do
     before do
-      sign_in_with_js(user)
+      login_as user
       visit('/')
     end
 
@@ -37,7 +37,7 @@ describe 'Featured works on the home page', type: :feature do
 
   context 'as an administrator' do
     before do
-      sign_in_with_js(admin_user)
+      login_as admin_user
       visit('/')
     end
     it 'allows the user to remove it as a featured work' do

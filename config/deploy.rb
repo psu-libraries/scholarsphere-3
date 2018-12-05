@@ -114,12 +114,12 @@ namespace :deploy do
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
-      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
-      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads /opt/heracles/deploy/scholarsphere/shared/public/"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.xml"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
-      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
+      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}_new/uploads/ /opt/heracles/deploy/scholarsphere/shared/tmp/"
+      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}_new/uploads /opt/heracles/deploy/scholarsphere/shared/public/"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}_new/public/robots.txt /opt/heracles/deploy/scholarsphere/shared/public/robots.txt"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}_new/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.xml"
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}_new/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
+      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}_new/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
     end
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
@@ -193,3 +193,14 @@ namespace :rbenv_custom_ruby_cleanup do
   end
   after 'deploy:finishing', 'rbenv_custom_ruby_cleanup:purge_old_versions'
 end
+
+# newrelic deployment markers
+after 'deploy:updated', 'newrelic:notice_deployment'
+
+desc 'send newrelic java deployment markers'
+task :nrdm_java do
+  on roles(:web) do
+    execute 'java -jar /opt/heracles/newrelic/newrelic.jar deployment'
+  end
+end
+# after 'newrelic:notice_deployment', :nrdm_java

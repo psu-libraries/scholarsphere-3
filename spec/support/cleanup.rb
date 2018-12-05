@@ -14,6 +14,8 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.clean_with(:truncation)
     ActiveFedora::Cleaner.clean!
+    FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
+    FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
   end
 
   # Only clean Fedora and Solr unless explicitly requested
@@ -21,6 +23,8 @@ RSpec.configure do |config|
     if example.metadata.fetch(:clean, nil)
       ActiveFedora::Cleaner.clean!
       DatabaseCleaner.clean_with(:truncation)
+      FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
+      FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
     end
   end
 
@@ -30,7 +34,6 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     Sipity::Workflow.destroy_all
     Sufia::PermissionTemplate.destroy_all
-    AdminSet.destroy_all
     initialize_default_adminset
   end
 

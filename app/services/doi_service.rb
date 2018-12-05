@@ -24,10 +24,10 @@ class DOIService
     'Other' => 'Other'
   }.freeze
 
-  def initialize(handle = ScholarSphere::Application.config.doi_handle,
-                 user = ScholarSphere::Application.config.doi_user,
-                 password = ScholarSphere::Application.config.doi_password)
-    @client = Ezid::Client.new(user: user, password: password)
+  # @note user, password, and host values for the Ezid::Client are obtained from environment variables
+  #   set in application.yml. The hostname can be either an EZID API service or the new DataCite EZ API.
+  def initialize(handle = ScholarSphere::Application.config.doi_handle)
+    @client = Ezid::Client.new
     @handle = handle
   end
 

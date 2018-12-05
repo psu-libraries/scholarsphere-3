@@ -5,7 +5,7 @@ require 'rails_helper'
 describe DOIService do
   subject(:run_service) { service.run(object) }
 
-  let(:service) { described_class.new('testhandle', 'testuser', 'testpassword') }
+  let(:service) { described_class.new('testhandle') }
   let(:first_creator) { create(:alias, display_name: 'First Creator', agent: Agent.new(given_name: 'First', sur_name: 'Creator')) }
   let(:second_creator) { create(:alias, display_name: 'Second Creator', agent: Agent.new(given_name: 'Second', sur_name: 'Creator')) }
 

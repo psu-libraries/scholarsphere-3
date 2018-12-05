@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['NEW_RELIC_APP_NAME'] = 'ss-stage-ruby'
+
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
@@ -15,7 +17,9 @@
 # This can be used to drop a more detailed server definition into the
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
-server 'ss2test.dlt.psu.edu', user: 'deploy', roles: %w(web app solr db job), primary: true
+server 'ssweb1stage-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
+server 'ssweb2stage-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
+server 'ssjobs1stage-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options

@@ -2,12 +2,12 @@
 
 require 'feature_spec_helper'
 
-describe 'Showing the Generic File', type: :feature do
+describe 'Showing the Generic File', type: :feature, js: true do
   let(:current_user) { create(:administrator) }
   let!(:gf)          { create(:public_file, depositor: current_user.login) }
 
   it 'allows a feature to be marked and deleted' do
-    sign_in_with_js(current_user)
+    login_as(current_user)
     visit '/'
     click_link 'Recent Additions'
     expect(page).to have_content(gf.title.first)
