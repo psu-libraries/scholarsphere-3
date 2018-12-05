@@ -203,4 +203,4 @@ task :nrdm_java do
     execute 'java -jar /opt/heracles/newrelic/newrelic.jar deployment'
   end
 end
-after 'newrelic:notice_deployment', :nrdm_java
+# after 'newrelic:notice_deployment', :nrdm_java
