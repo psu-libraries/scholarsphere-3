@@ -1,5 +1,8 @@
-<fieldset>
-  <legend class="legend-save-work"><%= t('curation_concerns.base.form_progress.legend_doi') %></legend>
-  <%= f.label :create_doi, "Create a DOI for this #{I18n.t("scholarsphere.model_display_name.#{f.object_name}")}", class: :doi_label %>
-  <%= f.check_box :create_doi, disabled: f.object.create_doi %>
-</fieldset>
+<%# adding this code here becuase we should throw it away once DataCite is fully integrated %>
+<% if ENV.fetch('doi_enabled', 'true').casecmp('true').zero? %>
+  <fieldset>
+    <legend class="legend-save-work"><%= t('curation_concerns.base.form_progress.legend_doi') %></legend>
+    <%= f.label :create_doi, "Create a DOI for this #{I18n.t("scholarsphere.model_display_name.#{f.object_name}")}", class: :doi_label %>
+    <%= f.check_box :create_doi, disabled: f.object.create_doi %>
+  </fieldset>
+<% end %>
