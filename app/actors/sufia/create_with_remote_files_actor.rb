@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Overrides Sufia. Adds in visibility attributes that Sufia does not handel
+# Overrides Sufia. Remove this file when we've updated to Sufia 7.3
 module Sufia
   # Attaches remote files to the work
   class CreateWithRemoteFilesActor < CurationConcerns::Actors::AbstractActor
