@@ -81,15 +81,22 @@ describe DownloadsController do
   describe '#show' do
     subject { controller.send(:show) }
 
+    let(:response) { instance_double ActionDispatch::Response, headers: {} }
+
     before do
       allow_any_instance_of(User).to receive(:groups).and_return([])
+      allow(controller).to receive(:response).and_return(response)
     end
 
     context 'with a FileSet' do
-      before { controller.params[:id] = my_file.id }
+      before do
+        allow(response).to receive(:"status=")
+        controller.params[:id] = my_file.id
+      end
       it 'sends content' do
-        expect(controller).to receive(:send_content)
+        # expect(controller).to receive(:send_content)
         expect(WorkZipService).not_to receive(:new)
+        expect(controller).to receive(:send_file).with(/.*#{my_file.id}.*world.png/, type: 'image/png', disposition: 'inline')
         subject
       end
     end
