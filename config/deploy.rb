@@ -75,6 +75,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
   'public/system',
   'public/uploads',
+  'public/binaries',
   'tmp/cache',
   'tmp/pids',
   'tmp/sockets',
@@ -120,6 +121,7 @@ namespace :deploy do
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}_new/public/sitemap.xml /opt/heracles/deploy/scholarsphere/shared/public/sitemap.xml"
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}_new/public/system/ /opt/heracles/deploy/scholarsphere/shared/public/"
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}_new/scholarsphere/ /opt/heracles/deploy/scholarsphere/shared/config"
+      execute "ln -sf /#{fetch(:application)}/binaries_#{fetch(:stage)} /opt/heracles/deploy/scholarsphere/shared/public/binaries"
     end
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
