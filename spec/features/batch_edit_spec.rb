@@ -39,6 +39,29 @@ describe 'Batch management of works', type: :feature do
     it 'edits a field and displays the changes', js: true do
       expect(page).to have_content 'Changes will be applied to the following'
 
+      # check the form has the correct values
+      @original_value = Capybara.ignore_hidden_elements
+      Capybara.ignore_hidden_elements = false
+      within('textarea#batch_edit_item_description') do
+        expect(page).to have_content('descriptiondescription')
+      end
+      expect(page).to have_css "input#batch_edit_item_contributor[value*='contributorcontributor']"
+      expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
+      expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
+      expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
+      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq('First')
+      expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq('Creator')
+      expect(find_field(id: 'batch_edit_item[creators][0][display_name]').value).to eq('First Creator')
+      expect(find_field(id: 'batch_edit_item[creators][1][given_name]').value).to eq('Second')
+      expect(find_field(id: 'batch_edit_item[creators][1][sur_name]').value).to eq('Creator')
+      expect(find_field(id: 'batch_edit_item[creators][1][display_name]').value).to eq('Second Creator')
+      expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
+      expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
+      expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
+      expect(page).to have_no_checked_field('Private')
+      expect(page).to have_content(I18n.t('scholarsphere.batch_edit.permissions_warning'))
+      Capybara.ignore_hidden_elements = @original_value
+
       # Update standard fields
       batch_edit_fields.each do |field|
         fill_in_batch_edit_field(field, with: "Updated batch #{field}")
@@ -80,30 +103,6 @@ describe 'Batch management of works', type: :feature do
       expect(work2.creators.map(&:display_name)).to contain_exactly('Dr. Creator C. Creator, MD', 'Another Creator')
       expect(work2.creators.map(&:agent).map(&:sur_name)).to contain_exactly('Creator', 'Creator')
       expect(work2.creators.map(&:agent).map(&:given_name)).to contain_exactly('Another', 'Second')
-    end
-
-    it "displays the field's existing value" do
-      @original_value = Capybara.ignore_hidden_elements
-      Capybara.ignore_hidden_elements = false
-      within('textarea#batch_edit_item_description') do
-        expect(page).to have_content('descriptiondescription')
-      end
-      expect(page).to have_css "input#batch_edit_item_contributor[value*='contributorcontributor']"
-      expect(page).to have_css "input#batch_edit_item_keyword[value*='tagtag']"
-      expect(page).to have_css "input#batch_edit_item_based_near[value*='based_nearbased_near']"
-      expect(page).to have_css "input#batch_edit_item_language[value*='languagelanguage']"
-      expect(find_field(id: 'batch_edit_item[creators][0][given_name]').value).to eq('First')
-      expect(find_field(id: 'batch_edit_item[creators][0][sur_name]').value).to eq('Creator')
-      expect(find_field(id: 'batch_edit_item[creators][0][display_name]').value).to eq('First Creator')
-      expect(find_field(id: 'batch_edit_item[creators][1][given_name]').value).to eq('Second')
-      expect(find_field(id: 'batch_edit_item[creators][1][sur_name]').value).to eq('Creator')
-      expect(find_field(id: 'batch_edit_item[creators][1][display_name]').value).to eq('Second Creator')
-      expect(page).to have_css "input#batch_edit_item_publisher[value*='publisherpublisher']"
-      expect(page).to have_css "input#batch_edit_item_subject[value*='subjectsubject']"
-      expect(page).to have_css "input#batch_edit_item_related_url[value*='http://example.org/TheRelatedURLLink/']"
-      expect(page).to have_no_checked_field('Private')
-      expect(page).to have_content(I18n.t('scholarsphere.batch_edit.permissions_warning'))
-      Capybara.ignore_hidden_elements = @original_value
     end
   end
 
