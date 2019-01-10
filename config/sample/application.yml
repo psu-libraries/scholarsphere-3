@@ -19,7 +19,7 @@ development:
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups'
   ldap_unwilling_sleep: "2"
-  REPOSITORY_FILESTORE: <%= Rails.root.join('public', 'repository').to_s %>
+  REPOSITORY_FILESTORE: <%= Rails.root.join('public', 'dev_repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/dev_repository'
   REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "dev_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
@@ -35,7 +35,7 @@ test:
   RECAPTCHA_SECRET_KEY: 'secret-key'
   backup_directory: 'backups_test'
   ldap_unwilling_sleep: "0"
-  REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'repository').to_s %>
+  REPOSITORY_FILESTORE:  <%= Rails.root.join('public', 'test_repository').to_s %>
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/test_repository'
   REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "test_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
