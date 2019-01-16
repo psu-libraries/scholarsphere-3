@@ -7,6 +7,7 @@ module BenchmarkConfig
 
   def headless?
     return false if ENV.fetch('BENCHMARK_HEADLESS', true) == 'false'
+
     true
   end
 

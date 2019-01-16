@@ -19,6 +19,7 @@ describe CurationConcerns::GenericWorkForm do
 
     context 'without a display name' do
       before { User.destroy_all }
+
       let(:user) { User.create(login: 'SomeUser') }
 
       # Note: I don't think we will ever encounter this scenario (awead)
@@ -62,6 +63,7 @@ describe CurationConcerns::GenericWorkForm do
       let(:work) { build(:private_work) }
 
       before { allow(work).to receive(:new_record?).and_return(false) }
+
       its(:visibility) { is_expected.to eq('restricted') }
     end
   end
@@ -77,6 +79,7 @@ describe CurationConcerns::GenericWorkForm do
       let(:work) { build(:work, id: '1234') }
 
       before { allow(work).to receive(:persisted?).and_return(true) }
+
       it { is_expected.to eq('#edit_generic_work_1234') }
     end
   end

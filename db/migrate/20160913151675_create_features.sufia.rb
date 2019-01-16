@@ -1,5 +1,5 @@
 # This migration comes from sufia (originally 20160415212015)
-class CreateFeatures < ActiveRecord::Migration
+class CreateFeatures < ActiveRecord::Migration[4.2]
   def change
     create_table :sufia_features do |t|
       t.string :key, null: false

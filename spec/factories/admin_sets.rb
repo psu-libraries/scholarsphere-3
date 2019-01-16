@@ -6,6 +6,6 @@ FactoryGirl.define do
   end
 
   trait :public do
-    read_groups ['public']
+    read_groups { ['public'] }
   end
 end

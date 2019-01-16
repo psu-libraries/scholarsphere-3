@@ -23,8 +23,8 @@ describe 'Visting the home page:', type: :feature, js: true do
       let(:current_user) { create(:user, :with_two_groups) }
 
       it do
-        is_expected.to have_content('Share. Manage. Preserve.')
-        is_expected.to have_content(current_user.display_name)
+        expect(subject).to have_content('Share. Manage. Preserve.')
+        expect(subject).to have_content(current_user.display_name)
       end
     end
 
@@ -32,11 +32,12 @@ describe 'Visting the home page:', type: :feature, js: true do
       let(:current_user) { create(:user, :with_many_groups) }
 
       it do
-        is_expected.to have_content('Share. Manage. Preserve.')
-        is_expected.to have_content(current_user.display_name)
+        expect(subject).to have_content('Share. Manage. Preserve.')
+        expect(subject).to have_content(current_user.display_name)
       end
     end
   end
+
   context 'with a mobile device' do
     let(:current_user) { create(:user) }
 

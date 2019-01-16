@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :file_set do
     transient do
       user { FactoryGirl.create(:user) }
-      content nil
+      content { nil }
     end
     after(:build) do |fs, evaluator|
       fs.apply_depositor_metadata evaluator.user.user_key
@@ -17,19 +17,19 @@ FactoryGirl.define do
     end
 
     trait :public do
-      read_groups ['public']
+      read_groups { ['public'] }
     end
 
     trait :registered do
-      read_groups ['registered']
+      read_groups { ['registered'] }
     end
 
     trait :with_png do
       transient do
-        id 'fixturepng'
+        id { 'fixturepng' }
       end
       initialize_with { new(id: id) }
-      title ['fake_image.png']
+      title { ['fake_image.png'] }
       before(:create) do |fs|
         fs.title = ['Sample PNG']
       end

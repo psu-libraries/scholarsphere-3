@@ -32,16 +32,19 @@ class CreatorForm
 
   def psu_id
     return unless read_only?
+
     agent_alias.agent.psu_id
   end
 
   def email
     return unless read_only?
+
     agent_alias.agent.email
   end
 
   def orcid_id
     return unless read_only?
+
     agent_alias.agent.orcid_id
   end
 

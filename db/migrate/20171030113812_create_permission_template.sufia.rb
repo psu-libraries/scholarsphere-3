@@ -1,5 +1,5 @@
 # This migration comes from sufia (originally 20161021175854)
-class CreatePermissionTemplate < ActiveRecord::Migration
+class CreatePermissionTemplate < ActiveRecord::Migration[4.2]
   def change
     create_table :permission_templates do |t|
       t.string :admin_set_id

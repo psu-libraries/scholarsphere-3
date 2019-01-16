@@ -23,7 +23,7 @@ describe 'FileSet versioning:', type: :feature do
     click_button('Upload New Version')
     expect(page).to have_selector('h1', text: filename)
     within('.file-show-details') do
-      expect(page).to have_selector('dd', filename)
+      expect(page).to have_selector('dd', text: filename)
     end
     click_link('Edit This File')
     click_link('Versions')
@@ -31,7 +31,7 @@ describe 'FileSet versioning:', type: :feature do
     click_button('Save Revision')
     expect(page).to have_selector('h1', text: 'world.png')
     within('.file-show-details') do
-      expect(page).to have_selector('dd', 'world.png')
+      expect(page).to have_selector('dd', text: 'world.png')
     end
   end
 end

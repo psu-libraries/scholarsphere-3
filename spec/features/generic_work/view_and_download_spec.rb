@@ -119,11 +119,13 @@ describe GenericWork, type: :feature, js: true do
 
     context 'When viewing a public file' do
       before  { db_item_title(public_file).click }
+
       specify { expect(page).to have_link 'Feature' }
     end
 
     context 'When viewing a private file' do
       before  { db_item_title(private_file).click }
+
       specify { expect(page).not_to have_link 'Feature' }
     end
   end

@@ -11,12 +11,14 @@ describe 'Site authentication', type: :feature do
         expect(unescape(current_url)).to eq(centralized_login_url)
       end
     end
+
     describe 'And I attempt to visit a restricted page on the site' do
       specify 'The restricted path should be included in my redirected url' do
         visit '/dashboard'
         expect(unescape(current_url)).to eq(centralized_login_url)
       end
     end
+
     describe 'And I try to upload a file' do
       specify 'It should take me back to the upload page after I have logged in' do
         pending('Need to apply configuration changes to login_url')

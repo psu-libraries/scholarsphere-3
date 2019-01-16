@@ -41,6 +41,7 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
 
       def remote?
         return true if new_record?
+
         ldp_source.head.response.status == 307
       end
 
@@ -48,6 +49,7 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
       def content_empty?
         return false if behaves_like_io?(@content) && @content.read.empty?
         return true if @content.class == String && @content.empty?
+
         false
       end
 
@@ -77,6 +79,7 @@ if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
 
       def file_path
         return unless remote?
+
         @file_path ||= Scholarsphere::Pairtree.new(self, nil).storage_path(file_url)
       end
 

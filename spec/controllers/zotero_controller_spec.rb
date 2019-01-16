@@ -14,7 +14,7 @@ describe API::ZoteroController, type: :controller do
       before { get :initiate }
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
@@ -27,7 +27,7 @@ describe API::ZoteroController, type: :controller do
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to(root_path)
         expect(flash[:alert]).to eq 'You are not authorized to perform this operation'
       end
@@ -43,7 +43,7 @@ describe API::ZoteroController, type: :controller do
       let(:broken_config) { Hash.new(client_key: 'foo', client_secret: 'bar') }
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to(root_path)
         expect(flash[:alert]).to eq 'Invalid Zotero client key pair'
       end
@@ -71,7 +71,7 @@ describe API::ZoteroController, type: :controller do
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(flash[:alert]).to be_nil
         expect(subject.headers['Location']).to include('oauth_callback=http%3A%2F%2Ftest.host%2Fapi%2Fzotero%2Fcallback')
       end
@@ -83,7 +83,7 @@ describe API::ZoteroController, type: :controller do
       before { get :callback }
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to('https://webaccess.psu.edu/?cosign-localhost&https://localhost')
       end
     end
@@ -96,7 +96,7 @@ describe API::ZoteroController, type: :controller do
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to(root_path)
         expect(flash[:alert]).to eq 'You are not authorized to perform this operation'
       end
@@ -109,7 +109,7 @@ describe API::ZoteroController, type: :controller do
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to(routes.url_helpers.edit_profile_path(user))
         expect(flash[:alert]).to eq 'Malformed request from Zotero'
       end
@@ -118,11 +118,11 @@ describe API::ZoteroController, type: :controller do
     context 'with a non-matching token' do
       before do
         sign_in user
-        get :callback, oauth_token: 'woohoo', oauth_verifier: '12345'
+        get :callback, params: { oauth_token: 'woohoo', oauth_verifier: '12345' }
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(subject).to redirect_to(routes.url_helpers.edit_profile_path(user))
         expect(flash[:alert]).to eq 'You have not yet connected to Zotero'
       end
@@ -133,7 +133,7 @@ describe API::ZoteroController, type: :controller do
         allow_any_instance_of(User).to receive(:zotero_token) { user_token }
         allow(Sufia::Arkivo::CreateSubscriptionJob).to receive(:perform_later)
         sign_in user
-        get :callback, oauth_token: token_string, oauth_verifier: pin
+        get :callback, params: { oauth_token: token_string, oauth_verifier: pin }
       end
 
       let(:token_string) { 'woohoo' }
@@ -149,7 +149,7 @@ describe API::ZoteroController, type: :controller do
       end
 
       specify do
-        expect(subject).to have_http_status(302)
+        expect(subject).to have_http_status(:found)
         expect(Sufia::Arkivo::CreateSubscriptionJob).to have_received(:perform_later).with(user.user_key)
         expect(subject).to redirect_to(routes.url_helpers.profile_path(user))
         expect(flash[:alert]).to be_nil

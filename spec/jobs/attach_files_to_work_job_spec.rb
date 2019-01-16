@@ -52,6 +52,7 @@ describe AttachFilesToWorkJob do
       allow(bad_actor).to receive(:create_content).with(file).and_return(false)
       allow(bad_actor).to receive(:user).and_return(user)
     end
+
     it 'sends a success message' do
       expect(AttachFilesToWorkFailureService).to receive(:new).with(user, kind_of(File)).and_call_original
       job.send(:add_file, bad_actor, file)

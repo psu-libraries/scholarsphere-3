@@ -40,6 +40,7 @@ describe 'Featured works on the home page', type: :feature, js: true do
       login_as admin_user
       visit('/')
     end
+
     it 'allows the user to remove it as a featured work' do
       document = find('li.dd-item:nth-of-type(1)')
       expect(document['data-id']).to eq(file1.id)

@@ -23,6 +23,7 @@ describe 'curation_concerns/base/_member.html.erb', verify_partial_doubles: fals
       allow(ability).to receive(:can?).with(:edit, member.id).and_return(false)
       render('curation_concerns/base/member.html.erb', member: member)
     end
+
     it { is_expected.to have_selector('a.btn', text: 'Download') }
   end
 
@@ -32,6 +33,7 @@ describe 'curation_concerns/base/_member.html.erb', verify_partial_doubles: fals
       allow(ability).to receive(:can?).with(:destroy, member.id).and_return(true)
       render('curation_concerns/base/member.html.erb', member: member)
     end
+
     it { is_expected.to have_selector('button#dropdownMenu_1234') }
   end
 end

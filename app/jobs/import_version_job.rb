@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ImportVersionJob < ActiveJob::Base
+class ImportVersionJob < ApplicationJob
   queue_as :files
   # @param [ActiveFedora::Base] the work class
   # @param [Array<UploadedFile>] an array of files to attach

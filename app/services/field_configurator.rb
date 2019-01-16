@@ -12,7 +12,7 @@ class FieldConfigurator
   def self.show_fields
     index_fields
       .except(:has_model)
-      .merge(depositor:  FieldConfig.new('Depositor'),
+      .merge(depositor: FieldConfig.new('Depositor'),
              contributor: FieldConfig.new('Contributor'),
              date_modified: FieldConfig.new(label: 'Date Modified',
                                             index_solr_type: :stored_sortable,
@@ -41,7 +41,7 @@ class FieldConfigurator
     {
       resource_type: FieldConfig.new('Resource Type'),
       creator_name: FieldConfig.new(label: 'Creator', facet_cleaners: [:creator]),
-      keyword:  FieldConfig.new(label: 'Keyword', facet_cleaners: [:downcase]),
+      keyword: FieldConfig.new(label: 'Keyword', facet_cleaners: [:downcase]),
       subject: FieldConfig.new('Subject'),
       language: FieldConfig.new('Language'),
       based_near: FieldConfig.new('Location'),

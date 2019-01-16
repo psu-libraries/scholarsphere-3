@@ -14,7 +14,7 @@ require 'uri'
 require 'tempfile'
 require 'browse_everything/retriever'
 
-class ImportUrlJob < ActiveJob::Base
+class ImportUrlJob < ApplicationJob
   queue_as CurationConcerns.config.ingest_queue_name
 
   before_enqueue do |job|
@@ -79,6 +79,7 @@ class ImportUrlJob < ActiveJob::Base
 
       def success?
         return false unless active_url?
+
         copy_remote_file
       end
 

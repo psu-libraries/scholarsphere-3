@@ -58,7 +58,7 @@ describe GenericWorkToShareJSONService do
       it 'formats the json' do
         pending('See issue #277')
         expect(name_service).to receive(:disambiguate).and_return([{ email: creator_email }])
-        is_expected.to eq(json)
+        expect(subject).to eq(json)
       end
     end
 
@@ -69,7 +69,7 @@ describe GenericWorkToShareJSONService do
       it 'formats the json' do
         pending('See issue #277')
         expect(name_service).to receive(:disambiguate).and_return([])
-        is_expected.to eq(json)
+        expect(subject).to eq(json)
       end
     end
 
@@ -82,6 +82,7 @@ describe GenericWorkToShareJSONService do
       let(:creator_email) { 'badguy@trouble.com' }
 
       before { allow(name_service).to receive(:disambiguate).and_return([{ email: creator_email }]) }
+
       it 'adds a delete property' do
         expect(subject['jsonData']['otherProperties']).to eq([{ 'name' => 'status', 'properties' => { 'status' => ['deleted'] } }])
       end

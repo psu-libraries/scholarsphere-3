@@ -37,6 +37,7 @@ describe ExpirationService do
       leased_work.deactivate_lease!
       leased_work.lease.save
     end
+
     it 'does not change the visibility' do
       expect(VisibilityCopyJob).not_to receive(:perform_later).with(leased_work)
       described_class.call(lease_date)
@@ -70,6 +71,7 @@ describe ExpirationService do
       embargoed_work.deactivate_embargo!
       embargoed_work.embargo.save
     end
+
     it 'does not change the visibility' do
       expect(VisibilityCopyJob).not_to receive(:perform_later).with(embargoed_work)
       described_class.call(embargo_date)

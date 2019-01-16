@@ -33,11 +33,13 @@ class PermissionsChangeSet
 
   def privatized?
     return false if unchanged?
+
     removed.include?(public_group_read)
   end
 
   def publicized?
     return false if unchanged?
+
     added.include?(public_group_read)
   end
 

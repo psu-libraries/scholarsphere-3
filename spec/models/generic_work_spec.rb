@@ -110,8 +110,10 @@ describe GenericWork do
     context 'with a blank date_uploaded' do
       its(:time_uploaded) { is_expected.to be_blank }
     end
+
     context 'with date_uploaded' do
       before { allow(work).to receive(:date_uploaded).and_return(Date.today) }
+
       its(:time_uploaded) { is_expected.to eq(Date.today.strftime('%Y-%m-%d %H:%M:%S')) }
     end
   end
@@ -138,6 +140,7 @@ describe GenericWork do
       ActiveFedora::SolrService.commit
       allow(work).to receive(:member_ids).and_return(['fs1', 'fs2'])
     end
+
     its(:bytes) { is_expected.to eq(2048) }
   end
 
@@ -150,6 +153,7 @@ describe GenericWork do
       let(:file_set) { build(:file_set, label: 'README') }
 
       before { allow(work).to receive(:file_sets).and_return([file_set]) }
+
       its(:readme_file) { is_expected.to eq(file_set) }
     end
 

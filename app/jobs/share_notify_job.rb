@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ShareNotifyJob < ActiveJob::Base
+class ShareNotifyJob < ApplicationJob
   attr_reader :work
 
   queue_as :share_notify
@@ -8,6 +8,7 @@ class ShareNotifyJob < ActiveJob::Base
   def perform(work)
     @work = work
     return if unshareable? || work.share_notified?
+
     notification_job
   end
 
@@ -45,6 +46,6 @@ class ShareNotifyJob < ActiveJob::Base
     end
 
     def depositor
-      User.find_by_login(work.depositor)
+      User.find_by(login: work.depositor)
     end
 end

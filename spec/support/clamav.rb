@@ -2,7 +2,7 @@
 
 class ClamAV
   include Singleton
-  def scanfile(_f)
+  def scanfile(_)
     0
   end
 

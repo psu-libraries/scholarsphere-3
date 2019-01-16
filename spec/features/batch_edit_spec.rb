@@ -111,6 +111,7 @@ describe 'Batch management of works', type: :feature do
       check 'check_all'
       accept_confirm { click_button('Delete Selected') }
     end
+
     it 'deletes all the works' do
       expect(page).to have_content('Batch delete complete')
       expect(GenericWork.count).to be_zero

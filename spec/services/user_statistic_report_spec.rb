@@ -37,6 +37,7 @@ describe GoogleAnalytics::UserStatisticReport do
         FileViewStat.create date: day1, file_id: user2_file_set.id, user_id: user2.id, views: 3
         FileDownloadStat.create(date: day2, file_id: user1_file_set.id, user_id: user1.id, downloads: 6)
       end
+
       it 'creates view entries in user table' do
         results = importer.call
 

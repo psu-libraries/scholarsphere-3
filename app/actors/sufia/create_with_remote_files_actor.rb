@@ -24,8 +24,10 @@ module Sufia
       # @return [TrueClass]
       def attach_files(remote_files)
         return true unless remote_files
+
         remote_files.each do |file_info|
           next if file_info.blank? || file_info[:url].blank?
+
           create_file_from_url(file_info[:url], file_info[:file_name])
         end
         true

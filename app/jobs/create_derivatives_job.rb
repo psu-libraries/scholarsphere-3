@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Replaces CurationConcerns job to rescue from derivative creation failures and notify the user.
-class CreateDerivativesJob < ActiveJob::Base
+class CreateDerivativesJob < ApplicationJob
   queue_as CurationConcerns.config.ingest_queue_name
 
   # @param [FileSet] file_set
@@ -9,6 +9,7 @@ class CreateDerivativesJob < ActiveJob::Base
   # @param [String, NilClass] filepath the cached file within the CurationConcerns.config.working_path
   def perform(file_set, file_id, filepath = nil)
     return if file_set.video? && !CurationConcerns.config.enable_ffmpeg
+
     filename = CurationConcerns::WorkingDirectory.find_or_retrieve(file_id, file_set.id, filepath)
 
     file_set.create_derivatives(filename)
@@ -26,13 +27,14 @@ class CreateDerivativesJob < ActiveJob::Base
   # then the parent also needs to be reindexed.
   def parent_needs_reindex?(file_set)
     return false unless file_set.parent
+
     file_set.parent.thumbnail_id == file_set.id || file_set.label =~ /^readme/i
   end
 
   private
 
     def notify_user(file_set)
-      user = User.find_by_login(file_set.depositor)
+      user = User.find_by(login: file_set.depositor)
       FileSetDerivativeFailureJob.perform_later(file_set, user)
     end
 end

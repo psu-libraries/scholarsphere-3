@@ -24,6 +24,7 @@ class BatchEditItem < ActiveFedora::Base
   def visibility
     range = batch.map(&:visibility).uniq
     return nil if range.count > 1
+
     range.first
   end
 

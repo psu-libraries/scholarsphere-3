@@ -1,4 +1,4 @@
-class CreateSuperusers < ActiveRecord::Migration
+class CreateSuperusers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :superusers do |t|
       t.integer :user_id, null:false

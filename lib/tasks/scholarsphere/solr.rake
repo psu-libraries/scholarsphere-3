@@ -5,6 +5,7 @@ namespace :scholarsphere do
     desc 'Index a single object in solr'
     task :index, [:id] => :environment do |_t, args|
       raise 'Please provide a id' if args[:id].nil?
+
       ActiveFedora::Base.find(args[:id]).update_index
     end
 
@@ -13,6 +14,7 @@ namespace :scholarsphere do
       fedora = number_of_objects_in_fedora
       solr = number_of_objects_in_solr
       raise "Fedora's #{fedora} objects exceeds Solr's #{solr}" if fedora > solr
+
       puts 'Things appear to be OK'
     end
   end
@@ -46,7 +48,7 @@ namespace :scholarsphere do
       puts "updating collection #{col.id}"
       begin
         col.members.each(&:update_index)
-      rescue
+      rescue StandardError
         puts "\n\n Error updating #{col.id}"
       end
     end

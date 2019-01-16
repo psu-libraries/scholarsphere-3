@@ -12,6 +12,7 @@ AllCops:
     - 'script/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
+    - 'bin/**/*'
 
 # catalog_controller.rb is usually long because it is mostly configuration
 # user.rb could use some refactoring, see #249
@@ -68,6 +69,12 @@ Naming/AccessorMethodName:
 Naming/PredicateName:
   Exclude:
     - 'app/controllers/application_controller.rb'
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - _
+    - id
+    - io
 
 # Causes spec/views/catalog/_index_default.html.erb_spec.rb:20 to fail because Blacklight is enforcing the
 # encoding of a frozen string:

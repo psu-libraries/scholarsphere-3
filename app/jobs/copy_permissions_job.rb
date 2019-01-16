@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Combines VisibilityCopyJob from CurationConcerns and InheritPermissionsJob from Sufia into one job.
-class CopyPermissionsJob < ActiveJob::Base
+class CopyPermissionsJob < ApplicationJob
   def perform(work)
     work.file_sets.each do |file|
       perform_copy(file, work: work)

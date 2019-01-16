@@ -13,6 +13,7 @@ describe ContentBlock do
 
   describe '::license_text=' do
     before { described_class.license_text = 'new value' }
+
     its(:value) { is_expected.to eq('new value') }
   end
 end

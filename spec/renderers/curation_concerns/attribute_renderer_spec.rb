@@ -7,7 +7,7 @@ describe CurationConcerns::Renderers::AttributeRenderer do
     subject { described_class.new(:size, '3').render }
 
     it 'does not display microdata' do
-      is_expected.to eq('<dt class="attribute-term">Size</dt><dd class="attribute size">3</dd>')
+      expect(subject).to eq('<dt class="attribute-term">Size</dt><dd class="attribute size">3</dd>')
     end
   end
 
@@ -15,9 +15,9 @@ describe CurationConcerns::Renderers::AttributeRenderer do
     subject { described_class.new(:creator, 'Joe Schmoe').render }
 
     it 'displays microdata' do
-      is_expected.to include('itemtype="http://schema.org/Person"')
-      is_expected.to include('itemprop="creator"')
-      is_expected.to include('<span itemprop="name">Joe Schmoe</span>')
+      expect(subject).to include('itemtype="http://schema.org/Person"')
+      expect(subject).to include('itemprop="creator"')
+      expect(subject).to include('<span itemprop="name">Joe Schmoe</span>')
     end
   end
 end

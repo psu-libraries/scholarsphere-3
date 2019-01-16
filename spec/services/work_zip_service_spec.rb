@@ -22,7 +22,7 @@ describe WorkZipService do
       let(:work) { build :work, title: ['My Work Is empty'], depositor: user.login }
 
       it 'creates a zip' do
-        is_expected.to eq('tmp/my_work_is_empty.zip')
+        expect(subject).to eq('tmp/my_work_is_empty.zip')
         expect(zip_file.entries.count).to eq(0)
       end
     end
@@ -32,7 +32,7 @@ describe WorkZipService do
       let(:work) { build :work, title: ['My Work Is empty'], depositor: user.login }
 
       it 'creates a zip' do
-        is_expected.to eq('/tmp/my_work_is_empty.zip')
+        expect(subject).to eq('/tmp/my_work_is_empty.zip')
         expect(zip_file.entries.count).to eq(0)
       end
     end
@@ -53,7 +53,7 @@ describe WorkZipService do
       end
 
       it 'creates a zip and filters the files we do not have access to read' do
-        is_expected.to eq('tmp/my_work_is_great.zip')
+        expect(subject).to eq('tmp/my_work_is_great.zip')
         expect(zip_file.entries.map(&:name)).to contain_exactly(mp3_file.title.first, my_file.title.first)
         expect(zip_file.entries.map(&:size)).to contain_exactly(mp3_file.original_file.size, my_file.original_file.size)
       end

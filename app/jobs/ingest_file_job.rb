@@ -3,7 +3,7 @@
 require 'fileutils'
 require 'open-uri'
 # Overrides CurationConcerns to update the file set with the file's name
-class IngestFileJob < ActiveJob::Base
+class IngestFileJob < ApplicationJob
   attr_reader :file_set, :filepath, :characterize_path
 
   queue_as CurationConcerns.config.ingest_queue_name

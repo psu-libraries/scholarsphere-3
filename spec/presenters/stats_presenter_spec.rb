@@ -72,6 +72,7 @@ describe StatsPresenter, type: :model do
     let(:stats) { { total: 100, public: 70, registered: 20, private: 10 } }
 
     before { allow(work_stats).to receive(:by_permission).and_return(stats) }
+
     it 'calls Sufia::Statistics::Works::Count for data' do
       expect(presenter.total_uploads).to eq(100)
       expect(presenter.total_public_uploads).to eq(70)
@@ -83,7 +84,8 @@ describe StatsPresenter, type: :model do
   describe '#total_users' do
     let(:start_datetime) { DateTime.now }
 
-    before { 3.times { create(:user) } }
+    before { create_list(:user, 3) }
+
     it 'returns the total number of user records' do
       expect(presenter.total_users).to eq(3)
     end

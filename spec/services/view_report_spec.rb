@@ -50,24 +50,24 @@ describe GoogleAnalytics::ViewReport do
     describe '#work_page_views' do
       subject { report.work_page_views }
 
-      it { is_expected.to eq([OpenStruct.new(date: '20170815', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '1'),
-                              OpenStruct.new(date: '20170820', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '3'),
-                              OpenStruct.new(date: '20170825', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '1'),
-                              OpenStruct.new(date: '20170816', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '1'),
-                              OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '1')])
+      it { expect(subject).to eq([OpenStruct.new(date: '20170815', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '1'),
+                                  OpenStruct.new(date: '20170820', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '3'),
+                                  OpenStruct.new(date: '20170825', pagePath: '/concern/generic_works/3xs55m9505', pageviews: '1'),
+                                  OpenStruct.new(date: '20170816', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '1'),
+                                  OpenStruct.new(date: '20170822', pagePath: '/concern/generic_works/1vh53wt10', pageviews: '1')])
       }
     end
 
     describe '#file_set_page_views' do
       subject { report.file_set_page_views }
 
-      it { is_expected.to eq([OpenStruct.new(date: '20170815', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
-                              OpenStruct.new(date: '20170818', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
-                              OpenStruct.new(date: '20170822', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
-                              OpenStruct.new(date: '20170816', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
-                              OpenStruct.new(date: '20170819', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
-                              OpenStruct.new(date: '20170820', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
-                              OpenStruct.new(date: '20170820', pagePath: '/concern/parent/1vh53wt10z/file_sets/4f4752g26g', pageviews: '0')])
+      it { expect(subject).to eq([OpenStruct.new(date: '20170815', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
+                                  OpenStruct.new(date: '20170818', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
+                                  OpenStruct.new(date: '20170822', pagePath: '/concern/parent/3xs55m9505/file_sets/fj67314220', pageviews: '0'),
+                                  OpenStruct.new(date: '20170816', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
+                                  OpenStruct.new(date: '20170819', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
+                                  OpenStruct.new(date: '20170820', pagePath: '/concern/file_sets/nzs25x853x', pageviews: '1'),
+                                  OpenStruct.new(date: '20170820', pagePath: '/concern/parent/1vh53wt10z/file_sets/4f4752g26g', pageviews: '0')])
       }
     end
   end

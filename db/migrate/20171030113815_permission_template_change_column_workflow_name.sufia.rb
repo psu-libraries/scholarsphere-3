@@ -1,5 +1,5 @@
 # This migration comes from sufia (originally 20170317141521)
-class PermissionTemplateChangeColumnWorkflowName < ActiveRecord::Migration
+class PermissionTemplateChangeColumnWorkflowName < ActiveRecord::Migration[4.2]
   def change
     change_column_null :permission_templates, :workflow_name, false
   end

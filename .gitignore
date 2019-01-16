@@ -8,6 +8,7 @@ config/browse_everything_providers.yml
 config/analytics.yml
 config/arkivo.yml
 config/share_notify.yml
+config/initializers/secret_token.rb
 
 ## MAC OS
 .DS_Store
@@ -103,7 +104,6 @@ public/sitemap.xml
 ## Magick-related artifacts
 mini_magick*.png
 
-bin/
 jetty
 .capistrano
 report.json

@@ -50,6 +50,7 @@ describe Collection do
     end
 
     before { allow(ActiveFedora::SolrService).to receive(:query).and_return(resp) }
+
     its(:bytes) { is_expected.to eq(40) }
     its(:url)   { is_expected.to eq("http://test.com/collections/#{collection.id}") }
   end

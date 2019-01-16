@@ -31,6 +31,7 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
     before do
       allow(form).to receive(:collection_ids).and_return([collection.id])
     end
+
     it 'lists the collection as selected' do
       expect(page.find_by_id('generic_work_collection_ids').value).to eq(['collection_id'])
     end
@@ -40,6 +41,7 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
     before do
       allow(view).to receive(:params).and_return(collection_ids: [collection.id])
     end
+
     it 'lists the collection as selected' do
       expect(page.find_by_id('generic_work_collection_ids').value).to eq(['collection_id'])
     end

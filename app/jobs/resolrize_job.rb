@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ResolrizeJob < ActiveJob::Base
+class ResolrizeJob < ApplicationJob
   queue_as :resolrize
 
   def perform

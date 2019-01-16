@@ -31,7 +31,7 @@ describe CollectionForm do
   describe '#secondary_terms' do
     subject { form.secondary_terms }
 
-    it { is_expected.to contain_exactly(:contributor,
+    it { expect(subject).to contain_exactly(:contributor,
                                         :rights,
                                         :publisher,
                                         :date_created,

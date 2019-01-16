@@ -14,7 +14,7 @@ module Devise
       def authenticate!
         user = remote_user(request.headers)
         if user.present?
-          u = User.find_by_login(user)
+          u = User.find_by(login: user)
           if u.nil?
             u = User.create(login: user, email: user)
             u.populate_attributes

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
 require 'socket'
@@ -93,14 +93,14 @@ module ScholarSphere
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 
     # html maintenance response
-    config.middleware.use 'Rack::Maintenance',
+    config.middleware.use Rack::Maintenance,
                           file: Rails.root.join('public', 'maintenance.html')
 
     # Time (in seconds) to wait before trying any LDAP queries if initial response is unwilling.
     config.ldap_unwilling_sleep = 2
 
     # allow errors to be raised in callbacks
-    config.active_record.raise_in_transactional_callbacks = true
+    ActiveSupport.halt_callback_chains_on_return_false = false
 
     config.action_mailer.default_options = { from: 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu' }
     config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }

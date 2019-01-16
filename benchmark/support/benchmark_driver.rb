@@ -33,6 +33,7 @@ module BenchmarkDriver
 
     def args
       return [] unless headless?
+
       ['--headless']
     end
 end

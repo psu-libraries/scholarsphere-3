@@ -29,6 +29,7 @@ class GenericWorkListToCSVService
 
     def all_terms
       return @all_terms if @all_terms.present?
+
       mapped_work_terms = work_terms.map { |term| "work_#{term}" }
       mapped_file_set_terms = file_set_terms.map { |term| "file_set_#{term}" }
       @all_terms = mapped_work_terms + mapped_file_set_terms

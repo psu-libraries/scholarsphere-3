@@ -14,6 +14,7 @@ describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do
     before do
       allow(ability).to receive(:can?).with(:admin_stats, User).and_return(true)
     end
+
     it 'creates a link to admin stats' do
       render
       page = Capybara::Node::Simple.new(rendered)
@@ -25,6 +26,7 @@ describe 'dashboard/_index_partials/_heading_greetings.html.erb', type: :view do
     before do
       allow(ability).to receive(:can?).with(:admin_stats, User).and_return(false)
     end
+
     it 'creates a link to admin stats' do
       render
       page = Capybara::Node::Simple.new(rendered)

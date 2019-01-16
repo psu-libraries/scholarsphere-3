@@ -16,6 +16,7 @@ describe FileSetPresenter do
 
   describe '#file_size' do
     before { allow(file).to receive(:file_size).and_return(['4906']) }
+
     its(:file_size) { is_expected.to eq('4.79 KB') }
   end
 end

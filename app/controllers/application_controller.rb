@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   with_themed_layout '1_column'
 
-  protect_from_forgery with: :exception
+  protect_from_forgery prepend: true, with: :exception
 
   before_action :clear_session_user, :filter_notify
 
@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
   #   * clearing the entire session including flash messages
   def clear_session_user
     return nil_request if request.nil?
+
     search = session[:search].dup if session[:search]
     return_url = session[:user_return_to].dup if session[:user_return_to]
     request.env['warden'].logout unless user_logged_in?
@@ -81,6 +82,7 @@ class ApplicationController < ActionController::Base
   # redirect_to controller_name_path(new_id), status: :moved_permanently
   def filter_notify
     return if flash[:alert].blank?
+
     flash[:alert] = filtered_flash_messages
     flash[:alert] = nil if flash[:alert].blank?
   end
@@ -89,6 +91,7 @@ class ApplicationController < ActionController::Base
     legacy_prefix = 'scholarsphere:'
     id = params[:id].to_s
     return id unless id.start_with?(legacy_prefix)
+
     new_id = id[legacy_prefix.length..-1]
     yield new_id if block_given?
     new_id
@@ -108,6 +111,7 @@ class ApplicationController < ActionController::Base
 
     def has_access?
       return if current_user&.ldap_exist? && !ReadOnly.read_only?
+
       if ReadOnly.read_only?
         @announcement = ReadOnly.announcement_text
         render template: '/error/read_only', layout: 'homepage', formats: [:html], status: 503

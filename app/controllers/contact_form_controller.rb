@@ -12,6 +12,7 @@ class ContactFormController < ApplicationController
 
   def check_recaptcha
     return if verify_recaptcha(model: @contact_form)
+
     flash[:error] = @contact_form.errors.full_messages.map(&:to_s).join(', ')
     render :new
   end
