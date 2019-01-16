@@ -3,13 +3,14 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '4.2.7.1'
+gem 'rails', '~> 5.1.3'
+# gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 
 # Hydra gems
 gem 'active-fedora', '~> 11.5'
-gem 'sufia', '7.4.1'
 gem 'blacklight_advanced_search', '~> 6.0'
+gem 'sufia', '7.4.1'
 
 # Use patched version of mail. Remove this once 2.6.6 is officially out
 gem 'mail', '= 2.6.6.rc1'
@@ -75,21 +76,22 @@ group :development do
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.7', require: false
   gem 'capistrano-bundler', '~> 1.2', require: false
+  gem 'capistrano-passenger'
   gem 'capistrano-rails', '~> 1.2', require: false
   gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
-  gem 'capistrano-passenger'
   gem 'travis', require: false
   gem 'xray-rails'
 end
 
 group :test do
   gem 'capybara'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
-  gem 'chromedriver-helper'
+  gem 'rails-controller-testing'
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'vcr'

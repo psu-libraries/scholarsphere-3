@@ -33,6 +33,7 @@ describe 'scholarsphere:solr' do
         let!(:count) { ActiveFedora::Base.count }
 
         before { ActiveFedora::Cleaner.cleanout_solr }
+
         it 'raises an error' do
           # TODO: the active fedora count includes a Hydra::AccessControls::Permission, and AdminSet Relationships which are a child of Hydra::AccessControls, so they are not at the top level count
           expect { run_task 'scholarsphere:solr:compare' }.to raise_error(RuntimeError, "Fedora's #{count - 3} objects exceeds Solr's 0")

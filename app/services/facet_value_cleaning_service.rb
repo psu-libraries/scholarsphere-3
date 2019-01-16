@@ -8,6 +8,7 @@ class FacetValueCleaningService
     def call(values, config, solr_document = nil)
       cleaners = config.opts.fetch(:facet_cleaners, [])
       return values unless cleaners.present? && values.is_a?(Array)
+
       run_cleaners(values, cleaners, solr_document)
     end
 

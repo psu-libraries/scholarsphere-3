@@ -11,6 +11,7 @@ describe 'share' do
     let(:job)  { double('job') }
 
     before { allow_any_instance_of(ResourceFilteredList).to receive(:filter).and_return([work]) }
+
     it 'pushes all available files to SHARE Notify' do
       expect(ShareNotifyJob).to receive(:perform_later).with(work)
       run_task 'share:files'

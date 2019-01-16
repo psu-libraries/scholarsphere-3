@@ -41,11 +41,12 @@ module CurationConcerns
           yield
         rescue AliasManagementService::Error => error
           curation_concern.errors.add(:creator, :invalid, message: error.message)
-          return false
+          false
         end
 
         def update_depositor(new_depositor)
           return unless new_depositor && user.administrator?
+
           current_depositor = curation_concern.depositor
           curation_concern.depositor = new_depositor
           edit_users = curation_concern.edit_users

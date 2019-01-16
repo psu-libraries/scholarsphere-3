@@ -16,7 +16,7 @@ describe 'Dashboard Highlights', type: :feature do
     expect(page).to have_content('My Highlights')
     expect(page).not_to have_content('Object Type')
     expect(page).to have_content('New Work')
-    expect(page).to have_content('Create Collection')
+    expect(page).to have_content('New Collection')
     expect(page).not_to have_selector(".batch-toggle input[value='Delete Selected']")
   end
 end

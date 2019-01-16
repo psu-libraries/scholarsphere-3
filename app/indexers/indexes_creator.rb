@@ -21,6 +21,7 @@ module IndexesCreator
 
     def build_facet(creator)
       return creator.display_name if creator.agent.nil?
+
       "#{creator.agent.given_name} #{creator.agent.sur_name}".strip.titleize.gsub(/[\.\,]/, '')
     end
 end

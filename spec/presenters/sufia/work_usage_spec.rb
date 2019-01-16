@@ -62,8 +62,8 @@ describe Sufia::WorkUsage do
     context 'multiple days are missing' do
       let(:stats) { [five_days_ago_stat, yesterday_stat] }
 
-      it { is_expected.to eq([five_days_ago_flot, four_days_ago_flot,
-                              three_days_ago_flot, two_days_ago_flot, yesterday_flot])}
+      it { expect(subject).to eq([five_days_ago_flot, four_days_ago_flot,
+                                  three_days_ago_flot, two_days_ago_flot, yesterday_flot])}
     end
   end
 end

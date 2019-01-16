@@ -6,6 +6,7 @@ describe Admin::StatsController, type: :controller do
   let(:query_service) { Sufia::QueryService.new }
 
   before { allow(controller).to receive(:query_service).and_return(query_service) }
+
   describe '#export' do
     context 'when format is csv' do
       let(:header) { "Work Url,Work Id,Work Title,Work Resource Type,Work Rights,File Set Url,File Set Time Uploaded,File Set Id,File Set Title,File Set Depositor,File Set Creator,File Set Visibility,File Set File Format\n" }
@@ -13,6 +14,7 @@ describe Admin::StatsController, type: :controller do
       before do
         allow(query_service).to receive(:find_by_date_created).and_return(file_list)
       end
+
       context 'no files' do
         let(:file_list) { [] }
 
@@ -22,6 +24,7 @@ describe Admin::StatsController, type: :controller do
           expect(response.body).to eq(header)
         end
       end
+
       context 'with files' do
         let(:file_list) { [create(:work, :with_one_file, file_title: ['my file'])] }
 
@@ -46,7 +49,7 @@ describe Admin::StatsController, type: :controller do
 
           it 'defaults end date and pasess start date parameters' do
             expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
-            get :export, format: 'csv', start_datetime: start_datetime_str
+            get :export, format: 'csv', params: { start_datetime: start_datetime_str }
           end
         end
 
@@ -57,7 +60,7 @@ describe Admin::StatsController, type: :controller do
 
           it 'defaults start date and pasess end date parameters' do
             expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
-            get :export, format: 'csv', end_datetime: end_datetime_str
+            get :export, format: 'csv', params: { end_datetime: end_datetime_str }
           end
         end
 
@@ -68,7 +71,7 @@ describe Admin::StatsController, type: :controller do
 
           it 'pasess start and end date' do
             expect(query_service).to receive(:find_by_date_created).with(begining, ending).and_return([])
-            get :export, format: 'csv', start_datetime: start_datetime_str, end_datetime: end_datetime_str
+            get :export, format: 'csv', params: { start_datetime: start_datetime_str, end_datetime: end_datetime_str }
           end
         end
       end

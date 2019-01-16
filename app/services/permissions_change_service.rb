@@ -13,6 +13,7 @@ class PermissionsChangeService
 
   def call
     return if state.unchanged?
+
     inform_users
     update_share_notify
   end
@@ -20,12 +21,14 @@ class PermissionsChangeService
   def inform_users
     state.added.each do |permission|
       next unless permission[:type] == 'person'
+
       send_message(permission[:access], User.find_by_user_key(permission[:name]))
     end
   end
 
   def update_share_notify
     return if unshareable?
+
     send_to_share if state.publicized?
     delete_from_share if state.privatized?
   end
@@ -46,6 +49,7 @@ class PermissionsChangeService
 
     def send_message(access, recipient = nil)
       return if recipient.nil?
+
       User.batch_user.send_message(
         recipient,
         "You can now #{access} file #{generic_work.title}",

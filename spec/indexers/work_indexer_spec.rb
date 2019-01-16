@@ -31,6 +31,7 @@ describe WorkIndexer do
 
     context 'with a file containing technical metadata' do
       before { allow(file_set).to receive(:original_file).and_return(file) }
+
       it { is_expected.to eq('jpeg (JPEG Image)') }
     end
 
@@ -40,6 +41,7 @@ describe WorkIndexer do
 
     context 'without a representative' do
       before { allow(work).to receive(:representative).and_return(nil) }
+
       it { is_expected.to be_nil }
     end
   end
@@ -53,18 +55,18 @@ describe WorkIndexer do
       allow(creator).to receive(:agent).and_return(agent)
     end
 
-    it { is_expected.to include('creator_name_sim' => ['Big Name'],
-                                'creator_name_tesim' => ['BIG. DISPLAY Name'],
-                                'keyword_sim' => ['bird'],
-                                'keyword_tesim' => ['Bird']) }
+    it { expect(subject).to include('creator_name_sim' => ['Big Name'],
+                                    'creator_name_tesim' => ['BIG. DISPLAY Name'],
+                                    'keyword_sim' => ['bird'],
+                                    'keyword_tesim' => ['Bird']) }
 
     it { is_expected.not_to include('creator_name_sim' => ['BIG. Name'], 'creator_name_tesim' => ['Big Display Name']) }
   end
 
   describe 'the readme file' do
-    before { allow(work).to receive(:readme_file).and_return(readme_file) }
-
     subject { solr_doc['readme_file_ss'] }
+
+    before { allow(work).to receive(:readme_file).and_return(readme_file) }
 
     context 'with no readme file' do
       let(:readme_file) { nil }

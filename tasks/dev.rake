@@ -65,7 +65,7 @@ namespace :dev do
 
   def cleanout_redis
     Redis.current.keys.map { |key| Redis.current.del(key) }
-  rescue => e
+  rescue StandardError => e
     Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
   end
 end

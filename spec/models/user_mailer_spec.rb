@@ -6,6 +6,7 @@ describe UserMailer do
   before :all do
     GenericWork.destroy_all
   end
+
   describe '#acknowledgment_email' do
     let(:form)    { { sufia_contact_form: { email: 'email@somewhere.com', subject: 'Selected topic' } } }
     let(:params)  { ActionController::Parameters.new(form) }

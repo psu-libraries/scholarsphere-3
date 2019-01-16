@@ -12,7 +12,6 @@ class CatalogController < ApplicationController
 
   # These before_filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
-  skip_before_action :default_html_head
 
   def self.uploaded_field
     solr_name('date_uploaded', :stored_sortable, type: :date)

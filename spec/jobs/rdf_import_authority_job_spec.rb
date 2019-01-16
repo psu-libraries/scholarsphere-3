@@ -13,6 +13,7 @@ describe RDFAuthorityImportJob do
 
   context 'with an authority' do
     before { allow(described_class).to receive(:authority).and_return('the law') }
+
     it 'imports the authority from a file using Questioning Authority' do
       expect(Qa::LocalAuthority).to receive(:find_or_create_by).with(name: 'the law')
       expect(Qa::Services::RDFAuthorityParser).to receive(:import_rdf).with('the law', [file], {})

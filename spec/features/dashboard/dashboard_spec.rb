@@ -19,7 +19,7 @@ describe 'The Dashboard', type: :feature, js: true do
     it "shows the user's statistics" do
       expect(page).to have_content(user.display_name)
       expect(page).to have_content('1 Works created')
-      expect(page).to have_content('1 Collections created 1')
+      expect(page).to have_content("1 Collections created\n1")
     end
   end
 
@@ -28,6 +28,7 @@ describe 'The Dashboard', type: :feature, js: true do
       sign_in(user)
       go_to_dashboard
     end
+
     it 'displays information correctly' do
       # displays information about the user
       expect(page).to have_content 'Joe Example'

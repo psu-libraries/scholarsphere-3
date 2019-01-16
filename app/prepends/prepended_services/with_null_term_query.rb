@@ -20,6 +20,6 @@ module PrependedServices::WithNullTermQuery
     Sufia::Statistics::TermQuery::Result.build(json['terms'][term])
   rescue StandardError => exception
     Rails.logger.error "Unable to query Solr for the term #{term}: #{exception}"
-    return []
+    []
   end
 end

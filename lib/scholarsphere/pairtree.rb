@@ -62,7 +62,7 @@ module Scholarsphere
     private
 
       def storage_dir
-        Dir["#{ENV['REPOSITORY_FILESTORE']}/#{@object.id[0, 2]}/#{@object.id[2, 2]}/#{@object.id[4, 2]}/#{@object.id[6, 2]}/#{@object.id}/*"].sort.last || ''
+        Dir["#{ENV['REPOSITORY_FILESTORE']}/#{@object.id[0, 2]}/#{@object.id[2, 2]}/#{@object.id[4, 2]}/#{@object.id[6, 2]}/#{@object.id}/*"].max || ''
       end
 
       def clean_file_name(file_name)

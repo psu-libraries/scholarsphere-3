@@ -3,13 +3,13 @@
 FactoryGirl.define do
   factory :ldap_entry, class: Net::LDAP::Entry do
     transient do
-      cn nil
-      displayname nil
-      uid nil
-      givenname nil
-      sn nil
-      mail nil
-      psofficelocation nil
+      cn { nil }
+      displayname { nil }
+      uid { nil }
+      givenname { nil }
+      sn { nil }
+      mail { nil }
+      psofficelocation { nil }
     end
 
     initialize_with { new("uid=#{uid},dc=psu,edu") }

@@ -12,6 +12,7 @@ describe WorkShowPresenter do
 
   describe '#size' do
     before { allow(work).to receive(:bytes).and_return('2048') }
+
     its(:size) { is_expected.to eq('2 KB') }
   end
 
@@ -52,6 +53,7 @@ describe WorkShowPresenter do
 
     context 'when file sets are in process' do
       before { QueuedFile.create(work_id: '1234') }
+
       it { is_expected.to be_uploading }
     end
 

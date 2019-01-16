@@ -1,4 +1,4 @@
-class AddMissingIndexes < ActiveRecord::Migration
+class AddMissingIndexes < ActiveRecord::Migration[4.2]
   def self.up
     add_index :domain_terms_local_authorities, [:local_authority_id, :domain_term_id], name: 'dtla_by_ids1'
     add_index :domain_terms_local_authorities, [:domain_term_id, :local_authority_id], name: 'dtla_by_ids2'

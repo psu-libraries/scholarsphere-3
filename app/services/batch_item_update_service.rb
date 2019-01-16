@@ -28,6 +28,7 @@ class BatchItemUpdateService
     # permissions on the curation_concern.
     def actor_params
       return params if !permissions_changed? || !has_incorrect_ids?
+
       new_permissions = updated_permissions_with_ids
       params[:permissions_attributes] = new_permissions + permissions_without_ids
       params
@@ -36,6 +37,7 @@ class BatchItemUpdateService
     def visibility_changed?(initial_visibility)
       selected_visibility = params.fetch(:visibility, nil)
       return false unless selected_visibility
+
       initial_visibility != selected_visibility
     end
 

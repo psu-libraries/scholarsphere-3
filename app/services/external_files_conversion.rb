@@ -65,11 +65,11 @@ class ExternalFilesConversion
   private
 
     def small_objects
-      @small_results ||= all_objects.reject { |item| item['bytes_lts'] > large_object_limit }.map(&:id)
+      @small_objects ||= all_objects.reject { |item| item['bytes_lts'] > large_object_limit }.map(&:id)
     end
 
     def large_objects
-      @large_results ||= all_objects.reject { |item| item['bytes_lts'] <= large_object_limit }.map(&:id)
+      @large_objects ||= all_objects.reject { |item| item['bytes_lts'] <= large_object_limit }.map(&:id)
     end
 
     # Get a list of all of the objects of type @work_class from solr

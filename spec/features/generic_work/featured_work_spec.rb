@@ -15,7 +15,9 @@ describe 'Showing the Generic File', type: :feature, js: true do
     expect(page).to have_content('Metadata')
     expect(page).to have_link 'Feature'
     click_link 'Feature'
+    expect(page).to have_content('Featured')
     visit "/concern/generic_works/#{gf.id}" # force a page refresh
+    expect(page).to have_content(gf.title.first)
     expect(page).to have_content('Unfeature')
     visit '/'
     within('.new_featured_work_list') do

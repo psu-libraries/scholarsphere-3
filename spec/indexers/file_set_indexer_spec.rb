@@ -25,6 +25,7 @@ describe FileSetIndexer do
 
     context 'with a file containing technical metadata' do
       before { allow(file_set).to receive(:original_file).and_return(file) }
+
       it { is_expected.to include('file_size_lts' => '12') }
       its(:keys) { is_expected.not_to include('file_size_is') }
     end
@@ -43,6 +44,7 @@ describe FileSetIndexer do
         allow(file_set).to receive(:extracted_text).and_return(extracted)
         allow(text_io).to receive(:read).and_return(text)
       end
+
       it 'forces utf8' do
         expect(text).to receive(:encode).with('utf-8', invalid: :replace, undef: :replace).and_return('abc123')
         subject
@@ -61,6 +63,7 @@ describe FileSetIndexer do
       before do
         allow(file_set).to receive(:extracted_text).and_return(extracted)
       end
+
       it 'does not force utf8' do
         expect(text).not_to receive(:force_encoding)
         subject

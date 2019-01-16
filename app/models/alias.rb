@@ -22,6 +22,7 @@ class Alias < ActiveFedora::Base
 
   def other_aliases_for_my_agent
     return if agent.blank?
+
     agent.reload.aliases.reject { |current_alias| current_alias.id == id }
   end
 end

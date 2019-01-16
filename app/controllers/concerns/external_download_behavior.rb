@@ -41,6 +41,7 @@ module ExternalDownloadBehavior
 
     def file_path
       return unless remote?
+
       @file_path ||= Scholarsphere::Pairtree.new(asset, nil).storage_path(file_url)
     end
 

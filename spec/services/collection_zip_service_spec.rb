@@ -18,7 +18,7 @@ describe CollectionZipService do
       let(:collection) { build(:collection, title: ['An Empty Collection'], depositor: user.login) }
 
       it 'creates a zip' do
-        is_expected.to eq('tmp/an_empty_collection.zip')
+        expect(subject).to eq('tmp/an_empty_collection.zip')
         expect(zip_file.entries.count).to eq(0)
       end
     end
@@ -28,7 +28,7 @@ describe CollectionZipService do
       let(:collection) { build(:collection, title: ['An Empty Collection'], depositor: user.login) }
 
       it 'creates a zip' do
-        is_expected.to eq('/tmp/an_empty_collection.zip')
+        expect(subject).to eq('/tmp/an_empty_collection.zip')
         expect(zip_file.entries.count).to eq(0)
       end
     end
@@ -45,7 +45,7 @@ describe CollectionZipService do
       end
 
       it 'creates a zip and filters the files we do not have access to read' do
-        is_expected.to eq('tmp/collection_with_works.zip')
+        expect(subject).to eq('tmp/collection_with_works.zip')
         expect(zip_file.entries.map(&:name)).to contain_exactly('First Work.zip', 'Second Work.zip')
       end
     end

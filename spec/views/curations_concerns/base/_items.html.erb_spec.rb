@@ -22,6 +22,7 @@ describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false
     context 'without files' do
       context 'without uploads' do
         before { render 'curation_concerns/base/items.html.erb', presenter: presenter }
+
         it { is_expected.to have_content('This Work has no files associated with it.') }
       end
 
@@ -31,6 +32,7 @@ describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false
           allow(presenter).to receive(:queued_files).and_return([queued_file])
           render 'curation_concerns/base/items.html.erb', presenter: presenter
         end
+
         it { is_expected.to have_content('Uploading in progress') }
       end
     end
@@ -42,6 +44,7 @@ describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false
     context 'without files' do
       context 'without uploads' do
         before { render 'curation_concerns/base/items.html.erb', presenter: presenter }
+
         it { is_expected.not_to have_content('This Work has no files associated with it.') }
       end
 
@@ -50,6 +53,7 @@ describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false
           allow(presenter).to receive(:uploading?).and_return(true)
           render 'curation_concerns/base/items.html.erb', presenter: presenter
         end
+
         it { is_expected.not_to have_content('Uploads are in progress.') }
       end
 
@@ -58,6 +62,7 @@ describe 'curation_concerns/base/_items.html.erb', verify_partial_doubles: false
           allow(presenter).to receive(:queued_files).and_return([queued_file])
           render 'curation_concerns/base/items.html.erb', presenter: presenter
         end
+
         it { is_expected.not_to have_content('Queued file') }
       end
     end

@@ -28,11 +28,11 @@ describe 'user_mailer/stats_email.html.erb', type: :view do
       expect(page).to have_selector('h1')
       expect(page).to have_text("Report for #{start_datetime}")
       expect(page).not_to have_text("to #{start_datetime}")
-      expect(page).to have_text('Total Users 10')
-      expect(page).to have_text('Total Uploads 100')
-      expect(page).to have_text('Total Public Uploads 70')
-      expect(page).to have_text('Total Registered Uploads 20')
-      expect(page).to have_text('Total Private Uploads 10')
+      expect(page).to have_text(/Total Users\s*10/)
+      expect(page).to have_text(/Total Uploads\s*100/)
+      expect(page).to have_text(/Total Public Uploads\s*70/)
+      expect(page).to have_text(/Total Registered Uploads\s*20/)
+      expect(page).to have_text(/Total Private Uploads\s*10/)
     end
   end
 

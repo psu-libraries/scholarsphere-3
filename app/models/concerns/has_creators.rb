@@ -28,6 +28,7 @@ module HasCreators
     # An ordered list of creator ids taken from the {creator_list} property
     def creator_ids
       return [] if creator_list.nil?
+
       creator_list.split(/##/)
     end
 

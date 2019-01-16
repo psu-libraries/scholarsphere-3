@@ -6,62 +6,62 @@ FactoryGirl.define do
   end
 
   factory :ldap_jill, class: User do
-    login 'jilluser'
-    display_name 'Jill Z. User'
-    title 'LDAP User'
+    login { 'jilluser' }
+    display_name { 'Jill Z. User' }
+    title { 'LDAP User' }
   end
 
   factory :user do
     transient do
-      event nil
-      proxy_for nil
+      event { nil }
+      proxy_for { nil }
     end
 
     login
-    display_name 'Joe Example'
-    title 'User'
+    display_name { 'Joe Example' }
+    title { 'User' }
 
     # Scholarsphere grants uploading rights to PSU users. We know
     # that a user is a PSU user if their information is in LDAP. This
     # is where we stub that information out to force it to be true.
-    ldap_available true
+    ldap_available { true }
     ldap_last_update { Time.zone.now }
     groups_last_update { Time.zone.now }
-    group_list 'umg/up.dlt.scholarsphere-users'
+    group_list { 'umg/up.dlt.scholarsphere-users' }
 
     # This user should be able to log in and modify metadata, but not
     # upload files.
     factory :non_psu_user do
-      ldap_available false
+      ldap_available { false }
     end
 
     factory :administrator do
-      login 'administrator1'
-      display_name 'Administrator 1'
-      title 'Administrator'
-      group_list 'umg/up.dlt.scholarsphere-admin-viewers'
+      login { 'administrator1' }
+      display_name { 'Administrator 1' }
+      title { 'Administrator' }
+      group_list { 'umg/up.dlt.scholarsphere-admin-viewers' }
     end
 
     factory :first_proxy do
-      display_name 'First Proxy'
+      display_name { 'First Proxy' }
     end
 
     factory :second_proxy do
-      display_name 'Second Proxy'
+      display_name { 'Second Proxy' }
     end
 
     factory :archivist do
-      login 'archivist1'
-      title 'Archivist'
+      login { 'archivist1' }
+      title { 'Archivist' }
     end
 
     factory :random_user do
-      display_name 'Random User'
+      display_name { 'Random User' }
     end
 
     factory :jill do
-      login 'jilluser'
-      display_name 'Jill Z. User'
+      login { 'jilluser' }
+      display_name { 'Jill Z. User' }
     end
 
     trait :with_event do

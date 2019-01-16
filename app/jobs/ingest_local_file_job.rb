@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class IngestLocalFileJob < ActiveJob::Base
+class IngestLocalFileJob < ApplicationJob
   queue_as CurationConcerns.config.ingest_queue_name
 
   # @param [FileSet] file_set

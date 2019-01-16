@@ -80,6 +80,7 @@ class CollectionForm < Sufia::Forms::CollectionForm
 
     def batch_document_ids
       return [] unless request
+
       request.filtered_parameters.fetch('batch_document_ids', [])
     end
 end

@@ -1,4 +1,4 @@
-class RemoveTimestampsFromAuthorities < ActiveRecord::Migration
+class RemoveTimestampsFromAuthorities < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :local_authority_entries, :created_at
     remove_column :local_authority_entries, :updated_at

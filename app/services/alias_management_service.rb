@@ -32,6 +32,7 @@ class AliasManagementService
   def _alias_
     if agent_alias.present?
       raise Error, I18n.t('scholarsphere.aliases.agent_error') if agent_alias.agent.blank?
+
       agent_alias
     else
       create_alias
@@ -50,6 +51,7 @@ class AliasManagementService
 
     def create_alias
       raise Error, I18n.t('scholarsphere.aliases.parameter_error') unless all_names_present?
+
       Alias.create(display_name: display_name, agent: agent)
     end
 
@@ -60,6 +62,7 @@ class AliasManagementService
     def agent
       agent = Agent.where(sur_name_ssim: sur_name, given_name_ssim: given_name).first
       return agent if agent.present?
+
       Agent.create(agent_attributes)
     end
 end

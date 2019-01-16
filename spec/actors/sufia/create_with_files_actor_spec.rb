@@ -32,7 +32,7 @@ describe Sufia::CreateWithFilesActor do
     end
 
     let(:attributes) do
-      visibility_attributes.merge(uploaded_files: [uploaded_file])
+      visibility_attributes.merge(uploaded_files: [uploaded_file.id])
     end
 
     it 'passes the visibility attributes to the job' do

@@ -15,7 +15,7 @@ describe Qa::TermsController do
 
       before do
         LanguageAuthorityImportJob.perform_now(File.join(fixture_path, 'lexvo_snippet.rdf'))
-        get :search, parameters
+        get :search, params: parameters
       end
 
       its(:body) { is_expected.to eq('[{"id":"http://lexvo.org/id/iso639-3/aab","label":"Alumu-Tesu"}]') }
@@ -26,7 +26,7 @@ describe Qa::TermsController do
 
       before do
         SubjectAuthorityImportJob.perform_now(File.join(fixture_path, 'loc_subjects_snippet.rdfxml.skos'))
-        get :search, parameters
+        get :search, params: parameters
       end
 
       its(:body) { is_expected.to eq('[{"id":"http://id.loc.gov/authorities/subjects/sh00000024","label":"Rio Oscuro (N.M.)"}]') }

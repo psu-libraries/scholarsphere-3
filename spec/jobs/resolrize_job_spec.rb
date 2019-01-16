@@ -12,6 +12,7 @@ describe ResolrizeJob, :clean do
     before do
       allow(ActiveFedora::Base).to receive(:find).and_call_original
     end
+
     it 'Updates the index for all parts of the records' do
       expect(Faraday).to receive(:new).and_return(connection)
       expect(connection).to receive(:basic_auth).with('fedoraAdmin', 'fedoraAdmin').and_call_original

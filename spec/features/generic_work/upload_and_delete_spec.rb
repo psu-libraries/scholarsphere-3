@@ -40,9 +40,9 @@ describe 'Generic File uploading and deletion:', type: :feature do
     context 'cloud providers' do
       before do
         allow(BrowseEverything).to receive(:config) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298', max_upload_file_size: 20 * 1024 } } }
-        allow(Sufia.config).to receive(:browse_everything) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298' } } }
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?) { true }
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token) { 'FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321' }
+        allow(Sufia.config).to receive(:browse_everything).and_return('dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298' })
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?).and_return(true)
+        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token).and_return('FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321')
         allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
         WebMock.enable!
       end
@@ -50,6 +50,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
       after do
         WebMock.disable!
       end
+
       specify 'I can click on cloud providers' do
         expect(ShareNotifyJob).to receive(:perform_later)
         VCR.use_cassette('dropbox', record: :none) do
@@ -89,7 +90,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
           within('#activity_log') do
             expect(page).to have_content("User #{current_user.display_name} has deposited Markdown Test")
           end
-          expect(page).to have_css('h1', 'Markdown Test')
+          expect(page).to have_css('h1', text: 'Markdown Test')
           click_on 'Notifications'
           expect(page).to have_content 'The file (Markdown Test.txt) was successfully imported'
         end
@@ -109,7 +110,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         within('div#savewidget') do
           expect(page).to have_link 'deposit agreement'
-          expect(page).to have_content 'I have read and agree to the deposit agreement'
+          expect(page).to have_content "I have read and agree to the\ndeposit agreement"
           expect(page).to have_link('Enter required metadata')
           expect(page).to have_link('Add files')
         end
@@ -225,7 +226,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
         check 'agreement'
         sleep(2.seconds)
         click_on 'Save'
-        expect(page).to have_css('h1', filename + '_title')
+        expect(page).to have_css('h1', text: filename + '_title')
         click_link 'My Dashboard'
         expect(page).to have_css 'table#activity'
         within('table#activity') do

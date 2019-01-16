@@ -23,7 +23,7 @@ describe My::WorksController, type: :controller do
       end
 
       context 'with a standard request' do
-        before { xhr :get, :index }
+        before { get :index }
 
         it 'returns an array of documents I can edit' do
           expect(response).to be_success
@@ -40,7 +40,7 @@ describe My::WorksController, type: :controller do
 
         let(:incorporate_collection) { create(:collection) }
 
-        before { get :index, add_files_to_collection: collection }
+        before { get :index, params: { add_files_to_collection: collection } }
 
         context 'when the collection exists' do
           let(:collection) { incorporate_collection.id }
@@ -75,81 +75,82 @@ describe My::WorksController, type: :controller do
         index_file_set(file_set)
         index_work(work)
       end
+
       it 'finds a file by title' do
-        xhr :get, :index, q: 'titletitle'
+        get :index, params: { q: 'titletitle' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('title'))[0]).to eql('titletitle')
       end
       it 'finds a file by keyword' do
-        xhr :get, :index, q: 'tagtag'
+        get :index, params: { q: 'tagtag' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('keyword'))[0]).to eql('tagtag')
       end
       it 'finds a file by subject' do
-        xhr :get, :index, q: 'subjectsubject'
+        get :index, params: { q: 'subjectsubject' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('subject'))[0]).to eql('subjectsubject')
       end
       it 'finds a file by creator' do
-        xhr :get, :index, q: 'creatorcreator'
+        get :index, params: { q: 'creatorcreator' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('creator_name'))[0]).to eql('creatorcreator')
       end
       it 'finds a file by contributor' do
-        xhr :get, :index, q: 'contributorcontributor'
+        get :index, params: { q: 'contributorcontributor' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('contributor'))[0]).to eql('contributorcontributor')
       end
       it 'finds a file by publisher' do
-        xhr :get, :index, q: 'publisherpublisher'
+        get :index, params: { q: 'publisherpublisher' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('publisher'))[0]).to eql('publisherpublisher')
       end
       it 'finds a file by based_near' do
-        xhr :get, :index, q: 'based_nearbased_near'
+        get :index, params: { q: 'based_nearbased_near' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('based_near'))[0]).to eql('based_nearbased_near')
       end
       it 'finds a file by language' do
-        xhr :get, :index, q: 'languagelanguage'
+        get :index, params: { q: 'languagelanguage' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('language'))[0]).to eql('languagelanguage')
       end
       it 'finds a file by resource_type' do
-        xhr :get, :index, q: 'resource_typeresource_type'
+        get :index, params: { q: 'resource_typeresource_type' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('resource_type'))[0]).to eql('resource_typeresource_type')
       end
       it 'finds a file by format_label' do
-        xhr :get, :index, q: 'format_labelformat_label'
+        get :index, params: { q: 'format_labelformat_label' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('file_format'))[0]).to eql('plain (format_labelformat_label)')
       end
       it 'finds a file by description' do
-        xhr :get, :index, q: 'descriptiondescription'
+        get :index, params: { q: 'descriptiondescription' }
         expect(response).to be_success
         expect(response).to render_template('my/index')
-        expect(assigns(:document_list).count).to eql(1)
+        expect(assigns(:document_list).count).to be(1)
         expect(assigns(:document_list)[0].fetch(solr_field('description'))[0]).to eql('descriptiondescription')
       end
     end
@@ -158,7 +159,7 @@ describe My::WorksController, type: :controller do
   describe 'not logged in as a user' do
     describe '#index' do
       it 'returns an error' do
-        xhr :post, :index
+        post :index
         expect(response).not_to be_success
       end
     end

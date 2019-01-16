@@ -60,18 +60,18 @@ describe GoogleAnalytics::DownloadReport do
     describe '#work_downloads' do
       subject { report.work_downloads }
 
-      it { is_expected.to eq([OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170815', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
-                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
-                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/3xs55m950', totalEvents: '1')])
+      it { expect(subject).to eq([OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170815', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
+                                  OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/3xs55m950', totalEvents: '1'),
+                                  OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170819', pagePath: '/downloads/3xs55m950', totalEvents: '1')])
       }
     end
 
     describe '#file_set_downloads' do
       subject { report.file_set_downloads }
 
-      it { is_expected.to eq([OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/19953w999z', totalEvents: '1'),
-                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1'),
-                              OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z?abc=123', totalEvents: '1')])
+      it { expect(subject).to eq([OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170817', pagePath: '/downloads/19953w999z', totalEvents: '1'),
+                                  OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z', totalEvents: '1'),
+                                  OpenStruct.new(eventCategory: 'Files', eventAction: 'Downloaded', eventLabel: '(not set)', date: '20170820', pagePath: '/downloads/19953w999z?abc=123', totalEvents: '1')])
       }
     end
   end

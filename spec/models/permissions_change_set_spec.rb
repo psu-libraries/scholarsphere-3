@@ -24,12 +24,14 @@ describe PermissionsChangeSet do
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to be_empty }
       end
+
       context 'and one permission before' do
         let(:before) { build(:file, edit_users: ['abd123']) }
 
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to eq(one_perm) }
       end
+
       context 'and multiple permissions before' do
         let(:before) { build(:file, edit_users: ['zzz123', 'def123']) }
 
@@ -37,6 +39,7 @@ describe PermissionsChangeSet do
         its(:removed) { is_expected.to eq(multi_perm) }
       end
     end
+
     context 'with one permission after' do
       let(:after) { build(:file, edit_users: ['abd123']) }
 
@@ -46,12 +49,14 @@ describe PermissionsChangeSet do
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to be_empty }
       end
+
       context 'and no permissions before' do
         let(:before) { build(:file) }
 
         its(:added)   { is_expected.to eq(one_perm) }
         its(:removed) { is_expected.to be_empty }
       end
+
       context 'and multiple permissions before' do
         let(:before) { build(:file, edit_users: ['zzz123', 'def123']) }
 
@@ -59,6 +64,7 @@ describe PermissionsChangeSet do
         its(:removed) { is_expected.to eq(multi_perm) }
       end
     end
+
     context 'with multiple permissions after' do
       let(:after) { build(:file, edit_users: ['zzz123', 'def123']) }
 
@@ -68,12 +74,14 @@ describe PermissionsChangeSet do
         its(:added)   { is_expected.to be_empty }
         its(:removed) { is_expected.to be_empty }
       end
+
       context 'and no permissions before' do
         let(:before) { build(:file) }
 
         its(:added)   { is_expected.to eq(multi_perm) }
         its(:removed) { is_expected.to be_empty }
       end
+
       context 'and one permission before' do
         let(:before) { build(:file, edit_users: ['abd123']) }
 

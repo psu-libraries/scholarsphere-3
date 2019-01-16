@@ -21,7 +21,7 @@ describe ShareNotifyJob do
 
     describe 'a successful outcome' do
       context 'when it has not been sent to SHARE Notify' do
-        before { allow(ShareNotify).to receive(:config) { { 'token' => 'SECRET_TOKEN' } } }
+        before { allow(ShareNotify).to receive(:config).and_return('token' => 'SECRET_TOKEN') }
 
         it 'sends a notification' do
           VCR.use_cassette('share_notify_success_job', record: :none) do
@@ -32,8 +32,9 @@ describe ShareNotifyJob do
       end
 
       context 'when it has already been sent to SHARE Notify' do
-        before { allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true) }
         subject { described_class.perform_now(work) }
+
+        before { allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true) }
 
         it { is_expected.to be_nil }
       end
@@ -45,7 +46,7 @@ describe ShareNotifyJob do
       end
 
       before do
-        allow(ShareNotify).to receive(:config) { { 'token' => 'BAD_TOKEN' } }
+        allow(ShareNotify).to receive(:config).and_return('token' => 'BAD_TOKEN')
         allow_any_instance_of(ShareNotify::SearchResponse).to receive(:status).and_return(400)
       end
 

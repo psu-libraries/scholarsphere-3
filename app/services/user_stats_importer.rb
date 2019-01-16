@@ -41,6 +41,7 @@ class UserStatsImporter
 
     def process_statistic_list(list, stat_class, object_lookup_method = :lookup_object)
       return [] if list.blank?
+
       list.map do |event|
         safe_method_call("Error finding object for event #{event}", :find_event_object, event, object_lookup_method) do |object|
           create_or_update_object_stat(event, translate_user_login_to_db_id(object.depositor),

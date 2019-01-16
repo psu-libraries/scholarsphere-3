@@ -7,6 +7,7 @@ describe 'Download requests', type: :request do
 
   context 'with a missing image' do
     before { get '/downloads/1234' }
+
     its(:status) { is_expected.to eq(500) }
   end
 end

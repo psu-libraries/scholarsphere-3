@@ -20,26 +20,31 @@ describe PermissionsChangeService do
 
   context 'permissions no change' do
     before { allow(state).to receive(:unchanged?).and_return(true) }
+
     it 'notifies no one' do
       expect(batch_user).not_to receive(:send_message)
       expect(service.call).to be_nil
     end
   end
+
   context 'permissions added' do
     before do
       allow(state).to receive(:unchanged?).and_return(false)
       allow(state).to receive(:added).and_return(permissions)
     end
+
     it 'notifies one user added' do
       expect(batch_user).to receive(:send_message).with(user, message, message_subject)
       expect(service.call).to be_nil
     end
   end
+
   context 'permissions removed' do
     before do
       allow(state).to receive(:unchanged?).and_return(false)
       allow(state).to receive(:added).and_return([])
     end
+
     it 'notifies no one' do
       expect(batch_user).not_to receive(:send_message)
       expect(service.call).to be_nil
@@ -52,22 +57,26 @@ describe PermissionsChangeService do
       allow(state).to receive(:unchanged?).and_return(false)
       allow(state).to receive(:added).and_return([])
     end
+
     context 'if the file has been privatized' do
       before do
         allow(state).to receive(:privatized?).and_return(true)
         allow(state).to receive(:publicized?).and_return(false)
       end
+
       it 'deletes the file from SHARE' do
         expect(ShareNotifyDeleteJob).to receive(:perform_later)
         expect(ShareNotifyJob).not_to receive(:perform_later)
         expect(service.call).to be_nil
       end
     end
+
     context 'if the file has been publicized' do
       before do
         allow(state).to receive(:privatized?).and_return(false)
         allow(state).to receive(:publicized?).and_return(true)
       end
+
       it 'sends the file to SHARE' do
         expect(ShareNotifyDeleteJob).not_to receive(:perform_later)
         expect(ShareNotifyJob).to receive(:perform_later)

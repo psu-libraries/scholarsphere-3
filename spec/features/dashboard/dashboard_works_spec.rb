@@ -31,6 +31,10 @@ describe 'Dashboard Works', type: :feature, js: true do
 
   let(:filename) { work1.title.first }
 
+  let(:resp) { ActiveFedora::SolrService.instance.conn.get 'select', params: { fl: ['id', title_field] } }
+  let(:title_field) { Solrizer.solr_name('title', :stored_searchable, type: :string) }
+  let(:conn) { ActiveFedora::SolrService.instance.conn }
+
   context 'with two works' do
     before do
       go_to_dashboard_works
@@ -92,6 +96,7 @@ describe 'Dashboard Works', type: :feature, js: true do
         expect(page).to have_content 'Unhighlight Work'
         db_item_actions_toggle(work1).click
       end
+
       specify 'It is highlighted' do
         # It is highlighted on my profile
         visit "/users/#{current_user.login}\#contributions"
@@ -116,8 +121,6 @@ describe 'Dashboard Works', type: :feature, js: true do
     # end
   end
 
-  let(:conn) { ActiveFedora::SolrService.instance.conn }
-
   context 'with more than 10 works:' do
     before do
       create_works(current_user, 10)
@@ -138,13 +141,13 @@ describe 'Dashboard Works', type: :feature, js: true do
         Capybara.ignore_hidden_elements = false
         {
           'Resource Type' => 'Video (10)',
-          'Creator'       => 'Creator1 Jones (10)',
-          'Keyword'       => 'keyword1 (10)',
-          'Subject'       => 'Subject1 (10)',
-          'Language'      => 'Language1 (10)',
-          'Location'      => 'Location1 (10)',
-          'Publisher'     => 'Publisher1 (10)',
-          'Format'        => 'plain () (10)'
+          'Creator' => 'Creator1 Jones (10)',
+          'Keyword' => 'keyword1 (10)',
+          'Subject' => 'Subject1 (10)',
+          'Language' => 'Language1 (10)',
+          'Location' => 'Location1 (10)',
+          'Publisher' => 'Publisher1 (10)',
+          'Format' => 'plain () (10)'
         }.each_value do |value|
           within('#facets') do
             # open facet
@@ -155,12 +158,12 @@ describe 'Dashboard Works', type: :feature, js: true do
 
         # When I search by partial title it does not display any results
         search_my_files_by_term('title')
-        expect(page).to have_content 'You searched for: title'
+        expect(page).to have_content "You searched for:\ntitle"
         page_should_not_list_any_files
 
         # When I search by title using exact words it displays the correct results
         search_my_files_by_term(work1.title.first)
-        expect(page).to have_content "You searched for: #{work1.title.first}"
+        expect(page).to have_content "You searched for:\n#{work1.title.first}"
         page_should_only_list work1
 
         # To Do resource type does not seem to be searchable
@@ -171,7 +174,7 @@ describe 'Dashboard Works', type: :feature, js: true do
 
         # When I search by Keywords it displays the correct results
         search_my_files_by_term(work1.keyword.first)
-        expect(page).to have_content "You searched for: #{work1.keyword.first}"
+        expect(page).to have_content "You searched for:\n#{work1.keyword.first}"
         page_should_only_list work1
 
         # allows me to remove constraints
@@ -180,7 +183,7 @@ describe 'Dashboard Works', type: :feature, js: true do
 
         # When I search by Creator it displays the correct results
         search_my_files_by_term(work1_creator_name)
-        expect(page).to have_content "You searched for: #{work1_creator_name}"
+        expect(page).to have_content "You searched for:\n#{work1_creator_name}"
         page_should_only_list work1
       end
     end
@@ -266,9 +269,6 @@ describe 'Dashboard Works', type: :feature, js: true do
       click_button('Go')
     end
   end
-
-  let(:title_field) { Solrizer.solr_name('title', :stored_searchable, type: :string) }
-  let(:resp) { ActiveFedora::SolrService.instance.conn.get 'select', params: { fl: ['id', title_field] } }
 
   def page_should_only_list(work1)
     expect(page).to have_selector('li.active', text: 'My Works')

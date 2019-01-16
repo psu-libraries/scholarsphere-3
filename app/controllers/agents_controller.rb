@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AgentsController < ApplicationController
-  protect_from_forgery with: :null_session
+  protect_from_forgery prepend: true, with: :null_session
 
   def name_query
     authorize! :name_query, Alias
@@ -93,14 +93,14 @@ class AgentsController < ApplicationController
           fl: ['id', 'display_name_tesim', 'name_ssim'],
           qt: 'select',
           rows: 10
-      )
+        )
     end
 
     def add_agent_information_to_alias(agent_alias)
       agent = ActiveFedora::SolrService.query(
         "id:#{agent_alias['name_ssim'].first}",
           fl: ['given_name_tesim', 'sur_name_tesim', 'email_ssim', 'psu_id_ssim', 'orcid_id_ssim']
-      )
+        )
       agent_alias.merge!(agent.first)
     end
 

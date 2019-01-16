@@ -6,7 +6,7 @@ describe FieldConfigurator do
   describe '::index_fields' do
     subject { described_class.index_fields.keys }
 
-    it { is_expected.to contain_exactly(:resource_type,
+    it { expect(subject).to contain_exactly(:resource_type,
                                        :creator_name,
                                        :keyword,
                                        :subject,
@@ -20,7 +20,7 @@ describe FieldConfigurator do
   describe '::show_fields' do
     subject { described_class.show_fields.keys }
 
-    it { is_expected.to contain_exactly(:description,
+    it { expect(subject).to contain_exactly(:description,
                                        :resource_type,
                                        :creator_name,
                                        :keyword,
@@ -41,7 +41,7 @@ describe FieldConfigurator do
   describe '::facet_fields' do
     subject { described_class.facet_fields.keys }
 
-    it { is_expected.to contain_exactly(:resource_type,
+    it { expect(subject).to contain_exactly(:resource_type,
                                        :creator_name,
                                        :keyword,
                                        :subject,
@@ -74,7 +74,7 @@ describe FieldConfigurator do
   describe '::search_fields' do
     subject { described_class.search_fields.keys }
 
-    it { is_expected.to contain_exactly(:title,
+    it { expect(subject).to contain_exactly(:title,
                                        :description,
                                        :resource_type,
                                        :creator_name,

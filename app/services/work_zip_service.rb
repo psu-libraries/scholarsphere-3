@@ -32,7 +32,7 @@ class WorkZipService
   #
   # @return [String] zip file name
   def call
-    zipfile_name = File.join(zip_directory, "#{resource.title.first.parameterize('_')}.zip")
+    zipfile_name = File.join(zip_directory, "#{resource.title.first.parameterize(separator: '_')}.zip")
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zip_file|
       zip_manifest.each do |file|
@@ -46,6 +46,7 @@ class WorkZipService
 
     def add_files_to_zip(zipfile, file_set)
       return unless add_to_zip?(file_set)
+
       zipfile.get_output_stream(file_set.title.first) do |outfile|
         file_set.original_file.stream.each { |buffer| outfile.write(buffer) }
       end

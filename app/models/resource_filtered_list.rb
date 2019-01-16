@@ -9,6 +9,6 @@ class ResourceFilteredList
   end
 
   def filter
-    @filtered ||= generic_files.select { |gf| (gf.resource_type.to_a & resource_types).count.positive? }
+    @filter ||= generic_files.select { |gf| (gf.resource_type.to_a & resource_types).count.positive? }
   end
 end

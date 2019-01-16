@@ -12,6 +12,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(404) }
   end
 
@@ -22,6 +23,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(404) }
   end
 
@@ -32,6 +34,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(404) }
   end
 
@@ -42,6 +45,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -52,6 +56,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -62,6 +67,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(404) }
   end
 
@@ -72,6 +78,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -82,6 +89,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -92,6 +100,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     it 'returns a 404' do
       pending 'Returning 500 instead of 404'
       expect(response.status).to be(404)
@@ -105,6 +114,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -115,6 +125,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -125,6 +136,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -135,6 +147,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -145,6 +158,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -155,6 +169,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -165,6 +180,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -175,6 +191,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(500) }
   end
 
@@ -185,6 +202,7 @@ describe ApplicationController do
       end
     end
     before { get :index }
+
     its(:status) { is_expected.to be(404) }
   end
 end

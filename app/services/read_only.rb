@@ -15,6 +15,7 @@ class ReadOnly
       def homepage_text
         block = ContentBlock.find_by(name: 'annoucement_text')
         return '' unless block
+
         block.value.html_safe
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BatchCreateJob < ActiveJob::Base
+class BatchCreateJob < ApplicationJob
   queue_as :ingest
 
   attr_reader :user, :log

@@ -1,4 +1,4 @@
-class CreateSubjectLocalAuthorityEntries < ActiveRecord::Migration
+class CreateSubjectLocalAuthorityEntries < ActiveRecord::Migration[4.2]
   # TODO: This method should ultimately be monkeypatched onto AR::Migration and made available to all migrations
   def truncate_table(table)
     # Do not touch the schema_migrations table, even if specified

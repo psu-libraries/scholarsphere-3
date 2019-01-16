@@ -25,12 +25,12 @@ describe Sufia::BatchUploadsController do
       end
 
       let(:params) do
-        ActionController::Parameters.new(
+        {
           title: { '1' => 'foo' },
           resource_type: { '1' => 'Article' },
           uploaded_files: ['1'],
           batch_upload_item: { keyword: [''], visibility: 'open', payload_concern: 'GenericWork' }
-        )
+        }
       end
 
       it 'is successful' do
@@ -40,7 +40,7 @@ describe Sufia::BatchUploadsController do
                 expected_types,
                 expected_attributes_for_actor,
                 Sufia::BatchCreateOperation)
-        post :create, params
+        post :create, params: params
         expect(response).to redirect_to Sufia::Engine.routes.url_helpers.dashboard_works_path
         expect(flash[:notice]).to include('Your files are being processed')
       end
@@ -48,18 +48,18 @@ describe Sufia::BatchUploadsController do
 
     context 'when providing a collection' do
       let(:params) do
-        ActionController::Parameters.new(
+        {
           title: { '1' => 'foo' },
           resource_type: { '1' => 'Article' },
           uploaded_files: ['1'],
           batch_upload_item: { keyword: [''], visibility: 'open', payload_concern: 'GenericWork', collection_ids: ['collection-id'] }
-        )
+        }
       end
 
       before { allow(BatchCreateJob).to receive(:perform_later) }
 
       it 'redirects to the collection show page' do
-        post :create, params
+        post :create, params: params
         expect(response).to redirect_to('/collections/collection-id')
         expect(flash[:notice]).to include('Your files are being processed')
       end
@@ -70,12 +70,16 @@ describe Sufia::BatchUploadsController do
     subject { described_class.new }
 
     before { allow(subject).to receive(:hash_key_for_curation_concern).and_return(:generic_work) }
+
     context 'without a proxy' do
       before { allow(subject).to receive(:params).and_return(generic_work: {}) }
+
       its(:uploading_on_behalf_of?) { is_expected.to be false }
     end
+
     context 'with a proxy' do
       before { allow(subject).to receive(:params).and_return(generic_work: { on_behalf_of: 'joe' }) }
+
       its(:uploading_on_behalf_of?) { is_expected.to be true }
     end
   end

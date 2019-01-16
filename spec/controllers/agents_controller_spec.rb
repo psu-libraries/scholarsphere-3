@@ -66,10 +66,11 @@ RSpec.describe AgentsController do
         allow_any_instance_of(Devise::Strategies::HttpHeaderAuthenticatable).to receive(:remote_user).and_return(user.login)
         allow_any_instance_of(User).to receive(:groups).and_return(['registered'])
       end
+
       it 'returns JSON search based on the first name & last name' do
         expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_name).with('JAM', '*', ldap_attrs).and_return(name_results)
         expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_mail).with('Jam@psu.edu', ldap_attrs).and_return(mail_results)
-        get :name_query, q: 'Jam'
+        get :name_query, params: { q: 'Jam' }
         results = JSON.parse(response.body)
         expect(results.count).to eq(6)
         expect(results.map { |x| x['display_name'] }.flatten).to contain_exactly('Dr. James T. Test', 'JAMIE L FRANKS', 'JAMIE TEST', 'JANET A MOUSE', 'Jamie Test', 'Sally James')
@@ -82,7 +83,7 @@ RSpec.describe AgentsController do
       it 'returns JSON results when queried with spaces' do
         expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_name).and_return(jamie_t_name_results)
         expect(PsuDir::Disambiguate::User).to receive(:query_ldap_by_mail).and_return(jamie_t_mail_results)
-        get :name_query, q: 'Jamie T'
+        get :name_query, params: { q: 'Jamie T' }
         results = JSON.parse(response.body)
         expect(results.count).to eq(2)
         expect(results.map { |x| x['display_name'] }.flatten).to contain_exactly('JAMIE TEST', 'Jamie Test')

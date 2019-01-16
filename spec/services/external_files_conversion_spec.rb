@@ -70,6 +70,7 @@ describe ExternalFilesConversion do
         expect(File.readlines(converter.error_file).each(&:chomp!).first).to eq work.id
       end
     end
+
     context 'with three works' do
       let(:work1) { create(:public_work_with_png, depositor: user.login) }
       let(:file_set1) { work1.file_sets.first }
@@ -226,6 +227,7 @@ describe ExternalFilesConversion do
       end
     end
   end
+
   context 'running without sha1 mocked', unless: travis? do
     it 'converts all versions of all the files of a work' do
       allow(Digest::SHA1).to receive(:file).and_call_original

@@ -1,4 +1,4 @@
-class IndexChecksumLogs < ActiveRecord::Migration
+class IndexChecksumLogs < ActiveRecord::Migration[4.2]
   def self.up
     add_index :checksum_audit_logs, [:pid, :dsid], name:'by_pid_and_dsid', order: {created_at: "DESC" }
   end

@@ -29,8 +29,8 @@ describe BatchEditsController do
     context 'when changing visibility' do
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { visibility: 'authenticated' },
+          update_type: 'update',
+          batch_edit_item: { visibility: 'authenticated' },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -38,7 +38,7 @@ describe BatchEditsController do
       it 'applies the new setting to all works' do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('authenticated')
         expect(work2.reload.visibility).to eq('authenticated')
       end
@@ -47,8 +47,8 @@ describe BatchEditsController do
     context 'when visibility is nil' do
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    {},
+          update_type: 'update',
+          batch_edit_item: {},
           batch_document_ids: [work1.id, work3.id]
         }
       end
@@ -56,7 +56,7 @@ describe BatchEditsController do
       it "preserves the objects' original permissions" do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('restricted')
         expect(work3.reload.visibility).to eq('open')
       end
@@ -65,8 +65,8 @@ describe BatchEditsController do
     context 'when visibility is unchanged' do
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { visibility: 'restricted' },
+          update_type: 'update',
+          batch_edit_item: { visibility: 'restricted' },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -74,7 +74,7 @@ describe BatchEditsController do
       it "preserves the objects' original permissions" do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('restricted')
         expect(work2.reload.visibility).to eq('restricted')
       end
@@ -84,8 +84,8 @@ describe BatchEditsController do
       let(:group_permission) { { '0' => { type: 'group', name: 'newgroop', access: 'edit' } } }
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { 'permissions_attributes' => group_permission, admin_set_id: admin_set.id },
+          update_type: 'update',
+          batch_edit_item: { 'permissions_attributes' => group_permission, admin_set_id: admin_set.id },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -93,7 +93,7 @@ describe BatchEditsController do
       it 'updates the permissions on all the works' do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).to receive(:perform_later).twice
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.edit_groups).to contain_exactly('newgroop')
         expect(work2.reload.edit_groups).to contain_exactly('newgroop')
       end
@@ -103,8 +103,8 @@ describe BatchEditsController do
       let(:user_permission) { { '2' => { 'type' => 'person', 'name' => 'cam156', 'access' => 'edit' } } }
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
+          update_type: 'update',
+          batch_edit_item: { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -112,7 +112,7 @@ describe BatchEditsController do
       it 'updates the permissions on all the works' do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).to receive(:perform_later).twice
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.edit_users).to contain_exactly('cam156', work1.depositor)
         expect(work2.reload.edit_users).to contain_exactly('cam156', work2.depositor)
       end
@@ -125,7 +125,7 @@ describe BatchEditsController do
       # Returns the id for a specific permission. The permissions edit form will have this information.
       let(:permission_id) do
         work1.permissions.map { |p| { p.id => p.to_hash } }.select do |h|
-          h.values.include?(name: 'cam156', type: 'person', access: 'edit')
+          h.value?(name: 'cam156', type: 'person', access: 'edit')
         end.first.keys.first
       end
 
@@ -138,8 +138,8 @@ describe BatchEditsController do
 
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
+          update_type: 'update',
+          batch_edit_item: { 'permissions_attributes' => user_permission, admin_set_id: admin_set.id },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -147,7 +147,7 @@ describe BatchEditsController do
       it 'removes the permission from each work' do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).to receive(:perform_later).twice
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.edit_users).to contain_exactly('mat141', work1.depositor)
         expect(work2.reload.edit_users).to contain_exactly('mat141', work2.depositor)
       end
@@ -170,7 +170,7 @@ describe BatchEditsController do
       it 'adds the embargo to all works' do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('restricted')
         expect(work2.reload.visibility).to eq('restricted')
         expect(work1.embargo).to be_active
@@ -195,7 +195,7 @@ describe BatchEditsController do
       it 'adds the lease to all works' do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('open')
         expect(work2.reload.visibility).to eq('open')
         expect(work1.lease).to be_active
@@ -209,8 +209,8 @@ describe BatchEditsController do
 
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { visibility: 'authenticated' },
+          update_type: 'update',
+          batch_edit_item: { visibility: 'authenticated' },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -218,7 +218,7 @@ describe BatchEditsController do
       it 'deactivates the embargo in all works' do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('authenticated')
         expect(work2.reload.visibility).to eq('authenticated')
         expect(work1.embargo).not_to be_active
@@ -232,8 +232,8 @@ describe BatchEditsController do
 
       let(:parameters) do
         {
-          update_type:        'update',
-          batch_edit_item:    { visibility: 'authenticated' },
+          update_type: 'update',
+          batch_edit_item: { visibility: 'authenticated' },
           batch_document_ids: [work1.id, work2.id]
         }
       end
@@ -241,7 +241,7 @@ describe BatchEditsController do
       it 'deactivates the embargo in all works' do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
-        put :update, parameters.as_json
+        put :update, params: parameters
         expect(work1.reload.visibility).to eq('authenticated')
         expect(work2.reload.visibility).to eq('authenticated')
         expect(work1.lease).not_to be_active

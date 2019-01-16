@@ -1,4 +1,4 @@
-class CreateQaLocalAuthorityEntries < ActiveRecord::Migration
+class CreateQaLocalAuthorityEntries < ActiveRecord::Migration[4.2]
   def change
     create_table :qa_local_authority_entries do |t|
       t.integer :local_authority_id, index: true
@@ -14,7 +14,7 @@ class CreateQaLocalAuthorityEntries < ActiveRecord::Migration
        remove_column :qa_local_authority_entries, :lower_label, :string
        
        # You can remove this once we're all developing on MariaDB
-       if Rails.env.development? && 
+       if (Rails.env.development? || Rails.env.test?) && 
            (Mysql2::Client.info.fetch(:version).match(/^5/) ||
            Mysql2::Client.info.fetch(:version).match(/^8/))
          execute("alter table qa_local_authority_entries add lower_label varchar(256) GENERATED ALWAYS AS (lower(label)) VIRTUAL")
