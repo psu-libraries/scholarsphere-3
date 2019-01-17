@@ -4,6 +4,7 @@ before_install:
 language: ruby
 addons:
   chrome: stable
+  postgresql: "9.6"
 cache:
   bundler: true
   directories:

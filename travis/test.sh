@@ -21,11 +21,12 @@ echo -e "\n\n\033[1;33mConfiguring Scholarsphere for test\033[0m"
 export PATH=$PATH:$(pwd)/fits
 cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml
 cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml
-cp config/sample/database.yml config/database.yml
+cp config/travis/database.yml config/database.yml
 cp config/sample/hydra-ldap.yml config/hydra-ldap.yml
 cp config/sample/share_notify.yml config/share_notify.yml
 cp config/sample/initializers/qa.rb config/initializers/qa.rb
 cp config/travis/application_test.yml config/application.yml
+psql -c 'create database travis_ci_test;' -U postgres
 
 echo -e "\n\n\033[1;33mListing Redis information\033[0m"
 redis-cli info

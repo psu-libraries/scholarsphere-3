@@ -41,7 +41,7 @@ FactoryGirl.define do
 
       factory :featured_file do
         after(:create) do |f|
-          FeaturedWork.create!(work_id: f.id)
+          FeaturedWork.create!(work_id: f.id, order: FeaturedWork.count + 1)
         end
       end
 

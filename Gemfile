@@ -11,6 +11,9 @@ gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 gem 'active-fedora', '~> 11.5'
 gem 'blacklight_advanced_search', '~> 6.0'
 gem 'sufia', '7.4.1'
+gem 'valkyrie'
+gem 'dry-types', '~> 0.12.0'
+gem 'dry-struct', '~> 0.4.0'
 
 # Use patched version of mail. Remove this once 2.6.6 is officially out
 gem 'mail', '= 2.6.6.rc1'

@@ -1,0 +1,12 @@
+development:
+  metadata_adapter: postgres
+  storage_adapter: disk
+
+test:
+  metadata_adapter: memory
+  storage_adapter: memory
+
+production:
+  metadata_adapter: postgres
+  storage_adapter: fedora
+
