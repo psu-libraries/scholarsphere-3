@@ -13,6 +13,10 @@ module Valkyrie
 
     attribute :alias_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
 
+    def fedora_model
+      ::Agent
+    end
+
     def aliases=(aliases)
       @aliases = aliases.map { |alias_hash| Alias.new(alias_hash) }
     end

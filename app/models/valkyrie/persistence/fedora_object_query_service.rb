@@ -2,7 +2,7 @@
 
 module Valkyrie
   module Persistence
-    class AgentQueryService < Valkyrie::Persistence::Postgres::QueryService
+    class FedoraObjectQueryService < Valkyrie::Persistence::Postgres::QueryService
       def find_by(id:)
         super
       rescue Valkyrie::Persistence::ObjectNotFoundError => e

@@ -2,9 +2,9 @@
 
 module Valkyrie
   module Persistence
-    class AgentPersister < Valkyrie::Persistence::Postgres::Persister
+    class FedoraObjectPersister < Valkyrie::Persistence::Postgres::Persister
       def ensure_multiple_values!(resource)
-        if resource.is_a? Valkyrie::Agent
+        if resource.respond_to? :fedora_model
           true
         else
           super

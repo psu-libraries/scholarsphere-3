@@ -3,8 +3,8 @@
 require 'rails_helper'
 require 'valkyrie/specs/shared_specs'
 
-describe Valkyrie::Persistence::AgentPersister do
-  let(:adapter) { Valkyrie::Persistence::AgentAdapter.new }
+describe Valkyrie::Persistence::FedoraObjectPersister do
+  let(:adapter) { Valkyrie::Persistence::FedoraObjectAdapter.new }
   let(:persister) { described_class.new(adapter: adapter) }
   let(:query_service) { adapter.query_service }
 
@@ -18,6 +18,12 @@ describe Valkyrie::Persistence::AgentPersister do
       agent
     end
 
+    let(:valkyrie_alias) do
+      valkyrie_alias = Valkyrie::Alias.new(display_name: 'John Lately')
+      valkyrie_alias.agent = agent
+      valkyrie_alias
+    end
+
     it 'saves an agent to fedora' do
       result = persister.save(resource: agent)
       fedora_agent = Agent.find(result.id.id)
@@ -27,6 +33,15 @@ describe Valkyrie::Persistence::AgentPersister do
       expect(fedora_agent.email).to eq('newkid@example.com')
       expect(fedora_agent.orcid_id).to eq('00123445')
       expect(fedora_agent.aliases.map(&:display_name)).to eq(['Johnny Lately'])
+    end
+
+    it 'saves an alias to fedora' do
+      result = persister.save(resource: valkyrie_alias)
+      fedora_alias = Alias.find(result.id.id)
+      expect(fedora_alias.display_name).to eq('John Lately')
+      expect(fedora_alias.agent_id).not_to be_blank
+      expect(fedora_alias.agent.id).not_to be_blank
+      expect(fedora_alias.agent.psu_id).to eq('jcl81')
     end
   end
 

@@ -2,19 +2,19 @@
 
 module Valkyrie
   module Persistence
-    class AgentAdapter
+    class FedoraObjectAdapter
       def persister
-        Valkyrie::Persistence::AgentPersister.new(adapter: self)
+        Valkyrie::Persistence::FedoraObjectPersister.new(adapter: self)
       end
 
       # @return [Class] {Valkyrie::Persistence::Postgres::QueryService}
       def query_service
-        @query_service ||= Valkyrie::Persistence::AgentQueryService.new(adapter: self)
+        @query_service ||= Valkyrie::Persistence::FedoraObjectQueryService.new(adapter: self)
       end
 
       # @return [Class] {Valkyrie::Persistence::Postgres::ResourceFactory}
       def resource_factory
-        Valkyrie::Persistence::AgentFactory
+        Valkyrie::Persistence::FedoraObjectFactory
       end
     end
   end

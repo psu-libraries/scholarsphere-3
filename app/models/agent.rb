@@ -3,6 +3,10 @@
 class Agent < ActiveFedora::Base
   has_many :aliases
 
+  def valkyrie_resource
+    Valkyrie::Agent
+  end
+
   property :given_name, predicate: ::RDF::Vocab::FOAF.firstName, multiple: false do |index|
     index.as :stored_searchable, :symbol
   end
@@ -25,5 +29,9 @@ class Agent < ActiveFedora::Base
 
   def display_name
     "#{given_name} #{sur_name}"
+  end
+
+  def attributes_including_linked_ids
+    attributes.merge(alias_ids: alias_ids).with_indifferent_access
   end
 end

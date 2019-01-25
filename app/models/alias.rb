@@ -5,6 +5,10 @@ class Alias < ActiveFedora::Base
 
   self.indexer = AliasIndexer
 
+  def valkyrie_resource
+    Valkyrie::Alias
+  end
+
   belongs_to :agent, class_name: 'Agent', predicate: ::RDF::Vocab::FOAF.name
 
   after_save :update_alias_indexes
@@ -24,5 +28,9 @@ class Alias < ActiveFedora::Base
     return if agent.blank?
 
     agent.reload.aliases.reject { |current_alias| current_alias.id == id }
+  end
+
+  def attributes_including_linked_ids
+    attributes.merge(agent_id: agent_id).with_indifferent_access
   end
 end
