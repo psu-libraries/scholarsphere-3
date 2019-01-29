@@ -8,7 +8,7 @@ describe 'scholarsphere:resque' do
     load_rake_environment ["#{Rails.root}/lib/tasks/scholarsphere/resque.rake"]
   end
 
-  let(:file_name) { Rails.root.join('tmp/resque_count.txt') }
+  let(:file_name) { Rails.root.join('/tmp/resque_admin_queue_failure_count.txt') }
   let(:output_file) { File.new(file_name) }
 
   describe 'count' do
