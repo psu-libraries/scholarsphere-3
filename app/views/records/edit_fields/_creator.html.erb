@@ -30,7 +30,7 @@
       <fieldset>
         <legend class="sr-only">Creator Information</legend>
         <% given_name_id = "#{id_base}[given_name]" %>
-        <%= label_tag given_name_id, 'Given Name' %>
+        <%= label_tag given_name_id, t('scholarsphere.creators.given_name') %>
         <%= text_field_tag given_name_id, creator_form.given_name,
               required: false,
               readonly: creator_form.read_only?,
@@ -38,7 +38,7 @@
               class: 'form-control string creator-first-name creator' %>
 
         <% sur_name_id = "#{id_base}[sur_name]" %>
-        <%= label_tag sur_name_id, 'Last Name' %>
+        <%= label_tag sur_name_id, t('scholarsphere.creators.sur_name') %>
         <%= text_field_tag sur_name_id, creator_form.sur_name,
               required: false,
               readonly: creator_form.read_only?,
@@ -55,7 +55,7 @@
               class: 'form-control string required creator-display-name creator' %>
 
         <% email_id = "#{id_base}[email]" %>
-        <%= label_tag email_id, 'Email' %>
+        <%= label_tag email_id, t('scholarsphere.creators.email') %>
         <%= text_field_tag email_id, creator_form.email,
               required: false,
               readonly: creator_form.read_only?,
@@ -63,7 +63,7 @@
               class: 'form-control string creator-email creator' %>
 
         <% psu_id_id = "#{id_base}[psu_id]" %>
-        <%= label_tag psu_id_id, 'PSU ID' %>
+        <%= label_tag psu_id_id, t('scholarsphere.creators.psu_id') %>
         <%= text_field_tag psu_id_id, creator_form.psu_id,
               required: false,
               readonly: creator_form.read_only?,

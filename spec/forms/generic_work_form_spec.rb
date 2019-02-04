@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe CurationConcerns::GenericWorkForm do
-  let(:user)    { create(:user, display_name: 'Test A User') }
+  let(:user)    { create(:user, display_name: 'Test A User', email: 'abc123', login: 'psu_id') }
   let(:ability) { Ability.new(user) }
   let(:work)    { build(:work) }
   let(:form)    { described_class.new(work, ability) }
@@ -15,6 +15,9 @@ describe CurationConcerns::GenericWorkForm do
       its(:display_name) { is_expected.to eq('Test A User') }
       its(:given_name) { is_expected.to eq('Test A') }
       its(:sur_name) { is_expected.to eq('User') }
+      its(:email) { is_expected.to eq('abc123') }
+      its(:psu_id) { is_expected.to eq('psu_id') }
+      its(:read_only?) { is_expected.to be_falsey }
     end
 
     context 'without a display name' do
@@ -34,6 +37,17 @@ describe CurationConcerns::GenericWorkForm do
       its(:display_name) { is_expected.to eq(creator.display_name) }
       its(:given_name) { is_expected.to eq(creator.agent.given_name) }
       its(:sur_name) { is_expected.to eq(creator.agent.sur_name) }
+    end
+
+    context 'with existing agent' do
+      let!(:agent) { create(:agent, psu_id: 'psu_id', email: 'abc123', sur_name: 'User', given_name: 'Test A') }
+
+      its(:display_name) { is_expected.to eq('Test A User') }
+      its(:given_name) { is_expected.to eq('Test A') }
+      its(:sur_name) { is_expected.to eq('User') }
+      its(:email) { is_expected.to eq('abc123') }
+      its(:psu_id) { is_expected.to eq('psu_id') }
+      its(:read_only?) { is_expected.to be_truthy }
     end
   end
 

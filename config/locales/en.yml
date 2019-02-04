@@ -62,7 +62,11 @@ en:
 
   scholarsphere:
     creators:
-      search_text: 'You can search for creators by Penn State User ID (abc123 or abc1234) or first name or last name.'
+      search_text: 'You can search for creators by Access Account ID (abc123 or abc1234) or first name or last name.'
+      given_name: 'Given Name'
+      sur_name: 'Last Name'
+      email: 'Email'
+      psu_id: 'Access Account ID (xyz1234)'
     model_display_name:
       generic_work: 'work'
       file_set: 'file'
