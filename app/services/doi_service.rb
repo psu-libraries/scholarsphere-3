@@ -6,13 +6,15 @@ class DOIService
   EZID_RESOURCE_TYPES = {
     'Article' => 'Text',
     'Audio' => 'Sound',
-    'Book' => 'Book',
+    'Book' => 'Text',
     'Capstone Project' => 'Text',
     'Conference Proceeding' => 'Text',
+    'Dissertation' => 'Text',
     'Dataset' => 'Dataset',
     'Image' => 'Image',
     'Journal' => 'Text',
     'Map or Cartographic Material' => 'Image',
+    'Masters Thesis' => 'Text',
     'Part of Book' => 'Text',
     'Poster' => 'Audiovisual',
     'Presentation' => 'Audiovisual',
@@ -35,10 +37,15 @@ class DOIService
     current_doi = doi(object)
     return current_doi.first if current_doi.present?
 
-    response = client.mint_identifier(handle, response_body(object))
-    object.identifier += [response.id]
-    object.save
-    response.id
+    begin
+      response = client.mint_identifier(handle, response_body(object))
+      object.identifier += [response.id]
+      object.save
+      response.id
+    rescue Ezid::Error => e
+      Rails.logger.warn "Got an Ezid::Error: #{e}, No DOI was created!"
+      DOIFailureJob.perform_later(object, User.find_by(login: object.depositor))
+    end
   end
 
   private
@@ -56,11 +63,12 @@ class DOIService
     end
 
     def base_body(object)
+      date_uploaded = object.date_uploaded || Time.now
       {
         'datacite.creator' => formatted_creators(object),
         'datacite.title' => object.title.first,
         'datacite.publisher' => 'ScholarSphere',
-        'datacite.publicationyear' => '2018',
+        'datacite.publicationyear' => date_uploaded.year.to_s,
         target: object.url
       }
     end
