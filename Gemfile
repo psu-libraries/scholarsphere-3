@@ -17,6 +17,7 @@ gem 'mail', '= 2.6.6.rc1'
 # Other components
 gem 'bagit', '~> 0.4.2'
 gem 'bootsnap', require: false
+gem 'bootstrap-sass', '>= 3.4.0'
 gem 'clamav' unless ENV['TRAVIS'] == 'true'
 gem 'coderay'
 gem 'coffee-rails'
