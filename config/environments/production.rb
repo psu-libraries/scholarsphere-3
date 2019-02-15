@@ -67,11 +67,11 @@ ScholarSphere::Application.configure do
   config.assets.compress = true
 
   # Choose the compressors to use
-  # config.assets.js_compressor  = :uglifier
+  config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :yui
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -80,6 +80,5 @@ ScholarSphere::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css.scss, and all non-JS/CSS are already added)
-  config.assets.precompile += %w(generic_files.js dashboard.js video.js audio.min.js jquery.zclip.min.js ZeroClipboard.swf bootstrap-tooltip.js bootstrap-popover.js video-js.css generic_files.css jquery-ui-1.8.1.custom.css jquery-ui-1.8.23.custom.css bootstrap.min.css batch.js reset_body.css scholarsphere-bootstrap.css bootstrap-modal.js jquery.validate.js swfobject.js ie8-and-down.css ie9-and-down.css)
-  config.assets.precompile += %w(*.jpg *.png *.gif *.ico *.svg)
+  config.assets.precompile += %w(*.jpg *.png *.gif *.ico *.svg *.js *.css *.css.scss)
 end
