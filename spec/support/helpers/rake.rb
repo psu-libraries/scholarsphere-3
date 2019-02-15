@@ -26,7 +26,7 @@ module RakeHelper
     out = StringIO.new
     $stdout = out
     yield
-    return out.string
+    out.string
   ensure
     $stdout = STDOUT
   end

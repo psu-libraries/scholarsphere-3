@@ -15,6 +15,7 @@ class DownloadsController < ApplicationController
     # Remove if/when projecthydra/curation_concerns#1118 is resolved
     def authorize_download!
       return params[:id] if current_user&.administrator?
+
       authorize! :read, params[asset_param_key]
     end
 
@@ -56,6 +57,6 @@ class DownloadsController < ApplicationController
     class ZipServiceError < StandardError; end
 
     def disk_file_url(file)
-      @file_url ||= ActiveFedora.fedora.connection.head(file.uri).response.headers['content-type'].split('"')[1]
+      @disk_file_url ||= ActiveFedora.fedora.connection.head(file.uri).response.headers['content-type'].split('"')[1]
     end
 end

@@ -10,6 +10,7 @@ describe 'curation_concerns/file_sets/_single_use_links.html.erb' do
 
   context 'when no links are present' do
     before { render 'curation_concerns/file_sets/single_use_links', presenter: presenter }
+
     it 'renders accessible text' do
       expect(rendered).to have_content('No links present. To create a new link, click Create Single-Use Link')
     end

@@ -25,8 +25,8 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Carolyn Cole and Adam Wead' }
 
     it 'finds both users' do
-      is_expected.to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' },
-                         { id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
+      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' },
+                             { id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
     end
   end
 
@@ -34,7 +34,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'K.B. Baker' }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'kbb2', given_name: 'Kurt Bradley', surname: 'Baker', email: 'kbb2@psu.edu', affiliation: ['RETIREE'], displayname: 'Kurt Bradley Baker' }])
+      expect(subject).to eq([{ id: 'kbb2', given_name: 'Kurt Bradley', surname: 'Baker', email: 'kbb2@psu.edu', affiliation: ['RETIREE'], displayname: 'Kurt Bradley Baker' }])
     end
   end
 
@@ -42,7 +42,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Jane Doe' }
 
     it 'finds the user' do
-      is_expected.to eq([])
+      expect(subject).to eq([])
     end
   end
 
@@ -50,7 +50,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Nicole Seger, MSN, RN, CPN' }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'nas150', given_name: 'NICOLE A', surname: 'SEGER', email: 'nas150@psu.edu', affiliation: ['STAFF'], displayname: 'NICOLE A SEGER' }])
+      expect(subject).to eq([{ id: 'nas150', given_name: 'NICOLE A', surname: 'SEGER', email: 'nas150@psu.edu', affiliation: ['STAFF'], displayname: 'NICOLE A SEGER' }])
     end
   end
 
@@ -58,7 +58,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'MSN Deb Cardenas' }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'dac40', given_name: 'DEBORAH A.', surname: 'CARDENAS', email: 'dac40@psu.edu', affiliation: ['STAFF'], displayname: 'DEBORAH A. CARDENAS' }])
+      expect(subject).to eq([{ id: 'dac40', given_name: 'DEBORAH A.', surname: 'CARDENAS', email: 'dac40@psu.edu', affiliation: ['STAFF'], displayname: 'DEBORAH A. CARDENAS' }])
     end
   end
 
@@ -66,7 +66,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Adam Garner Wead *' }
 
     it 'cleans the name' do
-      is_expected.to eq([{ id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
+      expect(subject).to eq([{ id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
     end
   end
 
@@ -74,7 +74,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { "Anthony R. D'Augelli" }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'ard', given_name: 'Anthony Raymond', surname: "D'Augelli", email: 'ard@psu.edu', affiliation: ['EMERITUS'], displayname: "Anthony Raymond D'Augelli" }])
+      expect(subject).to eq([{ id: 'ard', given_name: 'Anthony Raymond', surname: "D'Augelli", email: 'ard@psu.edu', affiliation: ['EMERITUS'], displayname: "Anthony Raymond D'Augelli" }])
     end
   end
 
@@ -82,7 +82,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'ALIDA HEATHER DOHN ROSS' }
 
     it 'finds the user' do
-      is_expected.to eq([{ id: 'hdr10', given_name: 'Alida Heather', surname: 'Dohn Ross', email: 'hdr10@psu.edu', affiliation: ['STAFF'], displayname: 'Alida Heather Dohn Ross' }])
+      expect(subject).to eq([{ id: 'hdr10', given_name: 'Alida Heather', surname: 'Dohn Ross', email: 'hdr10@psu.edu', affiliation: ['STAFF'], displayname: 'Alida Heather Dohn Ross' }])
     end
   end
 
@@ -90,7 +90,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Cole, Carolyn (Kubicki Group)' }
 
     it 'cleans the name' do
-      is_expected.to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' }])
+      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' }])
     end
   end
 
@@ -99,7 +99,7 @@ describe NameDisambiguationService, unless: travis? do
       let(:name) { 'Barbara I. Dewey a bdewey@psu.edu' }
 
       it 'does not find the user' do
-        is_expected.to eq([{ id: 'bid1', given_name: 'Barbara Irene', surname: 'Dewey', email: 'bid1@psu.edu', affiliation: ['STAFF'], displayname: 'Barbara Irene Dewey' }])
+        expect(subject).to eq([{ id: 'bid1', given_name: 'Barbara Irene', surname: 'Dewey', email: 'bid1@psu.edu', affiliation: ['STAFF'], displayname: 'Barbara Irene Dewey' }])
       end
     end
 

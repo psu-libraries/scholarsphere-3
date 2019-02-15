@@ -21,6 +21,7 @@ describe AliasIndexer do
         alias_item
         alias2
       end
+
       it { is_expected.to include('agent_name_tesim' => 'Sue Doe, mickey mouse') }
     end
   end

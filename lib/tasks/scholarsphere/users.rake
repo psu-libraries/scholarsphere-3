@@ -17,9 +17,10 @@ namespace :scholarsphere do
     # measure, the records of existing users also have their attributes re-populated.
     desc 'Restore missing user accounts'
     task restore: :environment do
-      depositor_logins.each { |l| User.create(login: l).populate_attributes if User.find_by_login(l).nil? }
+      depositor_logins.each { |l| User.create(login: l).populate_attributes if User.find_by(login: l).nil? }
       User.all.each do |u|
         next if depositor_logins.include? u.login
+
         u.populate_attributes
       end
     end

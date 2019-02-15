@@ -38,6 +38,7 @@ class Scholarsphere::Config
 
     def validate
       return true if required_keys.empty? || (required_keys - keys).empty?
+
       raise Error, "Config file #{File.basename(file)} requires #{required_keys} but has #{keys}"
     end
 

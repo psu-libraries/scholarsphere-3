@@ -21,7 +21,9 @@ class CollectionsController < ApplicationController
   end
 
   def remove_and_store_permissions
-    @create_permissions = params[:collection].delete('permissions_attributes')
+    # we must permit to allow for the delete now that params are an ActionController::Parameters
+    #  and not just a plain hash
+    @create_permissions = params[:collection].permit!.delete('permissions_attributes').to_h
   end
 
   # Overrides CurationConcerns::CollectionsControllerBehavior
@@ -33,7 +35,7 @@ class CollectionsController < ApplicationController
   #      existing works to the collection.
   def after_create
     if @create_permissions.present?
-      @collection.update_attributes('permissions_attributes' => @create_permissions)
+      @collection.update('permissions_attributes' => @create_permissions)
     end
     form # assigns the form attribute for use in the views
     respond_to do |format|
@@ -69,6 +71,7 @@ class CollectionsController < ApplicationController
 
   def create_doi
     return if params[:collection][:create_doi] != '1'
+
     doi_service.run(collection)
   end
 

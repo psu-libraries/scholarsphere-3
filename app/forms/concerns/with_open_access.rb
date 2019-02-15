@@ -7,6 +7,7 @@ module WithOpenAccess
   included do
     def visibility
       return Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC if model.new_record?
+
       model.visibility
     end
   end

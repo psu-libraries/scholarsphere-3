@@ -13,14 +13,16 @@ describe SessionsController, type: :controller do
       expect(new_user_session_path).to eq('/login_session')
     end
   end
+
   describe '#destroy' do
     it 'redirects to the central logout page and destroy the cookie' do
       request.env['COSIGN_SERVICE'] = 'cosign-gamma-ci.dlt.psu.edu'
-      expect(cookies).to receive(:delete).with('cosign-gamma-ci.dlt.psu.edu')
+      expect_any_instance_of(cookies.class).to receive(:delete).with('cosign-gamma-ci.dlt.psu.edu')
       get :destroy
       expect(response).to redirect_to Sufia::Engine.config.logout_url
     end
   end
+
   describe '#new' do
     it 'redirects to the central login page' do
       get :new

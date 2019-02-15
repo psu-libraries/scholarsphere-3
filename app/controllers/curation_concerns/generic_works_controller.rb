@@ -20,6 +20,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   def notify_users_of_permission_changes
     return if @curation_concern.nil?
+
     previous_permissions = @curation_concern.permissions.map(&:to_hash)
     yield
     current_permissions = @curation_concern.permissions.map(&:to_hash)
@@ -35,6 +36,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   def redirect_when_uploading
     return if QueuedFile.where(work_id: params[:id]).blank?
+
     flash[:notice] = 'Edits or deletes not allowed while files are being uploaded to a work'
     redirect_to polymorphic_path([main_app, curation_concern])
   end
@@ -69,6 +71,7 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
     def create_doi
       return if params[:generic_work][:create_doi] != '1'
+
       doi_service.run(curation_concern)
     end
 

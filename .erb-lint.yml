@@ -41,6 +41,8 @@ linters:
         Enabled: false
       Rails/OutputSafety:
         Enabled: false
+      Rails/LinkToBlank:
+        Enabled: false
   SelfClosingTag:
     enabled: true
   SpaceAroundErbTag:

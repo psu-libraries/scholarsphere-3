@@ -8,7 +8,7 @@ RSpec.configure do |config|
       redis_instance.keys('events:*').each { |key| redis_instance.del key }
       redis_instance.keys('User:*').each { |key| redis_instance.del key }
       redis_instance.keys('GenericWork:*').each { |key| redis_instance.del key }
-    rescue => e
+    rescue StandardError => e
       Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
     end
     ActiveFedora::Cleaner.clean!

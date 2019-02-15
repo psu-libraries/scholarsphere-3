@@ -42,6 +42,7 @@ module Features
       # either when testing, it doesn't matter.
       def request_headers(user = nil)
         return {} unless user
+
         { 'REMOTE_USER' => user.login }
       end
 

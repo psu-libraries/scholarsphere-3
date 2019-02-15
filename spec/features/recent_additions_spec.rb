@@ -9,8 +9,10 @@ describe 'Showing recent additions', type: :feature do
   it 'shows the correct links to facets' do
     visit '/'
     click_link 'Recent Additions'
-    expect(page).to have_selector('h3', gf.title.first)
+    expect(page).to have_selector('h3', text: gf.title.first)
     click_link(gf.keyword.first)
-    expect(page).to have_selector('h1', gf.title.first)
+    within('div#search-results') do
+      expect(page).to have_selector('h3', text: gf.title.first)
+    end
   end
 end

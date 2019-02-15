@@ -9,6 +9,7 @@ module AdditionalMetadata
 
   def time_uploaded
     return '' if date_uploaded.blank?
+
     date_uploaded.strftime('%Y-%m-%d %H:%M:%S')
   end
 

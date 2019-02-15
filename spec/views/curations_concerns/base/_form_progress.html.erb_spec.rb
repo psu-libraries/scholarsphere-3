@@ -18,6 +18,7 @@ describe 'curation_concerns/base/_form_progress.html.erb' do
 
   describe '#edit' do
     before { allow(controller).to receive(:action_name).and_return('edit') }
+
     context 'when the user is a proxy' do
       let(:user) { create(:user, :with_proxy, proxy_for: proxy) }
 
@@ -33,13 +34,14 @@ describe 'curation_concerns/base/_form_progress.html.erb' do
 
   describe '#create' do
     before { allow(controller).to receive(:action_name).and_return('new') }
+
     context 'when the user is a proxy' do
       let(:user) { create(:user, :with_proxy, proxy_for: proxy) }
 
       it do
-        is_expected.to have_selector('#generic_work_on_behalf_of')
-        is_expected.to have_selector('option', text: 'Chuck Treece')
-        is_expected.not_to have_selector('option', text: 'abc123')
+        expect(subject).to have_selector('#generic_work_on_behalf_of')
+        expect(subject).to have_selector('option', text: 'Chuck Treece')
+        expect(subject).not_to have_selector('option', text: 'abc123')
       end
     end
 

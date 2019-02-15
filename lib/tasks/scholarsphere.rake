@@ -23,7 +23,7 @@ namespace :scholarsphere do
     resp = ActiveFedora::SolrService.instance.conn.get 'select',
                                                        params: { fl: ['id'],
                                                                  fq: model_filter,
-                                                                 q:  query }
+                                                                 q: query }
     puts resp
     # get the totalNumber and the size of the current response
     total_num = resp['response']['numFound']
@@ -37,7 +37,7 @@ namespace :scholarsphere do
                                                          params: { fl: ['id'],
                                                                    fq: file_fq,
                                                                    page: page,
-                                                                   q:  query }
+                                                                   q: query }
       id_list += resp['response']['docs']
       total_num = resp['response']['numFound']
     end
@@ -69,6 +69,7 @@ namespace :scholarsphere do
     # GET could be slow if it's a big resource, we're using HEAD to avoid this problem,
     # but this causes more requests to Fedora.
     return [] unless Ldp::Response.rdf_source?(resource.head)
+
     immediate_descendant_uris = resource.graph.query(predicate: ::RDF::Vocab::LDP.contains).map { |descendant| descendant.object.to_s }
     immediate_descendant_uris.each do |uri|
       id = ActiveFedora::Base.uri_to_id(uri)
@@ -87,10 +88,12 @@ namespace :scholarsphere do
     desc 'Dump metadata as RDF/XML for e.g. Summon integration'
     task rdfxml: :environment do
       raise 'rake scholarsphere:export:rdfxml output=FILE' unless ENV['output']
+
       export_file = ENV['output']
       triples = RDF::Repository.new
       FileSet.find(:all).each do |file_set|
         next unless file_set.public?
+
         # TODO how do I get tripples for a file_set.  Should I include the work metadata
         RDF::Reader.for(:ntriples).new(file_set.descMetadata.content) do |reader|
           reader.each_statement do |statement|
@@ -155,7 +158,7 @@ namespace :scholarsphere do
   end
   desc 'generate and mail the stats report for the past week'
   task 'deliver_weekly_stats' => :environment do
-    UserMailer.stats_email(8.day.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
+    UserMailer.stats_email(8.days.ago.beginning_of_day, 1.day.ago.end_of_day).deliver
   end
 
   desc 'Mark a work as private'

@@ -9,6 +9,6 @@ class PublicFilteredList
   end
 
   def filter
-    @public_members ||= generic_files.select(&:public?)
+    @filter ||= generic_files.select(&:public?)
   end
 end

@@ -10,7 +10,7 @@ describe ShareNotifyDeleteJob do
   context 'when the file has been sent to SHARE' do
     before do
       allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(true)
-      allow(ShareNotify).to receive(:config) { { 'token' => 'SECRET_TOKEN' } }
+      allow(ShareNotify).to receive(:config).and_return('token' => 'SECRET_TOKEN')
       allow_any_instance_of(GenericWorkToShareJSONService)
         .to receive(:email_for_name)
         .and_return('kermit@muppets.org')

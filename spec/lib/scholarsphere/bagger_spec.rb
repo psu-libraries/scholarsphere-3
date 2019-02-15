@@ -45,6 +45,7 @@ describe Scholarsphere::Bagger do
       before do
         FileUtils.cp(bin_data, temp_dir)
       end
+
       it 'creates a bag with the correct bin data' do
         described_class.new(full_path: Rails.root.join('tmp', 'test_bag'), movable_file: temp_file)
         expect(File.directory?(Rails.root.join('tmp', 'test_bag'))).to eq(true)

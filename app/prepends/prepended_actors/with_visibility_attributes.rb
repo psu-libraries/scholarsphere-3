@@ -20,6 +20,7 @@ module PrependedActors::WithVisibilityAttributes
     # @return [TrueClass]
     def attach_files
       return true unless uploaded_files
+
       AttachFilesToWorkJob.perform_later(curation_concern, uploaded_files, visibility_attributes)
       true
     end

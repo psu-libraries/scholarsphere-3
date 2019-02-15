@@ -1,5 +1,5 @@
 # This migration comes from curation_concerns (originally 20160919151348)
-class CreateSipity < ActiveRecord::Migration
+class CreateSipity < ActiveRecord::Migration[4.2]
   def change
     create_table "sipity_notification_recipients" do |t|
       t.integer  "notification_id",                null: false

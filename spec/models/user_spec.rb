@@ -17,12 +17,16 @@ describe User, type: :model do
 
     context 'when the user exists' do
       before { allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).and_return(true) }
+
       it { is_expected.to be true }
     end
+
     context 'when the user does not exist' do
       before { allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).and_return(false) }
+
       it { is_expected.to be false }
     end
+
     context 'when LDAP misbehaves' do
       before do
         filter = Net::LDAP::Filter.eq('uid', user.login)
@@ -42,6 +46,7 @@ describe User, type: :model do
     let(:entry) { build(:ldap_entry, uid: 'mjg36', cn: 'MICHAEL JOSEPH GIARLO') }
 
     before { expect(Hydra::LDAP).to receive(:get_user).and_return([entry]) }
+
     it 'returns user attributes from LDAP' do
       expect(described_class.directory_attributes('mjg36', ['cn']).first['cn']).to eq(['MICHAEL JOSEPH GIARLO'])
     end
@@ -63,6 +68,7 @@ describe User, type: :model do
       expect(Hydra::LDAP).to receive(:get_user).with(filter, attrs).and_return(results)
       allow(Hydra::LDAP.connection).to receive(:get_operation_result).and_return(OpenStruct.new(code: 0, message: 'Success'))
     end
+
     it 'returns a list or people' do
       expect(described_class.query_ldap_by_name_or_id('cam')).to eq([{ id: 'cac6094', text: 'CAMILO CAPURRO (cac6094)' },
                                                                      { id: 'csl5210', text: 'CAMERON SIERRA LANGSJOEN (csl5210)' },
@@ -86,7 +92,7 @@ describe User, type: :model do
 
       it 'creates a user' do
         expect(described_class.count).to eq 0
-        is_expected.to be_a_kind_of(described_class)
+        expect(subject).to be_a_kind_of(described_class)
         expect(subject.display_name).to eq 'John Smith'
         expect(subject.office).to eq "Beaver Stadium\nSeat 100"
         expect(subject.website).to be_nil
@@ -100,7 +106,7 @@ describe User, type: :model do
 
       it 'does not create a user' do
         expect(described_class.count).to eq 0
-        is_expected.not_to be_a_kind_of(described_class)
+        expect(subject).not_to be_a_kind_of(described_class)
         expect(described_class.count).to eq 0
       end
     end
@@ -114,6 +120,7 @@ describe User, type: :model do
 
       it { is_expected.to be_falsey }
     end
+
     context 'administrative user' do
       let(:user) { create :administrator }
 
@@ -158,17 +165,20 @@ describe User, type: :model do
 
           it { is_expected.to be_falsey }
         end
+
         context 'private file' do
           let(:file) { private_file }
 
           it { is_expected.to be_falsey }
         end
+
         context 'shared file' do
           let(:file) { shared_file }
 
           it { is_expected.to be_falsey }
         end
       end
+
       context 'administrative user' do
         let(:user) { create :administrator }
 
@@ -176,19 +186,21 @@ describe User, type: :model do
           let(:file) { my_file }
 
           it {
-            is_expected.to be_falsey
+            expect(subject).to be_falsey
           }
         end
+
         context 'private file' do
           let(:file) { private_file }
 
           it { is_expected.to be_truthy }
         end
+
         context 'shared file' do
           let(:file) { shared_file }
 
           it {
-            is_expected.to be_falsey
+            expect(subject).to be_falsey
           }
         end
       end

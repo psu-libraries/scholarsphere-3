@@ -45,6 +45,7 @@ class WorkIndexer < Sufia::WorkIndexer
 
       def content
         return unless content?
+
         @content ||= retrieve_and_encode
       end
 

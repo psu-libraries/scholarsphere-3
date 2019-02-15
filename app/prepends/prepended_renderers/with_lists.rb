@@ -9,6 +9,7 @@ module PrependedRenderers
       markup = []
 
       return '' if values.blank? && !options[:include_empty]
+
       markup << %(<dt class="attribute-term">#{label}</dt>)
       attributes = microdata_object_attributes(field).merge(class: "attribute #{field}")
       Array(values).each do |value|

@@ -28,6 +28,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   def readme
     return if readme_file.nil?
+
     renderer = Redcarpet::Render::HTML.new(safe_links_only: true, hard_wrap: true)
     Redcarpet::Markdown.new(renderer).render(readme_file)
   end
@@ -42,6 +43,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
   def member_presenters
     return @member_presenters if @member_presenters.present?
+
     members = super.delete_if { |presenter| current_ability.cannot?(:read, presenter.solr_document) }
     @member_presenters = Kaminari.paginate_array(members).page(@file_page).per(10)
   end
@@ -79,6 +81,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   def attribute_to_html(field, options = {})
     value = send(field)
     return if value.blank?
+
     super
   end
 
@@ -100,6 +103,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     def build_representative_presenter
       selected_presenters = member_presenters.select { |presenter| presenter.id == representative_id }
       return NullRepresentativePresenter.new(current_ability, request) if selected_presenters.empty?
+
       selected_presenters.first
     end
 
@@ -112,6 +116,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
                    linked: CurationConcerns::Renderers::LinkedAttributeRenderer,
                    external_link: CurationConcerns::Renderers::ExternalLinkAttributeRenderer }
       return @cache[name] if @cache.include?(name)
+
       @cache[name] = super
     end
 end

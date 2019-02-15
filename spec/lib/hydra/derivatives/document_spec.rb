@@ -9,6 +9,7 @@ describe Hydra::Derivatives::Processors::Document do
   let(:output_service) { Hydra::Derivatives::PersistBasicContainedOutputFileService }
 
   before { allow(subject).to receive(:output_file_service).and_return(output_service) }
+
   before { allow(subject).to receive(:convert_to).with(convert_directive).and_return(converted_file) }
 
   describe '#encode_file' do
@@ -36,6 +37,7 @@ describe Hydra::Derivatives::Processors::Document do
       let(:mock_content)   { 'mocked png content' }
 
       before { allow(File).to receive(:read).with(converted_file).and_return(mock_content) }
+
       it 'creates a thumbnail of the document' do
         expect(output_service).to receive(:call).with(mock_content, directives)
         expect(File).to receive(:unlink).with(converted_file)

@@ -7,10 +7,10 @@ FactoryGirl.define do
   end
 
   trait :with_complete_metadata do
-    given_name 'Johnny C.'
-    sur_name   'Lately'
-    email      'newkid@example.com'
-    psu_id     'jcl81'
-    orcid_id   '00123445'
+    given_name { 'Johnny C.' }
+    sur_name   { 'Lately' }
+    email      { 'newkid@example.com' }
+    psu_id     { 'jcl81' }
+    orcid_id   { '00123445' }
   end
 end

@@ -7,12 +7,14 @@ module PrependedRenderers
   module ConfiguredMicrodata
     def microdata?(field)
       return false unless CurationConcerns.config.display_microdata
+
       key = "curation_concerns.schema_org.#{field}.property"
       t(key) if I18n.exists?(key)
     end
 
     def microdata_object?(field)
       return false unless CurationConcerns.config.display_microdata
+
       key = "curation_concerns.schema_org.#{field}.type"
       t(key) if I18n.exists?(key)
     end

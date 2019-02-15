@@ -43,15 +43,15 @@ describe ErrorPresenter do
   end
 
   context 'when the i18n key is missing' do
-    subject { described_class.new(Fixnum) }
+    subject { described_class.new(Integer) }
 
     its(:status)  { is_expected.to eq(500) }
     its(:title)   { is_expected.to eq('Error') }
     its(:message) { is_expected.to eq('There was an error with your request') }
 
     it "logs that the key isn't there" do
-      expect(Rails.logger).to receive(:warn).with('Error key fixnum is not present in the i18n file. You may want to add it.')
-      described_class.new(Fixnum)
+      expect(Rails.logger).to receive(:warn).with('Error key integer is not present in the i18n file. You may want to add it.')
+      described_class.new(Integer)
     end
   end
 end

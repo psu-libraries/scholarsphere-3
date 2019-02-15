@@ -13,6 +13,7 @@ class TranslatedFacetRenderer < CurationConcerns::Renderers::FacetedAttributeRen
 
     def value_for_facet(value)
       return value unless options.key?(:mapping)
+
       options[:mapping][value]
     end
 

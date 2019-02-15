@@ -10,6 +10,7 @@ describe ReadOnly do
       before do
         allow(ScholarSphere::Application.config).to receive(:respond_to?).with(:read_only).and_return(false)
       end
+
       it { is_expected.to be_falsey }
     end
 
@@ -17,6 +18,7 @@ describe ReadOnly do
       before do
         allow(ScholarSphere::Application.config).to receive(:read_only).and_return(false)
       end
+
       it { is_expected.to be_falsey }
     end
 
@@ -24,6 +26,7 @@ describe ReadOnly do
       before do
         allow(ScholarSphere::Application.config).to receive(:read_only).and_return(true)
       end
+
       it { is_expected.to be_truthy }
     end
 
@@ -31,6 +34,7 @@ describe ReadOnly do
       before do
         allow(ScholarSphere::Application.config).to receive(:read_only).and_return('false')
       end
+
       it { is_expected.to be_falsey }
     end
 
@@ -38,6 +42,7 @@ describe ReadOnly do
       before do
         allow(ScholarSphere::Application.config).to receive(:read_only).and_return('true')
       end
+
       it { is_expected.to be_truthy }
     end
   end

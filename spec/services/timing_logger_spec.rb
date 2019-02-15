@@ -19,9 +19,11 @@ describe TimingLogger do
     before do
       allow(ENV).to receive(:fetch).with('timing_enabled', 'false').and_return('true')
     end
+
     after do
       FileUtils.rm(logname)
     end
+
     describe '#log' do
       it 'does nothing' do
         logger.log(action: 'sending some data', start_time: Time.now)

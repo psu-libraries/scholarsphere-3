@@ -25,11 +25,13 @@ describe DownloadsController do
 
       context 'with my own file' do
         before { controller.params[:id] = my_file.id }
+
         it { is_expected.to eq(my_file.id) }
       end
 
       context 'with a file I do not have read access to' do
         before { controller.params[:id] = other_file.id }
+
         it 'denies access' do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
@@ -39,6 +41,7 @@ describe DownloadsController do
         let(:my_work) { create :public_work_with_png, depositor: user.login }
 
         before { controller.params[:id] = my_work.id }
+
         it { is_expected.to eq(my_work.id) }
       end
     end
@@ -50,11 +53,13 @@ describe DownloadsController do
 
       context 'with my own file' do
         before { controller.params[:id] = my_file.id }
+
         it { is_expected.to eq(my_file.id) }
       end
 
       context 'with a file I do not have read access to' do
         before { controller.params[:id] = other_file.id }
+
         it { is_expected.to eq(other_file.id) }
       end
     end
@@ -66,11 +71,13 @@ describe DownloadsController do
 
       context 'with a public file' do
         before { controller.params[:id] = public_file.id }
+
         it { is_expected.to eq(public_file.id) }
       end
 
       context 'with a public file' do
         before { controller.params[:id] = other_file.id }
+
         it 'denies access' do
           expect { subject }.to raise_error(CanCan::AccessDenied)
         end
@@ -93,6 +100,7 @@ describe DownloadsController do
         allow(response).to receive(:"status=")
         controller.params[:id] = my_file.id
       end
+
       it 'sends content' do
         # expect(controller).to receive(:send_content)
         expect(WorkZipService).not_to receive(:new)
@@ -109,6 +117,7 @@ describe DownloadsController do
         controller.params[:id] = my_work.id
         allow(controller).to receive(:response).and_return(response)
       end
+
       it 'downloads a zip' do
         expect(WorkZipService).to receive(:new).with(my_work, anything, anything).and_call_original
         expect(controller).to receive(:send_file).with(
@@ -119,7 +128,7 @@ describe DownloadsController do
                           my_work.id[6, 2],
                           'sample_title.zip').to_s,
                                         type: 'application/zip', disposition: 'inline'
-        )
+                                      )
         subject
       end
     end
@@ -135,6 +144,7 @@ describe DownloadsController do
         controller.params[:id] = my_collection.id
         allow(controller).to receive(:response).and_return(response)
       end
+
       it 'downloads a zip' do
         expect(CollectionZipService).to receive(:new).with(my_collection, anything, anything).and_call_original
         expect(controller).to receive(:send_file)

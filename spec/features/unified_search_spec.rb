@@ -43,11 +43,13 @@ describe 'unified search', type: :feature do
       expect(page).to have_link('Back to search results')
     end
   end
+
   context 'known user', js: true do
     before do
       login_as user
       visit('/')
     end
+
     it 'searches all' do
       expect(page).to have_content('All')
       expect(page).to have_css('a[data-search-label*=All]', visible: false)

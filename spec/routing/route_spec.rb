@@ -29,6 +29,7 @@ describe 'Routes', type: :routing do
     before do
       allow(Sufia::StatsAdmin).to receive(:matches?).and_return(true)
     end
+
     it 'routes to export' do
       expect(get: 'admin/stats/export').to route_to(controller: 'admin/stats', action: 'export')
     end

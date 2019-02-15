@@ -8,6 +8,7 @@ describe ZoteroSubscription do
     create(:user, login: 'abc111', zotero_userid: 'abc', arkivo_token: '123abc')
     create(:user, login: 'def333', zotero_userid: 'def', arkivo_token: 'def333', arkivo_subscription: 'subscribed')
   end
+
   let(:job) { double }
 
   describe '#call' do

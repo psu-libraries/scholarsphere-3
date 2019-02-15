@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContentBlock < ActiveRecord::Base
+class ContentBlock < ApplicationRecord
   include Sufia::ContentBlockBehavior
 
   LICENSE = 'license_text'

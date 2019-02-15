@@ -40,6 +40,7 @@ describe FileSet, type: :model do
     context 'with a blank date_uploaded' do
       its(:time_uploaded) { is_expected.to be_blank }
     end
+
     context 'with date_uploaded' do
       let(:file) { build(:file_set, date_uploaded: Date.today) }
 

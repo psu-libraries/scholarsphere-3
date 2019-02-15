@@ -139,8 +139,8 @@ describe Collection, type: :feature, js: true do
       # Test the view
       expect(page).to have_content(title)
       within('dl.metadata-collections') do
-        expect(page).to have_content('Total Items 2')
-        expect(page).to have_content('Size 0 Bytes')
+        expect(page).to have_content("Total Items\n2")
+        expect(page).to have_content("Size\n0 Bytes")
       end
       within('table.table-striped') do
         expect(page).to have_content('First file')

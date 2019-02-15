@@ -1,4 +1,4 @@
-class MailboxerNamespacingCompatibility < ActiveRecord::Migration
+class MailboxerNamespacingCompatibility < ActiveRecord::Migration[4.2]
 
   def self.up
 #    remove_index "receipts","notification_id"

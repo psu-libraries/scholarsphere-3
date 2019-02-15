@@ -1,4 +1,4 @@
-class CreateMigrateAudits < ActiveRecord::Migration
+class CreateMigrateAudits < ActiveRecord::Migration[4.2]
   def change
     create_table :migrate_audits do |t|
       t.string :f3_pid

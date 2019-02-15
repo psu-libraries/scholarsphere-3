@@ -27,6 +27,7 @@ describe 'scholarsphere:searches_truncate' do
       Search.create(query_params: { search_field: 'all_fields', q: 'test2', controller: 'catalog', action: 'index' })
       Search.create(query_params: { search_field: 'all_fields', q: 'test3', controller: 'catalog', action: 'index' })
     end
+
     it 'includes all users' do
       expect(Search.count).to eq(3)
       run_task 'scholarsphere:truncate_searches'

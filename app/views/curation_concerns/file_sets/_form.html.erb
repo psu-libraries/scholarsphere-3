@@ -12,7 +12,7 @@
       <%= f.submit(
             (curation_concern.persisted? ? 'Save' : %(Attach to #{parent.human_readable_type})),
         class: 'btn btn-primary'
-          ) %>
+      ) %>
       <%= link_to 'Cancel', parent_path(parent), class: 'btn btn-link' %>
     </div>
   </div>

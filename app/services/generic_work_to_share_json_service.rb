@@ -14,6 +14,7 @@ class GenericWorkToShareJSONService
     document.updated = work.date_modified
     add_contributors_to_document
     return false unless document.valid?
+
     document.delete if delete
     document.to_share.to_json
   end

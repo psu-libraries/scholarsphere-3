@@ -9,6 +9,7 @@ class TimingLogger
 
   def log(action:, start_time:)
     return unless enabled?
+
     end_time = Time.now.to_f
     log_instance.info("#{action} #{end_time - start_time.to_f}")
   end

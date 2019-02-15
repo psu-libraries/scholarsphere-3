@@ -1,4 +1,4 @@
-class DropLocalAuthorities < ActiveRecord::Migration
+class DropLocalAuthorities < ActiveRecord::Migration[4.2]
   def change
     drop_table :local_authority_entries
     drop_table :local_authorities

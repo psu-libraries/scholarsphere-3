@@ -10,7 +10,7 @@ describe RedirectToWebAccessFailure do
       'REQUEST_METHOD' => 'GET',
       'warden.options' => { scope: :user },
       'rack.session' => {},
-      'action_dispatch.request.formats' => Array(env_params.delete('formats') || Mime::HTML),
+      'action_dispatch.request.formats' => Array(env_params.delete('formats') || Mime[:html]),
       'rack.input' => '',
       'warden' => OpenStruct.new(message: nil)
     }.merge!(env_params)

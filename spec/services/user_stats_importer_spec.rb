@@ -153,6 +153,7 @@ describe UserStatsImporter do
         FileViewStat.create(date: Date.parse('2017-08-15'), file_id: user2_file_set.id, user_id: user2.id, views: 3)
         FileDownloadStat.create(date: Date.parse('2017-08-16'), file_id: user1_file_set.id, user_id: user1.id, downloads: 6)
       end
+
       it 'creates view entries in user table' do
         expect(UserStat.count).to eq(0)
         importer.tally_user_results
