@@ -49,6 +49,11 @@ every 60.minutes, roles: [:app] do
   command "#{path}/config/cronjobs/temp_file_clean.bash"
 end
 
+# No particular time just needs to run hourly.
+every :hour, at: 10, roles: [:job] do
+  command "cd #{path} && RAILS_ENV=production bundle exec rake scholarsphere:resque:count"
+end
+
 every 10.minutes, roles: [:job] do
   command "#{path}/config/cronjobs/resque-cleanup.bash"
 end
