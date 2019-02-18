@@ -1,3 +1,5 @@
+//= require scholarsphere/creator/creator_behavior
+
 ScholarSphere.creatorAutocomplete = {
   /**
    * Object for setting up Typeahead and Bloodhound
@@ -48,6 +50,7 @@ ScholarSphere.creatorAutocomplete = {
       var template = $('#creator_template').html()
       var render = Mustache.render(template, creator)
       $('.creator_container').append(render)
+      ScholarSphere.creatorBehavior.showHideCreatorRemove()
     })
   },
   typeaheadClose: function () {
