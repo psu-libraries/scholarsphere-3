@@ -80,5 +80,5 @@ ScholarSphere::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css.scss, and all non-JS/CSS are already added)
-  config.assets.precompile += %w(*.jpg *.png *.gif *.ico *.svg *.js *.css *.css.scss)
+  config.assets.precompile += %w(*.jpg *.png *.gif *.ico *.svg *.js *.css.scss)
 end
