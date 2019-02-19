@@ -51,7 +51,7 @@ class AgentsController < ApplicationController
           'id' => nil,
           'given_name' => ldap_entry[:given_name],
           'sur_name' => ldap_entry[:surname],
-          'email' => ldap_entry[:mail],
+          'email' => ldap_entry[:email],
           'psu_id' => ldap_entry[:id],
           'orcid_id' => nil,
           'display_name' => ldap_entry[:displayname]

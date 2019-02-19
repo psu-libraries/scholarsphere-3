@@ -177,6 +177,7 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
         # Add creator field from autocomplete results
         expect(page).to have_selector('.creator_inputs', count: 5)
+        expect(page).to have_selector('.remove-creator', count: 5)
         expect(page).to have_field('generic_work[creators][2][given_name]', readonly: true)
         expect(page).to have_field('generic_work[creators][2][sur_name]', readonly: true)
         expect(page).to have_field('generic_work[creators][2][email]', readonly: true)
@@ -185,6 +186,10 @@ describe 'Generic File uploading and deletion:', type: :feature do
         expect(page).to have_selector("input[value='TESTING TRANSFR UNIV']")
         expect(page).to have_selector("input[value='TESTING 1 CHRIS']")
         expect(page).to have_selector("input[value='Jeffrey L Tate']")
+        expect(page).to have_selector("input[value='Jeffrey L']")
+        expect(page).to have_selector("input[value='Tate']")
+        expect(page).to have_selector("input[value='jlt37@psu.edu']")
+        expect(page).to have_selector("input[value='jlt37']")
 
         # Remove the autocompleted creator field
         execute_script("$('.remove-creator')[2].click()")

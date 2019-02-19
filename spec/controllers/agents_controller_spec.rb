@@ -13,37 +13,41 @@ RSpec.describe AgentsController do
     let(:ldap_attrs) { %i[uid givenname sn mail eduPersonPrimaryAffiliation displayname] }
 
     let(:jamie_l_franks_ldap_entry) do
-      build(:ldap_entry,
-            uid: 'qjf1',
-            displayname: 'JAMIE L FRANKS',
-            givenname: 'JAMIE L',
-            sn: 'FRANKS',
-            mail: 'qjf1@psu.edu')
+      {
+        id: 'qjf1',
+        displayname: 'JAMIE L FRANKS',
+        given_name: 'JAMIE L',
+        surname: 'FRANKS',
+        email: 'qjf1@psu.edu'
+      }
     end
     let(:jamie_test_gmail_ldap_entry) do
-      build(:ldap_entry,
-            uid: 'jat1',
-            displayname: 'JAMIE TEST',
-            givenname: 'Jamie',
-            sn: 'Test',
-            mail: 'james@gmail.com')
+      {
+        id: 'jat1',
+        displayname: 'JAMIE TEST',
+        given_name: 'Jamie',
+        surname: 'Test',
+        email: 'james@gmail.com'
+      }
     end
     let(:jamie_test_psu_ldap_entry) do
-      build(:ldap_entry,
-            uid: 'jat1',
-            displayname: 'JAMIE TEST',
-            givenname: 'Jamie',
-            sn: 'Test',
-            mail: 'jat1@psu.edu')
+      {
+        id: 'jat1',
+        displayname: 'JAMIE TEST',
+        given_name: 'Jamie',
+        surname: 'Test',
+        email: 'jat1@psu.edu'
+      }
     end
 
     let(:janet_mouse_ldap_entry) do
-      build(:ldap_entry,
-            uid: 'jam',
-            displayname: 'JANET A MOUSE',
-            givenname: 'JANET A',
-            sn: 'MOUSE',
-            mail: 'jam@psu.edu')
+      {
+        id: 'jam',
+        displayname: 'JANET A MOUSE',
+        given_name: 'JANET A',
+        surname: 'MOUSE',
+        email: 'jam@psu.edu'
+      }
     end
 
     let(:name_results) { [jamie_l_franks_ldap_entry,
@@ -74,10 +78,10 @@ RSpec.describe AgentsController do
         results = JSON.parse(response.body)
         expect(results.count).to eq(6)
         expect(results.map { |x| x['display_name'] }.flatten).to contain_exactly('Dr. James T. Test', 'JAMIE L FRANKS', 'JAMIE TEST', 'JANET A MOUSE', 'Jamie Test', 'Sally James')
-        expect(results.map { |x| x['given_name'] }.flatten).to contain_exactly('Jamie', 'Jamie', 'Sally')
-        expect(results.map { |x| x['sur_name'] }.flatten).to contain_exactly('Test', 'Test', 'James')
+        expect(results.map { |x| x['given_name'] }.flatten).to contain_exactly('JAMIE L', 'Jamie', 'Jamie', 'Jamie', 'JANET A', 'Sally')
+        expect(results.map { |x| x['sur_name'] }.flatten).to contain_exactly('Test', 'Test', 'James', 'FRANKS', 'MOUSE', 'Test')
         expect(results.map { |x| x['email'] }.flatten).to contain_exactly(nil, 'jam@psu.edu', 'jat1@psu.edu', 'james@gmail.com', 'qjf1@psu.edu', 'james@gmail.com')
-        expect(results.map { |x| x['psu_id'] }.flatten).to contain_exactly('jtt01', 'jtt01', nil)
+        expect(results.map { |x| x['psu_id'] }.flatten).to contain_exactly('jtt01', 'jtt01', 'jam', 'jat1', 'qjf1', nil)
         expect(results.map { |x| x['orcid_id'] }.flatten).to contain_exactly(nil, nil, '1234', nil, nil, '1234')
       end
       it 'returns JSON results when queried with spaces' do
@@ -87,10 +91,10 @@ RSpec.describe AgentsController do
         results = JSON.parse(response.body)
         expect(results.count).to eq(2)
         expect(results.map { |x| x['display_name'] }.flatten).to contain_exactly('JAMIE TEST', 'Jamie Test')
-        expect(results.map { |x| x['given_name'] }.flatten).to contain_exactly('Jamie')
-        expect(results.map { |x| x['sur_name'] }.flatten).to contain_exactly('Test')
+        expect(results.map { |x| x['given_name'] }.flatten).to contain_exactly('Jamie', 'Jamie')
+        expect(results.map { |x| x['sur_name'] }.flatten).to contain_exactly('Test', 'Test')
         expect(results.map { |x| x['email'] }.flatten).to contain_exactly('james@gmail.com', 'jat1@psu.edu')
-        expect(results.map { |x| x['psu_id'] }.flatten).to contain_exactly('jtt01')
+        expect(results.map { |x| x['psu_id'] }.flatten).to contain_exactly('jtt01', 'jat1')
         expect(results.map { |x| x['orcid_id'] }.flatten).to contain_exactly(nil, '1234')
       end
     end

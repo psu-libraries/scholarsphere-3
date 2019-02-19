@@ -14,20 +14,21 @@ ScholarSphere.creatorBehavior = {
       $('.creator_container').append(render)
       ScholarSphere.creatorBehavior.activateRemoveButton()
       $('.creator_container').trigger("managed_field:add")
-        if ($('.remove-creator').length == 1)
-            $('.remove-creator').hide()
-        else
-            $('.remove-creator').show()
+      ScholarSphere.creatorBehavior.showHideCreatorRemove()
     })
   },
   activateRemoveButton: function () {
     $('.creator_container').on('click', '.remove-creator', function () {
         $(this).parent().remove()
-        if ($('.remove-creator').length == 1)
-            $('.remove-creator').hide()
-        else
-            $('.remove-creator').show()
+        ScholarSphere.creatorBehavior.showHideCreatorRemove()
     })
+  },
+
+  showHideCreatorRemove: function () {
+      if ($('.remove-creator').length == 1)
+          $('.remove-creator').hide()
+      else
+          $('.remove-creator').show()
   }
 }
 
