@@ -1,8 +1,14 @@
 // Override styles coming from Sufia for better contrast
 // scss-lint:disable IdSelector, SelectorDepth
 html > body .navbar-default .navbar-nav > li > a {
-  color: $gray-middle;
+  color: $gray-nav-aaa;
   text-decoration: none;
+}
+
+html > body .navbar-default .navbar-nav > li > a:hover {
+  border-top: 3px solid $psu-dark-blue;
+  color: $primary-black;
+  padding-top: 12px;
 }
 // scss-lint:enable IdSelector, SelectorDepth
 
