@@ -51,13 +51,13 @@ module ScholarSphere
     config.assets.enabled = true
     config.assets.compress = !Rails.env.development?
 
-    # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += Dir["#{config.root}/lib/**/*"]
-    config.autoload_paths << Rails.root.join('lib')
-    config.autoload_paths += %W(#{config.root}/app/models/datastreams)
-    config.autoload_paths += %W(#{config.root}/app/forms/concerns)
-    config.autoload_paths += %W(#{config.root}/app/renderers)
-    config.autoload_paths += %W(#{config.root}/app/prepends)
+    # Custom directories with classes and modules you want to be eager loaded.
+    config.eager_load_paths += Dir["#{config.root}/lib/**/*"]
+    config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths += %W(#{config.root}/app/models/datastreams)
+    config.eager_load_paths += %W(#{config.root}/app/forms/concerns)
+    config.eager_load_paths += %W(#{config.root}/app/renderers)
+    config.eager_load_paths += %W(#{config.root}/app/prepends)
 
     config.i18n.enforce_available_locales = true
 
