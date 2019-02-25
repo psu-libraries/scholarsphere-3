@@ -1,23 +1,26 @@
 # frozen_string_literal: true
 
-class Capistrano::Git < Capistrano::SCM
-  module SubmoduleStrategy
-    include DefaultStrategy
+if Object.const_defined?('Capistrano::SCM')
 
-    def test
-      test! " [ -d #{repo_path}/.git ] "
-    end
+  class Capistrano::Git < Capistrano::SCM
+    module SubmoduleStrategy
+      include DefaultStrategy
 
-    def clone
-      git :clone, '-b', fetch(:branch), '--recursive', repo_url, repo_path
-    end
+      def test
+        test! " [ -d #{repo_path}/.git ] "
+      end
 
-    def release
-      context.execute :rm, '-rf', release_path
-      git :clone, '--branch', fetch(:branch),
-          '--recursive',
-          '--no-hardlinks',
-          repo_path, release_path
+      def clone
+        git :clone, '-b', fetch(:branch), '--recursive', repo_url, repo_path
+      end
+
+      def release
+        context.execute :rm, '-rf', release_path
+        git :clone, '--branch', fetch(:branch),
+            '--recursive',
+            '--no-hardlinks',
+            repo_path, release_path
+      end
     end
   end
 end
