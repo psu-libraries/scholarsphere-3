@@ -39,7 +39,7 @@ class FieldConfigurator
   # Common fields between all lists
   def self.common_fields
     {
-      resource_type: FieldConfig.new('Resource Type'),
+      resource_type: FieldConfig.new(label: 'Resource Type', helper_method: :resource_type_helper_method),
       creator_name: FieldConfig.new(label: 'Creator', facet_cleaners: [:creator]),
       keyword: FieldConfig.new(label: 'Keyword', facet_cleaners: [:downcase]),
       subject: FieldConfig.new('Subject'),

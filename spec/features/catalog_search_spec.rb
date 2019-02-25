@@ -10,20 +10,23 @@ describe 'catalog searching', type: :feature do
                                      title: ['title 1'],
                                      description: ['first work'],
                                      date_created: ['just now'],
-                                     keyword: ['tag1', 'tag2']) }
+                                     keyword: ['tag1', 'tag2'],
+                                     resource_type: ['Audio']) }
 
   let!(:work2) { build(:public_work, id: 'pw2',
                                      depositor: user.login,
                                      title: ['title 2'],
                                      description: ['second work'],
                                      date_created: ['just now'],
-                                     keyword: ['tag2', 'tag3']) }
+                                     keyword: ['tag2', 'tag3'],
+                                     resource_type: ['']) }
 
   let!(:work3) { build(:public_work, id: 'pw3',
                                      depositor: user.login,
                                      title: ['title 3'],
                                      date_created: ['just now'],
-                                     keyword: ['tag3', 'tag4']) }
+                                     keyword: ['tag3', 'tag4'],
+                                     resource_type: ['']) }
 
   let!(:collection) { build(:collection, id: 'coll1', depositor: user.login, keyword: ['tag3', 'tag4']) }
 
@@ -33,17 +36,15 @@ describe 'catalog searching', type: :feature do
     visit '/'
   end
 
-  it 'shows the facets' do
-    within('#search-form-header') do
-      click_button('Go')
-    end
-    expect(page).to have_css 'div#facets'
-  end
-
   it 'finds multiple files' do
     within('#search-form-header') do
       fill_in('search-field-header', with: 'tag2')
       click_button('Go')
+    end
+
+    within('div#facets') do
+      expect(page).to have_link('unspecified')
+      expect(page).to have_link('Audio')
     end
 
     # All fields are displayed in the list view
@@ -75,6 +76,11 @@ describe 'catalog searching', type: :feature do
 
     expect(page).not_to have_selector('a.view-type-masonry')
     expect(page).not_to have_selector('a.view-type-slideshow')
+
+    click_link('unspecified')
+    expect(page).to have_content('You searched for: tag2 Remove constraint tag2 Resource Type unspecified Remove constraint Resource Type: unspecified')
+    expect(page).not_to have_link(work1.title.first)
+    expect(page).to have_link(work2.title.first)
   end
 
   it 'finds files and collections' do

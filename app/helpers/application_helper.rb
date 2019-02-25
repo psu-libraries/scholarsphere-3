@@ -7,6 +7,11 @@ module ApplicationHelper
     c.title
   end
 
+  # Put a clickable value when the facet value is empty
+  def resource_type_helper_method(value)
+    value.presence || I18n.t('scholarsphere.missing_facet')
+  end
+
   # TODO: Needed? this is in curation_concerns-0.14.0.pre1/app/inputs/select_with_modal_help_input.rb
   def link_to_help(subject)
     link_to '#', id: "#{subject}_help", rel: 'popover',
