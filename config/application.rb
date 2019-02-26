@@ -34,6 +34,7 @@ module ScholarSphere
     config.stats_email = ENV.fetch('stats_email', 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>')
     config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
     config.upload_limit = ENV.fetch('upload_limit', 10.gigabyte.to_s)
+    config.admin_group = ENV.fetch('admin_group', 'umg/up.ss.admin')
 
     # DOI Handle used with either EZID or DateCite EZ API
     config.doi_handle = ENV.fetch('doi_handle', 'doi:10.33532')

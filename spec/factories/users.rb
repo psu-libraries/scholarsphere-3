@@ -39,7 +39,7 @@ FactoryGirl.define do
       login { 'administrator1' }
       display_name { 'Administrator 1' }
       title { 'Administrator' }
-      group_list { 'umg/up.dlt.scholarsphere-admin-viewers' }
+      group_list { ScholarSphere::Application.config.admin_group }
     end
 
     factory :first_proxy do
