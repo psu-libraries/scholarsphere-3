@@ -98,6 +98,7 @@ en:
       representative_media: 'If this is or becomes your representative media, this may impact the display of your work in search results.'
     encoding:
       error: 'Error encoding readme as UTF-8'
+    missing_facet: 'unspecified'
 
   statistic:
     report:
