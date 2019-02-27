@@ -44,7 +44,7 @@ class DOIService
       response.id
     rescue Ezid::Error => e
       Rails.logger.warn "Got an Ezid::Error: #{e}, No DOI was created!"
-      DOIFailureJob.perform_later(object, User.find_by(login: object.depositor))
+      DOIFailureJob.perform_later(object, User.find_by(login: object.depositor)) if object.respond_to? :log_event
     end
   end
 
