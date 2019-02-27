@@ -24,7 +24,8 @@ class Scholarsphere::Config
         'EZID_HOST',
         'doi_handle',
         'RECAPTCHA_SITE_KEY',
-        'RECAPTCHA_SECRET_KEY'
+        'RECAPTCHA_SECRET_KEY',
+        'admin_group'
       ]
     }.freeze
 

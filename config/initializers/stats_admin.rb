@@ -6,6 +6,6 @@ class Sufia::StatsAdmin
     current_user = request.env['warden'].user
     return false if current_user.blank?
 
-    current_user.groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    current_user.groups.include? ScholarSphere::Application.config.admin_group
   end
 end

@@ -23,6 +23,7 @@ development:
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  admin_group: 'umg/admin'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -38,6 +39,7 @@ test:
   REPOSITORY_FILESTORE_HOST: 'http://localhost:8000/repository'
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  admin_group: 'umg/admin'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -58,3 +60,4 @@ production:
   REPOSITORY_FILESTORE_HOST: 'https://dce-fedora.vmhost.psu.edu/binaries'
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  admin_group: 'umg/admin'

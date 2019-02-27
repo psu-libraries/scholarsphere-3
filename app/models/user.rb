@@ -80,7 +80,7 @@ class User < ApplicationRecord
   end
 
   def administrator?
-    groups.include? 'umg/up.dlt.scholarsphere-admin-viewers'
+    groups.include? ScholarSphere::Application.config.admin_group
   end
 
   # In Sufia 7, administrators are granted edit rights via Ability, so if

@@ -48,7 +48,7 @@ describe DownloadsController do
 
     context 'with an administrator' do
       before do
-        allow_any_instance_of(User).to receive(:groups).and_return(['umg/up.dlt.scholarsphere-admin-viewers'])
+        allow_any_instance_of(User).to receive(:groups).and_return([ScholarSphere::Application.config.admin_group])
       end
 
       context 'with my own file' do
