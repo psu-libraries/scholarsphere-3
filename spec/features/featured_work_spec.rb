@@ -52,6 +52,14 @@ describe 'Featured works on the home page', type: :feature, js: true do
       end
     end
 
+    it 'allows the user to save the order' do
+      within('#featured_container') do
+        click_on 'Save order'
+      end
+      expect(page).to have_content(file1.title[0])
+      expect(page).to have_content(file2.title[0])
+    end
+
     it 'removes a featured work if it becomes private' do
       within('#featured_container') do
         expect(page).to have_content(file2.title[0])
