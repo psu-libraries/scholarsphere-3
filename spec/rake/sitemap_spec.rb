@@ -20,16 +20,15 @@ describe 'sitemap:generate' do
 
   describe 'sitemap generation', clean: true do
     it 'includes public generic files and users' do
-      pending('See #277')
       run_task 'sitemap:generate'
       filename = Rails.root.join(File.expand_path('public'), 'sitemap.xml')
       expect(Dir.glob(filename).entries.size).to eq(1)
       f = File.open(filename)
       output = f.read
-      expect(output).to include("/users/#{user.login}")
-      expect(output).to include("/files/#{file.id}")
-      expect(output).to include("/collections/#{collection.id}")
-      expect(output).not_to include("/files/#{private_file.id}")
+      expect(output).to include("https://scholarsphere.psu.edu/users/#{user.login}")
+      expect(output).to include("https://scholarsphere.psu.edu/concern/generic_works/#{file.id}")
+      expect(output).to include("https://scholarsphere.psu.edu/collections/#{collection.id}")
+      expect(output).not_to include("/concern/generic_works/#{private_file.id}")
     end
   end
 end

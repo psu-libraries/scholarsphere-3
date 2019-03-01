@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu') do
+Sitemap::Generator.instance.load(host: 'scholarsphere.psu.edu', protocol: 'https') do
   path :root, priority: 1, change_frequency: 'weekly'
   path :search_catalog, priority: 1, change_frequency: 'weekly'
   User.all.each do |user|
