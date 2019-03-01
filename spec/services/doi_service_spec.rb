@@ -80,6 +80,15 @@ describe DOIService do
       minted_id = service.run(object)
       expect(minted_id).to eq(doi)
     end
+
+    context 'the client errors' do
+      it 'logs an error' do
+        expect(client).to receive(:mint_identifier).with('testhandle', metadata).and_raise(Ezid::Error, 'bad error')
+        expect(DOIFailureJob).not_to receive(:perform_later)
+        minted_id = service.run(object)
+        expect(minted_id).to be_blank
+      end
+    end
   end
 
   context 'all the resource types' do
