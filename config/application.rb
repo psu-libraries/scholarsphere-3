@@ -121,6 +121,7 @@ module ScholarSphere
       Sufia::CreateWithFilesActor.prepend PrependedActors::WithVisibilityAttributes
       Sufia::Statistics::TermQuery.prepend PrependedServices::WithNullTermQuery
       Sufia::QueryService.prepend PrependedServices::WithDateUploaded
+      Sufia::FeaturedWorkListsController.prepend PrependedControllers::WithFeaturedListHash
 
       # Prepending class methods
       if ENV['REPOSITORY_EXTERNAL_FILES'] == 'true'
