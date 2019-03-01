@@ -56,7 +56,7 @@ class DOIService
 
     def response_body(object)
       if object.resource_type.empty?
-        base_body(object)
+        base_body(object).merge!('datacite.resourcetype' => 'Collection')
       else
         base_body(object).merge!('datacite.resourcetype' => EZID_RESOURCE_TYPES[object.resource_type.first])
       end

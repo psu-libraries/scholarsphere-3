@@ -69,6 +69,7 @@ describe DOIService do
                        'datacite.title' => 'DOI Collection',
                        'datacite.publisher' => 'ScholarSphere',
                        'datacite.publicationyear' => upload_date.year.to_s,
+                       'datacite.resourcetype' => 'Collection',
                        target: object.url } }
 
     before do
