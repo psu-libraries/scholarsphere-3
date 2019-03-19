@@ -23,10 +23,9 @@ class DownloadsController < ApplicationController
       if params['file'] == 'thumbnail'
         super
       elsif asset.is_a?(FileSet)
-        pcdm_file = asset.association(:original_file).find_target
-        path = Scholarsphere::Pairtree.new(asset, nil).storage_path(disk_file_url(pcdm_file))
-        if File.exist?(path)
-          path
+        location = FileSetDiskLocation.new(asset)
+        if File.exist?(location.path)
+          location.path
         else
           super
         end
@@ -55,8 +54,4 @@ class DownloadsController < ApplicationController
     end
 
     class ZipServiceError < StandardError; end
-
-    def disk_file_url(file)
-      @disk_file_url ||= ActiveFedora.fedora.connection.head(file.uri).response.headers['content-type'].split('"')[1]
-    end
 end

@@ -97,9 +97,7 @@ module FactoryHelpers
                             visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
 
     filename = "#{Rails.root}/spec/fixtures/scholarsphere/scholarsphere_test5.mp3"
-    local_file = File.open(filename, 'rb')
-    Hydra::Works::AddFileToFileSet.call(fs, local_file, :original_file, versioning: false)
-    fs.save!
+    IngestFileJob.perform_now(fs, filename, attributes.user)
     work.ordered_members << fs
     work.thumbnail_id = fs.id
     work.save
