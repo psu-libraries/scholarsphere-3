@@ -129,7 +129,7 @@ namespace :deploy do
   desc 'Restart resque-pool'
   task :resquepoolrestart do
     on roles(:job) do
-      execute 'sudo /sbin/service resque restart'
+      execute 'sudo /bin/systemctl restart resque'
     end
   end
   after :published, :resquepoolrestart
