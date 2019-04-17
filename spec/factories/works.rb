@@ -113,6 +113,7 @@ FactoryGirl.define do
       visibility { Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC }
 
       after(:create) do |work, attributes|
+        allow(CreateDerivativesJob).to receive(:perform_later)
         FactoryHelpers.add_public_mp3(work, attributes)
       end
     end
