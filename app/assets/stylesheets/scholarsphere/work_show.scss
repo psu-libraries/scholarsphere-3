@@ -42,3 +42,6 @@ dd.attribute + dd.attribute::before { // Keeping the dd here so that we don't ne
 .readme h4 { font-size: 1.5rem; }
 
 .breadcrumb > .active { color: $gray-bread-aaa; }
+
+// Fit video to its containing element
+video { width: 100%; }
