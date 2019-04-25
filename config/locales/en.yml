@@ -105,6 +105,9 @@ en:
       subject: "ScholarSphere - Statistic Report"
       csv:
         file_name: "scholarsphere-stats_%{date_str}.csv"
+    user_stats:
+      subject: "ScholarSphere - Reporting Monthly Downloads and Views"
+      heading: "Latest Report for the Month of %{date}"
 
   # Error messages used in conjunction with ErrorPresenter. The key for each error is derived as follows:
   #   StandardError => standard_error
