@@ -23,3 +23,4 @@
 //= require scholarsphere/work_relationships.js
 //= require mustache
 //= require sufia
+//= require mediaelement/mediaelement-and-player-4.2.10.min.js

@@ -20,7 +20,7 @@ class DownloadsController < ApplicationController
     end
 
     def load_file
-      if params['file'] == 'thumbnail'
+      if ['thumbnail', 'mp4', 'webm'].include?(params['file'])
         super
       elsif asset.is_a?(FileSet)
         location = FileSetDiskLocation.new(asset)
