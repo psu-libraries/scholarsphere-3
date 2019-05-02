@@ -16,7 +16,7 @@ describe UserStatsNotificationJob do
 
     it 'sends the email to the user' do
       expect(UserMailer).to receive(:user_stats_email)
-        .with(user_email: user.email, start_date: start_date, end_date: end_date)
+        .with(user: user, start_date: start_date, end_date: end_date)
         .and_return(mock_mailer)
       expect(mock_mailer).to receive(:deliver_now)
       described_class.perform_now(id: user.id, start_date: start_date, end_date: end_date)
