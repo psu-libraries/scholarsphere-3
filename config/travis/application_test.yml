@@ -9,7 +9,7 @@ development:
   service_instance: "localhost"
   virtual_host: "http://localhost:3000/"
   stats_email: "ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>"
-  no_reply_email: "no_repy@scholarsphere.psu.edu"
+  no_reply_email: "no_reply@scholarsphere.psu.edu"
   google_analytics_id: "test-id"
   read_only: "false"
   EZID_USER: 'ezid_user'
@@ -30,7 +30,7 @@ test:
   service_instance: "example-test"
   virtual_host: "http://test.com/"
   stats_email: "Test email"
-  no_reply_email: "no_repy@scholarsphere.psu.edu"
+  no_reply_email: "no_reply@scholarsphere.psu.edu"
   google_analytics_id: "test-id"
   read_only: "false"
   RECAPTCHA_SITE_KEY: 'site-key'
@@ -48,7 +48,7 @@ production:
   service_instance: "example-prod"
   virtual_host: "http://test.com/"
   stats_email: "Test email"
-  no_reply_email: "no_repy@scholarsphere.psu.edu"
+  no_reply_email: "no_reply@scholarsphere.psu.edu"
   google_analytics_id: "test-id"
   derivatives_path: "path"
   read_only: "false"

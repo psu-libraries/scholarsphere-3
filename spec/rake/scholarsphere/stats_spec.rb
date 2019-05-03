@@ -17,15 +17,19 @@ describe 'scholarsphere:stats' do
     end
 
     context 'when a user has stats' do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, email: 'nowhere@fake.com') }
+      let(:message) { ActionMailer::Base.deliveries.first }
 
       before do
+        allow(PsuDir::LdapUser).to receive(:check_ldap_exist!).with(user.login).and_return(true)
         UserStat.create(user_id: user.id, date: (Date.today.last_month.beginning_of_month + 10), file_downloads: 5)
       end
 
       it 'sends an email to the user' do
-        expect(UserStatsNotificationJob).to receive(:perform_later)
         run_task('scholarsphere:stats:notify')
+        expect(message.to).to contain_exactly('nowhere@fake.com')
+        expect(message.from).to contain_exactly(ENV['no_reply_email'])
+        expect(message.subject).to eq('ScholarSphere - Reporting Monthly Downloads and Views')
       end
     end
   end

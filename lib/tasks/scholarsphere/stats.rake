@@ -19,7 +19,7 @@ namespace :scholarsphere do
       start_date = Date.today.last_month.beginning_of_month
       end_date = Date.today.last_month.end_of_month
       UserStat.where(date: start_date..end_date).map(&:user_id).uniq.map do |id|
-        UserStatsNotificationJob.perform_later(id: id, start_date: start_date, end_date: end_date)
+        UserStatsNotificationJob.perform_later(id: id, start_date: start_date.to_s, end_date: end_date.to_s)
       end
     end
   end
