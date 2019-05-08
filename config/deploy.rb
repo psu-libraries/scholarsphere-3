@@ -101,6 +101,17 @@ namespace :apache do
   end
 end
 
+namespace :rbenv do
+  desc 'Overrides task in capistrano-rbenv-install to install the correct version of the bundler gem'
+  task install_bundler: ['rbenv:map_bins'] do
+    on roles fetch(:rbenv_roles) do
+      next if test :gem, :query, "--quiet --installed --name-matches ^bundler (#{Bundler::VERSION})$"
+
+      execute :gem, :install, :bundler, "--quiet --no-document --version #{Bundler::VERSION}"
+    end
+  end
+end
+
 namespace :deploy do
   desc 'Verify yaml configuration files are present and contain the correct keys'
   task :check_configs do

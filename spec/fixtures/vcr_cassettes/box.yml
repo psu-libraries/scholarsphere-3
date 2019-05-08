@@ -1,0 +1,400 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.box.com/api/oauth2/token
+    body:
+      encoding: UTF-8
+      string: client_id=fake-box-client-id&client_secret=fake-box-client-secret&grant_type=refresh_token&refresh_token=FAKEBOXREFRESHTOKEN
+    headers:
+      User-Agent:
+      - Faraday v0.12.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Cache-Control:
+      - no-store
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - box_visitor_id=5cd1aa944ee7b2.31242640; expires=Thu, 07-May-2020 15:56:04
+        GMT; Max-Age=31622400; path=/; domain=.box.com; secure
+      - bv=OPS-43023; expires=Tue, 14-May-2019 15:56:04 GMT; Max-Age=604800; path=/;
+        domain=.app.box.com; secure
+      - cn=55; expires=Thu, 07-May-2020 15:56:04 GMT; Max-Age=31622400; path=/; domain=.app.box.com;
+        secure
+      - site_preference=desktop; path=/; domain=.box.com; secure
+      Age:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"AW4jn84oi5E1O0gT3wNBiNG8IZy89yER","expires_in":3783,"restricted_to":[],"refresh_token":"bjRhgSFAcKLwWu7QixC8QKYPdHsS49NqumlgolZK2iF1LAaENvOZIiOnZ8VPQCBj","token_type":"bearer"}'
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:04 GMT
+- request:
+    method: get
+    uri: https://api.box.com/2.0/folders/0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer FAKEBOXTOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cache-Control:
+      - no-cache, no-store
+      Vary:
+      - Accept-Encoding
+      Box-Request-Id:
+      - 07lr4tn06p9h5fplvm54cjn3iue
+      Age:
+      - '3'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"type":"folder","id":"0","sequence_id":null,"etag":null,"name":"All
+        Files","created_at":null,"modified_at":null,"description":"","size":52540194,"path_collection":{"total_count":0,"entries":[]},"created_by":{"type":"user","id":"","name":"","login":""},"modified_by":{"type":"user","id":"225383863","name":"Sample
+        User","login":"xyz123@psu.edu"},"trashed_at":null,"purged_at":null,"content_created_at":null,"content_modified_at":null,"owned_by":{"type":"user","id":"225383863","name":"Sample
+        User","login":"xyz123@psu.edu"},"shared_link":null,"folder_upload_email":null,"parent":null,"item_status":"active","item_collection":{"total_count":33,"entries":[{"type":"folder","id":"20375782799","sequence_id":"0","etag":"0","name":"A
+        very looooooooooooong box folder, why so loooooooong Lets make it even longer
+        to show how far it gets sent to the side"},{"type":"folder","id":"2571160559","sequence_id":"0","etag":"0","name":"Apps
+        Team - Shared"},{"type":"folder","id":"37937618450","sequence_id":"0","etag":"0","name":"ArchiveSphere"},{"type":"folder","id":"30310516791","sequence_id":"0","etag":"0","name":"archivesphere
+        reports"},{"type":"folder","id":"72674091692","sequence_id":"0","etag":"0","name":"b-dsrd"},{"type":"folder","id":"33216728142","sequence_id":"3","etag":"3","name":"CHO"},{"type":"folder","id":"8564586477","sequence_id":"3","etag":"3","name":"Collections"},{"type":"folder","id":"20194542723","sequence_id":"1","etag":"1","name":"DSRD
+        - W Pattee 3"},{"type":"folder","id":"48267457558","sequence_id":"0","etag":"0","name":"LDAP_agw13"},{"type":"folder","id":"2459961273","sequence_id":"1","etag":"1","name":"Libraries
+        - DSRD Team"},{"type":"folder","id":"32357013200","sequence_id":"0","etag":"0","name":"Montana
+        State Visit"},{"type":"folder","id":"20284062015","sequence_id":"0","etag":"0","name":"My
+        Box Notes"},{"type":"folder","id":"11305958926","sequence_id":"0","etag":"0","name":"PCDM-Sufia"},{"type":"folder","id":"4227519189","sequence_id":"0","etag":"0","name":"refactor"},{"type":"folder","id":"69906298884","sequence_id":"1","etag":"1","name":"Research
+        Data Management Librarian - STEM"},{"type":"folder","id":"3399219062","sequence_id":"0","etag":"0","name":"Scholarsphere
+        - Migration"},{"type":"folder","id":"1168461187","sequence_id":"0","etag":"0","name":"test"},{"type":"folder","id":"3055812547","sequence_id":"0","etag":"0","name":"UX
+        Artifacts"},{"type":"folder","id":"24012535214","sequence_id":"0","etag":"0","name":"Warning
+        Room"},{"type":"file","id":"249254196166","file_version":{"type":"file_version","id":"262863976646","sha1":"1cbe92e0bb0adb547cf46fa4b930679cd6159777"},"sequence_id":"1","etag":"1","sha1":"1cbe92e0bb0adb547cf46fa4b930679cd6159777","name":"creators-404.m4v"},{"type":"file","id":"249252122960","file_version":{"type":"file_version","id":"262861776208","sha1":"06dce12bce3af49ba88b84cff810c32e3d57b20b"},"sequence_id":"1","etag":"1","sha1":"06dce12bce3af49ba88b84cff810c32e3d57b20b","name":"creators.m4v"},{"type":"file","id":"25581309763","file_version":{"type":"file_version","id":"23869158869","sha1":"4604bbe44fdcdd4afef3c666cf582e3773960954"},"sequence_id":"1","etag":"1","sha1":"4604bbe44fdcdd4afef3c666cf582e3773960954","name":"failed.tar.gz"},{"type":"file","id":"427142361509","file_version":{"type":"file_version","id":"451564981350","sha1":"61f611cc9ef6f9e71d9f5a358446988a7ff62f1c"},"sequence_id":"24","etag":"24","sha1":"61f611cc9ef6f9e71d9f5a358446988a7ff62f1c","name":"Box-upload-test.boxnote"},{"type":"file","id":"25588823531","file_version":{"type":"file_version","id":"23877641673","sha1":"abd18ce0a685a27b464fb05f27af5a84f9ec9be7"},"sequence_id":"1","etag":"1","sha1":"abd18ce0a685a27b464fb05f27af5a84f9ec9be7","name":"scholarsphere_5712md360.xml"},{"type":"file","id":"113711622968","file_version":{"type":"file_version","id":"122136107320","sha1":"da39a3ee5e6b4b0d3255bfef95601890afd80709"},"sequence_id":"0","etag":"0","sha1":"da39a3ee5e6b4b0d3255bfef95601890afd80709","name":"test.txt"},{"type":"file","id":"183158243461","file_version":{"type":"file_version","id":"194140042161","sha1":"c797a80d7883c65576e326fe90b0bdcb9351c3b8"},"sequence_id":"11","etag":"11","sha1":"c797a80d7883c65576e326fe90b0bdcb9351c3b8","name":"Communication
+        QA.boxnote"},{"type":"file","id":"238552473711","file_version":{"type":"file_version","id":"251713389852","sha1":"2e3fde3c712457b27bf3c2c5f2b9722e1992d1dd"},"sequence_id":"84","etag":"84","sha1":"2e3fde3c712457b27bf3c2c5f2b9722e1992d1dd","name":"Tomcat-Fedora-Modshape
+        configuration testing.boxnote"},{"type":"file","id":"242357374998","file_version":{"type":"file_version","id":"261636917405","sha1":"c450cdfdd5312554acda88236d6415f2caee70de"},"sequence_id":"81","etag":"81","sha1":"c450cdfdd5312554acda88236d6415f2caee70de","name":"Work
+        Type Creation Workflow.boxnote"},{"type":"file","id":"242359451500","file_version":{"type":"file_version","id":"261631547999","sha1":"1cd11395cd63cbc57a84db4fcaf39303f7ef1c82"},"sequence_id":"26","etag":"26","sha1":"1cd11395cd63cbc57a84db4fcaf39303f7ef1c82","name":"Ruth--
+        Collection Creation Workflow.boxnote"},{"type":"file","id":"270243120124","file_version":{"type":"file_version","id":"285865431480","sha1":"76422f5730239ef3414cb20ef6ed52c0734a555b"},"sequence_id":"8","etag":"8","sha1":"76422f5730239ef3414cb20ef6ed52c0734a555b","name":"Rails
+        Form Resources.boxnote"},{"type":"file","id":"271643093014","file_version":{"type":"file_version","id":"286602549822","sha1":"2177dfcd74805a87ce468d9ecfb58f5ab747e810"},"sequence_id":"32","etag":"32","sha1":"2177dfcd74805a87ce468d9ecfb58f5ab747e810","name":"Nested
+        Forms in Rails - Learnz.boxnote"},{"type":"file","id":"272967630295","file_version":{"type":"file_version","id":"287292361768","sha1":"2ee59b703d71d56c6d0b8824344fe8418546b11a"},"sequence_id":"22","etag":"22","sha1":"2ee59b703d71d56c6d0b8824344fe8418546b11a","name":"Form
+        Objects and Reform \u2013 Learnz.boxnote"},{"type":"file","id":"306931330278","file_version":{"type":"file_version","id":"323293527051","sha1":"87b661bcf1ddaa18e463b936e9292a6b61b41bec"},"sequence_id":"29","etag":"29","sha1":"87b661bcf1ddaa18e463b936e9292a6b61b41bec","name":"Selenium
+        Notes 2018-07-24 10.04.27.boxnote"}],"offset":0,"limit":100,"order":[{"by":"type","direction":"ASC"},{"by":"name","direction":"ASC"}]}}'
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:07 GMT
+- request:
+    method: get
+    uri: https://api.box.com/2.0/folders/0/items?fields=name,size,created_at&limit=99999&offset=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer FAKEBOXTOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cache-Control:
+      - no-cache, no-store
+      Vary:
+      - Accept-Encoding
+      Box-Request-Id:
+      - 1m292i518u5lv96hsikccfbqiff
+      Age:
+      - '1'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"total_count":33,"entries":[{"type":"folder","id":"20375782799","etag":"0","name":"A
+        very looooooooooooong box folder, why so loooooooong Lets make it even longer
+        to show how far it gets sent to the side","size":0,"created_at":"2017-03-01T04:15:15-08:00"},{"type":"folder","id":"2571160559","etag":"0","name":"Apps
+        Team - Shared","size":0,"created_at":"2014-10-15T13:00:29-07:00"},{"type":"folder","id":"37937618450","etag":"0","name":"ArchiveSphere","size":174064683,"created_at":"2017-09-13T12:43:06-07:00"},{"type":"folder","id":"30310516791","etag":"0","name":"archivesphere
+        reports","size":19299022,"created_at":"2017-06-22T06:23:28-07:00"},{"type":"folder","id":"72674091692","etag":"0","name":"b-dsrd","size":0,"created_at":"2019-04-09T12:36:27-07:00"},{"type":"folder","id":"33216728142","etag":"3","name":"CHO","size":6561170038,"created_at":"2017-07-24T07:33:56-07:00"},{"type":"folder","id":"8564586477","etag":"3","name":"Collections","size":122390294,"created_at":"2016-06-24T12:38:35-07:00"},{"type":"folder","id":"20194542723","etag":"1","name":"DSRD
+        - W Pattee 3","size":2952796,"created_at":"2017-02-27T08:17:21-08:00"},{"type":"folder","id":"48267457558","etag":"0","name":"LDAP_agw13","size":3101,"created_at":"2018-03-29T11:21:09-07:00"},{"type":"folder","id":"2459961273","etag":"1","name":"Libraries
+        - DSRD Team","size":244904193,"created_at":"2014-09-17T13:39:31-07:00"},{"type":"folder","id":"32357013200","etag":"0","name":"Montana
+        State Visit","size":275395371,"created_at":"2017-07-17T07:05:08-07:00"},{"type":"folder","id":"20284062015","etag":"0","name":"My
+        Box Notes","size":1613140,"created_at":"2017-02-28T08:52:26-08:00"},{"type":"folder","id":"11305958926","etag":"0","name":"PCDM-Sufia","size":1086318,"created_at":"2016-09-14T09:14:25-07:00"},{"type":"folder","id":"4227519189","etag":"0","name":"refactor","size":8766,"created_at":"2015-08-14T07:53:56-07:00"},{"type":"folder","id":"69906298884","etag":"1","name":"Research
+        Data Management Librarian - STEM","size":1148198,"created_at":"2019-03-12T08:21:19-07:00"},{"type":"folder","id":"3399219062","etag":"0","name":"Scholarsphere
+        - Migration","size":270984,"created_at":"2015-04-07T13:17:51-07:00"},{"type":"folder","id":"1168461187","etag":"0","name":"test","size":20625445557,"created_at":"2013-09-19T12:57:59-07:00"},{"type":"folder","id":"3055812547","etag":"0","name":"UX
+        Artifacts","size":3801994,"created_at":"2015-02-04T08:21:16-08:00"},{"type":"folder","id":"24012535214","etag":"0","name":"Warning
+        Room","size":71823753,"created_at":"2017-04-12T12:30:40-07:00"},{"type":"file","id":"249254196166","etag":"1","name":"creators-404.m4v","size":10468852,"created_at":"2017-11-21T09:51:21-08:00"},{"type":"file","id":"249252122960","etag":"1","name":"creators.m4v","size":11306258,"created_at":"2017-11-21T09:43:03-08:00"},{"type":"file","id":"25581309763","etag":"1","name":"failed.tar.gz","size":28650839,"created_at":"2015-01-29T05:18:43-08:00"},{"type":"file","id":"427142361509","etag":"24","name":"Box-upload-test.boxnote","size":22384,"created_at":"2019-03-24T18:46:36-07:00"},{"type":"file","id":"25588823531","etag":"1","name":"scholarsphere_5712md360.xml","size":97038,"created_at":"2015-01-29T08:38:44-08:00"},{"type":"file","id":"113711622968","etag":"0","name":"test.txt","size":0,"created_at":"2016-12-20T07:50:30-08:00"},{"type":"file","id":"183158243461","etag":"11","name":"Communication
+        QA.boxnote","size":3031,"created_at":"2017-06-09T04:05:45-07:00"},{"type":"file","id":"238552473711","etag":"84","name":"Tomcat-Fedora-Modshape
+        configuration testing.boxnote","size":6464,"created_at":"2017-10-17T07:23:34-07:00"},{"type":"file","id":"242357374998","etag":"81","name":"Work
+        Type Creation Workflow.boxnote","size":6201,"created_at":"2017-10-30T10:25:56-07:00"},{"type":"file","id":"242359451500","etag":"26","name":"Ruth--
+        Collection Creation Workflow.boxnote","size":2968,"created_at":"2017-10-30T10:26:28-07:00"},{"type":"file","id":"270243120124","etag":"8","name":"Rails
+        Form Resources.boxnote","size":6541,"created_at":"2018-01-26T07:43:55-08:00"},{"type":"file","id":"271643093014","etag":"32","name":"Nested
+        Forms in Rails - Learnz.boxnote","size":4145,"created_at":"2018-01-30T08:29:49-08:00"},{"type":"file","id":"272967630295","etag":"22","name":"Form
+        Objects and Reform \u2013 Learnz.boxnote","size":4692,"created_at":"2018-02-02T04:45:04-08:00"},{"type":"file","id":"306931330278","etag":"29","name":"Selenium
+        Notes 2018-07-24 10.04.27.boxnote","size":4343,"created_at":"2018-07-24T07:04:27-07:00"}],"offset":0,"limit":1000,"order":[{"by":"type","direction":"ASC"},{"by":"name","direction":"ASC"}]}'
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:08 GMT
+- request:
+    method: get
+    uri: https://api.box.com/2.0/files/427142361509
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer FAKEBOXTOKEN
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cache-Control:
+      - no-cache, no-store
+      Etag:
+      - '"24"'
+      Vary:
+      - Accept-Encoding
+      Box-Request-Id:
+      - 0hlfh0jg2au61sitljn1bh9b052
+      Age:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"type":"file","id":"427142361509","file_version":{"type":"file_version","id":"451564981350","sha1":"61f611cc9ef6f9e71d9f5a358446988a7ff62f1c"},"sequence_id":"24","etag":"24","sha1":"61f611cc9ef6f9e71d9f5a358446988a7ff62f1c","name":"Box-upload-test.boxnote","description":"","size":22384,"path_collection":{"total_count":1,"entries":[{"type":"folder","id":"0","sequence_id":null,"etag":null,"name":"All
+        Files"}]},"created_at":"2019-03-24T18:46:36-07:00","modified_at":"2019-03-24T19:03:37-07:00","trashed_at":null,"purged_at":null,"content_created_at":"2019-03-24T18:46:36-07:00","content_modified_at":"2019-03-24T19:03:06-07:00","created_by":{"type":"user","id":"225383863","name":"Sample
+        User","login":"xyz123@psu.edu"},"modified_by":{"type":"user","id":"225383863","name":"Sample
+        User","login":"xyz123@psu.edu"},"owned_by":{"type":"user","id":"225383863","name":"Sample
+        User","login":"xyz123@psu.edu"},"shared_link":null,"parent":{"type":"folder","id":"0","sequence_id":null,"etag":null,"name":"All
+        Files"},"item_status":"active"}'
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:10 GMT
+- request:
+    method: get
+    uri: https://api.box.com/2.0/files/427142361509/content
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer FAKEBOXTOKEN
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:11 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cache-Control:
+      - no-cache, no-store
+      Box-Request-Id:
+      - 1sos203m6iao0g94p3vj11e3btk
+      Location:
+      - https://dl.boxcloud.com/d/1/b1!1Yion0r0JN3Vv9IKmsdgV_dubSzIzoX0uOdkrmZrgy2bMhX56j16TMFVAcZKjkBEGLmKRBZaJ8MbjNpc7989v2OKRiXAOJrc6MqEYYE8KDUG-I8X1R00PWH0GqR3tIhDbAhncczyhN1G_s0SZ0R5o7Rze7GQGG-oH9Mn86Tk0GlNOXD2rrZS4Ay6FbixTqch0QENs7aKfosOhQmnr91m7D2NeSUt_XhhA77VvsNmYN4nkMnUgO56EfCRHIP_ejeqVDX9IgCcn505wGAUtTCmsr7YZOPYjokJjrf76bvwwydS_mk59RdKeOAYoUEOwY9wr6co4VwxSwekDJ92y10HBw-ljHPqhm18A832jYotGhgYnPmDPxiv97lHCbwiCKjfwVNpd1MBXDhuOEPJQw8XJA0OKtUeD4gbMUilDSxUwSB0Z1TDqegFfiAZQ4HzxCW7C2pxWLvy781B_NcL3GZ2X0xARExs98ow7jItgvftUw_D9uwgTeUZGQakHz7AI2SRTsNH9nqUop2UwEGOGAqIN3QWKRiz9JpFu2-KfU7b4rh0IhYBtcacUrYFPLcib9Nu9denZT-NGRFQbu36voRZExLcgEelrGULMDOHRPtE8sdKt5gbvl7rJuyFcQlaOwn-4KWbzqHtvNjNmLImHeubnTRNjCv1eQBPhB5osIezJbeehVgLTJMXQtE8VuV64scOhowMluHhOHgghdEeO04adAJJaNlqGYTz_bRQje44yrjx3fwVFTACBK-d7KPgrL_zGCh0LWAMObL--pxgl9i3pnTFizwGEjN5paSvJj-sVTEcVIezgCWpczFNk3nvi5TuzKEgV8jt4hpwSufkyH1sUqvKW-16AbwD6klEo3zXomK3jSlv0CW5WK1a3QGWFlcOMGQoAem7ns9XpS9F7Ubnex3MJgkiErZovku8ySo8aHC80-vy2-e3lhuiLIBpmGsOwItldfuUJDUG8S-cO-xzBX_UL0q1b7YHUHyJtpOMDL1lGoMDGj3D80QZDjqQ9jsRzcJ-ChPJ1-KDBaO2q4Yl--GW4QWFq3C2kBUt2KUH6Ih0pLPKQBYgWlUh_fh6CLS13oddxdn__fLd1zg896RFHw3zk6YTV0pvVOebU7JKpKv6uOnQOKifL6Z-V925lxmFR238G0e38YLj1QeiqftprfC6J7zHDLHmdcs_wI93ucVgWF0h9_HUoN5JGxZKTJZJZj-K3U5IIWXCr8S6t-nRB_I76jR6QF3k6AwlZmWk4_jKRziv3Vhmt8BCtQwIdCuV8v9dm9w./download
+      Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:11 GMT
+- request:
+    method: head
+    uri: https://dl.boxcloud.com/d/1/b1!1Yion0r0JN3Vv9IKmsdgV_dubSzIzoX0uOdkrmZrgy2bMhX56j16TMFVAcZKjkBEGLmKRBZaJ8MbjNpc7989v2OKRiXAOJrc6MqEYYE8KDUG-I8X1R00PWH0GqR3tIhDbAhncczyhN1G_s0SZ0R5o7Rze7GQGG-oH9Mn86Tk0GlNOXD2rrZS4Ay6FbixTqch0QENs7aKfosOhQmnr91m7D2NeSUt_XhhA77VvsNmYN4nkMnUgO56EfCRHIP_ejeqVDX9IgCcn505wGAUtTCmsr7YZOPYjokJjrf76bvwwydS_mk59RdKeOAYoUEOwY9wr6co4VwxSwekDJ92y10HBw-ljHPqhm18A832jYotGhgYnPmDPxiv97lHCbwiCKjfwVNpd1MBXDhuOEPJQw8XJA0OKtUeD4gbMUilDSxUwSB0Z1TDqegFfiAZQ4HzxCW7C2pxWLvy781B_NcL3GZ2X0xARExs98ow7jItgvftUw_D9uwgTeUZGQakHz7AI2SRTsNH9nqUop2UwEGOGAqIN3QWKRiz9JpFu2-KfU7b4rh0IhYBtcacUrYFPLcib9Nu9denZT-NGRFQbu36voRZExLcgEelrGULMDOHRPtE8sdKt5gbvl7rJuyFcQlaOwn-4KWbzqHtvNjNmLImHeubnTRNjCv1eQBPhB5osIezJbeehVgLTJMXQtE8VuV64scOhowMluHhOHgghdEeO04adAJJaNlqGYTz_bRQje44yrjx3fwVFTACBK-d7KPgrL_zGCh0LWAMObL--pxgl9i3pnTFizwGEjN5paSvJj-sVTEcVIezgCWpczFNk3nvi5TuzKEgV8jt4hpwSufkyH1sUqvKW-16AbwD6klEo3zXomK3jSlv0CW5WK1a3QGWFlcOMGQoAem7ns9XpS9F7Ubnex3MJgkiErZovku8ySo8aHC80-vy2-e3lhuiLIBpmGsOwItldfuUJDUG8S-cO-xzBX_UL0q1b7YHUHyJtpOMDL1lGoMDGj3D80QZDjqQ9jsRzcJ-ChPJ1-KDBaO2q4Yl--GW4QWFq3C2kBUt2KUH6Ih0pLPKQBYgWlUh_fh6CLS13oddxdn__fLd1zg896RFHw3zk6YTV0pvVOebU7JKpKv6uOnQOKifL6Z-V925lxmFR238G0e38YLj1QeiqftprfC6J7zHDLHmdcs_wI93ucVgWF0h9_HUoN5JGxZKTJZJZj-K3U5IIWXCr8S6t-nRB_I76jR6QF3k6AwlZmWk4_jKRziv3Vhmt8BCtQwIdCuV8v9dm9w./download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:17 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '22384'
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - private
+      Content-Disposition:
+      - attachment;filename="Box-upload-test.boxnote";filename*=UTF-8''Box-upload-test.boxnote
+      X-Robots-Tag:
+      - noindex, nofollow
+      Encryption-Policy-Id:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:17 GMT
+- request:
+    method: head
+    uri: https://dl.boxcloud.com/d/1/b1!1Yion0r0JN3Vv9IKmsdgV_dubSzIzoX0uOdkrmZrgy2bMhX56j16TMFVAcZKjkBEGLmKRBZaJ8MbjNpc7989v2OKRiXAOJrc6MqEYYE8KDUG-I8X1R00PWH0GqR3tIhDbAhncczyhN1G_s0SZ0R5o7Rze7GQGG-oH9Mn86Tk0GlNOXD2rrZS4Ay6FbixTqch0QENs7aKfosOhQmnr91m7D2NeSUt_XhhA77VvsNmYN4nkMnUgO56EfCRHIP_ejeqVDX9IgCcn505wGAUtTCmsr7YZOPYjokJjrf76bvwwydS_mk59RdKeOAYoUEOwY9wr6co4VwxSwekDJ92y10HBw-ljHPqhm18A832jYotGhgYnPmDPxiv97lHCbwiCKjfwVNpd1MBXDhuOEPJQw8XJA0OKtUeD4gbMUilDSxUwSB0Z1TDqegFfiAZQ4HzxCW7C2pxWLvy781B_NcL3GZ2X0xARExs98ow7jItgvftUw_D9uwgTeUZGQakHz7AI2SRTsNH9nqUop2UwEGOGAqIN3QWKRiz9JpFu2-KfU7b4rh0IhYBtcacUrYFPLcib9Nu9denZT-NGRFQbu36voRZExLcgEelrGULMDOHRPtE8sdKt5gbvl7rJuyFcQlaOwn-4KWbzqHtvNjNmLImHeubnTRNjCv1eQBPhB5osIezJbeehVgLTJMXQtE8VuV64scOhowMluHhOHgghdEeO04adAJJaNlqGYTz_bRQje44yrjx3fwVFTACBK-d7KPgrL_zGCh0LWAMObL--pxgl9i3pnTFizwGEjN5paSvJj-sVTEcVIezgCWpczFNk3nvi5TuzKEgV8jt4hpwSufkyH1sUqvKW-16AbwD6klEo3zXomK3jSlv0CW5WK1a3QGWFlcOMGQoAem7ns9XpS9F7Ubnex3MJgkiErZovku8ySo8aHC80-vy2-e3lhuiLIBpmGsOwItldfuUJDUG8S-cO-xzBX_UL0q1b7YHUHyJtpOMDL1lGoMDGj3D80QZDjqQ9jsRzcJ-ChPJ1-KDBaO2q4Yl--GW4QWFq3C2kBUt2KUH6Ih0pLPKQBYgWlUh_fh6CLS13oddxdn__fLd1zg896RFHw3zk6YTV0pvVOebU7JKpKv6uOnQOKifL6Z-V925lxmFR238G0e38YLj1QeiqftprfC6J7zHDLHmdcs_wI93ucVgWF0h9_HUoN5JGxZKTJZJZj-K3U5IIWXCr8S6t-nRB_I76jR6QF3k6AwlZmWk4_jKRziv3Vhmt8BCtQwIdCuV8v9dm9w./download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:17 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '22384'
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - private
+      Content-Disposition:
+      - attachment;filename="Box-upload-test.boxnote";filename*=UTF-8''Box-upload-test.boxnote
+      X-Robots-Tag:
+      - noindex, nofollow
+      Encryption-Policy-Id:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:17 GMT
+- request:
+    method: get
+    uri: https://dl.boxcloud.com/d/1/b1!1Yion0r0JN3Vv9IKmsdgV_dubSzIzoX0uOdkrmZrgy2bMhX56j16TMFVAcZKjkBEGLmKRBZaJ8MbjNpc7989v2OKRiXAOJrc6MqEYYE8KDUG-I8X1R00PWH0GqR3tIhDbAhncczyhN1G_s0SZ0R5o7Rze7GQGG-oH9Mn86Tk0GlNOXD2rrZS4Ay6FbixTqch0QENs7aKfosOhQmnr91m7D2NeSUt_XhhA77VvsNmYN4nkMnUgO56EfCRHIP_ejeqVDX9IgCcn505wGAUtTCmsr7YZOPYjokJjrf76bvwwydS_mk59RdKeOAYoUEOwY9wr6co4VwxSwekDJ92y10HBw-ljHPqhm18A832jYotGhgYnPmDPxiv97lHCbwiCKjfwVNpd1MBXDhuOEPJQw8XJA0OKtUeD4gbMUilDSxUwSB0Z1TDqegFfiAZQ4HzxCW7C2pxWLvy781B_NcL3GZ2X0xARExs98ow7jItgvftUw_D9uwgTeUZGQakHz7AI2SRTsNH9nqUop2UwEGOGAqIN3QWKRiz9JpFu2-KfU7b4rh0IhYBtcacUrYFPLcib9Nu9denZT-NGRFQbu36voRZExLcgEelrGULMDOHRPtE8sdKt5gbvl7rJuyFcQlaOwn-4KWbzqHtvNjNmLImHeubnTRNjCv1eQBPhB5osIezJbeehVgLTJMXQtE8VuV64scOhowMluHhOHgghdEeO04adAJJaNlqGYTz_bRQje44yrjx3fwVFTACBK-d7KPgrL_zGCh0LWAMObL--pxgl9i3pnTFizwGEjN5paSvJj-sVTEcVIezgCWpczFNk3nvi5TuzKEgV8jt4hpwSufkyH1sUqvKW-16AbwD6klEo3zXomK3jSlv0CW5WK1a3QGWFlcOMGQoAem7ns9XpS9F7Ubnex3MJgkiErZovku8ySo8aHC80-vy2-e3lhuiLIBpmGsOwItldfuUJDUG8S-cO-xzBX_UL0q1b7YHUHyJtpOMDL1lGoMDGj3D80QZDjqQ9jsRzcJ-ChPJ1-KDBaO2q4Yl--GW4QWFq3C2kBUt2KUH6Ih0pLPKQBYgWlUh_fh6CLS13oddxdn__fLd1zg896RFHw3zk6YTV0pvVOebU7JKpKv6uOnQOKifL6Z-V925lxmFR238G0e38YLj1QeiqftprfC6J7zHDLHmdcs_wI93ucVgWF0h9_HUoN5JGxZKTJZJZj-K3U5IIWXCr8S6t-nRB_I76jR6QF3k6AwlZmWk4_jKRziv3Vhmt8BCtQwIdCuV8v9dm9w./download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 May 2019 15:56:18 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '22384'
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - private
+      Content-Disposition:
+      - attachment;filename="Box-upload-test.boxnote";filename*=UTF-8''Box-upload-test.boxnote
+      X-Robots-Tag:
+      - noindex, nofollow
+      Encryption-Policy-Id:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        0000000000000000
+    http_version:
+  recorded_at: Tue, 07 May 2019 15:56:18 GMT
+recorded_with: VCR 4.0.0
