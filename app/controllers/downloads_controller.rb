@@ -54,4 +54,11 @@ class DownloadsController < ApplicationController
     end
 
     class ZipServiceError < StandardError; end
+
+    def mime_type_for(file)
+      types = MIME::Types.type_for(File.extname(file))
+      return 'application/octet-stream' if types.empty?
+
+      types.first.content_type
+    end
 end
