@@ -170,5 +170,21 @@ describe DownloadsController do
         expect { subject }.to raise_error(DownloadsController::ZipServiceError, 'BogusClass cannot be downloaded as a zip file')
       end
     end
+
+    context 'with an unknown file type' do
+      let(:file) { File.open(File.join(fixture_path, 'special-mime-type.R')) }
+
+      before do
+        allow(response).to receive(:"status=")
+        controller.params[:id] = my_file.id
+      end
+
+      it 'sends content' do
+        expect(WorkZipService).not_to receive(:new)
+        expect(controller).to receive(:send_file)
+          .with(/.*#{my_file.id}.*special-mime-type.R/, type: 'application/octet-stream', disposition: 'inline')
+        subject
+      end
+    end
   end
 end
