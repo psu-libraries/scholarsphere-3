@@ -16,6 +16,7 @@ class Scholarsphere::Config
         'service_instance',
         'virtual_host',
         'stats_email',
+        'no_reply_email',
         'google_analytics_id',
         'derivatives_path',
         'read_only',

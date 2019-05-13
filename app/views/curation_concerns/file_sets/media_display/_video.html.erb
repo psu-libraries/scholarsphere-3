@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-xs-12 show-video">
+    <video width="320"
+           height="240"
+           src="<%= main_app.download_path(file_set, file: 'webm') %>"
+           poster="<%= main_app.download_path(file_set, file: 'thumbnail') %>" />
+  </div>
+
+  <div class="col-xs-12 show-video">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="video-source">Video Source</label>
+        <select class="form-control" id="video-source">
+          <option value="<%= main_app.download_path(file_set, file: 'webm') %>">webm</option>
+          <option value="<%= main_app.download_path(file_set, file: 'mp4') %>">mp4</option>
+          <option value="<%= main_app.download_path(file_set) %>">original</option>
+       </select>
+      </div>
+
+      <%= link_to 'Download', main_app.download_path(file_set, file: 'webm'),
+      id: 'video-download', class: 'btn btn-primary btn-sm', data: { turbolinks: false } %>
+    </form>
+  </div>
+
+  <script>
+
+    Blacklight.onLoad(function() {
+      $('video, audio').mediaelementplayer({
+        useDefaultControls: true,
+        startLanguage: 'en'
+      });
+    });
+
+    document.body.querySelector('#video-source').addEventListener('change', function (e) {
+      var video = $('video')
+      var link = $('#video-download')
+
+      video.attr('src', e.target.value)
+      link.attr('href', e.target.value)
+      video.load()
+    })
+
+  </script>
+</div>

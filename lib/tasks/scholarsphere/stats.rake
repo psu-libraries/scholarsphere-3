@@ -13,5 +13,14 @@ namespace :scholarsphere do
       importer = UserStatsImporter.new(start_date, 1.day.ago)
       importer.import
     end
+
+    desc 'Notify users of their monthly stats'
+    task notify: :environment do
+      start_date = Date.today.last_month.beginning_of_month
+      end_date = Date.today.last_month.end_of_month
+      UserStat.where(date: start_date..end_date).map(&:user_id).uniq.map do |id|
+        UserStatsNotificationJob.perform_later(id: id, start_date: start_date.to_s, end_date: end_date.to_s)
+      end
+    end
   end
 end

@@ -39,10 +39,32 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
     context 'cloud providers' do
       before do
-        allow(BrowseEverything).to receive(:config) { { 'dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298', max_upload_file_size: 20 * 1024 } } }
-        allow(Sufia.config).to receive(:browse_everything).and_return('dropbox' => { app_key: 'fakekey189274942347', app_secret: 'fakesecret489289472347298' })
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:authorized?).and_return(true)
-        allow_any_instance_of(BrowseEverything::Driver::Dropbox).to receive(:token).and_return('FakeDropboxAccessToken01234567890ABCDEF_AAAAAAA987654321')
+        allow(BrowseEverything).to receive(:config) do
+          {
+            'box' => {
+              client_id: 'fake-box-client-id',
+              client_secret: 'fake-box-client-secret',
+              max_upload_file_size: 25 * 1024
+            }
+          }
+        end
+
+        allow(Sufia.config).to receive(:browse_everything) .and_return(
+          'dropbox' => {
+            client_id: 'fake-box-client-id',
+            client_secret: 'fake-box-client-secret'
+          }
+        )
+
+        allow_any_instance_of(BrowseEverything::Driver::Box)
+          .to receive(:box_token)
+          .and_return('FAKEBOXTOKEN')
+
+        allow_any_instance_of(BrowseEverything::Driver::Box)
+          .to receive(:box_refresh_token)
+          .and_return('FAKEBOXREFRESHTOKEN')
+
+        allow_any_instance_of(BrowseEverything::Driver::Box).to receive(:authorized?).and_return(true)
         allow_any_instance_of(GenericWork).to receive(:share_notified?).and_return(false)
         WebMock.enable!
       end
@@ -53,32 +75,39 @@ describe 'Generic File uploading and deletion:', type: :feature do
 
       specify 'I can click on cloud providers' do
         expect(ShareNotifyJob).to receive(:perform_later)
-        VCR.use_cassette('dropbox', record: :none) do
+        VCR.use_cassette('box', record: :none) do
           click_link 'Files'
           expect(page).to have_content 'Add cloud files'
           click_on 'Add cloud files'
           expect(page).to have_css '#provider-select'
-          select 'Dropbox', from: 'provider-select'
+
+          # Choose Box and view the files
+          select 'Box', from: 'provider-select'
           sleep(1.second)
-          expect(page).to have_content 'Getting Started.pdf'
-          click_on('Writer')
+          expect(page).to have_content 'My Box Notes'
+          expect(page).to have_content 'Box-upload-test.boxnote'
+          expect(page).to have_content 'creators.m4v'
+
+          # Files above the size limit are not clickable
+          expect(page).not_to have_css 'a', text: 'creators.m4v'
+
+          # Upload file into the queue
+          click_on('Box-upload-test.boxnote')
           sleep(1.second)
-          expect(page).to have_content 'Writer FAQ.txt'
-          expect(page).not_to have_css 'a', text: 'Writer FAQ.txt'
-          expect(page).to have_content 'Markdown Test.txt'
-          check('writer-markdown-test-txt')
           expect(page).to have_content '1 file selected'
           click_on('Submit')
           within 'tr.template-download' do
-            expect(page).to have_content 'Markdown Test.txt'
+            expect(page).to have_content 'Box-upload-test.boxnote'
           end
           within('#savewidget') do
             choose 'generic_work_visibility_authenticated'
           end
           sleep(1.second)
+
+          # Fill in the rest of the metadata and create the work
           check 'agreement'
           click_on 'Metadata'
-          fill_in 'generic_work_title', with: 'Markdown Test'
+          fill_in 'generic_work_title', with: 'Box Upload Test'
           fill_in 'generic_work_keyword', with: 'keyword'
           fill_in 'generic_work[creators][0][given_name]', with: 'creator'
           select 'Attribution-NonCommercial-NoDerivatives 4.0 International', from: 'generic_work_rights'
@@ -88,11 +117,11 @@ describe 'Generic File uploading and deletion:', type: :feature do
           click_on 'Save'
           expect(page).to have_content 'Your files are being processed'
           within('#activity_log') do
-            expect(page).to have_content("User #{current_user.display_name} has deposited Markdown Test")
+            expect(page).to have_content("User #{current_user.display_name} has deposited Box Upload Test")
           end
-          expect(page).to have_css('h1', text: 'Markdown Test')
+          expect(page).to have_css('h1', text: 'Box Upload Test')
           click_on 'Notifications'
-          expect(page).to have_content 'The file (Markdown Test.txt) was successfully imported'
+          expect(page).to have_content 'The file (Box-upload-test.boxnote) was successfully imported'
         end
       end
     end

@@ -17,6 +17,15 @@ class UserMailer < ActionMailer::Base
          subject: ::I18n.t('statistic.report.subject'))
   end
 
+  def user_stats_email(user:, start_date: Date.today.last_month.beginning_of_month, end_date: Date.today.last_month.end_of_month)
+    @presenter = UserStatsPresenter.new(start_date: start_date, end_date: end_date, user: user)
+    return if @presenter.file_downloads.zero?
+
+    mail(to: user.email,
+         from: ScholarSphere::Application.config.no_reply_email,
+         subject: ::I18n.t('statistic.user_stats.subject'))
+  end
+
   private
 
     def stats_report_name

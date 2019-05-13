@@ -20,13 +20,12 @@ class DownloadsController < ApplicationController
     end
 
     def load_file
-      if params['file'] == 'thumbnail'
+      if ['thumbnail', 'mp4', 'webm'].include?(params['file'])
         super
       elsif asset.is_a?(FileSet)
-        pcdm_file = asset.association(:original_file).find_target
-        path = Scholarsphere::Pairtree.new(asset, nil).storage_path(disk_file_url(pcdm_file))
-        if File.exist?(path)
-          path
+        location = FileSetDiskLocation.new(asset)
+        if File.exist?(location.path)
+          location.path
         else
           super
         end
@@ -56,7 +55,10 @@ class DownloadsController < ApplicationController
 
     class ZipServiceError < StandardError; end
 
-    def disk_file_url(file)
-      @disk_file_url ||= ActiveFedora.fedora.connection.head(file.uri).response.headers['content-type'].split('"')[1]
+    def mime_type_for(file)
+      types = MIME::Types.type_for(File.extname(file))
+      return 'application/octet-stream' if types.empty?
+
+      types.first.content_type
     end
 end

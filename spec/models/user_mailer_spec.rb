@@ -41,4 +41,39 @@ describe UserMailer do
       expect(message.parts[1].body).to include(csv)
     end
   end
+
+  describe '#user_stats_email' do
+    let(:user) { create(:user) }
+    let(:message) { described_class.user_stats_email(user: user) }
+    let(:body) { message.body.raw_source }
+
+    context 'when the user has file downloads' do
+      let(:mock_presenter) { instance_double(UserStatsPresenter, file_downloads: 8, total_files: 21) }
+
+      before do
+        allow(UserStatsPresenter).to receive(:new).and_return(mock_presenter)
+      end
+
+      it 'emails a user a report of their monthly downloads and views' do
+        expect(message['from'].to_s).to eq(Rails.application.config.no_reply_email)
+        expect(message['to'].to_s).to include(user.email)
+        expect(body).to include(I18n.t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')))
+        expect(body).to include('You had 8 new downloads last month across your 21 files')
+      end
+    end
+
+    context 'when the user has no file downloads' do
+      let(:mock_presenter) { instance_double(UserStatsPresenter, file_downloads: 0, total_files: 21) }
+
+      before do
+        allow(UserStatsPresenter).to receive(:new).and_return(mock_presenter)
+      end
+
+      it 'build a null message object' do
+        expect(message['from'].to_s).to be_empty
+        expect(message['to'].to_s).to be_empty
+        expect(message.body).to be_empty
+      end
+    end
+  end
 end

@@ -32,6 +32,7 @@ module ScholarSphere
     config.virtual_host = ENV.fetch('virtual_host', "https://#{Socket.gethostname}")
     config.google_analytics_id = ENV.fetch('google_analytics_id', nil)
     config.stats_email = ENV.fetch('stats_email', 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>')
+    config.no_reply_email = ENV.fetch('no_reply_email', 'no_reply@scholarsphere.psu.edu')
     config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
     config.upload_limit = ENV.fetch('upload_limit', 10.gigabyte.to_s)
     config.admin_group = ENV.fetch('admin_group', 'umg/up.ss.admin')
@@ -42,8 +43,8 @@ module ScholarSphere
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = 'v3.7'
-    config.scholarsphere_release_date = 'March 12, 2019'
+    config.scholarsphere_version = 'v3.8'
+    config.scholarsphere_release_date = 'May 14, 2019'
     config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page

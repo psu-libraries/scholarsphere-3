@@ -48,7 +48,8 @@ class WorkZipService
       return unless add_to_zip?(file_set)
 
       zipfile.get_output_stream(file_set.title.first) do |outfile|
-        file_set.original_file.stream.each { |buffer| outfile.write(buffer) }
+        location = FileSetDiskLocation.new(file_set)
+        File.open(location.path).each { |buffer| outfile.write(buffer) }
       end
     end
 
