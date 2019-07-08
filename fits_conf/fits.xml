@@ -1,3 +1,4 @@
+<!-- Changes to this file should be mirrored here: https://github.com/psu-stewardship/chef/tree/qa/cookbooks/scholarsphere_jobs/templates/default -->
 <?xml version="1.0" encoding="UTF-8"?>
 <fits_configuration>
 	<!-- Order of the tools determines preference -->
