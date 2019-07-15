@@ -25,6 +25,7 @@ development:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -42,6 +43,7 @@ test:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -64,3 +66,4 @@ production:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'

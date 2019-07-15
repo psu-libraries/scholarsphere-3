@@ -36,6 +36,7 @@ module ScholarSphere
     config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
     config.upload_limit = ENV.fetch('upload_limit', 10.gigabyte.to_s)
     config.admin_group = ENV.fetch('admin_group', 'umg/up.ss.admin')
+    config.network_ingest_directory = Pathname.new(ENV.fetch('network_ingest_directory', 'tmp/ingest-development'))
 
     # DOI Handle used with either EZID or DateCite EZ API
     config.doi_handle = ENV.fetch('doi_handle', 'doi:10.33532')
