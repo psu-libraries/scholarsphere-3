@@ -7,6 +7,19 @@ require 'capybara/rails'
 # Tell capybara to use css selectors, as opposed to xpath
 Capybara.default_selector = :css
 
+Capybara.register_driver :chrome_headless do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :chrome_headless
+
 # Ajax can run a little slowly on some machines. Give it a chance.
 Capybara.default_max_wait_time = 15
 
