@@ -87,7 +87,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'webdrivers'
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
@@ -95,5 +94,6 @@ group :test do
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'vcr'
+  gem 'webdrivers'
   gem 'webmock'
 end
