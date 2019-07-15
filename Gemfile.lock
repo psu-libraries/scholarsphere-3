@@ -69,8 +69,6 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     almond-rails (0.0.3)
       rails (>= 4.2, < 6)
-    archive-zip (0.11.0)
-      io-like (~> 0.3.0)
     arel (8.0.0)
     ast (2.4.0)
     autoprefixer-rails (9.4.7)
@@ -197,9 +195,6 @@ GEM
       mime-types (>= 1.16)
     childprocess (1.0.1)
       rake (< 13.0)
-    chromedriver-helper (2.1.0)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
     chronic (0.10.2)
     clamav (0.4.1)
     clipboard-rails (1.7.1)
@@ -444,7 +439,6 @@ GEM
       om (~> 3.1)
     i18n (0.8.1)
     ice_nine (0.11.2)
-    io-like (0.3.0)
     jaro_winkler (1.5.2)
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
@@ -898,6 +892,10 @@ GEM
       rack (>= 1.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
+    webdrivers (4.1.0)
+      nokogiri (~> 1.6)
+      rubyzip (~> 1.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -937,7 +935,6 @@ DEPENDENCIES
   capistrano-resque (~> 0.2.1)
   capybara
   capybara-screenshot
-  chromedriver-helper
   clamav
   coderay
   coffee-rails
@@ -993,6 +990,7 @@ DEPENDENCIES
   uglifier
   unicorn-rails
   vcr
+  webdrivers
   webmock
   whenever
   xray-rails
