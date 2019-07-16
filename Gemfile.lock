@@ -98,7 +98,7 @@ GEM
     bagit (0.4.3)
       docopt (~> 0.5.0)
       validatable (~> 1.6)
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -207,7 +207,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     colorize (0.8.1)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
     coveralls (0.8.22)
       json (>= 1.8, < 3)
@@ -253,7 +253,7 @@ GEM
     declarative-option (0.1.0)
     deprecation (1.0.0)
       activesupport
-    devise (4.5.0)
+    devise (4.6.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 6.0)
@@ -668,9 +668,9 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
-    responders (2.4.0)
-      actionpack (>= 4.2.0, < 5.3)
-      railties (>= 4.2.0, < 5.3)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     resque (1.27.4)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -933,7 +933,7 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.1)
   capistrano-rbenv-install
   capistrano-resque (~> 0.2.1)
-  capybara (~> 3.18)
+  capybara
   capybara-screenshot
   clamav
   coderay
