@@ -19,8 +19,7 @@ export PATH=$PATH:$(pwd)/dep_cache
 
 echo -e "\n\n\033[1;33mConfiguring Scholarsphere for test\033[0m"
 curl -Lo fits.zip https://projects.iq.harvard.edu/files/fits/files/fits-1.3.0.zip
-# TODO fix this
-rm -rf fits/*
+mkdir -p fits
 unzip -q fits.zip -d fits
 export PATH=$PATH:$(pwd)/fits
 cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml
