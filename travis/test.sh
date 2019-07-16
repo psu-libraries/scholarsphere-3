@@ -39,8 +39,10 @@ cd public
 python -m SimpleHTTPServer 8000 &
 cd ..
 
-echo -e "\n\n\033[1;33mStart Chrome for headless testing\033[0m"
-google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+echo -e "\n\n\033[1;33mStarting xvfb\033[0m"
+export DISPLAY=:99.0
+sh -e /etc/init.d/xvfb start
+sleep 5
 
 echo -e "\n\n\033[1;33mPrepare coverage report and run the RSpec test\033[0m"
 cc-test-reporter before-build
