@@ -25,6 +25,10 @@ FactoryGirl.define do
       description { 'My incredibly detailed description of the collection' }
     end
 
+    factory :registered_collection do
+      visibility { Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED }
+    end
+
     trait :with_complete_metadata do
       resource_type { ['Dissertation aaa'] }
       publisher { ['publisher bbb'] }

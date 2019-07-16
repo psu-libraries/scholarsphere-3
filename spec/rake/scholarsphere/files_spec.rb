@@ -57,4 +57,60 @@ describe 'scholarsphere:files' do
       end
     end
   end
+
+  describe ':zip' do
+    context 'with works that exceed the threshold' do
+      let(:id) { SecureRandom.uuid }
+      let(:small_id) { SecureRandom.uuid }
+      let(:psu_id) { SecureRandom.uuid }
+      let(:private_id) { SecureRandom.uuid }
+
+      before do
+        index_document(build(:public_work).to_solr.merge!(bytes_lts: 600_000_000, id: id))
+        index_document(build(:public_work).to_solr.merge!(bytes_lts: 100_000_000, id: small_id))
+        index_document(build(:registered_work).to_solr.merge!(bytes_lts: 600_000_000, id: psu_id))
+        index_document(build(:work).to_solr.merge!(bytes_lts: 600_000_000, id: private_id))
+      end
+
+      it 'submits jobs to create zip files for public and registered works only' do
+        expect(ZipJob).to receive(:perform_later).with(id)
+        expect(ZipJob).not_to receive(:perform_later).with(psu_id)
+        expect(ZipJob).not_to receive(:perform_later).with(private_id)
+        expect(ZipJob).not_to receive(:perform_later).with(small_id)
+        run_task('scholarsphere:files:zip')
+      end
+    end
+  end
+
+  describe ':delete_zips' do
+    let(:public_zip) { ScholarSphere::Application.config.public_zipfile_directory.join("#{SecureRandom.uuid}.zip") }
+    let(:mock_zip_file) { instance_double(ZipFile) }
+
+    before do
+      Cleanup.directories
+      FileUtils.touch(public_zip)
+    end
+
+    context 'when the zip file is stale' do
+      before { allow(mock_zip_file).to receive(:stale?).and_return(true) }
+
+      it 'removes the file' do
+        expect(public_zip).to be_exist
+        expect(ZipFile).to receive(:new).once.and_return(mock_zip_file)
+        run_task('scholarsphere:files:delete_zips')
+        expect(public_zip).not_to be_exist
+      end
+    end
+
+    context 'when the zip file is not stale' do
+      before { allow(mock_zip_file).to receive(:stale?).and_return(false) }
+
+      it 'does not remove the file' do
+        expect(public_zip).to be_exist
+        expect(ZipFile).to receive(:new).once.and_return(mock_zip_file)
+        run_task('scholarsphere:files:delete_zips')
+        expect(public_zip).to be_exist
+      end
+    end
+  end
 end

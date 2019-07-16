@@ -165,4 +165,38 @@ describe WorkShowPresenter do
   end
 
   its(:event_class) { is_expected.to eq(GenericWork) }
+
+  describe '#zip_available?' do
+    before { allow(presenter).to receive(:bytes).and_return(bytes) }
+
+    context 'when the files are still being uploaded' do
+      let(:bytes) { 0 }
+
+      before { allow(presenter).to receive(:uploading?).and_return(true) }
+
+      it { is_expected.not_to be_zip_available }
+    end
+
+    context 'when the work is smaller than the zip file size threshold' do
+      let(:bytes) { 10 }
+
+      it { is_expected.to be_zip_available }
+    end
+
+    context 'when the work is larger than the zip file size threshold and the file is present' do
+      let(:bytes) { ScholarSphere::Application.config.zipfile_size_threshold + 100 }
+
+      before { FileUtils.touch(ScholarSphere::Application.config.public_zipfile_directory.join("#{work.id}.zip")) }
+
+      after { FileUtils.rm_f(ScholarSphere::Application.config.public_zipfile_directory.join("#{work.id}.zip")) }
+
+      it { is_expected.to be_zip_available }
+    end
+
+    context 'when the work is larger than the zip file size threshold and the file is not present' do
+      let(:bytes) { ScholarSphere::Application.config.zipfile_size_threshold + 100 }
+
+      it { is_expected.not_to be_zip_available }
+    end
+  end
 end

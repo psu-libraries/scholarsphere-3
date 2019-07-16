@@ -62,6 +62,8 @@ namespace :dev do
     FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
     FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
     FileUtils.mkdir_p(ScholarSphere::Application.config.network_ingest_directory)
+    FileUtils.rm_rf(ScholarSphere::Application.config.public_zipfile_directory)
+    FileUtils.mkdir_p(ScholarSphere::Application.config.public_zipfile_directory)
   end
 
   def cleanout_redis

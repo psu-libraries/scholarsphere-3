@@ -26,6 +26,8 @@ development:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   network_ingest_directory: 'tmp/ingest-development'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-development'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -44,6 +46,8 @@ test:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   network_ingest_directory: 'tmp/ingest-test'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -67,3 +71,5 @@ production:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   network_ingest_directory: 'tmp/ingest-development'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-development'

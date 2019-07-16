@@ -29,6 +29,8 @@ class DownloadsController < ApplicationController
         else
           super
         end
+      elsif asset.public?
+        ScholarSphere::Application.config.public_zipfile_directory.join("#{asset.id}.zip").to_s
       else
         zip_service.call
       end
