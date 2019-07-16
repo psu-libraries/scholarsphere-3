@@ -8,7 +8,7 @@ echo "Listing directory contents:"
 ls -l dep_cache
 
 echo -e "\n\n\033[1;33mInstalling AWS command line tools\033[0m"
-pip -q install awscli --upgrade --user
+pip install awscli --upgrade --user
 
 echo -e "\n\n\033[1;33mInstalling Code Climate test reporting tool\033[0m"
 if [ ! -f dep_cache/cc-test-reporter ]; then
