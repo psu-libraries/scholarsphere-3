@@ -61,6 +61,7 @@ namespace :dev do
     FileUtils.mkdir_p(Sufia.config.upload_path.call)
     FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
     FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
+    FileUtils.mkdir_p(ScholarSphere::Application.config.network_ingest_directory)
   end
 
   def cleanout_redis

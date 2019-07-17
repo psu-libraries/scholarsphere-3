@@ -46,4 +46,10 @@ describe 'Application configuration' do
 
     it { is_expected.to eq('10737418240') }
   end
+
+  describe 'Network ingest directory' do
+    subject { config.network_ingest_directory }
+
+    it { is_expected.to eq(Pathname.new('tmp/ingest-test')) }
+  end
 end

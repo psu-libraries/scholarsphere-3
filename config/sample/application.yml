@@ -25,6 +25,7 @@ development:
   REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "dev_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  network_ingest_directory: 'tmp/ingest-development'
 test:
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
@@ -42,6 +43,7 @@ test:
   REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "test_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  network_ingest_directory: 'tmp/ingest-test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -64,3 +66,4 @@ production:
   REPOSITORY_MIGRATION_LOG: <%= Rails.root.join('log', "dce_fedora_migration.log").to_s %>
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
+  network_ingest_directory: 'tmp/ingest-development'
