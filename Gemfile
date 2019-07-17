@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.1.7'
 # gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 
