@@ -14,6 +14,7 @@ class DOIService
     'Image' => 'Image',
     'Journal' => 'Text',
     'Map or Cartographic Material' => 'Image',
+    'Masters Culminating Experience' => 'Text',
     'Masters Thesis' => 'Text',
     'Part of Book' => 'Text',
     'Poster' => 'Audiovisual',
