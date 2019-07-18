@@ -2,6 +2,14 @@
 <%= form_for @user, url: sufia.profile_path(@user.to_param), html: { multipart: true, class: 'form-horizontal' } do |f| %>
   <div class="form-group">
     <div class="checkbox">
+      <%= f.label :opt_out_stats_email do %>
+        <%= f.check_box :opt_out_stats_email %>
+        Receive monthly statistics via email
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
       <%= f.label :update_directory do %>
         <%= f.check_box :update_directory %>
         Refresh directory info
