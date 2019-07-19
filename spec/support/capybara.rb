@@ -20,4 +20,10 @@ RSpec.configure do |config|
   # Alias for shared examples
   config.alias_it_should_behave_like_to :we_can, 'We can'
   config.infer_spec_type_from_file_location!
+
+  config.before do |test|
+    if test.metadata.fetch(:js, false)
+      Capybara.current_driver = :selenium_chrome_headless
+    end
+  end
 end
