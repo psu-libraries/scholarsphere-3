@@ -17,10 +17,10 @@ module Features
       unless Capybara.drivers.include?(name)
         Capybara.register_driver name do |app|
           window_size = opts[:window_size] || 'window-size=1024,768'
-          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu', window_size, 'single-process'] })
-          Capybara::Selenium::Driver.new(app,
-                                           browser: :chrome,
-                                           desired_capabilities: capabilities)
+          options = Selenium::WebDriver::Chrome::Options.new(
+            args: ['no-sandbox', 'headless', 'disable-gpu', window_size, 'single-process']
+          )
+          Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
         end
       end
       Capybara.current_driver = name
