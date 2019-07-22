@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031110604) do
+ActiveRecord::Schema.define(version: 20190722175809) do
 
   create_table "bookmarks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", null: false
@@ -504,6 +504,7 @@ ActiveRecord::Schema.define(version: 20171031110604) do
     t.binary "zotero_token"
     t.string "zotero_userid"
     t.boolean "guest", default: false
+    t.boolean "opt_out_stats_email"
     t.index ["login"], name: "index_users_on_login", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -528,8 +529,6 @@ ActiveRecord::Schema.define(version: 20171031110604) do
     t.index ["work_id"], name: "index_work_view_stats_on_work_id"
   end
 
-  add_foreign_key "curation_concerns_operations", "users"
-  add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id_test"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "mailboxer_receipts_on_notification_id_test"
   add_foreign_key "permission_template_accesses", "permission_templates"
