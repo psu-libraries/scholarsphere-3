@@ -1,15 +1,32 @@
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-</head>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  </head>
 <body>
-<h1><%= t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')) %></h1>
-
-<p>
-  Dear Author, <br />
-  You had <%= @presenter.file_downloads %> new downloads last month across your <%= @presenter.total_files %> files in <%= t('sufia.product_name') %>.
-  You can <a href="https://scholarsphere.psu.edu/dashboard/">view your overall statistics in <%= t('sufia.product_name') %></a> by accessing your dashboard.
-</p>
-
+  <h1><%= t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')) %></h1>
+   <p>Dear <%= @given_name %>, <br />
+      You had <%= @presenter.file_downloads %> new downloads last month across your <%= @presenter.total_files %> files
+      in <%= t('sufia.product_name') %>.
+      You can
+      <a href="https://scholarsphere.psu.edu/dashboard/">view your overall statistics in <%= t('sufia.product_name') %></a>
+      by accessing your dashboard.
+   </p>
+  <p>Interested in sharing, archiving, and preserving other work? Consider depositing any of the following in
+    <a href="https://scholarsphere.psu.edu/"><%= t('sufia.product_name') %></a></p>
+  <ul>
+    <li>Articles: Check <a href="http://www.sherpa.ac.uk/romeo/index.php">SHERPA/RoMEO</a> to determine which version of
+        an article you can archive.
+    </li>
+    <li>Datasets</li>
+    <li>Videos</li>
+    <li>Software and analysis code</li>
+    <li>Book chapters: Check your publishing agreement to see if you can deposit a contributed chapter.</li>
+    <li>Books: Consider
+      <a href="https://www.authorsalliance.org/resources/rights-reversion-portal/">regaining copyright</a>
+      from your publisher so you can deposit an out-of-print book. You can also deposit any book that is openly licensed,
+      such as an open access monograph bearing one of the Creative Commons licenses.
+    </li>
+  </ul>
+  <p>If you have questions please <a href="https://scholarsphere.psu.edu/contact">contact us!</a></p>
 </body>
 </html>

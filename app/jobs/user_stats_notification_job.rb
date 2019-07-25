@@ -3,7 +3,7 @@
 class UserStatsNotificationJob < ApplicationJob
   def perform(id:, start_date:, end_date:)
     user = User.find(id)
-    return unless PsuDir::LdapUser.check_ldap_exist!(user.login)
+    return if user.opt_out_stats_email || !PsuDir::LdapUser.check_ldap_exist!(user.login)
 
     UserMailer.user_stats_email(
       user: user,

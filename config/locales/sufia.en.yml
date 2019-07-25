@@ -47,6 +47,7 @@ en:
         browse_files_button: "Add cloud files"
     user_profile:
       tab_user_info: "User Info"
+      opt_out_email: "Opt out of monthly statistics via email"
     works:
       edit:
         tab:
