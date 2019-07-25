@@ -10,7 +10,7 @@ describe 'curation_concerns/base/_work_readme.html.erb' do
   let(:presenter) { WorkShowPresenter.new(doc, ability, nil) }
 
   before do
-    render 'curation_concerns/base/work_readme', presenter: presenter
+    render 'curation_concerns/base/work_readme', presenter: presenter if presenter.show_readme_prompt?
   end
 
   it 'does not display a README prompt' do
@@ -26,6 +26,7 @@ describe 'curation_concerns/base/_work_readme.html.erb' do
   end
 
   context 'work with a readme' do
+    let(:work) { build(:work, id: '2', depositor: user.email, resource_type: ['Dataset']) }
     let(:doc) { SolrDocument.new(work.to_solr.merge("readme_file_ss": 'This is a readme for testing.')) }
 
     it 'displays a README contents' do

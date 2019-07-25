@@ -1,8 +1,8 @@
 <h2><%= t('scholarsphere.generic_work.readme_heading') %></h2>
 <section class="readme">
-  <% if presenter.readme %>
+  <% if presenter.readme.present? %>
     <%= raw(presenter.readme) %>
-  <% elsif presenter.readme_prompt %>
-    <p><%= presenter.readme_prompt %></p>
+  <% else %>
+    <p><%= I18n.t('scholarsphere.generic_work.readme_text_html').html_safe %></p>
   <% end %>
 </section>

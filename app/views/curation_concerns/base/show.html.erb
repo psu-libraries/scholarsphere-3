@@ -23,7 +23,7 @@
   </div>
   <div class="col-sm-8">
     <%= render 'work_description', presenter: @presenter %>
-    <%= render 'work_readme', presenter: @presenter %>
+    <%= render 'work_readme', presenter: @presenter if @presenter.show_readme_prompt? %>
     <div class="row">
       <%= render 'metadata', presenter: @presenter %>
       <%= render 'relationships', presenter: @presenter %>
