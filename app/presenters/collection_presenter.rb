@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CollectionPresenter < Sufia::CollectionPresenter
-  delegate :subtitle, to: :solr_document
+  delegate :subtitle, :bytes, to: :solr_document
 
   def self.terms
     [:creator, :keyword, :rights, :resource_type, :contributor, :publisher, :date_created, :date_uploaded,
@@ -18,5 +18,12 @@ class CollectionPresenter < Sufia::CollectionPresenter
 
   def cleaned_creators
     @cleaned_creators ||= FacetValueCleaningService.call(creator, FieldConfig.new(facet_cleaners: [:creator]), solr_document)
+  end
+
+  def zip_available?
+    return false if total_items.zero?
+    return true if bytes < ScholarSphere::Application.config.zipfile_size_threshold
+
+    ScholarSphere::Application.config.public_zipfile_directory.join("#{id}.zip").exist?
   end
 end

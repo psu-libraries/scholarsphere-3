@@ -85,6 +85,13 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     super
   end
 
+  def zip_available?
+    return false if uploading?
+    return true if bytes < ScholarSphere::Application.config.zipfile_size_threshold
+
+    ScholarSphere::Application.config.public_zipfile_directory.join("#{id}.zip").exist?
+  end
+
   private
 
     # Override to add rows parameter
