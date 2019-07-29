@@ -33,11 +33,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
     Redcarpet::Markdown.new(renderer).render(readme_file)
   end
 
-  def readme_prompt
-    return unless ['Dataset', 'Audio', 'Map',
-                   'Software', 'Video', 'Other'].include? resource_type.first
-
-    I18n.t('scholarsphere.generic_work.readme_text')
+  def show_readme_prompt?
+    ['Dataset', 'Audio', 'Map', 'Software', 'Video', 'Other'].include? resource_type.first
   end
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
