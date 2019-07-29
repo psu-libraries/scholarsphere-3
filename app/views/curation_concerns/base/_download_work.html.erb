@@ -1,6 +1,6 @@
 <div class="show-download">
   <% if presenter.zip_available? %>
-    <%= link_to main_app.download_path(presenter),
+    <%= link_to presenter.zip_download_path,
                 target: :_blank,
                 data: { turbolinks: false },
                 class: 'btn btn-default' do %>
