@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CollectionPresenter < Sufia::CollectionPresenter
+  include ZipDownloadBehavior
+
   delegate :subtitle, :bytes, to: :solr_document
 
   def self.terms
@@ -22,8 +24,7 @@ class CollectionPresenter < Sufia::CollectionPresenter
 
   def zip_available?
     return false if total_items.zero?
-    return true if bytes < ScholarSphere::Application.config.zipfile_size_threshold
 
-    ScholarSphere::Application.config.public_zipfile_directory.join("#{id}.zip").exist?
+    zip_download_path.present?
   end
 end

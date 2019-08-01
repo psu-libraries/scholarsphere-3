@@ -86,7 +86,7 @@ describe DownloadsController do
   end
 
   describe '#show' do
-    subject(:path) { controller.send(:show) }
+    subject { controller.send(:show) }
 
     let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
@@ -109,8 +109,8 @@ describe DownloadsController do
       end
     end
 
-    context 'with a non-public work' do
-      let(:my_work) { create :registered_work, depositor: user.login }
+    context 'with a GenericWork' do
+      let(:my_work) { create :public_work, depositor: user.login }
       let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
@@ -133,25 +133,8 @@ describe DownloadsController do
       end
     end
 
-    context 'with a public work' do
-      let(:my_work) { create :public_work, depositor: user.login }
-      let(:zip_file) { ScholarSphere::Application.config.public_zipfile_directory.join("#{my_work.id}.zip") }
-
-      before do
-        FileUtils.touch(zip_file)
-        controller.params[:id] = my_work.id
-      end
-
-      it 'downloads the public zip' do
-        expect(WorkZipService).not_to receive(:new)
-        expect(controller).to receive(:send_file)
-          .with(zip_file.to_s, type: 'application/zip', disposition: 'inline')
-        subject
-      end
-    end
-
-    context 'with a non-public collection' do
-      let(:my_collection) { create :registered_collection, depositor: user.login }
+    context 'with a Collection' do
+      let(:my_collection) { create :public_collection, depositor: user.login }
       let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
@@ -174,12 +157,7 @@ describe DownloadsController do
       let(:response) { instance_double ActionDispatch::Response, headers: {} }
 
       before do
-        class BogusClass < ActiveFedora::Base
-          def public?
-            false
-          end
-        end
-
+        class BogusClass < ActiveFedora::Base; end
         controller.params[:id] = unsupported_class.id
         allow(controller).to receive(:response).and_return(response)
       end

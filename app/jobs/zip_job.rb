@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ZipJob < ApplicationJob
+  queue_as :zip
+
   class Error < StandardError; end
 
   attr_reader :object

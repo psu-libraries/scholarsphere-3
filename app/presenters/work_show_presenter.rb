@@ -3,6 +3,7 @@
 class WorkShowPresenter < Sufia::WorkShowPresenter
   include ActionView::Helpers::NumberHelper
   include Sufia::WithEvents
+  include ZipDownloadBehavior
 
   delegate :bytes, :subtitle, :readme_file, to: :solr_document
 
@@ -84,9 +85,8 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
 
   def zip_available?
     return false if uploading?
-    return true if bytes < ScholarSphere::Application.config.zipfile_size_threshold
 
-    ScholarSphere::Application.config.public_zipfile_directory.join("#{id}.zip").exist?
+    zip_download_path.present?
   end
 
   private
