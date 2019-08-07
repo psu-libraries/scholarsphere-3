@@ -4,7 +4,7 @@
   </head>
 <body>
   <h1><%= t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')) %></h1>
-   <p>Dear <%= @given_name %>, <br />
+   <p>Dear <%= @alias %>, <br />
       You had <%= @presenter.file_downloads %> new downloads last month across your <%= @presenter.total_files %> files
       in <%= t('sufia.product_name') %>.
       You can
@@ -28,5 +28,13 @@
     </li>
   </ul>
   <p>If you have questions please <a href="https://scholarsphere.psu.edu/contact">contact us!</a></p>
+  <p>If you'd like to opt out of receiving these emails, follow these steps:</p>
+    <ol>
+      <li>Login</li>
+      <li>Once directed to the dashboard, or from any page if you are already logged in, select "Edit Profile" from the
+          top right menu with your name listed.</li>
+      <li>Under the "Edit Profile" heading, select the first checkbox to "Opt out of monthly statistics via email"</li>
+      <li>Click the "Save Profile" button to save your choice to opt out of monthly statistics via email.</li>
+    </ol>
 </body>
 </html>
