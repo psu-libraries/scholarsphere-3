@@ -46,8 +46,8 @@ module ScholarSphere
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = 'v3.8'
-    config.scholarsphere_release_date = 'May 14, 2019'
+    config.scholarsphere_version = 'v3.9'
+    config.scholarsphere_release_date = 'August 13, 2019'
     config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page
