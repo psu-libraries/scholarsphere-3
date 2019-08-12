@@ -5,8 +5,8 @@ Sufia.config do |config|
 
   config.register_curation_concern :generic_work
 
-  config.contact_email = 'scholarsphere@servicedesk.css.psu.edu, umg-up.its.scholarsphere-support@groups.ucs.psu.edu'
-  config.subject_prefix = 'ScholarSphere Contact Form - '
+  config.contact_email = Rails.application.config.contact_email
+  config.subject_prefix = Rails.application.config.subject_prefix
 
   config.fits_path = 'fits.sh'
   config.max_days_between_audits = 7
