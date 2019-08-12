@@ -26,7 +26,9 @@ class Scholarsphere::Config
         'doi_handle',
         'RECAPTCHA_SITE_KEY',
         'RECAPTCHA_SECRET_KEY',
-        'admin_group'
+        'admin_group',
+        'network_ingest_directory',
+        'public_zipfile_directory'
       ]
     }.freeze
 

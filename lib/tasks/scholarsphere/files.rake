@@ -23,5 +23,29 @@ namespace :scholarsphere do
         puts 'Success!'
       end
     end
+
+    desc 'Create zip files for large works and collections'
+    task zip: :environment do
+      public_resources
+        .select { |hit| hit['bytes_lts'] > ScholarSphere::Application.config.zipfile_size_threshold }
+        .map { |hit| ZipJob.perform_later(hit.id) }
+    end
+
+    desc 'Delete zip files that no longer match our criteria'
+    task delete_zips: :environment do
+      ScholarSphere::Application.config.public_zipfile_directory.children.map do |file|
+        zip_file = ZipFile.new(file)
+        file.delete if zip_file.stale?
+      end
+    end
+
+    def public_resources
+      ActiveFedora::SolrService.query(
+        'read_access_group_ssim:public',
+        fl: ['id, bytes_lts'],
+        rows: 1_000_000,
+        fq: '((*:* AND has_model_ssim:GenericWork) OR (*:* AND has_model_ssim:Collection))'
+      )
+    end
   end
 end

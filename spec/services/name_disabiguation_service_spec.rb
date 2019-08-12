@@ -9,24 +9,24 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Thompson, Britta M' }
 
     it 'finds the user' do
-      expect(subject).to eq([{ id: 'bmt13', given_name: 'Britta May', surname: 'Thompson', email: 'bmt13@psu.edu', affiliation: ['FACULTY'], displayname: 'Britta May Thompson' }])
+      expect(subject).to eq([{ id: 'bmt13', given_name: 'Britta', surname: 'Thompson', email: 'bmt13@psu.edu', affiliation: ['FACULTY'], displayname: 'Britta May Thompson' }])
     end
   end
 
   context 'when we have an id' do
-    let(:name) { 'cam156' }
+    let(:name) { 'dmc186' }
 
     it 'finds the ids' do
-      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' }])
+      expect(subject).to eq([{ id: 'dmc186', given_name: 'DANIEL M', surname: 'COUGHLIN', email: 'dmc186@psu.edu', affiliation: ['STAFF'], displayname: 'Daniel M Coughlin' }])
     end
   end
 
   context 'when we have multiple combined with an and' do
-    let(:name) { 'Carolyn Cole and Adam Wead' }
+    let(:name) { 'Daniel M Coughlin and Adam Wead' }
 
     it 'finds both users' do
-      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' },
-                             { id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
+      expect(subject).to eq([{ id: 'dmc186', given_name: 'DANIEL M', surname: 'COUGHLIN', email: 'dmc186@psu.edu', affiliation: ['STAFF'], displayname: 'Daniel M Coughlin' },
+                             { id: 'agw13', given_name: 'Adam', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Wead' }])
     end
   end
 
@@ -50,7 +50,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Nicole Seger, MSN, RN, CPN' }
 
     it 'finds the user' do
-      expect(subject).to eq([{ id: 'nas150', given_name: 'NICOLE A', surname: 'SEGER', email: 'nas150@psu.edu', affiliation: ['STAFF'], displayname: 'NICOLE A SEGER' }])
+      expect(subject).to eq([{ id: 'nas150', given_name: 'Nicole', surname: 'Seger', email: 'nas150@psu.edu', affiliation: ['STAFF'], displayname: 'Nicole A Seger' }])
     end
   end
 
@@ -58,7 +58,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'MSN Deb Cardenas' }
 
     it 'finds the user' do
-      expect(subject).to eq([{ id: 'dac40', given_name: 'DEBORAH A.', surname: 'CARDENAS', email: 'dac40@psu.edu', affiliation: ['STAFF'], displayname: 'DEBORAH A. CARDENAS' }])
+      expect(subject).to eq([{ id: 'dac40', given_name: 'Deborah', surname: 'Cardenas', email: 'dac40@psu.edu', affiliation: ['STAFF'], displayname: 'Deborah A. Cardenas' }])
     end
   end
 
@@ -66,7 +66,7 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Adam Garner Wead *' }
 
     it 'cleans the name' do
-      expect(subject).to eq([{ id: 'agw13', given_name: 'Adam Garner', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Garner Wead' }])
+      expect(subject).to eq([{ id: 'agw13', given_name: 'Adam', surname: 'Wead', email: 'agw13@psu.edu', affiliation: ['STAFF'], displayname: 'Adam Wead' }])
     end
   end
 
@@ -74,15 +74,15 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { "Anthony R. D'Augelli" }
 
     it 'finds the user' do
-      expect(subject).to eq([{ id: 'ard', given_name: 'Anthony Raymond', surname: "D'Augelli", email: 'ard@psu.edu', affiliation: ['EMERITUS'], displayname: "Anthony Raymond D'Augelli" }])
+      expect(subject).to eq([{ id: 'ard', given_name: 'Anthony', surname: "D'Augelli", email: 'ard@psu.edu', affiliation: ['EMERITUS'], displayname: "Anthony Raymond D'Augelli" }])
     end
   end
 
   context 'when the user has many names' do
-    let(:name) { 'ALIDA HEATHER DOHN ROSS' }
+    let(:name) { 'David Florn Johnson Arginteanu' }
 
     it 'finds the user' do
-      expect(subject).to eq([{ id: 'hdr10', given_name: 'Alida Heather', surname: 'Dohn Ross', email: 'hdr10@psu.edu', affiliation: ['STAFF'], displayname: 'Alida Heather Dohn Ross' }])
+      expect(subject).to eq([{ id: 'dxa179', given_name: 'David', surname: 'Arginteanu', email: 'dxa179@psu.edu', affiliation: ['STAFF'], displayname: 'David Florn Johnson Arginteanu' }])
     end
   end
 
@@ -90,16 +90,16 @@ describe NameDisambiguationService, unless: travis? do
     let(:name) { 'Cole, Carolyn (Kubicki Group)' }
 
     it 'cleans the name' do
-      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn Ann', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['STAFF'], displayname: 'Carolyn Ann Cole' }])
+      expect(subject).to eq([{ id: 'cam156', given_name: 'Carolyn', surname: 'Cole', email: 'cam156@psu.edu', affiliation: ['MEMBER'], displayname: 'Carolyn Ann Cole' }])
     end
   end
 
-  context 'when the user has an email in thier name' do
+  context 'when the user has an email in their name' do
     context 'when the email is not their id' do
       let(:name) { 'Barbara I. Dewey a bdewey@psu.edu' }
 
       it 'does not find the user' do
-        expect(subject).to eq([{ id: 'bid1', given_name: 'Barbara Irene', surname: 'Dewey', email: 'bid1@psu.edu', affiliation: ['STAFF'], displayname: 'Barbara Irene Dewey' }])
+        expect(subject).to eq([{ id: 'bid1', given_name: 'Barbara', surname: 'Dewey', email: 'bid1@psu.edu', affiliation: ['STAFF'], displayname: 'Barbara Irene Dewey' }])
       end
     end
 

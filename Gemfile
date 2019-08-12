@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Ruby on Rails components
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.1.7'
 # gem 'rails', '4.2.7.1'
 gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 
@@ -39,6 +39,7 @@ gem 'rainbow'
 gem 'rdf'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'redcarpet'
+gem 'resque-cleaner'
 gem 'resque-pool'
 gem 'rsolr'
 gem 'rubyzip'
@@ -87,7 +88,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'equivalent-xml'
   gem 'factory_girl_rails', '~> 4.1'
@@ -95,5 +95,6 @@ group :test do
   gem 'rspec-activemodel-mocks'
   gem 'selenium-webdriver'
   gem 'vcr'
+  gem 'webdrivers'
   gem 'webmock'
 end

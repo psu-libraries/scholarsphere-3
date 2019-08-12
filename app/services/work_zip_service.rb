@@ -15,34 +15,38 @@
 require 'zip'
 
 class WorkZipService
-  attr_reader :resource, :ability, :zip_directory
+  attr_reader :resource, :ability, :zipfile
 
   # Initialize the service
   #
-  # @param [GenericWork]  resource       work whose content will be zipped
-  # @param [User|Ability] ability        User|Ability who will have access to the zip
-  # @param [String]       zip_directory  Location to store zip file on disk
-  def initialize(resource, ability, zip_directory = 'tmp/')
+  # @param [GenericWork]  resource work whose content will be zipped
+  # @param [User|Ability] ability User|Ability who will have access to the zip
+  # @param [String, Pathname] zip_directory location to store zip file on disk
+  # @param [String] zipfile_name name of the zip file, defaults to the resource's title
+  def initialize(resource, ability, zip_directory = 'tmp/', zipfile_name = nil)
     @resource = resource
     @ability = ability
-    @zip_directory = zip_directory
+    zipfile_name ||= resource.title.first.parameterize(separator: '_') + '.zip'
+    @zipfile = ZipFile.new(Pathname.new(zip_directory).join(zipfile_name))
   end
 
   # create the zip file
   #
-  # @return [String] zip file name
+  # @return [String] full path to zip file
   def call
-    zipfile_name = File.join(zip_directory, "#{resource.title.first.parameterize(separator: '_')}.zip")
-
-    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zip_file|
-      zip_manifest.each do |file|
-        add_files_to_zip(zip_file, file)
-      end
-    end
-    zipfile_name
+    create_zip if zipfile.stale?
+    zipfile.file.to_s
   end
 
   private
+
+    def create_zip
+      Zip::File.open(zipfile.file, Zip::File::CREATE) do |zip_file|
+        zip_manifest.each do |file|
+          add_files_to_zip(zip_file, file)
+        end
+      end
+    end
 
     def add_files_to_zip(zipfile, file_set)
       return unless add_to_zip?(file_set)

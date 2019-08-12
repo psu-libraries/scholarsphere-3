@@ -46,4 +46,22 @@ describe 'Application configuration' do
 
     it { is_expected.to eq('10737418240') }
   end
+
+  describe 'Network ingest directory' do
+    subject { config.network_ingest_directory }
+
+    it { is_expected.to eq(Pathname.new('tmp/ingest-test')) }
+  end
+
+  describe 'Zip file size threshold' do
+    subject { config.zipfile_size_threshold }
+
+    it { is_expected.to eq(500_000_000) }
+  end
+
+  describe 'Public zip file directory' do
+    subject { config.public_zipfile_directory }
+
+    it { is_expected.to eq(Pathname.new('public/zip-test')) }
+  end
 end

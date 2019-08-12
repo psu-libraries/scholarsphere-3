@@ -26,9 +26,9 @@
                         method: :delete } %>
   <% end %>
 
-  <% if member_docs.present? %>
+  <% if presenter.zip_available? %>
     <%= link_to t('sufia.collection.actions.collection_zip_link'),
-                main_app.download_path(presenter),
+                presenter.zip_download_path,
                 target: :_blank,
                 data: { turbolinks: false },
                 class: 'btn btn-default' %>

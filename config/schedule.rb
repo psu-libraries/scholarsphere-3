@@ -27,6 +27,11 @@ every :day, at: '7:00am', roles: [:job] do
   rake 'scholarsphere:expire:leases_and_embargoes'
 end
 
+# Stats email sent to users on the 2nd of every month at 9 am
+every '0 9 2 * *' do
+  rake 'scholarsphere:stats:notify'
+end
+
 every :day, at: '12:20am', roles: [:job] do
   command '/scholarsphere/bin/whenever_audit_repository.sh'
 end

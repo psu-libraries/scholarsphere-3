@@ -2,6 +2,7 @@ before_install:
   - gem update --system
   - gem install bundler
 language: ruby
+dist: trusty
 addons:
   chrome: stable
 cache:
@@ -42,5 +43,5 @@ jobs:
       script: ./travis/coverage.sh
     - stage: niftany
       script: bundle exec niftany
-after_failure:
-  - cat log/test.log
+  after_failure:
+    - cat log/test.log

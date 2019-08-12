@@ -46,6 +46,8 @@ describe 'Visting the home page:', type: :feature, js: true do
       visit '/'
     end
 
-    it { is_expected.not_to have_content(current_user.display_name) }
+    it do
+      expect(page).not_to have_content(current_user.display_name)
+    end
   end
 end

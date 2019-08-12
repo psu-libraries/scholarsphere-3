@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class CollectionPresenter < Sufia::CollectionPresenter
-  delegate :subtitle, to: :solr_document
+  include ZipDownloadBehavior
+
+  delegate :subtitle, :bytes, to: :solr_document
 
   def self.terms
     [:creator, :keyword, :rights, :resource_type, :contributor, :publisher, :date_created, :date_uploaded,
@@ -18,5 +20,11 @@ class CollectionPresenter < Sufia::CollectionPresenter
 
   def cleaned_creators
     @cleaned_creators ||= FacetValueCleaningService.call(creator, FieldConfig.new(facet_cleaners: [:creator]), solr_document)
+  end
+
+  def zip_available?
+    return false if total_items.zero?
+
+    zip_download_path.present?
   end
 end

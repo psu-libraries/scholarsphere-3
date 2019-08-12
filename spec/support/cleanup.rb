@@ -2,6 +2,17 @@
 
 require 'active_fedora/cleaner'
 
+class Cleanup
+  def self.directories
+    FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
+    FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
+    FileUtils.rm_rf(ScholarSphere::Application.config.network_ingest_directory)
+    FileUtils.mkdir_p(ScholarSphere::Application.config.network_ingest_directory)
+    FileUtils.rm_rf(ScholarSphere::Application.config.public_zipfile_directory)
+    FileUtils.mkdir_p(ScholarSphere::Application.config.public_zipfile_directory)
+  end
+end
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
@@ -14,8 +25,7 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.clean_with(:truncation)
     ActiveFedora::Cleaner.clean!
-    FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
-    FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
+    Cleanup.directories
   end
 
   # Only clean Fedora and Solr unless explicitly requested
@@ -23,8 +33,7 @@ RSpec.configure do |config|
     if example.metadata.fetch(:clean, nil)
       ActiveFedora::Cleaner.clean!
       DatabaseCleaner.clean_with(:truncation)
-      FileUtils.rm_rf(ENV['REPOSITORY_FILESTORE'])
-      FileUtils.mkdir_p(ENV['REPOSITORY_FILESTORE'])
+      Cleanup.directories
     end
   end
 

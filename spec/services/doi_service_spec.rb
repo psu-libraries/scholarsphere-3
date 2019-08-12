@@ -125,7 +125,7 @@ describe DOIService do
       check_resource_type(work: work, client: client,
                           resource_types: ['Article', 'Book', 'Capstone Project',
                                            'Conference Proceeding', 'Dissertation',
-                                           'Journal', 'Masters Thesis', 'Part of Book',
+                                           'Journal', 'Masters Culminating Experience', 'Masters Thesis', 'Part of Book',
                                            'Report', 'Research Paper'],
                           datacite_type: 'Text')
     end

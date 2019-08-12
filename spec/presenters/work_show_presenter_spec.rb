@@ -165,4 +165,57 @@ describe WorkShowPresenter do
   end
 
   its(:event_class) { is_expected.to eq(GenericWork) }
+
+  describe '#zip_available?' do
+    context 'when the files are still being uploaded' do
+      before { allow(presenter).to receive(:uploading?).and_return(true) }
+
+      it { is_expected.not_to be_zip_available }
+    end
+
+    context 'when the zip download path is present' do
+      before do
+        allow(presenter).to receive(:uploading?).and_return(false)
+        allow(presenter).to receive(:zip_download_path).and_return('/path')
+      end
+
+      it { is_expected.to be_zip_available }
+    end
+
+    context 'when the zip download path is not present' do
+      before do
+        allow(presenter).to receive(:uploading?).and_return(false)
+        allow(presenter).to receive(:zip_download_path).and_return(nil)
+      end
+
+      it { is_expected.not_to be_zip_available }
+    end
+  end
+
+  describe '#zip_download_path' do
+    before { allow(presenter).to receive(:bytes).and_return(bytes) }
+
+    context 'when the work is smaller than the zip file size threshold' do
+      let(:bytes) { ScholarSphere::Application.config.zipfile_size_threshold - 1_000 }
+
+      its(:zip_download_path) { is_expected.to eq("/downloads/#{presenter.id}") }
+    end
+
+    context 'when the work is larger than the zip file size threshold but the zip does not exist' do
+      let(:bytes) { ScholarSphere::Application.config.zipfile_size_threshold + 1_000 }
+
+      its(:zip_download_path) { is_expected.to be_nil }
+    end
+
+    context 'when the work is larger than the zip file size threshold and the zip exists' do
+      let(:bytes) { ScholarSphere::Application.config.zipfile_size_threshold + 1_000 }
+      let(:zipfile) { ScholarSphere::Application.config.public_zipfile_directory.join("#{presenter.id}.zip") }
+
+      before { FileUtils.touch(zipfile) }
+
+      after  { FileUtils.rm_f(zipfile) }
+
+      its(:zip_download_path) { is_expected.to eq("/zip-test/#{presenter.id}.zip") }
+    end
+  end
 end

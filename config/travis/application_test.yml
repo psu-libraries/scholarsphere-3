@@ -5,6 +5,7 @@
 # Scholarsphere::Config::REQUIREMENTS otherwise, the cap deploy will fail.
 #
 development:
+  TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg"
   service_instance: "localhost"
   virtual_host: "http://localhost:3000/"
@@ -25,7 +26,11 @@ development:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-test'
 test:
+  TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
   service_instance: "example-test"
   virtual_host: "http://test.com/"
@@ -42,6 +47,9 @@ test:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-test'
 production:
   TMPDIR: "/tmp"
   ffmpeg_path: "ffmpeg-test"
@@ -64,3 +72,6 @@ production:
   REPOSITORY_EXTERNAL_FILES: 'true'
   timing_enabled: 'false'
   admin_group: 'umg/admin'
+  network_ingest_directory: 'tmp/ingest-test'
+  zipfile_size_threshold: 500_000_000
+  public_zipfile_directory: 'public/zip-test'

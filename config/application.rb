@@ -36,6 +36,9 @@ module ScholarSphere
     config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
     config.upload_limit = ENV.fetch('upload_limit', 10.gigabyte.to_s)
     config.admin_group = ENV.fetch('admin_group', 'umg/up.ss.admin')
+    config.network_ingest_directory = Pathname.new(ENV.fetch('network_ingest_directory', 'tmp/ingest-development'))
+    config.zipfile_size_threshold = ENV.fetch('zipfile_size_threshold', 500_000_000).to_i
+    config.public_zipfile_directory = Pathname.new(ENV.fetch('public_zipfile_directory', 'public/zip-development'))
 
     # DOI Handle used with either EZID or DateCite EZ API
     config.doi_handle = ENV.fetch('doi_handle', 'doi:10.33532')
@@ -43,8 +46,8 @@ module ScholarSphere
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = 'v3.8'
-    config.scholarsphere_release_date = 'May 14, 2019'
+    config.scholarsphere_version = 'v3.9'
+    config.scholarsphere_release_date = 'August 13, 2019'
     config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page

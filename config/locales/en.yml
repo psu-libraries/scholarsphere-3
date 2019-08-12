@@ -92,7 +92,7 @@ en:
       agent_error: "The provided alias does not have a person associated with it"
     generic_work:
       readme_heading: 'README'
-      readme_text: 'How about adding a README file? We currently accept plain text (README.txt) and markdown (README.md) files.  Note: You may need to refresh to see an README file you just uploaded.'
+      readme_text_html: 'How about adding a README file? Please see our <a href="https://github.com/psu-stewardship/scholarsphere/wiki/README-Guide">guide for documenting your datasets or other scholarly works with a README file</a>.'
     file_set:
       permission_help: 'Who should be able to view or download this content?'
       representative_media: 'If this is or becomes your representative media, this may impact the display of your work in search results.'
