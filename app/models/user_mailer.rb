@@ -5,6 +5,8 @@ class UserMailer < ActionMailer::Base
   default from: Rails.application.config.action_mailer.default_options.fetch(:from)
 
   def acknowledgment_email(params)
+    return if params[:sufia_contact_form][:email].split('@').last == 'psu.edu'
+
     mail(to: params[:sufia_contact_form][:email],
          subject: "ScholarSphere Contact Form - #{params[:sufia_contact_form][:subject]}")
   end
@@ -13,7 +15,6 @@ class UserMailer < ActionMailer::Base
     @presenter = StatsPresenter.new(start_datetime, end_datetime)
     attachments[stats_report_name] = stats_report
     mail(to: ScholarSphere::Application.config.stats_email,
-         from: ScholarSphere::Application.config.stats_from_email,
          subject: ::I18n.t('statistic.report.subject'))
   end
 
@@ -22,7 +23,6 @@ class UserMailer < ActionMailer::Base
     return if @presenter.file_downloads.zero?
 
     mail(to: user.email,
-         from: ScholarSphere::Application.config.no_reply_email,
          subject: ::I18n.t('statistic.user_stats.subject'))
   end
 
