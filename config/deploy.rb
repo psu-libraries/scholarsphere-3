@@ -36,7 +36,7 @@ set :rails_env, 'production'
 
 # Settings for whenever gem that updates the crontab file on the server
 # See schedule.rb for details
-set :whenever_roles, [:app, :job]
+set :whenever_roles, [:app, :job, :prod_job]
 
 set :log_level, :debug
 set :pty, true
