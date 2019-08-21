@@ -61,6 +61,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/arkivo_constraint.rb',
   'config/initializers/qa.rb',
   'config/initializers/sufia6.rb',
+  'config/initializers/hydra_derivatives_config.rb ',
   'config/newrelic.yml',
   'config/redis.yml',
   'config/secrets.yml',
