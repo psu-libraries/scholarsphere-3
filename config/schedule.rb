@@ -28,7 +28,7 @@ every :day, at: '7:00am', roles: [:job] do
 end
 
 # Stats email sent to users on the 2nd of every month at 9 am
-every '0 9 2 * *' do
+every '0 9 2 * *', roles: [:prod_job] do
   rake 'scholarsphere:stats:notify'
 end
 
