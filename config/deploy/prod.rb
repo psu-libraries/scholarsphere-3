@@ -19,7 +19,7 @@ ENV['NEW_RELIC_APP_NAME'] = 'ss-prod-ruby'
 # used to set extended properties on the server.
 server 'ssweb1prod-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
 server 'ssweb2prod-new.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db)
-server 'scholarsphere-jobs-prod.libraries.psu.edu:1855', user: 'deploy', roles: %w(app job)
+server 'scholarsphere-jobs-prod.libraries.psu.edu:1855', user: 'deploy', roles: %w(app job prod_job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options

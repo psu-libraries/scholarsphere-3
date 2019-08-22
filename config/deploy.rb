@@ -36,7 +36,7 @@ set :rails_env, 'production'
 
 # Settings for whenever gem that updates the crontab file on the server
 # See schedule.rb for details
-set :whenever_roles, [:app, :job]
+set :whenever_roles, [:app, :job, :prod_job]
 
 set :log_level, :debug
 set :pty, true
@@ -61,6 +61,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/arkivo_constraint.rb',
   'config/initializers/qa.rb',
   'config/initializers/sufia6.rb',
+  'config/initializers/hydra_derivatives_config.rb ',
   'config/newrelic.yml',
   'config/redis.yml',
   'config/secrets.yml',
