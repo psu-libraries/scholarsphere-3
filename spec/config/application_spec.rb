@@ -29,6 +29,18 @@ describe 'Application configuration' do
     it { is_expected.to eq('Test email') }
   end
 
+  describe 'contact_email' do
+    subject { config.contact_email }
+
+    it { is_expected.to eq('ssphere-support@psu.edu') }
+  end
+
+  describe 'subject_prefix' do
+    subject { config.subject_prefix }
+
+    it { is_expected.to eq('ScholarSphere Contact Form - ') }
+  end
+
   describe 'derivatives path' do
     subject { config.derivatives_path }
 

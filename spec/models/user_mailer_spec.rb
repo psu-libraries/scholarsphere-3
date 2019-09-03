@@ -7,16 +7,30 @@ describe UserMailer do
     GenericWork.destroy_all
   end
 
-  describe '#acknowledgment_email' do
-    let(:form)    { { sufia_contact_form: { email: 'email@somewhere.com', subject: 'Selected topic' } } }
-    let(:params)  { ActionController::Parameters.new(form) }
-    let(:message) { described_class.acknowledgment_email(params) }
+  let(:default_from_email) { Rails.application.config.action_mailer.default_options.fetch(:from) }
 
-    it 'sends an email to the user when the contact form is submitted' do
-      expect(message.to).to contain_exactly('email@somewhere.com')
-      expect(message.from).to contain_exactly(Rails.application.config.action_mailer.default_options.fetch(:from))
-      expect(message.subject).to eq('ScholarSphere Contact Form - Selected topic')
-      expect(message.body.raw_source).to match(/Thank you for contacting us with your question/)
+  describe '#acknowledgment_email' do
+    context 'when the user is outside of Penn State' do
+      let(:form)    { { sufia_contact_form: { email: 'email@somewhere.com', subject: 'Selected topic' } } }
+      let(:params)  { ActionController::Parameters.new(form) }
+      let(:message) { described_class.acknowledgment_email(params) }
+
+      it 'sends a confirmation email to the user' do
+        expect(message.to).to contain_exactly('email@somewhere.com')
+        expect(message.from).to contain_exactly(default_from_email)
+        expect(message.subject).to eq('ScholarSphere Contact Form - Selected topic')
+        expect(message.body.raw_source).to match(/Thank you for contacting us with your question/)
+      end
+    end
+
+    context 'when the user is from Penn State' do
+      let(:form)    { { sufia_contact_form: { email: 'xyz123@psu.edu', subject: 'Selected topic' } } }
+      let(:params)  { ActionController::Parameters.new(form) }
+      let(:message) { described_class.acknowledgment_email(params) }
+
+      it 'does not send a confirmation email to the user (ServiceNow will do this)' do
+        expect(message.body).to be_empty
+      end
     end
   end
 
@@ -32,7 +46,7 @@ describe UserMailer do
     end
 
     it 'emails the report' do
-      expect(message['from'].to_s).to eq(Rails.application.config.action_mailer.default_options.fetch(:from))
+      expect(message['from'].to_s).to eq(default_from_email)
       expect(message['to'].to_s).to include('Test email')
       expect(message.parts.count).to eq(2) # attachment & body
       expect(message.parts[0].body).to include('Report for')
@@ -55,7 +69,7 @@ describe UserMailer do
       end
 
       it 'emails a user a report of their monthly downloads and views' do
-        expect(message['from'].to_s).to eq(Rails.application.config.no_reply_email)
+        expect(message['from'].to_s).to eq(default_from_email)
         expect(message['to'].to_s).to include(user.email)
         expect(body).to include(I18n.t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')))
         expect(body).to include('You had 8 new downloads last month across your 21 files')

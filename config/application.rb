@@ -32,7 +32,8 @@ module ScholarSphere
     config.virtual_host = ENV.fetch('virtual_host', "https://#{Socket.gethostname}")
     config.google_analytics_id = ENV.fetch('google_analytics_id', nil)
     config.stats_email = ENV.fetch('stats_email', 'ScholarSphere Stats <umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu>')
-    config.no_reply_email = ENV.fetch('no_reply_email', 'no_reply@scholarsphere.psu.edu')
+    config.contact_email = ENV.fetch('contact_email', 'ssphere-support@psu.edu')
+    config.subject_prefix = ENV.fetch('subject_prefix', 'ScholarSphere Contact Form - ')
     config.backup_directory = Rails.root.join(ENV.fetch('backup_directory', 'backups'))
     config.upload_limit = ENV.fetch('upload_limit', 10.gigabyte.to_s)
     config.admin_group = ENV.fetch('admin_group', 'umg/up.ss.admin')
@@ -46,8 +47,8 @@ module ScholarSphere
     # Set the  system to read only mode.  Does not allow new uploads, file edits, new collections, and collection edits
     config.read_only = ENV.fetch('read_only', false)
 
-    config.scholarsphere_version = 'v3.9'
-    config.scholarsphere_release_date = 'August 13, 2019'
+    config.scholarsphere_version = 'v3.10'
+    config.scholarsphere_release_date = 'September 4, 2019'
     config.redis_namespace = 'scholarsphere'
 
     # Number of fits array items shown on the Generic File show page
@@ -93,8 +94,6 @@ module ScholarSphere
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.stats_from_email = 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu'
-
     config.max_upload_file_size = 20 * 1024 * 1024 * 1024 # 20GB
 
     # html maintenance response
@@ -107,7 +106,7 @@ module ScholarSphere
     # allow errors to be raised in callbacks
     ActiveSupport.halt_callback_chains_on_return_false = false
 
-    config.action_mailer.default_options = { from: 'umg-up.its.sas.scholarsphere-email@groups.ucs.psu.edu' }
+    config.action_mailer.default_options = { from: ENV.fetch('no_reply_email', 'no_reply@scholarsphere.psu.edu') }
     config.action_mailer.default_url_options = { host: config.service_instance, protocol: 'https' }
 
     # Inject new behaviors into existing classes without having to override the entire class itself.
