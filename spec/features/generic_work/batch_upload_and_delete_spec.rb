@@ -16,9 +16,7 @@ describe 'Generic File batch uploading', type: :feature, js: true do
     describe 'uploading a new work' do
       it 'enforces a workflow' do
         Sufia::AdminSetCreateService.create_default!
-        visit '/'
-        click_on 'Works'
-        click_on 'Batch Create'
+        visit '/batch_uploads/new?payload_concern=GenericWork'
 
         within('form#new_batch_upload_item') { expect(page).to have_selector('input#batch_upload_item_payload_concern', visible: false) }
 

@@ -13,10 +13,6 @@
     <% end %>
     <% unless f.object.persisted? %>
         <% content_for :metadata_tab do %>
-            <p class="switch-upload-type">
-              To create a separate work for each of the files, go to
-              <%= link_to 'Batch upload', switch_to_batch_upload_path, class: 'btn btn-default' %>
-            </p>
             <p class="instructions"><%= t('sufia.concepts.work_collection') %></p>
             <p class="instructions"><%= t('sufia.works.files.instructions') %></p>
         <% end %>
