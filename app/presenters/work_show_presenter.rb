@@ -35,7 +35,7 @@ class WorkShowPresenter < Sufia::WorkShowPresenter
   end
 
   def show_readme_prompt?
-    ['Dataset', 'Audio', 'Map', 'Software', 'Video', 'Other'].include? resource_type.first
+    ['Dataset', 'Audio', 'Map or Cartographic Material', 'Software or Program Code', 'Video', 'Other'].include? resource_type.first
   end
 
   # TODO: Remove once https://github.com/projecthydra/sufia/issues/2394 is resolved
