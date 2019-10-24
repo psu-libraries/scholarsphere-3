@@ -4,7 +4,7 @@
   </head>
 <body>
   <h1><%= t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')) %></h1>
-   <p>Dear <%= @alias %>, <br />
+   <p>Dear <%= @presenter.user.name %>, <br />
       You had <%= @presenter.file_downloads %> new downloads last month across your <%= @presenter.total_files %> files
       in <%= t('sufia.product_name') %>.
       You can
