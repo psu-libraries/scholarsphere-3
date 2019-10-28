@@ -62,7 +62,8 @@ describe UserMailer do
     let(:body) { message.body.raw_source }
 
     context 'when the user has file downloads' do
-      let(:mock_presenter) { instance_double(UserStatsPresenter, file_downloads: 8, total_files: 21) }
+      let(:user) { create(:user) }
+      let(:mock_presenter) { instance_double(UserStatsPresenter, file_downloads: 8, total_files: 21, user: user) }
 
       before do
         allow(UserStatsPresenter).to receive(:new).and_return(mock_presenter)
@@ -73,6 +74,7 @@ describe UserMailer do
         expect(message['to'].to_s).to include(user.email)
         expect(body).to include(I18n.t('statistic.user_stats.heading', date: Date.today.last_month.strftime('%B')))
         expect(body).to include('You had 8 new downloads last month across your 21 files')
+        expect(body).to include("Dear #{user.name}")
       end
     end
 
