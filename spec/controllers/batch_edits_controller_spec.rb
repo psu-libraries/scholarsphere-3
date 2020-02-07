@@ -160,7 +160,7 @@ describe BatchEditsController do
           batch_edit_item: {
             visibility: 'embargo',
             visibility_during_embargo: 'restricted',
-            embargo_release_date: '2020-01-09',
+            embargo_release_date: (DateTime.now + 1.year).strftime('%Y-%m-%d'),
             visibility_after_embargo: 'open'
           },
           batch_document_ids: [work1.id, work2.id]
@@ -185,7 +185,7 @@ describe BatchEditsController do
           batch_edit_item: {
             visibility: 'lease',
             visibility_during_lease: 'open',
-            lease_expiration_date: '2020-01-09',
+            lease_expiration_date: (DateTime.now + 1.year).strftime('%Y-%m-%d'),
             visibility_after_lease: 'restricted'
           },
           batch_document_ids: [work1.id, work2.id]
