@@ -1,0 +1,9 @@
+# Scholarsphere client config for Travis
+
+SHRINE_CACHE_PREFIX:     "cache"
+S3_ENDPOINT:             "https://s3.amazonaws.com"
+AWS_ACCESS_KEY_ID:       "xxxxxxxx"    
+AWS_SECRET_ACCESS_KEY:   "xxxxxxxx"
+AWS_REGION:              "us-east-1"
+AWS_BUCKET:              "scholarsphere-client"
+SS4_ENDPOINT:            "http://scholarsphere-4/api/v1"

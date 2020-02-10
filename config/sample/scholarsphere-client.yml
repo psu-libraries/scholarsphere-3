@@ -1,0 +1,10 @@
+# Sample Scholarsphere client configuration
+
+SHRINE_CACHE_PREFIX:     "cache"
+S3_ENDPOINT:             "http://127.0.0.1:9000"
+AWS_ACCESS_KEY_ID:       "asdf"     # this is MINIO_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY:   "asdfasdf" # this is MINIO_SECRET_KEY
+AWS_REGION:              "us-east-1"
+AWS_BUCKET:              "scholarsphere-dev"
+SS4_ENDPOINT:            "http://scholarsphere-4.test/api/v1"
+

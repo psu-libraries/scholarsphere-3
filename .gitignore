@@ -113,3 +113,4 @@ public/uploads
 config/application.yml
 public/zip-development
 public/zip-test
+config/scholarsphere-client.yml
