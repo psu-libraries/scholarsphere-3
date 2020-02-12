@@ -8,5 +8,6 @@ module Scholarsphere
     require 'work'
     require 'creator'
     require 'export_service'
+    require 'resource'
   end
 end

@@ -54,6 +54,10 @@ Style/GlobalVars:
     - 'config/initializers/active_fedora_base_redis.rb'
     - 'config/environment.rb'
 
+Style/StringLiterals:
+  Exclude:
+    - 'spec/lib/scholarsphere/migration/resource_spec.rb'
+
 Naming/VariableName:
   Exclude:
     - 'lib/share_notify/push_document.rb'
