@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200211210706) do
+ActiveRecord::Schema.define(version: 20200214174423) do
 
   create_table "bookmarks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id", null: false
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20200211210706) do
     t.string "pid"
     t.string "model"
     t.string "client_status"
-    t.string "client_message"
+    t.text "client_message"
     t.string "exception"
     t.string "error"
     t.datetime "created_at", null: false

@@ -3,6 +3,8 @@
 module Scholarsphere
   module Migration
     class Resource < ApplicationRecord
+      include ActionView::Helpers::TextHelper
+
       self.table_name = 'migration_resources'
 
       validates :pid, presence: true
@@ -14,7 +16,7 @@ module Scholarsphere
         result = ExportService.call(pid)
         update(client_status: result.status, client_message: result.body)
       rescue StandardError => exception
-        update(exception: exception.class, error: exception.message)
+        update(exception: exception.class, error: truncate(exception.message, length: 255))
       end
 
       def message
