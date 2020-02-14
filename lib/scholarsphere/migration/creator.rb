@@ -26,7 +26,12 @@ module Scholarsphere
       private
 
         def agent
-          @agent ||= creator_alias.agent
+          @agent ||= (creator_alias.agent || agent_from_display_name)
+        end
+
+        def agent_from_display_name
+          parsed_name = Namae::Name.parse(creator_alias.display_name)
+          Agent.new(sur_name: parsed_name.family, given_name: parsed_name.given)
         end
     end
   end
