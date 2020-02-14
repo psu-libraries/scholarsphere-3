@@ -33,10 +33,22 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
   end
 
   describe '#migrated?' do
-    context 'when the resource has been successfully migrated' do
+    context 'when the resource has been successfully published' do
       subject { described_class.new(client_status: 200) }
 
       it { is_expected.to be_migrated }
+    end
+
+    context 'when the resource has been migrated but not published' do
+      subject { described_class.new(client_status: 201) }
+
+      it { is_expected.to be_migrated }
+    end
+
+    context 'when an error is encountered' do
+      subject { described_class.new(client_status: 422) }
+
+      it { is_expected.not_to be_migrated }
     end
   end
 

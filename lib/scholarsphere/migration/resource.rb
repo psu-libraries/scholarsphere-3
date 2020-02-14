@@ -13,10 +13,9 @@ module Scholarsphere
       def migrate(force: false)
         return if migrated? && !force
 
-        result = ExportService.call(pid)
-        update(client_status: result.status, client_message: result.body)
+        migration_update(ExportService.call(pid))
       rescue StandardError => exception
-        update(exception: exception.class, error: truncate(exception.message, length: 255))
+        migration_error(exception)
       end
 
       def message
@@ -28,12 +27,32 @@ module Scholarsphere
       end
 
       def failed?
-        client_status != '200'
+        client_status != '200' && client_status != '201'
       end
 
       def blocked?
         exception.present?
       end
+
+      private
+
+        def migration_update(result)
+          update(
+            client_status: result.status,
+            client_message: result.body,
+            exception: nil,
+            error: nil
+          )
+        end
+
+        def migration_error(exception)
+          update(
+            client_status: nil,
+            client_message: nil,
+            exception: exception.class,
+            error: truncate(exception.message, length: 255)
+          )
+        end
     end
   end
 end
