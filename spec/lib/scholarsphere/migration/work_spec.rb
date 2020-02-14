@@ -25,6 +25,10 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
         expect(migration_work.metadata[:creator_aliases_attributes].first[:alias]).to eq('creatorcreator')
       end
     end
+
+    context 'with visibility' do
+      its(:metadata) { is_expected.to include(visibility: 'open') }
+    end
   end
 
   describe '#depositor' do

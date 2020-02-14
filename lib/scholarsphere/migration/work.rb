@@ -17,7 +17,8 @@ module Scholarsphere
           .slice(*direct_terms)
           .merge(
             title: migrated_title,
-            creator_aliases_attributes: creators
+            creator_aliases_attributes: creators,
+            visibility: work.visibility
           )
       end
 
