@@ -19,6 +19,8 @@ module Scholarsphere
       end
 
       def message
+        return {} if client_message.blank?
+
         HashWithIndifferentAccess.new(JSON.parse(client_message))
       end
 

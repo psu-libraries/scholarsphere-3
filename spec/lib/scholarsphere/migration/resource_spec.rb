@@ -69,10 +69,18 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
   end
 
   describe '#message' do
-    subject { described_class.new(pid: '1234', model: 'GenericWork', client_message: "{\"message\": \"success!\"}") }
+    context 'when there is a client message' do
+      subject { described_class.new(pid: '1234', model: 'GenericWork', client_message: "{\"message\": \"success!\"}") }
 
-    its(:message) { is_expected.to eq('message' => 'success!') }
-    its(:message) { is_expected.to be_a(HashWithIndifferentAccess) }
+      its(:message) { is_expected.to eq('message' => 'success!') }
+      its(:message) { is_expected.to be_a(HashWithIndifferentAccess) }
+    end
+
+    context 'when there is no client message' do
+      subject { described_class.new(pid: '1234', model: 'GenericWork') }
+
+      its(:message) { is_expected.to be_empty }
+    end
   end
 
   describe '#migrate' do
