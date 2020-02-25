@@ -18,7 +18,8 @@ module Scholarsphere
           .merge(
             title: migrated_title,
             creator_aliases_attributes: creators,
-            visibility: work.visibility
+            visibility: work.visibility,
+            noid: work.id
           )
       end
 

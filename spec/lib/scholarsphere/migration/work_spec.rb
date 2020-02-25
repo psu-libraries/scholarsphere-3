@@ -29,6 +29,10 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
     context 'with visibility' do
       its(:metadata) { is_expected.to include(visibility: 'open') }
     end
+
+    context 'with an original identifier' do
+      its(:metadata) { is_expected.to include(noid: work.id) }
+    end
   end
 
   describe '#depositor' do
