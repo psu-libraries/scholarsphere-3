@@ -52,7 +52,7 @@ module Scholarsphere
             client_status: nil,
             client_message: nil,
             exception: exception.class,
-            error: truncate(exception.message, length: 255)
+            error: truncate(exception.message, length: 250)
           )
         end
     end
