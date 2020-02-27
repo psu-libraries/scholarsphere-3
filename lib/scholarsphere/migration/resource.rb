@@ -13,6 +13,7 @@ module Scholarsphere
       def migrate(force: false)
         return if migrated? && !force
 
+        update(started_at: DateTime.now)
         migration_update(ExportService.call(pid))
       rescue StandardError => exception
         migration_error(exception)
@@ -43,7 +44,8 @@ module Scholarsphere
             client_status: result.status,
             client_message: result.body,
             exception: nil,
-            error: nil
+            error: nil,
+            completed_at: DateTime.now
           )
         end
 
@@ -52,7 +54,8 @@ module Scholarsphere
             client_status: nil,
             client_message: nil,
             exception: exception.class,
-            error: truncate(exception.message, length: 250)
+            error: truncate(exception.message, length: 250),
+            completed_at: DateTime.now
           )
         end
     end

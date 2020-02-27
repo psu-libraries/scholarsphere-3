@@ -13,7 +13,9 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
         'client_status',
         'client_message',
         'exception',
-        'error'
+        'error',
+        'started_at',
+        'completed_at'
       )
     end
   end
@@ -94,6 +96,8 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
         resource.migrate
         expect(resource.client_status).to eq('200')
         expect(resource.client_message).to eq("{\"message\": \"success!\"}")
+        expect(resource.started_at).not_to be_nil
+        expect(resource.completed_at).not_to be_nil
       end
     end
 
@@ -122,12 +126,13 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
         allow(Scholarsphere::Migration::ExportService)
           .to receive(:call)
           .with('1234')
-          .and_raise(StandardError, 'oops, something went wrong!')
+          .and_raise(StandardError, "oops, something went wrong!#{'x' * 300}")
         resource.migrate
       end
 
       its(:exception) { is_expected.to eq('StandardError') }
-      its(:error) { is_expected.to eq('oops, something went wrong!') }
+      its(:error) { is_expected.to match(/^oops, something went wrong!x{220}\.\.\.$/) }
+      its(:completed_at) { is_expected.not_to be_nil }
     end
   end
 end
