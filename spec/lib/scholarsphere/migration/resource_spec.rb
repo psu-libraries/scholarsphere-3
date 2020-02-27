@@ -131,7 +131,6 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
       end
 
       its(:exception) { is_expected.to eq('StandardError') }
-      its(:error) { is_expected.to match(/^oops, something went wrong!x{220}\.\.\.$/) }
       its(:completed_at) { is_expected.not_to be_nil }
     end
   end

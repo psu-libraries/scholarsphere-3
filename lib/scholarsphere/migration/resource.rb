@@ -3,8 +3,6 @@
 module Scholarsphere
   module Migration
     class Resource < ApplicationRecord
-      include ActionView::Helpers::TextHelper
-
       self.table_name = 'migration_resources'
 
       validates :pid, presence: true
@@ -56,11 +54,11 @@ module Scholarsphere
         end
 
         def migration_error(exception)
+          Rails.logger.error(exception.message)
           update(
             client_status: nil,
             client_message: nil,
             exception: exception.class,
-            error: truncate(exception.message, length: 250),
             completed_at: DateTime.now
           )
         end
