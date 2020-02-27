@@ -9,5 +9,6 @@ module Scholarsphere
     require 'creator'
     require 'export_service'
     require 'resource'
+    require 'job'
   end
 end
