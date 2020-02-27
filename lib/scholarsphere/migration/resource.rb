@@ -37,6 +37,12 @@ module Scholarsphere
         exception.present?
       end
 
+      def duration
+        return 0 if completed_at.nil? || started_at.nil?
+
+        completed_at - started_at
+      end
+
       private
 
         def migration_update(result)

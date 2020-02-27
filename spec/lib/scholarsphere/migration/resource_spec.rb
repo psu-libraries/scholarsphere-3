@@ -135,4 +135,20 @@ RSpec.describe Scholarsphere::Migration::Resource, type: :model do
       its(:completed_at) { is_expected.not_to be_nil }
     end
   end
+
+  describe '#duration' do
+    context 'when the migration has not been run' do
+      subject { described_class.new }
+
+      its(:duration) { is_expected.to eq(0) }
+    end
+
+    context 'with recorded times' do
+      subject { described_class.new(started_at: start_time, completed_at: (start_time + 5.seconds)) }
+
+      let(:start_time) { DateTime.now }
+
+      its(:duration) { is_expected.to eq(5) }
+    end
+  end
 end
