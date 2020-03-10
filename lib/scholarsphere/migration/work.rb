@@ -18,8 +18,9 @@ module Scholarsphere
           .merge(
             title: migrated_title,
             creator_aliases_attributes: creators,
-            visibility: work.visibility,
-            noid: work.id
+            visibility: embargo.visibility,
+            noid: work.id,
+            embargoed_until: embargo.release_date
           )
       end
 
@@ -55,6 +56,10 @@ module Scholarsphere
           end
         end
 
+        def embargo
+          @embargo ||= Embargo.new(work: work, file_sets: file_sets)
+        end
+
         # @note Terms that can be copied directly from the original work to the new one without any "translation"
         def direct_terms
           [
@@ -86,7 +91,11 @@ module Scholarsphere
         end
 
         def external_files
-          @external_files ||= work.file_sets.map { |file_set| FileSetDiskLocation.new(file_set) }
+          @external_files ||= file_sets.map { |file_set| FileSetDiskLocation.new(file_set) }
+        end
+
+        def file_sets
+          @file_sets ||= work.file_sets
         end
     end
   end

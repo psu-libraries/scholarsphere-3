@@ -33,6 +33,27 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
     context 'with an original identifier' do
       its(:metadata) { is_expected.to include(noid: work.id) }
     end
+
+    context 'when the work is embargoed' do
+      let(:embargo_date) { DateTime.now + 12.days }
+      let(:work) { build(:work, :with_public_embargo, embargo_release_date: embargo_date) }
+
+      its(:metadata) { is_expected.to include(embargoed_until: embargo_date.iso8601) }
+    end
+
+    context 'when the files are embargoed' do
+      let(:embargo_date) { DateTime.now + 3.months }
+      let(:fs1) { create(:file_set, embargo_release_date: (embargo_date - 1.month)) }
+      let(:fs2) { create(:file_set, embargo_release_date: (embargo_date - 2.months)) }
+      let(:fs3) { create(:file_set, embargo_release_date: embargo_date) }
+
+      before do
+        work.ordered_members << [fs1, fs3, fs2]
+        work.thumbnail_id = fs1.id
+      end
+
+      its(:metadata) { is_expected.to include(embargoed_until: embargo_date.iso8601) }
+    end
   end
 
   describe '#depositor' do
