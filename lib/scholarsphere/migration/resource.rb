@@ -54,7 +54,7 @@ module Scholarsphere
         end
 
         def migration_error(exception)
-          Rails.logger.error(exception.message)
+          Rails.logger.error("#{exception.message}\n#{exception.backtrace.join("\n")}")
           update(
             client_status: nil,
             client_message: nil,
