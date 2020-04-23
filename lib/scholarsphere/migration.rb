@@ -5,6 +5,7 @@ module Scholarsphere
     class Error < StandardError; end
 
     require 'data_report'
+    require 'depositors_report'
     require 'work'
     require 'creator'
     require 'export_service'
