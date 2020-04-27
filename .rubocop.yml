@@ -106,3 +106,6 @@ RSpec/DescribeClass:
 
 RSpec/LetSetup:
   Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
