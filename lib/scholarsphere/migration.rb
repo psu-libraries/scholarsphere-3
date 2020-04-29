@@ -8,6 +8,7 @@ module Scholarsphere
     require 'depositors_report'
     require 'work'
     require 'creator'
+    require 'depositor'
     require 'export_service'
     require 'resource'
     require 'job'

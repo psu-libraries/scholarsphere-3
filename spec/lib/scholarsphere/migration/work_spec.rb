@@ -57,7 +57,7 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
   end
 
   describe '#depositor' do
-    its(:depositor) { is_expected.to eq(work.depositor) }
+    its(:depositor) { is_expected.to include(psu_id: 'user', surname: 'user') }
   end
 
   describe '#permissions' do

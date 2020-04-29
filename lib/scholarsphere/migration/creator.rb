@@ -14,7 +14,7 @@ module Scholarsphere
       def metadata
         {
           alias: creator_alias.display_name,
-          creator_attributes: {
+          actor_attributes: {
             email: email,
             given_name: given_name,
             surname: sur_name,

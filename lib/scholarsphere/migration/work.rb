@@ -5,8 +5,6 @@ module Scholarsphere
     class Work
       attr_reader :work
 
-      delegate :depositor, to: :work
-
       # @param [GenericWork] the thing we want to migrate
       def initialize(work)
         @work = work
@@ -36,6 +34,10 @@ module Scholarsphere
 
           path
         end
+      end
+
+      def depositor
+        @depositor ||= Depositor.new(login: work.depositor).metadata
       end
 
       private

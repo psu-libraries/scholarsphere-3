@@ -11,7 +11,7 @@ RSpec.describe Scholarsphere::Migration::Creator do
     its(:metadata) do
       is_expected.to include(
         alias: creator_alias.display_name,
-        creator_attributes: {
+        actor_attributes: {
           given_name: creator_alias.agent.given_name,
           surname: creator_alias.agent.sur_name,
           email: creator_alias.agent.email,
@@ -27,7 +27,7 @@ RSpec.describe Scholarsphere::Migration::Creator do
     its(:metadata) do
       is_expected.to include(
         alias: creator_alias.display_name,
-        creator_attributes: {
+        actor_attributes: {
           given_name: 'John',
           surname: 'Smith',
           email: nil,
