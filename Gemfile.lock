@@ -528,7 +528,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (5.1.0)
-    newrelic_rpm (5.7.0.350)
+    newrelic_rpm (6.10.0.364)
     niftany (0.4.0)
       colorize (~> 0.8.1)
       erb_lint (~> 0.0.22)
@@ -999,4 +999,4 @@ DEPENDENCIES
   yaml_db
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
