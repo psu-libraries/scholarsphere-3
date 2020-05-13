@@ -7,6 +7,7 @@ module Scholarsphere
     require 'data_report'
     require 'depositors_report'
     require 'work'
+    require 'collection'
     require 'creator'
     require 'depositor'
     require 'export_service'
