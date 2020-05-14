@@ -61,7 +61,14 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
   end
 
   describe '#permissions' do
-    its(:permissions) { is_expected.to include(edit_users: [work.depositor], read_groups: ['public']) }
+    its(:permissions) do
+      is_expected.to eq(
+        'read_users' => [],
+        'read_groups' => [],
+        'edit_users' => [],
+        'edit_groups' => []
+      )
+    end
   end
 
   describe '#files' do

@@ -10,6 +10,7 @@ module Scholarsphere
     require 'collection'
     require 'creator'
     require 'depositor'
+    require 'permissions'
     require 'export_service'
     require 'resource'
     require 'job'

@@ -21,7 +21,7 @@ module Scholarsphere
       end
 
       def permissions
-        @permissions ||= HashWithIndifferentAccess.new(permissions_hash)
+        @permissions ||= Permissions.new(collection).attributes
       end
 
       def depositor
@@ -69,15 +69,6 @@ module Scholarsphere
             :related_url,
             :source
           ]
-        end
-
-        def permissions_hash
-          {
-            edit_users: collection.edit_users,
-            edit_groups: collection.edit_groups,
-            read_users: collection.read_users,
-            read_groups: collection.read_groups
-          }
         end
     end
   end

@@ -23,7 +23,7 @@ module Scholarsphere
       end
 
       def permissions
-        @permissions ||= HashWithIndifferentAccess.new(permissions_hash)
+        @permissions ||= Permissions.new(work).attributes
       end
 
       # @return [Array<Pathname>]
@@ -81,15 +81,6 @@ module Scholarsphere
             :related_url,
             :source
           ]
-        end
-
-        def permissions_hash
-          {
-            edit_users: work.edit_users,
-            edit_groups: work.edit_groups,
-            read_users: work.read_users,
-            read_groups: work.read_groups
-          }
         end
 
         def external_files
