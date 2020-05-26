@@ -54,6 +54,10 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
 
       its(:metadata) { is_expected.to include(embargoed_until: embargo_date.iso8601) }
     end
+
+    context 'with keywords' do
+      its(:metadata) { is_expected.to include(keyword: ['tagtag']) }
+    end
   end
 
   describe '#depositor' do
