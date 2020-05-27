@@ -11,6 +11,7 @@ module Scholarsphere
     require 'creator'
     require 'depositor'
     require 'permissions'
+    require 'work_type_mapper'
     require 'export_service'
     require 'resource'
     require 'job'

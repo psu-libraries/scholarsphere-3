@@ -7,7 +7,13 @@ RSpec.describe Scholarsphere::Migration::ExportService, unless: travis? do
   let(:creator) { create(:creator) }
 
   context 'with a work' do
-    let(:work) { create(:public_work_with_pdf, :with_complete_metadata, depositor: user.login) }
+    let(:work) do
+      create(
+        :public_work_with_pdf, :with_complete_metadata,
+        depositor: user.login,
+        resource_type: ['Article']
+      )
+    end
 
     it 'exports a work to the Scholarsphere 4 ingest endpoint' do
       result = described_class.call(work.id)

@@ -18,7 +18,8 @@ module Scholarsphere
             creator_aliases_attributes: creators,
             visibility: embargo.visibility,
             noid: work.id,
-            embargoed_until: embargo.release_date
+            embargoed_until: embargo.release_date,
+            work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type
           )
       end
 
