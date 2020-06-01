@@ -58,6 +58,10 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
     context 'with keywords' do
       its(:metadata) { is_expected.to include(keyword: ['tagtag']) }
     end
+
+    context 'with the original upload date' do
+      its(:metadata) { is_expected.to include(deposited_at: work.date_uploaded) }
+    end
   end
 
   describe '#depositor' do
@@ -82,7 +86,12 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
     before { allow_any_instance_of(CreateDerivativesJob).to receive(:perform) }
 
     context 'when the files exist' do
-      its(:files) { is_expected.to all(be_a(Pathname)) }
+      its(:files) do
+        is_expected.to include(
+          file: an_instance_of(Pathname),
+          deposited_at: work.file_sets.first.date_uploaded
+        )
+      end
     end
 
     context 'when the files do not exist' do

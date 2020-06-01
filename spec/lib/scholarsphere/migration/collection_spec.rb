@@ -29,6 +29,10 @@ RSpec.describe Scholarsphere::Migration::Collection, type: :model do
     context 'with an original identifier' do
       its(:metadata) { is_expected.to include(noid: collection.id) }
     end
+
+    context 'with an original uploaded date' do
+      its(:metadata) { is_expected.to include(deposited_at: collection.create_date) }
+    end
   end
 
   describe '#depositor' do

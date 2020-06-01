@@ -16,7 +16,8 @@ module Scholarsphere
           .merge(
             title: migrated_title,
             creator_aliases_attributes: creators,
-            noid: collection.id
+            noid: collection.id,
+            deposited_at: collection.create_date
           )
       end
 

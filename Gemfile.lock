@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/psu-stewardship/scholarsphere-client.git
-  revision: f30fda4d97a3ae7f6d23c483d63f702564af7356
+  revision: ece38dc021b398c6ef607bc819a21ecfd427167d
   branch: working
   specs:
     scholarsphere-client (0.1.0)
@@ -86,20 +86,20 @@ GEM
     awesome_nested_set (3.1.4)
       activerecord (>= 4.0.0, < 5.3)
     aws-eventstream (1.1.0)
-    aws-partitions (1.313.0)
-    aws-sdk-core (3.95.0)
+    aws-partitions (1.323.0)
+    aws-sdk-core (3.97.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.31.0)
+    aws-sdk-kms (1.33.0)
       aws-sdk-core (~> 3, >= 3.71.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.64.0)
-      aws-sdk-core (~> 3, >= 3.83.0)
+    aws-sdk-s3 (1.67.1)
+      aws-sdk-core (~> 3, >= 3.96.1)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
-    aws-sigv4 (1.1.3)
+    aws-sigv4 (1.1.4)
       aws-eventstream (~> 1.0, >= 1.0.2)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)

@@ -19,7 +19,8 @@ module Scholarsphere
             visibility: embargo.visibility,
             noid: work.id,
             embargoed_until: embargo.release_date,
-            work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type
+            work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type,
+            deposited_at: work.date_uploaded
           )
       end
 
@@ -29,11 +30,11 @@ module Scholarsphere
 
       # @return [Array<Pathname>]
       def files
-        external_files.map do |location|
-          path = Pathname.new(location.path)
-          raise Error, "FileSet for #{path.basename} does not exist" unless path.exist?
-
-          path
+        @files ||= file_sets.map do |file_set|
+          {
+            file: external_file_path(file_set),
+            deposited_at: file_set.date_uploaded
+          }
         end
       end
 
@@ -84,8 +85,12 @@ module Scholarsphere
           ]
         end
 
-        def external_files
-          @external_files ||= file_sets.map { |file_set| FileSetDiskLocation.new(file_set) }
+        def external_file_path(file_set)
+          location = FileSetDiskLocation.new(file_set)
+          path = Pathname.new(location.path)
+          raise Error, "FileSet for #{path.basename} does not exist" unless path.exist?
+
+          path
         end
 
         def file_sets
