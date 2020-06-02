@@ -89,7 +89,7 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
       its(:files) do
         is_expected.to include(
           file: an_instance_of(Pathname),
-          deposited_at: work.file_sets.first.date_uploaded
+          deposited_at: work.file_sets.first.create_date
         )
       end
     end

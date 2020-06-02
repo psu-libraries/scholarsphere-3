@@ -20,7 +20,7 @@ module Scholarsphere
             noid: work.id,
             embargoed_until: embargo.release_date,
             work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type,
-            deposited_at: work.date_uploaded
+            deposited_at: DateValidator.call(work.date_uploaded || work.create_date)
           )
       end
 
@@ -33,7 +33,7 @@ module Scholarsphere
         @files ||= file_sets.map do |file_set|
           {
             file: external_file_path(file_set),
-            deposited_at: file_set.date_uploaded
+            deposited_at: DateValidator.call(file_set.date_uploaded || file_set.create_date)
           }
         end
       end

@@ -17,7 +17,7 @@ module Scholarsphere
             title: migrated_title,
             creator_aliases_attributes: creators,
             noid: collection.id,
-            deposited_at: collection.create_date
+            deposited_at: DateValidator.call(collection.create_date)
           )
       end
 

@@ -4,16 +4,17 @@ module Scholarsphere
   module Migration
     class Error < StandardError; end
 
-    require 'data_report'
-    require 'depositors_report'
-    require 'work'
     require 'collection'
     require 'creator'
+    require 'data_report'
+    require 'date_validator'
     require 'depositor'
-    require 'permissions'
-    require 'work_type_mapper'
+    require 'depositors_report'
     require 'export_service'
-    require 'resource'
     require 'job'
+    require 'permissions'
+    require 'resource'
+    require 'work'
+    require 'work_type_mapper'
   end
 end
