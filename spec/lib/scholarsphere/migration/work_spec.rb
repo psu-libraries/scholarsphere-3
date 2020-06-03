@@ -62,6 +62,25 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
     context 'with the original upload date' do
       its(:metadata) { is_expected.to include(deposited_at: work.date_uploaded) }
     end
+
+    context 'when the published date is nil' do
+      let(:work) { build(:public_work, :with_complete_metadata, date_created: []) }
+
+      its(:metadata) { is_expected.to include(published_date: '') }
+    end
+
+    context 'with a single value for published date' do
+      let(:work) { build(:public_work, :with_complete_metadata, date_created: ['two days before tomorrow']) }
+
+      its(:metadata) { is_expected.to include(published_date: 'two days before tomorrow') }
+    end
+
+    context 'with multiple values for published date' do
+      let(:work) { build(:public_work, :with_complete_metadata, date_created: ['yesterday', 'today', 'tomorrow']) }
+
+      # @note order cannot be guaranteed
+      its(:metadata) { is_expected.to include(published_date: work.date_created.join(', ')) }
+    end
   end
 
   describe '#depositor' do

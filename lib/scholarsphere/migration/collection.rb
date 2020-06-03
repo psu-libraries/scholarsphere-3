@@ -17,7 +17,8 @@ module Scholarsphere
             title: migrated_title,
             creator_aliases_attributes: creators,
             noid: collection.id,
-            deposited_at: DateValidator.call(collection.create_date)
+            deposited_at: DateValidator.call(collection.create_date),
+            published_date: collection.date_created.join(', ')
           )
       end
 
@@ -62,7 +63,6 @@ module Scholarsphere
             :resource_type,
             :contributor,
             :publisher,
-            :published_date,
             :subject,
             :language,
             :identifier,

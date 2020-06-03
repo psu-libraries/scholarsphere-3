@@ -33,6 +33,25 @@ RSpec.describe Scholarsphere::Migration::Collection, type: :model do
     context 'with an original uploaded date' do
       its(:metadata) { is_expected.to include(deposited_at: collection.create_date) }
     end
+
+    context 'when the published date is nil' do
+      let(:collection) { build(:public_collection, :with_complete_metadata, date_created: []) }
+
+      its(:metadata) { is_expected.to include(published_date: '') }
+    end
+
+    context 'with a single value for published date' do
+      let(:collection) { build(:public_collection, :with_complete_metadata, date_created: ['two days before tomorrow']) }
+
+      its(:metadata) { is_expected.to include(published_date: 'two days before tomorrow') }
+    end
+
+    context 'with multiple values for published date' do
+      let(:collection) { build(:public_collection, :with_complete_metadata, date_created: ['yesterday', 'today', 'tomorrow']) }
+
+      # @note order cannot be guaranteed
+      its(:metadata) { is_expected.to include(published_date: collection.date_created.join(', ')) }
+    end
   end
 
   describe '#depositor' do
