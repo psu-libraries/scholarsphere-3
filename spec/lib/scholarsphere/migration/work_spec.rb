@@ -118,11 +118,7 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
 
       before { allow(FileSetDiskLocation).to receive(:new).and_return(mock_location) }
 
-      it 'raises an error' do
-        expect {
-          migration_work.files
-        }.to raise_error(Scholarsphere::Migration::Error, 'FileSet for bogus does not exist')
-      end
+      its(:files) { is_expected.to be_empty }
     end
   end
 end

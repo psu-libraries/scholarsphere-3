@@ -29,14 +29,10 @@ module Scholarsphere
         @permissions ||= Permissions.new(work).attributes
       end
 
-      # @return [Array<Pathname>]
       def files
         @files ||= file_sets.map do |file_set|
-          {
-            file: external_file_path(file_set),
-            deposited_at: DateValidator.call(file_set.date_uploaded || file_set.create_date)
-          }
-        end
+          Migration::FileSet.new(file_set).metadata
+        end.compact
       end
 
       def depositor

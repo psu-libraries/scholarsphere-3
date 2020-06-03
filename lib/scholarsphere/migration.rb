@@ -11,10 +11,17 @@ module Scholarsphere
     require 'depositor'
     require 'depositors_report'
     require 'export_service'
+    require 'file_set'
     require 'job'
     require 'permissions'
     require 'resource'
     require 'work'
     require 'work_type_mapper'
+
+    class << self
+      def log
+        @log ||= Logger.new('log/migration.log')
+      end
+    end
   end
 end
