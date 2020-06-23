@@ -7,5 +7,10 @@ namespace :scholarsphere do
       result = Scholarsphere::Migration::ExportService.call(args[:pid])
       pp JSON.parse(result.body)
     end
+
+    desc 'Export statistics'
+    task statistics: :environment do
+      Scholarsphere::Migration::Statistics.new.build
+    end
   end
 end
