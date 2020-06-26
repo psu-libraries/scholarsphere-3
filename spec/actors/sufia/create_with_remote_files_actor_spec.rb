@@ -46,7 +46,7 @@ describe Sufia::CreateWithRemoteFilesActor do
       {
         visibility: 'embargo',
         visibility_during_embargo: 'restricted',
-        embargo_release_date: '2020-06-08',
+        embargo_release_date: Date.today + 1.year,
         visibility_after_embargo: 'open',
         remote_files: remote_files
       }
@@ -59,7 +59,7 @@ describe Sufia::CreateWithRemoteFilesActor do
     it 'creates works and file sets with an embargo' do
       expect(work.file_sets).to be_empty
       actor.create(attributes)
-      expect(work.file_sets.first.embargo.embargo_release_date).to eq(Date.new(2020, 6, 8))
+      expect(work.file_sets.first.embargo.embargo_release_date).to eq(Date.today + 1.year)
     end
   end
 end
