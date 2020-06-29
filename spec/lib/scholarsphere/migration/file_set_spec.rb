@@ -14,7 +14,8 @@ RSpec.describe Scholarsphere::Migration::FileSet do
     its(:metadata) do
       is_expected.to include(
         file: an_instance_of(Pathname),
-        deposited_at: work.file_sets.first.create_date
+        deposited_at: work.file_sets.first.create_date,
+        noid: work.file_sets.first.id
       )
     end
   end

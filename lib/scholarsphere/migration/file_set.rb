@@ -14,7 +14,8 @@ module Scholarsphere
 
         {
           file: path,
-          deposited_at: DateValidator.call(file_set.date_uploaded || file_set.create_date)
+          deposited_at: DateValidator.call(file_set.date_uploaded || file_set.create_date),
+          noid: file_set.id
         }
       end
 

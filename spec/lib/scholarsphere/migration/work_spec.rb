@@ -81,6 +81,13 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
       # @note order cannot be guaranteed
       its(:metadata) { is_expected.to include(published_date: work.date_created.join(', ')) }
     end
+
+    context 'with mulitple values for description' do
+      let(:work) { build(:public_work, :with_complete_metadata, description: ['first', 'second', 'third']) }
+
+      # @note order cannot be guaranteed
+      its(:metadata) { is_expected.to include(description: work.description.join(' ')) }
+    end
   end
 
   describe '#depositor' do
@@ -108,7 +115,8 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
       its(:files) do
         is_expected.to include(
           file: an_instance_of(Pathname),
-          deposited_at: work.file_sets.first.create_date
+          deposited_at: work.file_sets.first.create_date,
+          noid: an_instance_of(String)
         )
       end
     end

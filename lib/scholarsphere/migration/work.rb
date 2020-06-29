@@ -21,7 +21,8 @@ module Scholarsphere
             embargoed_until: embargo.release_date,
             work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type,
             deposited_at: DateValidator.call(work.date_uploaded || work.create_date),
-            published_date: work.date_created.join(', ')
+            published_date: work.date_created.join(', '),
+            description: work.description.join(' ')
           )
       end
 
@@ -68,7 +69,6 @@ module Scholarsphere
             :rights,
             :version_name,
             :keyword,
-            :description,
             :resource_type,
             :contributor,
             :publisher,
