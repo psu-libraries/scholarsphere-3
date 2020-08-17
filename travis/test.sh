@@ -2,6 +2,12 @@
 
 echo -e "\n\n\033[0;32mTravis test.sh script\033[0m"
 
+echo -e "\n\n\033[0;32mInfo\033[0m"
+echo "Google Chrome version:"
+google-chrome --version
+echo "Java version:"
+java -version
+
 echo -e "\n\n\033[1;33mMaking dependency cache directory\033[0m"
 mkdir -p dep_cache
 echo "Listing directory contents:"
@@ -48,8 +54,9 @@ cc-test-reporter before-build
 bundle exec rake scholarsphere:travis:$TEST_SUITE
 RSPEC_EXIT_CODE=$?
 
-echo -e "\n\n\033[1;33mUpload coverage results to AWS\033[0m"
+echo -e "\n\n\033[1;33mUpload coverage results and logs to AWS\033[0m"
 cc-test-reporter format-coverage --output coverage/codeclimate.$TRAVIS_BUILD_ID.$TEST_SUITE.json
 aws s3 sync coverage/ s3://psu.edu.scholarsphere-qa/coverage/$TRAVIS_BUILD_NUMBER
+aws s3 sync log/ s3://psu.edu.scholarsphere-qa/build-logs/$TRAVIS_BUILD_NUMBER
 
 exit $RSPEC_EXIT_CODE

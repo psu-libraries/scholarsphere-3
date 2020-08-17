@@ -13,7 +13,7 @@ describe NetworkIngestService do
       before do
         FileUtils.mkdir(path)
         FileUtils.cp(Pathname.new(fixture_path).join('readme.md'), path)
-        FileUtils.cp(Pathname.new(fixture_path).join('image.jp2'), path)
+        FileUtils.cp(Pathname.new(fixture_path).join('world.png'), path)
       end
 
       it 'ingests each file in the directory' do
@@ -23,7 +23,7 @@ describe NetworkIngestService do
         described_class.call(path)
         work.reload
         expect(work.file_sets.count).to eq(2)
-        expect(work.file_sets.map(&:title)).to include(['readme.md'], ['image.jp2'])
+        expect(work.file_sets.map(&:title)).to include(['readme.md'], ['world.png'])
         work.file_sets.each do |file_set|
           expect(file_set.edit_users).to eq(edit_users)
           expect(file_set.read_users).to eq(read_users)
@@ -37,7 +37,7 @@ describe NetworkIngestService do
       before do
         FileUtils.mkdir(path)
         FileUtils.cp(Pathname.new(fixture_path).join('readme.md'), path)
-        FileUtils.cp(Pathname.new(fixture_path).join('image.jp2'), path)
+        FileUtils.cp(Pathname.new(fixture_path).join('world.png'), path)
       end
 
       it 'raises an error' do

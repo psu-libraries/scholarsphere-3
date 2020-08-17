@@ -30,7 +30,7 @@ describe AttachFilesToWorkJob do
       {
         visibility: 'embargo',
         visibility_during_embargo: 'restricted',
-        embargo_release_date: '2020-06-08',
+        embargo_release_date: Date.today + 1.year,
         visibility_after_embargo: 'open'
       }
     end
@@ -40,7 +40,7 @@ describe AttachFilesToWorkJob do
       expect(CharacterizeJob).to receive(:perform_later).once
       job.perform_now
       file_set = GenericWork.where(title_tesim: title).first.file_sets.first
-      expect(file_set.embargo.embargo_release_date).to eq(Date.new(2020, 6, 8))
+      expect(file_set.embargo.embargo_release_date).to eq(Date.today + 1.year)
       expect(file_set.visibility).to eq('restricted')
     end
   end
