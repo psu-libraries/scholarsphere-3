@@ -22,7 +22,9 @@ module Scholarsphere
             work_type: WorkTypeMapper.new(resource_types: work.resource_type).work_type,
             deposited_at: DateValidator.call(work.date_uploaded || work.create_date),
             published_date: work.date_created.join(', '),
-            description: work.description.join(' ')
+            description: work.description.join(' '),
+            identifier: identifier.other,
+            doi: identifier.doi
           )
       end
 
@@ -74,7 +76,6 @@ module Scholarsphere
             :publisher,
             :subject,
             :language,
-            :identifier,
             :based_near,
             :related_url,
             :source
@@ -91,6 +92,10 @@ module Scholarsphere
 
         def file_sets
           @file_sets ||= work.file_sets
+        end
+
+        def identifier
+          @identifier ||= Migration::Identifier.new(work_attributes[:identifier])
         end
     end
   end

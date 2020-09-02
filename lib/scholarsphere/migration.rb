@@ -12,6 +12,7 @@ module Scholarsphere
     require 'depositors_report'
     require 'export_service'
     require 'file_set'
+    require 'identifier'
     require 'job'
     require 'permissions'
     require 'resource'

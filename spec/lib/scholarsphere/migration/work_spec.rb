@@ -88,6 +88,20 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
       # @note order cannot be guaranteed
       its(:metadata) { is_expected.to include(description: work.description.join(' ')) }
     end
+
+    context 'when migrating identifiers' do
+      let(:work) { build(:public_work, :with_complete_metadata) }
+
+      its(:metadata) { is_expected.to include(identifier: work.identifier) }
+    end
+
+    context 'when migrating dois' do
+      let(:doi) { 'https://doi.org/10.18113/S1KW2H' }
+      let(:identifiers) { ['asdf', doi] }
+      let(:work) { build(:public_work, identifier: identifiers) }
+
+      its(:metadata) { is_expected.to include(identifier: ['asdf'], doi: doi) }
+    end
   end
 
   describe '#depositor' do
