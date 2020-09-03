@@ -63,6 +63,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/initializers/sufia6.rb',
   'config/initializers/hydra_derivatives_config.rb ',
   'config/redis.yml',
+  'config/scholarsphere-client.yml',
   'config/secrets.yml',
   'config/share_notify.yml',
   'config/solr.yml',
