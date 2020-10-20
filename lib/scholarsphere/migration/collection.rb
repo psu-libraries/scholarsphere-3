@@ -18,7 +18,10 @@ module Scholarsphere
             creator_aliases_attributes: creators,
             noid: collection.id,
             deposited_at: DateValidator.call(collection.create_date),
-            published_date: collection.date_created.join(', ')
+            published_date: collection.date_created.join(', '),
+            description: collection.description.join(' '),
+            identifier: identifier.other,
+            doi: identifier.doi
           )
       end
 
@@ -32,6 +35,10 @@ module Scholarsphere
 
       def work_noids
         @work_noids ||= collection.work_ids
+      end
+
+      def identifier
+        @identifier ||= Migration::Identifier.new(collection_attributes[:identifier])
       end
 
       private
@@ -58,7 +65,7 @@ module Scholarsphere
             :subtitle,
             :rights,
             :version_name,
-            :keywords,
+            :keyword,
             :description,
             :resource_type,
             :contributor,

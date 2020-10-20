@@ -1,13 +1,3 @@
-GIT
-  remote: https://github.com/psu-stewardship/scholarsphere-client.git
-  revision: ece38dc021b398c6ef607bc819a21ecfd427167d
-  branch: working
-  specs:
-    scholarsphere-client (0.1.0)
-      aws-sdk-s3 (~> 1.49)
-      faraday (> 0.12)
-      marcel (~> 0.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -765,6 +755,10 @@ GEM
     sassc (2.0.0)
       ffi (~> 1.9.6)
       rake
+    scholarsphere-client (0.1.0)
+      aws-sdk-s3 (~> 1.49)
+      faraday (> 0.12)
+      marcel (~> 0.3)
     scss_lint (0.57.1)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
@@ -991,7 +985,7 @@ DEPENDENCIES
   rspec-rails
   rubyzip
   sass-rails
-  scholarsphere-client!
+  scholarsphere-client
   select2-rails
   selenium-webdriver
   share_notify

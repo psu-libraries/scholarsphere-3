@@ -30,6 +30,10 @@ RSpec.describe Scholarsphere::Migration::Collection, type: :model do
       its(:metadata) { is_expected.to include(noid: collection.id) }
     end
 
+    context 'with keywords' do
+      its(:metadata) { is_expected.to include(keyword: ['keyword hhh']) }
+    end
+
     context 'with an original uploaded date' do
       its(:metadata) { is_expected.to include(deposited_at: collection.create_date) }
     end
@@ -51,6 +55,27 @@ RSpec.describe Scholarsphere::Migration::Collection, type: :model do
 
       # @note order cannot be guaranteed
       its(:metadata) { is_expected.to include(published_date: collection.date_created.join(', ')) }
+    end
+
+    context 'with mulitple values for description' do
+      let(:collection) { build(:public_collection, :with_complete_metadata, description: ['first', 'second', 'third']) }
+
+      # @note order cannot be guaranteed
+      its(:metadata) { is_expected.to include(description: collection.description.join(' ')) }
+    end
+
+    context 'when migrating identifiers' do
+      let(:collection) { build(:public_collection, :with_complete_metadata) }
+
+      its(:metadata) { is_expected.to include(identifier: collection.identifier) }
+    end
+
+    context 'when migrating dois' do
+      let(:doi) { 'https://doi.org/10.18113/S1KW2H' }
+      let(:identifiers) { ['asdf', doi] }
+      let(:collection) { build(:public_collection, identifier: identifiers) }
+
+      its(:metadata) { is_expected.to include(identifier: ['asdf'], doi: doi) }
     end
   end
 
