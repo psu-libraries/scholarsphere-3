@@ -16,6 +16,7 @@ module Scholarsphere
     require 'job'
     require 'permissions'
     require 'resource'
+    require 'rights'
     require 'statistics'
     require 'work'
     require 'work_type_mapper'

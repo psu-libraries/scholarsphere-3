@@ -102,6 +102,25 @@ RSpec.describe Scholarsphere::Migration::Work, type: :model do
 
       its(:metadata) { is_expected.to include(identifier: ['asdf'], doi: doi) }
     end
+
+    context 'with a single rights statement' do
+      let(:work) { build(:public_work, :with_complete_metadata) }
+
+      its(:metadata) { is_expected.to include(rights: work.rights.first) }
+    end
+
+    context 'with multiple rights statements' do
+      let(:rights) do
+        [
+          'http://creativecommons.org/licenses/by-nc-nd/3.0/us/',
+          'http://creativecommons.org/publicdomain/mark/1.0/'
+        ]
+      end
+
+      let(:work) { build(:public_work, rights: rights) }
+
+      its(:metadata) { is_expected.to include(rights: 'http://creativecommons.org/publicdomain/mark/1.0/') }
+    end
   end
 
   describe '#depositor' do

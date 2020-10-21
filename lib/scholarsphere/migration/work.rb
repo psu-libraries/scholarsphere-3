@@ -24,7 +24,8 @@ module Scholarsphere
             published_date: work.date_created.join(', '),
             description: work.description.join(' '),
             identifier: identifier.other,
-            doi: identifier.doi
+            doi: identifier.doi,
+            rights: Rights.call(work_attributes[:rights])
           )
       end
 
