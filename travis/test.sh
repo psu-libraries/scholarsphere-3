@@ -35,6 +35,7 @@ cp config/sample/hydra-ldap.yml config/hydra-ldap.yml
 cp config/sample/share_notify.yml config/share_notify.yml
 cp config/sample/initializers/qa.rb config/initializers/qa.rb
 cp config/travis/application_test.yml config/application.yml
+cp config/travis/scholarsphere-client.yml config/scholarsphere-client.yml
 
 echo -e "\n\n\033[1;33mListing Redis information\033[0m"
 redis-cli info

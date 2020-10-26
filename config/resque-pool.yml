@@ -3,4 +3,5 @@ files: 3
 event: 5
 authority_import: 1
 share_notify: 2
+migration: 2
 "*": 2
