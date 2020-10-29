@@ -59,7 +59,7 @@ module Scholarsphere::Migration
       def find_missing_agents(login)
         user = User.find_by(login: login)
         works = GenericWork.where(depositor: login)
-        collections = Collection.where(depositor: login)
+        collections = ::Collection.where(depositor: login)
         agents = (works + collections).map(&:creators).flatten.map(&:agent_id).uniq.map { |id| Agent.find(id) }
         agent_names = agents.map do |agent|
           {
